@@ -1,0 +1,125 @@
+package com.itqa.page_objects.customer_flows;
+
+import com.itqa.Utils.Environment;
+import com.itqa.Utils.ManifestId;
+import com.itqa.Utils.URLS;
+import com.itqa.page_objects.BasePage;
+import com.itqa.page_objects.booking_pages.*;
+import com.itqa.page_objects.checkin_pages.*;
+import data.Itinerary;
+import framework.DriverBase;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestContext;
+
+public class BookingFlow extends BasePage {
+    private RemoteWebDriver driver;
+    private Logger logger = null;
+    private LandingPage landingPage;
+    private FlightPage flightPage;
+    private TripsPage tripsPage;
+    private HotelPage hotelPage;
+    private VehiclePage vehiclePage;
+    private ActivityPage activityPage;
+    private TravelerPage travelerPage;
+    private SeatPage seatPage;
+    private PaymentPage paymentPage;
+    private BagPage bagPage;
+    private ConfirmationPage confirmationPage;
+    private LoginPage loginPage;
+    private BagAndBoardingPage bagAndBoardingPage;
+    private CheckedSeatPage checkedSeatPage;
+    private CheckinPaymentPage checkinPaymentPage;
+    private GetBoardingPassPage getBoardingPassPage;
+
+
+    public BookingFlow() {
+        this.logger = Logger.getLogger(BookingFlow.class);
+        landingPage = new LandingPage();
+        flightPage = new FlightPage();
+        hotelPage = new HotelPage();
+        vehiclePage = new VehiclePage();
+        activityPage = new ActivityPage();
+        travelerPage = new TravelerPage();
+        seatPage = new SeatPage();
+        paymentPage = new PaymentPage();
+        bagPage = new BagPage();
+        confirmationPage = new ConfirmationPage();
+        tripsPage = new TripsPage();
+        loginPage = new LoginPage();
+        bagAndBoardingPage = new BagAndBoardingPage();
+        checkedSeatPage = new CheckedSeatPage();
+        checkinPaymentPage = new CheckinPaymentPage();
+        getBoardingPassPage = new GetBoardingPassPage();
+    }
+
+
+    public String createWebBooking(Itinerary itn, ITestContext context) {
+        String manifestId = "";
+
+        try {
+            landingPage.selectFlightsOnLandingPage(itn);
+            flightPage.selectFlightPage(itn);
+            logger.info("Running on " + DriverBase.getDriver().getCurrentUrl());
+            manifestId = ManifestId.getManifestId(DriverBase.getDriver());
+            itn.setManifestId(manifestId);
+            logger.info("Initiated flight, manifest id is " + manifestId);
+            hotelPage.selectHotel(itn);
+            vehiclePage.selectVehicle(itn);
+            activityPage.selectActivity(itn);
+            travelerPage.fillTravelerPage(itn);
+            seatPage.selectSeatPage(itn);
+            bagPage.selectBagPage(itn);
+        } catch (Exception e) {
+            return manifestId;
+        }
+        return manifestId;
+    }
+
+    public String  createWebBookingWithOutAccount(Itinerary itn, ITestContext context) {
+        return createWebBookingWithAccount(itn, context, false);
+    }
+
+    public String createWebBookingWithAccount(Itinerary itn, ITestContext context, Boolean createAccount) {
+        String manifestId = "";
+
+        try {
+            manifestId = createWebBooking(itn, context);
+            paymentPage.fillPaymentPage(itn, createAccount, true);
+            confirmationPage.verifyConf(itn);
+        } catch (Exception e) {
+            System.out.println("%%%%%% caught error: " + e.getMessage());
+            e.printStackTrace();
+            return manifestId;
+        }
+        return manifestId;
+    }
+
+    public Boolean signInAndVerifyAccount(Itinerary itn) {
+        String logoutUrl = URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()) + "user/logout";
+
+        DriverBase.getDriver().get(logoutUrl);
+
+        landingPage.signIn(itn.getEmail());
+        return tripsPage.checkMyTrips(itn.getItn());
+    }
+
+    public Boolean processOnlineCheckinAndGetBoardingPass(Itinerary itn) {
+        DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+        loginPage.doCheckin(itn);
+        bagAndBoardingPage.doBagandBoardingNoUpsell();
+        checkedSeatPage.acceptDefaultSeat();
+        return getBoardingPassPage.boardingPassPrinted(itn);
+    }
+
+
+    public Boolean processOnlineCheckinWithUpsellAndGetBoardingPass(Itinerary itn) {
+        DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+        loginPage.doCheckin(itn);
+        bagAndBoardingPage.doBagandBoarding();
+        checkedSeatPage.selectUpgradeSeat();
+        checkinPaymentPage.fillCheckinPaymentPage(itn);
+        return getBoardingPassPage.boardingPassPrinted(itn);
+    }
+}
+

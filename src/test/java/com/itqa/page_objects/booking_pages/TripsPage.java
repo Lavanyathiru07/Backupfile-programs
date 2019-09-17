@@ -1,0 +1,57 @@
+package com.itqa.page_objects.booking_pages;
+
+import framework.DriverBase;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class TripsPage {
+
+    private Logger logger = null;
+
+    private WebDriver driver = null;
+    JavascriptExecutor jse = null;
+
+    @FindBy(xpath = "//a[text()='Trips']")
+    private WebElement tripsTab;
+
+    @FindBy(xpath = "//a[contains(@href,'conf')]/span")
+    private List<WebElement> confirmationNumbers;
+
+    @FindBy(xpath = "//span[contains(text(),'My Trips')]")
+    private WebElement myTripTitle;
+
+    public TripsPage() {
+        this.driver = DriverBase.getDriver();
+        this.logger = Logger.getLogger(TripsPage.class);
+        jse = (JavascriptExecutor) driver;
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
+    }
+
+    public boolean checkMyTrips(String itn) {
+        logger.info("Trips clicked");
+
+        if (!System.getProperty("env").contains("prod")) {
+            for (WebElement confirmationNumber: confirmationNumbers) {
+                if (confirmationNumber.getText().equalsIgnoreCase(itn)) {
+                    logger.info("ITN Found in my trips");
+                    return true;
+                }
+            }
+        }
+        else {
+            myTripTitle.isDisplayed();
+            logger.info("Log-in Success");
+            return true;
+        }
+        return false;
+    }
+}
