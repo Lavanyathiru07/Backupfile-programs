@@ -3,7 +3,6 @@ package com.itqa.page_objects.booking_pages;
 import com.itqa.Utils.Screenshot;
 import com.itqa.page_objects.BasePage;
 import common.Common;
-import data.BatParams;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -94,12 +93,12 @@ public class FlightPage extends BasePage {
         clickContinue();
     }
 
-    public Map RCAselectFlight(BatParams params) {
+    /*public Map RCAselectFlight1(BatParams params) {
         Map flightInfo = new HashMap();
 
         flightInfo.put("flt", depFlightList.get(0).findElement(By.xpath("//span[contains(@class,'flight-number')]//a")).getAttribute("aria-controls").split("_")[0].split("-")[1]);
         flightInfo.put("depart", depFlightList.get(0).findElement(By.xpath("//span[contains(@class,'flight-departs')]//time")).getAttribute("dateTime"));
 
         return flightInfo;
-    }
+    }*/
 }

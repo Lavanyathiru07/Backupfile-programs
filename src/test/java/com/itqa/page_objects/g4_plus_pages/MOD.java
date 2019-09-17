@@ -1,6 +1,5 @@
 package com.itqa.page_objects.g4_plus_pages;
 
-import data.BatParams;
 import data.Itinerary;
 import framework.DriverBase;
 

@@ -2,7 +2,6 @@ package com.itqa.page_objects.checkin_pages;
 
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.Screenshot;
-import data.BatParams;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;

@@ -29,7 +29,6 @@ public class DriverBase {
                 DriverFactory webDriverThread = new DriverFactory();
                 webDriverThreadPool.add(webDriverThread);
                 
-                System.out.println(webDriverThreadPool.size());
                 return webDriverThread;
             }
         };
@@ -41,8 +40,7 @@ public class DriverBase {
 
     @BeforeMethod(alwaysRun = true)
     public static void setTestName(Method method) {
-    	System.out.println("12354657687");
-        driverThread.get().setTestName(method.getName());
+    	driverThread.get().setTestName(method.getName());
     }
 
     @AfterMethod(alwaysRun = true)

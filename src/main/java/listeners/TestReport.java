@@ -110,8 +110,7 @@ public class TestReport implements IReporter{
     @Override
     public void generateReport(List<XmlSuite> xmlTestSuiteList, List<ISuite> testSuite,
                                String outputDirectory) {
-    	System.out.println("1111111111");
-        writeReportHeader();
+    	writeReportHeader();
         writePassedAndFailedTestReport();
         writeReportFooter();
     }

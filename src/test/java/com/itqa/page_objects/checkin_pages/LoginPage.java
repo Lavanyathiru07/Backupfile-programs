@@ -1,10 +1,7 @@
 package com.itqa.page_objects.checkin_pages;
 
-import com.itqa.Utils.Environment;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.Screenshot;
-import com.itqa.Utils.URLS;
-import data.BatParams;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -56,7 +53,7 @@ public class LoginPage {
     }
 
     public void fillPaxInfo(String fname, String lname, String itn) {
-//        driver.get(URLS.WWW.getUrl(Environment.getEnv(), Environment.getCurrentSilo()));
+        //driver.get(URLS.WWW.getUrl(Environment.getEnv(), Environment.getCurrentSilo()));
         checkinTab.click();
         firstNameField.sendKeys(fname);
         lastNameField.sendKeys(lname);
