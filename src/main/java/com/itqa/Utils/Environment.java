@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import static java.util.Arrays.stream;
 
 public class Environment {
-    public static String envUnderTest = System.getProperty("env");
+    public static String envUnderTest;
     public static Boolean shouldCreateJiraOnFailure = false;
     public static Boolean shouldUpdateConfluenceStatusOnFailure = false;
     private static Integer silo = -1;
@@ -20,6 +20,7 @@ public class Environment {
 
     public static String getEnv() {
         envUnderTest = System.getProperty("env");
+        System.out.println("Master Check "+envUnderTest);
         if (envUnderTest == null) {
             System.out.println("******* " + envUnderTest);
             System.setProperty("env", "stg");
