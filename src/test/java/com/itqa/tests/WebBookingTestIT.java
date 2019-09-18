@@ -130,10 +130,14 @@ public class WebBookingTestIT extends DriverBase {
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
-			updateTextContext(itn, context);
-
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 			step("Logged in and verified account");
+			if((env.contains("stg")||env.contains("qa1")||env.contains("qa2"))&&(silo==1)) {
+            	Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
+            }
+
+			updateTextContext(itn, context);
+
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}

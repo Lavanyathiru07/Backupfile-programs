@@ -393,7 +393,7 @@ public class PaymentPage extends BasePage {
 			fillCardInfo(itn.getCardNo());
 			
 			if (createAccount) {
-				itn.setEmail("Test" + System.currentTimeMillis() + "@hotmail.com");
+				itn.setEmail("tsqa.automation+" + System.currentTimeMillis() + "@tridentsqa.com");
 				if (itn.getScenario().toLowerCase().contains("account")) {
 					createProfile(itn.getEmail());
 				} else { fillEmail(itn.getEmail()); }

@@ -1,13 +1,20 @@
 package com.itqa.page_objects.customer_flows;
 
 import com.itqa.Utils.Environment;
+import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.ManifestId;
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.BasePage;
 import com.itqa.page_objects.booking_pages.*;
 import com.itqa.page_objects.checkin_pages.*;
+import com.itqa.page_objects.g4_plus_pages.G4MenuPage;
+import com.itqa.page_objects.g4_plus_pages.MOD;
+
 import data.Itinerary;
 import framework.DriverBase;
+
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
@@ -31,6 +38,8 @@ public class BookingFlow extends BasePage {
     private CheckedSeatPage checkedSeatPage;
     private CheckinPaymentPage checkinPaymentPage;
     private GetBoardingPassPage getBoardingPassPage;
+    private MOD mod;
+    private G4MenuPage g4MenuPage;
 
 
     public BookingFlow() {
@@ -51,6 +60,8 @@ public class BookingFlow extends BasePage {
         checkedSeatPage = new CheckedSeatPage();
         checkinPaymentPage = new CheckinPaymentPage();
         getBoardingPassPage = new GetBoardingPassPage();
+        mod = new MOD();
+        g4MenuPage = new G4MenuPage();
     }
 
 
@@ -120,6 +131,20 @@ public class BookingFlow extends BasePage {
         checkedSeatPage.selectUpgradeSeat();
         checkinPaymentPage.fillCheckinPaymentPage(itn);
         return getBoardingPassPage.boardingPassPrinted(itn);
+    }
+    
+    public Boolean createVoucher(Itinerary itn) {
+    	
+    	if(Environment.getEnv().contains("PROD")) {
+    		
+    	}else {
+    		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+        	DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+    	}
+    	 Set<String > curTab = DriverBase.getDriver().getWindowHandles();
+         g4MenuPage.selectMOD();
+         GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+    	return mod.createVoucher(itn);
     }
 }
 

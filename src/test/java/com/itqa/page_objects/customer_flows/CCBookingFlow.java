@@ -81,17 +81,5 @@ public class CCBookingFlow extends BasePage {
     }
     
     
-    public Boolean createVoucher(Itinerary itn) {
-    	
-    	if(Environment.getEnv().contains("PROD")) {
-    		
-    	}else {
-    		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-        	DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-    	}
-    	 Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-         g4MenuPage.selectMOD();
-         GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-    	return mod.createVoucher(itn);
-    }
+    
 }

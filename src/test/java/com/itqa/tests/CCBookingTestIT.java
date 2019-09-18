@@ -60,9 +60,7 @@ public class CCBookingTestIT extends DriverBase {
         	setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
         	CCBookingFlow booking = generateBooking(itn, silo, context);
             Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-            if((env.contains("stg")||env.contains("qa1")||env.contains("qa2"))&&(silo==2)) {
-            	Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
-            }
+            
             updateTextContext(itn, context);
         }else {
         	throw new SkipException("Skipping Test Case as runmode set to NO");

@@ -12,9 +12,11 @@
         </groups>
         <classes>
             <class name="com.itqa.tests.WebBookingTestIT"/>
+            <class name="com.itqa.tests.CCBookingTestIT"/>
+            <class name="com.itqa.tests.TABookingTestIT"/>
         </classes>
     </test>
-    <test name="CC Booking">
+   <!--  <test name="CC Booking">
         <groups>
             <define name="bat">
                 <include name="bat"  />
@@ -39,7 +41,7 @@
         <classes>
             <class name="com.itqa.tests.TABookingTestIT"/>
         </classes>
-    </test>
+    </test> -->
 </suite>
 
 
