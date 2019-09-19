@@ -126,9 +126,9 @@
 					</suiteXmlFiles>
 					<trimStackTrace>false</trimStackTrace>
 
-					<argLine>
+					<!-- <argLine>
 						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-					</argLine>
+					</argLine> -->
 				</configuration>
 			</plugin>
 			<!-- <plugin>
