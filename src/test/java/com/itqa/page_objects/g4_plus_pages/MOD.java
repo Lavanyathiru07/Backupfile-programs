@@ -378,15 +378,16 @@ public class MOD {
     }
 
     public boolean modUpsell(Itinerary Itn) {
+    	
+    	Set<String > curTab = DriverBase.getDriver().getWindowHandles();
         
         g4MenuPage.selectMOD();
-        Set<String > curTab = driver.getWindowHandles();
-        GeneralUtils.switchNextTab(driver, curTab);
+        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
         upsell(Itn);
         
         try {
-        	 new WebDriverWait(driver, 60).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class,'flight-panel-target')]")));
+        	 new WebDriverWait(DriverBase.getDriver(), 60).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class,'flight-panel-target')]")));
         	 return true;
         } catch (Exception e) {
             System.out.println("Error getting while upsell bags & Seats");
