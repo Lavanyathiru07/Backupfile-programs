@@ -27,7 +27,7 @@ public class ItineraryBuilder {
     Boolean seat = false;
     Boolean seatReturn = false;
 
-    Integer carryOnBag = 0;
+    Integer carryOnBag = 1;
     Integer checkedBag = 0;
     String priority = "false";
 

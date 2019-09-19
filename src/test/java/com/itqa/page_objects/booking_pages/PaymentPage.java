@@ -360,7 +360,7 @@ public class PaymentPage extends BasePage {
 		totalBookingFare = PaymentPage.ConvertPrice(amount);
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
-		/*int arr[] = { 201,204,249,253,257,301,302,303,304,401,402,501,502,503,508,
+		int arr[] = { 201,204,249,253,257,301,302,303,304,401,402,501,502,503,508,
 				509,510,521,522,530,531,570,571,572,591,592,594,595,596,602,603,605,
 				606,607,754,802,806,811,813,825,833,902,903,904,999,2351,2370 }; 
 		int toCheckValue =(int) ConvertPrice(amount) ;
@@ -383,9 +383,9 @@ public class PaymentPage extends BasePage {
 					driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
 				clickContinue();
 			}
-			paymentPage.fillPaymentPage(itn, false, false);
+			paymentPage.fillPaymentPage(itn, createAccount, false);
 		}
-		else {*/
+		else {
 			if(!(driver.getCurrentUrl().contains("cc-") ||driver.getCurrentUrl().contains("cc.")|| 
 					driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
 				selectTripFlex(itn.getTripFlex(), itn.getScenario());
@@ -399,7 +399,7 @@ public class PaymentPage extends BasePage {
 				} else { fillEmail(itn.getEmail()); }
 			} else { fillEmail(itn.getEmail()); }
 			termAcceptField.click();
-			clickPurchase(); //}
+			clickPurchase(); }
 	} 
 
 	private boolean checkDeclineAmount(int[] arr, int toCheckValue) {
