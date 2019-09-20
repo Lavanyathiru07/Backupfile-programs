@@ -18,22 +18,6 @@ public class TABookingFlow extends BasePage {
 	private RemoteWebDriver driver;
 	private Logger logger = null;
 
-
-	private JavascriptExecutor jse = null;
-
-	@FindBy(id = "edit-name")
-	private WebElement idField;
-
-	@FindBy(id = "edit-pass")
-	private WebElement passField;
-
-	@FindBy(id = "edit-agent-name")
-	private WebElement agentNameField;
-
-	@FindBy(id = "edit-submit")
-	private WebElement signinButton;
-
-
 	private LandingPage landingPage;
 	private FlightPage flightPage;
 	private HotelPage hotelPage;
@@ -43,15 +27,11 @@ public class TABookingFlow extends BasePage {
 	private PaymentPage paymentPage;
 	private BagPage bagPage;
 	private ConfirmationPage confirmationPage;
-	;
 
 
 	public TABookingFlow() {
-		this.driver = DriverBase.getDriver();
 		this.logger = Logger.getLogger(TABookingFlow.class);
-		jse = (JavascriptExecutor) driver;
-		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
-
+		
 		landingPage = new LandingPage();
 		flightPage = new FlightPage();
 		hotelPage = new HotelPage();
@@ -68,7 +48,7 @@ public class TABookingFlow extends BasePage {
 		String manifestId = "";
 
 		try {
-			taSignin();
+			landingPage.taSignin();
 			landingPage.selectFlightsOnLandingPage(itn);
 			flightPage.selectFlightPage(itn);
 			manifestId = ManifestId.getManifestId(driver);
@@ -90,11 +70,5 @@ public class TABookingFlow extends BasePage {
 	}
 
 
-	public void taSignin() {
-		idField.sendKeys("99000070");
-		passField.sendKeys("allegiant");
-		agentNameField.sendKeys("agent");
-		jse.executeScript("arguments[0].click();", signinButton);
-		logger.info("TA signed in");
-	}
+	
 }

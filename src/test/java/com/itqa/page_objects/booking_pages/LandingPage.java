@@ -91,6 +91,19 @@ public class LandingPage extends BasePage {
 
     @FindBy(xpath = "//span[contains(text(),'Close')]/..")
     private WebElement popUpCloseButton;
+    
+    
+    @FindBy(id = "edit-name")
+	private WebElement idField;
+
+	@FindBy(id = "edit-pass")
+	private WebElement passField;
+
+	@FindBy(id = "edit-agent-name")
+	private WebElement agentNameField;
+
+	@FindBy(id = "edit-submit")
+	private WebElement taSigninButton;
 
     public LandingPage() {
         this.driver = DriverBase.getDriver();
@@ -318,24 +331,16 @@ public class LandingPage extends BasePage {
         selectPaxNum(itn.getAdult(), itn.getChild());
         clickSearch();
     }
+    
+    public void taSignin() {
+		idField.sendKeys("99000070");
+		passField.sendKeys("allegiant");
+		agentNameField.sendKeys("agent");
+		jse.executeScript("arguments[0].click();", taSigninButton);
+		logger.info("TA signed in");
+	}
+    
+    
 
-//    public void selectLandingPage(BatParams params) {
-//        if (params.getScenario().contains("WWW")) {
-//            try {
-//                new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Close')]/..")));
-//                driver.findElement(By.xpath("//span[contains(text(),'Close')]/..")).click();
-//            } catch (Exception e) {}
-//        }
-//
-//        selectDepCity(params.getDepartureCity());
-//        selectDesCity(params.getDestinationCity());
-//        selectTripType(params.getRoundTrip());
-//        selectDepDate(params.getDepartureDateIndex());
-//        if (params.getRoundTrip()) {
-//            selectRetDate(params.getReturningDateIndex());
-//        }
-//        selectPaxNum(params.getAdult(), params.getChild());
-//
-//        clickSearch();
-//    }
+
 }
