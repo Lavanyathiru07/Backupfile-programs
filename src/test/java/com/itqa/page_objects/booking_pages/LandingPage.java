@@ -333,11 +333,19 @@ public class LandingPage extends BasePage {
     }
     
     public void taSignin() {
-		idField.sendKeys("99000070");
-		passField.sendKeys("allegiant");
-		agentNameField.sendKeys("agent");
-		jse.executeScript("arguments[0].click();", taSigninButton);
-		logger.info("TA signed in");
+    	
+    	try {
+            new WebDriverWait(DriverBase.getDriver(), 5).until(ExpectedConditions.elementToBeClickable(
+            		idField));
+            idField.sendKeys("99000070");
+    		passField.sendKeys("allegiant");
+    		agentNameField.sendKeys("agent");
+    		jse.executeScript("arguments[0].click();", taSigninButton);
+    		logger.info("TA signed in");
+    	}catch (TimeoutException e) {
+            logger.info("Could not loaded Ta login page");
+        }
+		
 	}
     
     
