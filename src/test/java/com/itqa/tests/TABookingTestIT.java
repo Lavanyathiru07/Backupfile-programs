@@ -56,7 +56,7 @@ public class TABookingTestIT extends DriverBase {
 	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		
 		
-		if((env.contains("stg")||env.contains("qa1")||env.contains("qa2"))&& (silo==1)) {
+		if(((env.contains("stg")||env.contains("qa1")||env.contains("qa2"))&& (silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
 			generateBooking(itn, silo, context);
