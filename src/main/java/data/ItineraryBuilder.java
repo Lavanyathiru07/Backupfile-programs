@@ -2,8 +2,8 @@ package data;
 
 public class ItineraryBuilder {
     String scenario = "";
-    String departureCity = "BLI";
-    String destinationCity = "LAS";
+    String departureCity = "CVG";
+    String destinationCity = "SFB";
     Boolean roundTrip = false;
     Integer departureDateIndex = 3;
     Integer returnDateIndex = 3;

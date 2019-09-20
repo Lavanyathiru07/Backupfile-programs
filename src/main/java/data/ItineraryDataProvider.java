@@ -101,8 +101,6 @@ public class ItineraryDataProvider {
             for (Integer silo: silos) {
                 Itinerary itnRoundTrip = new ItineraryBuilder()
                         .withScenario(method.getName())
-                        .withDepartureCity("CVG")
-                        .withDestinationCity("SFB")
                         .withRoundTrip(true)
                         .withHotel(true)
                         .withVehicle(true)
@@ -116,8 +114,6 @@ public class ItineraryDataProvider {
         	for (Integer silo: silos) {
                 Itinerary itnRoundTrip = new ItineraryBuilder()
                         .withScenario(method.getName())
-                        .withDepartureCity("CVG")
-                        .withDestinationCity("SFB")
                         .withHotel(true)
                         .withVehicle(true)
                         .withEmail("tsqa.automation@tridentsqa.com")
