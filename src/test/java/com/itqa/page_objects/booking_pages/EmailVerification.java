@@ -55,7 +55,7 @@ public class EmailVerification extends BasePage {
 		this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(FlightPage.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
         
 
 	}
