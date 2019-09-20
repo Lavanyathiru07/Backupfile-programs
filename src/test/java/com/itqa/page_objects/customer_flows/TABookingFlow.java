@@ -50,7 +50,7 @@ public class TABookingFlow extends BasePage {
 		this.driver = DriverBase.getDriver();
 		this.logger = Logger.getLogger(TABookingFlow.class);
 		jse = (JavascriptExecutor) driver;
-		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
 
 		landingPage = new LandingPage();
 		flightPage = new FlightPage();
