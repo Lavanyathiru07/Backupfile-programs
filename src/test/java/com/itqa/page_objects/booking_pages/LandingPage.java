@@ -336,7 +336,7 @@ public class LandingPage extends BasePage {
     	
     	try {
             new WebDriverWait(DriverBase.getDriver(), 5).until(ExpectedConditions.elementToBeClickable(
-            		idField));
+            		taSigninButton));
             idField.sendKeys("99000070");
     		passField.sendKeys("allegiant");
     		agentNameField.sendKeys("agent");
