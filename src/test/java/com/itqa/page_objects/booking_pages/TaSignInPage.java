@@ -1,0 +1,60 @@
+package com.itqa.page_objects.booking_pages;
+
+import com.itqa.page_objects.BasePage;
+import framework.DriverBase;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class TaSignInPage extends BasePage {
+
+    private Logger logger = null;
+
+    private WebDriver driver = null;
+    private JavascriptExecutor jse = null;
+
+    @FindBy(id = "edit-name")
+	private WebElement idField;
+
+	@FindBy(id = "edit-pass")
+	private WebElement passField;
+
+	@FindBy(id = "edit-agent-name")
+	private WebElement agentNameField;
+
+	@FindBy(id = "edit-submit")
+	private WebElement taSigninButton;
+
+    public TaSignInPage() {
+        this.driver = DriverBase.getDriver();
+        this.logger = Logger.getLogger(TaSignInPage.class);
+        jse = (JavascriptExecutor) this.driver;
+        PageFactory.initElements(new AjaxElementLocatorFactory(this.driver, 10), this);
+    }
+
+   
+    
+    public void taSignin() {
+    	
+    	try {
+            new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(
+            		taSigninButton));
+            idField.sendKeys("99000070");
+    		passField.sendKeys("allegiant");
+    		agentNameField.sendKeys("agent");
+    		jse.executeScript("arguments[0].click();", taSigninButton);
+    		logger.info("TA signed in");
+    	}catch (TimeoutException e) {
+            logger.info("Could not loaded Ta login page");
+        }
+		
+	}
+    
+    
+
+
+}

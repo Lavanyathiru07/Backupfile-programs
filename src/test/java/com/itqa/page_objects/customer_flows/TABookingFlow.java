@@ -18,6 +18,7 @@ public class TABookingFlow extends BasePage {
 	private RemoteWebDriver driver;
 	private Logger logger = null;
 
+	private TaSignInPage taSignInPage;
 	private LandingPage landingPage;
 	private FlightPage flightPage;
 	private HotelPage hotelPage;
@@ -32,6 +33,7 @@ public class TABookingFlow extends BasePage {
 	public TABookingFlow() {
 		this.logger = Logger.getLogger(TABookingFlow.class);
 		
+		taSignInPage = new TaSignInPage();
 		landingPage = new LandingPage();
 		flightPage = new FlightPage();
 		hotelPage = new HotelPage();
@@ -48,7 +50,7 @@ public class TABookingFlow extends BasePage {
 		String manifestId = "";
 
 		try {
-			landingPage.taSignin();
+			taSignInPage.taSignin();
 			landingPage.selectFlightsOnLandingPage(itn);
 			flightPage.selectFlightPage(itn);
 			manifestId = ManifestId.getManifestId(driver);
