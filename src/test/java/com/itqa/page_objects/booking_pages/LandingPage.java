@@ -98,7 +98,7 @@ public class LandingPage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(LandingPage.class);
         jse = (JavascriptExecutor) this.driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(this.driver, 15), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(this.driver, 10), this);
     }
 
     public void selectDepCity(String from) {
@@ -306,7 +306,7 @@ public class LandingPage extends BasePage {
 
     public void selectFlightsOnLandingPage(Itinerary itn) {
         try {
-            new WebDriverWait(DriverBase.getDriver(), 5).until(ExpectedConditions.elementToBeClickable(
+            new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(
                     popUpCloseButton));
             popUpCloseButton.click();
         } catch (TimeoutException e) {
