@@ -29,7 +29,7 @@ import com.itqa.page_objects.g4_plus_pages.G4MenuPage;
 
 import data.BatParams;
 
-import com.itqa.page_objects.g4_plus_pages.CL;
+//import com.itqa.page_objects.g4_plus_pages.CL;
 import com.itqa.page_objects.g4_plus_pages.STS;
 import com.itqa.page_objects.g4_plus_pages.SVT;
 import com.itqa.page_objects.g4_plus_pages.ATL;
@@ -67,7 +67,7 @@ public class G4PlusFlow extends BasePage{
 	private AccountsPayableMaintenance AccountsPayableMaintenance;
 	private FlightFlow FlightFlow;
 	private KayakConsole KayakConsole;
-	private CL CL;
+	//private CL CL;
 	private STS STS;
 	private ESP ESP;
 	private SVT SVT;
@@ -97,7 +97,7 @@ public class G4PlusFlow extends BasePage{
 		AccountsPayableMaintenance = new AccountsPayableMaintenance();
 		FlightFlow = new FlightFlow();
 		KayakConsole = new KayakConsole();
-		CL = new CL();
+		//CL = new CL();
 		STS = new STS();
 		ESP = new ESP();
 		SVT = new SVT();
@@ -158,7 +158,7 @@ public class G4PlusFlow extends BasePage{
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectCL();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		CL.accessCL();
+	//	CL.accessCL();
 	}
     
 	
