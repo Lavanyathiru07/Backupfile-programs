@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="BAT 2.0 Automation" verbose="1" parallel="methods"
+	thread-count="25" preserve-order="false"
+	data-provider-thread-count="3">
+	<test name="Non Booking">
+		<classes>
+			<class name="com.itqa.tests.NonBookingTestIT" />
+		</classes>
+	</test>
+</suite>

@@ -20,7 +20,8 @@ public class DriverBase {
 
     private static List<DriverFactory> webDriverThreadPool = Collections.synchronizedList(new ArrayList<DriverFactory>());
     private static ThreadLocal<DriverFactory> driverThread;
-
+    protected static boolean skip = false;
+    
     @BeforeSuite(alwaysRun = true)
     public static void instantiateDriverObject() {
         driverThread = new ThreadLocal<DriverFactory>() {
