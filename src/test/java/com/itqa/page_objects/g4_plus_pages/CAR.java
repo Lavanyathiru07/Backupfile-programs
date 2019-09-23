@@ -1,0 +1,78 @@
+package com.itqa.page_objects.g4_plus_pages;
+
+import org.apache.log4j.Logger;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.testng.SkipException;
+
+import framework.DriverBase;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class CAR extends DriverBase{
+
+    private Logger logger = null;
+
+    private WebDriver driver = null;
+    private JavascriptExecutor jse = null;
+
+    @FindBy(id = "pickupDateTime")
+    private WebElement pickupDateField;
+
+    @FindBy(id = "returnDateTime")
+    private WebElement returnDateField;
+
+    @FindBy(xpath = "//input[contains(@placeholder,'Select book location')]")
+    private WebElement bookLocField;
+
+    @FindBy(xpath = "//input[contains(@placeholder,'Select pick-up location')]")
+    private WebElement pickupLocField;
+
+    @FindBy(xpath = "//button[contains(text(),'Check Rate')]")
+    private WebElement checkRateButton;
+
+    @FindBy(css = "tr[ng-init='parentIndex = $index; rates = ratesByCode[code]']")
+    private WebElement resultRow;
+
+    public CAR() {
+    	this.driver = DriverBase.getDriver();
+    	this.logger = Logger.getLogger(CAR.class);
+    	jse = (JavascriptExecutor) driver;
+    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+    }
+
+    public void accessCAR() {
+    	try{
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        String selectDate = format.format(calendar.getTime());
+        pickupDateField.sendKeys("1");
+        pickupDateField.clear();
+        pickupDateField.sendKeys(selectDate + " 12:00PM");
+
+        calendar.add(Calendar.DATE, 2);
+        selectDate = format.format(calendar.getTime());
+        returnDateField.sendKeys("1");
+        returnDateField.clear();
+        returnDateField.sendKeys(selectDate + " 12:00PM");
+
+        bookLocField.sendKeys("LAS" + Keys.ENTER);
+        pickupLocField.sendKeys("LAS" + Keys.ENTER);
+        jse.executeScript("arguments[0].click();", checkRateButton);
+
+        resultRow.click();
+        logger.info("CAR Menu Open");
+    	}catch(Exception e){
+    		skip = true;
+    		DriverBase.getDriver().quit();
+			throw new SkipException("Scenario fails so execution stoped");
+    	}
+    }
+}

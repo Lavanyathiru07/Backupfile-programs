@@ -24,6 +24,9 @@ public class LoginPage {
     private WebDriver driver = null;
     private JavascriptExecutor jse = null;
 
+    @FindBy(id = "userName")
+    private WebElement usernameField;
+    
     @FindBy(css = "a[href='/online-checkin']")
     private WebElement checkinTab;
 
@@ -112,5 +115,18 @@ public class LoginPage {
         }
         clickCheckin();
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+    }
+    
+    public void openSwap() {
+        try {
+            usernameField.click();
+            logger.info("Swap Page Open");
+        }
+        catch (Exception e) {
+            throw new Error("Swap Page NOT Open");
+        }
+        finally {
+            GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/swap.png");
+        }
     }
 }
