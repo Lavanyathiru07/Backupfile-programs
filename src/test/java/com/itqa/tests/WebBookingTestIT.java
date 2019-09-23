@@ -65,7 +65,9 @@ public class WebBookingTestIT extends DriverBase {
 
 			updateTextContext(itn, context);
 		}else {
+			//DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
+			
 		}
 		
 	}
@@ -112,6 +114,7 @@ public class WebBookingTestIT extends DriverBase {
 					"Could not print boarding pass");
 			step("Upgraded bags and priority during OLCI.  Printed boarding pass");
 		}else {
+			//DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
@@ -139,6 +142,7 @@ public class WebBookingTestIT extends DriverBase {
 			updateTextContext(itn, context);
 
 		}else {
+			//DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 		

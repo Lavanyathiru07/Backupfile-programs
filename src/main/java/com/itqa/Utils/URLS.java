@@ -10,7 +10,7 @@ public enum URLS {
     RSFLTFEESEARCH ("https://ais.xxx.allegiantair.com/c/public/index.php/mx/rsfltfee/search"),
 	JIRA("https://tech.allegiantair.com"),
 	CONFLUENCE("https://confluence.allegiantair.com"),
-	G4PLUSTOKEN("https://g4plus-res.xxx.allegiantair.com/test/token?aisId=122	88"),
+	G4PLUSTOKEN("https://g4plus-res.xxx.allegiantair.com/test/token?aisId=12288"),
     CC("https://cc-xxx.allegiantair.com/"),
 	TA("https://ta-xxx.allegiantair.com/");
 //    INTERNATIONAL("int.nexus.intl");
@@ -27,7 +27,10 @@ public enum URLS {
         if (env.contains("intl")) {
             url = url.replace("allegiantair.com", NEXUSDOMAIN);
             return url.replace("xxx", "www." + INTLPREFIX);
-        } 
+        } else if(env.contains("VipProd")) {
+        	return url.replace("xxx", "www." + URLS.WWW);
+        	
+        }
         	
         if (silo == 0) {
         	if(env.contains("trn")) {
@@ -38,9 +41,20 @@ public enum URLS {
         		}
         		
         	}
+        	if(env.contains("prod")) {
+        		return url.replace("xxx.", "" );
+        		
+        	}
             return url.replace("xxx", env);
-        } else {
-            return url.replace("xxx", "silo" + silo + "." + env);
+        }else {
+        	if(env.contains("prod")) {
+        		return url.replace("xxx", "sw-prod-silo" + silo );
+        		
+        	}else {
+        		return url.replace("xxx", "silo" + silo + "." + env);
+        	}
+        
+            
         }
     }
 
