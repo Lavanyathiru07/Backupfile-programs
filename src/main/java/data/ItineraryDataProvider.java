@@ -129,4 +129,18 @@ public class ItineraryDataProvider {
 
     }
 
+    
+    @DataProvider(name = "NonBooking Use Cases", parallel = true)
+    public Iterator<Object[]> itineraryDataBuilderforNonBooking(ITestContext context, Method method) {
+    	ArrayList<Object[]> data = new ArrayList<>();
+        List<Integer> silos = new Environment().getSiloList();
+        for (Integer silo: silos) {
+            Itinerary itnRoundTrip = new ItineraryBuilder()
+                      .build();
+            data.add(new Object[]{silo, itnRoundTrip});
+        }
+        return data.iterator();
+    }
+    
+    
 }
