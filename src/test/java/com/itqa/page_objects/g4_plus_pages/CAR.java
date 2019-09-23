@@ -71,8 +71,7 @@ public class CAR extends DriverBase{
         logger.info("CAR Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		throw new SkipException("Scenario fails so execution stoped");
     	}
     }
 }

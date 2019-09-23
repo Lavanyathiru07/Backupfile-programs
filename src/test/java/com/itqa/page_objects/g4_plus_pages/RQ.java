@@ -9,12 +9,13 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.SkipException;
+import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
 import java.util.List;
 
-public class RQ extends DriverBase{
+public class RQ extends BasePage{
 
     private Logger logger = null;
 

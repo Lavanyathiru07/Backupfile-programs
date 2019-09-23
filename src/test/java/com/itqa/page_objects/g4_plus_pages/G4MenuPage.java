@@ -58,12 +58,12 @@ public class G4MenuPage extends DriverBase {
 	private WebElement stnsApp;
 
 	/*-------------------------------*/
-
+/*
 	@FindBy(xpath = "//li[contains(text(),'Signed in as')]/following-sibling::li/a")
 	private WebElement userDropDown;
 
 	@FindBy(css = "a[href='/login/logout']")
-	private WebElement logoutButton;
+	private WebElement logoutButton;*/
 
 	public G4MenuPage() {
 		this.driver = DriverBase.getDriver();
@@ -77,7 +77,6 @@ public class G4MenuPage extends DriverBase {
 			modApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -87,7 +86,6 @@ public class G4MenuPage extends DriverBase {
 			aisApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -97,7 +95,6 @@ public class G4MenuPage extends DriverBase {
 			stsApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -107,7 +104,6 @@ public class G4MenuPage extends DriverBase {
 			espApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -117,7 +113,6 @@ public class G4MenuPage extends DriverBase {
 			svtApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -127,7 +122,6 @@ public class G4MenuPage extends DriverBase {
 			carApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -137,7 +131,6 @@ public class G4MenuPage extends DriverBase {
 			fmApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -147,7 +140,6 @@ public class G4MenuPage extends DriverBase {
 			rqApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -157,7 +149,6 @@ public class G4MenuPage extends DriverBase {
 			hotApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 
@@ -168,7 +159,6 @@ public class G4MenuPage extends DriverBase {
 			atlApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -178,7 +168,6 @@ public class G4MenuPage extends DriverBase {
 			clApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -188,7 +177,6 @@ public class G4MenuPage extends DriverBase {
 			ofoApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -198,7 +186,6 @@ public class G4MenuPage extends DriverBase {
 			stnsApp.click();
 		} catch (Exception e) {
 			skip = true;
-			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}

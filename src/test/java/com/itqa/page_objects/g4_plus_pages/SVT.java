@@ -59,8 +59,7 @@ public class SVT extends DriverBase{
         logger.info("SVT Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		throw new SkipException("Scenario fails so execution stoped");
     	}
     }
 }

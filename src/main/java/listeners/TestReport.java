@@ -106,12 +106,27 @@ public class TestReport implements IReporter{
             System.out.println("There were no failed tests or passed tests files found. We are OK with that");
         }
     }
+    
+    public void nonBookingWritePassedAndFailedTestReport() {
+        try {
+            GeneralUtils.writeToFile("Result.html", getStringFromFile(System.getProperty("user.dir") +
+                    "/nonBookingFailedTests.html"));
+            GeneralUtils.writeToFile("Result.html", getStringFromFile(System.getProperty("user.dir") +
+                    "/nonBookingPassedTests.html"));
+            cleanUpTestReports("nonBookingFailedTests.html");
+            cleanUpTestReports("nonBookingPassedTests.html");
+        }
+        catch (Exception e) {
+            System.out.println("There were no failed tests or passed tests files found. We are OK with that");
+        }
+    }
 
     @Override
     public void generateReport(List<XmlSuite> xmlTestSuiteList, List<ISuite> testSuite,
                                String outputDirectory) {
     	System.out.println("started to generate report");
     	writeReportHeader();
+    	nonBookingWritePassedAndFailedTestReport();
         writePassedAndFailedTestReport();
         writeReportFooter();
         System.out.println("Generated report");

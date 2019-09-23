@@ -35,7 +35,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
                 " on thread " + Thread.currentThread().getId());
 
 
-        GeneralUtils.writeToFile("passedTests.html", "<tr><td>" +
+        GeneralUtils.writeToFile("nonBookingPassedTests.html", "<tr><td>" +
                 testResultContext.testName + "</td><td>" + testResultContext.manifestId +
                 "</td>" +testResultContext.description +
                 "<td align=\"center\"><font color='green'>PASSED</font></td>" + "<td></td>"+"<td></td>"+
@@ -63,7 +63,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
                 " on thread " + Thread.currentThread().getId());
         System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 
-        GeneralUtils.writeToFile("failedTests.html", "<tr><td>" +
+        GeneralUtils.writeToFile("nonBookingFailedTests.html", "<tr><td>" +
                 testResultContext.testName + "</td><td>" + testResultContext.manifestId +
                 "</td>" + "<td align=\"center\"><font color='red'>FAILED</font></td>"
                 + "<td>" + testResultContext.description + "</td>" +

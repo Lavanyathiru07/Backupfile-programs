@@ -58,7 +58,6 @@ public class FM extends DriverBase{
         logger.info("BAG Menu Open");
     }catch(Exception e){
 		skip = true;
-		DriverBase.getDriver().quit();
 		throw new SkipException("Scenario fails so execution stoped");
 	}
     }
@@ -83,7 +82,6 @@ public class FM extends DriverBase{
         logger.info("PB2 Menu Open");
     }catch(Exception e){
 		skip = true;
-		DriverBase.getDriver().quit();
 		throw new SkipException("Scenario fails so execution stoped");
 	}
     }
@@ -108,8 +106,7 @@ public class FM extends DriverBase{
         logger.info("TF2 Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		throw new SkipException("Scenario fails so execution stoped");
     	}
     }
 }

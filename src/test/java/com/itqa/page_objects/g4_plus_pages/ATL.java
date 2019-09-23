@@ -2,6 +2,8 @@ package com.itqa.page_objects.g4_plus_pages;
 
 import com.itqa.Utils.GeneralUtils;
 
+import com.itqa.page_objects.BasePage;
+
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
@@ -15,7 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
-public class ATL extends DriverBase{
+public class ATL extends BasePage{
 
     private Logger logger = null;
 
@@ -56,29 +58,28 @@ public class ATL extends DriverBase{
     public void accessATL() {
     	try{
         rulesTab.click();
-        new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(hotelOverPercentField));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(hotelOverPercentField));
         hotelOverPercentField.click();
-        GeneralUtils.takeScreenshot(DriverBase.getDriver(), System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/1ATL.png");
+        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/1ATL.png");
 
         reportsTab.click();
-        new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(typeField));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(typeField));
         typeField.click();
-        GeneralUtils.takeScreenshot(DriverBase.getDriver(), System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/2ATL.png");
+        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/2ATL.png");
 
         invoicesTab.click();
-        new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(invoiceDateField));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(invoiceDateField));
         invoiceDateField.click();
-        GeneralUtils.takeScreenshot(DriverBase.getDriver(), System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/3ATL.png");
+        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/3ATL.png");
 
         atlTab.click();
-        new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(glPostingRow));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(glPostingRow));
         glPostingRow.click();
 
         logger.info("ATL Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		throw new SkipException("Scenario fails so execution stoped");
     	}
     }
 }

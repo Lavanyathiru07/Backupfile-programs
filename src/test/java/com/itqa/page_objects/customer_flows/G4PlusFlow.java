@@ -4,17 +4,16 @@ package com.itqa.page_objects.customer_flows;
 import com.itqa.Utils.Environment;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.URLS;
-import com.itqa.page_objects.customer_flows.Reliability;
 import com.itqa.page_objects.g4_plus_pages.G4PlusLoginPage;
 import com.itqa.page_objects.g4_plus_pages.HOT;
 import com.itqa.page_objects.g4_plus_pages.MOD;
 import com.itqa.page_objects.g4_plus_pages.OFO;
 import com.itqa.page_objects.g4_plus_pages.RQ;
-import com.itqa.page_objects.g4_plus_pages.STNS;
 import com.itqa.page_objects.BasePage;
 import com.itqa.page_objects.aisPages.AccountsPayableMaintenance;
 import com.itqa.page_objects.aisPages.AircraftRecords;
 import com.itqa.page_objects.aisPages.AisMenuPage;
+import com.itqa.page_objects.aisPages.FlightFlow;
 import com.itqa.page_objects.aisPages.FlightFollowing;
 import com.itqa.page_objects.aisPages.FlightScheduleMaintenance;
 import com.itqa.page_objects.aisPages.InventoryMaintenance;
@@ -23,11 +22,9 @@ import com.itqa.page_objects.aisPages.LineMaintenance;
 import com.itqa.page_objects.aisPages.MaintenanceControl;
 import com.itqa.page_objects.aisPages.MaintenanceRecords;
 import com.itqa.page_objects.aisPages.PrintManifest;
+import com.itqa.page_objects.aisPages.Reliability;
 import com.itqa.page_objects.checkin_pages.LoginPage;
-import com.itqa.page_objects.customer_flows.FlightFlow;
 import com.itqa.page_objects.g4_plus_pages.G4MenuPage;
-
-import data.BatParams;
 
 //import com.itqa.page_objects.g4_plus_pages.CL;
 import com.itqa.page_objects.g4_plus_pages.STS;
@@ -78,7 +75,6 @@ public class G4PlusFlow extends BasePage{
 	private ATL ATL;
 	private OFO OFO;
 	private MOD MOD;
-	private STNS STNS;
 	
 	
 	public G4PlusFlow() {
@@ -107,7 +103,6 @@ public class G4PlusFlow extends BasePage{
 		HOT = new HOT();
 		ATL = new ATL();
 		OFO = new OFO();
-		STNS = new STNS();
 		
 	}
 
@@ -488,25 +483,7 @@ public class G4PlusFlow extends BasePage{
 	        MOD.accessMOD();
 	    }
 
-	    public void refundWholeAmount(BatParams params) {
-	    	g4PlusSignin();
-
-	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-	        g4MenuPage.selectMOD();
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        MOD.refundWholeAmount(params);
-	    }
-
-	    public void cancelWholeItn(BatParams params) {
-	    	g4PlusSignin();
-
-	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-	        g4MenuPage.selectMOD();
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        MOD.cancelWholeItn(params);
-	    }
+	   
 
 	    public void accessSwap() {
 	    	 if(!skip){
@@ -539,19 +516,7 @@ public class G4PlusFlow extends BasePage{
 	    }
 	    
 	    
-	    // put it on hold
-	    
-	    public void stationUncheckPaxs(BatParams params) {
-	    	g4PlusSignin();
-
-	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-	        g4MenuPage.selectSTNS();
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        STNS.unCheckPax(params);
-	    }
-
-	 
+	   
 	 
 	 
 }

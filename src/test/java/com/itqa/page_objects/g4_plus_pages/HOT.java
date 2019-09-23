@@ -78,40 +78,40 @@ public class HOT extends DriverBase{
                 }
             }
         }
-        new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(hotelProviderIdField));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(hotelProviderIdField));
         hotelProviderIdField.click();
-        GeneralUtils.takeScreenshot(DriverBase.getDriver(), System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/1HOT.png");
+        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/1HOT.png");
 
         fulfillmentTab.click();
-        new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(locationLabel));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(locationLabel));
         locationLabel.click();
-        GeneralUtils.takeScreenshot(DriverBase.getDriver(), System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/2HOT.png");
+        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/2HOT.png");
 
         revenueTab.click();
-        new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(locationLabel));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(locationLabel));
         locationLabel.click();
-        GeneralUtils.takeScreenshot(DriverBase.getDriver(), System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/3HOT.png");
+        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/3HOT.png");
 
         inventoryTab.click();
-        new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(airportLabel));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(airportLabel));
         airportLabel.click();
 
         dashboardTab.click();
-        new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(notifRow));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(notifRow));
         notifRow.click();
 
-        DriverBase.getDriver().manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         Boolean found = false;
         for (int loop=0; loop<30; loop++){
             try {
-            	DriverBase.getDriver().findElement(By.xpath("//tr[contains(@class,'ng-scope') and contains(@ng-repeat,'reportItems')]"));
+            	driver.findElement(By.xpath("//tr[contains(@class,'ng-scope') and contains(@ng-repeat,'reportItems')]"));
                 found = true;
                 break;
             }
             catch (Exception e) {}
 
             try {
-            	DriverBase.getDriver().findElement(By.xpath("//span[contains(text(),'There are currently no items with zero costs.')]"));
+            	driver.findElement(By.xpath("//span[contains(text(),'There are currently no items with zero costs.')]"));
                 found = true;
                 break;
             }
@@ -126,7 +126,6 @@ public class HOT extends DriverBase{
     
     }catch(Exception e){
 		skip = true;
-		DriverBase.getDriver().quit();
 		throw new SkipException("Scenario fails so execution stoped");
 	}
     }
