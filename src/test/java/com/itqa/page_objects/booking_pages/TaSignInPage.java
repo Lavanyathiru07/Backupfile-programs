@@ -41,7 +41,7 @@ public class TaSignInPage extends BasePage {
     public void taSignin() throws Exception {
     	
     	try {
-    		Thread.sleep(10000);
+    		Thread.sleep(15000);
             //new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(idField));
             idField.sendKeys("99000070");
     		passField.sendKeys("allegiant");
