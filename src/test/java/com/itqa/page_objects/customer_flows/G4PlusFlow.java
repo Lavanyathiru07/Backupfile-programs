@@ -53,7 +53,6 @@ public class G4PlusFlow extends BasePage{
 	private RemoteWebDriver driver;
 	private Logger logger = null;
 	private G4MenuPage g4MenuPage;
-	private CL CL;
 	private AisMenuPage AisMenuPage;
 	private MaintenanceRecords MaintenanceRecords;
 	private AircraftRecords AircraftRecords;
@@ -68,7 +67,7 @@ public class G4PlusFlow extends BasePage{
 	private AccountsPayableMaintenance AccountsPayableMaintenance;
 	private FlightFlow FlightFlow;
 	private KayakConsole KayakConsole;
-	//private G4AppCases G4AppCases;
+	private CL CL;
 	private STS STS;
 	private ESP ESP;
 	private SVT SVT;
@@ -86,13 +85,10 @@ public class G4PlusFlow extends BasePage{
 	
 	public G4PlusFlow() {
 		this.logger = Logger.getLogger(G4PlusFlow.class);
-		g4MenuPage = new G4MenuPage();
-		CL = new CL();
+		g4MenuPage = new G4MenuPage();		
 		AisMenuPage = new AisMenuPage();
 		MaintenanceRecords = new MaintenanceRecords();
-
-		AircraftRecords = new AircraftRecords();
-		
+		AircraftRecords = new AircraftRecords();		
 		LineMaintenance = new LineMaintenance();
 		MaintenanceControl = new MaintenanceControl();
 		Reliability = new Reliability();
@@ -103,6 +99,7 @@ public class G4PlusFlow extends BasePage{
 		AccountsPayableMaintenance = new AccountsPayableMaintenance();
 		FlightFlow = new FlightFlow();
 		KayakConsole = new KayakConsole();
+		CL = new CL();
 		STS = new STS();
 		ESP = new ESP();
 		SVT = new SVT();
@@ -112,7 +109,6 @@ public class G4PlusFlow extends BasePage{
 		HOT = new HOT();
 		ATL = new ATL();
 		OFO = new OFO();
-		//MOD = new MOD(DriverBase.getDriver(), this.logger);
 		STNS = new STNS();
 		
 	}
