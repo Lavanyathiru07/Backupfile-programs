@@ -81,8 +81,6 @@ public class G4PlusFlow extends BasePage{
 	private STNS STNS;
 	
 	
-	
-	
 	public G4PlusFlow() {
 		this.logger = Logger.getLogger(G4PlusFlow.class);
 		g4MenuPage = new G4MenuPage();		
