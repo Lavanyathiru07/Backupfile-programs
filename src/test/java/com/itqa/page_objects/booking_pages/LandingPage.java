@@ -312,6 +312,7 @@ public class LandingPage extends BasePage {
         } catch (TimeoutException e) {
             logger.info("Could not close the pop up, it probably was not displayed");
         }
+        System.out.println(driver.getCurrentUrl());
         System.out.println("Login succesful");
         selectDepCity(itn.getDepartureCity());
         selectDesCity(itn.getDestinationCity());
