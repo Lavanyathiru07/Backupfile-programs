@@ -38,18 +38,20 @@ public class TaSignInPage extends BasePage {
 
    
     
-    public void taSignin() {
+    public void taSignin() throws Exception {
     	
     	try {
-            new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(
-            		taSigninButton));
+    		Thread.sleep(15000);
+            //new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(idField));
             idField.sendKeys("99000070");
     		passField.sendKeys("allegiant");
     		agentNameField.sendKeys("agent");
     		jse.executeScript("arguments[0].click();", taSigninButton);
     		logger.info("TA signed in");
-    	}catch (TimeoutException e) {
+    	}catch (Exception e) {
             logger.info("Could not loaded Ta login page");
+            e.printStackTrace();
+            throw new Error(e);
         }
 		
 	}

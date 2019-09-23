@@ -306,7 +306,7 @@ public class LandingPage extends BasePage {
 
     public void selectFlightsOnLandingPage(Itinerary itn) {
         try {
-            new WebDriverWait(DriverBase.getDriver(), 5).until(ExpectedConditions.elementToBeClickable(
+            new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(
                     popUpCloseButton));
             popUpCloseButton.click();
         } catch (TimeoutException e) {
