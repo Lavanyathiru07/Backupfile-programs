@@ -64,6 +64,7 @@ public class TABookingTestIT extends DriverBase {
 
 			updateTextContext(itn, context);
 		}else {
+			//DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
@@ -84,6 +85,7 @@ public class TABookingTestIT extends DriverBase {
 
 			updateTextContext(itn, context);
 		}else {
+			//DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 		
@@ -97,6 +99,7 @@ public class TABookingTestIT extends DriverBase {
 		itn.setDescription(description);
 		driver.get(URLS.TA.getUrl(env, silo));
 		// Environment.setCurrentSilo(silo);
+		DriverBase.getDriver().manage().deleteAllCookies();
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);
