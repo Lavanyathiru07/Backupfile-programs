@@ -41,7 +41,7 @@ public class TaSignInPage extends BasePage {
     public void taSignin() {
     	
     	try {
-            new WebDriverWait(DriverBase.getDriver(), 10).until(ExpectedConditions.elementToBeClickable(
+            new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(
             		taSigninButton));
             idField.sendKeys("99000070");
     		passField.sendKeys("allegiant");
