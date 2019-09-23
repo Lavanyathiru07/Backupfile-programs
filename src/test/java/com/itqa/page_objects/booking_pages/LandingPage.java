@@ -93,18 +93,7 @@ public class LandingPage extends BasePage {
     private WebElement popUpCloseButton;
     
     
-    @FindBy(id = "edit-name")
-	private WebElement idField;
-
-	@FindBy(id = "edit-pass")
-	private WebElement passField;
-
-	@FindBy(id = "edit-agent-name")
-	private WebElement agentNameField;
-
-	@FindBy(id = "edit-submit")
-	private WebElement taSigninButton;
-
+   
     public LandingPage() {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(LandingPage.class);
@@ -115,6 +104,7 @@ public class LandingPage extends BasePage {
     public void selectDepCity(String from) {
         for (int loop=0; loop<5; loop++) {
             Boolean flag = false;
+            System.out.println("city name is "+from);
             try {
                 driver.findElement(By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(ABQ)')]"));
                 flag = true;
@@ -124,6 +114,7 @@ public class LandingPage extends BasePage {
                     jse.executeScript(JSFIRSTARG, depCityDropDown);
                 }
                 Thread.sleep(1000);
+                System.out.println("city name is "+from);
                 jse.executeScript(JSFIRSTARG, driver.findElement(By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(" + from + ")')]")));
 
                 if (depCityDropDown.getAttribute("value").contains("(" + from + ")")) {
@@ -321,6 +312,8 @@ public class LandingPage extends BasePage {
         } catch (TimeoutException e) {
             logger.info("Could not close the pop up, it probably was not displayed");
         }
+        System.out.println(driver.getCurrentUrl());
+        System.out.println("Login succesful");
         selectDepCity(itn.getDepartureCity());
         selectDesCity(itn.getDestinationCity());
         selectTripType(itn.getRoundTrip());
@@ -332,21 +325,6 @@ public class LandingPage extends BasePage {
         clickSearch();
     }
     
-    public void taSignin() {
-    	
-    	try {
-            new WebDriverWait(DriverBase.getDriver(), 5).until(ExpectedConditions.elementToBeClickable(
-            		taSigninButton));
-            idField.sendKeys("99000070");
-    		passField.sendKeys("allegiant");
-    		agentNameField.sendKeys("agent");
-    		jse.executeScript("arguments[0].click();", taSigninButton);
-    		logger.info("TA signed in");
-    	}catch (TimeoutException e) {
-            logger.info("Could not loaded Ta login page");
-        }
-		
-	}
     
     
 
