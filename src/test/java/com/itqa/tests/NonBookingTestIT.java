@@ -68,7 +68,7 @@ public class NonBookingTestIT extends DriverBase {
 		}
 		}
 	}
-/*
+
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "AIS: Search Decoupled Code For MX - Action Requests")
 	@Story("AIS: Search Decoupled Code For MX - Action Requests")
@@ -275,7 +275,7 @@ public class NonBookingTestIT extends DriverBase {
 	}
 	}
 	
-	*/
+	
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "G4+: Access ATL")
 	@Story("G4+: Access ATL")
@@ -289,7 +289,7 @@ public class NonBookingTestIT extends DriverBase {
 	}
 	
 	
-	/*
+	
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "G4+: Access OFO")
 	@Story("G4+: Access OFO")
@@ -356,7 +356,7 @@ public class NonBookingTestIT extends DriverBase {
 
 		return booking;
 	}
-*/
+
 	/**
      * Adds passed step with provided name in current test or step (or test fixture). Takes no effect
      * if no test run at the moment. Shortcut for {@link #step(String, Status)}.
