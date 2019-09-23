@@ -50,6 +50,8 @@ public class TaSignInPage extends BasePage {
     		logger.info("TA signed in");
     	}catch (TimeoutException e) {
             logger.info("Could not loaded Ta login page");
+            e.printStackTrace();
+            throw new Error(e);
         }
 		
 	}
