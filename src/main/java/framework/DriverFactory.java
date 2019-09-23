@@ -35,6 +35,7 @@ public class DriverFactory {
             log.error("No driver specified, defaulting to '" + driverType + "'...");
         }
         selectedDriverType = driverType;
+        getDriver().manage().window().maximize();
     }
 
     public RemoteWebDriver getDriver() {

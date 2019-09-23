@@ -22,14 +22,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import listeners.TestReport;
+import listeners.NonBookingTestReport;
 import listeners.TestResultContext;
 import listeners.RealTimeTestReport;
-
+import listeners.NonBookingRealTimeTestReport;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import static io.qameta.allure.Allure.step;
 
-@Listeners({TestReport.class, RealTimeTestReport.class}) 
+@Listeners({NonBookingTestReport.class, NonBookingRealTimeTestReport.class}) 
 public class NonBookingTestIT extends DriverBase {
 
 	private static Logger log = Logger.getLogger(NonBookingTestIT.class.getName());
