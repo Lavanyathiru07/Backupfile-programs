@@ -98,7 +98,7 @@ public class LandingPage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(LandingPage.class);
         jse = (JavascriptExecutor) this.driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(this.driver, 10), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(this.driver, 15), this);
     }
 
     public void selectDepCity(String from) {
