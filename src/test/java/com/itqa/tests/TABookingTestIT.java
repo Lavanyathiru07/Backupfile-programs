@@ -97,9 +97,8 @@ public class TABookingTestIT extends DriverBase {
 		Environment ev = new Environment();
 		ev.setCurrentSilo(silo);
 		itn.setDescription(description);
-		driver.get(URLS.TA.getUrl(env, silo));
+		DriverBase.getDriver().get(URLS.TA.getUrl(env, silo));
 		// Environment.setCurrentSilo(silo);
-		DriverBase.getDriver().manage().deleteAllCookies();
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);
