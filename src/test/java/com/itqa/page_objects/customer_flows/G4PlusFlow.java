@@ -492,7 +492,7 @@ public class G4PlusFlow extends BasePage{
 	            capabilities.setCapability("name", "Access Swap");
 	            capabilities.setCapability("idleTimeout", 60);
 	            capabilities.setCapability("tz", "America/Los_Angeles");
-	            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+	            //driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
 	            //driver = new ChromeDriver();
 	        }
 	        catch (Exception e) {

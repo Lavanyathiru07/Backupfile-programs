@@ -14,10 +14,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.Utils.GeneralUtils;
+import com.itqa.page_objects.BasePage;
+
 import java.util.List;
 import java.util.Set;
 
-public class MOD extends DriverBase{
+public class MOD extends BasePage{
 
     private Logger logger = null;
     private WebDriver driver = null;
@@ -212,8 +214,7 @@ public class MOD extends DriverBase{
         logger.info("MOD menu open");
     	}catch(Exception e){
     		skip = true;
-    		driver.quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		throw new SkipException("Scenario fails so execution stoped");
     	}
     }
 

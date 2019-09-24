@@ -36,10 +36,8 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 
 
         GeneralUtils.writeToFile("nonBookingPassedTests.html", "<tr><td>" +
-                testResultContext.testName + "</td><td>" + testResultContext.manifestId +
-                "</td>" +testResultContext.description +
-                "<td align=\"center\"><font color='green'>PASSED</font></td>" + "<td></td>"+"<td></td>"+
-                "</tr>");
+                testResultContext.testName + "</td><td align=\"center\"><font color='green'>PASSED</font></td><td></td>"
+                		+ "<td></td>" + "<td></td>"+"</tr>");
 
     }
 
@@ -63,13 +61,11 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
                 " on thread " + Thread.currentThread().getId());
         System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 
-        GeneralUtils.writeToFile("nonBookingFailedTests.html", "<tr><td>" +
-                testResultContext.testName + "</td><td>" + testResultContext.manifestId +
-                "</td>" + "<td align=\"center\"><font color='red'>FAILED</font></td>"
-                + "<td>" + testResultContext.description + "</td>" +
-                "<td align=\"center\"><a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo + ");\">show image</a>" +
+        GeneralUtils.writeToFile("nonBookingFailedTests.html", "<tr><td>" + 
+        		testResultContext.testName + "</td><td align=\"center\"><font color='red'>FAILED</font></td><td></td><td></td>"
+        		+"<td></td>" +"<td align=\"center\"><a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo + ");\">show image</a>" +
                 "<img id='screenshotId" + testResultContext.currentSilo + "' " +
-                "style='display:none' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>" +
+                "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>" +
                 "</td></tr>");
     }
 
