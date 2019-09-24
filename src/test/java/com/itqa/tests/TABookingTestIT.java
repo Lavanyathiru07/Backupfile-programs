@@ -88,9 +88,7 @@ public class TABookingTestIT extends DriverBase {
 			//DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		
-		
-
+	
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
