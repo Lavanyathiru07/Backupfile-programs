@@ -7,6 +7,8 @@ import com.itqa.Utils.Environment;
 
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.customer_flows.BookingFlow;
+
+import common.Retry;
 import data.*;
 import io.qameta.allure.Story;
 import listeners.TestResultContext;
@@ -120,6 +122,7 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, 
+			retryAnalyzer = Retry.class,
 			description = "Create Account during booking and Login", groups = {"bat" })
 	@Story("My account creation via booking path - Login with account created")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,

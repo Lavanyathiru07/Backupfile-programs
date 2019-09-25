@@ -366,24 +366,30 @@ public class PaymentPage extends BasePage {
 		int toCheckValue =(int) ConvertPrice(amount) ;
 
 		if (checkDeclineAmount(arr, toCheckValue)) {
-			wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
-			bagsTab.click();
-			String chbag = checkedBagList.getAttribute("value");
-			logger.info("Previously Selected check bags are " + chbag);
-			String checkedBag = "No";
+			try {
+				new WebDriverWait(driver, 2000).until(ExpectedConditions.visibilityOf(bagsTab));
+				bagsTab.click();
+				String chbag = checkedBagList.getAttribute("value");
+				logger.info("Previously Selected check bags are " + chbag);
+				String checkedBag = "No";
 
-			if (chbag.contains("1")) { checkedBag = "2"; } else if (chbag.contains("2")) { checkedBag = "3"; } 
-			else if (chbag.contains("3")) { checkedBag = "4"; } else if (chbag.contains("4")) { checkedBag = "1";
-			} else if (chbag.contains("0")) { checkedBag = "1"; }
+				if (chbag.contains("1")) { checkedBag = "2"; } else if (chbag.contains("2")) { checkedBag = "3"; } 
+				else if (chbag.contains("3")) { checkedBag = "4"; } else if (chbag.contains("4")) { checkedBag = "1";
+				} else if (chbag.contains("0")) { checkedBag = "1"; }
 
-			logger.info("Modified checked bags are " + checkedBag);
-			new Select(checkedBagList).selectByValue(checkedBag);
-			clickContinue();
-			if(driver.getCurrentUrl().contains("cc-") ||driver.getCurrentUrl().contains("cc.")|| 
-					driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
+				logger.info("Modified checked bags are " + checkedBag);
+				new Select(checkedBagList).selectByValue(checkedBag);
 				clickContinue();
+				if(driver.getCurrentUrl().contains("cc-") ||driver.getCurrentUrl().contains("cc.")|| 
+						driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
+					clickContinue();
+				}
+				paymentPage.fillPaymentPage(itn, createAccount, false);
+			}catch(Exception e) {
+				e.printStackTrace();
 			}
-			paymentPage.fillPaymentPage(itn, createAccount, false);
+			//wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
+			
 		}
 		else {
 			if(!(driver.getCurrentUrl().contains("cc-") ||driver.getCurrentUrl().contains("cc.")|| 
