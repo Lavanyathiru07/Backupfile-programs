@@ -122,7 +122,7 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, 
-			retryAnalyzer = Retry.class,
+			//retryAnalyzer = Retry.class,
 			description = "Create Account during booking and Login", groups = {"bat" })
 	@Story("My account creation via booking path - Login with account created")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
