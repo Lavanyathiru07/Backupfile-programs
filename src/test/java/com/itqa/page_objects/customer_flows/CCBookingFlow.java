@@ -23,6 +23,7 @@ public class CCBookingFlow extends BasePage {
     private Logger logger = null;
     private LandingPage landingPage;
     private FlightPage flightPage;
+    private BundlePage bundlePage;
     private HotelPage hotelPage;
     private VehiclePage vehiclePage;
     private TravelerPage travelerPage;
@@ -38,6 +39,7 @@ public class CCBookingFlow extends BasePage {
         this.logger = Logger.getLogger(CCBookingFlow.class);
         landingPage = new LandingPage();
         flightPage = new FlightPage();
+        bundlePage= new BundlePage();
         hotelPage = new HotelPage();
         vehiclePage = new VehiclePage();
         travelerPage = new TravelerPage();
@@ -59,6 +61,9 @@ public class CCBookingFlow extends BasePage {
             manifestId = ManifestId.getManifestId(driver);
             itn.setManifestId(manifestId);
             logger.info("Initiated flight, manifest id is " + manifestId);
+            if(Environment.getEnv().contains("qa1")||Environment.getEnv().contains("in1")) {
+            	bundlePage.selectBundle(itn);
+            }
             hotelPage.selectHotel(itn);
             vehiclePage.selectVehicle(itn);
             seatPage.selectSeatPage(itn);
