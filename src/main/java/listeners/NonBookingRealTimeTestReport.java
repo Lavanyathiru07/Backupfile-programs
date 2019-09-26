@@ -82,7 +82,6 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
         if (Environment.getCreateConfluenceSetting()) {
             UpdateConfluence page = new UpdateConfluence(result);
         }
-
     }
 
     @Override
