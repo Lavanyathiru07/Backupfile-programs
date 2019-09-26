@@ -17,7 +17,7 @@ import framework.DriverBase;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class CAR extends BasePage{
+public class CAR extends DriverBase{
 
     private Logger logger = null;
 

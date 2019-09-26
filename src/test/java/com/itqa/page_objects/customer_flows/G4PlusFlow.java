@@ -153,7 +153,7 @@ public class G4PlusFlow extends BasePage{
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectCL();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-	//	CL.accessCL();
+		//CL.accessCL();
 	}
     
 	

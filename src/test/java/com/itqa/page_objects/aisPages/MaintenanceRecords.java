@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class MaintenanceRecords extends BasePage {
+public class MaintenanceRecords extends DriverBase {
 
     private Logger logger = null;
     private WebDriver driver = null;
@@ -105,7 +105,7 @@ public class MaintenanceRecords extends BasePage {
         logger.info("MX Records Report displayed");
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
+    		//DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
     	}
     }

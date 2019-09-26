@@ -18,7 +18,7 @@ import org.testng.SkipException;
 
 import java.util.Set;
 
-public class PrintManifest extends BasePage {
+public class PrintManifest extends DriverBase {
 
     private Logger logger = null;
     private JavascriptExecutor jse = null;

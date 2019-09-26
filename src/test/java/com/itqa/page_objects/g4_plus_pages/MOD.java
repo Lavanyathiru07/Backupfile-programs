@@ -19,7 +19,7 @@ import com.itqa.page_objects.BasePage;
 import java.util.List;
 import java.util.Set;
 
-public class MOD extends BasePage{
+public class MOD extends DriverBase{
 
     private Logger logger = null;
     private WebDriver driver = null;

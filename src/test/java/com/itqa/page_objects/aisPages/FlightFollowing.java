@@ -16,7 +16,7 @@ import framework.DriverBase;
 
 import java.util.List;
 
-public class FlightFollowing extends BasePage{
+public class FlightFollowing extends DriverBase{
 
     private Logger logger = null;
     private JavascriptExecutor jse = null;

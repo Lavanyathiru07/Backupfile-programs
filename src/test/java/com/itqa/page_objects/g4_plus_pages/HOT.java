@@ -19,7 +19,7 @@ import org.testng.SkipException;
 
 import java.util.concurrent.TimeUnit;
 
-public class HOT extends BasePage{
+public class HOT extends DriverBase{
 
     private Logger logger = null;
 

@@ -16,7 +16,7 @@ import framework.DriverBase;
 
 import java.util.List;
 
-public class AircraftRecords extends BasePage{
+public class AircraftRecords extends DriverBase{
 	private JavascriptExecutor jse = null;
     private Logger logger = null;
     private WebDriver driver = null;

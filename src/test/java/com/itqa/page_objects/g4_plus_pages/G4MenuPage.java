@@ -13,7 +13,7 @@ import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
-public class G4MenuPage extends BasePage {
+public class G4MenuPage extends DriverBase {
 
 	private Logger logger = null;
 

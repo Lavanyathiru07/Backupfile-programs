@@ -16,7 +16,7 @@ import framework.DriverBase;
 
 import java.util.Base64;
 
-public class G4PlusLoginPage extends BasePage {
+public class G4PlusLoginPage extends DriverBase {
 
 	private Logger logger = null;
 

@@ -14,7 +14,7 @@ import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
-public class FlightFlow extends BasePage{
+public class FlightFlow extends DriverBase{
 
     private Logger logger = null;
     private JavascriptExecutor jse = null;

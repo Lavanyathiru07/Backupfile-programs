@@ -31,7 +31,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
         testResultContext.getTestResultContext(result);
 
         System.out.println("Test Pass->"+result.getName() +
-              /*  " on silo " + result.getTestContext().getAttribute("silo") +*/
+               " on silo " + result.getTestContext().getAttribute("silo") +
                 " on thread " + Thread.currentThread().getId());
 
 
@@ -57,7 +57,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
         System.out.println("Test Failed->"+result.getName());
 
         System.out.println("Test Failed->" + result.getName() +
-              /*  " on silo " + result.getTestContext().getAttribute("silo") +*/
+		/* " on silo " + result.getTestContext().getAttribute("silo") + */
                 " on thread " + Thread.currentThread().getId());
         System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 

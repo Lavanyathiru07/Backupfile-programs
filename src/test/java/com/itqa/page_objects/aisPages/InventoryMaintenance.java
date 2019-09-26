@@ -14,7 +14,7 @@ import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
-public class InventoryMaintenance extends BasePage{
+public class InventoryMaintenance extends DriverBase{
 
     private Logger logger = null;
     private JavascriptExecutor jse = null;

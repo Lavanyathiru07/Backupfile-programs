@@ -16,7 +16,7 @@ import framework.DriverBase;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Reliability extends BasePage{
+public class Reliability extends DriverBase{
 
     private Logger logger = null;
 

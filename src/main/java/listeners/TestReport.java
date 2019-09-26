@@ -84,13 +84,17 @@ public class TestReport implements IReporter{
     }
 
     private void cleanUpTestReports(String filename) throws NoSuchFileException, DirectoryNotEmptyException,IOException {
-        /*Path path = Paths.get(filename);
-        Files.delete(path);*/
+		/*
+		  Path path = Paths.get(filename); 
+		  Files.delete(path);
+		 */
         
-        File file = new File(filename);
-        if (file.exists()) {
-            file.delete();
-        }
+		
+		  File file = new File(filename);
+		  if (file.exists()) { 
+			  file.delete(); 
+			  }
+		 
     }
 
     public void writePassedAndFailedTestReport() {
@@ -126,8 +130,8 @@ public class TestReport implements IReporter{
                                String outputDirectory) {
     	System.out.println("started to generate report");
     	writeReportHeader();
-    	//nonBookingWritePassedAndFailedTestReport();
-        writePassedAndFailedTestReport();
+    	nonBookingWritePassedAndFailedTestReport();
+        //writePassedAndFailedTestReport();
         writeReportFooter();
         System.out.println("Generated report");
     }
