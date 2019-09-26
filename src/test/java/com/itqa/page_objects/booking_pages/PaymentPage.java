@@ -332,7 +332,7 @@ public class PaymentPage extends BasePage {
 	}
 
 	public void fillPaymentPage(Itinerary itn, Boolean createAccount,boolean Popupflag) {
-		driver = DriverBase.getDriver();
+		//driver = DriverBase.getDriver();
 		String amount = "";
 		double totalBookingFare = 0.00;
 		bagPage = new BagPage();

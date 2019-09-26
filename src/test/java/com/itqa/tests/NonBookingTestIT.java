@@ -331,26 +331,7 @@ public class NonBookingTestIT extends DriverBase {
 		step("NonBooking created with itn " + itn.getItn(), null);
 	}
 
-	private BookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context, Boolean withAccount) {
-		String manifestId = "";
-		itn.setSilo(silo.toString());
-		BookingFlow booking = new BookingFlow();
 
-		if (withAccount) {
-			manifestId = booking.createWebBookingWithAccount(itn, context, withAccount);
-			System.out.println(manifestId);
-		} else {
-			manifestId = booking.createWebBookingWithOutAccount(itn, context);
-		}
-
-		itn.setManifestId(manifestId);
-		step("NonBooking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "
-				+ itn.getDestinationCity(), null);
-
-		// itn.setItn(itn.getItn());
-
-		return booking;
-	}
 
 	/**
      * Adds passed step with provided name in current test or step (or test fixture). Takes no effect

@@ -20,18 +20,19 @@ public class Itinerary {
     private final String adult;
     private final String child;
 
+    private String bundle;
     private final Boolean hotel;
     private final Boolean vehicle;
     private final Boolean activity;
 
     private final String ssr;
-    private final Boolean seat;
-    private final Boolean seatReturn;
-    private final Integer carryOnBag;
-    private final Integer checkedBag;
-    private final String priority;
+    private Boolean seat;
+    private  Boolean seatReturn;
+    private  Integer carryOnBag;
+    private  Integer checkedBag;
+    private  String priority;
 
-    private final Boolean tripFlex;
+    private Boolean tripFlex;
     private final String cardNo;
     private String itn;
     private String silo;
@@ -41,7 +42,7 @@ public class Itinerary {
     private float total;
 
     public Itinerary(String scenario, String departureCity, String destinationCity, Boolean roundTrip, Integer departureDateIndex,
-                     Integer returningDateIndex, Boolean hotel, Boolean vehicle, Boolean activity, String firstName, String lastName,
+                     Integer returningDateIndex, String bundle,Boolean hotel, Boolean vehicle, Boolean activity, String firstName, String lastName,
                      String gender, Integer dobMonth, Integer dobDate, Integer dobYear, String email,
                      String adult, String child, String ssr, Boolean seat, Boolean seatReturn, Integer carryOnBag,
                      Integer checkedBag, String priority, Boolean tripFlex, String cardNo, String itn,
@@ -54,6 +55,7 @@ public class Itinerary {
         this.departureDateIndex = departureDateIndex;
         this.returningDateIndex = returningDateIndex;
 
+        this.bundle = bundle;
         this.hotel = hotel;
         this.vehicle = vehicle;
         this.activity = activity;
@@ -129,17 +131,27 @@ public class Itinerary {
 
 
     public String getSsr() { return this.ssr; }
+    public void setSeat(boolean seat) {
+    	this.seat = seat; ;
+    }
     public Boolean getSeat() {
         return seat;
+    }
+    public void setSeatRT(boolean seatReturn) {
+    	this.seatReturn = seatReturn;
     }
     public Boolean getSeatRT() {
         return seatReturn;
     }
-
+    
+    public void setCarryOnBag(int carryOnBag) { this.carryOnBag = carryOnBag; }
     public Integer getCarryOnBag() { return this.carryOnBag; }
+    public void setCheckedBag(int checkedBag) { this.checkedBag = checkedBag; }
     public Integer getCheckedBag() { return this.checkedBag; }
+    public void setPriority(String priority) { this.priority = priority; }
     public String getPriority() { return this.priority; }
 
+    public void setTripFlex(boolean tripFlex) { this.tripFlex = tripFlex; }
     public Boolean getTripFlex() {
         return tripFlex;
     }
@@ -158,6 +170,11 @@ public class Itinerary {
     public void setDepartureCity(String city) {
         this.departureCity = city;
     }
+    
+    public void setBundle(String bundle) {
+        this.bundle = bundle;
+    } 
+    public String getBundle() { return this.bundle; }
 
     public void setDestinationCity(String city) {
         this.destinationCity = city;

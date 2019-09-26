@@ -25,6 +25,7 @@ public class BookingFlow extends BasePage {
     private LandingPage landingPage;
     private FlightPage flightPage;
     private TripsPage tripsPage;
+    private BundlePage bundlePage;
     private HotelPage hotelPage;
     private VehiclePage vehiclePage;
     private ActivityPage activityPage;
@@ -46,6 +47,7 @@ public class BookingFlow extends BasePage {
         this.logger = Logger.getLogger(BookingFlow.class);
         landingPage = new LandingPage();
         flightPage = new FlightPage();
+        bundlePage= new BundlePage();
         hotelPage = new HotelPage();
         vehiclePage = new VehiclePage();
         activityPage = new ActivityPage();
@@ -75,6 +77,9 @@ public class BookingFlow extends BasePage {
             manifestId = ManifestId.getManifestId(DriverBase.getDriver());
             itn.setManifestId(manifestId);
             logger.info("Initiated flight, manifest id is " + manifestId);
+            if(Environment.getEnv().contains("qa1")||Environment.getEnv().contains("in1")) {
+            	bundlePage.selectBundle(itn);
+            }
             hotelPage.selectHotel(itn);
             vehiclePage.selectVehicle(itn);
             activityPage.selectActivity(itn);
@@ -87,11 +92,11 @@ public class BookingFlow extends BasePage {
         return manifestId;
     }
 
-    public String  createWebBookingWithOutAccount(Itinerary itn, ITestContext context) {
-        return createWebBookingWithAccount(itn, context, false);
+    public String  createWebBookingWithOutAccount(Integer silo,Itinerary itn, ITestContext context) {
+        return createWebBookingWithAccount(silo,itn, context, false);
     }
 
-    public String createWebBookingWithAccount(Itinerary itn, ITestContext context, Boolean createAccount) {
+    public String createWebBookingWithAccount(Integer silo,Itinerary itn, ITestContext context, Boolean createAccount) {
         String manifestId = "";
 
         try {
@@ -99,9 +104,20 @@ public class BookingFlow extends BasePage {
             paymentPage.fillPaymentPage(itn, createAccount, true);
             confirmationPage.verifyConf(itn);
         } catch (Exception e) {
-            System.out.println("%%%%%% caught error: " + e.getMessage());
-            e.printStackTrace();
-            return manifestId;
+        	try {
+        		itn.setDepartureCity("BLI");
+        		itn.setDestinationCity("LAS");
+        		
+        		DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+        		manifestId = createWebBooking(itn, context);
+                paymentPage.fillPaymentPage(itn, createAccount, true);
+                confirmationPage.verifyConf(itn);
+        	}catch(Exception e1) {
+        		System.out.println("%%%%%% caught error: " + e.getMessage());
+                e.printStackTrace();
+                return manifestId;
+        	}
+            
         }
         return manifestId;
     }
