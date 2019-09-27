@@ -13,7 +13,7 @@ import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
-public class AisMenuPage extends DriverBase{
+public class AisMenuPage extends BasePage{
 	
 	int count = 0;
 	private JavascriptExecutor jse = null;

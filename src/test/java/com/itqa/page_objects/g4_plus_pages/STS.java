@@ -13,7 +13,7 @@ import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
-public class STS extends DriverBase {
+public class STS extends BasePage {
 
     private Logger logger = null;
 

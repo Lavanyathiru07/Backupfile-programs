@@ -17,7 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
-public class ATL extends DriverBase{
+public class ATL extends BasePage{
 
     private Logger logger = null;
 

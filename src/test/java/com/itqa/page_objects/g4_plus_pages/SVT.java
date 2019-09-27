@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class SVT extends DriverBase{
+public class SVT extends BasePage{
 
     private Logger logger = null;
 

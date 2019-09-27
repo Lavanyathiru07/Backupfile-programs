@@ -13,7 +13,7 @@ import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
-public class KayakConsole extends DriverBase{
+public class KayakConsole extends BasePage{
 
     private Logger logger = null;
     private JavascriptExecutor jse = null;

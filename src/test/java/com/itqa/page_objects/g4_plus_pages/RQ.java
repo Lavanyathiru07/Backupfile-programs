@@ -15,7 +15,7 @@ import framework.DriverBase;
 
 import java.util.List;
 
-public class RQ extends DriverBase{
+public class RQ extends BasePage{
 
     private Logger logger = null;
 

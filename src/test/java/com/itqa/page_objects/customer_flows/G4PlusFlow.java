@@ -475,11 +475,9 @@ public class G4PlusFlow extends BasePage{
 	    
 	    public void accessMOD() {
 	    	g4PlusSignin();
-
 	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
 	        g4MenuPage.selectMOD();
 	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
 	        MOD.accessMOD();
 	    }
 

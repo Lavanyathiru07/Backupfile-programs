@@ -14,7 +14,7 @@ import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
-public class FM extends DriverBase{
+public class FM extends BasePage{
 
     private Logger logger = null;
 

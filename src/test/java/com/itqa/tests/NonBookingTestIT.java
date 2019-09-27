@@ -3,7 +3,7 @@ package com.itqa.tests;
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
-
+import com.itqa.page_objects.BasePage;
 import com.itqa.page_objects.customer_flows.BookingFlow;
 import com.itqa.page_objects.customer_flows.G4PlusFlow;
 
@@ -180,7 +180,6 @@ public class NonBookingTestIT extends DriverBase {
 			description = "G4+: Access ESP")
 	@Story("G4+: Access ESP")
 	public void accessESP(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessESP();
@@ -193,7 +192,6 @@ public class NonBookingTestIT extends DriverBase {
 			description = "G4+: Access SVT")
 	@Story("G4+: Access SVT")
 	public void accessSVT(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		 
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSVT();

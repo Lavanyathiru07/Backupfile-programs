@@ -14,7 +14,7 @@ import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
-public class AccountsPayableMaintenance extends DriverBase{
+public class AccountsPayableMaintenance extends BasePage{
 
     private Logger logger = null;
     private JavascriptExecutor jse = null;
