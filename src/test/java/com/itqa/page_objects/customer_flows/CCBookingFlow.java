@@ -50,7 +50,6 @@ public class CCBookingFlow extends BasePage {
 
 	public String CCBooking(Itinerary itn, ITestContext context) {
 		String manifestId = "";
-
 		try {
 			landingPage.selectFlightsOnLandingPage(itn);
 			flightPage.selectFlightPage(itn);
@@ -78,11 +77,10 @@ public class CCBookingFlow extends BasePage {
 		return mod.modUpsell(itn);
 	}
 
-	public void CCRefundAndCancellation(String itin,Itinerary itn) throws InterruptedException {
+	public void CCRefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
 		if (Environment.getEnv().contains("qa2")) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
 		}
 	}
-
 }

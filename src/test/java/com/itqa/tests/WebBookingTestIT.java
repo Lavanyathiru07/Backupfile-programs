@@ -7,7 +7,6 @@ import com.itqa.Utils.Environment;
 
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.customer_flows.BookingFlow;
-import com.itqa.page_objects.g4_plus_pages.MOD;
 
 import data.*;
 import io.qameta.allure.Story;
@@ -84,7 +83,6 @@ public class WebBookingTestIT extends DriverBase {
 			throws InterruptedException {
 		setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
-		MOD mod = new MOD();
 		setEarlyMarketCities(itn);
 
 		BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
@@ -94,7 +92,7 @@ public class WebBookingTestIT extends DriverBase {
 		updateTextContext(itn, context);
 
 		Assert.assertTrue(booking.processOnlineCheckinAndGetBoardingPass(itn), "Could not print boarding pass");
-		booking.WWWUncheckRefundAndCancel(itn.getItn(), itn);
+		booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
 		step("Checked in and printed boarding pass");
 	}
 
@@ -108,7 +106,7 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2")) && ((silo == 1) || (silo == 2)))
 				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
-			MOD mod = new MOD();
+
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
 			setEarlyMarketCities(itn);
@@ -120,7 +118,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
 					"Could not print boarding pass");
-			booking.WWWUncheckRefundAndCancel(itn.getItn(), itn);
+			booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
 			step("Upgraded bags and priority during OLCI.  Printed boarding pass");
 		} else {
 			// DriverBase.getDriver().close();
@@ -140,7 +138,6 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
-			MOD mod = new MOD();
 			BookingFlow booking = generateBooking(itn, silo, context, WITHACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
@@ -152,7 +149,7 @@ public class WebBookingTestIT extends DriverBase {
 			}
 
 			updateTextContext(itn, context);
-			booking.WWWRefundAndCancellation(itn.getItn(), itn);
+			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
 
 		} else {
 			// DriverBase.getDriver().close();
@@ -208,10 +205,10 @@ public class WebBookingTestIT extends DriverBase {
 		BookingFlow booking = new BookingFlow();
 
 		if (withAccount) {
-			manifestId = booking.createWebBookingWithAccount(itn, context, withAccount);
+			manifestId = booking.createWebBookingWithAccount(silo, itn, context, withAccount);
 			System.out.println(manifestId);
 		} else {
-			manifestId = booking.createWebBookingWithOutAccount(itn, context);
+			manifestId = booking.createWebBookingWithOutAccount(silo, itn, context);
 		}
 
 		itn.setManifestId(manifestId);
