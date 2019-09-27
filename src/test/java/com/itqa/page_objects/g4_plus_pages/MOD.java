@@ -29,8 +29,11 @@ public class MOD extends BasePage{
     public static String CancelReason="68";
     public static String WaiveReason="37";
 
-    @FindBy(id = "advance-search-itn-num")
+    @FindBy(xpath = "//*[@id='advance-search-itn-num']")
     private WebElement confirmationNumField;
+    
+    @FindBy(xpath = "//h1[contains(text(),'Search Bookings')]")
+    private WebElement confirmationField;
 
     @FindBy(xpath = "//input[contains(@value,'Search')]")
     private WebElement searchButton;
@@ -203,18 +206,15 @@ public class MOD extends BasePage{
     	this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(MOD.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 15), this);
         
         g4MenuPage = new G4MenuPage();
     }
 
     public void accessMOD() {
-    	try{
-        confirmationNumField.click();
+    	
+    	if(confirmationField.isDisplayed()) {
         logger.info("MOD menu open");
-    	}catch(Exception e){
-    		skip = true;
-    		throw new SkipException("Scenario fails so execution stoped");
     	}
     }
 

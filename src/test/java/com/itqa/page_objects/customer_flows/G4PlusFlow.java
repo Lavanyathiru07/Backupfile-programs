@@ -26,7 +26,7 @@ import com.itqa.page_objects.aisPages.Reliability;
 import com.itqa.page_objects.checkin_pages.LoginPage;
 import com.itqa.page_objects.g4_plus_pages.G4MenuPage;
 
-//import com.itqa.page_objects.g4_plus_pages.CL;
+import com.itqa.page_objects.g4_plus_pages.CL;
 import com.itqa.page_objects.g4_plus_pages.STS;
 import com.itqa.page_objects.g4_plus_pages.SVT;
 import com.itqa.page_objects.g4_plus_pages.ATL;
@@ -65,7 +65,7 @@ public class G4PlusFlow extends BasePage{
 	private AccountsPayableMaintenance AccountsPayableMaintenance;
 	private FlightFlow FlightFlow;
 	private KayakConsole KayakConsole;
-	//private CL CL;
+	private CL CL;
 	private STS STS;
 	private ESP ESP;
 	private SVT SVT;
@@ -94,7 +94,7 @@ public class G4PlusFlow extends BasePage{
 		AccountsPayableMaintenance = new AccountsPayableMaintenance();
 		FlightFlow = new FlightFlow();
 		KayakConsole = new KayakConsole();
-		//CL = new CL();
+		CL = new CL();
 		STS = new STS();
 		ESP = new ESP();
 		SVT = new SVT();
@@ -113,8 +113,12 @@ public class G4PlusFlow extends BasePage{
 		if (Environment.getEnv().contains("PROD")) {
 
 		} else {
-			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+			//DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+			driver=DriverBase.getDriver();
+			driver.findElementById("username").sendKeys("AB1C");
+        	driver.findElementById("password").sendKeys("Allegiant");
+        	driver.findElementByName("submitBtn").click();
 		}
 		}
 	}
@@ -123,15 +127,10 @@ public class G4PlusFlow extends BasePage{
 		if(!skip){
         if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
         	
-        	//DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 			
-			driver=DriverBase.getDriver();
-			driver.findElementById("username").sendKeys("AB1C");
-        	driver.findElementById("password").sendKeys("Allegiant");
-        	driver.findElementByName("submitBtn").click();
-        /*	
-        	DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
+			/*DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
         	DriverBase.getDriver().get("https://ais." + System.getProperty("env") + ".allegiantair.com");*/
         }
         else {
@@ -140,6 +139,7 @@ public class G4PlusFlow extends BasePage{
             }
             else {
             	DriverBase.getDriver().get("https://g4plus-portal.allegiantair.com/");
+            	         	
             }
             G4PlusLoginPage.g4plusLogin(false);
         	} 
@@ -158,7 +158,7 @@ public class G4PlusFlow extends BasePage{
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectCL();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		//CL.accessCL();
+		CL.accessCL();
 	}
     
 	
@@ -483,7 +483,7 @@ public class G4PlusFlow extends BasePage{
 	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
 	        g4MenuPage.selectMOD();
 	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-	        MOD.accessMOD();
+	       MOD.accessMOD();
 	    }
 
 	   
