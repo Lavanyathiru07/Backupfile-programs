@@ -51,15 +51,15 @@ public class NonBookingTestIT extends DriverBase {
 	
 	
 	// , retryAnalyzer = RetryFailure.class
-	@Test(dataProvider = "Non Booking Use Cases", dataProviderClass = ItineraryDataProvider.class,
-			description = "G4Portal: Access Customer Lookup")
-	@Story("G4Portal: Access Customer Lookup")
-	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if (!env.contains("IN1") || !env.contains("IN2")) {
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessCL();
-		}
-	}
+//	@Test(dataProvider = "Non Booking Use Cases", dataProviderClass = ItineraryDataProvider.class,
+//			description = "G4Portal: Access Customer Lookup")
+//	@Story("G4Portal: Access Customer Lookup")
+//	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//		if (!env.contains("IN1") || !env.contains("IN2")) {
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessCL();
+//		}
+//	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "AIS: Search Decoupled Code For MX - Action Requests")
