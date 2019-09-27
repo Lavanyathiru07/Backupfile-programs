@@ -7,6 +7,8 @@ import com.itqa.Utils.Environment;
 
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.customer_flows.BookingFlow;
+import com.itqa.page_objects.g4_plus_pages.MOD;
+
 import data.*;
 import io.qameta.allure.Story;
 import listeners.TestResultContext;
@@ -52,35 +54,37 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	// , retryAnalyzer = RetryFailure.class
-	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, 
-			description = "WWW Book One Way Trip", groups = {"simple", "bat" })
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
+			"simple", "bat" })
 	@Story("WWW Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		
-		if(((env.contains("in1")||env.contains("in2"))&& (silo==1))) {
+
+		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
 			generateBooking(itn, silo, context, WITHOUTACCOUNT);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 			updateTextContext(itn, context);
-		}else {
-			//DriverBase.getDriver().close();
+		} else {
+			// DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
-			
+
 		}
-		
+
 	}
 
 	// , retryAnalyzer = RetryFailure.class,
 
-	/*@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, 
-			description = "WWW One Way Booking with OLCI, NO UPSELL", groups = {"bat" })
-*/
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, NO UPSELL", groups = {
+			"bat" })
+
 	@Story("I can book a one way ticket, check in and print boarding pass")
-	public void testWebBookWithOLCI(Integer silo, Itinerary itn, ITestContext context, Method method) {
+	public void testWebBookWithOLCI(Integer silo, Itinerary itn, ITestContext context, Method method)
+			throws InterruptedException {
 		setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
+		MOD mod = new MOD();
 		setEarlyMarketCities(itn);
 
 		BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
@@ -90,17 +94,21 @@ public class WebBookingTestIT extends DriverBase {
 		updateTextContext(itn, context);
 
 		Assert.assertTrue(booking.processOnlineCheckinAndGetBoardingPass(itn), "Could not print boarding pass");
+		booking.WWWUncheckRefundAndCancel(itn.getItn(), itn);
 		step("Checked in and printed boarding pass");
 	}
 
-	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, 
-			description = "WWW One Way Booking with OLCI, UPSELL Bags, Priority", groups = {"bat" })
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags, Priority", groups = {
+			"bat" })
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
-	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		
-		if(((env.contains("in1")||env.contains("in2"))&& (silo==1))||((env.contains("qa1")||env.contains("qa2"))&& 
-				((silo==1)||(silo==2)))||(env.contains("stg")&& ((silo==1)||(silo==2)||(silo==3)))) {
+	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
+			throws InterruptedException {
+
+		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))
+				|| ((env.contains("qa1") || env.contains("qa2")) && ((silo == 1) || (silo == 2)))
+				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
+			MOD mod = new MOD();
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
 			setEarlyMarketCities(itn);
@@ -112,40 +120,45 @@ public class WebBookingTestIT extends DriverBase {
 
 			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
 					"Could not print boarding pass");
+			booking.WWWUncheckRefundAndCancel(itn.getItn(), itn);
 			step("Upgraded bags and priority during OLCI.  Printed boarding pass");
-		}else {
-			//DriverBase.getDriver().close();
+		} else {
+			// DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
-	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, 
-			description = "Create Account during booking and Login", groups = {"bat" })
-	@Story("My account creation via booking path - Login with account created")
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Create Account during booking andLogin", groups = {
+			"bat"
+
+	})
+
+	@Story("My account creation via booking path with create voucher - Login with account created")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
-			Method method) {
-		
-		if(((env.contains("qa1")||env.contains("qa2")||env.contains("stg"))&& 
-				(silo==1))) {
+			Method method) throws InterruptedException {
+
+		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
+			MOD mod = new MOD();
 			BookingFlow booking = generateBooking(itn, silo, context, WITHACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 			step("Logged in and verified account");
-			if((env.contains("stg")||env.contains("qa1")||env.contains("qa2"))&&(silo==1)) {
-            	Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
-            }
+			if ((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1)) {
+				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
+			}
 
 			updateTextContext(itn, context);
+			booking.WWWRefundAndCancellation(itn.getItn(), itn);
 
-		}else {
-			//DriverBase.getDriver().close();
+		} else {
+			// DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		
+
 	}
 
 	private void setEarlyMarketCities(Itinerary itn) {

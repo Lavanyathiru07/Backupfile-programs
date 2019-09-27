@@ -24,7 +24,7 @@ public class G4PlusLoginPage extends DriverBase {
 
 	private String username = "Y2hhcm5raWp0YXdhcnVzaC5hdQ==";
 	private String stationUsername = "Q2hhbmF0YW4uQ2hhcm4udGVzdA==";
-	private String password = "QFNkMTUwNDEyMzQ=";
+	private String password = "QFNkMTUwNDEyMzQ1";
 
 	@FindBy(id = "username")
 	private WebElement userNameField;
@@ -40,6 +40,12 @@ public class G4PlusLoginPage extends DriverBase {
 
 	@FindBy(id = "submitaction")
 	private WebElement acceptButton;
+	
+	@FindBy(xpath = "//li[contains(text(),'Signed in as')]/following-sibling::li/a")
+	private WebElement userDropDown;
+
+	@FindBy(css = "a[href='/login/logout']")
+	private WebElement logoutButton;
 
 	public G4PlusLoginPage() {
 		this.driver = DriverBase.getDriver();
@@ -77,5 +83,41 @@ public class G4PlusLoginPage extends DriverBase {
 			skip = true;
 			throw new SkipException("Scenario fails so execution stoped");
 		}
+	}
+	
+	public void g4Signin(Boolean station) {
+		driver = DriverBase.getDriver();
+		if (!Environment.getEnv().contains("ndd") || Environment.getEnv().contains("prod")) {
+			driver.get("https://g4plus-portal." + System.getProperty("env") + ".allegiantair.com/portal");
+		} else {
+			if (Environment.getEnv().contains("ndd")) {
+				driver.get("https://nddprd-g4plus-portal.allegiantair.com/");
+			} else {
+				driver.get("https://g4plus-portal.allegiantair.com/");
+			}
+		}
+
+		if (driver.manage().getCookies().toString().contains("ais_")) {
+			logOut();
+		}
+		g4plusLogin(station);
+	}
+
+	public void logOut() {
+		for (int i = 0; i < 10; i++) {
+			try {
+				userDropDown.click();
+				break;
+			} catch (Exception e) {
+				if (i == 9) {
+					throw new Error(e);
+				}
+				try {
+					Thread.sleep(500);
+				} catch (Exception e1) {
+				}
+			}
+		}
+		logoutButton.click();
 	}
 }

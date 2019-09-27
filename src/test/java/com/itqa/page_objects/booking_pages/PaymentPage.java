@@ -331,7 +331,7 @@ public class PaymentPage extends BasePage {
 		return price;
 	}
 
-	public void fillPaymentPage(Itinerary itn, Boolean createAccount,boolean Popupflag) {
+	public void fillPaymentPage(Itinerary itn, Boolean createAccount,boolean Popupflag) throws InterruptedException {
 		driver = DriverBase.getDriver();
 		String amount = "";
 		double totalBookingFare = 0.00;
@@ -359,13 +359,14 @@ public class PaymentPage extends BasePage {
 
 		totalBookingFare = PaymentPage.ConvertPrice(amount);
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
-
-		int arr[] = { 201,204,249,253,257,301,302,303,304,401,402,501,502,503,508,
+		//,253201,
+		int arr[] = { 204,249,257,301,302,303,304,401,402,501,502,503,508,
 				509,510,521,522,530,531,570,571,572,591,592,594,595,596,602,603,605,
 				606,607,754,802,806,811,813,825,833,902,903,904,999}; 
 		int toCheckValue =(int) ConvertPrice(amount) ;
 
 		if (checkDeclineAmount(arr, toCheckValue)) {
+			Thread.sleep(1000);
 			wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
 			bagsTab.click();
 			String chbag = checkedBagList.getAttribute("value");
