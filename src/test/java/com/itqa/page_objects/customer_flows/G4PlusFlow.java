@@ -42,6 +42,7 @@ import java.util.Calendar;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -118,13 +119,17 @@ public class G4PlusFlow extends BasePage{
 		}
 	}
 	
-	public void g4PlusSignin() {
+	public void g4PlusSignin()  {
 		if(!skip){
         if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
         	
-        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+        	//DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-        	
+			
+			driver=DriverBase.getDriver();
+			driver.findElementById("username").sendKeys("AB1C");
+        	driver.findElementById("password").sendKeys("Allegiant");
+        	driver.findElementByName("submitBtn").click();
         /*	
         	DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
         	DriverBase.getDriver().get("https://ais." + System.getProperty("env") + ".allegiantair.com");*/

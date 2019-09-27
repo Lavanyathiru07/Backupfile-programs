@@ -58,8 +58,6 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessCL();
-		}else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
@@ -270,13 +268,12 @@ public class NonBookingTestIT extends DriverBase {
 			description = "G4+: Access ATL")
 	@Story("G4+: Access ATL")
 	public void accessATL(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		 if(!skip){
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessATL();
 		}
 	}
-	}
+	
 	
 	
 	
@@ -284,7 +281,6 @@ public class NonBookingTestIT extends DriverBase {
 			description = "G4+: Access OFO")
 	@Story("G4+: Access OFO")
 	public void accessOFO(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessOFO();
@@ -295,7 +291,6 @@ public class NonBookingTestIT extends DriverBase {
 			description = "G4+: Access MOD")
 	@Story("G4+: Access MOD")
 	public void accessMOD(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		 
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessMOD();

@@ -71,6 +71,32 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 
     @Override
     public void onTestSkipped(ITestResult result) {
+    	String base64Screenshot = "data:image/png;base64,"+((TakesScreenshot)getDriver()).
+                getScreenshotAs(OutputType.BASE64);
+
+        TestResultContext testResultContext = new TestResultContext();
+        testResultContext.getTestResultContext(result);
+
+        if (Environment.getCreateJiraSetting()) {
+            Jira jira = new Jira();
+            jira.createJira(result);
+        }
+
+        System.out.println("Test Failed->"+result.getName());
+
+        System.out.println("Test Failed->" + result.getName() +
+		/* " on silo " + result.getTestContext().getAttribute("silo") + */
+                " on thread " + Thread.currentThread().getId());
+        System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
+
+        GeneralUtils.writeToFile("nonBookingFailedTests.html", "<tr><td>" + 
+        		testResultContext.testName + "</td><td align=\"center\"><font color='red'>Failed</font></td>"
+        				+ "<td align=\\\"center\\\"><font color='orange'>Invalid-Credential</font><td></td>"
+        		+"<td></td>" +"<td align=\"center\"><a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo + ");\">show image</a>" +
+                "<img id='screenshotId" + testResultContext.currentSilo + "' " +
+                "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>" +
+                "</td></tr>");
+   
         System.out.println("Test Skipped->"+result.getName());
 
     }
