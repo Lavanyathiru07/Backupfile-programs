@@ -107,16 +107,23 @@ public class SeatPage extends BasePage {
         new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'seatchooser-wrapper') and contains(@aria-hidden,'false')]")));
         jse.executeScript(JSFIRSTARG, continueButton);
         if (!roundtrip) {
-            if (!firstLeg && !driver.getCurrentUrl().contains("cc-")&&!driver.getCurrentUrl().contains("cc.") ) {
-                new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(yesContinueButton));
-                jse.executeScript(JSFIRSTARG, yesContinueButton);
-            }
+        	try {
+        		 new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(yesContinueButton));
+                 jse.executeScript(JSFIRSTARG, yesContinueButton);
+        	}catch(Exception e) {}
+            /*if (!firstLeg && !driver.getCurrentUrl().contains("cc-")&&!driver.getCurrentUrl().contains("cc.") ) {
+               
+            }*/
         }
         else {
-            if ((!firstLeg || !secondLeg) && !driver.getCurrentUrl().contains("cc-silo")&&!driver.getCurrentUrl().contains("cc.")) {
+            /*if ((!firstLeg || !secondLeg) && !driver.getCurrentUrl().contains("cc-silo")&&!driver.getCurrentUrl().contains("cc.")) {
                 new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(yesContinueButton));
                 jse.executeScript(JSFIRSTARG, yesContinueButton);
-            }
+            }*/
+        	try {
+       		 new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(yesContinueButton));
+                jse.executeScript(JSFIRSTARG, yesContinueButton);
+        	}catch(Exception e) {}
         }
         logger.info("Click continue");
     }
