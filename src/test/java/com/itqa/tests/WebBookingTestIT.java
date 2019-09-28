@@ -58,7 +58,7 @@ public class WebBookingTestIT extends DriverBase {
 	@Story("WWW Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		
-		if(((env.contains("in1")||env.contains("in2")||env.contains("prod"))&& (silo==1))) {
+		if(((env.contains("in1")||env.contains("in2"))&& (silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
 			generateBooking(itn, silo, context, WITHOUTACCOUNT);
