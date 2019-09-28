@@ -154,6 +154,7 @@ public class SeatPage extends BasePage {
     	
     	Common.elementToBeClickable(driver,seatTable, "Seat map");
         if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {
+        	Common.elementToBeClickable(driver, ssrPopupOkButton, "SSR pop up");
             if (!itn.getSsr().isEmpty()) {
                 selectSSR(itn.getPaxNum(), itn.getSsr());
             }
