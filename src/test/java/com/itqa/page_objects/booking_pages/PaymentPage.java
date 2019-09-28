@@ -199,12 +199,14 @@ public class PaymentPage extends BasePage {
 		}
 	}
 
-	public void fillCardInfo(String cardNo) {
+	public void fillCardInfo(String cardNo) throws Exception {
 		String expiredMonth;
 		String expiredYear;
 		String cardNumber;
 		String cvv;
 		String cardName;
+		
+		Common.elementToBeClickable(driver, expireMonthField, "exp month");
 
 		if(System.getProperty("env").contains("prod")) {
 			expiredMonth = System.getProperty("expiration").split("-")[0].replace("0", "");
@@ -331,7 +333,7 @@ public class PaymentPage extends BasePage {
 		return price;
 	}
 
-	public void fillPaymentPage(Itinerary itn, Boolean createAccount,boolean Popupflag) {
+	public void fillPaymentPage(Itinerary itn, Boolean createAccount,boolean Popupflag) throws Exception {
 		//driver = DriverBase.getDriver();
 		String amount = "";
 		double totalBookingFare = 0.00;
@@ -396,6 +398,7 @@ public class PaymentPage extends BasePage {
 					driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
 				selectTripFlex(itn.getTripFlex(), itn.getScenario());
 			}
+			
 			fillCardInfo(itn.getCardNo());
 			
 			if (createAccount) {

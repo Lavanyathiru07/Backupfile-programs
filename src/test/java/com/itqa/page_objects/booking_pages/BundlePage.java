@@ -1,6 +1,8 @@
 package com.itqa.page_objects.booking_pages;
 
 import com.itqa.page_objects.BasePage;
+
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -41,9 +43,9 @@ public class BundlePage extends BasePage {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
     }
 
-    public void selectBundle(Itinerary itn) {
+    public void selectBundle(Itinerary itn) throws Exception {
     	
-    	new WebDriverWait(driver, 2000).until(ExpectedConditions.visibilityOf(budleTitle));
+    	Common.elementToBeClickable(driver, budleTitle, "budle Title");
     	
     	if(itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
     		itn.setSeat(true);
