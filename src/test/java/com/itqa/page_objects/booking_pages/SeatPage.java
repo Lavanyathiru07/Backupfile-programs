@@ -1,6 +1,8 @@
 package com.itqa.page_objects.booking_pages;
 
 import com.itqa.page_objects.BasePage;
+
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -148,7 +150,9 @@ public class SeatPage extends BasePage {
         ssrPopupOkButton.click();
     }
 
-    public void selectSeatPage(Itinerary itn) {
+    public void selectSeatPage(Itinerary itn) throws Exception {
+    	
+    	Common.elementToBeClickable(driver,seatTable, "Seat map");
         if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {
             if (!itn.getSsr().isEmpty()) {
                 selectSSR(itn.getPaxNum(), itn.getSsr());
