@@ -50,10 +50,10 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
         TestResultContext testResultContext = new TestResultContext();
         testResultContext.getTestResultContext(result);
 
-        if (Environment.getCreateJiraSetting()) {
-            Jira jira = new Jira();
-            jira.createJira(result);
-        }
+//        if (Environment.getCreateJiraSetting()) {
+//            Jira jira = new Jira();
+//            jira.createJira(result);
+//        }
 
         System.out.println("Test Failed->"+result.getName());
 

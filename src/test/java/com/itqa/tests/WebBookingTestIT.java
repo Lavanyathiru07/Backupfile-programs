@@ -75,8 +75,8 @@ public class WebBookingTestIT extends DriverBase {
 
 	// , retryAnalyzer = RetryFailure.class,
 
-	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, NO UPSELL", groups = {
-			"bat" })
+	/*@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, NO UPSELL", groups = {
+			"bat" })*/
 
 	@Story("I can book a one way ticket, check in and print boarding pass")
 	public void testWebBookWithOLCI(Integer silo, Itinerary itn, ITestContext context, Method method)
