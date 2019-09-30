@@ -158,7 +158,7 @@ public class PaymentPage extends BasePage {
 	public void selectTripFlex(Boolean tf, String scenario) {
 		for (int loop = 0; loop < 5; loop++) {
 			try {
-				if (!scenario.toLowerCase().contains("web")) {
+				if (!scenario.toLowerCase().contains("www")) {
 					if (tf) {
 						jse.executeScript(JSFIRSTARG, taCCyesTripFlex);
 						logger.info("Select TripFlex");
@@ -353,7 +353,7 @@ public class PaymentPage extends BasePage {
 				closePopup();
 			}
 		}
-		new WebDriverWait(driver, 2000).until(ExpectedConditions.visibilityOf(totalAmount));
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(totalAmount));
 		try {
 			// PageFactory.initElements(driver, PaymentPage.class);
 			amount = totalAmount.getText();
@@ -372,7 +372,7 @@ public class PaymentPage extends BasePage {
 		if (checkDeclineAmount(arr, toCheckValue)) {
 
 			try {
-				new WebDriverWait(driver, 2000).until(ExpectedConditions.visibilityOf(bagsTab));
+				new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(bagsTab));
 				bagsTab.click();
 				String chbag = checkedBagList.getAttribute("value");
 				logger.info("Previously Selected check bags are " + chbag);
