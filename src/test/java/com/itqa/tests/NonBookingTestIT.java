@@ -218,21 +218,21 @@ public class NonBookingTestIT extends DriverBase {
 			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
-	
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
-			description = "G4+: Access TF2")
-	@Story("G4+: Access TF2")
-	public void accessTF2(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		 
-		if (!env.contains("IN1") || !env.contains("IN2")) {
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessTF2();
-		}else {
-			//DriverBase.getDriver().close();
-			throw new SkipException("Skipping Test Case due to Login / application ");
-		}
-	}
-	
+//	
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
+//			description = "G4+: Access TF2")
+//	@Story("G4+: Access TF2")
+//	public void accessTF2(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//		 
+//		if (!env.contains("IN1") || !env.contains("IN2")) {
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessTF2();
+//		}else {
+//			//DriverBase.getDriver().close();
+//			throw new SkipException("Skipping Test Case due to Login / application ");
+//		}
+//	}
+//	
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "G4+: Access RQ")
 	@Story("G4+: Access RQ")
@@ -247,33 +247,33 @@ public class NonBookingTestIT extends DriverBase {
 		}
 	}
 	
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
-			description = "G4+: Access BAG")
-	@Story("G4+: Access BAG")
-	public void accessBAG(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		
-		if (!env.contains("IN1") || !env.contains("IN2")) {
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessBAG();
-		}else {
-			//DriverBase.getDriver().close();
-			throw new SkipException("Skipping Test Case due to Login / application ");
-		}
-	}
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
+//			description = "G4+: Access BAG")
+//	@Story("G4+: Access BAG")
+//	public void accessBAG(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//		
+//		if (!env.contains("IN1") || !env.contains("IN2")) {
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessBAG();
+//		}else {
+//			//DriverBase.getDriver().close();
+//			throw new SkipException("Skipping Test Case due to Login / application ");
+//		}
+//	}
 	
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
-			description = "G4+: Access PB2")
-	@Story("G4+: Access PB2")
-	public void accessPB2(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		 
-		if (!env.contains("IN1") || !env.contains("IN2")) {
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessPB2();
-		}else {
-			//DriverBase.getDriver().close();
-			throw new SkipException("Skipping Test Case due to Login / application ");
-		}
-	}
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
+//			description = "G4+: Access PB2")
+//	@Story("G4+: Access PB2")
+//	public void accessPB2(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//		 
+//		if (!env.contains("IN1") || !env.contains("IN2")) {
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessPB2();
+//		}else {
+//			//DriverBase.getDriver().close();
+//			throw new SkipException("Skipping Test Case due to Login / application ");
+//		}
+//	}
 	
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "G4+: Access HOT")
@@ -307,18 +307,18 @@ public class NonBookingTestIT extends DriverBase {
 	
 	
 	
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
-			description = "G4+: Access OFO")
-	@Story("G4+: Access OFO")
-	public void accessOFO(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if (!env.contains("IN1") || !env.contains("IN2")) {
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessOFO();
-		}else {
-			//DriverBase.getDriver().close();
-			throw new SkipException("Skipping Test Case due to Login / application ");
-		}
-	}
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
+//			description = "G4+: Access OFO")
+//	@Story("G4+: Access OFO")
+//	public void accessOFO(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//		if (!env.contains("IN1") || !env.contains("IN2")) {
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessOFO();
+//			}else {
+//			//DriverBase.getDriver().close();
+//			throw new SkipException("Skipping Test Case due to Login / application ");
+//		}
+//	}
 	
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "G4+: Access MOD")

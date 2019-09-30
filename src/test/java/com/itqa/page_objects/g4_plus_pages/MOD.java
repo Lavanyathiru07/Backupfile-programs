@@ -212,10 +212,13 @@ public class MOD extends BasePage{
     }
 
     public void accessMOD() {
-    	
-    	if(confirmationField.isDisplayed()) {
-        logger.info("MOD menu open");
+    	try {    	
+    		confirmationNumField.click();
+    		logger.info("MOD menu open");
+    	}catch (Exception e) {
+    		e.printStackTrace();
     	}
+
     }
 
 

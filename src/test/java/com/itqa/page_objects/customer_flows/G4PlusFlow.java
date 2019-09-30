@@ -104,6 +104,7 @@ public class G4PlusFlow extends BasePage{
 		HOT = new HOT();
 		ATL = new ATL();
 		OFO = new OFO();
+		MOD=new MOD();
 		
 	}
 
@@ -123,12 +124,18 @@ public class G4PlusFlow extends BasePage{
 		}
 	}
 	
-	public void g4PlusSignin()  {
+	public void g4PlusSignin() {
 		if(!skip){
         if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
         	
         	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			/*DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
         	DriverBase.getDriver().get("https://ais." + System.getProperty("env") + ".allegiantair.com");*/
@@ -474,6 +481,7 @@ public class G4PlusFlow extends BasePage{
 			Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 			g4MenuPage.selectOFO();
 			GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+			//Thread.sleep(1000);
 			OFO.accessOFO();
 		}
 	    
@@ -483,8 +491,9 @@ public class G4PlusFlow extends BasePage{
 	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
 	        g4MenuPage.selectMOD();
 	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-	       MOD.accessMOD();
-	    }
+	        System.out.println("Switched......");
+	         MOD.accessMOD();
+	       	    }
 
 	   
 

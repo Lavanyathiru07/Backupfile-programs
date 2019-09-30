@@ -41,9 +41,9 @@ public class OFO extends BasePage {
 
     public void accessOFO() {
     	try{
-        pendingDisp.click();
-        appChart.click();
-        todayOE.click();
+        pendingDisp.isDisplayed();
+        appChart.isDisplayed();
+        todayOE.isDisplayed();
         searchDispButton.isDisplayed();
         logger.info("OFO Menu Open");
     	}catch(Exception e){
