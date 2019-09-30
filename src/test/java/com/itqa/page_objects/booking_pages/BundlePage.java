@@ -25,7 +25,7 @@ public class BundlePage extends BasePage {
     private JavascriptExecutor jse = null;
 
     @FindBy(xpath = "//*[text()='Select your bundle']")
-	private WebElement budleTitle;
+	private WebElement bundleTitle;
 
     @FindBy(xpath = "//*[@data-hook='select_select_button_2']")
    	private WebElement selectAllegiantBonus;
@@ -45,7 +45,7 @@ public class BundlePage extends BasePage {
 
     public void selectBundle(Itinerary itn) throws Exception {
     	
-    	Common.elementToBeClickable(driver, budleTitle, "budle Title");
+    	Common.elementToBeClickable(driver, bundleTitle, "bundle Title");
     	
     	if(itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
     		itn.setSeat(true);
