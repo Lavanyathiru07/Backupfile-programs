@@ -226,7 +226,7 @@ public class MOD extends DriverBase {
 		this.driver = DriverBase.getDriver();
 		this.logger = Logger.getLogger(MOD.class);
 		jse = (JavascriptExecutor) driver;
-		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 
 		g4MenuPage = new G4MenuPage();
 		g4LoginPage = new G4PlusLoginPage();

@@ -43,7 +43,7 @@ public class FlightPage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(FlightPage.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 15), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void selectDepFlight(int num, Itinerary itn) {

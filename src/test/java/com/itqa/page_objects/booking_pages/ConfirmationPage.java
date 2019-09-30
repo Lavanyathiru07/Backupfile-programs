@@ -44,7 +44,7 @@ public class ConfirmationPage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(ConfirmationPage.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void verifyConf(Itinerary itn) {

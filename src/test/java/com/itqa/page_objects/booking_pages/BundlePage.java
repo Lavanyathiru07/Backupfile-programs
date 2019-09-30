@@ -40,7 +40,7 @@ public class BundlePage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(BundlePage.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void selectBundle(Itinerary itn) throws Exception {
