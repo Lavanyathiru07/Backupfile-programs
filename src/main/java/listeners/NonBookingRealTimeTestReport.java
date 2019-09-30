@@ -91,7 +91,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 
         GeneralUtils.writeToFile("nonBookingFailedTests.html", "<tr><td>" + 
         		testResultContext.testName + "</td><td align=\"center\"><font color='red'>FAILED</font></td>"
-        				+ "<td align=\\\"center\\\"><font color='orange'>Invalid-Credential</font><td></td>"
+        				+ "<td align=\\\"center\\\"><font color='orange'>Invalid-Credential / Loading </font><td></td>"
         		+"<td></td>" +"<td align=\"center\"><a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo + ");\">show image</a>" +
                 "<img id='screenshotId" + testResultContext.currentSilo + "' " +
                 "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>" +

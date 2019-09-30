@@ -40,7 +40,6 @@ public class NonBookingTestIT extends DriverBase {
 
 	@BeforeMethod
 	public void setup(ITestContext context) throws MalformedURLException {
-		
 		driver = DriverBase.getDriver();
 		System.out.println("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
 				+ ", " + driver.getCurrentUrl());
@@ -51,15 +50,18 @@ public class NonBookingTestIT extends DriverBase {
 	
 	
 	// , retryAnalyzer = RetryFailure.class
-//	@Test(dataProvider = "Non Booking Use Cases", dataProviderClass = ItineraryDataProvider.class,
-//			description = "G4Portal: Access Customer Lookup")
-//	@Story("G4Portal: Access Customer Lookup")
-//	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
-//		if (!env.contains("IN1") || !env.contains("IN2")) {
-//			G4PlusFlow nonBooking = new G4PlusFlow();
-//			nonBooking.accessCL();
-//		}
-//	}
+	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
+			description = "G4Portal: Access Customer Lookup")
+	@Story("G4Portal: Access Customer Lookup")
+	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
+		if (!env.contains("IN1") || !env.contains("IN2")) {
+			G4PlusFlow nonBooking = new G4PlusFlow();
+			nonBooking.accessCL();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
+		}
+	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "AIS: Search Decoupled Code For MX - Action Requests")
@@ -68,9 +70,9 @@ public class NonBookingTestIT extends DriverBase {
 		G4PlusFlow nonBooking = new G4PlusFlow();
 		nonBooking.lookupActionRequest();
 	}
-
-	
-	
+//
+//	
+//	
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "AIS: Search Coupled Code For MX - Aircraft Records")
 	@Story("AIS: Search Coupled Code For MX - Aircraft Records")
@@ -79,8 +81,8 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.lookupAircraftRecordsPart();
 		}
-	
-
+//	
+//
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "AIS: Run SPOE Reports - Line MX - MX Control - Reliabiliy - MX Records")
 	@Story("AIS: Run SPOE Reports - Line MX - MX Control - Reliabiliy - MX Records")
@@ -89,9 +91,9 @@ public class NonBookingTestIT extends DriverBase {
 		G4PlusFlow nonBooking = new G4PlusFlow();
 		nonBooking.runSPOEreport();
 		}
-	
-	
-
+//	
+//	
+//
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "AIS: Flight Information - Flight Following")
 	@Story("AIS: Flight Information - Flight Following")
@@ -100,8 +102,8 @@ public class NonBookingTestIT extends DriverBase {
 		G4PlusFlow nonBooking = new G4PlusFlow();
 		nonBooking.verifyFlightFollowing();
 		}
-	
-
+//	
+//
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "AIS: Access Inventory Maintenance")
 	@Story("AIS: Access Inventory Maintenance")
@@ -110,8 +112,8 @@ public class NonBookingTestIT extends DriverBase {
 		G4PlusFlow nonBooking = new G4PlusFlow();
 		nonBooking.accessInventoryMX();
 		 }
-	
-
+//	
+//
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "AIS: Access Print Manifest")
 	@Story("AIS: Access Print Manifest")
@@ -190,8 +192,8 @@ public class NonBookingTestIT extends DriverBase {
 		}
 	}
 
-		 
-
+//		 
+//
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 			description = "G4+: Access SVT")
 	@Story("G4+: Access SVT")
@@ -246,7 +248,7 @@ public class NonBookingTestIT extends DriverBase {
 			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
-	
+//	
 //	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class,
 //			description = "G4+: Access BAG")
 //	@Story("G4+: Access BAG")

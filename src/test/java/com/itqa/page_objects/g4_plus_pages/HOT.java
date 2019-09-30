@@ -68,6 +68,7 @@ public class HOT extends BasePage{
         for (int loop=0; loop<10; loop++) {
             try {
                 payloadTab.click();
+                
                 break;
             }
             catch (Exception e) {
