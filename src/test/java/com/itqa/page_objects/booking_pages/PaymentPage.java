@@ -158,7 +158,7 @@ public class PaymentPage extends BasePage {
 	public void selectTripFlex(Boolean tf, String scenario) {
 		for (int loop = 0; loop < 5; loop++) {
 			try {
-				if (!scenario.toLowerCase().contains("www")) {
+				if (!scenario.toLowerCase().contains("web")) {
 					if (tf) {
 						jse.executeScript(JSFIRSTARG, taCCyesTripFlex);
 						logger.info("Select TripFlex");
