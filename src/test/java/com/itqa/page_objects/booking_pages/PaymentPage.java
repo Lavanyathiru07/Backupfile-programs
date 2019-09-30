@@ -355,7 +355,7 @@ public class PaymentPage extends BasePage {
 		}
 		new WebDriverWait(driver, 2000).until(ExpectedConditions.visibilityOf(totalAmount));
 		try {
-			PageFactory.initElements(driver, PaymentPage.class);
+			// PageFactory.initElements(driver, PaymentPage.class);
 			amount = totalAmount.getText();
 		} catch (StaleElementReferenceException e) {
 			logger.info(e);
