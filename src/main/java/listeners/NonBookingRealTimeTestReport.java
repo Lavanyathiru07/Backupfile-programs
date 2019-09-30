@@ -90,7 +90,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
         System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 
         GeneralUtils.writeToFile("nonBookingFailedTests.html", "<tr><td>" + 
-        		testResultContext.testName + "</td><td align=\"center\"><font color='red'>Failed</font></td>"
+        		testResultContext.testName + "</td><td align=\"center\"><font color='red'>FAILED</font></td>"
         				+ "<td align=\\\"center\\\"><font color='orange'>Invalid-Credential</font><td></td>"
         		+"<td></td>" +"<td align=\"center\"><a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo + ");\">show image</a>" +
                 "<img id='screenshotId" + testResultContext.currentSilo + "' " +

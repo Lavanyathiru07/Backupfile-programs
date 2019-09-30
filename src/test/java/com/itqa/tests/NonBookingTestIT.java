@@ -170,6 +170,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSTS();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 		 }
 	
@@ -181,6 +184,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessESP();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 
@@ -193,6 +199,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSVT();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 	
@@ -204,6 +213,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessCAR();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 	
@@ -215,6 +227,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessTF2();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 	
@@ -226,6 +241,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessRQ();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 	
@@ -237,6 +255,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessBAG();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 	
@@ -248,6 +269,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessPB2();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 	
@@ -259,6 +283,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessHOT();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 	
@@ -271,6 +298,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessATL();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 	
@@ -284,6 +314,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessOFO();
+		}else {
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 	
@@ -295,7 +328,8 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessMOD();
 		}else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
+			//DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case due to Login / application ");
 		}
 	}
 	
