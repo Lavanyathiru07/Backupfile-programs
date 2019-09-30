@@ -32,6 +32,9 @@ public class FlightPage extends BasePage {
 
     @FindBy(xpath = "//button[contains(text(),'Continue')]")
     private WebElement continueButton;
+    
+    @FindBy(xpath = "//div[contains(@id,'flightchooser-departing')]//li")
+    private WebElement depFlightTable;
 
     @FindBy(id = "flights-wrapper")
     private WebElement flightTitle;
@@ -84,7 +87,11 @@ public class FlightPage extends BasePage {
         logger.info("Click Continue");
     }
 
-    public void selectFlightPage(Itinerary itn) {
+    public void selectFlightPage(Itinerary itn) throws Exception {
+    	
+    	Common.elementToBeClickable(driver,depFlightTable, "Depture flight table");
+        
+    	
         selectDepFlight(0, itn);
         if (itn.getRoundTrip()) {
             selectRetFlight(0);

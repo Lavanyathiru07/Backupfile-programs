@@ -1,6 +1,8 @@
 package com.itqa.page_objects.booking_pages;
 
 import com.itqa.page_objects.BasePage;
+
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -107,16 +109,23 @@ public class SeatPage extends BasePage {
         new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'seatchooser-wrapper') and contains(@aria-hidden,'false')]")));
         jse.executeScript(JSFIRSTARG, continueButton);
         if (!roundtrip) {
-            if (!firstLeg && !driver.getCurrentUrl().contains("cc-")&&!driver.getCurrentUrl().contains("cc.") ) {
-                new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(yesContinueButton));
-                jse.executeScript(JSFIRSTARG, yesContinueButton);
-            }
+        	try {
+        		 new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(yesContinueButton));
+                 jse.executeScript(JSFIRSTARG, yesContinueButton);
+        	}catch(Exception e) {}
+            /*if (!firstLeg && !driver.getCurrentUrl().contains("cc-")&&!driver.getCurrentUrl().contains("cc.") ) {
+               
+            }*/
         }
         else {
-            if ((!firstLeg || !secondLeg) && !driver.getCurrentUrl().contains("cc-silo")&&!driver.getCurrentUrl().contains("cc.")) {
+            /*if ((!firstLeg || !secondLeg) && !driver.getCurrentUrl().contains("cc-silo")&&!driver.getCurrentUrl().contains("cc.")) {
                 new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(yesContinueButton));
                 jse.executeScript(JSFIRSTARG, yesContinueButton);
-            }
+            }*/
+        	try {
+       		 new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(yesContinueButton));
+                jse.executeScript(JSFIRSTARG, yesContinueButton);
+        	}catch(Exception e) {}
         }
         logger.info("Click continue");
     }
@@ -141,8 +150,10 @@ public class SeatPage extends BasePage {
         ssrPopupOkButton.click();
     }
 
-    public void selectSeatPage(Itinerary itn) {
-        if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {
+    public void selectSeatPage(Itinerary itn) throws Exception {
+    	
+    	if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {
+        	Common.elementToBeClickable(driver, ssrPopupOkButton, "SSR pop up");
             if (!itn.getSsr().isEmpty()) {
                 selectSSR(itn.getPaxNum(), itn.getSsr());
             }
@@ -150,6 +161,8 @@ public class SeatPage extends BasePage {
                 ssrPopupOkButton.click();
             }
         }
+    	Common.elementToBeClickable(driver,seatTable, "Seat map");
+        
         if (itn.getSeat() || itn.getSeatRT()) {
             chooseSeat(itn.getPaxNum(), itn.getSeat(), itn.getSeatRT());
             clickContinue(itn.getRoundTrip(), itn.getSeat(), itn.getSeatRT(), itn.getScenario());

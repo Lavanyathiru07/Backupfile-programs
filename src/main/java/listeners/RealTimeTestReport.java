@@ -36,9 +36,9 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
         
         GeneralUtils.writeToFile("passedTests.html", "<tr><td align=\"center\">" + "Silo-" + testResultContext.currentSilo
-        		+" "+testResultContext.description + "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" +
-                testResultContext.itn +
-                "</td><td></td><td></td></tr>");
+	        		+" "+testResultContext.description + "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" +
+	                testResultContext.itn +
+	                "</td><td></td><td></td></tr>");
 
     }
 
