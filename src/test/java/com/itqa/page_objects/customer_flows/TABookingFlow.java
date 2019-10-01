@@ -1,8 +1,11 @@
 package com.itqa.page_objects.customer_flows;
 
+import com.itqa.Utils.Environment;
 import com.itqa.Utils.ManifestId;
 import com.itqa.page_objects.BasePage;
 import com.itqa.page_objects.booking_pages.*;
+import com.itqa.page_objects.g4_plus_pages.MOD;
+
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -28,11 +31,11 @@ public class TABookingFlow extends BasePage {
 	private PaymentPage paymentPage;
 	private BagPage bagPage;
 	private ConfirmationPage confirmationPage;
-
+	private MOD mod;
 
 	public TABookingFlow() {
 		this.logger = Logger.getLogger(TABookingFlow.class);
-		
+
 		taSignInPage = new TaSignInPage();
 		landingPage = new LandingPage();
 		flightPage = new FlightPage();
@@ -43,6 +46,7 @@ public class TABookingFlow extends BasePage {
 		paymentPage = new PaymentPage();
 		bagPage = new BagPage();
 		confirmationPage = new ConfirmationPage();
+		mod = new MOD();
 
 	}
 
@@ -71,6 +75,11 @@ public class TABookingFlow extends BasePage {
 		return manifestId;
 	}
 
+	public void TARefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
+		if (Environment.getEnv().contains("qa2")) {
+			mod.refundWholeAmountInMod(itin, itn);
+			mod.cancelWholeItn(itn.getItn());
+		}
+	}
 
-	
 }

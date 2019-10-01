@@ -67,7 +67,7 @@ public class SeatPage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(SeatPage.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void chooseSeat(int num, Boolean firstLeg, Boolean secondLeg) {
