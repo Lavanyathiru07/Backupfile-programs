@@ -53,11 +53,10 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	// , retryAnalyzer = RetryFailure.class
-	/*
-	 * @Test(dataProvider = "Web Use Cases", dataProviderClass =
-	 * ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups =
-	 * { "simple", "bat" })
-	 */
+
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
+			"simple", "bat" })
+
 	@Story("WWW Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
@@ -102,11 +101,8 @@ public class WebBookingTestIT extends DriverBase {
 		step("Checked in and printed boarding pass");
 	}
 
-	/*
-	 * @Test(dataProvider = "Web Use Cases", dataProviderClass =
-	 * ItineraryDataProvider.class, description =
-	 * "WWW One Way Booking with OLCI, UPSELL Bags, Priority", groups = { "bat" })
-	 */
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags, Priority", groups = {
+			"bat" })
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
