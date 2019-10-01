@@ -46,30 +46,30 @@ public class BundlePage extends BasePage {
 
 	public void selectBundle(Itinerary itn) throws Exception {
 		try {
-			Common.elementToBeClickable(driver, bundleTitle, "bundle Title");
+			if (bundleTitle.isDisplayed()) {
+				if (itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
+					itn.setSeat(true);
+					itn.setCarryOnBag(1);
+					itn.setTripFlex(true);
+					if (itn.getRoundTrip()) {
+						itn.setSeatRT(true);
+					}
+					selectAllegiantBonus.click();
 
-			if (itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
-				itn.setSeat(true);
-				itn.setCarryOnBag(1);
-				itn.setTripFlex(true);
-				if (itn.getRoundTrip()) {
-					itn.setSeatRT(true);
+				} else if (itn.getBundle().equalsIgnoreCase("AllegiantTotal")) {
+					itn.setSeat(true);
+					itn.setCarryOnBag(1);
+					itn.setCheckedBag(4);
+					itn.setPriority("true");
+					itn.setTripFlex(true);
+					if (itn.getRoundTrip()) {
+						itn.setSeatRT(true);
+					}
+					selectAllegiantTotal.click();
 				}
-				selectAllegiantBonus.click();
 
-			} else if (itn.getBundle().equalsIgnoreCase("AllegiantTotal")) {
-				itn.setSeat(true);
-				itn.setCarryOnBag(1);
-				itn.setCheckedBag(4);
-				itn.setPriority("true");
-				itn.setTripFlex(true);
-				if (itn.getRoundTrip()) {
-					itn.setSeatRT(true);
-				}
-				selectAllegiantTotal.click();
+				continueButton.click();
 			}
-
-			continueButton.click();
 		} catch (NoSuchElementException e) {
 			logger.info("Bundles page is skipping");
 		}
