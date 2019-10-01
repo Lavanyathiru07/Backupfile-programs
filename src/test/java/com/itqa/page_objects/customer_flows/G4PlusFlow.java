@@ -5,10 +5,6 @@ import com.itqa.Utils.Environment;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.g4_plus_pages.G4PlusLoginPage;
-import com.itqa.page_objects.g4_plus_pages.HOT;
-import com.itqa.page_objects.g4_plus_pages.MOD;
-import com.itqa.page_objects.g4_plus_pages.OFO;
-import com.itqa.page_objects.g4_plus_pages.RQ;
 import com.itqa.page_objects.BasePage;
 import com.itqa.page_objects.aisPages.AccountsPayableMaintenance;
 import com.itqa.page_objects.aisPages.AircraftRecords;
@@ -25,6 +21,10 @@ import com.itqa.page_objects.aisPages.PrintManifest;
 import com.itqa.page_objects.aisPages.Reliability;
 import com.itqa.page_objects.checkin_pages.LoginPage;
 import com.itqa.page_objects.g4_plus_pages.G4MenuPage;
+import com.itqa.page_objects.g4_plus_pages.HOT;
+import com.itqa.page_objects.g4_plus_pages.MOD;
+import com.itqa.page_objects.g4_plus_pages.OFO;
+import com.itqa.page_objects.g4_plus_pages.RQ;
 
 import com.itqa.page_objects.g4_plus_pages.CL;
 import com.itqa.page_objects.g4_plus_pages.STS;
@@ -36,15 +36,10 @@ import com.itqa.page_objects.g4_plus_pages.FM;
 
 import framework.DriverBase;
 
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Base64;
-import java.util.Calendar;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -131,15 +126,13 @@ public class G4PlusFlow extends BasePage{
 	}
 	
 	public void Login(){
-		
-					
+							
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 			driver=DriverBase.getDriver();
 			driver.findElementById("username").sendKeys(new String(Base64.getDecoder().decode(username)));
         	driver.findElementById("password").sendKeys(new String(Base64.getDecoder().decode(password)));
         	driver.findElementByName("submitBtn").click();
-		
-		
+				
 	}
 	
 	public void g4PlusSignin() {

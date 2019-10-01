@@ -53,7 +53,7 @@ public class G4MenuPage extends BasePage {
 	@FindBy(xpath = "//span[contains(text(),'CL')]")
 	private WebElement clApp;
 
-	@FindBy(xpath = "(//span[@class='ng-binding'])[13]")
+	@FindBy(xpath = "//span[contains(text(),'OFO')]")
 	private WebElement ofoApp;
 
 	@FindBy(xpath = "//span[contains(text(),'STNS')]")
