@@ -1,6 +1,8 @@
 package com.itqa.page_objects.booking_pages;
 
 import com.itqa.page_objects.BasePage;
+
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -23,6 +25,9 @@ public class BagPage extends BasePage {
 
     @FindBy(name = "flight_extras[bin_bags]")
     private List<WebElement> binBagList;
+    
+    @FindBy(name = "flight_extras[bin_bags]")
+    private WebElement carryOnBag;
 
     @FindBy(name = "flight_extras[checked_bags]")
     private List<WebElement> checkedBagList;
@@ -49,7 +54,7 @@ public class BagPage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(BagPage.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void chooseBag(int num, int carryOnBag, int checkedBag, String prio) {
@@ -98,7 +103,8 @@ public class BagPage extends BasePage {
         logger.info("Click continue");
     }
 
-    public void selectBagPage(Itinerary itn) {
+    public void selectBagPage(Itinerary itn) throws Exception {
+    	Common.elementToBeClickable(driver, carryOnBag, "Bags page");
         chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority());
                 if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.") 
         		||driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {

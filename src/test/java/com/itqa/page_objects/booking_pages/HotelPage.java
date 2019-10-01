@@ -43,11 +43,11 @@ public class HotelPage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(HotelPage.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void selectRoom() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(firstRowHotel));
+        new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(firstRowHotel));
         jse.executeScript(BasePage.JSFIRSTARG, firstRowHotel);
         String hotelText = firstRowHotel.getText();
 

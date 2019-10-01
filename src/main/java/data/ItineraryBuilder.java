@@ -8,6 +8,7 @@ public class ItineraryBuilder {
     Integer departureDateIndex = 3;
     Integer returnDateIndex = 3;
 
+    String bundle = "";
     Boolean hotel = false;
     Boolean vehicle = false;
     Boolean activity = false;
@@ -166,6 +167,11 @@ public class ItineraryBuilder {
         this.cardNum = cardNo;
         return this;
     }
+    
+    public ItineraryBuilder withBundle(String bundle) {
+        this.bundle = bundle;
+        return this;
+    }
 
     public ItineraryBuilder withItn(String itn) {
         this.itn = itn;
@@ -173,7 +179,7 @@ public class ItineraryBuilder {
     }
 
     public Itinerary build() {
-        return new Itinerary(scenario, departureCity, destinationCity, roundTrip, departureDateIndex, returnDateIndex,
+        return new Itinerary(scenario, departureCity, destinationCity, roundTrip, departureDateIndex, returnDateIndex,bundle,
                 hotel, vehicle, activity, firstName, lastName, gender, dobMonth, dobDay, dobYear, email, adult, child,
                 ssr, seat, seatReturn, carryOnBag, checkedBag, priority, tripFlex, cardNum, itn, description, manifestId);
     }

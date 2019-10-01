@@ -36,9 +36,9 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
         
         GeneralUtils.writeToFile("passedTests.html", "<tr><td align=\"center\">" + "Silo-" + testResultContext.currentSilo
-        		+" "+testResultContext.description + "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" +
-                testResultContext.itn +
-                "</td><td></td><td></td></tr>");
+	        		+" "+testResultContext.description + "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" +
+	                testResultContext.itn +
+	                "</td><td></td><td></td></tr>");
 
     }
 
@@ -50,10 +50,10 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
         TestResultContext testResultContext = new TestResultContext();
         testResultContext.getTestResultContext(result);
 
-        if (Environment.getCreateJiraSetting()) {
-            Jira jira = new Jira();
-            jira.createJira(result);
-        }
+//        if (Environment.getCreateJiraSetting()) {
+//            Jira jira = new Jira();
+//            jira.createJira(result);
+//        }
 
         System.out.println("Test Failed->"+result.getName());
 

@@ -19,67 +19,73 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
 
 public class CCBookingFlow extends BasePage {
-    private RemoteWebDriver driver;
-    private Logger logger = null;
-    private LandingPage landingPage;
-    private FlightPage flightPage;
-    private HotelPage hotelPage;
-    private VehiclePage vehiclePage;
-    private TravelerPage travelerPage;
-    private SeatPage seatPage;
-    private PaymentPage paymentPage;
-    private BagPage bagPage;
-    private ConfirmationPage confirmationPage;
-    private MOD mod;
-    private G4MenuPage g4MenuPage;
+	private RemoteWebDriver driver;
+	private Logger logger = null;
+	private LandingPage landingPage;
+	private FlightPage flightPage;
+	private BundlePage bundlePage;
+	private HotelPage hotelPage;
+	private VehiclePage vehiclePage;
+	private TravelerPage travelerPage;
+	private SeatPage seatPage;
+	private PaymentPage paymentPage;
+	private BagPage bagPage;
+	private ConfirmationPage confirmationPage;
+	private MOD mod;
+	private G4MenuPage g4MenuPage;
 
+	public CCBookingFlow() {
+		this.logger = Logger.getLogger(CCBookingFlow.class);
+		landingPage = new LandingPage();
+		flightPage = new FlightPage();
+		bundlePage = new BundlePage();
+		hotelPage = new HotelPage();
+		vehiclePage = new VehiclePage();
+		travelerPage = new TravelerPage();
+		seatPage = new SeatPage();
+		paymentPage = new PaymentPage();
+		bagPage = new BagPage();
+		confirmationPage = new ConfirmationPage();
+		mod = new MOD();
+		g4MenuPage = new G4MenuPage();
+	}
 
-    public CCBookingFlow() {
-        this.logger = Logger.getLogger(CCBookingFlow.class);
-        landingPage = new LandingPage();
-        flightPage = new FlightPage();
-        hotelPage = new HotelPage();
-        vehiclePage = new VehiclePage();
-        travelerPage = new TravelerPage();
-        seatPage = new SeatPage();
-        paymentPage = new PaymentPage();
-        bagPage = new BagPage();
-        confirmationPage = new ConfirmationPage();
-        mod = new MOD();
-        g4MenuPage = new G4MenuPage();
-    }
+	public String CCBooking(Itinerary itn, ITestContext context) {
+		String manifestId = "";
+		try {
+			landingPage.selectFlightsOnLandingPage(itn);
+			flightPage.selectFlightPage(itn);
+			manifestId = ManifestId.getManifestId(driver);
+			itn.setManifestId(manifestId);
+			logger.info("Initiated flight, manifest id is " + manifestId);
+			if (Environment.getEnv().contains("qa1") || Environment.getEnv().contains("in1")) {
+				bundlePage.selectBundle(itn);
+			}
+			hotelPage.selectHotel(itn);
+			vehiclePage.selectVehicle(itn);
+			seatPage.selectSeatPage(itn);
+			bagPage.selectBagPage(itn);
+			travelerPage.fillTravelerPage(itn);
+			paymentPage.fillPaymentPage(itn, false, true);
+			confirmationPage.verifyConf(itn);
+		} catch (Exception e) {
+			System.out.println("%%%%%% caught error: " + e.getMessage());
+			e.printStackTrace();
+			return manifestId;
+		}
+		return manifestId;
+	}
 
+	public Boolean processCCModification(Itinerary itn) {
+		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		return mod.modUpsell(itn);
+	}
 
-    public String CCBooking(Itinerary itn, ITestContext context) {
-        String manifestId = "";
-
-        try {
-        	landingPage.selectFlightsOnLandingPage(itn);
-            flightPage.selectFlightPage(itn);
-            manifestId = ManifestId.getManifestId(driver);
-            itn.setManifestId(manifestId);
-            logger.info("Initiated flight, manifest id is " + manifestId);
-            hotelPage.selectHotel(itn);
-            vehiclePage.selectVehicle(itn);
-            seatPage.selectSeatPage(itn);
-            bagPage.selectBagPage(itn);
-            travelerPage.fillTravelerPage(itn);
-        	paymentPage.fillPaymentPage(itn, false, true);
-            confirmationPage.verifyConf(itn);
-        } catch (Exception e) {
-            System.out.println("%%%%%% caught error: " + e.getMessage());
-            e.printStackTrace();
-            return manifestId;
-        }
-        return manifestId;
-    }
-    
-    public Boolean processCCModification(Itinerary itn) {
-    	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-    	DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-        return mod.modUpsell(itn);
-    }
-    
-    
-    
+	public void CCRefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
+		if (Environment.getEnv().contains("qa2")) {
+			mod.refundWholeAmountInMod(itin, itn);
+			mod.cancelWholeItn(itn.getItn());
+		}
+	}
 }

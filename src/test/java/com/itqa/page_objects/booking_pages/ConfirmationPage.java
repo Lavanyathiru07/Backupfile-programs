@@ -1,6 +1,8 @@
 package com.itqa.page_objects.booking_pages;
 
 import com.itqa.page_objects.BasePage;
+
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -42,12 +44,14 @@ public class ConfirmationPage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(ConfirmationPage.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void verifyConf(Itinerary itn) {
 
         try {
+        	
+        	Common.elementToBeClickable(driver, confNumber, "confirmation Number");
             confNumber.isDisplayed();
             logger.info("Confirmation Number Found: " + confNumber.getText());
             itn.setItn(confNumber.getText());

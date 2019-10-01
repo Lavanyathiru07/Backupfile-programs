@@ -4,7 +4,9 @@ import framework.DriverBase;
 import com.itqa.Utils.Environment;
 
 import com.itqa.Utils.URLS;
+import com.itqa.page_objects.customer_flows.BookingFlow;
 import com.itqa.page_objects.customer_flows.TABookingFlow;
+import com.itqa.page_objects.g4_plus_pages.MOD;
 
 import data.*;
 import io.qameta.allure.Story;
@@ -53,42 +55,45 @@ public class TABookingTestIT extends DriverBase {
 			"simple", "bat" })
 
 	@Story(" TA Flight + Hotel + Car booking Email confirmation received")
-	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		
-		
-		if(((env.contains("stg")||env.contains("qa1")||env.contains("qa2"))&& (silo==1))) {
+	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
+			throws InterruptedException {
+
+		if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-
 			updateTextContext(itn, context);
-		}else {
-			//DriverBase.getDriver().close();
+			TABookingFlow booking = new TABookingFlow();
+			booking.TARefundAndCancellation(itn.getItn(), itn);
+		} else {
+			// DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
 	// , retryAnalyzer = RetryFailure.class
-	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, 
-			description = "Travel Agent (TA) Can Book a Round Trip", groups = {"bat" })
+	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book a Round Trip", groups = {
+			"bat" })
 
 	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and CC Priority emails received.")
-	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		
-		if((env.contains("stg")&& ((silo==2)||(silo==3)))||((env.contains("qa1")||env.contains("qa2"))&& (silo==2))
-        		||((env.contains("in1")||env.contains("in2"))&& (silo==1))) {
+	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)
+			throws InterruptedException {
+		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
+				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))
+				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 			updateTextContext(itn, context);
-		}else {
-			//DriverBase.getDriver().close();
+			TABookingFlow booking = new TABookingFlow();
+			booking.TARefundAndCancellation(itn.getItn(), itn);
+		} else {
+			// DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-	
+
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {

@@ -69,7 +69,7 @@ public class TravelerPage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(TravelerPage.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void fillPaxInfo(int num, String fname, String lname, String gender, Integer month, Integer day, Integer year, String email) {

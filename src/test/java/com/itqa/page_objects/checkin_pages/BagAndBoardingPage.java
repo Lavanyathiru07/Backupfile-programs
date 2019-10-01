@@ -54,9 +54,14 @@ public class BagAndBoardingPage {
         }
         else {
             for (int i = 0; i < binBagList.size(); i++) {
-                new Select(binBagList.get(i)).selectByValue(binBags);
-                new Select(checkedBagList.get(i)).selectByValue(checkedBags);
+            	try {
+            	Thread.sleep(1000);
+                new Select(binBagList.get(i)).selectByIndex(Integer.parseInt(binBags));
+                new Select(checkedBagList.get(i)).selectByIndex(Integer.parseInt(checkedBags));
                 new Select(prioList.get(i)).selectByValue(priority);
+            	} catch(Exception e) {
+            		logger.info("Error while selecting bags");
+            	}
             }
         }
         logger.info("Add 1 carry-on, 2 checked, and  priority boarding");

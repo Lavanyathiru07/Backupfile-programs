@@ -17,9 +17,6 @@ public class ItineraryDataProvider {
         ArrayList<Object[]> data = new ArrayList<>();
         List<Integer> silos = new Environment().getSiloList();
 
-//        if(random) {
-//            silos = Environment.getRandomSilo();
-//        }
 
         if (method.getName().contains("OLCI")) {
                 for (Integer silo: silos) {
