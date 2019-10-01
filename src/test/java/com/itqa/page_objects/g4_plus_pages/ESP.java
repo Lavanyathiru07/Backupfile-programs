@@ -36,7 +36,7 @@ public class ESP extends BasePage{
         logger.info("ESP Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     	}
 }

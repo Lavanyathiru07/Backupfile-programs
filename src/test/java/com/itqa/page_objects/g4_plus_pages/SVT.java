@@ -61,7 +61,7 @@ public class SVT extends BasePage{
         logger.info("SVT Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }

@@ -115,23 +115,20 @@ public class G4PlusFlow extends BasePage{
 		if (Environment.getEnv().contains("PROD")) {
 
 		} else {
-			//DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			driver=DriverBase.getDriver();
-			driver.findElementById("username").sendKeys("AB1C");
-        	driver.findElementById("password").sendKeys("Allegiant");
-        	driver.findElementByName("submitBtn").click();
+			
 		}
 		}
 	}
 	
 	public void Login(){
-							
-			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			driver=DriverBase.getDriver();
-			driver.findElementById("username").sendKeys(new String(Base64.getDecoder().decode(username)));
-        	driver.findElementById("password").sendKeys(new String(Base64.getDecoder().decode(password)));
-        	driver.findElementByName("submitBtn").click();
+		driver=DriverBase.getDriver();
+		driver.get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+
+		driver.findElementById("username").sendKeys(new String(Base64.getDecoder().decode(username)));
+		driver.findElementById("password").sendKeys(new String(Base64.getDecoder().decode(password)));
+		driver.findElementByName("submitBtn").click();
 				
 	}
 	
@@ -386,11 +383,9 @@ public class G4PlusFlow extends BasePage{
 	 public void accessESP() {
 		 	
 		 	g4PlusSignin();
-
 	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
 	        g4MenuPage.selectESP();
 	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
 	        ESP.accessESP();
 	    }
 	 
@@ -525,9 +520,7 @@ public class G4PlusFlow extends BasePage{
 	            e.printStackTrace();
 	            throw new Error();
 	        }
-	        finally {
-	        	DriverBase.getDriver().quit();
-	        }
+	        
 	    	 }
 	    }
 	    

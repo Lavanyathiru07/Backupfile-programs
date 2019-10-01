@@ -44,7 +44,7 @@ public class STS extends BasePage {
         logger.info("STS Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }

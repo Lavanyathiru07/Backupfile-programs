@@ -36,7 +36,7 @@ public class KayakConsole extends BasePage{
     	}catch(Exception e){
     		skip = true;
     		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }
