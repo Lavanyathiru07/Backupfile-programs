@@ -53,8 +53,11 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	// , retryAnalyzer = RetryFailure.class
-	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
-			"simple", "bat" })
+	/*
+	 * @Test(dataProvider = "Web Use Cases", dataProviderClass =
+	 * ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups =
+	 * { "simple", "bat" })
+	 */
 	@Story("WWW Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
@@ -75,8 +78,11 @@ public class WebBookingTestIT extends DriverBase {
 
 	// , retryAnalyzer = RetryFailure.class,
 
-	/*@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, NO UPSELL", groups = {
-			"bat" })*/
+	/*
+	 * @Test(dataProvider = "Web Use Cases", dataProviderClass =
+	 * ItineraryDataProvider.class, description =
+	 * "WWW One Way Booking with OLCI, NO UPSELL", groups = { "bat" })
+	 */
 
 	@Story("I can book a one way ticket, check in and print boarding pass")
 	public void testWebBookWithOLCI(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -96,8 +102,11 @@ public class WebBookingTestIT extends DriverBase {
 		step("Checked in and printed boarding pass");
 	}
 
-	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags, Priority", groups = {
-			"bat" })
+	/*
+	 * @Test(dataProvider = "Web Use Cases", dataProviderClass =
+	 * ItineraryDataProvider.class, description =
+	 * "WWW One Way Booking with OLCI, UPSELL Bags, Priority", groups = { "bat" })
+	 */
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -127,9 +136,7 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Create Account during booking andLogin", groups = {
-			"bat"
-
-	})
+			"bat" })
 
 	@Story("My account creation via booking path with create voucher - Login with account created")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,

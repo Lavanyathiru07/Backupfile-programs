@@ -374,7 +374,8 @@ public class PaymentPage extends BasePage {
 
 			try {
 				new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(bagsTab));
-				bagsTab.click();
+				jse.executeScript("arguments[0].click()", bagsTab);
+				// bagsTab.click();
 				String chbag = checkedBagList.getAttribute("value");
 				logger.info("Previously Selected check bags are " + chbag);
 				String checkedBag = "No";

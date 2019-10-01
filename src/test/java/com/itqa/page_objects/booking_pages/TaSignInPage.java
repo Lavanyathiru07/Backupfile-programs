@@ -39,6 +39,7 @@ public class TaSignInPage extends BasePage {
 	public void taSignin() throws Exception {
 
 		try {
+			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(agentNameField));
 			agentNameField.sendKeys("agent");
 			idField.sendKeys("99000070");
 			passField.sendKeys("allegiant");

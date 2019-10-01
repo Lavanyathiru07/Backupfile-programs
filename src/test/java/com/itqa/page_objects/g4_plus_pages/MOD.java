@@ -515,7 +515,7 @@ public class MOD extends DriverBase {
 		searchBtn.click();
 		logger.info("Search button is clicked");
 		itnField.sendKeys(itn);
-		logger.info("Itn is entered." + itn +Keys.TAB);
+		logger.info("Itn is entered." + itn + Keys.TAB);
 		jse.executeScript("arguments[0].click();", submitBtn);
 		logger.info("Submit button is clicked");
 		cogButton.click();
@@ -532,7 +532,7 @@ public class MOD extends DriverBase {
 		}
 	}
 
-	public void refundWholeAmount(String itn,Itinerary itin) throws InterruptedException {
+	public void refundWholeAmount(String itn, Itinerary itin) throws InterruptedException {
 
 		confirmationNumField.sendKeys(itn.split(" | ")[0]);
 		searchButton.click();
@@ -561,17 +561,16 @@ public class MOD extends DriverBase {
 				}
 			}
 		}
-		try {
-			if (itin.getDescription().toLowerCase().contains("voucher")) {
-				reversevoucher();
-			}
-		} catch (Exception e) {
-			logger.info("Error while cancelling the voucher");
+
+		if (itin.getDescription().toLowerCase().contains("voucher")) {
+			reversevoucher();
 		}
 
 		new WebDriverWait(driver, 10).until(
 				ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@class,'btn-reverse-transactions')]")));
-		reverseButton.click();
+		Thread.sleep(1000);
+		jse.executeScript("arguments[0].click()",reverseButton );
+	//	reverseButton.click();
 		logger.info("reverse button is clicked");
 
 		new WebDriverWait(driver, 10).until(ExpectedConditions.numberOfElementsToBeMoreThan(
@@ -695,14 +694,14 @@ public class MOD extends DriverBase {
 		unCheckPax(itn);
 	}
 
-	public void refundWholeAmountInMod(String itin,Itinerary itn) throws InterruptedException {
+	public void refundWholeAmountInMod(String itin, Itinerary itn) throws InterruptedException {
 		g4LoginPage.g4Signin(false);
 
 		Set<String> curTab = driver.getWindowHandles();
 		g4MenuPage.selectMOD();
 		GeneralUtils.switchNextTab(driver, curTab);
 
-		refundWholeAmount(itin,itn);
+		refundWholeAmount(itin, itn);
 	}
 
 	public void cancelWholeItn(String itn) {

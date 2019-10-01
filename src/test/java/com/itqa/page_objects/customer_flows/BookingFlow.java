@@ -171,7 +171,7 @@ public class BookingFlow extends BasePage {
 	}
 
 	public void WWWRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("qa2")) {
+		if (Environment.getEnv().contains("stg")) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
 		}

@@ -51,10 +51,8 @@ public class TABookingTestIT extends DriverBase {
 	}
 
 	// , retryAnalyzer = RetryFailure.class
-	// @Test(dataProvider = "TA Use Cases", dataProviderClass =
-	// ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book a One
-	// Way Trip", groups = {
-	// "simple", "bat" })
+	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book a One Way Trip", groups = {
+			"simple", "bat" })
 
 	@Story(" TA Flight + Hotel + Car booking Email confirmation received")
 	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
