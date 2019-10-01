@@ -9,9 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
+import com.itqa.page_objects.BasePage;
+
 import framework.DriverBase;
 
-public class STS extends DriverBase {
+public class STS extends BasePage {
 
     private Logger logger = null;
 
@@ -42,7 +44,7 @@ public class STS extends DriverBase {
         logger.info("STS Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }

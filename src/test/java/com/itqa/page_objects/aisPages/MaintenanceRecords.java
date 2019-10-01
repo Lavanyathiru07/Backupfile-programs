@@ -9,13 +9,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
+import com.itqa.page_objects.BasePage;
+
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class MaintenanceRecords extends DriverBase {
+public class MaintenanceRecords extends BasePage {
 
     private Logger logger = null;
     private WebDriver driver = null;
@@ -103,7 +105,7 @@ public class MaintenanceRecords extends DriverBase {
         logger.info("MX Records Report displayed");
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
+    		//DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
     	}
     }

@@ -9,9 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
+import com.itqa.page_objects.BasePage;
+
 import framework.DriverBase;
 
-public class AisMenuPage extends DriverBase{
+public class AisMenuPage extends BasePage{
 	
 	int count = 0;
 	private JavascriptExecutor jse = null;

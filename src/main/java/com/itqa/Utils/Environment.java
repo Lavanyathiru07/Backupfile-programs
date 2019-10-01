@@ -11,12 +11,15 @@ public class Environment {
 	public static Boolean shouldUpdateConfluenceStatusOnFailure = false;
 	private static Integer silo = -1;
 
+
+
 	private int[] stg = { 1, 2, 3 };
 	private int[] qa1 = { 1, 2 };
 	private int[] qa2 = { 1, 2 };
 	private int[] in1 = { 1 };
 	private int[] intl = { 1 };
 	private int[] trn = { 0 };
+
 
 	public static String getEnv() {
 		envUnderTest = System.getProperty("env");

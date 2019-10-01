@@ -13,30 +13,36 @@ import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
-public class ESP extends BasePage{
+public class CL extends BasePage{
 
     private Logger logger = null;
 
     private WebDriver driver = null;
     private JavascriptExecutor jse = null;
 
-    @FindBy(xpath = "//td[contains(text(),'31B')]")
-    private WebElement mapRow;
+    @FindBy(id = "fname")
+    private WebElement fnameField;
 
-    public ESP() {
-    	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(ESP.class);
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+    @FindBy(id = "email")
+    private WebElement emailField;
+
+    public CL() { 
+        this.driver = DriverBase.getDriver();
+        this.logger = Logger.getLogger(CL.class);
+        jse = (JavascriptExecutor) driver;
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+        
     }
 
-    public void accessESP() {
+    public void accessCL() {
     	try{
-        mapRow.click();
-        logger.info("ESP Menu Open");
+        fnameField.click();
+        emailField.click();
+        logger.info("CL Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		e.printStackTrace();
+    		DriverBase.getDriver().quit();
+			throw new SkipException("Scenario fails so execution stoped");
     	}
-    	}
+    }
 }

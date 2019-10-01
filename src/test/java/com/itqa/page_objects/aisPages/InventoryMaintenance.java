@@ -10,9 +10,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
+import com.itqa.page_objects.BasePage;
+
 import framework.DriverBase;
 
-public class InventoryMaintenance extends DriverBase{
+public class InventoryMaintenance extends BasePage{
 
     private Logger logger = null;
     private JavascriptExecutor jse = null;

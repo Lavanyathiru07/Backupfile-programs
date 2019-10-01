@@ -9,13 +9,14 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
+import com.itqa.page_objects.BasePage;
 import com.itqa.page_objects.g4_plus_pages.G4MenuPage;
 
 import framework.DriverBase;
 
 import java.util.List;
 
-public class AircraftRecords extends DriverBase{
+public class AircraftRecords extends BasePage{
 	private JavascriptExecutor jse = null;
     private Logger logger = null;
     private WebDriver driver = null;
