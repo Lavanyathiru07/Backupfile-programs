@@ -54,7 +54,6 @@ public enum URLS {
         	}else {
         		return url.replace("xxx", "silo" + silo + "." + env);
         	}
-        
             
         }
     }

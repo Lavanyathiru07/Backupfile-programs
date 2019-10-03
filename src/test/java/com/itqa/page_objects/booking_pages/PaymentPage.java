@@ -130,10 +130,8 @@ public class PaymentPage extends BasePage {
 	@FindBy(xpath = "(//*[contains(text(),' do not add Trip Flex to my trip.')])[2]")
 	private WebElement tripFlexPopupNo;
 
-
 	@FindBy(xpath = "//h2[contains(text(),'Who Will Be Traveling?')]")
 	private WebElement travellersPageH2;
-
 
 	public PaymentPage() {
 		this.driver = DriverBase.getDriver();
@@ -152,14 +150,13 @@ public class PaymentPage extends BasePage {
 		try {
 			closeApplyCardPopup.click();
 			logger.info("Close apply allegiant card pop-up");
-		}  catch (
-				TimeoutException e) {
+		} catch (TimeoutException e) {
 			logger.info("Could not close the pop up, it probably was not displayed");
 		}
 	}
 
 	public void selectTripFlex(Boolean tf, String scenario) {
-		for (int loop=0; loop<5; loop++) {
+		for (int loop = 0; loop < 5; loop++) {
 			try {
 				if (!scenario.toLowerCase().contains("web")) {
 					if (tf) {
@@ -178,22 +175,22 @@ public class PaymentPage extends BasePage {
 					}
 				}
 				break;
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				if (loop == 4) {
 					throw new Error(e);
-				}
-				else {
-					try {Thread.sleep(1000);} catch (Exception e1) {}
+				} else {
+					try {
+						Thread.sleep(1000);
+					} catch (Exception e1) {
+					}
 				}
 			}
 		}
-		for (int loop=0; loop<5; loop++) {
+		for (int loop = 0; loop < 5; loop++) {
 			try {
 				yesTripFlexButton.getAttribute("disabled").equals("");
 				Thread.sleep(1000);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				break;
 			}
 		}
@@ -205,17 +202,16 @@ public class PaymentPage extends BasePage {
 		String cardNumber;
 		String cvv;
 		String cardName;
-		
+
 		Common.elementToBeClickable(driver, expireMonthField, "exp month");
 
-		if(System.getProperty("env").contains("prod")) {
+		if (System.getProperty("env").contains("prod")) {
 			expiredMonth = System.getProperty("expiration").split("-")[0].replace("0", "");
 			expiredYear = System.getProperty("expiration").split("-")[1];
 			cardNumber = System.getProperty("cardno");
 			cardName = System.getProperty("cardname");
 			cvv = System.getProperty("cvv");
-		}
-		else {
+		} else {
 			expiredMonth = "3";
 			expiredYear = "2020";
 			cardNumber = cardNo;
@@ -223,7 +219,7 @@ public class PaymentPage extends BasePage {
 			cvv = "123";
 		}
 
-		for (int loop=0; loop<10; loop++) {
+		for (int loop = 0; loop < 10; loop++) {
 			try {
 				new Select(expireMonthField).selectByValue(expiredMonth);
 				break;
@@ -231,7 +227,7 @@ public class PaymentPage extends BasePage {
 			}
 		}
 
-		for (int loop=0; loop<10; loop++) {
+		for (int loop = 0; loop < 10; loop++) {
 			try {
 				new Select(expireYearField).selectByValue(expiredYear);
 				break;
@@ -239,22 +235,26 @@ public class PaymentPage extends BasePage {
 			}
 		}
 
-		//Some strange AJAX call is made around here and mess with entering CC
-		//Wait a lil for that call to pass
-		try {Thread.sleep(5000);} catch (Exception e) {}
+		// Some strange AJAX call is made around here and mess with entering CC
+		// Wait a lil for that call to pass
+		try {
+			Thread.sleep(5000);
+		} catch (Exception e) {
+		}
 
-		for (int loop=0; loop<10; loop++) {
+		for (int loop = 0; loop < 10; loop++) {
 			try {
 				cardNoField.clear();
 				cardNoField.sendKeys(cardNumber);
 				break;
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				if (loop == 9) {
 					throw new Error(e);
-				}
-				else {
-					try {Thread.sleep(1000);} catch (Exception e1) {}
+				} else {
+					try {
+						Thread.sleep(1000);
+					} catch (Exception e1) {
+					}
 				}
 			}
 		}
@@ -268,23 +268,23 @@ public class PaymentPage extends BasePage {
 		addrField.sendKeys("A");
 		cityField.sendKeys("A");
 
-		for (int loop=0; loop<5; loop++) {
+		for (int loop = 0; loop < 5; loop++) {
 			try {
 				new Select(stateField).selectByValue("AL");
 				break;
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				if (loop == 4) {
 					throw new Error(e.getMessage());
-				}
-				else {
-					try {Thread.sleep(500);} catch (Exception e1) {
+				} else {
+					try {
+						Thread.sleep(500);
+					} catch (Exception e1) {
 					}
 				}
 			}
 		}
 
-		for (int loop=0; loop<10; loop++) {
+		for (int loop = 0; loop < 10; loop++) {
 			try {
 				postalField.click();
 				break;
@@ -333,89 +333,109 @@ public class PaymentPage extends BasePage {
 		return price;
 	}
 
-	public void fillPaymentPage(Itinerary itn, Boolean createAccount,boolean Popupflag) throws Exception {
-		//driver = DriverBase.getDriver();
+	public void fillPaymentPage(Itinerary itn, Boolean createAccount, boolean Popupflag) throws Exception {
+		// driver = DriverBase.getDriver();
 		String amount = "";
 		double totalBookingFare = 0.00;
 		bagPage = new BagPage();
 		paymentPage = new PaymentPage();
 		travelerPage = new TravelerPage();
-		WebDriverWait wait = new WebDriverWait(driver, 60);	
+		// WebDriverWait wait = new WebDriverWait(driver, 60);
 
-		logger.info("Will popup be called?  "+ Popupflag);
-		if(driver.getCurrentUrl().contains("cc-") ||driver.getCurrentUrl().contains("cc.") ||
-				driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")){
-			if(Popupflag) {
+		logger.info("Will popup be called?  " + Popupflag);
+		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
+				|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
+			if (Popupflag) {
 				tripFlexPopupNo.click();
+				logger.info("Tripflex 'NO' popup is clicked");
 			}
-		}else {
-			if(Popupflag){ 
-				closePopup(); 
+		} else {
+			if (Popupflag) {
+				closePopup();
 			}
-		}	
-		new WebDriverWait(driver, 2000).until(ExpectedConditions.visibilityOf(totalAmount));
+		}
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(totalAmount));
 		try {
-			PageFactory.initElements(driver, PaymentPage.class); 
+			// PageFactory.initElements(driver, PaymentPage.class);
 			amount = totalAmount.getText();
-		}catch(StaleElementReferenceException e) { logger.info(e); }
+		} catch (StaleElementReferenceException e) {
+			logger.info(e);
+		}
 
 		totalBookingFare = PaymentPage.ConvertPrice(amount);
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
-		int arr[] = { 201,204,249,253,257,301,302,303,304,401,402,501,502,503,508,
-				509,510,521,522,530,531,570,571,572,591,592,594,595,596,602,603,605,
-				606,607,754,802,806,811,813,825,833,902,903,904,999}; 
-		int toCheckValue =(int) ConvertPrice(amount) ;
+		int arr[] = { 201, 204, 249, 253, 257, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521, 522,
+				530, 531, 570, 571, 572, 591, 592, 594, 595, 596, 602, 603, 605, 606, 607, 754, 802, 806, 811, 813, 825,
+				833, 902, 903, 904, 999 };
+		int toCheckValue = (int) ConvertPrice(amount);
 
 		if (checkDeclineAmount(arr, toCheckValue)) {
+
 			try {
-				new WebDriverWait(driver, 2000).until(ExpectedConditions.visibilityOf(bagsTab));
-				bagsTab.click();
+				new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(bagsTab));
+				jse.executeScript("arguments[0].click()", bagsTab);
+				// bagsTab.click();
 				String chbag = checkedBagList.getAttribute("value");
 				logger.info("Previously Selected check bags are " + chbag);
 				String checkedBag = "No";
 
-				if (chbag.contains("1")) { checkedBag = "2"; } else if (chbag.contains("2")) { checkedBag = "3"; } 
-				else if (chbag.contains("3")) { checkedBag = "4"; } else if (chbag.contains("4")) { checkedBag = "1";
-				} else if (chbag.contains("0")) { checkedBag = "1"; }
+				if (chbag.contains("1")) {
+					checkedBag = "2";
+				} else if (chbag.contains("2")) {
+					checkedBag = "3";
+				} else if (chbag.contains("3")) {
+					checkedBag = "4";
+				} else if (chbag.contains("4")) {
+					checkedBag = "1";
+				} else if (chbag.contains("0")) {
+					checkedBag = "1";
+				}
 
 				logger.info("Modified checked bags are " + checkedBag);
 				new Select(checkedBagList).selectByValue(checkedBag);
 				clickContinue();
-				if(driver.getCurrentUrl().contains("cc-") ||driver.getCurrentUrl().contains("cc.")|| 
-						driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
+				if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
+						|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
 					clickContinue();
 				}
 				paymentPage.fillPaymentPage(itn, createAccount, false);
-			}catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
-			
-		}
-		else {
-			if(!(driver.getCurrentUrl().contains("cc-") ||driver.getCurrentUrl().contains("cc.")|| 
-					driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
+			// wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
+
+		} else {
+			if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
+					|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
 				selectTripFlex(itn.getTripFlex(), itn.getScenario());
 			}
-			
+
 			fillCardInfo(itn.getCardNo());
-			
+
 			if (createAccount) {
 				itn.setEmail("tsqa.automation+" + System.currentTimeMillis() + "@tridentsqa.com");
 				if (itn.getScenario().toLowerCase().contains("account")) {
 					createProfile(itn.getEmail());
-				} else { fillEmail(itn.getEmail()); }
-			} else { fillEmail(itn.getEmail()); }
+				} else {
+					fillEmail(itn.getEmail());
+				}
+			} else {
+				fillEmail(itn.getEmail());
+			}
 			termAcceptField.click();
-			clickPurchase(); }
-	} 
+			clickPurchase();
+		}
+	}
 
 	private boolean checkDeclineAmount(int[] arr, int toCheckValue) {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i] == toCheckValue) {
-				logger.info("Actual amount (" + toCheckValue + ") is matching with decline amount: TRUE "); return true; }
+				logger.info("Actual amount (" + toCheckValue + ") is matching with decline amount: TRUE ");
+				return true;
+			}
 		}
 		logger.info("Actual amount (" + toCheckValue + ") is matching with decline amount: FALSE");
-		return false; }
+		return false;
+	}
 }

@@ -54,7 +54,7 @@ public class BagPage extends BasePage {
         this.driver = DriverBase.getDriver();
         this.logger = Logger.getLogger(BagPage.class);
         jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void chooseBag(int num, int carryOnBag, int checkedBag, String prio) {

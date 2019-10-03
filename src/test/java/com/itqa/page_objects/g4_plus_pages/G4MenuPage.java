@@ -69,7 +69,7 @@ public class G4MenuPage extends DriverBase {
 		this.driver = DriverBase.getDriver();
 		this.logger = Logger.getLogger(G4MenuPage.class);
 		jse = (JavascriptExecutor) driver;
-		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
 	}
 
 	public void selectMOD() {
