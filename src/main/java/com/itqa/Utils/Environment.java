@@ -29,8 +29,7 @@ public class Environment {
         return envUnderTest;
     }
 
-
-	public List<Integer> getRandomSilo() {
+    public List<Integer> getRandomSilo() {
 		switch (getEnv()) {
 		case "stg":
 			Optional<Integer> optional = Arrays.stream(stg).boxed().skip((int) (stg.length * Math.random())).findAny();
