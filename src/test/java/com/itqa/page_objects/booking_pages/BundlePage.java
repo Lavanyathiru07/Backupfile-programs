@@ -37,6 +37,9 @@ public class BundlePage extends BasePage {
 	@FindBy(xpath = "//*[@class='continue']")
 	private WebElement continueButton;
 
+	@FindBy(className = "bundles")
+	private WebElement bundle;
+
 	public BundlePage() {
 		this.driver = DriverBase.getDriver();
 		this.logger = Logger.getLogger(BundlePage.class);
@@ -46,7 +49,8 @@ public class BundlePage extends BasePage {
 
 	public void selectBundle(Itinerary itn) throws Exception {
 		try {
-			if (bundleTitle.isDisplayed()) {
+			new WebDriverWait(driver,20).until(ExpectedConditions.elementToBeClickable(bundleTitle));
+			if (bundleTitle.isDisplayed() && bundle.isDisplayed()) {
 				if (itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
 					itn.setSeat(true);
 					itn.setCarryOnBag(1);

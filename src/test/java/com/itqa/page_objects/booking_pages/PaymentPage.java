@@ -346,6 +346,7 @@ public class PaymentPage extends BasePage {
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
 				|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
 			if (Popupflag) {
+				new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(tripFlexPopupNo));
 				tripFlexPopupNo.click();
 				logger.info("Tripflex 'NO' popup is clicked");
 			}
