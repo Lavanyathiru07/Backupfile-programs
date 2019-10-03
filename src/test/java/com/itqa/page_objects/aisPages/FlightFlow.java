@@ -10,9 +10,11 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.SkipException;
 
+import com.itqa.page_objects.BasePage;
+
 import framework.DriverBase;
 
-public class FlightFlow extends DriverBase{
+public class FlightFlow extends BasePage{
 
     private Logger logger = null;
     private JavascriptExecutor jse = null;

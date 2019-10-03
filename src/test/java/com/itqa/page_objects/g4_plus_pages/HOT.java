@@ -1,6 +1,7 @@
 package com.itqa.page_objects.g4_plus_pages;
 
 import com.itqa.Utils.GeneralUtils;
+import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
@@ -18,7 +19,7 @@ import org.testng.SkipException;
 
 import java.util.concurrent.TimeUnit;
 
-public class HOT extends DriverBase{
+public class HOT extends BasePage{
 
     private Logger logger = null;
 
@@ -67,6 +68,7 @@ public class HOT extends DriverBase{
         for (int loop=0; loop<10; loop++) {
             try {
                 payloadTab.click();
+                
                 break;
             }
             catch (Exception e) {

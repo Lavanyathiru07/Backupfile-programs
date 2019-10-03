@@ -10,12 +10,13 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
 import com.itqa.Utils.Environment;
+import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
 import java.util.Base64;
 
-public class G4PlusLoginPage extends DriverBase {
+public class G4PlusLoginPage extends BasePage {
 
 	private Logger logger = null;
 

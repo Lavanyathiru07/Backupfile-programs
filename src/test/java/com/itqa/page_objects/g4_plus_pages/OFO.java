@@ -9,9 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
+import com.itqa.page_objects.BasePage;
+
 import framework.DriverBase;
 
-public class OFO extends DriverBase {
+public class OFO extends BasePage {
 
     private Logger logger = null;
 
@@ -39,9 +41,9 @@ public class OFO extends DriverBase {
 
     public void accessOFO() {
     	try{
-        pendingDisp.click();
-        appChart.click();
-        todayOE.click();
+        pendingDisp.isDisplayed();
+        appChart.isDisplayed();
+        todayOE.isDisplayed();
         searchDispButton.isDisplayed();
         logger.info("OFO Menu Open");
     	}catch(Exception e){
