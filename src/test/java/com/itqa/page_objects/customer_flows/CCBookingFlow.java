@@ -33,6 +33,7 @@ public class CCBookingFlow extends BasePage {
 	private ConfirmationPage confirmationPage;
 	private MOD mod;
 	private G4MenuPage g4MenuPage;
+	private EmailVerification EmailVerification;
 
 	public CCBookingFlow() {
 		this.logger = Logger.getLogger(CCBookingFlow.class);
@@ -48,6 +49,7 @@ public class CCBookingFlow extends BasePage {
 		confirmationPage = new ConfirmationPage();
 		mod = new MOD();
 		g4MenuPage = new G4MenuPage();
+		EmailVerification = new EmailVerification();
 	}
 
 	public String CCBooking(Itinerary itn, ITestContext context) {
@@ -80,6 +82,7 @@ public class CCBookingFlow extends BasePage {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		return mod.modUpsell(itn);
+		
 	}
 
 	public void CCRefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
@@ -87,5 +90,15 @@ public class CCBookingFlow extends BasePage {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
 		}
+	}
+	
+	public Boolean emailVerification(Itinerary itn, String mailToValidation) {
+		try {
+			EmailVerification.openGmail(itn,mailToValidation);
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+				
 	}
 }

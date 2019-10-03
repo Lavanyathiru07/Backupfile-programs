@@ -93,7 +93,9 @@ public class WebBookingTestIT extends DriverBase {
 		BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 		Assert.assertNotNull(itn.getItn(), "ITN could not be created");
-
+		
+		Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+		
 		updateTextContext(itn, context);
 
 		Assert.assertTrue(booking.processOnlineCheckinAndGetBoardingPass(itn), "Could not print boarding pass");
@@ -119,6 +121,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			updateTextContext(itn, context);
 
 			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
@@ -144,6 +147,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 			step("Logged in and verified account");

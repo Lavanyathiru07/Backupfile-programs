@@ -42,6 +42,7 @@ public class BookingFlow extends BasePage {
 	private GetBoardingPassPage getBoardingPassPage;
 	private MOD mod;
 	private G4MenuPage g4MenuPage;
+	private EmailVerification EmailVerification;
 
 	public BookingFlow() {
 		this.logger = Logger.getLogger(BookingFlow.class);
@@ -64,6 +65,7 @@ public class BookingFlow extends BasePage {
 		getBoardingPassPage = new GetBoardingPassPage();
 		mod = new MOD();
 		g4MenuPage = new G4MenuPage();
+		EmailVerification = new EmailVerification();
 	}
 
 	public String createWebBooking(Itinerary itn, ITestContext context) {
@@ -175,6 +177,16 @@ public class BookingFlow extends BasePage {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
 		}
+	}
+	
+	public Boolean emailVerification(Itinerary itn, String mailToValidation) {
+		try {
+			EmailVerification.openGmail(itn,mailToValidation);
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+				
 	}
 
 }
