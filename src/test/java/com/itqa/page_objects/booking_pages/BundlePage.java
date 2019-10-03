@@ -6,6 +6,7 @@ import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +19,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BundlePage extends BasePage {
 	private Logger logger = null;
@@ -49,8 +51,8 @@ public class BundlePage extends BasePage {
 
 	public void selectBundle(Itinerary itn) throws Exception {
 		try {
-			new WebDriverWait(driver,20).until(ExpectedConditions.elementToBeClickable(bundleTitle));
-			if (bundleTitle.isDisplayed() && bundle.isDisplayed()) {
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);	
+			if (driver.findElement(By.className("bundles")).isDisplayed()) {
 				if (itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
 					itn.setSeat(true);
 					itn.setCarryOnBag(1);
@@ -74,7 +76,7 @@ public class BundlePage extends BasePage {
 
 				continueButton.click();
 			}
-		} catch (NoSuchElementException e) {
+		} catch (Exception e) {
 			logger.info("Bundles page is skipping");
 		}
 	}
