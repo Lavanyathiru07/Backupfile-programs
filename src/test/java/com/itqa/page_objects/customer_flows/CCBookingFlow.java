@@ -76,11 +76,16 @@ public class CCBookingFlow extends BasePage {
 		return manifestId;
 	}
 
-	public Boolean processCCModification(Itinerary itn) {
-		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-		return mod.modUpsell(itn);
-	}
+    
+    public Boolean processCCModification(Itinerary itn) {
+    	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+    	DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+        return mod.modUpsell(itn);
+    }
+    
+    
+    
+
 
 	public void CCRefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
 		if (Environment.getEnv().contains("qa2")) {
@@ -88,4 +93,5 @@ public class CCBookingFlow extends BasePage {
 			mod.cancelWholeItn(itn.getItn());
 		}
 	}
+
 }
