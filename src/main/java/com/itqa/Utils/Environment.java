@@ -15,6 +15,7 @@ public class Environment {
 	private int[] qa1 = { 1, 2 };
 	private int[] qa2 = { 1, 2 };
 	private int[] in1 = { 1 };
+	private int[] in2 = { 1 };
 	private int[] intl = { 1 };
 	private int[] trn = { 0 };
 
@@ -56,6 +57,8 @@ public class Environment {
 			return stream(intl).boxed().collect(Collectors.toList());
 		case "trn":
 			return stream(trn).boxed().collect(Collectors.toList());
+		case "in2":
+			return stream(in2).boxed().collect(Collectors.toList());
 		default:
 			return stream(stg).boxed().collect(Collectors.toList());
 

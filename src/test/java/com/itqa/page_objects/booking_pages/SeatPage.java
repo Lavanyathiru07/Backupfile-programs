@@ -158,7 +158,9 @@ public class SeatPage extends BasePage {
                 selectSSR(itn.getPaxNum(), itn.getSsr());
             }
             else {
+            	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(ssrPopupOkButton));
                 ssrPopupOkButton.click();
+                logger.info("SSR popup closed");
             }
         }
     	Common.elementToBeClickable(driver,seatTable, "Seat map");
