@@ -203,7 +203,7 @@ public class PaymentPage extends BasePage {
 		String cvv;
 		String cardName;
 
-		Common.elementToBeClickable(driver, expireMonthField, "exp month");
+	//	Common.elementToBeClickable(driver, expireMonthField, "exp month");
 
 		if (System.getProperty("env").contains("prod")) {
 			expiredMonth = System.getProperty("expiration").split("-")[0].replace("0", "");
@@ -347,7 +347,8 @@ public class PaymentPage extends BasePage {
 				|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
 			if (Popupflag) {
 				new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(tripFlexPopupNo));
-				tripFlexPopupNo.click();
+				jse.executeScript(JSFIRSTARG, tripFlexPopupNo);
+				//tripFlexPopupNo.click();
 				logger.info("Tripflex 'NO' popup is clicked");
 			}
 		} else {
