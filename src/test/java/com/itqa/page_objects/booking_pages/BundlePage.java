@@ -51,9 +51,8 @@ public class BundlePage extends BasePage {
 
 	public void selectBundle(Itinerary itn) throws Exception {
 		try {
-			Thread.sleep(2000);
-			//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			if (driver.findElement(By.className("bundles")).isDisplayed()) {
+			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(bundleTitle));
+			if (bundle.isDisplayed() && bundleTitle.isDisplayed()) {
 				if (itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
 					itn.setSeat(true);
 					itn.setCarryOnBag(1);
@@ -78,7 +77,7 @@ public class BundlePage extends BasePage {
 				continueButton.click();
 				logger.info("Continue is clicked");
 			}
-		} catch (Exception e) {
+		} catch (NoSuchElementException e) {
 			logger.info("Bundles page is skipping");
 		}
 	}
