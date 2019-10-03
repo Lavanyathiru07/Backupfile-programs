@@ -148,6 +148,7 @@ public class PaymentPage extends BasePage {
 	public void closePopup() {
 
 		try {
+			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(closeApplyCardPopup));
 			closeApplyCardPopup.click();
 			logger.info("Close apply allegiant card pop-up");
 		} catch (TimeoutException e) {
@@ -203,7 +204,7 @@ public class PaymentPage extends BasePage {
 		String cvv;
 		String cardName;
 
-	//	Common.elementToBeClickable(driver, expireMonthField, "exp month");
+		// Common.elementToBeClickable(driver, expireMonthField, "exp month");
 
 		if (System.getProperty("env").contains("prod")) {
 			expiredMonth = System.getProperty("expiration").split("-")[0].replace("0", "");
@@ -218,9 +219,10 @@ public class PaymentPage extends BasePage {
 			cardName = "A";
 			cvv = "123";
 		}
-
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		for (int loop = 0; loop < 10; loop++) {
 			try {
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				new Select(expireMonthField).selectByValue(expiredMonth);
 				break;
 			} catch (Exception e) {
@@ -291,6 +293,7 @@ public class PaymentPage extends BasePage {
 			} catch (Exception e) {
 			}
 		}
+		Thread.sleep(2000);
 		postalField.sendKeys("12345");
 		phoneField.clear();
 		phoneField.sendKeys("7025555555");
@@ -316,7 +319,7 @@ public class PaymentPage extends BasePage {
 		logger.info("Created profile: " + accountEmail + " / " + PASSWORD);
 	}
 
-	public void clickPurchase() {
+	public void clickPurchase() throws InterruptedException {
 		jse.executeScript(JSFIRSTARG, purchaseButton);
 		logger.info("Click purchase");
 	}
@@ -348,7 +351,7 @@ public class PaymentPage extends BasePage {
 			if (Popupflag) {
 				new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(tripFlexPopupNo));
 				jse.executeScript(JSFIRSTARG, tripFlexPopupNo);
-				//tripFlexPopupNo.click();
+				// tripFlexPopupNo.click();
 				logger.info("Tripflex 'NO' popup is clicked");
 			}
 		} else {
@@ -367,9 +370,9 @@ public class PaymentPage extends BasePage {
 		totalBookingFare = PaymentPage.ConvertPrice(amount);
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
-		int arr[] = { 201, 204, 249, 253, 257, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521, 522,
-				530, 531, 570, 571, 572, 591, 592, 594, 595, 596, 602, 603, 605, 606, 607, 754, 802, 806, 811, 813, 825,
-				833, 902, 903, 904, 999 };
+		int arr[] = { 201, 204, 249, 253, 257, 258, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521,
+				522, 530, 531, 570, 571, 572, 591, 592, 594, 595, 596, 602, 603, 605, 606, 607, 754, 802, 806, 811, 813,
+				825, 833, 902, 903, 904, 999 };
 		int toCheckValue = (int) ConvertPrice(amount);
 
 		if (checkDeclineAmount(arr, toCheckValue)) {
