@@ -24,7 +24,6 @@ public class Environment {
 
 	public static String getEnv() {
 		envUnderTest = System.getProperty("env");
-		System.out.println("Master Check " + envUnderTest);
 		if (envUnderTest == null) {
 			System.out.println("******* " + envUnderTest);
 			System.setProperty("env", "stg");
