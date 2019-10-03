@@ -87,8 +87,8 @@ public class FlightFollowing extends BasePage{
     
     }catch(Exception e){
 		skip = true;
-		DriverBase.getDriver().quit();
-		throw new SkipException("Scenario fails so execution stoped");
+		//DriverBase.getDriver().quit();
+		e.printStackTrace();
 	}
     }
 }

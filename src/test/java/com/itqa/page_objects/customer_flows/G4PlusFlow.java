@@ -137,8 +137,7 @@ public class G4PlusFlow extends BasePage{
         if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
         	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			
-			
+						
 			/*DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
         	DriverBase.getDriver().get("https://ais." + System.getProperty("env") + ".allegiantair.com");*/
         }

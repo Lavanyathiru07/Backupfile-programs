@@ -41,8 +41,8 @@ public class CL extends BasePage{
         logger.info("CL Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+    		e.printStackTrace();
     	}
     }
 }
