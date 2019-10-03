@@ -3,7 +3,6 @@ package com.itqa.tests;
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
-import com.itqa.Utils.NonBookingEnv;
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.BasePage;
 import com.itqa.page_objects.customer_flows.BookingFlow;
@@ -45,7 +44,7 @@ public class NonBookingTestIT extends DriverBase {
 		driver = DriverBase.getDriver();
 		System.out.println("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
 				+ ", " + driver.getCurrentUrl());
-		env = NonBookingEnv.getEnv();
+		env = Environment.getEnv();
 		trc = new TestResultContext();
 
 	}
@@ -287,7 +286,7 @@ public class NonBookingTestIT extends DriverBase {
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
-		NonBookingEnv ev = new NonBookingEnv();
+		Environment ev = new Environment();
 		ev.setCurrentSilo(silo);
 		driver = DriverBase.getDriver();
 		driver.get(URLS.WWW.getUrl(env, silo));
