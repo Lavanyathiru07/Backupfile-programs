@@ -78,6 +78,7 @@ public class CCBookingFlow extends BasePage {
 		return manifestId;
 	}
 
+
 	public Boolean processCCModification(Itinerary itn) {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
@@ -101,4 +102,5 @@ public class CCBookingFlow extends BasePage {
 		}
 				
 	}
+
 }
