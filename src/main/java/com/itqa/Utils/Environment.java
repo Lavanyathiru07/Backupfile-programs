@@ -13,7 +13,7 @@ public class Environment {
 
 
 
-	private int[] stg = { 1, 2, 3 };
+	private int[] stg = { 1 };
 	private int[] qa1 = { 1, 2 };
 	private int[] qa2 = { 1, 2 };
 	private int[] in1 = { 1 };
