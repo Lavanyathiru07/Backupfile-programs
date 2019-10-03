@@ -109,9 +109,12 @@ public class PaymentPage extends BasePage {
 	@FindBy(id = "payment-wrapper")
 	private WebElement paymentTitle;
 
-	@FindBy(xpath = "//*[@class='total-breakdown']/p/strong|//strong[@class='balance']")
-	private WebElement totalAmount;
+	/*@FindBy(xpath = "//*[@class='total-breakdown']/p/strong|//strong[@class='balance']")
+	private WebElement totalAmount;*/
 
+	@FindBy(xpath = "//th[contains(text(),'Total (USD)')]/following::td[1]")
+	private WebElement totalAmount;
+	
 	@FindBy(xpath = "//span[contains(text(),'Bags')]")
 	private WebElement bagsTab;
 
@@ -148,7 +151,7 @@ public class PaymentPage extends BasePage {
 	public void closePopup() {
 
 		try {
-			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(closeApplyCardPopup));
+			//new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(closeApplyCardPopup));
 			closeApplyCardPopup.click();
 			logger.info("Close apply allegiant card pop-up");
 		} catch (TimeoutException e) {
@@ -362,7 +365,7 @@ public class PaymentPage extends BasePage {
 		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(totalAmount));
 		try {
 			// PageFactory.initElements(driver, PaymentPage.class);
-			amount = totalAmount.getText();
+			amount = totalAmount.getText().trim();
 		} catch (StaleElementReferenceException e) {
 			logger.info(e);
 		}
