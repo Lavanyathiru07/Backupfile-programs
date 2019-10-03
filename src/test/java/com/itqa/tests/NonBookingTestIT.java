@@ -229,8 +229,8 @@ public class NonBookingTestIT extends DriverBase {
 		if (!env.contains("IN1") || !env.contains("IN2")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessPB2();
-		} else { //
-			DriverBase.getDriver().close();
+		} else { 
+			
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -302,14 +302,7 @@ public class NonBookingTestIT extends DriverBase {
 		step("NonBooking created with itn " + itn.getItn(), null);
 	}
 
-	/**
-	 * Adds passed step with provided name in current test or step (or test
-	 * fixture). Takes no effect if no test run at the moment. Shortcut for
-	 * {@link #step(String, Status)}.
-	 *
-	 * @param name   the name of step.
-	 * @param passed
-	 */
+	
 	public static void step(final String name, Status passed) {
 		step(name, Status.PASSED);
 	}
