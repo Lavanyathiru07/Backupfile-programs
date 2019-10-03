@@ -51,8 +51,8 @@ public class BundlePage extends BasePage {
 
 	public void selectBundle(Itinerary itn) throws Exception {
 		try {
-			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(bundleTitle));
-			if (bundle.isDisplayed() && bundleTitle.isDisplayed()) {
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			if (driver.findElement(By.className("bundles")).isDisplayed()) {
 				if (itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
 					itn.setSeat(true);
 					itn.setCarryOnBag(1);
