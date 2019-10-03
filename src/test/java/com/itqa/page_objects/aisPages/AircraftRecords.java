@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -41,7 +42,7 @@ public class AircraftRecords extends BasePage{
     public void lookupAircraftPart() {
     	try{
         lookupButton.click();
-
+        new WebDriverWait(driver, 30).wait();
         if (aircraftRecordsResultRow.size() > 0) {
             logger.info("Aircraft Records Lookup: " + aircraftRecordsResultRow.size() + " rows");
             logger.info("The first row is: " + aircraftRecordsResultRow.get(0).getText().replaceAll("\n", " "));
