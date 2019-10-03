@@ -51,7 +51,7 @@ public class BundlePage extends BasePage {
 
 	public void selectBundle(Itinerary itn) throws Exception {
 		try {
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);	
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			if (driver.findElement(By.className("bundles")).isDisplayed()) {
 				if (itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
 					itn.setSeat(true);
@@ -75,6 +75,7 @@ public class BundlePage extends BasePage {
 				}
 
 				continueButton.click();
+				logger.info("Continue is clicked");
 			}
 		} catch (Exception e) {
 			logger.info("Bundles page is skipping");
