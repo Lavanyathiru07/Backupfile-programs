@@ -51,8 +51,8 @@ public class CCBookingFlow extends BasePage {
         g4MenuPage = new G4MenuPage();
     }
 
-
-    public String CCBooking(Itinerary itn, ITestContext context) {
+    
+    public String createWebBooking(Itinerary itn, ITestContext context) {
         String manifestId = "";
 
         try {
@@ -69,10 +69,23 @@ public class CCBookingFlow extends BasePage {
             seatPage.selectSeatPage(itn);
             bagPage.selectBagPage(itn);
             travelerPage.fillTravelerPage(itn);
+        } catch (Exception e) {
+            return manifestId;
+        }
+        return manifestId;
+    }
+
+    
+    public String CCBooking(Itinerary itn, ITestContext context) {
+        String manifestId = "";
+
+        try {
+        	manifestId = createWebBooking(itn, context);
         	paymentPage.fillPaymentPage(itn, false, true);
             confirmationPage.verifyConf(itn);
         } catch (Exception e) {
-            System.out.println("%%%%%% caught error: " + e.getMessage());
+        	
+        	System.out.println("%%%%%% caught error: " + e.getMessage());
             e.printStackTrace();
             return manifestId;
         }

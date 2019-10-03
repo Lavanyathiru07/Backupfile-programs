@@ -28,8 +28,9 @@ public enum URLS {
             url = url.replace("allegiantair.com", NEXUSDOMAIN);
             return url.replace("xxx", "www." + INTLPREFIX);
         } else if(env.contains("VipProd")) {
-        	return url.replace("xxx", "www." + URLS.WWW);
         	
+        	return url.replace("xxx", "www." + URLS.WWW);
+        	//URLS.AIS.url=URLS.AIS.url.replace("ais.xxx", "xxx.ais");
         }
         	
         if (silo == 0) {
