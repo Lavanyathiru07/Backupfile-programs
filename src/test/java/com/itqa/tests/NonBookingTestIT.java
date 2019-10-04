@@ -158,7 +158,7 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Story("G4+: Access ESP")
 	public void accessESP(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if (!env.contains("IN1") || !env.contains("IN2")) {
+		if (!env.contains("in") || !env.contains("aws")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessESP();
 		}
@@ -168,7 +168,7 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Story("G4+: Access SVT")
 	public void accessSVT(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if (!env.contains("IN1") || !env.contains("IN2")) {
+		if (!env.contains("in") || !env.contains("aws")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSVT();
 		}
@@ -190,7 +190,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access TF2")
 	public void accessTF2(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("IN1") || !env.contains("IN2")) {
+		if (!env.contains("in") || !env.contains("aws")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessTF2();
 		} else { //
@@ -204,7 +204,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access RQ")
 	public void accessRQ(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("IN1") || !env.contains("IN2")) {
+		if (!env.contains("in") || !env.contains("aws")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessRQ();
 		}
@@ -215,11 +215,11 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access BAG")
 	public void accessBAG(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("IN1") || !env.contains("IN2")) {
+		if (!env.contains("in") || !env.contains("aws")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessBAG();
 		} else { //
-			DriverBase.getDriver().close();
+			
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -229,7 +229,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access PB2")
 	public void accessPB2(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("IN1") || !env.contains("IN2")) {
+		if (!env.contains("in") || !env.contains("aws")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessPB2();
 		} else { 
@@ -243,7 +243,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access HOT")
 	public void accessHOT(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("IN1") || !env.contains("IN2")) {
+		if (!env.contains("in") || !env.contains("aws")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessHOT();
 		}
@@ -253,7 +253,7 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Story("G4+: Access ATL")
 	public void accessATL(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if (!env.contains("IN1") || !env.contains("IN2")) {
+		if (!env.contains("in") || !env.contains("aws")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessATL();
 		}
@@ -263,7 +263,7 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Story("G4+: Access OFO")
 	public void accessOFO(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if (!env.contains("IN1") || !env.contains("IN2")) {
+		if (!env.contains("in") || !env.contains("aws")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessOFO();
 		} else {
@@ -275,7 +275,7 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Story("G4+: Access MOD")
 	public void accessMOD(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if (!env.contains("IN1") || !env.contains("IN2")) {
+		if (!env.contains("in") || !env.contains("aws")) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessMOD();
 		}
