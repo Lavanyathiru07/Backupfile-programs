@@ -65,7 +65,10 @@ public enum URLS {
 
 			}else if(env.contains("nddprd")) {
 				return url.replace("xxx", env + "-silo" + silo);	
-			}else {
+			}else if(env.contains("aws")) {
+	               return url.replace("xxx", "silo" + silo + "." + System.getProperty("awsenv"));
+	           }
+			else {
 				return url.replace("xxx", "silo" + silo + "." + env);
 			}
 		}
