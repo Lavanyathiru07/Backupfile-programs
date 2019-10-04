@@ -32,6 +32,7 @@ public class TABookingFlow extends BasePage {
 	private BagPage bagPage;
 	private ConfirmationPage confirmationPage;
 	private MOD mod;
+	private EmailVerification EmailVerification;
 
 	public TABookingFlow() {
 		this.logger = Logger.getLogger(TABookingFlow.class);
@@ -47,6 +48,7 @@ public class TABookingFlow extends BasePage {
 		bagPage = new BagPage();
 		confirmationPage = new ConfirmationPage();
 		mod = new MOD();
+		EmailVerification = new EmailVerification();
 
 	}
 
@@ -80,6 +82,16 @@ public class TABookingFlow extends BasePage {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
 		}
+	}
+	
+	public Boolean emailVerification(Itinerary itn, String mailToValidation) {
+		try {
+			EmailVerification.openGmail(itn,mailToValidation);
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+				
 	}
 
 }

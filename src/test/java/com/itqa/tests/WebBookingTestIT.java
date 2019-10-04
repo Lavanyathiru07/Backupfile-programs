@@ -57,14 +57,17 @@ public class WebBookingTestIT extends DriverBase {
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
 			"simple", "bat" })
 
-	@Story("WWW Booking Creation & Verify email confirmation")
+	@Story("WWW One way Booking Creation & Verify email confirmation and modification")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
 		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
-			generateBooking(itn, silo, context, WITHOUTACCOUNT);
+			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			
+			booking.manageTravelModificationUpsellBag(itn);
 
 			updateTextContext(itn, context);
 		} else {
@@ -77,11 +80,9 @@ public class WebBookingTestIT extends DriverBase {
 
 	// , retryAnalyzer = RetryFailure.class,
 
-	/*
-	 * @Test(dataProvider = "Web Use Cases", dataProviderClass =
-	 * ItineraryDataProvider.class, description =
-	 * "WWW One Way Booking with OLCI, NO UPSELL", groups = { "bat" })
-	 */
+	
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, 
+			description = "WWW One Way Booking with OLCI, NO UPSELL", groups = {"bat" })
 
 	@Story("I can book a one way ticket, check in and print boarding pass")
 	public void testWebBookWithOLCI(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -93,7 +94,9 @@ public class WebBookingTestIT extends DriverBase {
 		BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 		Assert.assertNotNull(itn.getItn(), "ITN could not be created");
-
+		
+		Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+		
 		updateTextContext(itn, context);
 
 		Assert.assertTrue(booking.processOnlineCheckinAndGetBoardingPass(itn), "Could not print boarding pass");
@@ -119,6 +122,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			updateTextContext(itn, context);
 
 			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
@@ -144,6 +148,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 			step("Logged in and verified account");

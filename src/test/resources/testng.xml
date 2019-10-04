@@ -1,26 +1,53 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="BAT 2.0 Automation" verbose="1" parallel="methods"
-	thread-count="25" preserve-order="false" data-provider-thread-count="25">
+	thread-count="25" preserve-order="false"
+	data-provider-thread-count="25">
 	<test name="WWW Booking">
-		<!-- <groups> <define name="bat"> <include name="bat" /> </define> <define 
-			name="simple"> <include name="simple" /> </define> </groups> -->
+		<groups>
+			<define name="bat">
+				<include name="bat" />
+			</define>
+			<define name="simple">
+				<include name="simple" />
+			</define>
+		</groups>
 		<classes>
 
-			
-			<!-- <class name="com.itqa.tests.WebBookingTestIT" />
-			<class name="com.itqa.tests.TABookingTestIT" />
-			<class name="com.itqa.tests.CCBookingTestIT" /> -->
-			<class name="com.itqa.tests.NonBookingTestIT" />
+
+			<class name="com.itqa.tests.WebBookingTestIT" />
+			<!-- <class name="com.itqa.tests.TABookingTestIT" />
+			<class name="com.itqa.tests.CCBookingTestIT" />
+			<class name="com.itqa.tests.NonBookingTestIT" /> -->
 
 
 		</classes>
 	</test>
-	<!-- <test name="CC Booking"> <groups> <define name="bat"> <include name="bat" 
-		/> </define> <define name="simple"> <include name="simple" /> </define> </groups> 
-		<classes> <class name="com.itqa.tests.CCBookingTestIT" /> </classes> </test> 
-		<test name="TA Booking"> <groups> <define name="bat"> <include name="bat" 
-		/> </define> <define name="simple"> <include name="simple" /> </define> </groups> 
-		<classes> <class name="com.itqa.tests.TABookingTestIT" /> </classes> </test> -->
+	<!-- <test name="CC Booking">
+		<groups>
+			<define name="bat">
+				<include name="bat" />
+			</define>
+			<define name="simple">
+				<include name="simple" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.itqa.tests.CCBookingTestIT" />
+		</classes>
+	</test>
+	<test name="TA Booking">
+		<groups>
+			<define name="bat">
+				<include name="bat" />
+			</define>
+			<define name="simple">
+				<include name="simple" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.itqa.tests.TABookingTestIT" />
+		</classes>
+	</test> -->
 </suite>
 
 

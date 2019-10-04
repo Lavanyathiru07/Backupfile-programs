@@ -63,7 +63,7 @@ public class CCBookingTestIT extends DriverBase {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			updateTextContext(itn, context);
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
 		} else {
@@ -86,6 +86,7 @@ public class CCBookingTestIT extends DriverBase {
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 			updateTextContext(itn, context);
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
 			step("Modified seats & bags in CC MOD");
