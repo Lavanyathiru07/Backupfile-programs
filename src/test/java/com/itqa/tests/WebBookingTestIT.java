@@ -63,8 +63,11 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
-			generateBooking(itn, silo, context, WITHOUTACCOUNT);
+			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			
+			booking.manageTravelModificationUpsellBag(itn);
 
 			updateTextContext(itn, context);
 		} else {
@@ -77,11 +80,9 @@ public class WebBookingTestIT extends DriverBase {
 
 	// , retryAnalyzer = RetryFailure.class,
 
-	/*
-	 * @Test(dataProvider = "Web Use Cases", dataProviderClass =
-	 * ItineraryDataProvider.class, description =
-	 * "WWW One Way Booking with OLCI, NO UPSELL", groups = { "bat" })
-	 */
+	
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, 
+			description = "WWW One Way Booking with OLCI, NO UPSELL", groups = {"bat" })
 
 	@Story("I can book a one way ticket, check in and print boarding pass")
 	public void testWebBookWithOLCI(Integer silo, Itinerary itn, ITestContext context, Method method)
