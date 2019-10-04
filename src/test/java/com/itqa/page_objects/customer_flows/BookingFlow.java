@@ -124,9 +124,9 @@ public class BookingFlow extends BasePage {
 
 	public Boolean signInAndVerifyAccount(Itinerary itn) {
 		String logoutUrl = URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()) + "user/logout";
-
-		DriverBase.getDriver().get(logoutUrl);
-
+		driver.get(logoutUrl);
+		//DriverBase.getDriver().get(logoutUrl);
+		System.out.println(logoutUrl);
 		landingPage.signIn(itn.getEmail());
 		return tripsPage.checkMyTrips(itn.getItn());
 	}
@@ -163,7 +163,7 @@ public class BookingFlow extends BasePage {
 	}
 
 	public void WWWUncheckRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("qa2")) {
+		if (Environment.getEnv().contains("prod")) {
 			mod.stationUncheckPax(itn.getItn());
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
@@ -171,7 +171,7 @@ public class BookingFlow extends BasePage {
 	}
 
 	public void WWWRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("stg")) {
+		if (Environment.getEnv().contains("prod")) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
 		}
