@@ -57,7 +57,7 @@ public class WebBookingTestIT extends DriverBase {
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
 			"simple", "bat" })
 
-	@Story("WWW Booking Creation & Verify email confirmation")
+	@Story("WWW One way Booking Creation & Verify email confirmation and modification")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
 		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))) {
