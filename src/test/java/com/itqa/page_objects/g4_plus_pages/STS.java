@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -38,8 +40,11 @@ public class STS extends BasePage {
 
     public void accessSTS() {
     	try{
+    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(seatMapTitle));	
         seatMapTitle.click();
+        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(seatMaskingTitle));
         seatMaskingTitle.click();
+        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(seatPricingTitle));
         seatPricingTitle.click();
         logger.info("STS Menu Open");
     	}catch(Exception e){

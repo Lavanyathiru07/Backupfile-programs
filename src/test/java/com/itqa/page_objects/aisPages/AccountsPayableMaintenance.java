@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -61,6 +63,7 @@ public class AccountsPayableMaintenance extends BasePage{
         if (System.getProperty("env").contains("in")) {
             for (int loop=0; loop<10; loop++) {
                 try {
+                	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(selectVendorIN));
                     selectVendorIN.click();
                     break;
                 }
@@ -85,7 +88,7 @@ public class AccountsPayableMaintenance extends BasePage{
             }
         }
         logger.info("Vendor id: 000005 found");
-
+        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(analysisTab));
         analysisTab.click();
 
         String num = selectedTransaction.getText();
@@ -118,8 +121,7 @@ public class AccountsPayableMaintenance extends BasePage{
     
     }catch(Exception e){
 		skip = true;
-		DriverBase.getDriver().quit();
-		throw new SkipException("Scenario fails so execution stoped");
+		e.printStackTrace();
 	}
 }
 }

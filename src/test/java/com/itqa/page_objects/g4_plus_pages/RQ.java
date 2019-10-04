@@ -55,8 +55,7 @@ public class RQ extends BasePage{
         logger.info("RQ Menu Open");
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }

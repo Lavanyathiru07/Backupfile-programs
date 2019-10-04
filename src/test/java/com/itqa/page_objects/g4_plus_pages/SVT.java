@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -57,6 +59,7 @@ public class SVT extends BasePage{
         new Select(operationSelect).selectByValue("equals");
         valueField.sendKeys(format.format(date));
         searchButton.click();
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
         resultRow.click();
         logger.info("SVT Menu Open");
     	}catch(Exception e){

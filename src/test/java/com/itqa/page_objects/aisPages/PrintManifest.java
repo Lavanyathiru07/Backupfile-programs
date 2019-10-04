@@ -60,8 +60,9 @@ public class PrintManifest extends BasePage {
 
     public void verifyPrintManifest() {
     	try{
+    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(locationSelect));
         locationSelect.click();
-        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(locationField));
+        new WebDriverWait(DriverBase.getDriver(), 3).until(ExpectedConditions.visibilityOf(locationField));
         locationField.sendKeys("LAS");
         logger.info("Select Location: LAS");
         selectCity.click();
@@ -75,8 +76,7 @@ public class PrintManifest extends BasePage {
         paxTable.click();
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }

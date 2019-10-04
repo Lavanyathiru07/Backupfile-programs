@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -31,11 +33,11 @@ public class KayakConsole extends BasePage{
 
     public void editKayakConsole() {
     	try{
+    	 new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(kayakTable));
         kayakTable.click();
         logger.info("Kayak Console Open");
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
     		e.printStackTrace();
     	}
     }

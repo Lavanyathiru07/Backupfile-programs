@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -44,8 +46,8 @@ public class FM extends BasePage{
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
+            	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(bagTab));
                 bagTab.click();
-                break;
             }
             catch (Exception e) {
                 if (loop == 9) {
@@ -92,6 +94,7 @@ public class FM extends BasePage{
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
+            	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(tfTab));
                 tfTab.click();
                 break;
             }
