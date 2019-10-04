@@ -124,8 +124,8 @@ public class BookingFlow extends BasePage {
 
 	public Boolean signInAndVerifyAccount(Itinerary itn) {
 		String logoutUrl = URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()) + "user/logout";
-		driver.get(logoutUrl);
-		//DriverBase.getDriver().get(logoutUrl);
+	//	driver.get(logoutUrl);
+		DriverBase.getDriver().get(logoutUrl);
 		System.out.println(logoutUrl);
 		landingPage.signIn(itn.getEmail());
 		return tripsPage.checkMyTrips(itn.getItn());
