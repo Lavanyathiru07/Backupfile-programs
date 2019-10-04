@@ -109,12 +109,15 @@ public class PaymentPage extends BasePage {
 	@FindBy(id = "payment-wrapper")
 	private WebElement paymentTitle;
 
-	/*@FindBy(xpath = "//*[@class='total-breakdown']/p/strong|//strong[@class='balance']")
-	private WebElement totalAmount;*/
+	/*
+	 * @FindBy(xpath =
+	 * "//*[@class='total-breakdown']/p/strong|//strong[@class='balance']") private
+	 * WebElement totalAmount;
+	 */
 
 	@FindBy(xpath = "//th[contains(text(),'Total (USD)')]/following::td[1]")
 	private WebElement totalAmount;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'Bags')]")
 	private WebElement bagsTab;
 
@@ -151,7 +154,7 @@ public class PaymentPage extends BasePage {
 	public void closePopup() {
 
 		try {
-			//new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(closeApplyCardPopup));
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(closeApplyCardPopup));
 			closeApplyCardPopup.click();
 			logger.info("Close apply allegiant card pop-up");
 		} catch (TimeoutException e) {
@@ -352,7 +355,7 @@ public class PaymentPage extends BasePage {
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
 				|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
 			if (Popupflag) {
-				new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(tripFlexPopupNo));
+				new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(tripFlexPopupNo));
 				jse.executeScript(JSFIRSTARG, tripFlexPopupNo);
 				// tripFlexPopupNo.click();
 				logger.info("Tripflex 'NO' popup is clicked");
@@ -362,7 +365,7 @@ public class PaymentPage extends BasePage {
 				closePopup();
 			}
 		}
-		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(totalAmount));
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		try {
 			// PageFactory.initElements(driver, PaymentPage.class);
 			amount = totalAmount.getText().trim();
