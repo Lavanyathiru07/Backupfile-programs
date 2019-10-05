@@ -137,27 +137,32 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void g4PlusSignin() {
-		try {
-			if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
-				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+		try{
+	        if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
+	        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			}else
-			if (System.getProperty("awsenv").contains("aws")) {
-				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("env"), 0));
+							
+				/*DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
+	        	DriverBase.getDriver().get("https://ais." + System.getProperty("env") + ".allegiantair.com");*/
+	        }else if(System.getProperty("awsenv").contains("aws")) {
+	        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("env"), 0));
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("env"), 0));
-			}else
-			if (System.getProperty("env").contains("ndd")) {
-				DriverBase.getDriver().get(URLS.NDD.getUrl(Environment.getEnv(), 0));
-			} else {
-				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+	        
+				} else {
+					if (System.getProperty("env").contains("ndd")) {
+						DriverBase.getDriver().get(URLS.NDD.getUrl(Environment.getEnv(), 0));
+					//	DriverBase.getDriver().get("https://nddprd-g4plus-portal.allegiantair.com/");
+					} else {
+						DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+					//	DriverBase.getDriver().get("https://g4plus-portal.allegiantair.com/");
+					}
+					G4PlusLoginPage.g4plusLogin(false);
+				}
+			} catch (Exception e) {
+				skip =true;
+				throw new SkipException("Skipping Test Case as runmode set to NO");
 			}
-			G4PlusLoginPage.g4plusLogin(false);
-
-		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-	}
 	
 	
 	
