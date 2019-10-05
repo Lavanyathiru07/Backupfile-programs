@@ -509,7 +509,7 @@ public class G4PlusFlow extends BasePage {
 		try {
 			loginPage.openSwap();
 		} catch (Exception e) {
-				throw new Error();
+			throw new Error();
 		}
 
 	}

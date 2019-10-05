@@ -3,6 +3,7 @@ package com.itqa.tests;
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
+import com.itqa.Utils.NonBookingEnvironment;
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.BasePage;
 import com.itqa.page_objects.customer_flows.BookingFlow;
@@ -39,18 +40,17 @@ public class NonBookingTestIT extends DriverBase {
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
 	}
-	
-	
+
 	@BeforeMethod
 	public void setup(ITestContext context) throws MalformedURLException {
 
 		driver = DriverBase.getDriver();
 		System.out.println("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
 				+ ", " + driver.getCurrentUrl());
-		env = Environment.getEnv();
-		System.out.println(env+"*************");
+		env = NonBookingEnvironment.getEnv();
+		System.out.println(env + "*************");
 		awsenv = System.getProperty("awsenv");
-		System.out.println(awsenv+"*************");
+		System.out.println(awsenv + "*************");
 		trc = new TestResultContext();
 
 	}
@@ -80,7 +80,6 @@ public class NonBookingTestIT extends DriverBase {
 		nonBooking.runSPOEreport();
 
 	}
-	
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Flight Information - Flight Following")
 	@Story("AIS: Flight Information - Flight Following")
@@ -127,7 +126,6 @@ public class NonBookingTestIT extends DriverBase {
 
 	}
 
-
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Flight Flow")
 	@Story("AIS: Access Flight Flow")
 	public void verifyFlightFlow(Integer silo, Itinerary itn, ITestContext context, Method method) {
@@ -145,10 +143,9 @@ public class NonBookingTestIT extends DriverBase {
 		nonBooking.accessKayakConsole();
 
 	}
-	
 
 
-	// , retryAnalyzer = RetryFailure.class
+
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4Portal: Access Customer Lookup")
 	@Story("G4Portal: Access Customer Lookup")
 	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
@@ -163,13 +160,12 @@ public class NonBookingTestIT extends DriverBase {
 	}
 
 	
-
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access STS")
 	@Story("G4+: Access STS")
 	public void accessSTS(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
-				
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
+
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSTS();
 
@@ -182,7 +178,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access ESP")
 	public void accessESP(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessESP();
@@ -196,7 +192,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access SVT")
 	public void accessSVT(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSVT();
@@ -210,7 +206,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access CAR")
 	public void accessCAR(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessCAR();
@@ -224,7 +220,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access TF2")
 	public void accessTF2(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessTF2();
@@ -238,7 +234,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access RQ")
 	public void accessRQ(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessRQ();
@@ -252,7 +248,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access BAG")
 	public void accessBAG(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessBAG();
@@ -266,7 +262,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access PB2")
 	public void accessPB2(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessPB2();
@@ -280,7 +276,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access HOT")
 	public void accessHOT(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessHOT();
@@ -294,7 +290,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4+: Access ATL")
 	public void accessATL(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessATL();
@@ -303,13 +299,12 @@ public class NonBookingTestIT extends DriverBase {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
-	
-	
+
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access OFO")
 	@Story("G4+: Access OFO")
 	public void accessOFO(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessOFO();
@@ -319,13 +314,11 @@ public class NonBookingTestIT extends DriverBase {
 
 	}
 
-	
-	
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access MOD")
 	@Story("G4+: Access MOD")
 	public void accessMOD(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
+		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")) {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessMOD();
@@ -334,16 +327,16 @@ public class NonBookingTestIT extends DriverBase {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
-	
+
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Swap: Access Swap")
 	@Story("Swap: Access Swap")
 	public void accessSwap(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		
+
 		G4PlusFlow nonBooking = new G4PlusFlow();
 		nonBooking.accessSwap();
-		
+
 	}
-	
+
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
 		Environment ev = new Environment();
 		ev.setCurrentSilo(silo);
@@ -360,7 +353,6 @@ public class NonBookingTestIT extends DriverBase {
 		step("NonBooking created with itn " + itn.getItn(), null);
 	}
 
-	
 	public static void step(final String name, Status passed) {
 		step(name, Status.PASSED);
 	}
