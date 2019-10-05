@@ -144,7 +144,7 @@ public class NonBookingTestIT extends DriverBase {
 
 	}
 
-
+/*
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4Portal: Access Customer Lookup")
 	@Story("G4Portal: Access Customer Lookup")
@@ -336,6 +336,9 @@ public class NonBookingTestIT extends DriverBase {
 		nonBooking.accessSwap();
 
 	}
+
+*/
+
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
 		Environment ev = new Environment();
