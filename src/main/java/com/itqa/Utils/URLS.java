@@ -12,7 +12,8 @@ public enum URLS {
 	CONFLUENCE("https://confluence.allegiantair.com"),
 	G4PLUSTOKEN("https://g4plus-res.xxx.allegiantair.com/test/token?aisId=12288"),
 	CC("https://cc-xxx.allegiantair.com/"),
-	TA("https://ta-xxx.allegiantair.com/");
+	TA("https://ta-xxx.allegiantair.com/"),
+	NDD("https://nddprd-g4plus-portal.allegiantair.com/");
 	//    INTERNATIONAL("int.nexus.intl");
 
 	private String url;

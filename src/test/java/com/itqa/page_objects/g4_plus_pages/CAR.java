@@ -74,8 +74,8 @@ public class CAR extends BasePage{
         resultRow.click();
         logger.info("CAR Menu Open");
     	}catch(Exception e){
-    		skip = true;
-    		throw new SkipException("Scenario fails so execution stoped");
+
+    		e.printStackTrace();
     	}
     }
 }

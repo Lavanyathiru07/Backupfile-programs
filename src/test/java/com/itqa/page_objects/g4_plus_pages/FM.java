@@ -61,8 +61,7 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("BAG Menu Open");
     }catch(Exception e){
-		skip = true;
-		throw new SkipException("Scenario fails so execution stoped");
+    	e.printStackTrace();
 	}
     }
 
@@ -85,8 +84,7 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("PB2 Menu Open");
     }catch(Exception e){
-		skip = true;
-		throw new SkipException("Scenario fails so execution stoped");
+    	e.printStackTrace();
 	}
     }
 
@@ -110,8 +108,7 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("TF2 Menu Open");
     	}catch(Exception e){
-    		skip = true;
-    		throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }
