@@ -372,14 +372,14 @@ public class PaymentPage extends BasePage {
 		} catch (StaleElementReferenceException e) {
 			logger.info(e);
 		}
-
+		System.out.println("Sibi check--->1" + amount);
 		totalBookingFare = PaymentPage.ConvertPrice(amount);
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
 		int arr[] = { 201, 204, 249, 253, 257, 258, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521,
 				522, 530, 531, 570, 571, 572, 591, 592, 594, 595, 596, 602, 603, 605, 606, 607, 754, 802, 806, 811, 813,
 				825, 833, 902, 903, 904, 999 };
-		int toCheckValue = (int) ConvertPrice(amount);
+		int toCheckValue = (int) PaymentPage.ConvertPrice(amount);
 
 		if (checkDeclineAmount(arr, toCheckValue)) {
 
