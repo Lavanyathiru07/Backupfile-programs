@@ -48,6 +48,7 @@ public class TripsPage {
 
 	public boolean checkMyTrips(String itn) {
 		logger.info("Trips clicked");
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(profile));
 		jse.executeScript("arguments[0].click()", profile);
 		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(profileTitle));
 		System.out.println("Element profile title is visibled");
