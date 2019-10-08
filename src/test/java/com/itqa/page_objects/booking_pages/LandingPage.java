@@ -6,6 +6,7 @@ import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -294,8 +295,9 @@ public class LandingPage extends BasePage {
 			// this pop up is not always displayed
 		}
 		new WebDriverWait(driver,20).until(ExpectedConditions.elementToBeClickable(loginButton));
-		jse.executeScript("arguments[0].click()", loginButton);
-		Common.clickWithTimeOut(driver, loginButton);
+		new Actions(driver).click(loginButton).build().perform();
+		//jse.executeScript("arguments[0].click()", loginButton);
+		//Common.clickWithTimeOut(driver, loginButton);
 
 		editNameField.sendKeys(accountEmail);
 		System.out.println("1111111111"+accountEmail);

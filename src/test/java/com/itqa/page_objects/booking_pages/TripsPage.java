@@ -17,51 +17,59 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TripsPage {
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	JavascriptExecutor jse = null;
 
-    @FindBy(xpath = "//a[text()='Trips']")
-    private WebElement tripsTab;
+	@FindBy(xpath = "//a[text()='Trips']")
+	private WebElement tripsTab;
 
-    @FindBy(xpath = "//a[contains(@href,'conf')]/span")
-    private List<WebElement> confirmationNumbers;
+	@FindBy(xpath = "//a[contains(@href,'conf')]/span")
+	private List<WebElement> confirmationNumbers;
 
-    @FindBy(xpath = "//span[contains(text(),'My Trips')]")
-    private WebElement myTripTitle;
-    
-    @FindBy(xpath = "//*[@data-hook='navigate_to_Profile']")
-    private WebElement profile;
+	@FindBy(xpath = "//span[contains(text(),'My Trips')]")
+	private WebElement myTripTitle;
 
-    public TripsPage() {
-        this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(TripsPage.class);
-        jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
-    }
+	@FindBy(xpath = "//*[@data-hook='navigate_to_Profile']")
+	private WebElement profile;
+	
+	@FindBy(xpath = "//span[text()='My Profile']")
+	private WebElement profileTitle;
+	
+	
 
-    public boolean checkMyTrips(String itn) {
-        logger.info("Trips clicked");
+	public TripsPage() {
+		this.driver = DriverBase.getDriver();
+		this.logger = Logger.getLogger(TripsPage.class);
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
+	}
 
-        if (!System.getProperty("env").contains("prod")) {
-            for (WebElement confirmationNumber: confirmationNumbers) {
-                if (confirmationNumber.getText().equalsIgnoreCase(itn)) {
-                    logger.info("ITN Found in my trips");
-                    return true;
-                }
-            }
-        }
-        else {
-        	new WebDriverWait(driver,20).until(ExpectedConditions.elementToBeClickable(profile));
-        	profile.click();
-        	new WebDriverWait(driver,20).until(ExpectedConditions.elementToBeClickable(tripsTab));
-        	tripsTab.click();
-        	new WebDriverWait(driver,20).until(ExpectedConditions.elementToBeClickable(myTripTitle));
-            myTripTitle.isDisplayed();
-            logger.info("Log-in Success");
-            return true;
-        }
-        return false;
-    }
+	public boolean checkMyTrips(String itn) {
+		logger.info("Trips clicked");
+		jse.executeScript("arguments[0].click()", profile);
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(profileTitle));
+		System.out.println("Element profile title is visibled");
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(tripsTab));
+		jse.executeScript("arguments[0].click()", tripsTab);
+		
+		
+		if (!System.getProperty("env").contains("prod")) {
+			for (WebElement confirmationNumber : confirmationNumbers) {
+				if (confirmationNumber.getText().equalsIgnoreCase(itn)) {
+					logger.info("ITN Found in my trips");
+					return true;
+				}
+			}
+		} else {
+			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(tripsTab));
+			tripsTab.click();
+			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(myTripTitle));
+			myTripTitle.isDisplayed();
+			logger.info("Log-in Success");
+			return true;
+		}
+		return false;
+	}
 }
