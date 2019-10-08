@@ -34,9 +34,9 @@ public class TripsPage {
 	@FindBy(xpath = "//*[@data-hook='navigate_to_Profile']")
 	private WebElement profile;
 	
-	@FindBy(xpath = "//span[text()='My Profile']")
-	private WebElement profileTitle;
-	
+	@FindBy(xpath = "//span[text()='My Trips']")
+	private WebElement tripsTitle;
+
 	
 
 	public TripsPage() {
@@ -48,9 +48,7 @@ public class TripsPage {
 
 	public boolean checkMyTrips(String itn) {
 		logger.info("Trips clicked");
-		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(profile));
-		jse.executeScript("arguments[0].click()", profile);
-		jse.executeScript("arguments[0].click()", tripsTab);
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(tripsTitle));
 		if (!System.getProperty("env").contains("prod")) {
 			for (WebElement confirmationNumber : confirmationNumbers) {
 				if (confirmationNumber.getText().equalsIgnoreCase(itn)) {
