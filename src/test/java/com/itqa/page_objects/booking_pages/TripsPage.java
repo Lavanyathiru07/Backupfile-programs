@@ -48,7 +48,7 @@ public class TripsPage {
 
 	public boolean checkMyTrips(String itn) {
 		logger.info("Trips clicked");
-		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(tripsTab));
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(profile));
 		jse.executeScript("arguments[0].click()", profile);
 		jse.executeScript("arguments[0].click()", tripsTab);
 		if (!System.getProperty("env").contains("prod")) {
