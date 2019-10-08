@@ -246,8 +246,7 @@ public class MOD extends BasePage{
 			logger.info("MOD menu open");
 		} catch (Exception e) {
 			skip = true;
-			driver.quit();
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 

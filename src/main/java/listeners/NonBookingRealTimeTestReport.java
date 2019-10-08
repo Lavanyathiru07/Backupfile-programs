@@ -71,6 +71,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 
     @Override
     public void onTestSkipped(ITestResult result) {
+    	if(!skip) {
     	String base64Screenshot = "data:image/png;base64,"+((TakesScreenshot)getDriver()).
                 getScreenshotAs(OutputType.BASE64);
 
@@ -99,7 +100,10 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
    
         System.out.println("Test Skipped->"+result.getName());
 
+    }else{
+    	}
     }
+   
 
     @Override
     public void onFinish(ITestContext result) {
