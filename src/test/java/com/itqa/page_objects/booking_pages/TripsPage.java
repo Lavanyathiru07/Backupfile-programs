@@ -51,7 +51,6 @@ public class TripsPage {
 		jse.executeScript("arguments[0].click()", profile);
 		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(profileTitle));
 		System.out.println("Element profile title is visibled");
-		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(tripsTab));
 		jse.executeScript("arguments[0].click()", tripsTab);
 		
 		
