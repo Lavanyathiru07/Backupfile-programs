@@ -54,8 +54,10 @@ public class WebBookingTestIT extends DriverBase {
 
 	// , retryAnalyzer = RetryFailure.class
 
-	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
-			"simple", "bat" })
+	// @Test(dataProvider = "Web Use Cases", dataProviderClass =
+	// ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups =
+	// {
+	// "simple", "bat" })
 
 	@Story("WWW Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
@@ -77,19 +79,18 @@ public class WebBookingTestIT extends DriverBase {
 
 	// , retryAnalyzer = RetryFailure.class,
 
-	/*
-	 * @Test(dataProvider = "Web Use Cases", dataProviderClass =
-	 * ItineraryDataProvider.class, description =
-	 * "WWW One Way Booking with OLCI, NO UPSELL", groups = { "bat" })
-	 */
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, NO UPSELL", groups = {
+			"bat" })
 
 	@Story("I can book a one way ticket, check in and print boarding pass")
 	public void testWebBookWithOLCI(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 		setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
-		setEarlyMarketCities(itn);
+		// setEarlyMarketCities(itn);
 
+		itn.setDepartureCity("BLI");
+		itn.setDestinationCity("LAS");
 		BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 		Assert.assertNotNull(itn.getItn(), "ITN could not be created");
@@ -101,7 +102,7 @@ public class WebBookingTestIT extends DriverBase {
 		step("Checked in and printed boarding pass");
 	}
 
-	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags, Priority", groups = {
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {
 			"bat" })
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
@@ -114,8 +115,9 @@ public class WebBookingTestIT extends DriverBase {
 
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
-			setEarlyMarketCities(itn);
-
+			// setEarlyMarketCities(itn);
+			itn.setDepartureCity("BLI");
+			itn.setDestinationCity("LAS");
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");

@@ -69,7 +69,7 @@ public class LandingPage extends BasePage {
 	@FindBy(id = "submit-search")
 	private WebElement seachButton;
 
-	@FindBy(xpath = "//a[.='Log in']")
+	@FindBy(xpath = "//*[@title='Login']")
 	private WebElement loginButton;
 
 	@FindBy(xpath = "//span[text()='myAllegiant™']")
@@ -294,8 +294,9 @@ public class LandingPage extends BasePage {
 		} catch (Exception e) {
 			// this pop up is not always displayed
 		}
-		new WebDriverWait(driver,20).until(ExpectedConditions.elementToBeClickable(loginButton));
+		new WebDriverWait(driver,5).until(ExpectedConditions.elementToBeClickable(loginButton));
 		new Actions(driver).click(loginButton).build().perform();
+		System.out.println("Login button is clicked");
 		//jse.executeScript("arguments[0].click()", loginButton);
 		//Common.clickWithTimeOut(driver, loginButton);
 
