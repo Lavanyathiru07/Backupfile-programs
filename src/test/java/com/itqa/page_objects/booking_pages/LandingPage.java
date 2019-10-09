@@ -294,14 +294,10 @@ public class LandingPage extends BasePage {
 		} catch (Exception e) {
 			// this pop up is not always displayed
 		}
-		new WebDriverWait(driver,5).until(ExpectedConditions.elementToBeClickable(loginButton));
-		new Actions(driver).click(loginButton).build().perform();
+		new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(loginButton));
+		jse.executeScript("arguments[0].click()", loginButton);
 		System.out.println("Login button is clicked");
-		//jse.executeScript("arguments[0].click()", loginButton);
-		//Common.clickWithTimeOut(driver, loginButton);
-
 		editNameField.sendKeys(accountEmail);
-		System.out.println("1111111111"+accountEmail);
 		if (System.getProperty("env").contains("prod")) {
 			editPassField.sendKeys("QAtest1234");
 		} else {
@@ -321,7 +317,7 @@ public class LandingPage extends BasePage {
 		try {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(popUpCloseButton));
 			jse.executeScript("arguments[0].click()", popUpCloseButton);
-			//	popUpCloseButton.click();
+			// popUpCloseButton.click();
 		} catch (TimeoutException e) {
 			logger.info("Could not close the pop up, it probably was not displayed");
 		}

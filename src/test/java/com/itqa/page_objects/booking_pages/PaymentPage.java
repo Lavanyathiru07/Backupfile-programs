@@ -333,12 +333,13 @@ public class PaymentPage extends BasePage {
 	public static double ConvertPrice(String value) {
 
 		double price = 0.00;
-		String[] pric = value.split("\\$");
+		String pric = value.replace("$", "");
+		
 		try {
-			pric[1] = pric[1].replace(",", "");
+			pric = pric.replace(",", "");
 		} catch (Exception e) {
 		}
-		price = Double.parseDouble(pric[1]);
+		price = Double.parseDouble(pric);
 		return price;
 	}
 
@@ -373,14 +374,15 @@ public class PaymentPage extends BasePage {
 			logger.info(e);
 		}
 		System.out.println("Sibi check--->1" + amount);
-		totalBookingFare = PaymentPage.ConvertPrice(amount);
+		totalBookingFare = ConvertPrice(amount);
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
 		int arr[] = { 201, 204, 249, 253, 257, 258, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521,
 				522, 530, 531, 570, 571, 572, 591, 592, 594, 595, 596, 602, 603, 605, 606, 607, 754, 802, 806, 811, 813,
 				825, 833, 902, 903, 904, 999 };
-		int toCheckValue = (int) PaymentPage.ConvertPrice(amount);
-
+		// int toCheckValue = (int) PaymentPage.ConvertPrice(amount);
+		int toCheckValue = (int) totalBookingFare;
+		System.out.println("Sibi Check---> 2 " + toCheckValue);
 		if (checkDeclineAmount(arr, toCheckValue)) {
 
 			try {
