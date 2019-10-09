@@ -351,7 +351,6 @@ public class PaymentPage extends BasePage {
 		bagPage = new BagPage();
 		paymentPage = new PaymentPage();
 		travelerPage = new TravelerPage();
-		// WebDriverWait wait = new WebDriverWait(driver, 60);
 
 		logger.info("Will popup be called?  " + Popupflag);
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
