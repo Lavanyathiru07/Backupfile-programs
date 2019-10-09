@@ -109,14 +109,13 @@ public class PaymentPage extends BasePage {
 	@FindBy(id = "payment-wrapper")
 	private WebElement paymentTitle;
 
-	/*
-	 * @FindBy(xpath =
-	 * "//*[@class='total-breakdown']/p/strong|//strong[@class='balance']") private
-	 * WebElement totalAmount;
-	 */
-
-	@FindBy(xpath = "//th[contains(text(),'Total (USD)')]/following::td[1]")
+	@FindBy(xpath = "//p[@class='total']/strong")
 	private WebElement totalAmount;
+
+	/*
+	 * @FindBy(xpath = "//th[contains(text(),'Total (USD)')]/following::td[1]")
+	 * private WebElement totalAmount;
+	 */
 
 	@FindBy(xpath = "//span[contains(text(),'Bags')]")
 	private WebElement bagsTab;
@@ -334,7 +333,7 @@ public class PaymentPage extends BasePage {
 
 		double price = 0.00;
 		String pric = value.replace("$", "");
-		
+
 		try {
 			pric = pric.replace(",", "");
 		} catch (Exception e) {
@@ -345,7 +344,7 @@ public class PaymentPage extends BasePage {
 
 	public void fillPaymentPage(Itinerary itn, Boolean createAccount, boolean Popupflag) throws Exception {
 		// driver = DriverBase.getDriver();
-		
+
 		String amount = "";
 		double totalBookingFare = 0.00;
 		bagPage = new BagPage();
@@ -366,11 +365,12 @@ public class PaymentPage extends BasePage {
 				closePopup();
 			}
 		}
-		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(totalAmount));
+		// new WebDriverWait(driver,
+		// 20).until(ExpectedConditions.elementToBeClickable(totalAmount));
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 			// PageFactory.initElements(driver, PaymentPage.class);
-			amount =driver.findElement(By.xpath("//th[contains(text(),'Total (USD)')]/following::td[1]")).getText().trim();
+			amount = totalAmount.getText().trim();
 		} catch (StaleElementReferenceException e) {
 			logger.info(e);
 		}
