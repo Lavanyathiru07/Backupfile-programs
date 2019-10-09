@@ -67,7 +67,7 @@ public class LoginPage {
 	}
 
 	public void clickCheckin() {
-		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(continueButton));
+		new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(continueButton));
 		jse.executeScript("arguments[0].click()", continueButton);
 		logger.info("Click CHECK_IN");
 	}

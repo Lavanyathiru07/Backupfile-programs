@@ -365,6 +365,10 @@ public class PaymentPage extends BasePage {
 				closePopup();
 			}
 		}
+		if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
+				|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
+			selectTripFlex(itn.getTripFlex(), itn.getScenario());
+		}
 		// new WebDriverWait(driver,
 		// 20).until(ExpectedConditions.elementToBeClickable(totalAmount));
 		try {
@@ -420,10 +424,10 @@ public class PaymentPage extends BasePage {
 			// wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
 
 		} else {
-			if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
+			/*if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
 					|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
 				selectTripFlex(itn.getTripFlex(), itn.getScenario());
-			}
+			}*/
 
 			fillCardInfo(itn.getCardNo());
 

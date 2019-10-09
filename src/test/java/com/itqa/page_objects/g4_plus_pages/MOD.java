@@ -222,6 +222,18 @@ public class MOD extends DriverBase {
 	@FindBy(xpath = "//td/abbr[text()='Refunded']/following::td[@class='amount'][2]")
 	private WebElement amountPaid;
 
+	@FindBy(xpath = "//*[@data-show='customer']")
+	private WebElement customer;
+
+	@FindBy(className = "btn-user-lookup")
+	private WebElement userLookup;
+
+	@FindBy(xpath = "//*[text()='Vouchers']")
+	private WebElement voucherTab;
+
+	@FindBy(xpath = "//*[contains(@class,'panel-section')]/a")
+	private WebElement voucher;
+
 	public MOD() {
 		this.driver = DriverBase.getDriver();
 		this.logger = Logger.getLogger(MOD.class);
@@ -299,6 +311,7 @@ public class MOD extends DriverBase {
 		if (voucher.equals("")) {
 			return false;
 		} else {
+			voucherVerification();
 			return true;
 		}
 	}
@@ -569,8 +582,8 @@ public class MOD extends DriverBase {
 		new WebDriverWait(driver, 10).until(
 				ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@class,'btn-reverse-transactions')]")));
 		Thread.sleep(1000);
-		jse.executeScript("arguments[0].click()",reverseButton );
-	//	reverseButton.click();
+		jse.executeScript("arguments[0].click()", reverseButton);
+		// reverseButton.click();
 		logger.info("reverse button is clicked");
 
 		new WebDriverWait(driver, 10).until(ExpectedConditions.numberOfElementsToBeMoreThan(
@@ -714,25 +727,22 @@ public class MOD extends DriverBase {
 		cancelItn(itn);
 	}
 
-	/*
-	 * public void reverseVoucherAmount(String itn) throws InterruptedException {
-	 * g4LoginPage.g4Signin(false);
-	 * 
-	 * Set<String> curTab = driver.getWindowHandles(); g4MenuPage.selectMOD();
-	 * GeneralUtils.switchNextTab(driver, curTab);
-	 * 
-	 * driver.get("https://g4plus-res.stg.allegiantair.com/app/bookings/" + itn);
-	 * try { new WebDriverWait(driver, 5).until(
-	 * ExpectedConditions.elementToBeClickable(By.cssSelector(
-	 * "a[href='/app/bookings/" + itn + "']")));
-	 * driver.findElement(By.cssSelector("a[href='/app/bookings/" + itn +
-	 * "']")).click(); } catch (Exception e) { }
-	 * 
-	 * for (int i = 0; i < 10; i++) { try { paymentTab.click();
-	 * logger.info("Payment tab is clicked"); break; } catch (Exception e) { if (i
-	 * == 9) { throw new Error(e); } try { Thread.sleep(1000); } catch (Exception
-	 * e1) { } } } reversevoucher();
-	 * 
-	 * }
-	 */
+	public void voucherVerification() {
+
+		jse.executeScript("arguments[0].click()", customer);
+		logger.info("Customer tab is clicked");
+		Set<String> curTab = driver.getWindowHandles();
+		jse.executeScript("arguments[0].click()", userLookup);
+		GeneralUtils.switchNextTab(driver, curTab);
+		voucherTab.click();
+		try {
+			if (!voucher.getText().equals("")) {
+				logger.info("Voucher is displayed in customer lookup -- Voucher number is  : " + voucher.getText());
+			}
+		} catch (Exception e) {
+			logger.info("Error while verifying the voucher.Please check manually");
+
+		}
+	}
+
 }
