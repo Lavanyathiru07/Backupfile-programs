@@ -368,8 +368,9 @@ public class PaymentPage extends BasePage {
 		}
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(totalAmount));
 		try {
+			Thread.sleep(1000);
 			// PageFactory.initElements(driver, PaymentPage.class);
-			amount = totalAmount.getText().trim();
+			amount =driver.findElement(By.xpath("//th[contains(text(),'Total (USD)')]/following::td[1]")).getText().trim();
 		} catch (StaleElementReferenceException e) {
 			logger.info(e);
 		}
