@@ -47,13 +47,11 @@ public class TripsPage {
 	public boolean checkMyTrips(String itn) {
 		// logger.info("Trips clicked");
 		for (int i = 0; i <= 3; i++) {
-			new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(tripsTab));
-			jse.executeScript("arguments[0].click()", profile);
-			new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(tripsTab));
-			jse.executeScript("arguments[0].click()", tripsTab);
 			if(tripsTitle.isDisplayed()) {
 				break;
 			}
+			jse.executeScript("arguments[0].click()", tripsTab);
+			
 		}
 		if (!System.getProperty("env").contains("prod")) {
 			for (WebElement confirmationNumber : confirmationNumbers) {

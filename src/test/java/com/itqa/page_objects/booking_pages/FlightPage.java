@@ -13,99 +13,133 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class FlightPage extends BasePage {
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
+	private LandingPage landingPage;
 
-    @FindBy(xpath = "//div[contains(@id,'flightchooser-departing')]//li")
-    private List<WebElement> depFlightList;
+	@FindBy(xpath = "//div[contains(@id,'flightchooser-departing')]//li")
+	private List<WebElement> depFlightList;
 
-    @FindBy(xpath = "//div[contains(@id,'flightchooser-returning')]//li")
-    private List<WebElement> retFlightList;
+	@FindBy(xpath = "//div[contains(@id,'flightchooser-returning')]//li")
+	private List<WebElement> retFlightList;
 
-    @FindBy(xpath = "//button[contains(text(),'Continue')]")
-    private WebElement continueButton;
-    
-    @FindBy(xpath = "//div[contains(@id,'flightchooser-departing')]//li")
-    private WebElement depFlightTable;
+	@FindBy(xpath = "//button[contains(text(),'Continue')]")
+	private WebElement continueButton;
 
-    @FindBy(id = "flights-wrapper")
-    private WebElement flightTitle;
+	@FindBy(xpath = "//div[contains(@id,'flightchooser-departing')]//li")
+	private WebElement depFlightTable;
 
-    public FlightPage() {
-        this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(FlightPage.class);
-        jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	@FindBy(id = "flights-wrapper")
+	private WebElement flightTitle;
 
-    public void selectDepFlight(int num, Itinerary itn) {
+	@FindBy(id = "departing")
+	private WebElement depart;
 
-        if (itn.getScenario().contains("check-in")) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            Date depDate;
-            try {
-                depDate = sdf.parse(depFlightList.get(0).findElement(By.xpath("//span[contains(@class,'flight-departs')]//time")).getAttribute("dateTime"));
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new Error();
-            }
+	@FindBy(xpath = "//*[text()='New Search']")
+	private WebElement newSearch;
 
-            Calendar depTime = Calendar.getInstance();
-            depTime.setTime(depDate);
-            Calendar currentTime = Calendar.getInstance();
-            currentTime.add(Calendar.HOUR, 23);
+	public FlightPage() {
+		this.driver = DriverBase.getDriver();
+		this.logger = Logger.getLogger(FlightPage.class);
+		landingPage = new LandingPage();
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
-            if (depTime.after(currentTime)) {
-                throw new Error("Departure Time not within 24 hr....Stop this test");
-            }
-        }
-        try {
-            Common.click(driver, depFlightList.get(num));
-        } catch (IndexOutOfBoundsException e) {
-            logger.error("Could not select a departing flight");
-            Screenshot.saveScreenshot("Could not select departing flight", driver);
-        }
+	public void selectDepFlight(int num, Itinerary itn) {
 
-        logger.info("Departure Flight: " + depFlightList.get(num).getText().split("\n")[1]);
-    }
+		if (itn.getScenario().contains("check-in")) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			Date depDate;
+			try {
+				depDate = sdf.parse(
+						depFlightList.get(0).findElement(By.xpath("//span[contains(@class,'flight-departs')]//time"))
+								.getAttribute("dateTime"));
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new Error();
+			}
 
-    public void selectRetFlight(int num) {
-        retFlightList.get(num).click();
-        logger.info("Returning Flight: " + retFlightList.get(num).getText().split("\n")[1]);
-    }
+			Calendar depTime = Calendar.getInstance();
+			depTime.setTime(depDate);
+			Calendar currentTime = Calendar.getInstance();
+			currentTime.add(Calendar.HOUR, 23);
 
-    public void clickContinue() {
-        continueButton.click();
-        logger.info("Click Continue");
-    }
+			if (depTime.after(currentTime)) {
+				throw new Error("Departure Time not within 24 hr....Stop this test");
+			}
+		}
+		try {
+			Common.click(driver, depFlightList.get(num));
+		} catch (IndexOutOfBoundsException e) {
+			logger.error("Could not select a departing flight");
+			Screenshot.saveScreenshot("Could not select departing flight", driver);
+		}
 
-    public void selectFlightPage(Itinerary itn) throws Exception {
-    	
-    	Common.elementToBeClickable(driver,depFlightTable, "Depture flight table");
-        
-    	
-        selectDepFlight(0, itn);
-        if (itn.getRoundTrip()) {
-            selectRetFlight(0);
-        }
-        Screenshot.saveScreenshot("Flights selected", driver);
-        clickContinue();
-    }
+		logger.info("Departure Flight: " + depFlightList.get(num).getText().split("\n")[1]);
+	}
 
-    /*public Map RCAselectFlight1(BatParams params) {
-        Map flightInfo = new HashMap();
+	public void selectRetFlight(int num) {
+		retFlightList.get(num).click();
+		logger.info("Returning Flight: " + retFlightList.get(num).getText().split("\n")[1]);
+	}
 
-        flightInfo.put("flt", depFlightList.get(0).findElement(By.xpath("//span[contains(@class,'flight-number')]//a")).getAttribute("aria-controls").split("_")[0].split("-")[1]);
-        flightInfo.put("depart", depFlightList.get(0).findElement(By.xpath("//span[contains(@class,'flight-departs')]//time")).getAttribute("dateTime"));
+	public void clickContinue() {
+		continueButton.click();
+		logger.info("Click Continue");
+	}
 
-        return flightInfo;
-    }*/
+	public void selectFlightPage(Itinerary itn) throws Exception {
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(depart));
+		if (depart.isDisplayed()) {
+			Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
+
+			selectDepFlight(0, itn);
+			if (itn.getRoundTrip()) {
+				selectRetFlight(0);
+			}
+			Screenshot.saveScreenshot("Flights selected", driver);
+			clickContinue();
+		} else {
+			if (itn.getDepartureCity().contains("CVG")) {
+				itn.setDepartureCity("BLI");
+			}
+			if (itn.getDepartureCity().contains("BLI")) {
+				itn.setDepartureCity("CVG");
+			}
+			if (itn.getDestinationCity().contains("CVG")) {
+				itn.setDepartureCity("LAS");
+			}
+			if (itn.getDestinationCity().contains("BLI")) {
+				itn.setDepartureCity("SFB");
+			}
+			newSearch.click();
+			landingPage.selectFlightsOnLandingPage(itn);
+			selectFlightPage(itn);
+
+		}
+	}
+	/*
+	 * public Map RCAselectFlight1(BatParams params) { Map flightInfo = new
+	 * HashMap();
+	 * 
+	 * flightInfo.put("flt", depFlightList.get(0).findElement(By.xpath(
+	 * "//span[contains(@class,'flight-number')]//a")).getAttribute("aria-controls")
+	 * .split("_")[0].split("-")[1]); flightInfo.put("depart",
+	 * depFlightList.get(0).findElement(By.xpath(
+	 * "//span[contains(@class,'flight-departs')]//time")).getAttribute("dateTime"))
+	 * ;
+	 * 
+	 * return flightInfo; }
+	 */
 }

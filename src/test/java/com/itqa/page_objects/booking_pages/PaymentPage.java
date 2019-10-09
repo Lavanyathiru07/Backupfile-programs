@@ -366,7 +366,7 @@ public class PaymentPage extends BasePage {
 				closePopup();
 			}
 		}
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(totalAmount));
 		try {
 			// PageFactory.initElements(driver, PaymentPage.class);
 			amount = totalAmount.getText().trim();
