@@ -57,7 +57,7 @@ public class NonBookingTestIT extends DriverBase {
 	
 	
 	
-/*
+
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Decoupled Code For MX - Action Requests")
 	@Story("AIS: Search Decoupled Code For MX - Action Requests")
 	public void lookupActionRequest(Integer silo, Itinerary itn, ITestContext context, Method method) {
@@ -128,7 +128,7 @@ public class NonBookingTestIT extends DriverBase {
 		nonBooking.lookupAccountsPayableMX();
 
 	}
-*/
+
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Flight Flow")
 	@Story("AIS: Access Flight Flow")
 	public void verifyFlightFlow(Integer silo, Itinerary itn, ITestContext context, Method method) {
@@ -164,7 +164,7 @@ public class NonBookingTestIT extends DriverBase {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
-/*
+
 	
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access STS")
 	@Story("G4+: Access STS")
@@ -342,7 +342,7 @@ public class NonBookingTestIT extends DriverBase {
 		nonBooking.accessSwap();
 
 	}
-*/
+
 
 
 
