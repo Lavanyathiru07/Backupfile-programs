@@ -63,7 +63,7 @@ public class AccountsPayableMaintenance extends BasePage{
         if (System.getProperty("env").contains("in")) {
             for (int loop=0; loop<10; loop++) {
                 try {
-                	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(selectVendorIN));
+                	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectVendorIN));
                     selectVendorIN.click();
                     break;
                 }
@@ -88,7 +88,7 @@ public class AccountsPayableMaintenance extends BasePage{
             }
         }
         logger.info("Vendor id: 000005 found");
-        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(analysisTab));
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(analysisTab));
         analysisTab.click();
 
         String num = selectedTransaction.getText();

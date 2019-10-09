@@ -41,7 +41,7 @@ public class FlightFlow extends BasePage{
     public void openFlightFlow() {
     	try{
         new Select(acGroupSelect).selectByVisibleText("ALL");
-        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(submitButton));
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(submitButton));
         submitButton.click();
         mainTable.isDisplayed();
         logger.info("Flight Flow Table Displayed");

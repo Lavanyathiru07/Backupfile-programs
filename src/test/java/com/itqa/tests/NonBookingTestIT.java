@@ -36,6 +36,8 @@ public class NonBookingTestIT extends DriverBase {
 	private String awsenv;
 	private TestResultContext trc;
 
+	
+
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
 	}
@@ -123,7 +125,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessCL();
 		}else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -135,7 +137,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSTS();
 		}else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -147,7 +149,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessESP();
 		}else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -159,7 +161,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSVT();
 		}else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -171,7 +173,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessCAR();
 		}else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -183,7 +185,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessTF2();
 		} else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -195,7 +197,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessRQ();
 		}else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -207,7 +209,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessBAG();
 		} else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -219,7 +221,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessPB2();
 		} else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -231,7 +233,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessHOT();
 		}else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -243,7 +245,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessATL();
 		}else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
@@ -254,9 +256,9 @@ public class NonBookingTestIT extends DriverBase {
 		if (!(env.contains("in") || env.contains("aws"))) {
 				G4PlusFlow nonBooking = new G4PlusFlow();
 				nonBooking.accessOFO();
-			} else {
-				skip = true;
-				throw new SkipException("Skipping Test Case due to Login  application ");
+			}else { 
+				flag=true;
+				throw new SkipException("Skipping Test Case due to Login application ");
 			}
 
 		}
@@ -265,21 +267,21 @@ public class NonBookingTestIT extends DriverBase {
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access MOD")
 	@Story("G4+: Access MOD")
 	public void accessMOD(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if (!(env.contains("in") || env.contains("aws"))) {
+		if (!(env.contains("in") || env.contains("aws") )) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessMOD();
 		}else { 
-			skip=true;
+			flag=true;
 			throw new SkipException("Skipping Test Case due to Login application ");
 		}
 	}
 
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Swap: Access Swap")
-	@Story("Swap: Access Swap")
-	public void accessSwap(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		G4PlusFlow nonBooking = new G4PlusFlow();
-		nonBooking.accessSwap();
-	}
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Swap: Access Swap")
+//	@Story("Swap: Access Swap")
+//	public void accessSwap(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//		G4PlusFlow nonBooking = new G4PlusFlow();
+//		nonBooking.accessSwap();
+//	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
 		Environment ev = new Environment();

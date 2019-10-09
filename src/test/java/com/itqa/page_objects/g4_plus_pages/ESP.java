@@ -34,7 +34,7 @@ public class ESP extends BasePage{
 
     public void accessESP() {
     	try{
-    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(mapRow));
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mapRow));
         mapRow.click();
         logger.info("ESP Menu Open");
     	}catch(Exception e){

@@ -40,7 +40,8 @@ public class Itinerary {
     private String manifestId;
 
     private float total;
-
+    private boolean skip;
+   
     public Itinerary(String scenario, String departureCity, String destinationCity, Boolean roundTrip, Integer departureDateIndex,
                      Integer returningDateIndex, String bundle,Boolean hotel, Boolean vehicle, Boolean activity, String firstName, String lastName,
                      String gender, Integer dobMonth, Integer dobDate, Integer dobYear, String email,
@@ -86,6 +87,8 @@ public class Itinerary {
         this.silo = silo;
         this.description = description;
         this.manifestId = manifestId;
+        this.skip = skip;
+       
     }
 
     public String getScenario() { return scenario; }
@@ -124,7 +127,7 @@ public class Itinerary {
     public String getGender() { return gender; }
     public int getPaxNum() { return Integer.parseInt(adult) + Integer.parseInt(child); }
 
-
+    public Boolean getSkip() { return skip; }
     public Boolean getHotel() { return hotel; }
     public Boolean getVehicle() { return vehicle; }
     public Boolean getActivity() { return activity; }
@@ -156,6 +159,7 @@ public class Itinerary {
         return tripFlex;
     }
     public String getCardNo() { return cardNo; }
+   
     public String getItn() {
         return itn;
     }
@@ -166,6 +170,9 @@ public class Itinerary {
     public float getTotal() { return total; }
 
     public void setItn(String itn) {this.itn = itn; }
+    public void setSkip(boolean skip) {this.skip = skip; }
+    
+   
 
     public void setDepartureCity(String city) {
         this.departureCity = city;

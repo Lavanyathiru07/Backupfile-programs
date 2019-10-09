@@ -69,11 +69,11 @@ public class MaintenanceRecords extends BasePage {
 
     public void lookupActionRequest() {
     	try{
-    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(actionsTab));
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(actionsTab));
         actionsTab.click();
-    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(actionRequestsTab));
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(actionRequestsTab));
         actionRequestsTab.click();
-    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(actionRequestsLookupButton));
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(actionRequestsLookupButton));
         actionRequestsLookupButton.click();
 
         if (actionRequestsResultRow.size() > 0) {
@@ -92,9 +92,9 @@ public class MaintenanceRecords extends BasePage {
 
     public void openReport() {
     	try{
-    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(reportsTab));
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
         reportsTab.click();
-        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(flightLogTab));
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
         flightLogTab.click();
 
         jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);

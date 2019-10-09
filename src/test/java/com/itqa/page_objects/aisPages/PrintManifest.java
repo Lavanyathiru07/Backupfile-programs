@@ -60,9 +60,9 @@ public class PrintManifest extends BasePage {
 
     public void verifyPrintManifest() {
     	try{
-    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(locationSelect));
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(locationSelect));
         locationSelect.click();
-        new WebDriverWait(DriverBase.getDriver(), 3).until(ExpectedConditions.visibilityOf(locationField));
+        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(locationField));
         locationField.sendKeys("LAS");
         logger.info("Select Location: LAS");
         selectCity.click();

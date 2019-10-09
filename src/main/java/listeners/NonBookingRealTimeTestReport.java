@@ -4,6 +4,9 @@ import com.itqa.Utils.Environment;
 import com.itqa.Utils.GeneralUtils;
 
 import com.itqa.Utils.UpdateConfluence;
+
+import data.Itinerary;
+
 import com.itqa.Utils.Jira;
 import framework.DriverBase;
 import org.openqa.selenium.OutputType;
@@ -14,6 +17,8 @@ import org.testng.ITestResult;
 
 
 public class NonBookingRealTimeTestReport extends DriverBase implements ITestListener {
+	
+	
 
     @Override
     public void onStart(ITestContext context) {
@@ -71,7 +76,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 
     @Override
     public void onTestSkipped(ITestResult result) {
-    	if(!skip) {
+    	if(!flag) {
     	String base64Screenshot = "data:image/png;base64,"+((TakesScreenshot)getDriver()).
                 getScreenshotAs(OutputType.BASE64);
 
@@ -92,7 +97,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 
         GeneralUtils.writeToFile("nonBookingFailedTests.html", "<tr><td>" + 
         		testResultContext.testName + "</td><td align=\"center\"><font color='red'>FAILED</font></td>"
-        				+ "<td align=\\\"center\\\"><font color='orange'>Invalid-Credential / Loading </font><td></td>"
+        				+ "<td align=\\\"center\\\"><font color='orange'>Invalid-Credential</font><td></td>"
         		+"<td align=\"center\"><a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo + ");\">show image</a>" +
                 "<img id='screenshotId" + testResultContext.currentSilo + "' " +
                 "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>" +

@@ -54,7 +54,6 @@ public class AircraftRecords extends BasePage{
     			throw new Error("Aircraft Records returns no result.");
     		}
     	}catch(Exception e){
-    		skip = true;
     		e.printStackTrace();
 
     	}

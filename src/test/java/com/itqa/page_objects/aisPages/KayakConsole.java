@@ -33,7 +33,7 @@ public class KayakConsole extends BasePage{
 
     public void editKayakConsole() {
     	try{
-    	 new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(kayakTable));
+    	 new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakTable));
         kayakTable.click();
         logger.info("Kayak Console Open");
     	}catch(Exception e){

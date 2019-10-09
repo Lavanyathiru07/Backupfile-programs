@@ -40,11 +40,11 @@ public class STS extends BasePage {
 
     public void accessSTS() {
     	try{
-    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(seatMapTitle));	
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatMapTitle));	
         seatMapTitle.click();
-        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(seatMaskingTitle));
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatMaskingTitle));
         seatMaskingTitle.click();
-        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(seatPricingTitle));
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatPricingTitle));
         seatPricingTitle.click();
         logger.info("STS Menu Open");
     	}catch(Exception e){

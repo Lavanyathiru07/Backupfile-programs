@@ -40,9 +40,9 @@ public class InventoryMaintenance extends BasePage{
 
     public void verifyInventoryMX() {
     	try{
-    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(selectedPart));
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectedPart));
         selectedPart.click();
-        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(transactionTab));
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(transactionTab));
         transactionTab.click();
 
         Boolean found = false;

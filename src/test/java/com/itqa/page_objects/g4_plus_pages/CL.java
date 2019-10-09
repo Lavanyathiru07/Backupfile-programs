@@ -38,14 +38,12 @@ public class CL extends BasePage{
 
     public void accessCL() {
     	try{
-    	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(fnameField));
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(fnameField));
         fnameField.click();
-        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(emailField));
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(emailField));
         emailField.click();
         logger.info("CL Menu Open");
     	}catch(Exception e){
-    		skip = true;
-    		//DriverBase.getDriver().quit();
     		e.printStackTrace();
     	}
     }

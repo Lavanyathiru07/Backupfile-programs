@@ -46,7 +46,7 @@ public class FM extends BasePage{
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
-            	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(bagTab));
+            	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(bagTab));
                 bagTab.click();
             }
             catch (Exception e) {
@@ -94,7 +94,7 @@ public class FM extends BasePage{
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
-            	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(tfTab));
+            	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(tfTab));
                 tfTab.click();
                 break;
             }
