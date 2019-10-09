@@ -43,7 +43,8 @@ public class CL extends BasePage{
         new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(emailField));
         emailField.click();
         logger.info("CL Menu Open");
-    	}catch(Exception e){
+
+    	}catch(Exception e){    		
     		e.printStackTrace();
     	}
     }

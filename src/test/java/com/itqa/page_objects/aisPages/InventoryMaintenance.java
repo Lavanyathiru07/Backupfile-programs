@@ -69,7 +69,7 @@ public class InventoryMaintenance extends BasePage{
             logger.info("Inventory Maintenance Transaction displayed");
         }
     	}catch(Exception e){
-    		skip = true;
+    	
     		e.printStackTrace();
 			
     	}

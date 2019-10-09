@@ -48,7 +48,7 @@ public class STS extends BasePage {
         seatPricingTitle.click();
         logger.info("STS Menu Open");
     	}catch(Exception e){
-    		skip = true;
+    		
     		e.printStackTrace();
     	}
     }

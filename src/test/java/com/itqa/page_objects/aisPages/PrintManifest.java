@@ -75,7 +75,6 @@ public class PrintManifest extends BasePage {
         allPaxButton.click();
         paxTable.click();
     	}catch(Exception e){
-    		skip = true;
     		e.printStackTrace();
     	}
     }

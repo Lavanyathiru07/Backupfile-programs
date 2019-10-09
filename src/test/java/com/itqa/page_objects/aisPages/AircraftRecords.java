@@ -19,8 +19,9 @@ import framework.DriverBase;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class AircraftRecords extends BasePage{
+public class AircraftRecords extends BasePage {
 	private JavascriptExecutor jse = null;
+
     private Logger logger = null;
     private WebDriver driver = null;
 
@@ -58,4 +59,6 @@ public class AircraftRecords extends BasePage{
 
     	}
     }
+
+	
 }

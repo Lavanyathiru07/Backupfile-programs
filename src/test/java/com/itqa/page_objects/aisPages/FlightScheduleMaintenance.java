@@ -39,7 +39,6 @@ public class FlightScheduleMaintenance extends BasePage{
         originText.click();
         logger.info("Flight Schedule Maintenance Displayed");
     	}catch(Exception e){
-    		skip = true;
     		e.printStackTrace();
     	}
     }

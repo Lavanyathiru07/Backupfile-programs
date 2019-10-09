@@ -54,7 +54,7 @@ public class RQ extends BasePage{
         jse.executeScript("arguments[0].click();", resultRow);
         logger.info("RQ Menu Open");
     	}catch(Exception e){
-    		skip = true;
+    
     		e.printStackTrace();
     	}
     }

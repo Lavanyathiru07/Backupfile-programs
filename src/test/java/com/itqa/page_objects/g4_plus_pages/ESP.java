@@ -38,7 +38,6 @@ public class ESP extends BasePage{
         mapRow.click();
         logger.info("ESP Menu Open");
     	}catch(Exception e){
-    		skip = true;
     		e.printStackTrace();
     	}
     	}

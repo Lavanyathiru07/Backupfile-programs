@@ -67,9 +67,7 @@ public class MaintenanceControl extends BasePage{
         jse.executeScript("arguments[0].click();", resultRow);
         logger.info("MX Control Report displayed");
     	}catch(Exception e){
-    		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }

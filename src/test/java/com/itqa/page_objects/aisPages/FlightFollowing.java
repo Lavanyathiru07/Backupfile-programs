@@ -86,8 +86,7 @@ public class FlightFollowing extends BasePage{
         }
     
     }catch(Exception e){
-		skip = true;
-		//DriverBase.getDriver().quit();
+		
 		e.printStackTrace();
 	}
     }
