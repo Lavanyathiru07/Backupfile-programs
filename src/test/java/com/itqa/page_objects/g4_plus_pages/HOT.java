@@ -128,8 +128,7 @@ public class HOT extends BasePage{
         logger.info("HOT Menu Open");
     
     }catch(Exception e){
-		skip = true;
-		throw new SkipException("Scenario fails so execution stoped");
+    	e.printStackTrace();
 	}
     }
 }

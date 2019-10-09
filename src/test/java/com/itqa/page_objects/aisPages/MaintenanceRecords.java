@@ -84,8 +84,7 @@ public class MaintenanceRecords extends BasePage {
             throw new Error("Action Requests returns no result.");
         }
     	}catch(Exception e){
-    		skip = true;
-    		//DriverBase.getDriver().quit();
+    		
     		e.printStackTrace();
     	}
     }
@@ -111,8 +110,7 @@ public class MaintenanceRecords extends BasePage {
         jse.executeScript("arguments[0].click();", resultRow);
         logger.info("MX Records Report displayed");
     	}catch(Exception e){
-    		skip = true;
-    		//DriverBase.getDriver().quit();
+    		
     		e.printStackTrace();
     	}
     }

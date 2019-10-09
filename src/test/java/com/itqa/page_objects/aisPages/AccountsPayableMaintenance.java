@@ -120,7 +120,6 @@ public class AccountsPayableMaintenance extends BasePage{
         }
     
     }catch(Exception e){
-		skip = true;
 		e.printStackTrace();
 	}
 }

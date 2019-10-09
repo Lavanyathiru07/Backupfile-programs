@@ -245,12 +245,13 @@ public class MOD extends BasePage{
 			confirmationNumField.click();
 			logger.info("MOD menu open");
 		} catch (Exception e) {
-			skip = true;
+
 			e.printStackTrace();
 		}
 	}
 
 	public boolean createVoucher(Itinerary itn) {
+		
 		confirmationNumField.sendKeys(itn.getItn());
 		searchButton.click();
 		logger.info("Seach itn: " + itn.getItn());
@@ -308,10 +309,11 @@ public class MOD extends BasePage{
 		} else {
 			return true;
 		}
+		
 	}
 
 	public void upsell(Itinerary Itn) {
-		try {
+		
 			String expiredMonth;
 			String expiredYear;
 			// String cardNumber;
@@ -415,14 +417,11 @@ public class MOD extends BasePage{
 
 			new WebDriverWait(driver, 30).until(
 					ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class,'flight-panel-target')]")));
-		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
-		}
+		
 	}
 
 	public boolean modUpsell(Itinerary Itn) {
-		try {
+		
 			Set<String> curTab = driver.getWindowHandles();
 			g4MenuPage.selectMOD();
 			GeneralUtils.switchNextTab(driver, curTab);
@@ -437,10 +436,7 @@ public class MOD extends BasePage{
 				System.out.println("Error getting while upsell bags & Seats");
 				return false;
 			}
-		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
-		}
+		
 	}
 
 	public void reversing() {

@@ -37,7 +37,6 @@ public class KayakConsole extends BasePage{
         kayakTable.click();
         logger.info("Kayak Console Open");
     	}catch(Exception e){
-    		skip = true;
     		e.printStackTrace();
     	}
     }
