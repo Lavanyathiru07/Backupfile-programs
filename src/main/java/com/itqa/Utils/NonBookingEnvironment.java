@@ -23,6 +23,7 @@ public class NonBookingEnvironment {
 
 	public static String getEnv() {
 		envUnderTest = System.getProperty("env");
+		
 		if (envUnderTest == null) {
 			System.out.println("******* " + envUnderTest);
 			System.setProperty("env", "stg");

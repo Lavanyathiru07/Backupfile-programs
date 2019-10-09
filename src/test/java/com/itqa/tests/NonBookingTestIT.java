@@ -54,7 +54,10 @@ public class NonBookingTestIT extends DriverBase {
 		trc = new TestResultContext();
 
 	}
-
+	
+	
+	
+/*
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Decoupled Code For MX - Action Requests")
 	@Story("AIS: Search Decoupled Code For MX - Action Requests")
 	public void lookupActionRequest(Integer silo, Itinerary itn, ITestContext context, Method method) {
@@ -125,20 +128,21 @@ public class NonBookingTestIT extends DriverBase {
 		nonBooking.lookupAccountsPayableMX();
 
 	}
-
+*/
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Flight Flow")
 	@Story("AIS: Access Flight Flow")
 	public void verifyFlightFlow(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
+	
 		G4PlusFlow nonBooking = new G4PlusFlow();
 		nonBooking.verifyFlightFlow();
 
 	}
+	
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Kayak Console")
 	@Story("AIS: Access Kayak Console")
 	public void accessKayakConsole(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
+	
 		G4PlusFlow nonBooking = new G4PlusFlow();
 		nonBooking.accessKayakConsole();
 
@@ -150,15 +154,17 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("G4Portal: Access Customer Lookup")
 	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (!env.contains("in") && !env.contains("IN") && !env.contains("aws") && !env.contains("AWS")){
-
+		
+		if (!env.contains("in") && !env.contains("IN") && !awsenv.contains("aws") && !awsenv.contains("AWS")){
+		
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessCL();
+		
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
-
+/*
 	
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access STS")
 	@Story("G4+: Access STS")
@@ -336,7 +342,7 @@ public class NonBookingTestIT extends DriverBase {
 		nonBooking.accessSwap();
 
 	}
-
+*/
 
 
 
