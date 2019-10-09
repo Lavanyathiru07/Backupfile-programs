@@ -33,11 +33,9 @@ public class TripsPage {
 
 	@FindBy(xpath = "//*[@data-hook='navigate_to_Profile']")
 	private WebElement profile;
-	
+
 	@FindBy(xpath = "//span[text()='My Trips']")
 	private WebElement tripsTitle;
-
-	
 
 	public TripsPage() {
 		this.driver = DriverBase.getDriver();
@@ -47,10 +45,16 @@ public class TripsPage {
 	}
 
 	public boolean checkMyTrips(String itn) {
-		//logger.info("Trips clicked");
-		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(tripsTab));
-		tripsTab.click();
-		
+		// logger.info("Trips clicked");
+		for (int i = 0; i <= 3; i++) {
+			new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(tripsTab));
+			jse.executeScript("arguments[0].click()", profile);
+			new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(tripsTab));
+			jse.executeScript("arguments[0].click()", tripsTab);
+			if(tripsTitle.isDisplayed()) {
+				break;
+			}
+		}
 		if (!System.getProperty("env").contains("prod")) {
 			for (WebElement confirmationNumber : confirmationNumbers) {
 				if (confirmationNumber.getText().equalsIgnoreCase(itn)) {
