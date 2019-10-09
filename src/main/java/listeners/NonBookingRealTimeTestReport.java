@@ -14,6 +14,7 @@ import org.testng.ITestResult;
 
 public class NonBookingRealTimeTestReport extends DriverBase implements ITestListener {
 
+
 	@Override
 	public void onStart(ITestContext context) {
 		System.out.println("Start  Of Execution(TEST)->" + context.getName());
@@ -88,5 +89,6 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
 		// TODO Auto-generated method stub
 	}
+
 
 }

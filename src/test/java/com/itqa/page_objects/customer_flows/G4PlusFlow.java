@@ -210,7 +210,6 @@ public class G4PlusFlow extends BasePage {
 		AircraftRecords.lookupAircraftPart();
 
 	}
-
 	public void runSPOEreport() {
 
 		if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
@@ -267,6 +266,7 @@ public class G4PlusFlow extends BasePage {
 
 			DriverBase.getDriver().close();
 			DriverBase.getDriver().switchTo().window(curTab.iterator().next());
+
 		}
 
 		AisMenuPage.selectMXRecords();
@@ -499,9 +499,11 @@ public class G4PlusFlow extends BasePage {
 		} catch (Exception e) {
 			throw new Error(e);
 		}
+
 		DriverBase.getDriver().get("https://swap.allegiantair.com");
 
 		LoginPage loginPage = new LoginPage();
+
 
 		try {
 			loginPage.openSwap();
