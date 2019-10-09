@@ -47,7 +47,9 @@ public class TripsPage {
 	}
 
 	public boolean checkMyTrips(String itn) {
-		logger.info("Trips clicked");
+		//logger.info("Trips clicked");
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(tripsTab));
+		tripsTab.click();
 		
 		if (!System.getProperty("env").contains("prod")) {
 			for (WebElement confirmationNumber : confirmationNumbers) {
