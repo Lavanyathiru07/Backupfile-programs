@@ -211,7 +211,7 @@ public class BookingFlow extends BasePage {
 		DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
 		ManageTravelLoginPage.doManageTravel(itn);
 		ManageTravelBagPage.selectBagPage(itn);
-		ManageTravelSeatPage.chooseSeat(itn);
+		ManageTravelSeatPage.selectUpgradeSeat(itn);
 		ManageTravelHotelPage.selectHotel();
 		ManageTravelVehiclePage.selectVehicle();
 		ManageTravelPaymentPage.fillPaymentPage(itn);
