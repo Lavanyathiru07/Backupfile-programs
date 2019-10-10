@@ -245,19 +245,19 @@ public class MOD extends BasePage{
 			confirmationNumField.click();
 			logger.info("MOD menu open");
 		} catch (Exception e) {
-			skip = true;
-			driver.quit();
-			throw new SkipException("Scenario fails so execution stoped");
+
+			e.printStackTrace();
 		}
 	}
 
 	public boolean createVoucher(Itinerary itn) {
+		
 		confirmationNumField.sendKeys(itn.getItn());
 		searchButton.click();
 		logger.info("Seach itn: " + itn.getItn());
 
 		try {
-			new WebDriverWait(driver, 5).until(ExpectedConditions
+			new WebDriverWait(driver, 15).until(ExpectedConditions
 					.elementToBeClickable(By.cssSelector("a[href='/app/bookings/" + itn.getItn() + "']")));
 			driver.findElement(By.cssSelector("a[href='/app/bookings/" + itn.getItn() + "']")).click();
 		} catch (Exception e) {
@@ -309,10 +309,11 @@ public class MOD extends BasePage{
 		} else {
 			return true;
 		}
+		
 	}
 
 	public void upsell(Itinerary Itn) {
-		try {
+		
 			String expiredMonth;
 			String expiredYear;
 			// String cardNumber;
@@ -328,7 +329,7 @@ public class MOD extends BasePage{
 			logger.info("Seach itn: " + Itn.getItn());
 
 			try {
-				new WebDriverWait(driver, 5).until(ExpectedConditions
+				new WebDriverWait(driver, 15).until(ExpectedConditions
 						.elementToBeClickable(By.cssSelector("a[href='/app/bookings/" + Itn.getItn() + "']")));
 				driver.findElement(By.cssSelector("a[href='/app/bookings/" + Itn.getItn() + "']")).click();
 			} catch (Exception e) {
@@ -416,14 +417,11 @@ public class MOD extends BasePage{
 
 			new WebDriverWait(driver, 30).until(
 					ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class,'flight-panel-target')]")));
-		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
-		}
+		
 	}
 
 	public boolean modUpsell(Itinerary Itn) {
-		try {
+		
 			Set<String> curTab = driver.getWindowHandles();
 			g4MenuPage.selectMOD();
 			GeneralUtils.switchNextTab(driver, curTab);
@@ -438,10 +436,7 @@ public class MOD extends BasePage{
 				System.out.println("Error getting while upsell bags & Seats");
 				return false;
 			}
-		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
-		}
+		
 	}
 
 	public void reversing() {
@@ -624,7 +619,7 @@ public class MOD extends BasePage{
 
 		// driver.get("https://g4plus-res.stg.allegiantair.com/app/bookings/" + itn);
 		try {
-			new WebDriverWait(driver, 5).until(
+			new WebDriverWait(driver, 15).until(
 					ExpectedConditions.elementToBeClickable(By.cssSelector("a[href='/app/bookings/" + itn + "']")));
 			driver.findElement(By.cssSelector("a[href='/app/bookings/" + itn + "']")).click();
 		} catch (Exception e) {
@@ -652,27 +647,27 @@ public class MOD extends BasePage{
 		logger.info("Cancel itn button is clicked");
 
 		try {
-			new WebDriverWait(driver, 5)
+			new WebDriverWait(driver, 15)
 					.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Continue')]")));
 			continueButton.click();
 			logger.info("Continue is clicked for Policy Override");
 			withPolicyOverridebtn.click();
-			new WebDriverWait(driver, 5)
+			new WebDriverWait(driver, 15)
 					.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class = 'btn-waive-cancel-fee']")));
 			waiveCancelFee.click();
 			logger.info("waive cancel fees button is clicked");
-			new WebDriverWait(driver, 5)
+			new WebDriverWait(driver, 15)
 					.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id = 'waiveCancelFeeReason']")));
 			new Select(waiveCancelFeeReason).selectByValue(WaiveReason);
 			logger.info("Waive cancel reason is clicked");
-			new WebDriverWait(driver, 5).until(
+			new WebDriverWait(driver, 15).until(
 					ExpectedConditions.elementToBeClickable(By.xpath("//select[contains(@class, 'override-reason')]")));
 			new Select(overRideReasons).selectByValue(OverRideReason);
 			logger.info("Override reason is clicked");
 		} catch (Exception e) {
 		}
 
-		new WebDriverWait(driver, 5)
+		new WebDriverWait(driver, 15)
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//Select[@id = 'cancelReason']")));
 		new Select(cancelReason).selectByValue(CancelReason);
 		logger.info("Cancel reason is selected");

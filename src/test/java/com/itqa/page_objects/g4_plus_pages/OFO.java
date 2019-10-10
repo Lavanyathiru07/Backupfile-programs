@@ -47,8 +47,7 @@ public class OFO extends BasePage {
         searchDispButton.isDisplayed();
         logger.info("OFO Menu Open");
     	}catch(Exception e){
-    		skip = true;
-    		throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }

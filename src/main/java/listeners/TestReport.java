@@ -13,10 +13,9 @@ import org.testng.IReporter;
 import org.testng.ISuite;
 import org.testng.xml.XmlSuite;
 
-public class TestReport implements IReporter{
+public class TestReport implements IReporter {
 
-
-    private void writeReportHeader(){
+	    private void writeReportHeader(){
         try {
         	
         	 File file = new File("Result.html");
@@ -67,76 +66,74 @@ public class TestReport implements IReporter{
         }
     }
 
-    private void writeReportFooter() {
-        GeneralUtils.writeToFile("Result.html","<tr><td bgcolor=\"#FF9F33\" colspan=\"4\"><font color=\"White\"><b>RELEASE FUNCTIONAL</font></td></tr>");
-        GeneralUtils.writeToFile("Result.html", "<tr><td align=\"center\">&nbsp;</td><td>&nbsp;</td><td align=\"center\">&nbsp;</td><td>&nbsp;</td></tr>");
-    }
 
-    private static String getStringFromFile(String filePath)
-    {
-        String content = "";
-        try
-        {
-            content = new String ( Files.readAllBytes( Paths.get(filePath) ) );
-        }
-        catch (IOException e)
-        {
-            System.out.println("The results file was not found, that is OK. -> " + filePath);
-            return "";
-        }
-        return content;
-    }
+	private void writeReportFooter() {
+		GeneralUtils.writeToFile("Result.html",
+				"<tr><td bgcolor=\"#FF9F33\" colspan=\"4\"><font color=\"White\"><b>RELEASE FUNCTIONAL</font></td></tr>");
+		GeneralUtils.writeToFile("Result.html",
+				"<tr><td align=\"center\">&nbsp;</td><td>&nbsp;</td><td align=\"center\">&nbsp;</td><td>&nbsp;</td></tr>");
+	}
 
-    private void cleanUpTestReports(String filename) throws NoSuchFileException, DirectoryNotEmptyException,IOException {
+	private static String getStringFromFile(String filePath) {
+		String content = "";
+		try {
+			content = new String(Files.readAllBytes(Paths.get(filePath)));
+		} catch (IOException e) {
+			System.out.println("The results file was not found, that is OK. -> " + filePath);
+			return "";
+		}
+		return content;
+	}
+
+	private void cleanUpTestReports(String filename)
+			throws NoSuchFileException, DirectoryNotEmptyException, IOException {
 		/*
-		  Path path = Paths.get(filename); 
-		  Files.delete(path);
+		 * Path path = Paths.get(filename); Files.delete(path);
 		 */
-        
-		
-		  File file = new File(filename);
-		  if (file.exists()) { 
-			  file.delete(); 
-			  }
-		 
-    }
 
-    public void writePassedAndFailedTestReport() {
-        try {
-            GeneralUtils.writeToFile("Result.html", getStringFromFile(System.getProperty("user.dir") +
-                    "/failedTests.html"));
-            GeneralUtils.writeToFile("Result.html", getStringFromFile(System.getProperty("user.dir") +
-                    "/passedTests.html"));
-            cleanUpTestReports("failedTests.html");
-            cleanUpTestReports("passedTests.html");
-        }
-        catch (Exception e) {
-            System.out.println("There were no failed tests or passed tests files found. We are OK with that");
-        }
-    }
-    
-    public void nonBookingWritePassedAndFailedTestReport() {
-        try {
-            GeneralUtils.writeToFile("Result.html", getStringFromFile(System.getProperty("user.dir") +
-                    "/nonBookingFailedTests.html"));
-            GeneralUtils.writeToFile("Result.html", getStringFromFile(System.getProperty("user.dir") +
-                    "/nonBookingPassedTests.html"));
-            cleanUpTestReports("nonBookingFailedTests.html");
-            cleanUpTestReports("nonBookingPassedTests.html");
-        }
-        catch (Exception e) {
-            System.out.println("There were no failed tests or passed tests files found. We are OK with that");
-        }
-    }
+		File file = new File(filename);
+		if (file.exists()) {
+			file.delete();
+		}
+
+	}
+
+	public void writePassedAndFailedTestReport() {
+		try {
+			GeneralUtils.writeToFile("Result.html",
+					getStringFromFile(System.getProperty("user.dir") + "/failedTests.html"));
+			GeneralUtils.writeToFile("Result.html",
+					getStringFromFile(System.getProperty("user.dir") + "/passedTests.html"));
+			cleanUpTestReports("failedTests.html");
+			cleanUpTestReports("passedTests.html");
+		} catch (Exception e) {
+			System.out.println("There were no failed tests or passed tests files found. We are OK with that");
+		}
+	}
+
+	public void nonBookingWritePassedAndFailedTestReport() {
+		try {
+			GeneralUtils.writeToFile("Result.html",
+					getStringFromFile(System.getProperty("user.dir") + "/nonBookingFailedTests.html"));
+			GeneralUtils.writeToFile("Result.html",
+					getStringFromFile(System.getProperty("user.dir") + "/nonBookingPassedTests.html"));
+			cleanUpTestReports("nonBookingFailedTests.html");
+			cleanUpTestReports("nonBookingPassedTests.html");
+		} catch (Exception e) {
+			System.out.println("There were no failed tests or passed tests files found. We are OK with that");
+		}
+	}
+
 
     @Override
     public void generateReport(List<XmlSuite> xmlTestSuiteList, List<ISuite> testSuite,
                                String outputDirectory) {
     	System.out.println("started to generate report");
     	writeReportHeader();
-    	//nonBookingWritePassedAndFailedTestReport();
+    	nonBookingWritePassedAndFailedTestReport();
         writePassedAndFailedTestReport();
         writeReportFooter();
         System.out.println("Generated report");
     }
+
 }

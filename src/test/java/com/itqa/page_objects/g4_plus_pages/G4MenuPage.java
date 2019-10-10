@@ -60,12 +60,6 @@ public class G4MenuPage extends BasePage {
 	private WebElement stnsApp;
 
 	/*-------------------------------*/
-/*
-	@FindBy(xpath = "//li[contains(text(),'Signed in as')]/following-sibling::li/a")
-	private WebElement userDropDown;
-
-	@FindBy(css = "a[href='/login/logout']")
-	private WebElement logoutButton;*/
 
 	public G4MenuPage() {
 		this.driver = DriverBase.getDriver();
@@ -78,8 +72,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			modApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -87,8 +80,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			aisApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -96,8 +88,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			stsApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -105,8 +96,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			espApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -114,8 +104,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			svtApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -123,8 +112,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			carApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -132,8 +120,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			fmApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -141,8 +128,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			rqApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -150,8 +136,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			hotApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 
 	}
@@ -160,8 +145,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			atlApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -169,8 +153,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			clApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -178,8 +161,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			ofoApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 
@@ -187,8 +169,7 @@ public class G4MenuPage extends BasePage {
 		try {
 			stnsApp.click();
 		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Scenario fails so execution stoped");
+			e.printStackTrace();
 		}
 	}
 

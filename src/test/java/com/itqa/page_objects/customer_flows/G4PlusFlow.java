@@ -1,6 +1,5 @@
 package com.itqa.page_objects.customer_flows;
 
-
 import com.itqa.Utils.Environment;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.URLS;
@@ -42,8 +41,9 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.SkipException;
 
-public class G4PlusFlow extends BasePage{
+public class G4PlusFlow extends BasePage {
 	private RemoteWebDriver driver;
 	private Logger logger = null;
 	private G4MenuPage g4MenuPage;
@@ -72,19 +72,17 @@ public class G4PlusFlow extends BasePage{
 	private ATL ATL;
 	private OFO OFO;
 	private MOD MOD;
-	
-	private String username = "Y2hhcm5raWp0YXdhcnVzaC5hdQ==";
-    private String stationUsername = "Q2hhbmF0YW4uQ2hhcm4udGVzdA==";
-    private String password = "QFNkMTUwNDEyMzQ1";
 
-	
-	
+	private String username = "Y2hhcm5raWp0YXdhcnVzaC5hdQ==";
+	private String stationUsername = "Q2hhbmF0YW4uQ2hhcm4udGVzdA==";
+	private String password = "QFNkMTUwNDEyMzQ1";
+
 	public G4PlusFlow() {
 		this.logger = Logger.getLogger(G4PlusFlow.class);
-		g4MenuPage = new G4MenuPage();		
+		g4MenuPage = new G4MenuPage();
 		AisMenuPage = new AisMenuPage();
 		MaintenanceRecords = new MaintenanceRecords();
-		AircraftRecords = new AircraftRecords();		
+		AircraftRecords = new AircraftRecords();
 		LineMaintenance = new LineMaintenance();
 		MaintenanceControl = new MaintenanceControl();
 		Reliability = new Reliability();
@@ -106,71 +104,83 @@ public class G4PlusFlow extends BasePage{
 		ATL = new ATL();
 		OFO = new OFO();
 		MOD = new MOD();
-		
+
 	}
 
-	
-	public void g4PlusLogin(){
-		if(!skip){
-		if (Environment.getEnv().contains("PROD")) {
+	public void g4PlusLogin() {
+		try {
+			if (Environment.getEnv().contains("PROD")) {
 
-		} else {
-			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			
+			} else {
+				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+			}
+		} catch (Exception e) {
+			skip = true;
+			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
+
+	}
+
+	public void Login() {
+		try {
+			driver = DriverBase.getDriver();
+			driver.get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+
+			driver.findElementById("username").sendKeys(new String(Base64.getDecoder().decode(username)));
+			driver.findElementById("password").sendKeys(new String(Base64.getDecoder().decode(password)));
+			driver.findElementByName("submitBtn").click();
+		} catch (Exception e) {
+			skip = true;
+			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
-	
-	public void Login(){
-		driver=DriverBase.getDriver();
-		driver.get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 
-		driver.findElementById("username").sendKeys(new String(Base64.getDecoder().decode(username)));
-		driver.findElementById("password").sendKeys(new String(Base64.getDecoder().decode(password)));
-		driver.findElementByName("submitBtn").click();
-				
-	}
-	
 	public void g4PlusSignin() {
-		if(!skip){
-        if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
-        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-						
-			/*DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
-        	DriverBase.getDriver().get("https://ais." + System.getProperty("env") + ".allegiantair.com");*/
-        }
-        else {
-            if (System.getProperty("env").contains("ndd")) {
-            	DriverBase.getDriver().get("https://nddprd-g4plus-portal.allegiantair.com/");
-            }
-            else {
-            	DriverBase.getDriver().get("https://g4plus-portal.allegiantair.com/");
-            	         	
-            }
-            G4PlusLoginPage.g4plusLogin(false);
-        	} 
-        }
-    }
-    
-    public void accessAIS() {
-    	 g4PlusSignin();
-    	 Set<String > tabs = DriverBase.getDriver().getWindowHandles();
-         g4MenuPage.selectAIS();
-         GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
-    }
-	 
-    public void accessCL() {
-    	g4PlusSignin();
+		try{
+	        if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
+	        	//System.out.println(">>>>>>>>>>>>>ENV CHECK<<<<<<<<<<<"+Environment.getEnv());
+	        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+							
+				/*DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
+	        	DriverBase.getDriver().get("https://ais." + System.getProperty("env") + ".allegiantair.com");*/
+	        }else if(System.getProperty("awsenv").contains("aws")) {
+	        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
+	        
+				} else {
+					if (System.getProperty("env").contains("ndd")) {
+						DriverBase.getDriver().get(URLS.NDD.getUrl(Environment.getEnv(), 0));
+					//	DriverBase.getDriver().get("https://nddprd-g4plus-portal.allegiantair.com/");
+					} else {
+						DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+					//	DriverBase.getDriver().get("https://g4plus-portal.allegiantair.com/");
+					}
+					G4PlusLoginPage.g4plusLogin(false);
+				}
+			} catch (Exception e) {
+				skip =true;
+				throw new SkipException("Skipping Test Case as runmode set to NO");
+			}
+		}
+	
+	
+	
+	public void accessAIS() {
+		g4PlusSignin();
+		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectAIS();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
+	}
+
+	public void accessCL() {
+		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectCL();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 		CL.accessCL();
 	}
-    
-	
-	
 
 	public void lookupActionRequest() {
 
@@ -187,345 +197,325 @@ public class G4PlusFlow extends BasePage{
 		MaintenanceRecords.lookupActionRequest();
 
 	}
-	
+
 	public void lookupAircraftRecordsPart() {
-		
+
 		accessAIS();
 
-        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
-        AisMenuPage.selectAircraftRecords();
+		AisMenuPage.selectAircraftRecords();
 
-        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-        AircraftRecords.lookupAircraftPart();
-		
-		
+		AircraftRecords.lookupAircraftPart();
+
 	}
-	
 	public void runSPOEreport() {
-		if(!skip){
-        if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
-        	DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
-        	DriverBase.getDriver().get("https://ais." + System.getProperty("env") + ".allegiantair.com");
-        }
-        else {
-            if (System.getProperty("env").contains("ndd")) {
-            	DriverBase.getDriver().get("https://nddprd-g4plus-portal.allegiantair.com/");
-            }
-            else {
-            	DriverBase.getDriver().get("https://g4plus-portal.allegiantair.com/");
-            }
-            G4PlusLoginPage.g4plusLogin(false);
-            g4MenuPage.selectAIS();
-            DriverBase.getDriver().close();
-            Set<String > tabs = DriverBase.getDriver().getWindowHandles();
-            DriverBase.getDriver().switchTo().window(tabs.iterator().next());
-        }
 
-        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-        AisMenuPage.selectMXandEngr();
+		if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
+			if(System.getProperty("env").contains("aws")){
+				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("env"), 0));
+				DriverBase.getDriver().get(URLS.AIS.getUrl(System.getProperty("env"), 0));
+				}else {
+			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+			DriverBase.getDriver().get(URLS.AIS.getUrl(Environment.getEnv(), 0));
+				}
+		} else {
+			if (System.getProperty("env").contains("ndd")) {
+				DriverBase.getDriver().get(URLS.NDD.getUrl(Environment.getEnv(), 0));
 
-        AisMenuPage.selectLineMX();
+			} else {
+				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 
-        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-        LineMaintenance.openReport();
-        GeneralUtils.takeScreenshot(DriverBase.getDriver(), System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/1SPOE.png");
-
-        DriverBase.getDriver().close();
-        DriverBase.getDriver().switchTo().window(curTab.iterator().next());
-
-        if (!System.getProperty("env").contains("prod") && !System.getProperty("env").contains("trn")) {
-        	AisMenuPage.selectMXControl();
-
-            GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-            MaintenanceControl.openReport();
-            GeneralUtils.takeScreenshot(DriverBase.getDriver(), System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/2SPOE.png");
-
-            DriverBase.getDriver().close();
-            DriverBase.getDriver().switchTo().window(curTab.iterator().next());
-
-            AisMenuPage.selectReliability();
-
-            GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-            Reliability.openReport();
-            GeneralUtils.takeScreenshot(DriverBase.getDriver(), System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/3SPOE.png");
-
-            DriverBase.getDriver().close();
-            DriverBase.getDriver().switchTo().window(curTab.iterator().next());
-        }
-
-        AisMenuPage.selectMXRecords();
-
-        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-        MaintenanceRecords.openReport();
+			}
+			G4PlusLoginPage.g4plusLogin(false);
+			g4MenuPage.selectAIS();
+			DriverBase.getDriver().close();
+			Set<String> tabs = DriverBase.getDriver().getWindowHandles();
+			DriverBase.getDriver().switchTo().window(tabs.iterator().next());
 		}
-    }
-	
-	 public void verifyFlightFollowing() {
-		 	
-		 	accessAIS();
 
-	        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		AisMenuPage.selectMXandEngr();
 
-	        AisMenuPage.selectFlightFollowing();
+		AisMenuPage.selectLineMX();
 
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-	        FlightFollowing.verifyFlightInformation();
-	    }
+		LineMaintenance.openReport();
+		GeneralUtils.takeScreenshot(DriverBase.getDriver(),
+				System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/1SPOE.png");
 
-	 public void accessInventoryMX() {
-	        
-		 	accessAIS();
+		DriverBase.getDriver().close();
+		DriverBase.getDriver().switchTo().window(curTab.iterator().next());
 
-	        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		if (!System.getProperty("env").contains("prod") && !System.getProperty("env").contains("trn")) {
+			AisMenuPage.selectMXControl();
 
-	        AisMenuPage.selectinventoryMaintenance();
-
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        InventoryMaintenance.verifyInventoryMX();
-	    }
-	 
-	 
-	 public void verifyPrintManifest() {
-
-		 	accessAIS();
-
-	        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-
-	        AisMenuPage.selectPrintManifest();
-
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        PrintManifest.verifyPrintManifest();
-	    }
-
-	 
-	 
-	 public void verifyFlightScheduleMX() {
-	        
-		 	accessAIS();
-
-	        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-
-	        AisMenuPage.selectFlightScheduleMX();
-
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        FlightScheduleMaintenance.verifyFlightScheduleMX();
-	    }
-	 
-	 
-	 public void lookupAccountsPayableMX() {
-		 
-		 	accessAIS();
-
-	        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-
-	        AisMenuPage.selectaccountsPayableMaintenance();
-
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        AccountsPayableMaintenance.lookupTransaction();
-	    }
-	 
-	 
-	 
-	 
-	 public void verifyFlightFlow() {
-	        
-		 
-		 	accessAIS();
-
-	        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-
-	        AisMenuPage.selectFlightFlow();
-
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        FlightFlow.openFlightFlow();
-	    }
-	 
-	 
-	 
-	 public void accessKayakConsole() {
-		 
-		 	accessAIS();
-
-	        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-
-	        AisMenuPage.selectKayakConsole();
-
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        KayakConsole.editKayakConsole();
-	    }
-	 
-	 
-	 public void accessSTS() {
-		 
-		 	g4PlusSignin();
-
-	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-	        g4MenuPage.selectSTS();
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        STS.accessSTS();
-	    }
-	 
-	 public void accessESP() {
-		 	
-		 	g4PlusSignin();
-	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-	        g4MenuPage.selectESP();
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-	        ESP.accessESP();
-	    }
-	 
-	 
-	 public void accessSVT() {
-		 
-		 	g4PlusSignin();
-
-	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-	        g4MenuPage.selectSVT();
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        SVT.accessSVT();
-	    }
-	 
-	 
-	 public void accessCAR() {
-		
-		 	g4PlusSignin();
-
-	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-	        g4MenuPage.selectCAR();
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        CAR.accessCAR();
-	    }
-	 
-	 
-	 public void accessTF2() {
-		 Login();
-		 Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-		 g4MenuPage.selectFM();
-		 GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-		 FM.accessTF2();
-	 }
-
-	 
-	 public void accessRQ() {
-
-		 g4PlusSignin();
-
-		 Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-		 g4MenuPage.selectRQ();
-		 GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-		 RQ.accessRQ();
-	 }
-	 
-	 
-	 public void accessBAG() {
-		 Login();
-		 Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-		 g4MenuPage.selectFM();
-		 GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-		 FM.accessBag();
-	 }
-
-	 public void accessPB2() {
-		 Login();
-
-		 Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-		 g4MenuPage.selectFM();
-		 GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-		 FM.accessPB2();
-	 }
-
-	    public void accessHOT() {
-	    	g4PlusSignin();
-
-	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-	        g4MenuPage.selectHOT();
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        HOT.accessHOT();
-	    }
-
-	    public void accessATL() {
-	    	g4PlusSignin();
-
-	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-	        g4MenuPage.selectATL();
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-	        ATL.accessATL();
-	    }
-
-	    
-	    public void accessOFO() {
-	    	Login();
-			Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-			g4MenuPage.selectOFO();
 			GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-			OFO.accessOFO();
+
+			MaintenanceControl.openReport();
+			GeneralUtils.takeScreenshot(DriverBase.getDriver(),
+					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/2SPOE.png");
+
+			DriverBase.getDriver().close();
+			DriverBase.getDriver().switchTo().window(curTab.iterator().next());
+
+			AisMenuPage.selectReliability();
+
+			GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+			GeneralUtils.takeScreenshot(DriverBase.getDriver(),
+					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/3SPOE.png");
+
+			DriverBase.getDriver().close();
+			DriverBase.getDriver().switchTo().window(curTab.iterator().next());
+
 		}
-	    
-	    
-	    public void accessMOD() {
-	    	g4PlusSignin();
-	        Set<String > curTab = DriverBase.getDriver().getWindowHandles();
-	        g4MenuPage.selectMOD();
-	        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-	        System.out.println("Switched......");
-	         MOD.accessMOD();
-	       	    }
 
-	   
+		AisMenuPage.selectMXRecords();
 
-	    public void accessSwap() {
-	    	 if(!skip){
-	        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-	        try {
-	            capabilities.setCapability("name", "Access Swap");
-	            capabilities.setCapability("idleTimeout", 60);
-	            capabilities.setCapability("tz", "America/Los_Angeles");
-	            //driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
-	            //driver = new ChromeDriver();
-	        }
-	        catch (Exception e) {
-	            throw new Error(e);
-	        }
-	        DriverBase.getDriver().get("https://swap.allegiantair.com");
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-	        LoginPage loginPage = new LoginPage();
+		MaintenanceRecords.openReport();
 
-	        try {
-	            loginPage.openSwap();
-	        }
-	        catch (Exception e) {
-	            e.printStackTrace();
-	            throw new Error();
-	        }
-	        
-	    	 }
-	    }
-	    
-	    
-	   
-	 
-	 
+	}
+
+	public void verifyFlightFollowing() {
+
+		accessAIS();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+
+		AisMenuPage.selectFlightFollowing();
+
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		FlightFollowing.verifyFlightInformation();
+	}
+
+	public void accessInventoryMX() {
+
+		accessAIS();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+
+		AisMenuPage.selectinventoryMaintenance();
+
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		InventoryMaintenance.verifyInventoryMX();
+	}
+
+	public void verifyPrintManifest() {
+
+		accessAIS();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+
+		AisMenuPage.selectPrintManifest();
+
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		PrintManifest.verifyPrintManifest();
+	}
+
+	public void verifyFlightScheduleMX() {
+
+		accessAIS();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+
+		AisMenuPage.selectFlightScheduleMX();
+
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		FlightScheduleMaintenance.verifyFlightScheduleMX();
+	}
+
+	public void lookupAccountsPayableMX() {
+
+		accessAIS();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+
+		AisMenuPage.selectaccountsPayableMaintenance();
+
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		AccountsPayableMaintenance.lookupTransaction();
+	}
+
+	public void verifyFlightFlow() {
+
+		accessAIS();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+
+		AisMenuPage.selectFlightFlow();
+
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		FlightFlow.openFlightFlow();
+	}
+
+	public void accessKayakConsole() {
+
+		accessAIS();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+
+		AisMenuPage.selectKayakConsole();
+
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		KayakConsole.editKayakConsole();
+	}
+
+	public void accessSTS() {
+
+		g4PlusSignin();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectSTS();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		STS.accessSTS();
+	}
+
+	public void accessESP() {
+
+		g4PlusSignin();
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectESP();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+		ESP.accessESP();
+	}
+
+	public void accessSVT() {
+
+		g4PlusSignin();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectSVT();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		SVT.accessSVT();
+	}
+
+	public void accessCAR() {
+
+		g4PlusSignin();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectCAR();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		CAR.accessCAR();
+	}
+
+	public void accessTF2() {
+		Login();
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectFM();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		FM.accessTF2();
+	}
+
+	public void accessRQ() {
+
+		g4PlusSignin();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectRQ();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		RQ.accessRQ();
+	}
+
+	public void accessBAG() {
+		Login();
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectFM();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		FM.accessBag();
+	}
+
+	public void accessPB2() {
+		Login();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectFM();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		FM.accessPB2();
+	}
+
+	public void accessHOT() {
+		g4PlusSignin();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectHOT();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		HOT.accessHOT();
+	}
+
+	public void accessATL() {
+		g4PlusSignin();
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectATL();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		ATL.accessATL();
+	}
+
+	public void accessOFO() {
+		Login();
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectOFO();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+		OFO.accessOFO();
+	}
+
+	public void accessMOD() {
+		g4PlusSignin();
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+		g4MenuPage.selectMOD();
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+		System.out.println("Switched......");
+		MOD.accessMOD();
+	}
+
+	public void accessSwap() {
+
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		try {
+			capabilities.setCapability("name", "Access Swap");
+			capabilities.setCapability("idleTimeout", 60);
+			capabilities.setCapability("tz", "America/Los_Angeles");
+			// driver = new RemoteWebDriver(new
+			// URL("http://localhost:4444/wd/hub"), capabilities);
+			// driver = new ChromeDriver();
+		} catch (Exception e) {
+			throw new Error(e);
+		}
+
+		DriverBase.getDriver().get("https://swap.allegiantair.com");
+
+		LoginPage loginPage = new LoginPage();
+
+
+		try {
+			loginPage.openSwap();
+		} catch (Exception e) {
+			throw new Error();
+		}
+
+	}
+
 }
-

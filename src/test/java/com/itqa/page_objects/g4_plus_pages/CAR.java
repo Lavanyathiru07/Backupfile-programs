@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -68,12 +70,12 @@ public class CAR extends BasePage{
         bookLocField.sendKeys("LAS" + Keys.ENTER);
         pickupLocField.sendKeys("LAS" + Keys.ENTER);
         jse.executeScript("arguments[0].click();", checkRateButton);
-
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
         resultRow.click();
         logger.info("CAR Menu Open");
     	}catch(Exception e){
-    		skip = true;
-    		throw new SkipException("Scenario fails so execution stoped");
+
+    		e.printStackTrace();
     	}
     }
 }

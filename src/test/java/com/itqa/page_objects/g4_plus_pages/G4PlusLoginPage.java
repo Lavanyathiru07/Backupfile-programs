@@ -56,7 +56,7 @@ public class G4PlusLoginPage extends BasePage {
 	}
 
 	public void g4plusLogin(Boolean station) {
-		if (!skip) {
+		try {
 			if (!station) {
 				if (Environment.getEnv().contains("prod")) {
 					userNameField.sendKeys(System.getProperty("username"));
@@ -71,7 +71,11 @@ public class G4PlusLoginPage extends BasePage {
 			}
 			loginButton.click();
 			logger.info("Signin to G4Plus-Portal");
+		} catch (Exception e) {
+			skip=true;
+			e.printStackTrace();
 		}
+		
 	}
 
 	public void selectCompany() {
