@@ -6,6 +6,7 @@ import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +19,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BundlePage extends BasePage {
 	private Logger logger = null;
@@ -37,6 +39,9 @@ public class BundlePage extends BasePage {
 	@FindBy(xpath = "//*[@class='continue']")
 	private WebElement continueButton;
 
+	@FindBy(className = "bundles")
+	private WebElement bundle;
+
 	public BundlePage() {
 		this.driver = DriverBase.getDriver();
 		this.logger = Logger.getLogger(BundlePage.class);
@@ -46,30 +51,32 @@ public class BundlePage extends BasePage {
 
 	public void selectBundle(Itinerary itn) throws Exception {
 		try {
-			Common.elementToBeClickable(driver, bundleTitle, "bundle Title");
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			if (driver.findElement(By.className("bundles")).isDisplayed()) {
+				if (itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
+					itn.setSeat(true);
+					itn.setCarryOnBag(1);
+					itn.setTripFlex(true);
+					if (itn.getRoundTrip()) {
+						itn.setSeatRT(true);
+					}
+					selectAllegiantBonus.click();
 
-			if (itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
-				itn.setSeat(true);
-				itn.setCarryOnBag(1);
-				itn.setTripFlex(true);
-				if (itn.getRoundTrip()) {
-					itn.setSeatRT(true);
+				} else if (itn.getBundle().equalsIgnoreCase("AllegiantTotal")) {
+					itn.setSeat(true);
+					itn.setCarryOnBag(1);
+					itn.setCheckedBag(4);
+					itn.setPriority("true");
+					itn.setTripFlex(true);
+					if (itn.getRoundTrip()) {
+						itn.setSeatRT(true);
+					}
+					selectAllegiantTotal.click();
 				}
-				selectAllegiantBonus.click();
 
-			} else if (itn.getBundle().equalsIgnoreCase("AllegiantTotal")) {
-				itn.setSeat(true);
-				itn.setCarryOnBag(1);
-				itn.setCheckedBag(4);
-				itn.setPriority("true");
-				itn.setTripFlex(true);
-				if (itn.getRoundTrip()) {
-					itn.setSeatRT(true);
-				}
-				selectAllegiantTotal.click();
+				continueButton.click();
+				logger.info("Continue is clicked");
 			}
-
-			continueButton.click();
 		} catch (NoSuchElementException e) {
 			logger.info("Bundles page is skipping");
 		}

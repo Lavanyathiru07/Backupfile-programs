@@ -142,11 +142,12 @@ public class BookingFlow extends BasePage {
 		return manifestId;
 	}
 
-	public Boolean signInAndVerifyAccount(Itinerary itn) {
+	public Boolean signInAndVerifyAccount(Itinerary itn) throws InterruptedException {
 		String logoutUrl = URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()) + "user/logout";
-
+	//	driver.get(logoutUrl);
+		Thread.sleep(3000);
 		DriverBase.getDriver().get(logoutUrl);
-
+		System.out.println(logoutUrl);
 		landingPage.signIn(itn.getEmail());
 		return tripsPage.checkMyTrips(itn.getItn());
 	}
@@ -180,10 +181,11 @@ public class BookingFlow extends BasePage {
 		g4MenuPage.selectMOD();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 		return mod.createVoucher(itn);
+
 	}
 
 	public void WWWUncheckRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("qa2")) {
+		if (Environment.getEnv().contains("prod")) {
 			mod.stationUncheckPax(itn.getItn());
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
@@ -191,12 +193,11 @@ public class BookingFlow extends BasePage {
 	}
 
 	public void WWWRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("stg")) {
+		if (Environment.getEnv().contains("prod")) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
 		}
 	}
-	
 	public Boolean emailVerification(Itinerary itn, String mailToValidation) {
 		try {
 			EmailVerification.openGmail(itn,mailToValidation);
@@ -218,5 +219,4 @@ public class BookingFlow extends BasePage {
 		
 		
 	}
-
 }

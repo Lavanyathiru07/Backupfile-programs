@@ -76,35 +76,35 @@ public class HotelPage extends BasePage {
         Boolean hotelPage = true;
         for (int loop=0; loop<5; loop++) {
             try {
-                new WebDriverWait(driver, 0).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'travellers')]")));
+                new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'travellers')]")));
                 hotelPage = false;
                 break;
             }
             catch (Exception e) {}
 
             try {
-                new WebDriverWait(driver, 0).until(ExpectedConditions.elementToBeClickable(By.id("seatchooser-wrapper")));
+                new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("seatchooser-wrapper")));
                 hotelPage = false;
                 break;
             }
             catch (Exception e) {}
 
             try {
-                new WebDriverWait(driver, 0).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'attractionchooser')]")));
+                new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'attractionchooser')]")));
                 hotelPage = false;
                 break;
             }
             catch (Exception e) {}
 
             try {
-                new WebDriverWait(driver, 0).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'transport')]")));
+                new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'transport')]")));
                 hotelPage = false;
                 break;
             }
             catch (Exception e) {}
 
             try {
-                new WebDriverWait(driver, 0).until(ExpectedConditions.elementToBeClickable(By.xpath("//h3[contains(@class,'hotel-name')]")));
+                new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//h3[contains(@class,'hotel-name')]")));
                 break;
             }
             catch (Exception e) {}

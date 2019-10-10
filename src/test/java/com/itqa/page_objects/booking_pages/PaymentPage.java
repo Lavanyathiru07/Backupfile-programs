@@ -109,8 +109,13 @@ public class PaymentPage extends BasePage {
 	@FindBy(id = "payment-wrapper")
 	private WebElement paymentTitle;
 
-	@FindBy(xpath = "//*[@class='total-breakdown']/p/strong|//strong[@class='balance']")
+	@FindBy(xpath = "//p[@class='total']/strong")
 	private WebElement totalAmount;
+
+	/*
+	 * @FindBy(xpath = "//th[contains(text(),'Total (USD)')]/following::td[1]")
+	 * private WebElement totalAmount;
+	 */
 
 	@FindBy(xpath = "//span[contains(text(),'Bags')]")
 	private WebElement bagsTab;
@@ -148,6 +153,7 @@ public class PaymentPage extends BasePage {
 	public void closePopup() {
 
 		try {
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(closeApplyCardPopup));
 			closeApplyCardPopup.click();
 			logger.info("Close apply allegiant card pop-up");
 		} catch (TimeoutException e) {
@@ -203,7 +209,7 @@ public class PaymentPage extends BasePage {
 		String cvv;
 		String cardName;
 
-		Common.elementToBeClickable(driver, expireMonthField, "exp month");
+		// Common.elementToBeClickable(driver, expireMonthField, "exp month");
 
 		if (System.getProperty("env").contains("prod")) {
 			expiredMonth = System.getProperty("expiration").split("-")[0].replace("0", "");
@@ -218,9 +224,10 @@ public class PaymentPage extends BasePage {
 			cardName = "A";
 			cvv = "123";
 		}
-
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		for (int loop = 0; loop < 10; loop++) {
 			try {
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				new Select(expireMonthField).selectByValue(expiredMonth);
 				break;
 			} catch (Exception e) {
@@ -291,6 +298,7 @@ public class PaymentPage extends BasePage {
 			} catch (Exception e) {
 			}
 		}
+		Thread.sleep(2000);
 		postalField.sendKeys("12345");
 		phoneField.clear();
 		phoneField.sendKeys("7025555555");
@@ -316,7 +324,7 @@ public class PaymentPage extends BasePage {
 		logger.info("Created profile: " + accountEmail + " / " + PASSWORD);
 	}
 
-	public void clickPurchase() {
+	public void clickPurchase() throws InterruptedException {
 		jse.executeScript(JSFIRSTARG, purchaseButton);
 		logger.info("Click purchase");
 	}
@@ -324,29 +332,32 @@ public class PaymentPage extends BasePage {
 	public static double ConvertPrice(String value) {
 
 		double price = 0.00;
-		String[] pric = value.split("\\$");
+		String pric = value.replace("$", "");
+
 		try {
-			pric[1] = pric[1].replace(",", "");
+			pric = pric.replace(",", "");
 		} catch (Exception e) {
 		}
-		price = Double.parseDouble(pric[1]);
+		price = Double.parseDouble(pric);
 		return price;
 	}
 
 	public void fillPaymentPage(Itinerary itn, Boolean createAccount, boolean Popupflag) throws Exception {
 		// driver = DriverBase.getDriver();
+
 		String amount = "";
 		double totalBookingFare = 0.00;
 		bagPage = new BagPage();
 		paymentPage = new PaymentPage();
 		travelerPage = new TravelerPage();
-		// WebDriverWait wait = new WebDriverWait(driver, 60);
 
 		logger.info("Will popup be called?  " + Popupflag);
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
 				|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
 			if (Popupflag) {
-				tripFlexPopupNo.click();
+				new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(tripFlexPopupNo));
+				jse.executeScript(JSFIRSTARG, tripFlexPopupNo);
+				// tripFlexPopupNo.click();
 				logger.info("Tripflex 'NO' popup is clicked");
 			}
 		} else {
@@ -354,22 +365,25 @@ public class PaymentPage extends BasePage {
 				closePopup();
 			}
 		}
-		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(totalAmount));
+		// new WebDriverWait(driver,
+		// 20).until(ExpectedConditions.elementToBeClickable(totalAmount));
 		try {
+			Thread.sleep(3000);
 			// PageFactory.initElements(driver, PaymentPage.class);
-			amount = totalAmount.getText();
+			amount = totalAmount.getText().trim();
 		} catch (StaleElementReferenceException e) {
 			logger.info(e);
 		}
-
-		totalBookingFare = PaymentPage.ConvertPrice(amount);
+		System.out.println("Sibi check--->1" + amount);
+		totalBookingFare = ConvertPrice(amount);
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
-		int arr[] = { 201, 204, 249, 253, 257, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521, 522,
-				530, 531, 570, 571, 572, 591, 592, 594, 595, 596, 602, 603, 605, 606, 607, 754, 802, 806, 811, 813, 825,
-				833, 902, 903, 904, 999 };
-		int toCheckValue = (int) ConvertPrice(amount);
-
+		int arr[] = { 201, 204, 249, 253, 257, 258, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521,
+				522, 530, 531, 570, 571, 572, 591, 592, 594, 595, 596, 602, 603, 605, 606, 607, 754, 802, 806, 811, 813,
+				825, 833, 902, 903, 904, 999 };
+		// int toCheckValue = (int) PaymentPage.ConvertPrice(amount);
+		int toCheckValue = (int) totalBookingFare;
+		System.out.println("Sibi Check---> 2 " + toCheckValue);
 		if (checkDeclineAmount(arr, toCheckValue)) {
 
 			try {
