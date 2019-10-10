@@ -33,7 +33,7 @@ public class TaSignInPage extends BasePage {
 		this.driver = DriverBase.getDriver();
 		this.logger = Logger.getLogger(TaSignInPage.class);
 		jse = (JavascriptExecutor) this.driver;
-		PageFactory.initElements(new AjaxElementLocatorFactory(this.driver, 10), this);
+		PageFactory.initElements(new AjaxElementLocatorFactory(this.driver, 20), this);
 	}
 
 	public void taSignin() throws Exception {
