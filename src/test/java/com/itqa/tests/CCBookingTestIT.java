@@ -58,7 +58,7 @@ public class CCBookingTestIT extends DriverBase {
 			throws InterruptedException {
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))
-				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1))) {
+				|| ((env.contains("in1") || env.contains("in2")||env.contains("aws")) && (silo == 1))) {
 			MOD mod = new MOD();
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			CCBookingFlow booking = generateBooking(itn, silo, context);
@@ -101,9 +101,14 @@ public class CCBookingTestIT extends DriverBase {
 		Environment ev = new Environment();
 		ev.setCurrentSilo(silo);
 		itn.setDescription(description);
-
-		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(env, 0));
-		DriverBase.getDriver().get(URLS.CC.getUrl(env, silo));
+		if(env.contains("aws")) {
+			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+			DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("awsenv"), silo));
+		}else {
+			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(env, 0));
+			DriverBase.getDriver().get(URLS.CC.getUrl(env, silo));
+		}
+		
 		// Environment.setCurrentSilo(silo);
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);

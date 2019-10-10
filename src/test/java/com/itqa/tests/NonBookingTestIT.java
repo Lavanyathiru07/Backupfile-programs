@@ -103,6 +103,7 @@ public class NonBookingTestIT extends DriverBase {
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Print Manifest")
 	@Story("AIS: Access Print Manifest")
 	public void verifyPrintManifest(Integer silo, Itinerary itn, ITestContext context, Method method) {
+		setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 		G4PlusFlow nonBooking = new G4PlusFlow();
 		nonBooking.verifyPrintManifest();
 
