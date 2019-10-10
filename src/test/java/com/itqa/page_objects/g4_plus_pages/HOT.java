@@ -67,6 +67,7 @@ public class HOT extends BasePage{
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
+            	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(payloadTab));
                 payloadTab.click();
                 
                 break;
@@ -127,8 +128,7 @@ public class HOT extends BasePage{
         logger.info("HOT Menu Open");
     
     }catch(Exception e){
-		skip = true;
-		throw new SkipException("Scenario fails so execution stoped");
+    	e.printStackTrace();
 	}
     }
 }

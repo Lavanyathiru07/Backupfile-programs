@@ -1,6 +1,8 @@
 package data;
 
 import com.itqa.Utils.Environment;
+import com.itqa.Utils.NonBookingEnvironment;
+
 import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
 
@@ -132,7 +134,7 @@ public class ItineraryDataProvider {
     @DataProvider(name = "NonBooking Use Cases", parallel = true)
     public Iterator<Object[]> itineraryDataBuilderforNonBooking(ITestContext context, Method method) {
     	ArrayList<Object[]> data = new ArrayList<>();
-        List<Integer> silos = new Environment().getSiloList();
+        List<Integer> silos = new NonBookingEnvironment().getSiloList();
         for (Integer silo: silos) {
             Itinerary itnRoundTrip = new ItineraryBuilder()
                       .build();

@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -36,12 +38,13 @@ public class CL extends BasePage{
 
     public void accessCL() {
     	try{
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(fnameField));
         fnameField.click();
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(emailField));
         emailField.click();
         logger.info("CL Menu Open");
-    	}catch(Exception e){
-    		skip = true;
-    		//DriverBase.getDriver().quit();
+
+    	}catch(Exception e){    		
     		e.printStackTrace();
     	}
     }

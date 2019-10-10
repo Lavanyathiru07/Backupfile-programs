@@ -103,41 +103,29 @@ public class FlightPage extends BasePage {
 	}
 
 	public void selectFlightPage(Itinerary itn) throws Exception {
-			/*try {*/
-				new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(depFlightTable));
-				/*if (depFlightTable.isDisplayed()) {*/
-					 Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
+		/* try { */
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(depFlightTable));
+		/* if (depFlightTable.isDisplayed()) { */
+		Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
 
-					selectDepFlight(0, itn);
-					if (itn.getRoundTrip()) {
-						selectRetFlight(0);
-					}
-					Screenshot.saveScreenshot("Flights selected", driver);
-					clickContinue();
-				/*}
-			} catch (NoSuchElementException e) {
-				if (!flag) {
-				if (itn.getDepartureCity().contains("CVG")) {
-					itn.setDepartureCity("BLI");
-				}
-				if (itn.getDepartureCity().contains("BLI")) {
-					itn.setDepartureCity("CVG");
-				}
-				if (itn.getDestinationCity().contains("SFB")) {
-					itn.setDepartureCity("LAS");
-				}
-				if (itn.getDestinationCity().contains("LAS")) {
-					itn.setDepartureCity("SFB");
-				}
-				flag=true;
-				newSearch.click();
-				landingPage.selectFlightsOnLandingPage(itn);
-				selectFlightPage(itn);
-				
-			} else {
-				throw new Error("Flights not available... Please check..");
-			}*/
-		//} 
+		selectDepFlight(0, itn);
+		if (itn.getRoundTrip()) {
+			selectRetFlight(0);
+		}
+		Screenshot.saveScreenshot("Flights selected", driver);
+		clickContinue();
+		/*
+		 * } } catch (NoSuchElementException e) { if (!flag) { if
+		 * (itn.getDepartureCity().contains("CVG")) { itn.setDepartureCity("BLI"); } if
+		 * (itn.getDepartureCity().contains("BLI")) { itn.setDepartureCity("CVG"); } if
+		 * (itn.getDestinationCity().contains("SFB")) { itn.setDepartureCity("LAS"); }
+		 * if (itn.getDestinationCity().contains("LAS")) { itn.setDepartureCity("SFB");
+		 * } flag=true; newSearch.click(); landingPage.selectFlightsOnLandingPage(itn);
+		 * selectFlightPage(itn);
+		 * 
+		 * } else { throw new Error("Flights not available... Please check.."); }
+		 */
+		// }
 	}
 	/*
 	 * public Map RCAselectFlight1(BatParams params) { Map flightInfo = new
@@ -152,4 +140,5 @@ public class FlightPage extends BasePage {
 	 * 
 	 * return flightInfo; }
 	 */
+
 }

@@ -39,9 +39,8 @@ public class FlightScheduleMaintenance extends BasePage{
         originText.click();
         logger.info("Flight Schedule Maintenance Displayed");
     	}catch(Exception e){
-    		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
+    		throw new Error("");
     	}
     }
 }

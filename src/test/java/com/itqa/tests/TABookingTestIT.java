@@ -63,9 +63,9 @@ public class TABookingTestIT extends DriverBase {
 			TABookingFlow booking = new TABookingFlow();
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-		//	Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			updateTextContext(itn, context);
-			
+
 			booking.TARefundAndCancellation(itn.getItn(), itn);
 		} else {
 			// DriverBase.getDriver().close();
@@ -82,14 +82,16 @@ public class TABookingTestIT extends DriverBase {
 			throws InterruptedException {
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))
+
 				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))) {
+
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			TABookingFlow booking = new TABookingFlow();
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-		//	Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			updateTextContext(itn, context);
-			
+
 			booking.TARefundAndCancellation(itn.getItn(), itn);
 		} else {
 			// DriverBase.getDriver().close();

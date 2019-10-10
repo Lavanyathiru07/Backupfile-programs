@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -39,13 +41,12 @@ public class FlightFlow extends BasePage{
     public void openFlightFlow() {
     	try{
         new Select(acGroupSelect).selectByVisibleText("ALL");
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(submitButton));
         submitButton.click();
         mainTable.isDisplayed();
         logger.info("Flight Flow Table Displayed");
     	}catch(Exception e){
-    		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }

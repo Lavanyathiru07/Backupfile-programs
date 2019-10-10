@@ -25,8 +25,12 @@ public class SQL_Executor {
             throw new Error(e.getMessage());
         }
 
-
-        url = urlPreFix + env.toLowerCase() + urlPostFix;
+        if(env.contains("aws")) {
+        	url = urlPreFix + System.getProperty("awsenv").toLowerCase() + urlPostFix;
+        }else {
+        	url = urlPreFix + env.toLowerCase() + urlPostFix;
+        }
+        
 
         if (env.contains("intl")) {
             url = urlPreFix + URLS.INTLPREFIX + urlPostFix;
@@ -50,8 +54,8 @@ public class SQL_Executor {
             pass = "a88ZBj4y";
         }
         else {
-            user = "javauser";
-            pass = "resuavaj";
+            user = "otahotel";
+            pass = "L0ck1tUp";
         }
 
         try {
