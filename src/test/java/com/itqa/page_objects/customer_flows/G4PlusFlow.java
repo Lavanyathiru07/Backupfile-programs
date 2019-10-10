@@ -139,7 +139,7 @@ public class G4PlusFlow extends BasePage {
 	public void g4PlusSignin() {
 		try{
 	        if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
-	        	System.out.println(">>>>>>>>>>>>>ENV CHECK<<<<<<<<<<<"+Environment.getEnv());
+	        	//System.out.println(">>>>>>>>>>>>>ENV CHECK<<<<<<<<<<<"+Environment.getEnv());
 	        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 							

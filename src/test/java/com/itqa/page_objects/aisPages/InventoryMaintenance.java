@@ -70,7 +70,8 @@ public class InventoryMaintenance extends BasePage{
         }
     	}catch(Exception e){
     		e.printStackTrace();
-    		throw new SkipException("Scenario fails so execution stoped");
+    		throw new Error("");
+    		
     		
 			
     	}

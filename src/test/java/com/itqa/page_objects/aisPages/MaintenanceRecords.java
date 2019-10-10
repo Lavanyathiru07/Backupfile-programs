@@ -110,8 +110,8 @@ public class MaintenanceRecords extends BasePage {
         jse.executeScript("arguments[0].click();", resultRow);
         logger.info("MX Records Report displayed");
     	}catch(Exception e){
-    		
     		e.printStackTrace();
+    		throw new Error("");
     	}
     }
 }
