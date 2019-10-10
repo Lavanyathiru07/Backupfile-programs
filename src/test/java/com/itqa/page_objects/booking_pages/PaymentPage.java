@@ -374,7 +374,6 @@ public class PaymentPage extends BasePage {
 		} catch (StaleElementReferenceException e) {
 			logger.info(e);
 		}
-		System.out.println("Sibi check--->1" + amount);
 		totalBookingFare = ConvertPrice(amount);
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
@@ -383,7 +382,6 @@ public class PaymentPage extends BasePage {
 				825, 833, 902, 903, 904, 999 };
 		// int toCheckValue = (int) PaymentPage.ConvertPrice(amount);
 		int toCheckValue = (int) totalBookingFare;
-		System.out.println("Sibi Check---> 2 " + toCheckValue);
 		if (checkDeclineAmount(arr, toCheckValue)) {
 
 			try {

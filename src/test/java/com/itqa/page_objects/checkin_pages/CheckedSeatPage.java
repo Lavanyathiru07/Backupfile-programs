@@ -63,7 +63,12 @@ public class CheckedSeatPage extends BasePage {
         else{
             chooseSeat();
         }
-        jse.executeScript(JSFIRSTARG, continueButton);
+        //jse.executeScript(JSFIRSTARG, continueButton);
+        try {
+            new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'seatchooser-wrapper') and contains(@aria-hidden,'false')]")));
+            jse.executeScript("arguments[0].click();", continueButton);
+            jse.executeScript("arguments[0].click();", yesContinueButton);
+       }catch(Exception e) {}
         logger.info("Click Continue");
     }
 
