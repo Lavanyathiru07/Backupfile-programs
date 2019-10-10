@@ -51,6 +51,8 @@ public enum URLS {
         	if(env.contains("prod")) {
         		return url.replace("xxx", "sw-prod-silo" + silo );
         		
+        	}else if(env.contains("aws")) {
+        		return url.replace("xxx", "silo" + silo + "." + System.getProperty("awsenv"));
         	}else {
         		return url.replace("xxx", "silo" + silo + "." + env);
         	}
