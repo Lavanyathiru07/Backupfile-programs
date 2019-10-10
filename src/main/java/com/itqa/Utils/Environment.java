@@ -11,17 +11,19 @@ public class Environment {
 	public static Boolean shouldUpdateConfluenceStatusOnFailure = false;
 	private static Integer silo = -1;
 
-	private int[] stg = { 1, 2, 3 };
+	private int[] stg = { 1,2,3};
 	private int[] qa1 = { 1, 2 };
 	private int[] qa2 = { 1, 2 };
 	private int[] in1 = { 1 };
 	private int[] in2 = { 1 };
 	private int[] intl = { 1 };
 	private int[] trn = { 0 };
+	private int[] aws = {1};
+	private int[] nddprd = { 1,2,3 };
+	private int[] prod = {1,2,3};
 
 	public static String getEnv() {
 		envUnderTest = System.getProperty("env");
-		System.out.println("Master Check " + envUnderTest);
 		if (envUnderTest == null) {
 			System.out.println("******* " + envUnderTest);
 			System.setProperty("env", "stg");
@@ -59,6 +61,13 @@ public class Environment {
 			return stream(trn).boxed().collect(Collectors.toList());
 		case "in2":
 			return stream(in2).boxed().collect(Collectors.toList());
+		case "aws":
+			return stream(aws).boxed().collect(Collectors.toList());
+		case "nddprd":
+			return stream(nddprd).boxed().collect(Collectors.toList());
+		case "prod":
+			return stream(prod).boxed().collect(Collectors.toList());
+
 		default:
 			return stream(stg).boxed().collect(Collectors.toList());
 

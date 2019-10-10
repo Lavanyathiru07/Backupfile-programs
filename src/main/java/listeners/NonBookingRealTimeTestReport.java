@@ -31,15 +31,13 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
         testResultContext.getTestResultContext(result);
 
         System.out.println("Test Pass->"+result.getName() +
-              /*  " on silo " + result.getTestContext().getAttribute("silo") +*/
+               " on silo " + result.getTestContext().getAttribute("silo") +
                 " on thread " + Thread.currentThread().getId());
 
 
         GeneralUtils.writeToFile("nonBookingPassedTests.html", "<tr><td>" +
-                testResultContext.testName + "</td><td>" + testResultContext.manifestId +
-                "</td>" +testResultContext.description +
-                "<td align=\"center\"><font color='green'>PASSED</font></td>" + "<td></td>"+"<td></td>"+
-                "</tr>");
+                testResultContext.testName + "</td><td align=\"center\"><font color='green'>PASSED</font></td><td></td>"
+                		+ "<td></td>" + "<td></td>"+"</tr>");
 
     }
 
@@ -59,22 +57,46 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
         System.out.println("Test Failed->"+result.getName());
 
         System.out.println("Test Failed->" + result.getName() +
-              /*  " on silo " + result.getTestContext().getAttribute("silo") +*/
+		/* " on silo " + result.getTestContext().getAttribute("silo") + */
                 " on thread " + Thread.currentThread().getId());
         System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 
-        GeneralUtils.writeToFile("nonBookingFailedTests.html", "<tr><td>" +
-                testResultContext.testName + "</td><td>" + testResultContext.manifestId +
-                "</td>" + "<td align=\"center\"><font color='red'>FAILED</font></td>"
-                + "<td>" + testResultContext.description + "</td>" +
-                "<td align=\"center\"><a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo + ");\">show image</a>" +
+        GeneralUtils.writeToFile("nonBookingFailedTests.html", "<tr><td>" + 
+        		testResultContext.testName + "</td><td align=\"center\"><font color='red'>FAILED</font></td><td></td><td></td>"
+        		 +"<td align=\"center\"><a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo + ");\">show image</a>" +
                 "<img id='screenshotId" + testResultContext.currentSilo + "' " +
-                "style='display:none' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>" +
+                "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>" +
                 "</td></tr>");
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
+    	String base64Screenshot = "data:image/png;base64,"+((TakesScreenshot)getDriver()).
+                getScreenshotAs(OutputType.BASE64);
+
+        TestResultContext testResultContext = new TestResultContext();
+        testResultContext.getTestResultContext(result);
+
+        if (Environment.getCreateJiraSetting()) {
+            Jira jira = new Jira();
+            jira.createJira(result);
+        }
+
+        System.out.println("Test Failed->"+result.getName());
+
+        System.out.println("Test Failed->" + result.getName() +
+		/* " on silo " + result.getTestContext().getAttribute("silo") + */
+                " on thread " + Thread.currentThread().getId());
+        System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
+
+        GeneralUtils.writeToFile("nonBookingFailedTests.html", "<tr><td>" + 
+        		testResultContext.testName + "</td><td align=\"center\"><font color='red'>FAILED</font></td>"
+        				+ "<td align=\\\"center\\\"><font color='orange'>Invalid-Credential / Loading </font><td></td>"
+        		+"<td align=\"center\"><a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo + ");\">show image</a>" +
+                "<img id='screenshotId" + testResultContext.currentSilo + "' " +
+                "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>" +
+                "</td></tr>");
+   
         System.out.println("Test Skipped->"+result.getName());
 
     }
@@ -86,7 +108,6 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
         if (Environment.getCreateConfluenceSetting()) {
             UpdateConfluence page = new UpdateConfluence(result);
         }
-
     }
 
     @Override

@@ -15,10 +15,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.Utils.GeneralUtils;
+import com.itqa.page_objects.BasePage;
+
 import java.util.List;
 import java.util.Set;
 
-public class MOD extends DriverBase {
+public class MOD extends BasePage {
 
 	private Logger logger = null;
 	private WebDriver driver = null;
@@ -26,6 +28,9 @@ public class MOD extends DriverBase {
 
 	private G4MenuPage g4MenuPage;
 	private G4PlusLoginPage g4LoginPage;
+
+	@FindBy(xpath = "//h1[contains(text(),'Search Bookings')]")
+	private WebElement confirmationField;
 
 	public static String OverRideReason = "37";
 	public static String CancelReason = "68";

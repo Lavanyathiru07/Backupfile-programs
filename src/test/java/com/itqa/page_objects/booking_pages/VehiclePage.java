@@ -1,6 +1,8 @@
 package com.itqa.page_objects.booking_pages;
 
 import com.itqa.page_objects.BasePage;
+
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -73,7 +75,13 @@ public class VehiclePage extends BasePage {
             catch (Exception e) {}
 
             try {
-                new WebDriverWait(driver, 0).until(ExpectedConditions.elementToBeClickable(By.id("seatchooser-wrapper")));
+            	if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {
+            		new WebDriverWait(driver, 0).until(ExpectedConditions.elementToBeClickable(By.className("popup_ok")));
+                    
+            	}else {
+            		new WebDriverWait(driver, 0).until(ExpectedConditions.elementToBeClickable(By.id("seatchooser-wrapper")));
+                    
+            	}
                 vehiclePage = false;
                 break;
             }

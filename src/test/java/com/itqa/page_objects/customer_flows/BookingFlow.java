@@ -5,6 +5,12 @@ import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.ManifestId;
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.BasePage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelLoginPage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelBagPage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelSeatPage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelHotelPage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelVehiclePage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelPaymentPage;
 import com.itqa.page_objects.booking_pages.*;
 import com.itqa.page_objects.checkin_pages.*;
 import com.itqa.page_objects.g4_plus_pages.G4MenuPage;
@@ -42,6 +48,13 @@ public class BookingFlow extends BasePage {
 	private GetBoardingPassPage getBoardingPassPage;
 	private MOD mod;
 	private G4MenuPage g4MenuPage;
+	private EmailVerification EmailVerification;
+	private ManageTravelLoginPage ManageTravelLoginPage;
+	private ManageTravelBagPage ManageTravelBagPage;
+	private ManageTravelSeatPage ManageTravelSeatPage;
+	private ManageTravelHotelPage ManageTravelHotelPage;
+	private ManageTravelVehiclePage ManageTravelVehiclePage;
+	private ManageTravelPaymentPage ManageTravelPaymentPage;
 
 	public BookingFlow() {
 		this.logger = Logger.getLogger(BookingFlow.class);
@@ -64,6 +77,13 @@ public class BookingFlow extends BasePage {
 		getBoardingPassPage = new GetBoardingPassPage();
 		mod = new MOD();
 		g4MenuPage = new G4MenuPage();
+		EmailVerification = new EmailVerification();
+		ManageTravelLoginPage =new ManageTravelLoginPage();
+		ManageTravelBagPage = new ManageTravelBagPage();
+		ManageTravelSeatPage = new ManageTravelSeatPage();
+		ManageTravelHotelPage = new ManageTravelHotelPage();
+		ManageTravelVehiclePage = new ManageTravelVehiclePage();
+		ManageTravelPaymentPage = new ManageTravelPaymentPage();
 	}
 
 	public String createWebBooking(Itinerary itn, ITestContext context) {
@@ -178,5 +198,25 @@ public class BookingFlow extends BasePage {
 			mod.cancelWholeItn(itn.getItn());
 		}
 	}
+	public Boolean emailVerification(Itinerary itn, String mailToValidation) {
+		try {
+			EmailVerification.openGmail(itn,mailToValidation);
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+				
+	}
 	
+	public void manageTravelModificationUpsellBag(Itinerary itn) {
+		DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+		ManageTravelLoginPage.doManageTravel(itn);
+		ManageTravelBagPage.selectBagPage(itn);
+		ManageTravelSeatPage.chooseSeat(itn);
+		ManageTravelHotelPage.selectHotel();
+		ManageTravelVehiclePage.selectVehicle();
+		ManageTravelPaymentPage.fillPaymentPage(itn);
+		
+		
+	}
 }

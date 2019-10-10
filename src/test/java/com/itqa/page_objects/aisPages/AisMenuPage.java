@@ -9,9 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
+import com.itqa.page_objects.BasePage;
+
 import framework.DriverBase;
 
-public class AisMenuPage extends DriverBase{
+public class AisMenuPage extends BasePage{
 	
 	int count = 0;
 	private JavascriptExecutor jse = null;
@@ -102,8 +104,8 @@ public class AisMenuPage extends DriverBase{
         
     }catch(Exception e){
 		skip = true;
-		DriverBase.getDriver().quit();
-		throw new SkipException("Scenario fails so execution stoped");
+		//DriverBase.getDriver().quit();
+		e.printStackTrace();
 	}
     }
 
@@ -113,8 +115,8 @@ public class AisMenuPage extends DriverBase{
         kayakConsoleTab.click();
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+    		e.printStackTrace();
     	}
     }
 
@@ -124,8 +126,8 @@ public class AisMenuPage extends DriverBase{
         flightFollowingTab.click();
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+    		e.printStackTrace();
     	}
     }
 
@@ -135,8 +137,8 @@ public class AisMenuPage extends DriverBase{
         flightFlowTab.click();
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+    		e.printStackTrace();
     	}
     }
 
@@ -150,8 +152,8 @@ public class AisMenuPage extends DriverBase{
         catch (Exception e) {
         	skip = true;
         	logger.info("Security Alert not display");
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+        	e.printStackTrace();
             
         }
     }
@@ -162,8 +164,8 @@ public class AisMenuPage extends DriverBase{
         aircraftRecordsTab.click();
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+    		e.printStackTrace();
     	}
     }
 
@@ -172,8 +174,8 @@ public class AisMenuPage extends DriverBase{
         METab.click();
     }catch(Exception e){
 		skip = true;
-		DriverBase.getDriver().quit();
-		throw new SkipException("Scenario fails so execution stoped");
+		//DriverBase.getDriver().quit();
+		e.printStackTrace();
 	}
     }
 
@@ -183,7 +185,7 @@ public class AisMenuPage extends DriverBase{
     	}catch(Exception e){
     		skip = true;
     		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 
@@ -192,8 +194,8 @@ public class AisMenuPage extends DriverBase{
         mxControlTab.click();
     }catch(Exception e){
 		skip = true;
-		DriverBase.getDriver().quit();
-		throw new SkipException("Scenario fails so execution stoped");
+		//DriverBase.getDriver().quit();
+		e.printStackTrace();
 	}
     }
 
@@ -202,8 +204,8 @@ public class AisMenuPage extends DriverBase{
         reliabilityTab.click();
     	}catch(Exception e){
 		skip = true;
-		DriverBase.getDriver().quit();
-		throw new SkipException("Scenario fails so execution stoped");
+		//DriverBase.getDriver().quit();
+		e.printStackTrace();
 	}
     }
 
@@ -212,8 +214,8 @@ public class AisMenuPage extends DriverBase{
         mxRecordsTab.click();
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+    		e.printStackTrace();
     	}
     }
 
@@ -223,8 +225,8 @@ public class AisMenuPage extends DriverBase{
         flightScheduleMXTab.click();
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+    		e.printStackTrace();
     	}
     }
 
@@ -234,8 +236,8 @@ public class AisMenuPage extends DriverBase{
         airOnlyTab.click();
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+    		e.printStackTrace();
     	}
     }
 
@@ -245,8 +247,8 @@ public class AisMenuPage extends DriverBase{
         printManifestTab.click();
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+    		e.printStackTrace();
     	}
     }
 
@@ -256,8 +258,8 @@ public class AisMenuPage extends DriverBase{
         itnMXTab.click();
     	}catch(Exception e){
     		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		//DriverBase.getDriver().quit();
+    		e.printStackTrace();
     	}
     }
 

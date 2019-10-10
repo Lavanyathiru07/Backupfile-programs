@@ -9,12 +9,14 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
+import com.itqa.page_objects.BasePage;
+
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class MaintenanceControl extends DriverBase{
+public class MaintenanceControl extends BasePage{
 
     private Logger logger = null;
 

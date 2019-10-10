@@ -59,14 +59,17 @@ public class WebBookingTestIT extends DriverBase {
 	// {
 	// "simple", "bat" })
 
-	@Story("WWW Booking Creation & Verify email confirmation")
+	@Story("WWW One way Booking Creation & Verify email confirmation and modification")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
 		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
-			generateBooking(itn, silo, context, WITHOUTACCOUNT);
+			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			
+			booking.manageTravelModificationUpsellBag(itn);
 
 			updateTextContext(itn, context);
 		} else {
@@ -94,7 +97,9 @@ public class WebBookingTestIT extends DriverBase {
 		BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 		Assert.assertNotNull(itn.getItn(), "ITN could not be created");
-
+		
+		Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+		
 		updateTextContext(itn, context);
 
 		Assert.assertTrue(booking.processOnlineCheckinAndGetBoardingPass(itn), "Could not print boarding pass");
@@ -121,6 +126,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			updateTextContext(itn, context);
 
 			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
@@ -146,6 +152,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 

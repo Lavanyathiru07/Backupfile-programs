@@ -10,11 +10,13 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
+import com.itqa.page_objects.BasePage;
+
 import framework.DriverBase;
 
 import java.util.List;
 
-public class FlightFollowing extends DriverBase{
+public class FlightFollowing extends BasePage{
 
     private Logger logger = null;
     private JavascriptExecutor jse = null;
@@ -85,8 +87,8 @@ public class FlightFollowing extends DriverBase{
     
     }catch(Exception e){
 		skip = true;
-		DriverBase.getDriver().quit();
-		throw new SkipException("Scenario fails so execution stoped");
+		//DriverBase.getDriver().quit();
+		e.printStackTrace();
 	}
     }
 }

@@ -1,6 +1,7 @@
 package com.itqa.page_objects.aisPages;
 
 import com.itqa.Utils.GeneralUtils;
+import com.itqa.page_objects.BasePage;
 
 import framework.DriverBase;
 
@@ -17,7 +18,7 @@ import org.testng.SkipException;
 
 import java.util.Set;
 
-public class PrintManifest extends DriverBase {
+public class PrintManifest extends BasePage {
 
     private Logger logger = null;
     private JavascriptExecutor jse = null;
