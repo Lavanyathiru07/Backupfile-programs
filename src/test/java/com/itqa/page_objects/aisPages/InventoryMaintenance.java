@@ -69,8 +69,9 @@ public class InventoryMaintenance extends BasePage{
             logger.info("Inventory Maintenance Transaction displayed");
         }
     	}catch(Exception e){
-    	
     		e.printStackTrace();
+    		throw new SkipException("Scenario fails so execution stoped");
+    		
 			
     	}
     }

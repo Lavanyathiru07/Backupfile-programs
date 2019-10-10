@@ -37,8 +37,6 @@ public class NonBookingTestIT extends DriverBase {
 	private String awsenv;
 	private TestResultContext trc;
 
-	
-
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
 	}
@@ -51,15 +49,12 @@ public class NonBookingTestIT extends DriverBase {
 				+ ", " + driver.getCurrentUrl());
 
 		env = NonBookingEnvironment.getEnv();
-		System.out.println(NonBookingEnvironment.getEnv()+"***********");
+		System.out.println(NonBookingEnvironment.getEnv() + "***********");
 		awsenv = System.getProperty("awsenv");
-		System.out.println(System.getProperty("awsenv")+"***********");
+		System.out.println(System.getProperty("awsenv") + "***********");
 		trc = new TestResultContext();
 
 	}
-	
-	
-	
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Decoupled Code For MX - Action Requests")
 	@Story("AIS: Search Decoupled Code For MX - Action Requests")
@@ -124,217 +119,202 @@ public class NonBookingTestIT extends DriverBase {
 
 	}
 
-	
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Flight Flow")
 	@Story("AIS: Access Flight Flow")
 	public void verifyFlightFlow(Integer silo, Itinerary itn, ITestContext context, Method method) {
-	
+
 		G4PlusFlow nonBooking = new G4PlusFlow();
 		nonBooking.verifyFlightFlow();
 
 	}
-	
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Kayak Console")
 	@Story("AIS: Access Kayak Console")
 	public void accessKayakConsole(Integer silo, Itinerary itn, ITestContext context, Method method) {
-	
 
 		G4PlusFlow nonBooking = new G4PlusFlow();
 		nonBooking.accessKayakConsole();
 
 	}
 
-
-
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4Portal: Access Customer Lookup")
-	@Story("G4Portal: Access Customer Lookup")
-	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-		
-	if (!env.contains("in")  && !env.contains("aws")) {
-		
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessCL();
-		
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-
-	
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access STS")
-	@Story("G4+: Access STS")
-	public void accessSTS(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-
-		if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessSTS();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access ESP")
-	@Story("G4+: Access ESP")
-	public void accessESP(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-		if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessESP();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access SVT")
-	@Story("G4+: Access SVT")
-	public void accessSVT(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-
-		if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessSVT();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access CAR")
-	@Story("G4+: Access CAR")
-	public void accessCAR(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-
-		if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessCAR();
-
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access TF2")
-	@Story("G4+: Access TF2")
-	public void accessTF2(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-		if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessTF2();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access RQ")
-	@Story("G4+: Access RQ")
-	public void accessRQ(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-
-		if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessRQ();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access BAG")
-	@Story("G4+: Access BAG")
-	public void accessBAG(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-		if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessBAG();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access PB2")
-	@Story("G4+: Access PB2")
-	public void accessPB2(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-
-		if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessPB2();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access HOT")
-	@Story("G4+: Access HOT")
-	public void accessHOT(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-		if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessHOT();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access ATL")
-	@Story("G4+: Access ATL")
-	public void accessATL(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-
-if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessATL();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access OFO")
-	@Story("G4+: Access OFO")
-	public void accessOFO(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if (!env.contains("in")  && !env.contains("aws")) {
-
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessOFO();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-
-	}
-
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access MOD")
-	@Story("G4+: Access MOD")
-	public void accessMOD(Integer silo, Itinerary itn, ITestContext context, Method method) {
-	if (!(env.contains("in") || env.contains("aws"))) {
-			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessMOD();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Swap: Access Swap")
-	@Story("Swap: Access Swap")
-	public void accessSwap(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
-		G4PlusFlow nonBooking = new G4PlusFlow();
-		nonBooking.accessSwap();
-	}
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4Portal: Access Customer Lookup")
+//	@Story("G4Portal: Access Customer Lookup")
+//	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessCL();
+//
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access STS")
+//	@Story("G4+: Access STS")
+//	public void accessSTS(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessSTS();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access ESP")
+//	@Story("G4+: Access ESP")
+//	public void accessESP(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessESP();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access SVT")
+//	@Story("G4+: Access SVT")
+//	public void accessSVT(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessSVT();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access CAR")
+//	@Story("G4+: Access CAR")
+//	public void accessCAR(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessCAR();
+//
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access TF2")
+//	@Story("G4+: Access TF2")
+//	public void accessTF2(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessTF2();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access RQ")
+//	@Story("G4+: Access RQ")
+//	public void accessRQ(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessRQ();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access BAG")
+//	@Story("G4+: Access BAG")
+//	public void accessBAG(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessBAG();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access PB2")
+//	@Story("G4+: Access PB2")
+//	public void accessPB2(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessPB2();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access HOT")
+//	@Story("G4+: Access HOT")
+//	public void accessHOT(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessHOT();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access ATL")
+//	@Story("G4+: Access ATL")
+//	public void accessATL(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessATL();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access OFO")
+//	@Story("G4+: Access OFO")
+//	public void accessOFO(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//		if (!env.contains("in") && !env.contains("aws")) {
+//
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessOFO();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access MOD")
+//	@Story("G4+: Access MOD")
+//	public void accessMOD(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//		if (!(env.contains("in") || env.contains("aws"))) {
+//			G4PlusFlow nonBooking = new G4PlusFlow();
+//			nonBooking.accessMOD();
+//		} else {
+//			throw new SkipException("Skipping Test Case as runmode set to NO");
+//		}
+//	}
+//
+//	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Swap: Access Swap")
+//	@Story("Swap: Access Swap")
+//	public void accessSwap(Integer silo, Itinerary itn, ITestContext context, Method method) {
+//
+//		G4PlusFlow nonBooking = new G4PlusFlow();
+//		nonBooking.accessSwap();
+//	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
 		Environment ev = new Environment();
