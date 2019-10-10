@@ -175,7 +175,7 @@ public class Common {
 		try {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(ele));			
 		} catch (Exception e) {
-			logger.error("The object " + objname + " is not clickable");
+			logger.info("The object " + objname + " is not clickable");
 		}
 	}
 }
