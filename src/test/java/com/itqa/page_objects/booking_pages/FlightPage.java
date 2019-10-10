@@ -99,18 +99,20 @@ public class FlightPage extends BasePage {
 		logger.info("Click Continue");
 	}
 
-	public void selectFlightPage(Itinerary itn) throws Exception {
-		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(flightNum));
-		if (flightNum.isDisplayed()) {
-			Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
+	public void selectFlightPage(Itinerary itn)  {
+		try {
+			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(flightNum));
+			if (flightNum.isDisplayed()) {
+				Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
 
-			selectDepFlight(0, itn);
-			if (itn.getRoundTrip()) {
-				selectRetFlight(0);
+				selectDepFlight(0, itn);
+				if (itn.getRoundTrip()) {
+					selectRetFlight(0);
+				}
+				Screenshot.saveScreenshot("Flights selected", driver);
+				clickContinue();
 			}
-			Screenshot.saveScreenshot("Flights selected", driver);
-			clickContinue();
-		} else {
+		} catch (Exception e) {
 			if (itn.getDepartureCity().contains("CVG")) {
 				itn.setDepartureCity("BLI");
 			}
