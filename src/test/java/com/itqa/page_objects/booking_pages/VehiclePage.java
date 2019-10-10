@@ -43,7 +43,7 @@ public class VehiclePage extends BasePage {
     }
 
     public void selectCar() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(firstRowVehicle));
+        new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(firstRowVehicle));
         String vehicleText = firstRowVehicle.getAttribute("aria-label");
         jse.executeScript("arguments[0].click();", firstRowVehicle);
         logger.info("Select vehicle: " + vehicleText);

@@ -92,8 +92,8 @@ public class WebBookingTestIT extends DriverBase {
 
 		// setEarlyMarketCities(itn);
 
-		itn.setDepartureCity("BLI");
-		itn.setDestinationCity("LAS");
+		itn.setDepartureCity("CVG");
+		itn.setDestinationCity("SFB");
 		BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 		Assert.assertNotNull(itn.getItn(), "ITN could not be created");
@@ -121,8 +121,8 @@ public class WebBookingTestIT extends DriverBase {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
 			// setEarlyMarketCities(itn);
-			itn.setDepartureCity("BLI");
-			itn.setDestinationCity("LAS");
+			itn.setDepartureCity("CVG");
+			itn.setDestinationCity("SFB");
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
