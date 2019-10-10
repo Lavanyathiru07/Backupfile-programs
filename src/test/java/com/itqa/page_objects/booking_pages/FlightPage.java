@@ -8,6 +8,7 @@ import framework.DriverBase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,6 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeoutException;
 
 public class FlightPage extends BasePage {
 
@@ -99,11 +101,11 @@ public class FlightPage extends BasePage {
 		logger.info("Click Continue");
 	}
 
-	public void selectFlightPage(Itinerary itn)  {
+	public void selectFlightPage(Itinerary itn) {
 		try {
-			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(flightNum));
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(flightNum));
 			if (flightNum.isDisplayed()) {
-				Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
+				// Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
 
 				selectDepFlight(0, itn);
 				if (itn.getRoundTrip()) {
@@ -112,7 +114,7 @@ public class FlightPage extends BasePage {
 				Screenshot.saveScreenshot("Flights selected", driver);
 				clickContinue();
 			}
-		} catch (Exception e) {
+		} catch (NoSuchElementException e) {
 			if (itn.getDepartureCity().contains("CVG")) {
 				itn.setDepartureCity("BLI");
 			}
