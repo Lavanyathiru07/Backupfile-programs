@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -44,8 +46,8 @@ public class FM extends BasePage{
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
+            	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(bagTab));
                 bagTab.click();
-                break;
             }
             catch (Exception e) {
                 if (loop == 9) {
@@ -59,8 +61,7 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("BAG Menu Open");
     }catch(Exception e){
-		skip = true;
-		throw new SkipException("Scenario fails so execution stoped");
+    	e.printStackTrace();
 	}
     }
 
@@ -83,8 +84,7 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("PB2 Menu Open");
     }catch(Exception e){
-		skip = true;
-		throw new SkipException("Scenario fails so execution stoped");
+    	e.printStackTrace();
 	}
     }
 
@@ -92,6 +92,7 @@ public class FM extends BasePage{
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
+            	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(tfTab));
                 tfTab.click();
                 break;
             }
@@ -107,8 +108,7 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("TF2 Menu Open");
     	}catch(Exception e){
-    		skip = true;
-    		throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
     	}
     }
 }

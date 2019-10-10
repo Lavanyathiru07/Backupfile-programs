@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -32,10 +34,10 @@ public class ESP extends BasePage{
 
     public void accessESP() {
     	try{
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mapRow));
         mapRow.click();
         logger.info("ESP Menu Open");
     	}catch(Exception e){
-    		skip = true;
     		e.printStackTrace();
     	}
     	}

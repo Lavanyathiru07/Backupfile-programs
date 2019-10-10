@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -38,7 +40,9 @@ public class InventoryMaintenance extends BasePage{
 
     public void verifyInventoryMX() {
     	try{
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectedPart));
         selectedPart.click();
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(transactionTab));
         transactionTab.click();
 
         Boolean found = false;
@@ -65,9 +69,11 @@ public class InventoryMaintenance extends BasePage{
             logger.info("Inventory Maintenance Transaction displayed");
         }
     	}catch(Exception e){
-    		skip = true;
-    		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+    		e.printStackTrace();
+    		throw new Error("");
+    		
+    		
+			
     	}
     }
 }
