@@ -13,6 +13,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -89,8 +91,9 @@ public class FlightPage extends BasePage {
 
     public void selectFlightPage(Itinerary itn) throws Exception {
     	
-    	Common.elementToBeClickable(driver,depFlightTable, "Depture flight table");
+    	//Common.elementToBeClickable(driver,depFlightTable, "Depture flight table");
         
+    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(depFlightTable));
     	
         selectDepFlight(0, itn);
         if (itn.getRoundTrip()) {

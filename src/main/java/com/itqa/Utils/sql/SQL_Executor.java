@@ -50,8 +50,8 @@ public class SQL_Executor {
             pass = "a88ZBj4y";
         }
         else {
-            user = "javauser";
-            pass = "resuavaj";
+            user = "g4dev";
+            pass = "L0ck1tUp";
         }
 
         try {
