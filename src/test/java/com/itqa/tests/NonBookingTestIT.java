@@ -146,8 +146,6 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessCL();
 
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
@@ -159,9 +157,6 @@ public class NonBookingTestIT extends DriverBase {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSTS();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-
 		}
 	}
 
@@ -173,8 +168,6 @@ public class NonBookingTestIT extends DriverBase {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessESP();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
@@ -186,8 +179,6 @@ public class NonBookingTestIT extends DriverBase {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSVT();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
@@ -200,8 +191,6 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessCAR();
 
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
@@ -213,8 +202,6 @@ public class NonBookingTestIT extends DriverBase {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessTF2();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
@@ -226,9 +213,6 @@ public class NonBookingTestIT extends DriverBase {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessRQ();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-
 		}
 	}
 
@@ -240,8 +224,6 @@ public class NonBookingTestIT extends DriverBase {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessBAG();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
@@ -253,8 +235,6 @@ public class NonBookingTestIT extends DriverBase {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessPB2();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
@@ -266,8 +246,6 @@ public class NonBookingTestIT extends DriverBase {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessHOT();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
@@ -279,8 +257,6 @@ public class NonBookingTestIT extends DriverBase {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessATL();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
@@ -291,8 +267,6 @@ public class NonBookingTestIT extends DriverBase {
 
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessOFO();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 
 	}
@@ -303,8 +277,6 @@ public class NonBookingTestIT extends DriverBase {
 		if (!(env.contains("in") || env.contains("aws"))) {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessMOD();
-		} else {
-			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
