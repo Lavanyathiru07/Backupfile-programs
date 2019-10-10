@@ -148,6 +148,7 @@ public class WebBookingTestIT extends DriverBase {
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
+
 			step("Logged in and verified account");
 			if ((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1)) {
 				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
