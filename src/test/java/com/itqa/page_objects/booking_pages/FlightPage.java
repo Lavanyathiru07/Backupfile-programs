@@ -102,11 +102,11 @@ public class FlightPage extends BasePage {
 		logger.info("Click Continue");
 	}
 
-	public void selectFlightPage(Itinerary itn) {
-			try {
-				new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(flightNum));
-				if (flightNum.isDisplayed()) {
-					// Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
+	public void selectFlightPage(Itinerary itn) throws Exception {
+			/*try {*/
+				new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(depFlightTable));
+				/*if (depFlightTable.isDisplayed()) {*/
+					 Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
 
 					selectDepFlight(0, itn);
 					if (itn.getRoundTrip()) {
@@ -114,7 +114,7 @@ public class FlightPage extends BasePage {
 					}
 					Screenshot.saveScreenshot("Flights selected", driver);
 					clickContinue();
-				}
+				/*}
 			} catch (NoSuchElementException e) {
 				if (!flag) {
 				if (itn.getDepartureCity().contains("CVG")) {
@@ -136,8 +136,8 @@ public class FlightPage extends BasePage {
 				
 			} else {
 				throw new Error("Flights not available... Please check..");
-			}
-		} 
+			}*/
+		//} 
 	}
 	/*
 	 * public Map RCAselectFlight1(BatParams params) { Map flightInfo = new
