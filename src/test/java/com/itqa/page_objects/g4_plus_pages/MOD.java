@@ -733,7 +733,6 @@ public class MOD extends BasePage {
 	}
 
 	public void voucherVerification() {
-
 		jse.executeScript("arguments[0].click()", customer);
 		logger.info("Customer tab is clicked");
 		Set<String> curTab = driver.getWindowHandles();
