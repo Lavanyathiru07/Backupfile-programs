@@ -65,14 +65,17 @@ public class PrintManifest extends BasePage {
         new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(locationField));
         locationField.sendKeys("LAS");
         logger.info("Select Location: LAS");
+        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(selectCity));
         selectCity.click();
         submitButton.click();
 
         Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(selectFlight));
         selectFlight.click();
         GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
+        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(allPaxButton));
         allPaxButton.click();
+        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(paxTable));
         paxTable.click();
     	}catch(Exception e){
     		e.printStackTrace();

@@ -46,13 +46,18 @@ public enum URLS {
         	if(env.contains("prod")) {
         		return url.replace("xxx.", "" );
         		
+        	}else if(env.contains("aws")) {
+        		return url.replace("xxx", System.getProperty("awsenv"));
         	}
             return url.replace("xxx", env);
         }else {
         	if(env.contains("prod")) {
         		return url.replace("xxx", "sw-prod-silo" + silo );
         		
-        	}else {
+        	}else if(env.contains("aws")) {
+				System.out.println("silo" + silo + "." + System.getProperty("awsenv"));
+	               return url.replace("xxx", "silo" + silo + "." + System.getProperty("awsenv"));
+	           }else {
         		return url.replace("xxx", "silo" + silo + "." + env);
         	}
 

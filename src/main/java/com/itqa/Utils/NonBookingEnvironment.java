@@ -11,13 +11,14 @@ public class NonBookingEnvironment {
 	public static Boolean shouldUpdateConfluenceStatusOnFailure = false;
 	private static Integer silo = -1;
 
-	private int[] stg = { 1};
-	private int[] qa1 = { 1};
-	private int[] qa2 = { 1};
+	private int[] stg = { 1 };
+	private int[] qa1 = { 1 };
+	private int[] qa2 = { 1 };
 	private int[] in1 = { 1 };
+	private int[] in2 = { 1 };
 	private int[] intl = { 1 };
 	private int[] trn = { 0 };
-	private int[] aws = {1};
+	private int[] aws = { 1 };
 	private int[] nddprd = { 1};
 	private int[] prod = {1};
 
@@ -56,6 +57,8 @@ public class NonBookingEnvironment {
 			return stream(qa2).boxed().collect(Collectors.toList());
 		case "in1":
 			return stream(in1).boxed().collect(Collectors.toList());
+		case "in2":
+			return stream(in2).boxed().collect(Collectors.toList());
 		case "intl":
 			return stream(intl).boxed().collect(Collectors.toList());
 		case "trn":

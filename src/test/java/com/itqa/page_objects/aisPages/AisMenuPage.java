@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -96,7 +98,9 @@ public class AisMenuPage extends BasePage {
 
 	public void selectaccountsPayableMaintenance() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(APTab));
 			APTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(accountsPayableMXTab));
 			accountsPayableMXTab.click();
 
 			driver.switchTo().alert().accept();
@@ -110,7 +114,9 @@ public class AisMenuPage extends BasePage {
 
 	public void selectKayakConsole() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(ADTab));
 			ADTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakConsoleTab));
 			kayakConsoleTab.click();
 		} catch (Exception e) {
 
@@ -120,7 +126,9 @@ public class AisMenuPage extends BasePage {
 
 	public void selectFlightFollowing() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(FFTab));
 			FFTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightFollowingTab));
 			flightFollowingTab.click();
 		} catch (Exception e) {
 
@@ -130,7 +138,9 @@ public class AisMenuPage extends BasePage {
 
 	public void selectFlightFlow() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(FFTab));
 			FFTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightFlowTab));
 			flightFlowTab.click();
 		} catch (Exception e) {
 
@@ -140,7 +150,9 @@ public class AisMenuPage extends BasePage {
 
 	public void selectinventoryMaintenance() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(INTab));
 			INTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(inventoryMXTab));
 			inventoryMXTab.click();
 			DriverBase.getDriver().switchTo().alert().accept();
 			logger.info("Accept Security Alert");
@@ -153,7 +165,9 @@ public class AisMenuPage extends BasePage {
 
 	public void selectAircraftRecords() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(MXTab));
 			MXTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(aircraftRecordsTab));
 			aircraftRecordsTab.click();
 		} catch (Exception e) {
 
@@ -163,6 +177,7 @@ public class AisMenuPage extends BasePage {
 
 	public void selectMXandEngr() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(METab));
 			METab.click();
 		} catch (Exception e) {
 
@@ -172,6 +187,7 @@ public class AisMenuPage extends BasePage {
 
 	public void selectLineMX() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(lineMXTab));
 			lineMXTab.click();
 		} catch (Exception e) {
 
@@ -181,6 +197,7 @@ public class AisMenuPage extends BasePage {
 
 	public void selectMXControl() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxControlTab));
 			mxControlTab.click();
 		} catch (Exception e) {
 
@@ -190,6 +207,7 @@ public class AisMenuPage extends BasePage {
 
 	public void selectReliability() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reliabilityTab));
 			reliabilityTab.click();
 		} catch (Exception e) {
 
@@ -199,6 +217,7 @@ public class AisMenuPage extends BasePage {
 
 	public void selectMXRecords() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxRecordsTab));
 			mxRecordsTab.click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -207,7 +226,9 @@ public class AisMenuPage extends BasePage {
 
 	public void selectFlightScheduleMX() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(OPTab));
 			OPTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightScheduleMXTab));
 			flightScheduleMXTab.click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -216,7 +237,9 @@ public class AisMenuPage extends BasePage {
 
 	public void selectAirOnly() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(rsTab));
 			rsTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(airOnlyTab));
 			airOnlyTab.click();
 		} catch (Exception e) {
 
@@ -226,7 +249,9 @@ public class AisMenuPage extends BasePage {
 
 	public void selectPrintManifest() {
 		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(rsTab));
 			rsTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(printManifestTab));
 			printManifestTab.click();
 		} catch (Exception e) {
 

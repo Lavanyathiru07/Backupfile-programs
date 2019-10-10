@@ -51,7 +51,9 @@ public class NonBookingTestIT extends DriverBase {
 				+ ", " + driver.getCurrentUrl());
 
 		env = NonBookingEnvironment.getEnv();
+		System.out.println(NonBookingEnvironment.getEnv()+"***********");
 		awsenv = System.getProperty("awsenv");
+		System.out.println(System.getProperty("awsenv")+"***********");
 		trc = new TestResultContext();
 
 	}

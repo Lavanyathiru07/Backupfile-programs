@@ -139,14 +139,15 @@ public class G4PlusFlow extends BasePage {
 	public void g4PlusSignin() {
 		try{
 	        if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
+	        	System.out.println(">>>>>>>>>>>>>ENV CHECK<<<<<<<<<<<"+Environment.getEnv());
 	        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 							
 				/*DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
 	        	DriverBase.getDriver().get("https://ais." + System.getProperty("env") + ".allegiantair.com");*/
 	        }else if(System.getProperty("awsenv").contains("aws")) {
-	        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("env"), 0));
-				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("env"), 0));
+	        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
 	        
 				} else {
 					if (System.getProperty("env").contains("ndd")) {
@@ -213,9 +214,13 @@ public class G4PlusFlow extends BasePage {
 	public void runSPOEreport() {
 
 		if (!System.getProperty("env").contains("ndd") && !System.getProperty("env").contains("prod")) {
+			if(System.getProperty("env").contains("aws")){
+				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("env"), 0));
+				DriverBase.getDriver().get(URLS.AIS.getUrl(System.getProperty("env"), 0));
+				}else {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 			DriverBase.getDriver().get(URLS.AIS.getUrl(Environment.getEnv(), 0));
-
+				}
 		} else {
 			if (System.getProperty("env").contains("ndd")) {
 				DriverBase.getDriver().get(URLS.NDD.getUrl(Environment.getEnv(), 0));
