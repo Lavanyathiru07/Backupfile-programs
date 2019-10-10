@@ -82,7 +82,7 @@ public class TABookingTestIT extends DriverBase {
 			throws InterruptedException {
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))
-				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1))) {
+				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			TABookingFlow booking = new TABookingFlow();
 			generateBooking(itn, silo, context);
