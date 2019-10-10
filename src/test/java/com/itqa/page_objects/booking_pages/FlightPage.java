@@ -24,6 +24,7 @@ import java.util.concurrent.TimeoutException;
 public class FlightPage extends BasePage {
 
 	private Logger logger = null;
+	private Boolean flag = false;
 
 	private WebDriver driver = null;
 	private JavascriptExecutor jse = null;
@@ -44,7 +45,7 @@ public class FlightPage extends BasePage {
 	@FindBy(id = "flights-wrapper")
 	private WebElement flightTitle;
 
-	@FindBy(className = "flight-number")
+	@FindBy(className = "flights-per-day")
 	private WebElement flightNum;
 
 	@FindBy(xpath = "//*[text()='New Search']")
@@ -102,37 +103,41 @@ public class FlightPage extends BasePage {
 	}
 
 	public void selectFlightPage(Itinerary itn) {
-		try {
-			
-			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(flightNum));
-			if (flightNum.isDisplayed()) {
-				// Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
+			try {
+				new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(flightNum));
+				if (flightNum.isDisplayed()) {
+					// Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
 
-				selectDepFlight(0, itn);
-				if (itn.getRoundTrip()) {
-					selectRetFlight(0);
+					selectDepFlight(0, itn);
+					if (itn.getRoundTrip()) {
+						selectRetFlight(0);
+					}
+					Screenshot.saveScreenshot("Flights selected", driver);
+					clickContinue();
 				}
-				Screenshot.saveScreenshot("Flights selected", driver);
-				clickContinue();
+			} catch (NoSuchElementException e) {
+				if (!flag) {
+				if (itn.getDepartureCity().contains("CVG")) {
+					itn.setDepartureCity("BLI");
+				}
+				if (itn.getDepartureCity().contains("BLI")) {
+					itn.setDepartureCity("CVG");
+				}
+				if (itn.getDestinationCity().contains("SFB")) {
+					itn.setDepartureCity("LAS");
+				}
+				if (itn.getDestinationCity().contains("LAS")) {
+					itn.setDepartureCity("SFB");
+				}
+				flag=true;
+				newSearch.click();
+				landingPage.selectFlightsOnLandingPage(itn);
+				selectFlightPage(itn);
+				
+			} else {
+				throw new Error("Flights not available... Please check..");
 			}
-		} catch (NoSuchElementException e) {
-			if (itn.getDepartureCity().contains("CVG")) {
-				itn.setDepartureCity("BLI");
-			}
-			if (itn.getDepartureCity().contains("BLI")) {
-				itn.setDepartureCity("CVG");
-			}
-			if (itn.getDestinationCity().contains("CVG")) {
-				itn.setDepartureCity("LAS");
-			}
-			if (itn.getDestinationCity().contains("BLI")) {
-				itn.setDepartureCity("SFB");
-			}
-			newSearch.click();
-			landingPage.selectFlightsOnLandingPage(itn);
-			selectFlightPage(itn);
-
-		}
+		} 
 	}
 	/*
 	 * public Map RCAselectFlight1(BatParams params) { Map flightInfo = new
