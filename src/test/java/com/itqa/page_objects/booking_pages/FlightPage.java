@@ -103,6 +103,7 @@ public class FlightPage extends BasePage {
 
 	public void selectFlightPage(Itinerary itn) {
 		try {
+			
 			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(flightNum));
 			if (flightNum.isDisplayed()) {
 				// Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
