@@ -122,9 +122,10 @@ public class BookingFlow extends BasePage {
 		return manifestId;
 	}
 
-	public Boolean signInAndVerifyAccount(Itinerary itn) {
+	public Boolean signInAndVerifyAccount(Itinerary itn) throws InterruptedException {
 		String logoutUrl = URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()) + "user/logout";
 	//	driver.get(logoutUrl);
+		Thread.sleep(3000);
 		DriverBase.getDriver().get(logoutUrl);
 		System.out.println(logoutUrl);
 		landingPage.signIn(itn.getEmail());
@@ -160,6 +161,7 @@ public class BookingFlow extends BasePage {
 		g4MenuPage.selectMOD();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 		return mod.createVoucher(itn);
+
 	}
 
 	public void WWWUncheckRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
@@ -176,5 +178,5 @@ public class BookingFlow extends BasePage {
 			mod.cancelWholeItn(itn.getItn());
 		}
 	}
-
+	
 }

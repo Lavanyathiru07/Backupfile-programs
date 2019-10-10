@@ -42,8 +42,8 @@ public class FlightPage extends BasePage {
 	@FindBy(id = "flights-wrapper")
 	private WebElement flightTitle;
 
-	@FindBy(id = "departing")
-	private WebElement depart;
+	@FindBy(className = "flight-number")
+	private WebElement flightNum;
 
 	@FindBy(xpath = "//*[text()='New Search']")
 	private WebElement newSearch;
@@ -100,8 +100,8 @@ public class FlightPage extends BasePage {
 	}
 
 	public void selectFlightPage(Itinerary itn) throws Exception {
-		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(depart));
-		if (depart.isDisplayed()) {
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(flightNum));
+		if (flightNum.isDisplayed()) {
 			Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
 
 			selectDepFlight(0, itn);
