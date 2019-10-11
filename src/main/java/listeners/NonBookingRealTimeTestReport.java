@@ -40,7 +40,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 		GeneralUtils.writeToFile("nonBookingPassedTests.html",
 				"<tr><td align=\"center\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
-						+ "</td><td></td><td></td></tr>");
+						+ "</td><td></td></tr>");
 
 	}
 
@@ -62,15 +62,10 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 
 		System.out.println("Test Failed->" + result.getName() + " on silo "
 				+ result.getTestContext().getAttribute("silo") + " on thread " + Thread.currentThread().getId());
-		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 		GeneralUtils.writeToFile("nonBookingFailedTests.html",
 				"<tr><td align=\"center\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
-						+ "</td><td>" + testResultContext.manifestId + "</td><td>"
-						+ "<a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo
-						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
-						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
-						+ "</td></tr>");
+						+ "</td><td></td></tr>");
 	}
 
 	@Override
