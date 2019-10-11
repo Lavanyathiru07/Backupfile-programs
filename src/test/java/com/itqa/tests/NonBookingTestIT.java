@@ -316,7 +316,7 @@ public class NonBookingTestIT extends DriverBase {
 		}
 	}
 
-	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Swap: Access Swap")
+	//@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Swap: Access Swap")
 	@Story("Swap: Access Swap")
 	public void accessSwap(Integer silo,ITestContext context, Method method,Itinerary itn) {
 		setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
