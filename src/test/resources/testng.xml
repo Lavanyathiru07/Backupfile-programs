@@ -1,16 +1,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="BAT 2.0 Automation" verbose="1" parallel="methods"
 	thread-count="25" preserve-order="false"
-	data-provider-thread-count="25">
+	data-provider-thread-count="30">
 	<test name="WWW Booking">
-		<groups>
+		<!-- <groups>
 			<define name="bat">
 				<include name="bat" />
 			</define>
 			<define name="simple">
 				<include name="simple" />
 			</define>
-		</groups>
+		</groups> -->
 		<classes>
 
 			<class name="com.itqa.tests.WebBookingTestIT" />

@@ -130,7 +130,7 @@ public class TestReport implements IReporter {
                                String outputDirectory) {
     	System.out.println("started to generate report");
     	writeReportHeader();
-    	nonBookingWritePassedAndFailedTestReport();
+    	//nonBookingWritePassedAndFailedTestReport();
         writePassedAndFailedTestReport();
         writeReportFooter();
         System.out.println("Generated report");

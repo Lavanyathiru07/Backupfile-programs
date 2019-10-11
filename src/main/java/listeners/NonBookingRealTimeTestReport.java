@@ -38,7 +38,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 				+ " on thread " + Thread.currentThread().getId());
 
 		GeneralUtils.writeToFile("nonBookingPassedTests.html",
-				"<tr><td align=\"center\">" + " " + testResultContext.description
+				"<tr><td align=\"center\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
 						+ "</td><td></td><td></td></tr>");
 
