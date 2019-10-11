@@ -91,7 +91,7 @@ public class WebBookingTestIT extends DriverBase {
 			throws InterruptedException {
 		setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
-		 setEarlyMarketCities(itn);
+		setEarlyMarketCities(itn);
 
 		BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
@@ -115,7 +115,9 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2")) && ((silo == 1) || (silo == 2)))
-				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
+				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
+				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
+				|| (env.contains("trn") && (silo == 0))) {
 
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
@@ -123,7 +125,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
-			 Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			updateTextContext(itn, context);
 
 			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
@@ -149,7 +151,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
-		    Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");

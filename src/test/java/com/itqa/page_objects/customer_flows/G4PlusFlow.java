@@ -151,7 +151,7 @@ public class G4PlusFlow extends BasePage {
 	        
 				} else {
 					if (System.getProperty("env").contains("ndd")) {
-						DriverBase.getDriver().get(URLS.NDD.getUrl(Environment.getEnv(), 0));
+						//DriverBase.getDriver().get(URLS.NDD.getUrl(Environment.getEnv(), 0));
 					//	DriverBase.getDriver().get("https://nddprd-g4plus-portal.allegiantair.com/");
 					} else {
 						DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
@@ -223,7 +223,7 @@ public class G4PlusFlow extends BasePage {
 				}
 		} else {
 			if (System.getProperty("env").contains("ndd")) {
-				DriverBase.getDriver().get(URLS.NDD.getUrl(Environment.getEnv(), 0));
+				//DriverBase.getDriver().get(URLS.NDD.getUrl(Environment.getEnv(), 0));
 
 			} else {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));

@@ -57,19 +57,21 @@ public class CCBookingTestIT extends DriverBase {
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
+				|| (env.contains("nddprd") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))
+				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
+				|| (env.contains("trn") && (silo == 1))) {
 
-				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))) {
-
-			MOD mod = new MOD();
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			 Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			if (env.contains("trn") && (silo == 1)) {
+				Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
+			}
 			updateTextContext(itn, context);
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
 		} else {
-			// DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
@@ -81,14 +83,15 @@ public class CCBookingTestIT extends DriverBase {
 	@Story(" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification Retrieve ITN in G4+ MOD & upsell bags & seats")
 	public void testCCBookRoundTripWithModification(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
-		if ((env.contains("stg") && (silo == 1)) || ((env.contains("qa1") || env.contains("qa2")) && (silo == 1))) {
+		if ((env.contains("stg") && (silo == 1)) || (env.contains("nddprd") && (silo == 1))
+				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 			updateTextContext(itn, context);
-			 Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
 			step("Modified seats & bags in CC MOD");
