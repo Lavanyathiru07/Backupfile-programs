@@ -22,32 +22,7 @@
 
 		</classes>
 	</test>
-	<!-- <test name="CC Booking">
-		<groups>
-			<define name="bat">
-				<include name="bat" />
-			</define>
-			<define name="simple">
-				<include name="simple" />
-			</define>
-		</groups>
-		<classes>
-			<class name="com.itqa.tests.CCBookingTestIT" />
-		</classes>
-	</test>
-	<test name="TA Booking">
-		<groups>
-			<define name="bat">
-				<include name="bat" />
-			</define>
-			<define name="simple">
-				<include name="simple" />
-			</define>
-		</groups>
-		<classes>
-			<class name="com.itqa.tests.TABookingTestIT" />
-		</classes>
-	</test> -->
+	
 </suite>
 
 
