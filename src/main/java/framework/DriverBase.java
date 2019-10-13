@@ -67,10 +67,12 @@ public class DriverBase {
 
     @AfterSuite(alwaysRun = true)
     public static void closeDriverObjects() {
+    	DriverBase.getDriver().quit();
+    	/*
     	System.out.println("Inside closeDriverObjects");
         for (DriverFactory webDriverThread : webDriverThreadPool) {
             webDriverThread.quitDriver();
         }
         System.out.println("Finished closeDriverObjects");
-    }
+    */}
 }
