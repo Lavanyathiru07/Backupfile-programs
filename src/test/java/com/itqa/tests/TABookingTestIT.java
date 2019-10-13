@@ -95,7 +95,6 @@ public class TABookingTestIT extends DriverBase {
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			updateTextContext(itn, context);
-
 			booking.TARefundAndCancellation(itn.getItn(), itn);
 		} else {
 			// DriverBase.getDriver().close();

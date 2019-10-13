@@ -65,7 +65,7 @@ public class CCBookingTestIT extends DriverBase {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+		//	Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			if (env.contains("trn") && (silo == 1)) {
 				Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
 			}
