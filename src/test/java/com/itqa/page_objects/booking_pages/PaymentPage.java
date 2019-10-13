@@ -368,7 +368,7 @@ public class PaymentPage extends BasePage {
 		// new WebDriverWait(driver,
 		// 20).until(ExpectedConditions.elementToBeClickable(totalAmount));
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 			// PageFactory.initElements(driver, PaymentPage.class);
 			amount = totalAmount.getText().trim();
 		} catch (StaleElementReferenceException e) {
