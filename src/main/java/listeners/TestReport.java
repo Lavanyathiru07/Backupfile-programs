@@ -25,11 +25,11 @@ public class TestReport implements IReporter {
              }
             StringBuilder htmlStringBuilder = new StringBuilder();
             htmlStringBuilder.append("<html><head>");
-            htmlStringBuilder.append("<script>function setImageVisible(action, id) {\n" +
+            /*htmlStringBuilder.append("<script>function setImageVisible(action, id) {\n" +
                     " if (action === 'show') {" +
                     "    var img = document.getElementById('screenshotId' + id);\n" +
                     "    img.style.display = 'block';\n" +
-                    "}}</script>");
+                    "}}</script>");*/
             htmlStringBuilder.append("<title>Test Result</title><style>td {border: 1px solid black; padding: 2px;} table {border-collapse: collapse; width: 1000px;}</style></head>");
             htmlStringBuilder.append("<body>");
             htmlStringBuilder.append("<table>");
@@ -66,7 +66,7 @@ public class TestReport implements IReporter {
             e.printStackTrace();
         }
     }
-
+	    
 
 	private void writeReportFooter() {
 		GeneralUtils.writeToFile("Result.html",
