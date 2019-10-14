@@ -57,14 +57,16 @@ public class DriverBase {
     @AfterMethod
     public void takeScreenShot(ITestResult testResult) throws IOException {
         byte[] screenShotByteFile;
-        screenShotByteFile = Screenshot.saveScreenshot( testResult.getName(), getDriver());
+        screenShotByteFile = Screenshot.saveScreenshot( testResult.getName(), getDriver());   
         testResult.setAttribute("screenshot", screenShotByteFile);
+        driverThread.get().quitDriver();
     }
+    
 
-    @AfterSuite(alwaysRun = true)
+    /*@AfterSuite(alwaysRun = true)
     public static void closeDriverObjects() {
-        for (DriverFactory webDriverThread : webDriverThreadPool) {
+        //for (DriverFactory webDriverThread : webDriverThreadPool) {
             webDriverThread.quitDriver();
-        }
-    }
+        //}
+    }*/
 }
