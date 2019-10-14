@@ -1,16 +1,25 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="BAT 2.0 Automation" verbose="1" parallel="methods"
 	thread-count="25" preserve-order="false" data-provider-thread-count="30">
-	<test name="Booking">
+	<test name="WebBooking">
 		<classes>
 
 			<class name="com.itqa.tests.WebBookingTestIT" />
+		</classes>
+	</test>
+	<test name="TABooking">
+		<classes>
 			<class name="com.itqa.tests.TABookingTestIT" />
+		</classes>
+	</test>
+	<test name="CCBooking">
+		<classes>
 			<class name="com.itqa.tests.CCBookingTestIT" />
+		</classes>
+	</test>
+	<test name="NonBooking">
+		<classes>
 			<class name="com.itqa.tests.NonBookingTestIT" />
-
-
-
 		</classes>
 	</test>
 
