@@ -56,6 +56,7 @@ public class DriverBase {
 
     @AfterMethod
     public void takeScreenShot(ITestResult testResult) throws IOException {
+    	
         byte[] screenShotByteFile;
         screenShotByteFile = Screenshot.saveScreenshot( testResult.getName(), getDriver());   
         testResult.setAttribute("screenshot", screenShotByteFile);
