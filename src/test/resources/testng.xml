@@ -10,19 +10,10 @@
 		<classes>
 
 			<class name="com.itqa.tests.WebBookingTestIT" />
-		</classes>
-	</test>
-	<test name="TABooking">
-		<classes>
 			<class name="com.itqa.tests.TABookingTestIT" />
-		</classes>
-	</test>
-	<test name="CCBooking">
-		<classes>
 			<class name="com.itqa.tests.CCBookingTestIT" />
 		</classes>
 	</test>
-	
 
 </suite>
 
