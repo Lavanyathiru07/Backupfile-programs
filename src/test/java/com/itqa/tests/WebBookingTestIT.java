@@ -121,7 +121,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
-			setEarlyMarketCities(itn);
+			//setEarlyMarketCities(itn);
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
