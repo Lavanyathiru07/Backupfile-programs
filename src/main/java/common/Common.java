@@ -170,6 +170,8 @@ public class Common {
         Select dropDownLocator = new Select(driver.findElement(By.xpath(locator)));
         dropDownLocator.selectByVisibleText(text);
     }
+    
+    
     public static void elementToBeClickable(WebDriver driver, WebElement ele, String objname) throws Exception {
 
 		try {
