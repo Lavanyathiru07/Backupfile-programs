@@ -6,6 +6,7 @@ import com.itqa.Utils.Environment;
 
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.customer_flows.CCBookingFlow;
+import com.itqa.page_objects.g4_plus_pages.G4PlusLoginPage;
 import com.itqa.page_objects.g4_plus_pages.MOD;
 
 import data.*;
@@ -36,6 +37,7 @@ public class CCBookingTestIT extends DriverBase {
 	private RemoteWebDriver driver;
 	private String env;
 	private TestResultContext trc;
+	
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -57,19 +59,24 @@ public class CCBookingTestIT extends DriverBase {
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
+				|| (env.contains("nddprd") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))
+				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
+				|| (env.contains("trn") && (silo == 1))) {
 
-				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))) {
-
-			MOD mod = new MOD();
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			 //Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+		//	Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			if (env.contains("trn") && (silo == 1)) {
+				Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
+			}
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+			// recevied");
+
 			updateTextContext(itn, context);
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
 		} else {
-			// DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
@@ -81,14 +88,16 @@ public class CCBookingTestIT extends DriverBase {
 	@Story(" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification Retrieve ITN in G4+ MOD & upsell bags & seats")
 	public void testCCBookRoundTripWithModification(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
-		if ((env.contains("stg") && (silo == 1)) || ((env.contains("qa1") || env.contains("qa2")) && (silo == 1))) {
+		if ((env.contains("stg") && (silo == 1)) || (env.contains("nddprd") && (silo == 1))
+				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 			updateTextContext(itn, context);
-			 //Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+
 			Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
 			step("Modified seats & bags in CC MOD");
@@ -107,7 +116,10 @@ public class CCBookingTestIT extends DriverBase {
 		if (env.contains("aws")) {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("awsenv"), silo));
-		} else {
+		} else if(env.contains("nddprd")) {
+			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		} 
+		else {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(env, 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(env, silo));
 		}
@@ -136,7 +148,6 @@ public class CCBookingTestIT extends DriverBase {
 		context.setAttribute("manifestid", manifestId);
 		step("CC Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "
 				+ itn.getDestinationCity());
-
 		return booking;
 	}
 
