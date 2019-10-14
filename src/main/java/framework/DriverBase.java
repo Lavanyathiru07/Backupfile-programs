@@ -47,24 +47,30 @@ public class DriverBase {
 
     @AfterMethod(alwaysRun = true)
     public static void clearCookies() {
+    	System.out.println("Inside clearCookies");
         try {
             getDriver().manage().deleteAllCookies();
         } catch (Exception ex) {
             System.err.println("Unable to delete cookies: " + ex);
         }
+        System.out.println("Finished clearCookies");
     }
 
     @AfterMethod
     public void takeScreenShot(ITestResult testResult) throws IOException {
+    	System.out.println("Inside takeScreenShot");
         byte[] screenShotByteFile;
         screenShotByteFile = Screenshot.saveScreenshot( testResult.getName(), getDriver());
         testResult.setAttribute("screenshot", screenShotByteFile);
+        System.out.println("Finished takeScreenShot");
     }
 
     @AfterSuite(alwaysRun = true)
-    public static void closeDriverObjects() {
+    public static void closeDriverObjects() {    	
+    	System.out.println("Inside closeDriverObjects");
         for (DriverFactory webDriverThread : webDriverThreadPool) {
             webDriverThread.quitDriver();
         }
+        System.out.println("Finished closeDriverObjects");
     }
 }

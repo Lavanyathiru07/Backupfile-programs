@@ -66,7 +66,7 @@ public class TestReport implements IReporter {
             e.printStackTrace();
         }
     }
-
+	    
 
 	private void writeReportFooter() {
 		GeneralUtils.writeToFile("Result.html",
@@ -131,7 +131,7 @@ public class TestReport implements IReporter {
                                String outputDirectory) {
     	System.out.println("started to generate report");
     	writeReportHeader();
-    	//nonBookingWritePassedAndFailedTestReport();
+    	nonBookingWritePassedAndFailedTestReport();
         writePassedAndFailedTestReport();
         writeReportFooter();
         System.out.println("Generated report");

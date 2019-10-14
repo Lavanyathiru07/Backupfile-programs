@@ -62,7 +62,6 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 
 		System.out.println("Test Failed->" + result.getName() + " on silo "
 				+ result.getTestContext().getAttribute("silo") + " on thread " + Thread.currentThread().getId());
-		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 		GeneralUtils.writeToFile("nonBookingFailedTests.html",
 				"<tr><td align=\"center\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
@@ -80,9 +79,9 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 		System.out.println("END Of Execution(TEST)->" + result.getName());
 		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 
-		if (Environment.getCreateConfluenceSetting()) {
+		/*if (Environment.getCreateConfluenceSetting()) {
 			UpdateConfluence page = new UpdateConfluence(result);
-		}
+		}*/
 
 	}
 

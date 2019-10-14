@@ -7,6 +7,7 @@ import com.itqa.Utils.URLS;
 import com.itqa.page_objects.BasePage;
 import com.itqa.page_objects.booking_pages.*;
 import com.itqa.page_objects.g4_plus_pages.G4MenuPage;
+import com.itqa.page_objects.g4_plus_pages.G4PlusLoginPage;
 import com.itqa.page_objects.g4_plus_pages.MOD;
 
 import data.Itinerary;
@@ -34,6 +35,7 @@ public class CCBookingFlow extends BasePage {
 	private MOD mod;
 	private G4MenuPage g4MenuPage;
 	private EmailVerification EmailVerification;
+	private G4PlusLoginPage G4PlusLoginPage;
 
 	public CCBookingFlow() {
 		this.logger = Logger.getLogger(CCBookingFlow.class);
@@ -50,11 +52,16 @@ public class CCBookingFlow extends BasePage {
 		mod = new MOD();
 		g4MenuPage = new G4MenuPage();
 		EmailVerification = new EmailVerification();
+		G4PlusLoginPage=new G4PlusLoginPage();
 	}
 
 	public String CCBooking(Itinerary itn, ITestContext context) {
 		String manifestId = "";
 		try {
+			if(System.getProperty("env").contains("nddprd")) {
+				G4PlusLoginPage.g4plusLogin(false);
+				DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("env"), Environment.getCurrentSilo()));
+			}
 			landingPage.selectFlightsOnLandingPage(itn);
 			flightPage.selectFlightPage(itn);
 			manifestId = ManifestId.getManifestId(driver);
