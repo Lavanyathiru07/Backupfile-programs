@@ -23,7 +23,7 @@ public class DriverBase {
     protected static boolean skip = false;
 	protected boolean flag;
 	
-    @BeforeSuite(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public static void instantiateDriverObject() {
         driverThread = new ThreadLocal<DriverFactory>() {
             @Override
@@ -40,10 +40,10 @@ public class DriverBase {
         return driverThread.get().getDriver();
     }
 
-    @BeforeMethod(alwaysRun = true)
+   /* @BeforeMethod(alwaysRun = true)
     public static void setTestName(Method method) {
     	driverThread.get().setTestName(method.getName());
-    }
+    }*/
 
     @AfterMethod(alwaysRun = true)
     public static void clearCookies() {
@@ -56,7 +56,7 @@ public class DriverBase {
         System.out.println("Finished clearCookies");
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void takeScreenShot(ITestResult testResult) throws IOException {
 
         byte[] screenShotByteFile;
@@ -64,6 +64,7 @@ public class DriverBase {
         testResult.setAttribute("screenshot", screenShotByteFile);
 
         driverThread.get().quitDriver();
+        DriverBase.getDriver().close();
 
     }
     
