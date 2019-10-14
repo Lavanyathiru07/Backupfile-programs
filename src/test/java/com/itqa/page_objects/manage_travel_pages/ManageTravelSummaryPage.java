@@ -1,4 +1,4 @@
-package com.itqa.page_objects.ManageTravelPages;
+package com.itqa.page_objects.manage_travel_pages;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
