@@ -6,6 +6,7 @@ import com.itqa.Utils.Environment;
 
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.customer_flows.CCBookingFlow;
+import com.itqa.page_objects.g4_plus_pages.G4PlusLoginPage;
 import com.itqa.page_objects.g4_plus_pages.MOD;
 
 import data.*;
@@ -36,6 +37,7 @@ public class CCBookingTestIT extends DriverBase {
 	private RemoteWebDriver driver;
 	private String env;
 	private TestResultContext trc;
+	
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -114,7 +116,10 @@ public class CCBookingTestIT extends DriverBase {
 		if (env.contains("aws")) {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("awsenv"), silo));
-		} else {
+		} else if(env.contains("nddprd")) {
+			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		} 
+		else {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(env, 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(env, silo));
 		}
@@ -143,7 +148,6 @@ public class CCBookingTestIT extends DriverBase {
 		context.setAttribute("manifestid", manifestId);
 		step("CC Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "
 				+ itn.getDestinationCity());
-
 		return booking;
 	}
 

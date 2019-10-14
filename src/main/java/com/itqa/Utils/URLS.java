@@ -33,14 +33,8 @@ public enum URLS {
 
 
 		}else if(env.contains("nddprd")) {
-			URLS.AIS.url = URLS.AIS.url.replace("ais.xxx", "xxx.ais");
-		} //if token is used, please the commented code
-		/* 
-			 * else if(env.contains("aws")) { URLS.G4PLUSTOKEN.url =
-			 * URLS.G4PLUSTOKEN.url.replace("g4plus-res.xxx", "g4plus-res." +
-			 * System.getProperty("awsenv")); }
-			 */else if(env.contains("aws")) { // if login is used, use this piece of code
-			URLS.G4PLUS.url = URLS.G4PLUS.url.replace("g4plus-portal.xxx", "g4plus-portal." +  System.getProperty("awsenv"));
+			URLS.AIS.url = URLS.AIS.url.replace("ais.xxx", "xxx-ais");
+			URLS.G4PLUS.url=URLS.G4PLUS.url.replace("g4plus-portal.xxx", "xxx-g4plus-portal");
 		}
 
 		if (silo == 0) {
