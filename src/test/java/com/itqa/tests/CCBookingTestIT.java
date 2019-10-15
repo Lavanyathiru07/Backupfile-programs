@@ -144,7 +144,6 @@ public class CCBookingTestIT extends DriverBase {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(env, 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(env, silo));
 		}
-
 		// Environment.setCurrentSilo(silo);
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);

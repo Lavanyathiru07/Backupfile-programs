@@ -67,9 +67,7 @@ public class CCBookingFlow extends BasePage {
 			manifestId = ManifestId.getManifestId(driver);
 			itn.setManifestId(manifestId);
 			logger.info("Initiated flight, manifest id is " + manifestId);
-			if (Environment.getEnv().contains("qa1") || Environment.getEnv().contains("in1")) {
-				bundlePage.selectBundle(itn);
-			}
+			bundlePage.selectBundle(itn);
 			hotelPage.selectHotel(itn);
 			vehiclePage.selectVehicle(itn);
 			seatPage.selectSeatPage(itn);
