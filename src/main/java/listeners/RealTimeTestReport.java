@@ -35,7 +35,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
                 " on thread " + Thread.currentThread().getId());
 
         
-        GeneralUtils.writeToFile("passedTests.html", "<tr><td align=\"center\">" + "Silo-" + testResultContext.currentSilo
+        GeneralUtils.writeToFile("passedTests.html", "<tr><td align=\"left\">" + "Silo-" + testResultContext.currentSilo
 	        		+" "+testResultContext.description + "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" +
 	                testResultContext.itn +
 	                "</td><td></td></tr>");
@@ -61,7 +61,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
                 " on silo " + result.getTestContext().getAttribute("silo") +
                 " on thread " + Thread.currentThread().getId());
         System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
-        GeneralUtils.writeToFile("failedTests.html", "<tr><td align=\"center\">" +"Silo" + testResultContext.currentSilo
+        GeneralUtils.writeToFile("failedTests.html", "<tr><td align=\"left\">" +"Silo" + testResultContext.currentSilo
         		+testResultContext.description + "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" +
                 testResultContext.itn + "</td><td>" + testResultContext.manifestId +
                 "</td></tr>");
