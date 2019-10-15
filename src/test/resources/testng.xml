@@ -9,6 +9,11 @@
 			<class name="com.itqa.tests.NonBookingTestIT" />
 		</classes>
 	</test>
+	<test name="NonBooking">
+		<classes>			
+			<class name="com.itqa.tests.NonBookingTestIT" />
+		</classes>
+	</test>
 
 </suite>
 
