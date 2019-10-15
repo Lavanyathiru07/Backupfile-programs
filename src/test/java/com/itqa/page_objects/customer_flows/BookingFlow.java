@@ -96,10 +96,7 @@ public class BookingFlow extends BasePage {
 			manifestId = ManifestId.getManifestId(DriverBase.getDriver());
 			itn.setManifestId(manifestId);
 			logger.info("Initiated flight, manifest id is " + manifestId);
-			if (Environment.getEnv().contains("qa1") || Environment.getEnv().contains("in1")
-					|| Environment.getEnv().contains("stg")) {
-				bundlePage.selectBundle(itn);
-			}
+			bundlePage.selectBundle(itn);
 			hotelPage.selectHotel(itn);
 			vehiclePage.selectVehicle(itn);
 			activityPage.selectActivity(itn);
