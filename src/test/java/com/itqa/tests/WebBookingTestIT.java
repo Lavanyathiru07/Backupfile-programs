@@ -61,11 +61,15 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
 			if (env.contains("prod")) {
-				setUpTestContext(silo, method.getAnnotation(Story.class).value()
+				setUpTestContext(silo, "silo"+ silo +" "+ method.getAnnotation(Story.class).value()
 						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
 			} else {
-
-				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+				if(silo!=0) {
+					setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
+				}else {
+					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+				}
+				
 			}
 
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
@@ -87,7 +91,7 @@ public class WebBookingTestIT extends DriverBase {
 
 	}
 
-	// @Test(dataProvider = "Web Use Cases", dataProviderClass =
+	/*// @Test(dataProvider = "Web Use Cases", dataProviderClass =
 	// ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, NO
 	// UPSELL", groups = {
 	// "bat" })
@@ -111,7 +115,7 @@ public class WebBookingTestIT extends DriverBase {
 		Assert.assertTrue(booking.processOnlineCheckinAndGetBoardingPass(itn), "Could not print boarding pass");
 		booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
 		step("Checked in and printed boarding pass");
-	}
+	}*/
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {
 			"bat" })
@@ -125,8 +129,12 @@ public class WebBookingTestIT extends DriverBase {
 				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("trn") && (silo == 0)) || (env.contains("prod") && (silo == 3))) {
-
-			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+			if(silo!=0) {
+				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
+			}else {
+				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+			}
+			
 			// itn.setDepartureCity("BLI");
 			// itn.setDestinationCity("LAS");
 			setEarlyMarketCities(itn);
@@ -156,7 +164,7 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
-			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+			setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 
 			BookingFlow booking = generateBooking(itn, silo, context, WITHACCOUNT);
 

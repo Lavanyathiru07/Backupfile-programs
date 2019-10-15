@@ -63,14 +63,14 @@ public class CCBookingTestIT extends DriverBase {
 				|| (env.contains("trn") && (silo == 1)) || (env.contains("prod") && (silo == 1))) {
 			if (env.contains("prod") && (silo == 1)) {
 				setUpTestContext(silo,
-						"CC Booking Creation- OW- Confirmation Email received, CCModify - Upsell Bag & seat- Modification Emails received",
+						"silo"+ silo +" CC Booking Creation- OW- Confirmation Email received, CCModify - Upsell Bag & seat- Modification Emails received",
 						context, itn);
 			} else if ((env.contains("trn") || env.contains("aws") || env.contains("qa1") || env.contains("qa2"))
 					&& (silo == 1)) {
-				setUpTestContext(silo, method.getAnnotation(Story.class).value()
+				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value()
 						+ ", CCModify - Upsell Bag & seat- Modification Emails received", context, itn);
 			} else {
-				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			}
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
@@ -101,16 +101,15 @@ public class CCBookingTestIT extends DriverBase {
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))) {
 
 			if (env.contains("nddprd") && ((silo == 2) || (silo == 3))) {
-				setUpTestContext(silo, "CC Booking Creation- Confirmation Email received", context, itn);
+				setUpTestContext(silo, "silo"+ silo +" CC Booking Creation- Confirmation Email received", context, itn);
 			} else if ((env.contains("qa1") || env.contains("qa2")) && (silo == 2)) {
 				setUpTestContext(silo,
-						"CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification",
+						"silo"+ silo +" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification",
 						context, itn);
 			} else {
-				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			}
-			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-
+			
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
