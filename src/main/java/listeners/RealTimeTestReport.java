@@ -35,7 +35,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		GeneralUtils.writeToFile("passedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
-						+ "</td><td></td></tr>");
+						+ "</td><td></td><td></td></tr>");
 
 	}
 
@@ -60,7 +60,10 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		GeneralUtils.writeToFile("failedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
-						+ "</td><td>" + testResultContext.manifestId + "</td></tr>");
+						+ "</td><td>" + testResultContext.manifestId + "</td><td>"+"<a href=\"javascript:setImageVisible('show', " 
+						+ testResultContext.currentSilo + ");\">show image</a>" +"<img id='screenshotId" + 
+						testResultContext.currentSilo + "' " +"style='display:none' height=\"40%\" width=\"auto\" src='" 
+						+ base64Screenshot + "'/>" +"</td></tr>");
 	}
 
 	@Override
