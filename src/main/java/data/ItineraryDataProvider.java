@@ -121,6 +121,7 @@ public class ItineraryDataProvider {
                         .withScenario(method.getName())
                         .withHotel(true)
                         .withVehicle(true)
+                        .withSsr("PPOC")
                         .withEmail("tsqa.automation@tridentsqa.com")
                         .build();
                 data.add(new Object[]{silo, itnRoundTrip});

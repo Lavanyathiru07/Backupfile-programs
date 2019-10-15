@@ -78,7 +78,7 @@ public class BookingFlow extends BasePage {
 		mod = new MOD();
 		g4MenuPage = new G4MenuPage();
 		EmailVerification = new EmailVerification();
-		ManageTravelLoginPage =new ManageTravelLoginPage();
+		ManageTravelLoginPage = new ManageTravelLoginPage();
 		ManageTravelBagPage = new ManageTravelBagPage();
 		ManageTravelSeatPage = new ManageTravelSeatPage();
 		ManageTravelHotelPage = new ManageTravelHotelPage();
@@ -96,9 +96,7 @@ public class BookingFlow extends BasePage {
 			manifestId = ManifestId.getManifestId(DriverBase.getDriver());
 			itn.setManifestId(manifestId);
 			logger.info("Initiated flight, manifest id is " + manifestId);
-			if (Environment.getEnv().contains("qa1") || Environment.getEnv().contains("in1")) {
-				bundlePage.selectBundle(itn);
-			}
+			bundlePage.selectBundle(itn);
 			hotelPage.selectHotel(itn);
 			vehiclePage.selectVehicle(itn);
 			activityPage.selectActivity(itn);
@@ -144,7 +142,7 @@ public class BookingFlow extends BasePage {
 
 	public Boolean signInAndVerifyAccount(Itinerary itn) throws InterruptedException {
 		String logoutUrl = URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()) + "user/logout";
-	//	driver.get(logoutUrl);
+		// driver.get(logoutUrl);
 		Thread.sleep(3000);
 		DriverBase.getDriver().get(logoutUrl);
 		System.out.println(logoutUrl);
@@ -198,17 +196,18 @@ public class BookingFlow extends BasePage {
 			mod.cancelWholeItn(itn.getItn());
 		}
 	}
+
 	public Boolean emailVerification(Itinerary itn, String mailToValidation) {
 		try {
-			EmailVerification.openGmail(itn,mailToValidation);
+			EmailVerification.openGmail(itn, mailToValidation);
 			return true;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
-				
+
 	}
-	
-	public void manageTravelModificationUpsellBag(Itinerary itn) {
+
+	public void manageTravelModificationUpsellBagSeat(Itinerary itn) {
 		DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
 		ManageTravelLoginPage.doManageTravel(itn);
 		ManageTravelBagPage.selectBagPage(itn);
@@ -216,7 +215,6 @@ public class BookingFlow extends BasePage {
 		ManageTravelHotelPage.selectHotel();
 		ManageTravelVehiclePage.selectVehicle();
 		ManageTravelPaymentPage.fillPaymentPage(itn);
-		
-		
+
 	}
 }

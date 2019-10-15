@@ -2,19 +2,21 @@ package com.itqa.page_objects.customer_flows;
 
 import com.itqa.Utils.Environment;
 import com.itqa.Utils.ManifestId;
+import com.itqa.Utils.URLS;
 import com.itqa.page_objects.BasePage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelBagPage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelHotelPage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelLoginPage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelPaymentPage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelSeatPage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelVehiclePage;
 import com.itqa.page_objects.booking_pages.*;
 import com.itqa.page_objects.g4_plus_pages.MOD;
 
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.ITestContext;
 
 public class TABookingFlow extends BasePage {
@@ -33,6 +35,12 @@ public class TABookingFlow extends BasePage {
 	private ConfirmationPage confirmationPage;
 	private MOD mod;
 	private EmailVerification EmailVerification;
+	private ManageTravelLoginPage ManageTravelLoginPage;
+	private ManageTravelBagPage ManageTravelBagPage;
+	private ManageTravelSeatPage ManageTravelSeatPage;
+	private ManageTravelHotelPage ManageTravelHotelPage;
+	private ManageTravelVehiclePage ManageTravelVehiclePage;
+	private ManageTravelPaymentPage ManageTravelPaymentPage;
 
 	public TABookingFlow() {
 		this.logger = Logger.getLogger(TABookingFlow.class);
@@ -49,6 +57,12 @@ public class TABookingFlow extends BasePage {
 		confirmationPage = new ConfirmationPage();
 		mod = new MOD();
 		EmailVerification = new EmailVerification();
+		ManageTravelLoginPage =new ManageTravelLoginPage();
+		ManageTravelBagPage = new ManageTravelBagPage();
+		ManageTravelSeatPage = new ManageTravelSeatPage();
+		ManageTravelHotelPage = new ManageTravelHotelPage();
+		ManageTravelVehiclePage = new ManageTravelVehiclePage();
+		ManageTravelPaymentPage = new ManageTravelPaymentPage();
 
 	}
 
@@ -78,7 +92,7 @@ public class TABookingFlow extends BasePage {
 	}
 
 	public void TARefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("prod")) {
+		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprod") ) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
 		}
@@ -92,6 +106,18 @@ public class TABookingFlow extends BasePage {
 			return false;
 		}
 				
+	}
+	public void TAmanageTravelModificationUpsellBag(Itinerary itn,Integer silo) throws Exception {
+		DriverBase.getDriver().get(URLS.TA.getUrl(Environment.getEnv(),silo));
+	//	taSignInPage.taSignin();
+		ManageTravelLoginPage.doManageTravel(itn);
+		ManageTravelBagPage.selectBagPage(itn);
+		ManageTravelSeatPage.selectUpgradeSeat(itn);
+		ManageTravelHotelPage.selectHotel();
+		ManageTravelVehiclePage.selectVehicle();
+		ManageTravelPaymentPage.fillPaymentPage(itn);
+		
+		
 	}
 
 }

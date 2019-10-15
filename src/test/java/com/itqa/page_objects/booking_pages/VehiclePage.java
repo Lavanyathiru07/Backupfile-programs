@@ -103,7 +103,7 @@ public class VehiclePage extends BasePage {
             try {Thread.sleep(1000);} catch (Exception e) {}
         }
         if (vehiclePage) {
-            if (itn.getVehicle() && !System.getProperty("env").contains("ndd")) {
+            if (itn.getVehicle() && (!System.getProperty("env").contains("ndd") || !System.getProperty("env").contains("prod"))) {
                 selectCar();
                 clickContinue();
             } else {

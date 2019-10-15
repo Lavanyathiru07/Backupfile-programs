@@ -4,15 +4,17 @@ import framework.DriverBase;
 
 public enum URLS {
 	WWW("https://xxx.allegiantair.com/"),
+	CC("https://cc-xxx.allegiantair.com/"),
+	TA("https://ta-xxx.allegiantair.com/"),
 	G4PLUS("https://g4plus-portal.xxx.allegiantair.com/"),
+	G4PLUSTOKEN("https://g4plus-res.xxx.allegiantair.com/test/token?aisId=12288"),
 	G4META("https://g4meta.xxx.allegiantair.com/"),
 	AIS("https://ais.xxx.allegiantair.com/"),
 	RSFLTFEESEARCH ("https://ais.xxx.allegiantair.com/c/public/index.php/mx/rsfltfee/search"),
 	JIRA("https://tech.allegiantair.com"),
-	CONFLUENCE("https://confluence.allegiantair.com"),
-	G4PLUSTOKEN("https://g4plus-res.xxx.allegiantair.com/test/token?aisId=12288"),
-	CC("https://cc-xxx.allegiantair.com/"),
-	TA("https://ta-xxx.allegiantair.com/");
+	CONFLUENCE("https://confluence.allegiantair.com");
+	
+	
 	//    INTERNATIONAL("int.nexus.intl");
 
 	private String url;
@@ -28,18 +30,27 @@ public enum URLS {
 		if (env.contains("intl")) {
 			url = url.replace("allegiantair.com", NEXUSDOMAIN);
 			return url.replace("xxx", "www." + INTLPREFIX);
-		} else if(env.contains("VipProd")) {
-			return url.replace("xxx", "www." + URLS.WWW);
-
-
-		}else if(env.contains("nddprd")) {
-
+		} else if(env.contains("nddprd")) {
 			URLS.AIS.url = URLS.AIS.url.replace("ais.xxx", "xxx-ais");
 			URLS.G4PLUS.url=URLS.G4PLUS.url.replace("g4plus-portal.xxx", "xxx-g4plus-portal");
 
 		}
 
 		if (silo == 0) {
+			if(env.contains("vipprod")) {
+				if(url.contains("cc-")|| url.contains("cc.")) {
+					url = url.replace("cc-", "cc.");
+				}else if(url.contains("ta-") || url.contains("ta.") ) {
+					url = url.replace("ta-", "ta.");
+				}
+					
+				if(url.contains("ais") || url.contains("g4plus-portal")||url.contains("ta.")|| url.contains("cc.")) {
+					return url.replace("xxx.","");
+				}else {
+					return url.replace("xxx","www");
+				}
+			}
+			
 			if(env.contains("trn")) {
 				if(url.contains("cc-")|| url.contains("cc.")) {
 					url = url.replace("cc-", "cc.");
@@ -68,12 +79,11 @@ public enum URLS {
 		}else {
 			if(env.contains("prod")) {
 				return url.replace("xxx", "sw-prod-silo" + silo );
-
 			}else if(env.contains("nddprd")) {
 				return url.replace("xxx", env + "-silo" + silo);	
 			}else if(env.contains("aws")) {
 	               return url.replace("xxx", "silo" + silo + "." + System.getProperty("awsenv"));
-	           }
+	        }
 			else {
 				return url.replace("xxx", "silo" + silo + "." + env);
 			}

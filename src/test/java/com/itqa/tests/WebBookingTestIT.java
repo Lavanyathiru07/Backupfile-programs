@@ -52,24 +52,32 @@ public class WebBookingTestIT extends DriverBase {
 
 	}
 
-	// , retryAnalyzer = RetryFailure.class
-
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
 			"simple", "bat" })
 
-	@Story("WWW One way Booking Creation & Verify email confirmation and modification")
+	@Story("WWW One way Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))) {
+		if (((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
+				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
+			if (env.contains("prod")) {
+				setUpTestContext(silo, method.getAnnotation(Story.class).value()
+						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
+			} else {
 
-			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+			}
 
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
+
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 
-			booking.manageTravelModificationUpsellBag(itn);
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 
+			if (env.contains("prod") && ((silo == 1) || (silo == 2))) {
+				booking.manageTravelModificationUpsellBagSeat(itn);
+				Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
+			}
 			updateTextContext(itn, context);
 		} else {
 			// DriverBase.getDriver().close();
@@ -78,8 +86,6 @@ public class WebBookingTestIT extends DriverBase {
 		}
 
 	}
-
-	// , retryAnalyzer = RetryFailure.class,
 
 	// @Test(dataProvider = "Web Use Cases", dataProviderClass =
 	// ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, NO
@@ -97,7 +103,8 @@ public class WebBookingTestIT extends DriverBase {
 
 		Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
-		//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+		// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+		// recevied");
 
 		updateTextContext(itn, context);
 
@@ -117,16 +124,17 @@ public class WebBookingTestIT extends DriverBase {
 				|| ((env.contains("qa1") || env.contains("qa2")) && ((silo == 1) || (silo == 2)))
 				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
-				|| (env.contains("trn") && (silo == 0))) {
+				|| (env.contains("trn") && (silo == 0)) || (env.contains("prod") && (silo == 3))) {
 
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-
+			// itn.setDepartureCity("BLI");
+			// itn.setDestinationCity("LAS");
 			setEarlyMarketCities(itn);
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			updateTextContext(itn, context);
 
 			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
@@ -142,23 +150,26 @@ public class WebBookingTestIT extends DriverBase {
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Create Account during booking andLogin", groups = {
 			"bat" })
 
-	@Story("My account creation via booking path with create voucher - Login with account created")
+	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
 			Method method) throws InterruptedException {
 
-		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg")) && (silo == 1))) {
+		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
+				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
 			BookingFlow booking = generateBooking(itn, silo, context, WITHACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+			// recevied");
 
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");
-			if ((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1)) {
+			if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1))
+					|| (env.contains("prod") && (silo == 3))) {
 				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
 			}
 			updateTextContext(itn, context);
@@ -194,7 +205,9 @@ public class WebBookingTestIT extends DriverBase {
 		ev.setCurrentSilo(silo);
 		driver = DriverBase.getDriver();
 		driver.get(URLS.WWW.getUrl(env, silo));
-
+		System.out.println(URLS.WWW.getUrl(env, silo));
+		System.out.println(URLS.TA.getUrl(env, silo));
+		System.out.println(URLS.CC.getUrl(env, silo));
 		itn.setDescription(description);
 		trc.setSetSilo(silo.toString());
 
