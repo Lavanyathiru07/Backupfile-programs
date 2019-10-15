@@ -72,7 +72,7 @@ public enum URLS {
 				}
 			}
 			if(env.contains("aws")) {
-				 return url.replace("xxx",System.getProperty("awsenv"));
+				 return url.replace("xxx",env);
 			}
 
 			return url.replace("xxx", env);
@@ -82,7 +82,7 @@ public enum URLS {
 			}else if(env.contains("nddprd")) {
 				return url.replace("xxx", env + "-silo" + silo);	
 			}else if(env.contains("aws")) {
-	               return url.replace("xxx", "silo" + silo + "." + System.getProperty("awsenv"));
+	               return url.replace("xxx", "silo" + silo + "." + env);
 	        }
 			else {
 				return url.replace("xxx", "silo" + silo + "." + env);
