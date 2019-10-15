@@ -4,24 +4,19 @@ import com.itqa.Utils.Environment;
 import com.itqa.Utils.ManifestId;
 import com.itqa.Utils.URLS;
 import com.itqa.page_objects.BasePage;
-import com.itqa.page_objects.ManageTravelPages.ManageTravelBagPage;
-import com.itqa.page_objects.ManageTravelPages.ManageTravelHotelPage;
-import com.itqa.page_objects.ManageTravelPages.ManageTravelLoginPage;
-import com.itqa.page_objects.ManageTravelPages.ManageTravelPaymentPage;
-import com.itqa.page_objects.ManageTravelPages.ManageTravelSeatPage;
-import com.itqa.page_objects.ManageTravelPages.ManageTravelVehiclePage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelBagPage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelHotelPage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelLoginPage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelPaymentPage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelSeatPage;
+import com.itqa.page_objects.manage_travel_pages.ManageTravelVehiclePage;
 import com.itqa.page_objects.booking_pages.*;
 import com.itqa.page_objects.g4_plus_pages.MOD;
 
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.ITestContext;
 
 public class TABookingFlow extends BasePage {

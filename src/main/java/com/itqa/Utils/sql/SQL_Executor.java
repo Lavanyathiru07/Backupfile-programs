@@ -38,12 +38,8 @@ public class SQL_Executor {
 
         //Supply this account
         if (env.equalsIgnoreCase("STG")) {
-            user = "webuser";
-            pass = "resubew1";
-        }
-        else if (env.equalsIgnoreCase("TRN")) {
-            user = "webuser";
-            pass = "webpass";
+            user = "g4dev";
+            pass = "L0ck1tUp";
         }
         else if (env.equalsIgnoreCase("IN2") || env.equalsIgnoreCase("SB1")) {
             user = "javauser";

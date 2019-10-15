@@ -217,8 +217,10 @@ public class G4PlusFlow extends BasePage {
 				DriverBase.getDriver().get(URLS.AIS.getUrl(Environment.getEnv(), 0));
 			}
 		} else {
+
 			if (System.getProperty("env").contains("nddprd")) {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+
 
 			} else {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));

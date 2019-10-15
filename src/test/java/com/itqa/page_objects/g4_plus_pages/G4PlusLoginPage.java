@@ -90,7 +90,7 @@ public class G4PlusLoginPage extends BasePage {
 		}
 	}
 	
-	public void g4Signin(Boolean station) {
+	public void g4Signin1(Boolean station) {
 		driver = DriverBase.getDriver();
 		if (!Environment.getEnv().contains("ndd") || Environment.getEnv().contains("prod")) {
 			driver.get("https://g4plus-portal." + System.getProperty("env") + ".allegiantair.com/portal");

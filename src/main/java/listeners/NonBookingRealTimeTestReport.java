@@ -52,11 +52,11 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 		TestResultContext testResultContext = new TestResultContext();
 		testResultContext.getTestResultContext(result);
 
-		if (Environment.getCreateJiraSetting()) {
+		/*if (Environment.getCreateJiraSetting()) {
 			Jira jira = new Jira();
 			jira.createJira(result);
 		}
-		Itinerary itn;
+		Itinerary itn;*/
 
 		System.out.println("Test Failed->" + result.getName());
 

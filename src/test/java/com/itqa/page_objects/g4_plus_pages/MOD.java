@@ -14,7 +14,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
+import com.itqa.Utils.Environment;
 import com.itqa.Utils.GeneralUtils;
+import com.itqa.Utils.URLS;
 import com.itqa.page_objects.BasePage;
 
 import java.util.List;
@@ -699,8 +701,8 @@ public class MOD extends BasePage {
 	}
 
 	public void stationUncheckPax(String itn) {
-		g4LoginPage.g4Signin(true);
-
+		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		g4LoginPage.g4plusLogin(true);
 		Set<String> curTab = driver.getWindowHandles();
 		g4MenuPage.selectSTNS();
 		GeneralUtils.switchNextTab(driver, curTab);
@@ -708,8 +710,8 @@ public class MOD extends BasePage {
 	}
 
 	public void refundWholeAmountInMod(String itin, Itinerary itn) throws InterruptedException {
-		g4LoginPage.g4Signin(false);
-
+		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		g4LoginPage.g4plusLogin(false);
 		Set<String> curTab = driver.getWindowHandles();
 		g4MenuPage.selectMOD();
 		GeneralUtils.switchNextTab(driver, curTab);
@@ -718,8 +720,8 @@ public class MOD extends BasePage {
 	}
 
 	public void cancelWholeItn(String itn) {
-		g4LoginPage.g4Signin(false);
-
+		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		g4LoginPage.g4plusLogin(false);
 		Set<String> curTab = driver.getWindowHandles();
 		g4MenuPage.selectMOD();
 		GeneralUtils.switchNextTab(driver, curTab);

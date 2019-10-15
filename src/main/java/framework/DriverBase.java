@@ -23,7 +23,7 @@ public class DriverBase {
     protected static boolean skip = false;
 	protected boolean flag;
 	
-    @BeforeSuite(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public static void instantiateDriverObject() {
         driverThread = new ThreadLocal<DriverFactory>() {
             @Override
@@ -40,10 +40,10 @@ public class DriverBase {
         return driverThread.get().getDriver();
     }
 
-    @BeforeMethod(alwaysRun = true)
+   /* @BeforeMethod(alwaysRun = true)
     public static void setTestName(Method method) {
     	driverThread.get().setTestName(method.getName());
-    }
+    }*/
 
     @AfterMethod(alwaysRun = true)
     public static void clearCookies() {
@@ -56,21 +56,27 @@ public class DriverBase {
         System.out.println("Finished clearCookies");
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void takeScreenShot(ITestResult testResult) throws IOException {
-    	System.out.println("Inside takeScreenShot");
-        byte[] screenShotByteFile;
-        screenShotByteFile = Screenshot.saveScreenshot( testResult.getName(), getDriver());
-        testResult.setAttribute("screenshot", screenShotByteFile);
-        System.out.println("Finished takeScreenShot");
-    }
 
-    @AfterSuite(alwaysRun = true)
+        byte[] screenShotByteFile;
+        screenShotByteFile = Screenshot.saveScreenshot( testResult.getName(), getDriver());   
+        testResult.setAttribute("screenshot", screenShotByteFile);
+       // getDriver().close();
+        driverThread.get().quitDriver();
+       
+
+    }
+    
+
+
+   /* @AfterSuite(alwaysRun = true)
     public static void closeDriverObjects() {    	
     	System.out.println("Inside closeDriverObjects");
         for (DriverFactory webDriverThread : webDriverThreadPool) {
             webDriverThread.quitDriver();
         }
         System.out.println("Finished closeDriverObjects");
-    }
+    }*/
+
 }

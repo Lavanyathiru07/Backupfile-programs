@@ -33,6 +33,7 @@ public enum URLS {
 		} else if(env.contains("nddprd")) {
 			URLS.AIS.url = URLS.AIS.url.replace("ais.xxx", "xxx-ais");
 			URLS.G4PLUS.url=URLS.G4PLUS.url.replace("g4plus-portal.xxx", "xxx-g4plus-portal");
+
 		}
 
 		if (silo == 0) {
