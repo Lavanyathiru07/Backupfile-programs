@@ -59,10 +59,15 @@ public class TABookingTestIT extends DriverBase {
 				|| (env.contains("vipprod") && (silo == 0)) || (env.contains("prod") && (silo == 2))) {
 			if (env.contains("prod") && (silo == 2)) {
 				setUpTestContext(silo,
-						"TA Booking Creation- OW- Confirmation Email received, Modification - Upsell Bag & seat- Modification Emails received",
+						"silo"+ silo +" "+"TA Booking Creation- OW- Confirmation Email received, Modification - Upsell Bag & seat- Modification Emails received",
 						context, itn);
 			} else {
-				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+				if(silo!=0) {
+					setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
+				}else {
+					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+				}
+				
 			}
 
 			TABookingFlow booking = new TABookingFlow();
@@ -94,7 +99,7 @@ public class TABookingTestIT extends DriverBase {
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))
 				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
-			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+			setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			TABookingFlow booking = new TABookingFlow();
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");

@@ -58,8 +58,8 @@ public class TestReport implements IReporter {
             htmlStringBuilder.append("<font color=\"white\"><b>DATA</b></font></td>");
             htmlStringBuilder.append("<td bgcolor=\"#FF9F33\" width=\"20%\" align=\"center\">");
             htmlStringBuilder.append("<font color=\"white\"><b>MANIFEST</b></font></td>");
-            //htmlStringBuilder.append("<td bgcolor=\"#FF9F33\" width=\"20%\" align=\"center\">");
-            //htmlStringBuilder.append("<font color=\"white\"><b>SCREENSHOT</b></font></td>");
+            htmlStringBuilder.append("<td bgcolor=\"#FF9F33\" width=\"20%\" align=\"center\">");
+            htmlStringBuilder.append("<font color=\"white\"><b>SCREENSHOT</b></font></td>");
             GeneralUtils.writeToFile("Result.html", htmlStringBuilder.toString());
         } catch (Exception e) {
             System.err.println("Could not create report, exception -> " + e.getMessage() + " --->>> ");
@@ -131,7 +131,7 @@ public class TestReport implements IReporter {
                                String outputDirectory) {
     	System.out.println("started to generate report");
     	writeReportHeader();
-    	nonBookingWritePassedAndFailedTestReport();
+    	//nonBookingWritePassedAndFailedTestReport();
         writePassedAndFailedTestReport();
         writeReportFooter();
         System.out.println("Generated report");

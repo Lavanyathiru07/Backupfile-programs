@@ -19,11 +19,11 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import listeners.TestReport;
 import listeners.TestResultContext;
-import listeners.NonBookingRealTimeTestReport;
+import listeners.RealTimeTestReport;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 
-@Listeners({ TestReport.class, NonBookingRealTimeTestReport.class })
+@Listeners({ TestReport.class, RealTimeTestReport.class })
 public class NonBookingTestIT extends DriverBase {
 
 	private static Logger log = Logger.getLogger(NonBookingTestIT.class.getName());
