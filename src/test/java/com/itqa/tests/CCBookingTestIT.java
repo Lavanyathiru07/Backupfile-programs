@@ -37,7 +37,6 @@ public class CCBookingTestIT extends DriverBase {
 	private RemoteWebDriver driver;
 	private String env;
 	private TestResultContext trc;
-	
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -62,17 +61,16 @@ public class CCBookingTestIT extends DriverBase {
 				|| (env.contains("nddprd") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))
 				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
-				|| (env.contains("trn") && (silo == 1))) {
+				|| (env.contains("trn") && (silo == 1)) || (env.contains("prod") && (silo == 1))) {
 
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-		//	Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			if (env.contains("trn") && (silo == 1)) {
 				Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
+				Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
 			}
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-			// recevied");
 
 			updateTextContext(itn, context);
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
@@ -96,7 +94,8 @@ public class CCBookingTestIT extends DriverBase {
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 			updateTextContext(itn, context);
-			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+			// recevied");
 
 			Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
@@ -116,10 +115,9 @@ public class CCBookingTestIT extends DriverBase {
 		if (env.contains("aws")) {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("awsenv"), silo));
-		} else if(env.contains("nddprd")) {
+		} else if (env.contains("nddprd")) {
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-		} 
-		else {
+		} else {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(env, 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(env, silo));
 		}

@@ -80,7 +80,7 @@ public class G4PlusFlow extends BasePage {
 	public G4PlusFlow() {
 		this.logger = Logger.getLogger(G4PlusFlow.class);
 		g4MenuPage = new G4MenuPage();
-		G4PlusLoginPage=new G4PlusLoginPage();
+		G4PlusLoginPage = new G4PlusLoginPage();
 		AisMenuPage = new AisMenuPage();
 		MaintenanceRecords = new MaintenanceRecords();
 		AircraftRecords = new AircraftRecords();
@@ -138,36 +138,29 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void g4PlusSignin() {
-		try{
-	        if (!System.getProperty("env").contains("nddprd") && !System.getProperty("env").contains("prod")) {
-	        	//System.out.println(">>>>>>>>>>>>>ENV CHECK<<<<<<<<<<<"+Environment.getEnv());
-	        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+		try {
+			if (!System.getProperty("env").contains("nddprd") && !System.getProperty("env").contains("prod")
+					&& !System.getProperty("env").contains("aws")) {
+				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-							
-				/*DriverBase.getDriver().get("https://g4plus-res." + System.getProperty("env") + ".allegiantair.com/api/shows/test/token?aisId=12288");
-	        	DriverBase.getDriver().get("https://ais." + System.getProperty("env") + ".allegiantair.com");*/
-	        }else if(System.getProperty("awsenv").contains("aws")) {
-	        	DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+			} else if (System.getProperty("awsenv").contains("aws")) {
+				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
-	        
+
+			} else {
+				if (System.getProperty("env").contains("nddprd")) {
+					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				} else {
-					if (System.getProperty("env").contains("nddprd")) {
-						DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-					//	DriverBase.getDriver().get("https://nddprd-g4plus-portal.allegiantair.com/");
-					} else {
-						DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-					//	DriverBase.getDriver().get("https://g4plus-portal.allegiantair.com/");
-					}
-					G4PlusLoginPage.g4plusLogin(false);
+					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				}
-			} catch (Exception e) {
-				skip =true;
-				throw new SkipException("Skipping Test Case as runmode set to NO");
+				G4PlusLoginPage.g4plusLogin(false);
 			}
+		} catch (Exception e) {
+			skip = true;
+			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-	
-	
-	
+	}
+
 	public void accessAIS() {
 		g4PlusSignin();
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
@@ -212,16 +205,17 @@ public class G4PlusFlow extends BasePage {
 		AircraftRecords.lookupAircraftPart();
 
 	}
+
 	public void runSPOEreport() {
 
 		if (!System.getProperty("env").contains("nddprd") && !System.getProperty("env").contains("prod")) {
-			if(System.getProperty("env").contains("aws")){
+			if (System.getProperty("env").contains("aws")) {
 				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("env"), 0));
 				DriverBase.getDriver().get(URLS.AIS.getUrl(System.getProperty("env"), 0));
-				}else {
-			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-			DriverBase.getDriver().get(URLS.AIS.getUrl(Environment.getEnv(), 0));
-				}
+			} else {
+				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+				DriverBase.getDriver().get(URLS.AIS.getUrl(Environment.getEnv(), 0));
+			}
 		} else {
 			if (System.getProperty("env").contains("nddprd")) {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
@@ -509,7 +503,6 @@ public class G4PlusFlow extends BasePage {
 		DriverBase.getDriver().get("https://swap.allegiantair.com");
 
 		LoginPage loginPage = new LoginPage();
-
 
 		try {
 			loginPage.openSwap();

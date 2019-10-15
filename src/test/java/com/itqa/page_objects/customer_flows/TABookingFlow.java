@@ -2,7 +2,14 @@ package com.itqa.page_objects.customer_flows;
 
 import com.itqa.Utils.Environment;
 import com.itqa.Utils.ManifestId;
+import com.itqa.Utils.URLS;
 import com.itqa.page_objects.BasePage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelBagPage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelHotelPage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelLoginPage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelPaymentPage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelSeatPage;
+import com.itqa.page_objects.ManageTravelPages.ManageTravelVehiclePage;
 import com.itqa.page_objects.booking_pages.*;
 import com.itqa.page_objects.g4_plus_pages.MOD;
 
@@ -33,6 +40,12 @@ public class TABookingFlow extends BasePage {
 	private ConfirmationPage confirmationPage;
 	private MOD mod;
 	private EmailVerification EmailVerification;
+	private ManageTravelLoginPage ManageTravelLoginPage;
+	private ManageTravelBagPage ManageTravelBagPage;
+	private ManageTravelSeatPage ManageTravelSeatPage;
+	private ManageTravelHotelPage ManageTravelHotelPage;
+	private ManageTravelVehiclePage ManageTravelVehiclePage;
+	private ManageTravelPaymentPage ManageTravelPaymentPage;
 
 	public TABookingFlow() {
 		this.logger = Logger.getLogger(TABookingFlow.class);
@@ -49,6 +62,12 @@ public class TABookingFlow extends BasePage {
 		confirmationPage = new ConfirmationPage();
 		mod = new MOD();
 		EmailVerification = new EmailVerification();
+		ManageTravelLoginPage =new ManageTravelLoginPage();
+		ManageTravelBagPage = new ManageTravelBagPage();
+		ManageTravelSeatPage = new ManageTravelSeatPage();
+		ManageTravelHotelPage = new ManageTravelHotelPage();
+		ManageTravelVehiclePage = new ManageTravelVehiclePage();
+		ManageTravelPaymentPage = new ManageTravelPaymentPage();
 
 	}
 
@@ -78,7 +97,7 @@ public class TABookingFlow extends BasePage {
 	}
 
 	public void TARefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("prod")) {
+		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprod") ) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
 		}
@@ -92,6 +111,18 @@ public class TABookingFlow extends BasePage {
 			return false;
 		}
 				
+	}
+	public void TAmanageTravelModificationUpsellBag(Itinerary itn,Integer silo) throws Exception {
+		DriverBase.getDriver().get(URLS.TA.getUrl(Environment.getEnv(),silo));
+	//	taSignInPage.taSignin();
+		ManageTravelLoginPage.doManageTravel(itn);
+		ManageTravelBagPage.selectBagPage(itn);
+		ManageTravelSeatPage.selectUpgradeSeat(itn);
+		ManageTravelHotelPage.selectHotel();
+		ManageTravelVehiclePage.selectVehicle();
+		ManageTravelPaymentPage.fillPaymentPage(itn);
+		
+		
 	}
 
 }

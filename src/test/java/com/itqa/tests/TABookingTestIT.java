@@ -1,34 +1,30 @@
 package com.itqa.tests;
 
-import framework.DriverBase;
-import com.itqa.Utils.Environment;
+import static io.qameta.allure.Allure.step;
 
-import com.itqa.Utils.URLS;
-import com.itqa.page_objects.customer_flows.BookingFlow;
-import com.itqa.page_objects.customer_flows.TABookingFlow;
-import com.itqa.page_objects.g4_plus_pages.MOD;
-
-import data.*;
-import io.qameta.allure.Story;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 
 import org.apache.log4j.Logger;
-
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
+import com.itqa.Utils.Environment;
+import com.itqa.Utils.URLS;
+import com.itqa.page_objects.customer_flows.TABookingFlow;
+
+import data.Itinerary;
+import data.ItineraryDataProvider;
+import framework.DriverBase;
+import io.qameta.allure.Story;
+import listeners.RealTimeTestReport;
 import listeners.TestReport;
 import listeners.TestResultContext;
-import listeners.RealTimeTestReport;
-
-import java.io.File;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-
-import static io.qameta.allure.Allure.step;
 
 @Listeners({ TestReport.class, RealTimeTestReport.class })
 public class TABookingTestIT extends DriverBase {
@@ -44,8 +40,7 @@ public class TABookingTestIT extends DriverBase {
 
 	@BeforeMethod
 	public void setup(ITestContext context) throws MalformedURLException {
-		
-	
+
 		driver = DriverBase.getDriver();
 		System.out.println("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
 				+ ", " + driver.getCurrentUrl());
@@ -58,16 +53,21 @@ public class TABookingTestIT extends DriverBase {
 			"simple", "bat" })
 
 	@Story(" TA Flight + Hotel + Car booking Email confirmation received")
-	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
-			throws InterruptedException {
+	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
 
 		if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1))
-				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
+				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
+				|| env.contains("vipprod") && (silo == 0) || env.contains("prod") && ((silo == 2))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			TABookingFlow booking = new TABookingFlow();
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+			// recevied");
+			if (env.contains("prod")) {
+				booking.TAmanageTravelModificationUpsellBag(itn,silo);
+				Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
+			}
 			updateTextContext(itn, context);
 
 			booking.TARefundAndCancellation(itn.getItn(), itn);
@@ -77,9 +77,8 @@ public class TABookingTestIT extends DriverBase {
 		}
 	}
 
-	// , retryAnalyzer = RetryFailure.class
-	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book a Round Trip", groups = {
-			"bat" })
+//	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book aRound Trip", groups = {
+//			"bat" })
 
 	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and CC Priority emails received.")
 	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -93,7 +92,8 @@ public class TABookingTestIT extends DriverBase {
 			TABookingFlow booking = new TABookingFlow();
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+			// recevied");
 			updateTextContext(itn, context);
 			booking.TARefundAndCancellation(itn.getItn(), itn);
 		} else {
@@ -108,6 +108,7 @@ public class TABookingTestIT extends DriverBase {
 		ev.setCurrentSilo(silo);
 		itn.setDescription(description);
 		DriverBase.getDriver().get(URLS.TA.getUrl(env, silo));
+		System.out.println(URLS.TA.getUrl(env, silo));
 		// Environment.setCurrentSilo(silo);
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);
