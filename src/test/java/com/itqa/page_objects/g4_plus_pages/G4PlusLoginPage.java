@@ -89,24 +89,6 @@ public class G4PlusLoginPage extends BasePage {
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
-	
-	public void g4Signin1(Boolean station) {
-		driver = DriverBase.getDriver();
-		if (!Environment.getEnv().contains("ndd") || Environment.getEnv().contains("prod")) {
-			driver.get("https://g4plus-portal." + System.getProperty("env") + ".allegiantair.com/portal");
-		} else {
-			if (Environment.getEnv().contains("ndd")) {
-				driver.get("https://nddprd-g4plus-portal.allegiantair.com/");
-			} else {
-				driver.get("https://g4plus-portal.allegiantair.com/");
-			}
-		}
-
-		if (driver.manage().getCookies().toString().contains("ais_")) {
-			logOut();
-		}
-		g4plusLogin(station);
-	}
 
 	public void logOut() {
 		for (int i = 0; i < 10; i++) {

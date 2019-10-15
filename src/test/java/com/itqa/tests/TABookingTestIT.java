@@ -55,17 +55,22 @@ public class TABookingTestIT extends DriverBase {
 	@Story(" TA Flight + Hotel + Car booking Email confirmation received")
 	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
 
-		if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1))
-				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
-				|| env.contains("vipprod") && (silo == 0) || env.contains("prod") && ((silo == 2))) {
-			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+		if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 1))
+				|| (env.contains("vipprod") && (silo == 0)) || (env.contains("prod") && (silo == 2))) {
+			if (env.contains("prod") && (silo == 2)) {
+				setUpTestContext(silo,
+						"TA Booking Creation- OW- Confirmation Email received, Modification - Upsell Bag & seat- Modification Emails received",
+						context, itn);
+			} else {
+				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+			}
+
 			TABookingFlow booking = new TABookingFlow();
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-			// recevied");
-			if (env.contains("prod")) {
-				booking.TAmanageTravelModificationUpsellBag(itn,silo);
+			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			if (env.contains("prod")&& (silo == 2)) {
+				booking.TAmanageTravelModificationUpsellBag(itn, silo);
 				Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
 			}
 			updateTextContext(itn, context);
@@ -77,16 +82,18 @@ public class TABookingTestIT extends DriverBase {
 		}
 	}
 
-//	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book aRound Trip", groups = {
-//			"bat" })
+	// @Test(dataProvider = "TA Use Cases", dataProviderClass =
+	// ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book aRound
+	// Trip", groups = {
+	// "bat" })
 
-	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and CC Priority emails received.")
+	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and Emails received.")
 	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))
-				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
-				|| (env.contains("trn") && (silo == 1))) {
+				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
+				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			TABookingFlow booking = new TABookingFlow();

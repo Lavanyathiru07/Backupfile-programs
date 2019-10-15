@@ -112,7 +112,7 @@ public class HotelPage extends BasePage {
             try {Thread.sleep(1000);} catch (Exception e) {}
         }
         if (hotelPage) {
-            if (itn.getHotel() && !System.getProperty("env").contains("ndd")) {
+            if (itn.getHotel() && (!System.getProperty("env").contains("ndd") || !System.getProperty("env").contains("prod"))) {
                 selectRoom();
                 if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("cc.") || driver.getCurrentUrl().contains("ta.")) {
                     clickContinue();

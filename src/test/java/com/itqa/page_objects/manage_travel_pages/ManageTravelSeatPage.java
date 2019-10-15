@@ -45,12 +45,12 @@ public class ManageTravelSeatPage {
 
     public void chooseSeat(Itinerary itn) {
 
-        if (System.getProperty("env").contains("in2") && (itn.getSiloIndex()==1)) {
+       // if (System.getProperty("env").contains("in2") && (itn.getSiloIndex()==1)) {
             int num = new Random().nextInt(availSeatList.size());
             logger.info("Upgrading seat: " + availSeatList.get(num).getAttribute("aria-label") + " for pax 1");
             jse.executeScript("arguments[0].click();", availSeatList.get(num));
             yesUpgradeButton.click();
-        }
+        //}
 
     }
 

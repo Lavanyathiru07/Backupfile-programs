@@ -59,10 +59,11 @@ public class WebBookingTestIT extends DriverBase {
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
 		if (((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
-				|| env.contains("prod") && ((silo == 1) || (silo == 2)) || env.contains("vipprod") && (silo == 0)) {
-			if(env.contains("prod")) {
-				setUpTestContext(silo, method.getAnnotation(Story.class).value()+" and modification", context, itn);
-			}else {
+				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
+			if (env.contains("prod")) {
+				setUpTestContext(silo, method.getAnnotation(Story.class).value()
+						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
+			} else {
 
 				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			}
@@ -73,9 +74,8 @@ public class WebBookingTestIT extends DriverBase {
 
 			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 
-			
-			if (env.contains("prod")) {
-				booking.manageTravelModificationUpsellBag(itn);
+			if (env.contains("prod") && ((silo == 1) || (silo == 2))) {
+				booking.manageTravelModificationUpsellBagSeat(itn);
 				Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
 			}
 			updateTextContext(itn, context);
@@ -150,11 +150,11 @@ public class WebBookingTestIT extends DriverBase {
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Create Account during booking andLogin", groups = {
 			"bat" })
 
-	@Story("My account creation via booking path with create voucher - Login with account created")
+	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
 			Method method) throws InterruptedException {
 
-		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg")) && (silo == 1))
+		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 
@@ -168,7 +168,8 @@ public class WebBookingTestIT extends DriverBase {
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");
-			if ((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1)) {
+			if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1))
+					|| (env.contains("prod") && (silo == 3))) {
 				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
 			}
 			updateTextContext(itn, context);

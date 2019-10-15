@@ -207,7 +207,7 @@ public class BookingFlow extends BasePage {
 
 	}
 
-	public void manageTravelModificationUpsellBag(Itinerary itn) {
+	public void manageTravelModificationUpsellBagSeat(Itinerary itn) {
 		DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
 		ManageTravelLoginPage.doManageTravel(itn);
 		ManageTravelBagPage.selectBagPage(itn);
