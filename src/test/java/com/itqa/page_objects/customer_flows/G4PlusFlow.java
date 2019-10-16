@@ -108,20 +108,7 @@ public class G4PlusFlow extends BasePage {
 
 	}
 
-	public void g4PlusLogin() {
-		try {
-			if (Environment.getEnv().contains("PROD")) {
-
-			} else {
-				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			}
-		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-
-	}
+	
 
 	public void Login() {
 		try {

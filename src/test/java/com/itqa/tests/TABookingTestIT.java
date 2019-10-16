@@ -73,7 +73,7 @@ public class TABookingTestIT extends DriverBase {
 			TABookingFlow booking = new TABookingFlow();
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			if (env.contains("prod")&& (silo == 2)) {
 				booking.TAmanageTravelModificationUpsellBag(itn, silo);
 				Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");

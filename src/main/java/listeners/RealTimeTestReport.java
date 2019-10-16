@@ -62,7 +62,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
 						+ "</td><td>" + testResultContext.manifestId + "</td><td>"+"<a href=\"javascript:setImageVisible('show', " 
 						+ testResultContext.currentSilo + ");\">show image</a>" +"<img id='screenshotId" + 
-						testResultContext.currentSilo + "' " +"style='display:none' height=\"40%\" width=\"auto\" src='" 
+						testResultContext.currentSilo + "' " +"style='display:inline' height=\"40%\" width=\"auto\" src='" 
 						+ base64Screenshot + "'/>" +"</td></tr>");
 	}
 
