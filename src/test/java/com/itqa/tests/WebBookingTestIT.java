@@ -91,32 +91,6 @@ public class WebBookingTestIT extends DriverBase {
 
 	}
 
-	/*// @Test(dataProvider = "Web Use Cases", dataProviderClass =
-	// ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, NO
-	// UPSELL", groups = {
-	// "bat" })
-
-	@Story("I can book a one way ticket, check in and print boarding pass")
-	public void testWebBookWithOLCI(Integer silo, Itinerary itn, ITestContext context, Method method)
-			throws InterruptedException {
-		setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-
-		setEarlyMarketCities(itn);
-
-		BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
-
-		Assert.assertNotNull(itn.getItn(), "ITN could not be created");
-
-		// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-		// recevied");
-
-		updateTextContext(itn, context);
-
-		Assert.assertTrue(booking.processOnlineCheckinAndGetBoardingPass(itn), "Could not print boarding pass");
-		booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
-		step("Checked in and printed boarding pass");
-	}*/
-
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {
 			"bat" })
 

@@ -38,7 +38,7 @@ public class FlightFollowing extends BasePage{
     	this.driver = DriverBase.getDriver();
     	this.logger = Logger.getLogger(FlightFollowing.class);
     	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void verifyFlightInformation() {

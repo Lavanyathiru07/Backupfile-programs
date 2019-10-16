@@ -39,6 +39,7 @@ import java.util.Base64;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.SkipException;
@@ -76,7 +77,7 @@ public class G4PlusFlow extends BasePage {
 	private String username = "Y2hhcm5raWp0YXdhcnVzaC5hdQ==";
 	private String stationUsername = "Q2hhbmF0YW4uQ2hhcm4udGVzdA==";
 	private String password = "QFNkMTUwNDEyMzQ1";
-
+	private String env=Environment.getEnv();
 	public G4PlusFlow() {
 		this.logger = Logger.getLogger(G4PlusFlow.class);
 		g4MenuPage = new G4MenuPage();
@@ -108,8 +109,6 @@ public class G4PlusFlow extends BasePage {
 
 	}
 
-	
-
 	public void Login() {
 		try {
 			driver = DriverBase.getDriver();
@@ -126,22 +125,24 @@ public class G4PlusFlow extends BasePage {
 
 	public void g4PlusSignin() {
 		try {
-			if (!System.getProperty("env").contains("nddprd") && !System.getProperty("env").contains("prod")
-					&& !System.getProperty("env").contains("aws")) {
+			if ((!System.getProperty("env").contains("nddprd")) && (!System.getProperty("env").contains("prod"))
+					&& (!System.getProperty("env").contains("aws"))) {
 				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+				Thread.sleep(2000);
+				System.out.println(DriverBase.getDriver().findElement(By.xpath("//html/body/pre")).getText());
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+			} else if (System.getProperty("env").contains("nddprd")) {
+				Login();
 			} else if (System.getProperty("awsenv").contains("aws")) {
 				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+				Thread.sleep(2000);
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
 
 			} else {
-				if (System.getProperty("env").contains("nddprd")) {
-					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-				} else {
-					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-				}
-				G4PlusLoginPage.g4plusLogin(false);
+				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 			}
+			G4PlusLoginPage.g4plusLogin(false);
+
 		} catch (Exception e) {
 			skip = true;
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -149,7 +150,11 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessAIS() {
-		g4PlusSignin();
+		if(env.contains("nddprd")) {
+			Login();
+			}else {
+			g4PlusSignin();
+			}
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectAIS();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
@@ -207,7 +212,6 @@ public class G4PlusFlow extends BasePage {
 
 			if (System.getProperty("env").contains("nddprd")) {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-
 
 			} else {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));

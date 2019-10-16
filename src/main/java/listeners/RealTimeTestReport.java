@@ -1,16 +1,14 @@
 package listeners;
 
-import com.itqa.Utils.Environment;
-import com.itqa.Utils.GeneralUtils;
-
-import com.itqa.Utils.UpdateConfluence;
-import com.itqa.Utils.Jira;
-import framework.DriverBase;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+
+import com.itqa.Utils.GeneralUtils;
+
+import framework.DriverBase;
 
 public class RealTimeTestReport extends DriverBase implements ITestListener {
 
@@ -75,8 +73,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 	@Override
 	public void onFinish(ITestContext result) {
 		System.out.println("END Of Execution(TEST)->" + result.getName());
-		// System.out.println("**** on finish manifestid: " +
-		// result.getAttribute("manifestid"));
+		 System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 
 		/*
 		 * if (Environment.getCreateConfluenceSetting()) { UpdateConfluence page = new
