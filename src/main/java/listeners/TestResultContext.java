@@ -1,9 +1,8 @@
 package listeners;
 
-import com.itqa.Utils.ManifestId;
-import data.Itinerary;
-import framework.DriverBase;
 import org.testng.ITestResult;
+
+import data.Itinerary;
 
 public class TestResultContext {
     final int SILOINDEX = 0;
