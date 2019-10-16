@@ -108,8 +108,6 @@ public class G4PlusFlow extends BasePage {
 
 	}
 
-	
-
 	public void Login() {
 		try {
 			driver = DriverBase.getDriver();
@@ -126,9 +124,10 @@ public class G4PlusFlow extends BasePage {
 
 	public void g4PlusSignin() {
 		try {
-			if (!System.getProperty("env").contains("nddprd") && !System.getProperty("env").contains("prod")
-					&& !System.getProperty("env").contains("aws")) {
+			if ((!System.getProperty("env").contains("nddprd")) && (!System.getProperty("env").contains("prod"))
+					&& (!System.getProperty("env").contains("aws"))){
 				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+				Thread.sleep(2000);
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 			} else if (System.getProperty("awsenv").contains("aws")) {
 				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
@@ -207,7 +206,6 @@ public class G4PlusFlow extends BasePage {
 
 			if (System.getProperty("env").contains("nddprd")) {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-
 
 			} else {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
