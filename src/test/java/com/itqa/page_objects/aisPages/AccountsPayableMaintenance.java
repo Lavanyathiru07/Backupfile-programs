@@ -53,7 +53,7 @@ public class AccountsPayableMaintenance extends BasePage{
     	this.driver = DriverBase.getDriver();
     	this.logger = Logger.getLogger(AccountsPayableMaintenance.class);
     	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void lookupTransaction() {

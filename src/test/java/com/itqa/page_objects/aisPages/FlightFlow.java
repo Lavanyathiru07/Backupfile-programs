@@ -35,7 +35,7 @@ public class FlightFlow extends BasePage{
     	this.driver = DriverBase.getDriver();
     	this.logger = Logger.getLogger(FlightFlow.class);
     	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void openFlightFlow() {
