@@ -11,9 +11,9 @@
 	<test name="BAT 2.0">
 		<classes>
 			<class name="com.itqa.tests.NonBookingTestIT" />
-			<!-- <class name="com.itqa.tests.WebBookingTestIT" />
+			<class name="com.itqa.tests.WebBookingTestIT" />
 			<class name="com.itqa.tests.TABookingTestIT" />
-			<class name="com.itqa.tests.CCBookingTestIT" /> -->
+			<class name="com.itqa.tests.CCBookingTestIT" />
 		</classes>
 	</test>
 </suite>
