@@ -23,7 +23,6 @@ public class ItineraryDataProvider {
                     Itinerary itnOneWay = new ItineraryBuilder()
                             .withScenario(method.getName())
                             .withDepartureDateIndex(1)
-                            .withCheckedBag(2)
                             .build();
                     data.add(new Object[]{silo, itnOneWay});
                 }

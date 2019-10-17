@@ -59,7 +59,7 @@ public class SQL_Executor {
         }
         catch (SQLException e) {
             logger.error("Fail to establish a connection with CMSDB");
-            throw new Error(e.getMessage());
+        //    throw new Error(e.getMessage());
         }
 
         logger.info("CMSDB Connection is established");

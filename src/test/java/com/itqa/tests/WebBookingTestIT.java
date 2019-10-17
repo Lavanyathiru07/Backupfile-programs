@@ -112,6 +112,7 @@ public class WebBookingTestIT extends DriverBase {
 			try {
 				setEarlyMarketCities(itn);
 			} catch (Exception e) {
+				log.info("Error while getting the early flight. So, It's executing with default city pair(BLI-LAS)");
 				itn.setDepartureCity("BLI");
 				itn.setDestinationCity("LAS");
 			}
