@@ -112,8 +112,8 @@ public class WebBookingTestIT extends DriverBase {
 			try {
 				setEarlyMarketCities(itn);
 			} catch (Exception e) {
-				log.info("Error while getting the early flight. So, It's executing with default city pair(BLI-LAS)");
-				itn.setDepartureCity("BLI");
+				log.info("Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
+				itn.setDepartureCity("FAT");
 				itn.setDestinationCity("LAS");
 			}
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
