@@ -1,20 +1,16 @@
 package framework;
 
-import com.itqa.Utils.Screenshot;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static io.qameta.allure.Allure.step;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
+import com.itqa.Utils.Screenshot;
 
 public class DriverBase {
 
@@ -47,13 +43,11 @@ public class DriverBase {
 
     @AfterMethod(alwaysRun = true)
     public static void clearCookies() {
-    	System.out.println("Inside clearCookies");
-        try {
+         try {
             getDriver().manage().deleteAllCookies();
         } catch (Exception ex) {
             System.err.println("Unable to delete cookies: " + ex);
         }
-        System.out.println("Finished clearCookies");
     }
 
     @AfterMethod(alwaysRun = true)

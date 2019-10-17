@@ -28,7 +28,7 @@ public class KayakConsole extends BasePage{
     	this.driver = DriverBase.getDriver();
     	this.logger = Logger.getLogger(KayakConsole.class);
     	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void editKayakConsole() {

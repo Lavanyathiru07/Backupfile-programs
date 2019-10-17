@@ -35,7 +35,7 @@ public class InventoryMaintenance extends BasePage{
     	this.driver = DriverBase.getDriver();
     	this.logger = Logger.getLogger(InventoryMaintenance.class);
     	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
+    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
     public void verifyInventoryMX() {
