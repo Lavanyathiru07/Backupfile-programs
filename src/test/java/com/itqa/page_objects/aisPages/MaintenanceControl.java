@@ -65,6 +65,7 @@ public class MaintenanceControl extends BasePage {
 
 			jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
 			jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
 			jse.executeScript("arguments[0].click();", runReportButton);
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(resultRow));
 			jse.executeScript("arguments[0].click();", resultRow);

@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.page_objects.BasePage;
@@ -50,22 +52,25 @@ public class LineMaintenance extends BasePage{
 
     public void openReport() {
     	try{
-        reportsTab.click();
-        flightLogTab.click();
+    		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
+    		reportsTab.click();
+    		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
+    		flightLogTab.click();
 
-        jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
+    		jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -90);
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        String selectDate = format.format(calendar.getTime());
+    		Calendar calendar = Calendar.getInstance();
+    		calendar.add(Calendar.DATE, -90);
+    		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+    		String selectDate = format.format(calendar.getTime());
 
-        jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
-        jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
-        jse.executeScript("arguments[0].click();", runReportButton);
+    		jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
+    		jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
+    		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
+    		jse.executeScript("arguments[0].click();", runReportButton);
 
-        jse.executeScript("arguments[0].click();", resultRow);
-        logger.info("Line MX Report displayed");
+    		jse.executeScript("arguments[0].click();", resultRow);
+    		logger.info("Line MX Report displayed");
     	}catch(Exception e){
     		e.printStackTrace();
     	}
