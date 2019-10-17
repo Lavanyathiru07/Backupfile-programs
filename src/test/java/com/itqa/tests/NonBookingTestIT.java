@@ -369,6 +369,7 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessMOD();
 		}else {
+			
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
