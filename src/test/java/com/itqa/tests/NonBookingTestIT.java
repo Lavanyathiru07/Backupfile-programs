@@ -127,7 +127,7 @@ public class NonBookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Print Manifest")
-	@Story("AIS: Access Print Manifest")
+	@Story("AIS: Access Print Manifest- search and select a flight")
 	public void verifyPrintManifest(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		System.out.println("silo value="+silo);
 		if((!env.contains("vipprod")&&(silo==1))) {
@@ -199,7 +199,7 @@ public class NonBookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4Portal: Access Customer Lookup")
-	@Story("G4Portal: Access Customer Lookup")
+	@Story("G4+: Access Customer Lookup")
 	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		System.out.println("silo value="+silo);
 		if((!env.contains("vipprod")&&(silo==1))) {
