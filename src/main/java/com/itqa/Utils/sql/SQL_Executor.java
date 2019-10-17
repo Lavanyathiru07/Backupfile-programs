@@ -21,8 +21,8 @@ public class SQL_Executor {
             Class.forName("com.ibm.db2.jcc.DB2Driver");
         }
         catch (ClassNotFoundException e) {
-            logger.error("DB2 class not found. Stop running ");
-            throw new Error(e.getMessage());
+            logger.info("DB2 class not found. Stop running ");
+         //  throw new Error(e.getMessage());
         }
 
         if(env.contains("aws")) {
@@ -58,7 +58,7 @@ public class SQL_Executor {
             connection = DriverManager.getConnection(url, user, pass);
         }
         catch (SQLException e) {
-            logger.error("Fail to establish a connection with CMSDB");
+            logger.info("Fail to establish a connection with CMSDB");
         //    throw new Error(e.getMessage());
         }
 
@@ -77,8 +77,8 @@ public class SQL_Executor {
         catch (SQLException e) {
             resultSet.close();
             statement.close();
-            logger.error("Fail to execute the query");
-            throw new Error(e.getMessage());
+            logger.info("Fail to execute the query");
+          //  throw new Error(e.getMessage());
         }
 
         return resultSet;
@@ -89,8 +89,8 @@ public class SQL_Executor {
             connection.close();
         }
         catch (SQLException e) {
-            logger.error("Fail to close CMSDB connection");
-            throw new Error(e.getMessage());
+            logger.info("Fail to close CMSDB connection");
+       //     throw new Error(e.getMessage());
         }
     }
 }
