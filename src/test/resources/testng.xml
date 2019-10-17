@@ -14,6 +14,6 @@
 			<class name="com.itqa.tests.CCBookingTestIT" />
 		</classes>
 	</test>
-</suite>   
+</suite>      
 
 
