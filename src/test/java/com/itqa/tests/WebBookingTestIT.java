@@ -86,7 +86,6 @@ public class WebBookingTestIT extends DriverBase {
 			}
 			updateTextContext(itn, context);
 		} else {
-			// DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 
 		}
