@@ -61,26 +61,28 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
 			if (env.contains("prod")) {
-				setUpTestContext(silo, "silo"+ silo +" "+ method.getAnnotation(Story.class).value()
+				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
 			} else {
-				if(silo!=0) {
-					setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
-				}else {
+				if (silo != 0) {
+					setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context,
+							itn);
+				} else {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
-				
 			}
 
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
-			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+			// recevied");
 
 			if (env.contains("prod") && ((silo == 1) || (silo == 2))) {
 				booking.manageTravelModificationUpsellBagSeat(itn);
-				//Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
+				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
+				// recevied");
 			}
 			updateTextContext(itn, context);
 		} else {
@@ -103,20 +105,23 @@ public class WebBookingTestIT extends DriverBase {
 				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("trn") && (silo == 0)) || (env.contains("prod") && (silo == 3))) {
-			if(silo!=0) {
-				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
-			}else {
+			if (silo != 0) {
+				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
+			} else {
 				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			}
-			
-			// itn.setDepartureCity("BLI");
-			// itn.setDestinationCity("LAS");
-			setEarlyMarketCities(itn);
+			try {
+				setEarlyMarketCities(itn);
+			} catch (Exception e) {
+				itn.setDepartureCity("BLI");
+				itn.setDestinationCity("LAS");
+			}
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
-			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+			// recevied");
 			updateTextContext(itn, context);
 
 			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
@@ -138,7 +143,7 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
-			setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
+			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 
 			BookingFlow booking = generateBooking(itn, silo, context, WITHACCOUNT);
 

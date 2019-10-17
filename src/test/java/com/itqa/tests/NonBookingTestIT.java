@@ -110,8 +110,6 @@ public class NonBookingTestIT extends DriverBase {
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		
-
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Inventory Maintenance")
