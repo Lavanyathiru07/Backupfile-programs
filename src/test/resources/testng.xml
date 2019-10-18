@@ -11,7 +11,7 @@
 	<test name="Bat 2.0">
 		<classes>
 		    <class name="com.itqa.tests.NonBookingTestIT" />
-===			<class name="com.itqa.tests.WebBookingTestIT" />
+     		<class name="com.itqa.tests.WebBookingTestIT" />
 			<class name="com.itqa.tests.TABookingTestIT" />
 			<class name="com.itqa.tests.CCBookingTestIT" />
 		</classes>
