@@ -34,6 +34,8 @@ public enum URLS {
 			URLS.AIS.url = URLS.AIS.url.replace("ais.xxx", "xxx-ais");
 			URLS.G4PLUS.url=URLS.G4PLUS.url.replace("g4plus-portal.xxx", "xxx-g4plus-portal");
 		}
+		
+		
 
 		if (silo == 0) {
 			if(env.contains("vipprod")) {
@@ -70,20 +72,13 @@ public enum URLS {
 					return url.replace("xxx", env);
 				}
 			}
-			if(env.contains("aws")) {
-				 return url.replace("xxx",env);
-			}
-
 			return url.replace("xxx", env);
 		}else {
 			if(env.contains("prod")) {
 				return url.replace("xxx", "sw-prod-silo" + silo );
 			}else if(env.contains("nddprd")) {
 				return url.replace("xxx", env + "-silo" + silo);	
-			}else if(env.contains("aws")) {
-	               return url.replace("xxx", "silo" + silo + "." + env);
-	        }
-			else {
+			} else {
 				return url.replace("xxx", "silo" + silo + "." + env);
 			}
 		}
