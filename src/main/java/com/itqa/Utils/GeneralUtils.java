@@ -127,7 +127,7 @@ public class GeneralUtils {
         catch (SQLException e) {
             sql_executor.closeConnection();
             e.printStackTrace();
-            throw new Error("Fail to obtain flights from sql");
+      //      throw new Error("Fail to obtain flights from sql");
         }
 
         sql_executor.closeConnection();

@@ -96,7 +96,7 @@ public class MaintenanceRecords extends BasePage {
         new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
         flightLogTab.click();
 
-        jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
+        jse.executeScript("arguments[0].setAttribute('value', '215NV');", tailField);
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -90);
@@ -105,8 +105,9 @@ public class MaintenanceRecords extends BasePage {
 
         jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
         jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
         jse.executeScript("arguments[0].click();", runReportButton);
-
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
         jse.executeScript("arguments[0].click();", resultRow);
         logger.info("MX Records Report displayed");
     	}catch(Exception e){
