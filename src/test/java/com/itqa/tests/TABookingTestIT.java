@@ -96,7 +96,7 @@ public class TABookingTestIT extends DriverBase {
 	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
-				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))
+				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 2))
 				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
@@ -118,9 +118,12 @@ public class TABookingTestIT extends DriverBase {
 		Environment ev = new Environment();
 		ev.setCurrentSilo(silo);
 		itn.setDescription(description);
-		DriverBase.getDriver().get(URLS.TA.getUrl(env, silo));
-		System.out.println(URLS.TA.getUrl(env, silo));
-		// Environment.setCurrentSilo(silo);
+		driver = DriverBase.getDriver();
+		if (env.contains("aws")) {
+		     driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
+		}else {
+			driver.get(URLS.TA.getUrl(env, silo));
+		}
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);

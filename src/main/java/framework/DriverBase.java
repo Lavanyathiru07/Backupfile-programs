@@ -59,12 +59,7 @@ public class DriverBase {
         testResult.setAttribute("screenshot", screenShotByteFile);
         getDriver().close();
         driverThread.get().quitDriver();
-       
-
     }
-    
-
-
    /* @AfterSuite(alwaysRun = true)
     public static void closeDriverObjects() {    	
     	System.out.println("Inside closeDriverObjects");

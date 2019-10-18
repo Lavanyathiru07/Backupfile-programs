@@ -99,7 +99,7 @@ public class CCBookingTestIT extends DriverBase {
 			throws InterruptedException {
 		if ((env.contains("stg") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
-				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 2))) {
+				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 2))) {
 
 			if (env.contains("nddprd") && ((silo == 2) || (silo == 3))) {
 				setUpTestContext(silo, "silo"+ silo +" CC Booking Creation- Confirmation Email received", context, itn);

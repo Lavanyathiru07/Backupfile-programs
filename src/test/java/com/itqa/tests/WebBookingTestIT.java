@@ -49,7 +49,6 @@ public class WebBookingTestIT extends DriverBase {
 				+ ", " + driver.getCurrentUrl());
 		env = Environment.getEnv();
 		trc = new TestResultContext();
-
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
@@ -60,7 +59,7 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
-			if (env.contains("prod")) {
+			if (env.contains("prod") || env.contains("aws")) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
 			} else {
@@ -100,8 +99,8 @@ public class WebBookingTestIT extends DriverBase {
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 
-		if (((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
-				|| ((env.contains("qa1") || env.contains("qa2")) && ((silo == 1) || (silo == 2)))
+		if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
+				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
 				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("trn") && (silo == 0)) || (env.contains("prod") && (silo == 3))) {
@@ -145,14 +144,15 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
-
-			BookingFlow booking = generateBooking(itn, silo, context, WITHACCOUNT);
+			System.out.println("Accoutn creation booking started");
+			BookingFlow booking = new BookingFlow();
+			generateBooking(itn, silo, context, true);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 			// recevied");
-
+			System.out.println("Account creation started");
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");
@@ -192,10 +192,11 @@ public class WebBookingTestIT extends DriverBase {
 		Environment ev = new Environment();
 		ev.setCurrentSilo(silo);
 		driver = DriverBase.getDriver();
-		driver.get(URLS.WWW.getUrl(env, silo));
-		System.out.println(URLS.WWW.getUrl(env, silo));
-		System.out.println(URLS.TA.getUrl(env, silo));
-		System.out.println(URLS.CC.getUrl(env, silo));
+		if (env.contains("aws")) {
+		     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
+		}else {
+			driver.get(URLS.WWW.getUrl(env, silo));
+		}
 		itn.setDescription(description);
 		trc.setSetSilo(silo.toString());
 

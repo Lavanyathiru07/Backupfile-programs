@@ -106,13 +106,13 @@ public class FlightPage extends BasePage {
 		/* try { */
 		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(depFlightTable));
 		/* if (depFlightTable.isDisplayed()) { */
-		Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
+	//	Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
 
 		selectDepFlight(0, itn);
 		if (itn.getRoundTrip()) {
 			selectRetFlight(0);
 		}
-		Screenshot.saveScreenshot("Flights selected", driver);
+	//	Screenshot.saveScreenshot("Flights selected", driver);
 		clickContinue();
 		/*
 		 * } } catch (NoSuchElementException e) { if (!flag) { if
