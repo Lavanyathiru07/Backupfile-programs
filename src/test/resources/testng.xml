@@ -16,7 +16,7 @@
 			<class name="com.itqa.tests.TABookingTestIT" />
 			<class name="com.itqa.tests.CCBookingTestIT" />
 		</classes>
-	</test>
+	</test>    
 
 </suite>      
 
