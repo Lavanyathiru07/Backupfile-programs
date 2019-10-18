@@ -40,6 +40,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.SkipException;
@@ -122,22 +123,24 @@ public class G4PlusFlow extends BasePage {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
+	
+
 
 	public void g4PlusSignin() {
 		try {
 			if ((!System.getProperty("env").contains("nddprd")) && (!System.getProperty("env").contains("prod"))
 					&& (!System.getProperty("env").contains("aws"))) {
 				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-				Thread.sleep(2000);
-				System.out.println(DriverBase.getDriver().findElement(By.xpath("//html/body/pre")).getText());
+				Thread.sleep(1500);
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+				System.out.println("Token Passed:"+DriverBase.getDriver().findElement(By.xpath("//h1[contains(text(),'Welcome to G4+')]")).isDisplayed());
 			} else if (System.getProperty("env").contains("nddprd")) {
 				Login();
 			} else if (System.getProperty("awsenv").contains("aws")) {
 				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
-				Thread.sleep(2000);
+				Thread.sleep(1500);
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
-
+				System.out.println("Token Passed:"+DriverBase.getDriver().findElement(By.xpath("//h1[contains(text(),'Welcome to G4+')]")).isDisplayed());
 			} else {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 			}
