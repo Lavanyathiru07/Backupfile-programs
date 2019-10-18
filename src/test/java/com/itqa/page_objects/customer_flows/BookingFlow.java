@@ -141,7 +141,12 @@ public class BookingFlow extends BasePage {
 	}
 
 	public Boolean signInAndVerifyAccount(Itinerary itn) throws InterruptedException {
-		String logoutUrl = URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()) + "user/logout";
+		String logoutUrl;
+		if (Environment.getEnv().contains("aws")) {
+			logoutUrl = URLS.WWW.getUrl(System.getProperty("awsenv"), itn.getSiloIndex()) + "user/logout";
+		} else {
+			logoutUrl = URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()) + "user/logout";
+		}
 		// driver.get(logoutUrl);
 		Thread.sleep(3000);
 		DriverBase.getDriver().get(logoutUrl);

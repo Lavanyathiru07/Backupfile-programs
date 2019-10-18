@@ -61,7 +61,6 @@ public class BundlePage extends BasePage {
 						itn.setSeatRT(true);
 					}
 					selectAllegiantBonus.click();
-
 				} else if (itn.getBundle().equalsIgnoreCase("AllegiantTotal")) {
 					itn.setSeat(true);
 					itn.setCarryOnBag(1);
