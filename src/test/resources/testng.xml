@@ -7,8 +7,7 @@
 			<class name="com.itqa.tests.NonBookingTestIT" />
 		</classes>
 	</test>
-
-	<test name="Bat 2.0">
+	<test name="Booking">
 		<classes>
 			<class name="com.itqa.tests.WebBookingTestIT" />
 			<class name="com.itqa.tests.TABookingTestIT" />

@@ -49,7 +49,6 @@ public class WebBookingTestIT extends DriverBase {
 				+ ", " + driver.getCurrentUrl());
 		env = Environment.getEnv();
 		trc = new TestResultContext();
-
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
@@ -99,8 +98,8 @@ public class WebBookingTestIT extends DriverBase {
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 
-		if (((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
-				|| ((env.contains("qa1") || env.contains("qa2")) && ((silo == 1) || (silo == 2)))
+		if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
+				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
 				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("trn") && (silo == 0)) || (env.contains("prod") && (silo == 3))) {
@@ -152,7 +151,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 			// recevied");
-			System.out.println("Accoutn creation started");
+			System.out.println("Account creation started");
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");
