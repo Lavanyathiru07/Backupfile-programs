@@ -118,9 +118,12 @@ public class TABookingTestIT extends DriverBase {
 		Environment ev = new Environment();
 		ev.setCurrentSilo(silo);
 		itn.setDescription(description);
-		DriverBase.getDriver().get(URLS.TA.getUrl(env, silo));
-		System.out.println(URLS.TA.getUrl(env, silo));
-		// Environment.setCurrentSilo(silo);
+		driver = DriverBase.getDriver();
+		if (env.contains("aws")) {
+		     driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
+		}else {
+			driver.get(URLS.TA.getUrl(env, silo));
+		}
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);
