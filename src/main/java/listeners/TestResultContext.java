@@ -23,17 +23,6 @@ public class TestResultContext {
         this.description = currentItn.getDescription();
         this.manifestId = currentItn.getManifestId();
 
-//        try {
-//            this.description = result.getTestContext().getAttribute("description").toString();
-//        } catch (NullPointerException npeDescription) {
-//            System.out.println("No description found for current test");
-//        }
-//        try {
-//            this.manifestId = ManifestId.getManifestId(DriverBase.getDriver());
-//        } catch (NullPointerException npeManifest) {
-//            System.out.println("No manifest id found for the current test");
-//            this.manifestId = "";
-//        }
 
         return new TestResultContext();
     }

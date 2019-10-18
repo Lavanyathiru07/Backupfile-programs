@@ -118,45 +118,16 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.14.1</version>
 				<configuration>
-					<!-- <systemPropertyVariables>
-					<propertyName>env</propertyName>
-					</systemPropertyVariables> -->
+					
 					<suiteXmlFiles>
 						<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
 					<trimStackTrace>false</trimStackTrace>
 
-					<!-- <argLine>
-						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-					</argLine> -->
+					
 				</configuration>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>3.0.0-M3</version>
-				<configuration>
-					<parallel>methods</parallel>
-					<threadCount>25</threadCount>
-					<suiteXmlFiles>
-						<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
-					<properties>
-						<property>
-							<name>parallel</name>
-							<value>tests</value>
-						</property>
-						<property>
-							<name>threadCount</name>
-							<value>25</value>
-						</property>
-						<property>
-							<name>dataproviderthreadcount</name>
-							<value>25</value>
-						</property>
-					</properties>
-				</configuration>
-			</plugin> -->
+			
 			<plugin>
 				<groupId>io.qameta.allure</groupId>
 				<artifactId>allure-maven</artifactId>

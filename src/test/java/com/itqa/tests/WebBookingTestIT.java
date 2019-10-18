@@ -6,7 +6,7 @@ import framework.DriverBase;
 import com.itqa.Utils.Environment;
 
 import com.itqa.Utils.URLS;
-import com.itqa.page_objects.customer_flows.BookingFlow;
+import com.itqa.pageObjects.customerFlows.BookingFlow;
 
 import data.*;
 import io.qameta.allure.Story;
@@ -229,8 +229,6 @@ public class WebBookingTestIT extends DriverBase {
 		itn.setManifestId(manifestId);
 		step("Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "
 				+ itn.getDestinationCity());
-
-		// itn.setItn(itn.getItn());
 
 		return booking;
 	}

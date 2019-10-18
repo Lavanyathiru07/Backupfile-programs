@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 
 import com.itqa.Utils.Environment;
 import com.itqa.Utils.URLS;
-import com.itqa.page_objects.customer_flows.TABookingFlow;
+import com.itqa.pageObjects.customerFlows.TABookingFlow;
 
 import data.Itinerary;
 import data.ItineraryDataProvider;

@@ -3,7 +3,7 @@ package com.itqa.tests;
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
-import com.itqa.page_objects.customer_flows.G4PlusFlow;
+import com.itqa.pageObjects.customerFlows.G4PlusFlow;
 
 import data.*;
 import io.qameta.allure.Story;

@@ -1,6 +1,6 @@
 package com.itqa.Utils;
 
-import com.itqa.Utils.sql.SQL_Executor;
+import com.itqa.Utils.sql.SQLExecutor;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
@@ -115,10 +115,10 @@ public class GeneralUtils {
                 "ORDER BY SL_OUT ASC";
 
         String[] res = new String[2];
-        SQL_Executor sql_executor = null;
+        SQLExecutor sql_executor = null;
 
         try {
-            sql_executor = new SQL_Executor(System.getProperty("env"), logger);
+            sql_executor = new SQLExecutor(System.getProperty("env"), logger);
             ResultSet resultSet = sql_executor.getRow(sqlString, new Random().nextInt(8) + 1);
 
             res[0] = resultSet.getString("S_ORG");

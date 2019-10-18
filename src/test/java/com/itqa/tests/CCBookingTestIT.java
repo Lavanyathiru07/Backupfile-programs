@@ -5,9 +5,9 @@ import framework.DriverBase;
 import com.itqa.Utils.Environment;
 
 import com.itqa.Utils.URLS;
-import com.itqa.page_objects.customer_flows.CCBookingFlow;
-import com.itqa.page_objects.g4_plus_pages.G4PlusLoginPage;
-import com.itqa.page_objects.g4_plus_pages.MOD;
+import com.itqa.pageObjects.customerFlows.CCBookingFlow;
+import com.itqa.pageObjects.g4PlusPages.G4PlusLoginPage;
+import com.itqa.pageObjects.g4PlusPages.MOD;
 
 import data.*;
 import io.qameta.allure.Story;
