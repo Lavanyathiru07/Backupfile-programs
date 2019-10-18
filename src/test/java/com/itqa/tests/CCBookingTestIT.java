@@ -85,6 +85,7 @@ public class CCBookingTestIT extends DriverBase {
 			updateTextContext(itn, context);
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
 		} else {
+			
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
@@ -124,7 +125,7 @@ public class CCBookingTestIT extends DriverBase {
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
 			step("Modified seats & bags in CC MOD");
 		} else {
-			// DriverBase.getDriver().close();
+			
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 

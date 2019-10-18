@@ -84,7 +84,7 @@ public class TABookingTestIT extends DriverBase {
 
 			booking.TARefundAndCancellation(itn.getItn(), itn);
 		} else {
-			// DriverBase.getDriver().close();
+			
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
@@ -108,7 +108,7 @@ public class TABookingTestIT extends DriverBase {
 			updateTextContext(itn, context);
 			booking.TARefundAndCancellation(itn.getItn(), itn);
 		} else {
-			// DriverBase.getDriver().close();
+			
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 
