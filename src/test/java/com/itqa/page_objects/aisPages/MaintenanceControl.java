@@ -56,7 +56,7 @@ public class MaintenanceControl extends BasePage {
 			reportsTab.click();
 			flightLogTab.click();
 
-			jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
+			jse.executeScript("arguments[0].setAttribute('value', '215NV');", tailField);
 
 			Calendar calendar = Calendar.getInstance();
 			calendar.add(Calendar.DATE, -90);
