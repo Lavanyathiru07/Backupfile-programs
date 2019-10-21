@@ -127,12 +127,9 @@ public class G4PlusFlow extends BasePage {
 
 	public void g4PlusSignin() {
 		try {
-			if ((!System.getProperty("env").contains("nddprd")) && (!System.getProperty("env").contains("prod"))
-					&& (!System.getProperty("env").contains("aws"))) {
-				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-				Thread.sleep(1500);
+			if (Environment.getEnv().contains("prod")) {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-				System.out.println("Token Passed:"+DriverBase.getDriver().findElement(By.xpath("//h1[contains(text(),'Welcome to G4+')]")).isDisplayed());
+				G4PlusLoginPage.g4plusLogin(false);
 			} else if (System.getProperty("env").contains("nddprd")) {
 				Login();
 			} else if (System.getProperty("awsenv").contains("aws")) {
@@ -141,10 +138,12 @@ public class G4PlusFlow extends BasePage {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
 				System.out.println("Token Passed:"+DriverBase.getDriver().findElement(By.xpath("//h1[contains(text(),'Welcome to G4+')]")).isDisplayed());
 			} else {
+				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+				Thread.sleep(1500);
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+				System.out.println("Token Passed:"+DriverBase.getDriver().findElement(By.xpath("//h1[contains(text(),'Welcome to G4+')]")).isDisplayed());
 			}
-			G4PlusLoginPage.g4plusLogin(false);
-
+			
 		} catch (Exception e) {
 			skip = true;
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -152,11 +151,12 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessAIS() {
+		System.out.println(env);
 		if(env.contains("nddprd")) {
 			Login();
-			}else {
+		}else {
 			g4PlusSignin();
-			}
+		}
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectAIS();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
@@ -173,7 +173,7 @@ public class G4PlusFlow extends BasePage {
 	public void lookupActionRequest() {
 
 		accessAIS();
-
+		System.out.println("2222222222222222");
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
 		AisMenuPage.selectMXandEngr();
