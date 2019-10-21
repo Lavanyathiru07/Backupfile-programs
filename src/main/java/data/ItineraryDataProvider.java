@@ -104,9 +104,8 @@ public class ItineraryDataProvider {
                 Itinerary itnRoundTrip = new ItineraryBuilder()
                         .withScenario(method.getName())
                         .withRoundTrip(true)
-                        .withHotel(true)
-                        .withVehicle(true)
                         .withSsr("PPOC")
+                        .withPriority("true")
                         .withEmail("tsqa.automation@tridentsqa.com")
                         .build();
                 data.add(new Object[]{silo, itnRoundTrip});
