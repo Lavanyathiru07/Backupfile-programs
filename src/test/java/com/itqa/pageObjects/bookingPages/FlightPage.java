@@ -57,7 +57,7 @@ public class FlightPage extends BasePage {
 		this.logger = Logger.getLogger(FlightPage.class);
 		landingPage = new LandingPage();
 		jse = (JavascriptExecutor) driver;
-		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
 	}
 
 	public void selectDepFlight(int num, Itinerary itn) {
@@ -104,42 +104,14 @@ public class FlightPage extends BasePage {
 	}
 
 	public void selectFlightPage(Itinerary itn) throws Exception {
-		/* try { */
-		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(depFlightTable));
-		/* if (depFlightTable.isDisplayed()) { */
-	//	Common.elementToBeClickable(driver, depFlightTable, "Depture flight table");
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(depFlightTable));
 
 		selectDepFlight(0, itn);
 		if (itn.getRoundTrip()) {
 			selectRetFlight(0);
 		}
-	//	Screenshot.saveScreenshot("Flights selected", driver);
-		clickContinue();
-		/*
-		 * } } catch (NoSuchElementException e) { if (!flag) { if
-		 * (itn.getDepartureCity().contains("CVG")) { itn.setDepartureCity("BLI"); } if
-		 * (itn.getDepartureCity().contains("BLI")) { itn.setDepartureCity("CVG"); } if
-		 * (itn.getDestinationCity().contains("SFB")) { itn.setDepartureCity("LAS"); }
-		 * if (itn.getDestinationCity().contains("LAS")) { itn.setDepartureCity("SFB");
-		 * } flag=true; newSearch.click(); landingPage.selectFlightsOnLandingPage(itn);
-		 * selectFlightPage(itn);
-		 * 
-		 * } else { throw new Error("Flights not available... Please check.."); }
-		 */
-		// }
-	}
-	/*
-	 * public Map RCAselectFlight1(BatParams params) { Map flightInfo = new
-	 * HashMap();
-	 * 
-	 * flightInfo.put("flt", depFlightList.get(0).findElement(By.xpath(
-	 * "//span[contains(@class,'flight-number')]//a")).getAttribute("aria-controls")
-	 * .split("_")[0].split("-")[1]); flightInfo.put("depart",
-	 * depFlightList.get(0).findElement(By.xpath(
-	 * "//span[contains(@class,'flight-departs')]//time")).getAttribute("dateTime"))
-	 * ;
-	 * 
-	 * return flightInfo; }
-	 */
 
+		clickContinue();
+		
+	}
 }
