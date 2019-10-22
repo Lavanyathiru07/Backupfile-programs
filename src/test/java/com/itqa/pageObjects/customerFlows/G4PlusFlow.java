@@ -128,14 +128,12 @@ public class G4PlusFlow extends BasePage {
 	public void g4PlusSignin() {
 		try {
 			if (!Environment.getEnv().contains("ndd")&&!Environment.getEnv().contains("prod")) {
-				System.out.println("11111111111111111111");
 				if (Environment.getEnv().contains("aws")) {
 					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 					Thread.sleep(1500);
 					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
 					logger.info("Token Passed:"+DriverBase.getDriver().findElement(By.xpath("//h1[contains(text(),'Welcome to G4+')]")).isDisplayed());
 				}else {
-					System.out.println("11111111111111111111");
 					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 					Thread.sleep(1000);
 					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
@@ -161,7 +159,6 @@ public class G4PlusFlow extends BasePage {
 		if(env.contains("nddprd")) {
 			Login();
 		}else {
-			System.out.println("11111111111111111111");
 			g4PlusSignin();
 		}
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
@@ -180,7 +177,6 @@ public class G4PlusFlow extends BasePage {
 	public void lookupActionRequest() {
 
 		accessAIS();
-		System.out.println("11111111111111111111");
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
 		AisMenuPage.selectMXandEngr();
