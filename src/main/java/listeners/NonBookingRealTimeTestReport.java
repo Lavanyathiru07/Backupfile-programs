@@ -1,14 +1,10 @@
 package listeners;
 
-import com.itqa.Utils.Environment;
 import com.itqa.Utils.GeneralUtils;
 
-import com.itqa.Utils.UpdateConfluence;
-
-import data.Itinerary;
-
-import com.itqa.Utils.Jira;
 import framework.DriverBase;
+
+import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
@@ -17,16 +13,16 @@ import org.testng.ITestResult;
 
 public class NonBookingRealTimeTestReport extends DriverBase implements ITestListener {
 	
-	
+	private Logger logger = null;
 
 	@Override
 	public void onStart(ITestContext context) {
-		System.out.println("Start  Of Execution(TEST)->" + context.getName());
+		logger.info("Start  Of Execution(TEST)->" + context.getName());
 	}
 
 	@Override
 	public void onTestStart(ITestResult result) {
-		System.out.println("Test Started->" + result.getName());
+		logger.info("Test Started->" + result.getName());
 	}
 
 	@Override
@@ -34,7 +30,7 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 		TestResultContext testResultContext = new TestResultContext();
 		testResultContext.getTestResultContext(result);
 
-		System.out.println("Test Pass->" + result.getName() + " on silo " + result.getTestContext().getAttribute("silo")
+		logger.info("Test Pass->" + result.getName() + " on silo " + result.getTestContext().getAttribute("silo")
 				+ " on thread " + Thread.currentThread().getId());
 
 		GeneralUtils.writeToFile("nonBookingPassedTests.html",
@@ -58,9 +54,9 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 		}
 		Itinerary itn;*/
 
-		System.out.println("Test Failed->" + result.getName());
+		logger.info("Test Failed->" + result.getName());
 
-		System.out.println("Test Failed->" + result.getName() + " on silo "
+		logger.info("Test Failed->" + result.getName() + " on silo "
 				+ result.getTestContext().getAttribute("silo") + " on thread " + Thread.currentThread().getId());
 		GeneralUtils.writeToFile("nonBookingFailedTests.html",
 				"<tr><td align=\"center\">" + testResultContext.description
@@ -70,14 +66,14 @@ public class NonBookingRealTimeTestReport extends DriverBase implements ITestLis
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
-		System.out.println("Test Skipped->" + result.getName());
+		logger.info("Test Skipped->" + result.getName());
 	}
 	
 
 	@Override
 	public void onFinish(ITestContext result) {
-		System.out.println("END Of Execution(TEST)->" + result.getName());
-		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
+		logger.info("END Of Execution(TEST)->" + result.getName());
+		logger.info("**** on finish manifestid: " + result.getAttribute("manifestid"));
 
 		/*if (Environment.getCreateConfluenceSetting()) {
 			UpdateConfluence page = new UpdateConfluence(result);

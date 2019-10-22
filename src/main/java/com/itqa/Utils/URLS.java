@@ -3,19 +3,25 @@ package com.itqa.Utils;
 import framework.DriverBase;
 
 public enum URLS {
-	WWW("https://xxx.allegiantair.com/"),
+	WWW("https://xxx.allegiantair.com/"), 
 	CC("https://cc-xxx.allegiantair.com/"),
-	TA("https://ta-xxx.allegiantair.com/"),
+	TA("https://ta-xxx.allegiantair.com/"), 
 	G4PLUS("https://g4plus-portal.xxx.allegiantair.com/"),
-	G4PLUSTOKEN("https://g4plus-res.xxx.allegiantair.com/test/token?aisId=12288"),
-	G4META("https://g4meta.xxx.allegiantair.com/"),
+	G4PLUSTOKEN(
+			"https://g4plus-res.xxx.allegiantair.com/test/token?roles=res_customer,res_booking,res_booking_agent,res_booking_"
+			+ "waiver,res_booking_override,res_booking_manager,call_center_agent,ops_airline_bags,ops_airline_pb,ops_airline_"
+			+ "seats,ops_eswap,res_airline_reaccom,ota_vehicle,ota_trip_flex,ota_payments,ota_surcharge,ota_surcharge_accounting,"
+			+ "ota_surcharge_revenue,ota_hotel,ota_hotel_revenue,ota_hotel_inventory,ota_hotel_inventory_manager,ota_shows,ota_"
+			+ "shows_inventory,ota_shows_revenue,ota_accounting,ota_accounting_invoicing,ota_accounting_atl,ota_accounting_"
+			+ "invoicing_suspended_managers,ota_accounting_invoicing_suspended_coordinators,ops_fee_management,ops_flight_"
+			+ "operations,ops_flight_operations_manager"),
+	G4META("https://g4meta.xxx.allegiantair.com/"), 
 	AIS("https://ais.xxx.allegiantair.com/"),
-	RSFLTFEESEARCH ("https://ais.xxx.allegiantair.com/c/public/index.php/mx/rsfltfee/search"),
-	JIRA("https://tech.allegiantair.com"),
+	RSFLTFEESEARCH("https://ais.xxx.allegiantair.com/c/public/index.php/mx/rsfltfee/search"),
+	JIRA("https://tech.allegiantair.com"), 
 	CONFLUENCE("https://confluence.allegiantair.com");
-	
-	
-	//    INTERNATIONAL("int.nexus.intl");
+
+	// INTERNATIONAL("int.nexus.intl");
 
 	private String url;
 	public static final String INTLPREFIX = "int.nexus.intl";
@@ -25,59 +31,56 @@ public enum URLS {
 		this.url = envUrl;
 	}
 
-
 	public String getUrl(String env, Integer silo) {
 		if (env.contains("intl")) {
 			url = url.replace("allegiantair.com", NEXUSDOMAIN);
 			return url.replace("xxx", "www." + INTLPREFIX);
-		} else if(env.contains("nddprd")) {
+		} else if (env.contains("nddprd")) {
 			URLS.AIS.url = URLS.AIS.url.replace("ais.xxx", "xxx-ais");
-			URLS.G4PLUS.url=URLS.G4PLUS.url.replace("g4plus-portal.xxx", "xxx-g4plus-portal");
+			URLS.G4PLUS.url = URLS.G4PLUS.url.replace("g4plus-portal.xxx", "xxx-g4plus-portal");
 		}
-		
-		
 
 		if (silo == 0) {
-			if(env.contains("vipprod")) {
-				if(url.contains("cc-")|| url.contains("cc.")) {
+			if (env.contains("vipprod")) {
+				if (url.contains("cc-") || url.contains("cc.")) {
 					url = url.replace("cc-", "cc.");
-				}else if(url.contains("ta-") || url.contains("ta.") ) {
+				} else if (url.contains("ta-") || url.contains("ta.")) {
 					url = url.replace("ta-", "ta.");
 				}
-					
-				if(url.contains("ais") || url.contains("g4plus-portal")||url.contains("ta.")|| url.contains("cc.")) {
-					return url.replace("xxx.","");
-				}else {
-					return url.replace("xxx","www");
+
+				if (url.contains("ais") || url.contains("g4plus-portal") || url.contains("ta.")
+						|| url.contains("cc.")) {
+					return url.replace("xxx.", "");
+				} else {
+					return url.replace("xxx", "www");
 				}
 			}
-			
-			if(env.contains("trn")) {
-				if(url.contains("cc-")|| url.contains("cc.")) {
+
+			if (env.contains("trn")) {
+				if (url.contains("cc-") || url.contains("cc.")) {
 					url = url.replace("cc-", "cc.");
-				}else if(url.contains("ta-") || url.contains("ta.") ) {
+				} else if (url.contains("ta-") || url.contains("ta.")) {
 					url = url.replace("ta-", "ta.");
-				}else if(url.contains("ais") || url.contains("g4plus-portal")) {
-					return url.replace("xxx",env);
-				}		
-				else {
+				} else if (url.contains("ais") || url.contains("g4plus-portal")) {
+					return url.replace("xxx", env);
+				} else {
 					return url.replace("xxx", "www." + env);
 				}
 			}
-			if(env.contains("prod")) {
-				return url.replace("xxx.", "" );
+			if (env.contains("prod")) {
+				return url.replace("xxx.", "");
 			}
-			if(env.contains("nddprd")) {
-				if(url.contains("cc-")) {
+			if (env.contains("nddprd")) {
+				if (url.contains("cc-")) {
 					return url.replace("xxx", env);
 				}
 			}
 			return url.replace("xxx", env);
-		}else {
-			if(env.contains("prod")) {
-				return url.replace("xxx", "sw-prod-silo" + silo );
-			}else if(env.contains("nddprd")) {
-				return url.replace("xxx", env + "-silo" + silo);	
+		} else {
+			if (env.contains("prod")) {
+				return url.replace("xxx", "sw-prod-silo" + silo);
+			} else if (env.contains("nddprd")) {
+				return url.replace("xxx", env + "-silo" + silo);
 			} else {
 				return url.replace("xxx", "silo" + silo + "." + env);
 			}

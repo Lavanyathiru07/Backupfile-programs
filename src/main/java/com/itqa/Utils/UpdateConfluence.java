@@ -16,6 +16,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -32,6 +33,7 @@ public class UpdateConfluence {
 	private static final String USERNAME = "WE41WQ==";
 	private static final String PASSWORD = "Q2FsdmFyeTQyIQ==";
 	private static final String ENCODING = "utf-8";
+	private Logger logger = null;
 
 		public UpdateConfluence(ITestContext result) {
 			try {
@@ -86,9 +88,9 @@ public class UpdateConfluence {
 
 			pageObj = IOUtils.toString(pageEntity.getContent());
 
-			System.out.println("Get Page Request returned " + getPageResponse.getStatusLine().toString()); 
-			System.out.println("");
-			System.out.println(pageObj); 
+			logger.info("Get Page Request returned " + getPageResponse.getStatusLine().toString()); 
+			logger.info("");
+			logger.info(pageObj); 
 		} 
 		finally { 
 			if (pageEntity != null) 
@@ -110,9 +112,9 @@ public class UpdateConfluence {
 					ContentType.APPLICATION_JSON); putPageRequest.setEntity(entity);
 			HttpResponse putPageResponse = client.execute(putPageRequest); putPageEntity
 					= putPageResponse.getEntity();
-			System.out.println("Put Page Request returned " +putPageResponse.getStatusLine().toString()); 
-			System.out.println("");
-			System.out.println(IOUtils.toString(putPageEntity.getContent())); 
+			logger.info("Put Page Request returned " +putPageResponse.getStatusLine().toString()); 
+			logger.info("");
+			logger.info(IOUtils.toString(putPageEntity.getContent())); 
 		} 
 		finally {
 			EntityUtils.consume(putPageEntity); 

@@ -1,10 +1,11 @@
 package com.itqa.Utils;
 
 import framework.DriverBase;
+
 import org.openqa.selenium.WebDriver;
 
 public class ManifestId {
-    public static String getManifestId(WebDriver driver) {
+	public static String getManifestId(WebDriver driver) {
         String url;
         try {
             url = DriverBase.getDriver().getCurrentUrl();
@@ -18,7 +19,7 @@ public class ManifestId {
             }
         }
         catch(Exception e) {
-            System.out.println("Error getting manifestid");
+        	System.out.println("Error getting manifestid");
             e.printStackTrace();
             return "-1";
         }

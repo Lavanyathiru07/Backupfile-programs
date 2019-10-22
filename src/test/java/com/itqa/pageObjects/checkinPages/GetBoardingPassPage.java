@@ -64,7 +64,7 @@ public class GetBoardingPassPage {
         try {
             checkBP(printBP(), itn.getItn());
         } catch (Exception e) {
-            System.out.println("Error getting boarding pass");
+            logger.info("Error getting boarding pass");
             return false;
         }
         return true;

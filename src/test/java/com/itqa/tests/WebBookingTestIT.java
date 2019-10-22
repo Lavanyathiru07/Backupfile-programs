@@ -45,7 +45,7 @@ public class WebBookingTestIT extends DriverBase {
 	@BeforeMethod(alwaysRun = true)
 	public void setup(ITestContext context) throws MalformedURLException {
 		driver = DriverBase.getDriver();
-		System.out.println("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
+		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
 				+ ", " + driver.getCurrentUrl());
 		env = Environment.getEnv();
 		trc = new TestResultContext();
@@ -144,7 +144,7 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
-			System.out.println("Accoutn creation booking started");
+			log.info("Accoutn creation booking started");
 			BookingFlow booking = new BookingFlow();
 			generateBooking(itn, silo, context, true);
 
@@ -152,7 +152,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 			// recevied");
-			System.out.println("Account creation started");
+			log.info("Account creation started");
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");
@@ -203,7 +203,7 @@ public class WebBookingTestIT extends DriverBase {
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);
 
-		System.out.println(
+		log.info(
 				"Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
 
 	}
@@ -221,7 +221,7 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (withAccount) {
 			manifestId = booking.createWebBookingWithAccount(silo, itn, context, withAccount);
-			System.out.println(manifestId);
+			log.info(manifestId);
 		} else {
 			manifestId = booking.createWebBookingWithOutAccount(silo, itn, context);
 		}

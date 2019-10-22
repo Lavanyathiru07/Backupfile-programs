@@ -12,7 +12,7 @@ public class TestResultContext {
     String manifestId;
     String itn;
     String testName;
-
+    
     public TestResultContext getTestResultContext(ITestResult result) {
         Itinerary currentItn = (Itinerary) result.getParameters()[ITNINDEX];
         String currentSilo = (String) result.getParameters()[SILOINDEX].toString();

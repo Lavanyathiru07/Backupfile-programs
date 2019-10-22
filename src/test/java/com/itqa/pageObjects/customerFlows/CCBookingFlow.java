@@ -76,7 +76,7 @@ public class CCBookingFlow extends BasePage {
 			paymentPage.fillPaymentPage(itn, false, true);
 			confirmationPage.verifyConf(itn);
 		} catch (Exception e) {
-			System.out.println("%%%%%% caught error: " + e.getMessage());
+			logger.info("%%%%%% caught error: " + e.getMessage());
 			e.printStackTrace();
 			return manifestId;
 		}

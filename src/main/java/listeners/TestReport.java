@@ -9,12 +9,14 @@ import java.util.Date;
 import java.util.List;
 
 import com.itqa.Utils.GeneralUtils;
+
 import org.testng.IReporter;
 import org.testng.ISuite;
 import org.testng.xml.XmlSuite;
 
 public class TestReport implements IReporter {
-
+	
+	
 	    private void writeReportHeader(){
         try {
         	

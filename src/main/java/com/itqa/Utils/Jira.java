@@ -2,6 +2,7 @@ package com.itqa.Utils;
 
 import net.rcarz.jiraclient.*;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.Logger;
 import org.testng.ITestResult;
 
 import listeners.TestResultContext;
@@ -18,11 +19,12 @@ public class Jira extends TestResultContext {
 	String story;
 	String silo;
 	String env = Environment.getEnv();
+	private Logger logger = null;
 
 	public String createJira(ITestResult endResult) {
 		try {
 
-			System.out.println("Insode the JIra classs to create a jira");
+			logger.info("Insode the JIra classs to create a jira");
 			if (endResult.getTestContext().getAttribute("manifestid") != null) {
 				descManifestID = endResult.getTestContext().getAttribute("manifestid").toString();
 			}
@@ -33,7 +35,7 @@ public class Jira extends TestResultContext {
 		}
 
 		catch (Exception e) {
-			System.out.println(" the exception is " + e);
+			logger.info(" the exception is " + e);
 			
 		}
 
@@ -49,14 +51,14 @@ public class Jira extends TestResultContext {
 								+ ": The test method  which is failed is :  " + testMethod)
 						.execute();
 
-				System.out.println(" The newly created jira is  .. : " + newIsuue.getKey());
+				logger.info(" The newly created jira is  .. : " + newIsuue.getKey());
 
 				jiraID = newIsuue.getKey();
 
 			}
 
 		} catch (Exception e) {
-			System.out.println(e);
+			logger.info(e);
 		}
 		return jiraID;
 

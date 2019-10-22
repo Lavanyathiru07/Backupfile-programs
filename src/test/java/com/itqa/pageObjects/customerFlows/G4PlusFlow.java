@@ -127,21 +127,27 @@ public class G4PlusFlow extends BasePage {
 
 	public void g4PlusSignin() {
 		try {
-			if (Environment.getEnv().contains("prod")) {
+			if (!Environment.getEnv().contains("ndd")&&!Environment.getEnv().contains("prod")) {
+				System.out.println("11111111111111111111");
+				if (Environment.getEnv().contains("aws")) {
+					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+					Thread.sleep(1500);
+					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
+					logger.info("Token Passed:"+DriverBase.getDriver().findElement(By.xpath("//h1[contains(text(),'Welcome to G4+')]")).isDisplayed());
+				}else {
+					System.out.println("11111111111111111111");
+					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+					Thread.sleep(1000);
+					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+				}
+				
+				/*DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+				G4PlusLoginPage.g4plusLogin(false);*/
+			} else if (Environment.getEnv().contains("prod")) {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				G4PlusLoginPage.g4plusLogin(false);
-			} else if (System.getProperty("env").contains("nddprd")) {
+			} else if (Environment.getEnv().contains("nddprd")){
 				Login();
-			} else if (System.getProperty("awsenv").contains("aws")) {
-				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
-				Thread.sleep(1500);
-				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
-				System.out.println("Token Passed:"+DriverBase.getDriver().findElement(By.xpath("//h1[contains(text(),'Welcome to G4+')]")).isDisplayed());
-			} else {
-				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-				Thread.sleep(1500);
-				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-				System.out.println("Token Passed:"+DriverBase.getDriver().findElement(By.xpath("//h1[contains(text(),'Welcome to G4+')]")).isDisplayed());
 			}
 			
 		} catch (Exception e) {
@@ -151,10 +157,11 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessAIS() {
-		System.out.println(env);
+		logger.info(env);
 		if(env.contains("nddprd")) {
 			Login();
 		}else {
+			System.out.println("11111111111111111111");
 			g4PlusSignin();
 		}
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
@@ -173,7 +180,7 @@ public class G4PlusFlow extends BasePage {
 	public void lookupActionRequest() {
 
 		accessAIS();
-		System.out.println("2222222222222222");
+		System.out.println("11111111111111111111");
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
 		AisMenuPage.selectMXandEngr();
@@ -477,7 +484,6 @@ public class G4PlusFlow extends BasePage {
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectMOD();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		System.out.println("Switched......");
 		MOD.accessMOD();
 	}
 
@@ -488,9 +494,7 @@ public class G4PlusFlow extends BasePage {
 			capabilities.setCapability("name", "Access Swap");
 			capabilities.setCapability("idleTimeout", 60);
 			capabilities.setCapability("tz", "America/Los_Angeles");
-			// driver = new RemoteWebDriver(new
-			// URL("http://localhost:4444/wd/hub"), capabilities);
-			// driver = new ChromeDriver();
+			
 		} catch (Exception e) {
 			throw new Error(e);
 		}

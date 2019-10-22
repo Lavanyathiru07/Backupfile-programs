@@ -131,7 +131,7 @@ public class BookingFlow extends BasePage {
 				paymentPage.fillPaymentPage(itn, createAccount, true);
 				confirmationPage.verifyConf(itn);
 			} catch (Exception e1) {
-				System.out.println("%%%%%% caught error: " + e.getMessage());
+				logger.info("%%%%%% caught error: " + e.getMessage());
 				e.printStackTrace();
 				return manifestId;
 			}
@@ -150,7 +150,7 @@ public class BookingFlow extends BasePage {
 		// driver.get(logoutUrl);
 		Thread.sleep(3000);
 		DriverBase.getDriver().get(logoutUrl);
-		System.out.println(logoutUrl);
+		logger.info(logoutUrl);
 		landingPage.signIn(itn.getEmail());
 		return tripsPage.checkMyTrips(itn.getItn());
 	}

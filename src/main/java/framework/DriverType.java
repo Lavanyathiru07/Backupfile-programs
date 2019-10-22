@@ -22,6 +22,7 @@ import java.util.HashMap;
 
 public enum DriverType implements DriverSetup {
 
+	
 
     FIREFOX {
         public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
@@ -35,7 +36,7 @@ public enum DriverType implements DriverSetup {
         }
     },
     CHROME {
-        public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+    	public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
             HashMap<String, Object> chromePreferences = new HashMap<>();
             chromePreferences.put("profile.password_manager_enabled", false);
             WebDriverManager.chromedriver().setup();
@@ -47,7 +48,7 @@ public enum DriverType implements DriverSetup {
             try {
                 return new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
             } catch (Exception e) {
-                System.out.println("No remote web driver, we must be local ");
+            	System.out.println("No remote web driver, we must be local ");
             }
             return new ChromeDriver(options);
         }

@@ -20,13 +20,12 @@ public class Environment {
 	private int[] trn = { 0, 1 };
 	private int[] aws = { 1 };
 	private int[] nddprd = { 1, 2, 3 };
-	private int[] prod = { 1, 2, 3 };
+	private int[] prod = { 1};
 	private int[] vipprod = { 0 };
 
 	public static String getEnv() {
 		envUnderTest = System.getProperty("env");
 		if (envUnderTest == null) {
-			System.out.println("******* " + envUnderTest);
 			System.setProperty("env", "stg");
 			envUnderTest = System.getProperty("env");
 		}

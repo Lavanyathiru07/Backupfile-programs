@@ -445,7 +445,7 @@ public class MOD extends BasePage {
 						.elementToBeClickable(By.xpath("//div[contains(@class,'flight-panel-target')]")));
 				return true;
 			} catch (Exception e) {
-				System.out.println("Error getting while upsell bags & Seats");
+				logger.info("Error getting while upsell bags & Seats");
 				return false;
 			}
 		
@@ -562,7 +562,7 @@ public class MOD extends BasePage {
 
 		for (int i = 0; i < 10; i++) {
 			try {
-				System.out.println(driver.getCurrentUrl());
+				logger.info(driver.getCurrentUrl());
 				paymentTab.click();
 				logger.info("Payment is clicked");
 				break;

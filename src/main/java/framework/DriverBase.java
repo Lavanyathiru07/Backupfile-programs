@@ -37,11 +37,6 @@ public class DriverBase {
         return driverThread.get().getDriver();
     }
 
-   /* @BeforeMethod(alwaysRun = true)
-    public static void setTestName(Method method) {
-    	driverThread.get().setTestName(method.getName());
-    }*/
-
     @AfterSuite(alwaysRun = true)
     public static void clearCookies() {
          try {
@@ -60,13 +55,5 @@ public class DriverBase {
         getDriver().close();
         driverThread.get().quitDriver();
     }
-   /* @AfterSuite(alwaysRun = true)
-    public static void closeDriverObjects() {    	
-    	System.out.println("Inside closeDriverObjects");
-        for (DriverFactory webDriverThread : webDriverThreadPool) {
-            webDriverThread.quitDriver();
-        }
-        System.out.println("Finished closeDriverObjects");
-    }*/
-
+  
 }

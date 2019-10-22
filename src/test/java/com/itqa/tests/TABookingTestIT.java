@@ -42,7 +42,7 @@ public class TABookingTestIT extends DriverBase {
 	public void setup(ITestContext context) throws MalformedURLException {
 
 		driver = DriverBase.getDriver();
-		System.out.println("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
+		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
 				+ ", " + driver.getCurrentUrl());
 		env = Environment.getEnv();
 		trc = new TestResultContext();
@@ -127,7 +127,7 @@ public class TABookingTestIT extends DriverBase {
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);
-		System.out.println(
+		log.info(
 				"Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
 	}
 

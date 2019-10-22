@@ -104,7 +104,7 @@ public class LandingPage extends BasePage {
 	public void selectDepCity(String from) {
 		for (int loop = 0; loop < 5; loop++) {
 			Boolean flag = false;
-			System.out.println("city name is " + from);
+			logger.info("city name is " + from);
 			try {
 				driver.findElement(By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(ABQ)')]"));
 				flag = true;
@@ -115,7 +115,7 @@ public class LandingPage extends BasePage {
 					jse.executeScript(JSFIRSTARG, depCityDropDown);
 				}
 				Thread.sleep(1000);
-				System.out.println("city name is " + from);
+				logger.info("city name is " + from);
 				jse.executeScript(JSFIRSTARG, driver.findElement(
 						By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(" + from + ")')]")));
 
@@ -297,7 +297,7 @@ public class LandingPage extends BasePage {
 		}
 		new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(loginButton));
 		jse.executeScript("arguments[0].click()", loginButton);
-		System.out.println("Login button is clicked");
+		logger.info("Login button is clicked");
 		editNameField.sendKeys(accountEmail);
 		if (System.getProperty("env").contains("prod")) {
 			editPassField.sendKeys("QAtest1234");
@@ -322,8 +322,8 @@ public class LandingPage extends BasePage {
 		} catch (TimeoutException e) {
 			logger.info("Could not close the pop up, it probably was not displayed");
 		}
-		System.out.println(driver.getCurrentUrl());
-		System.out.println("Login succesful");
+		logger.info(driver.getCurrentUrl());
+		logger.info("Login succesful");
 		selectDepCity(itn.getDepartureCity());
 		selectDesCity(itn.getDestinationCity());
 		selectTripType(itn.getRoundTrip());
