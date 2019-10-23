@@ -20,7 +20,7 @@ public class Environment {
 	private int[] trn = { 0, 1 };
 	private int[] aws = { 1 };
 	private int[] nddprd = { 1, 2, 3 };
-	private int[] prod = { 1};
+	private int[] prod = { 1, 2, 3};
 	private int[] vipprod = { 0 };
 
 	public static String getEnv() {
