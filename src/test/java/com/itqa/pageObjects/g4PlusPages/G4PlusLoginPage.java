@@ -63,6 +63,7 @@ public class G4PlusLoginPage extends BasePage {
 					userNameField.sendKeys(System.getProperty("username"));
 					Thread.sleep(500);
 					System.out.println("user name entered");
+					System.out.println(System.getProperty("password"));
 					passwordField.sendKeys(System.getProperty("password"));
 					System.out.println("password entered");
 					Thread.sleep(500);
