@@ -142,6 +142,8 @@ public class G4PlusFlow extends BasePage {
 				/*DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				G4PlusLoginPage.g4plusLogin(false);*/
 			} else if (Environment.getEnv().contains("prod")) {
+				System.out.println(System.getProperty("username"));
+				System.out.println(System.getProperty("password"));
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				G4PlusLoginPage.g4plusLogin(false);
 			} else if (Environment.getEnv().contains("nddprd")){
