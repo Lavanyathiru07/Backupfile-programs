@@ -88,10 +88,7 @@ public class TestReport implements IReporter {
 
 	private void cleanUpTestReports(String filename)
 			throws NoSuchFileException, DirectoryNotEmptyException, IOException {
-		/*
-		 * Path path = Paths.get(filename); Files.delete(path);
-		 */
-
+		
 		File file = new File(filename);
 		if (file.exists()) {
 			file.delete();

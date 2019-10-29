@@ -59,13 +59,9 @@ public class G4PlusLoginPage extends BasePage {
 		try {
 			if (!station) {
 				if (Environment.getEnv().contains("prod")) {
-					System.out.println(System.getProperty("username"));
 					userNameField.sendKeys(System.getProperty("username"));
 					Thread.sleep(500);
-					System.out.println("user name entered");
-					System.out.println(System.getProperty("password"));
 					passwordField.sendKeys(System.getProperty("password"));
-					System.out.println("password entered");
 					Thread.sleep(500);
 				} else {
 					userNameField.sendKeys(new String(Base64.getDecoder().decode(username)));

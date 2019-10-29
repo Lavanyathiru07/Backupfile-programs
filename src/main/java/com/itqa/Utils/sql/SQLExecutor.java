@@ -25,18 +25,16 @@ public class SQLExecutor {
          //  throw new Error(e.getMessage());
         }
 
-        if(env.contains("aws")) {
+        if(env.contains("aws")) 
         	url = urlPreFix + System.getProperty("awsenv").toLowerCase() + urlPostFix;
-        }else if(env.contains("nddprd")){
+         else if (env.contains("nddprd"))
         	url = urlPreFix + "nddprddb2db03.prd.ndd.g4.corp" + urlPostFix;
-        }else {
-        	url = urlPreFix + env.toLowerCase() + urlPostFix;
-        }
-        
-
-        if (env.contains("intl")) {
+         else if (env.contains("intl")) 
             url = urlPreFix + URLS.INTLPREFIX + urlPostFix;
-        }
+         else 
+        	url = urlPreFix + env.toLowerCase() + urlPostFix;
+        
+        
 
         //Supply this account
         if (env.equalsIgnoreCase("STG")) {

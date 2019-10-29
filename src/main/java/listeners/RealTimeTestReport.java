@@ -12,7 +12,6 @@ import framework.DriverBase;
 
 public class RealTimeTestReport extends DriverBase implements ITestListener {
 
-	
 	@Override
 	public void onStart(ITestContext context) {
 		System.out.println("Start  Of Execution(TEST)->" + context.getName());
@@ -59,10 +58,11 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		GeneralUtils.writeToFile("failedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
-						+ "</td><td>" + testResultContext.manifestId + "</td><td>"+"<a href=\"javascript:setImageVisible('show', " 
-						+ testResultContext.currentSilo + ");\">show image</a>" +"<img id='screenshotId" + 
-						testResultContext.currentSilo + "' " +"style='display:inline' height=\"40%\" width=\"auto\" src='" 
-						+ base64Screenshot + "'/>" +"</td></tr>");
+						+ "</td><td>" + testResultContext.manifestId + "</td><td>"
+						+ "<a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo
+						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
+						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
+						+ "</td></tr>");
 	}
 
 	@Override
@@ -73,10 +73,10 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
 	@Override
 	public void onFinish(ITestContext result) {
-		
+
 		DriverBase.getDriver().quit();
 		System.out.println("END Of Execution(TEST)->" + result.getName());
-		 System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
+		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 
 		/*
 		 * if (Environment.getCreateConfluenceSetting()) { UpdateConfluence page = new
