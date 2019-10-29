@@ -72,11 +72,11 @@
 			<artifactId>webdrivermanager</artifactId>
 			<version>3.3.0</version>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>com.itqa</groupId>
 			<artifactId>CATint</artifactId>
 			<version>0.04</version>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
