@@ -236,14 +236,14 @@ public class WebBookingTestIT extends DriverBase {
 		System.out.println("inside after method");
 
 		if (DB.get().getSkip()) {
-			DriverBase.status.put(Iteration.get()+" Results", "SKIP");
+			//DriverBase.status.put(Iteration.get()+" Results", "SKIP");
 		}
 		else if (DB.get().getFail()) {
 			isTestPass = false;
 			
-			DriverBase.status.put(Iteration.get()+" Results", "FAIL");
-			DriverBase.status.put(Iteration.get()+" Confirmation Number",itn.getItn());
-			DriverBase.status.put(Iteration.get()+" Comments", DB.get().getComments());
+			//DriverBase.status.put(Iteration.get()+" Results", "FAIL");
+			//DriverBase.status.put(Iteration.get()+" Confirmation Number",itn.getItn());
+			//DriverBase.status.put(Iteration.get()+" Comments", DB.get().getComments());
 
 			//if (useCat) {
 			//	try {
