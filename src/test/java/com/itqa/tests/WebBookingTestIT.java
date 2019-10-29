@@ -104,10 +104,10 @@ public class WebBookingTestIT extends DriverBase {
         
 
 
-		//synchronized (this) {
-		//	testId.set(testnum);
-		//	testnum++;
-		//}
+		synchronized (this) {
+			testId.set(testnum);
+			testnum++;
+		}
 
 		//if (useCat) {
 		//	try {
