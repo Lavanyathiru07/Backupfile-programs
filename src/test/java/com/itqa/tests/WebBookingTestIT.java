@@ -231,7 +231,7 @@ public class WebBookingTestIT extends DriverBase {
 
 	}
 
-	@AfterMethod
+	//@AfterMethod
 	public void writeResult(ITestResult result, Itinerary itn) {
 		System.out.println("inside after method");
 

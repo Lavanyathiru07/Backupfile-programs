@@ -8,6 +8,7 @@ import org.testng.ITestResult;
 
 import com.itqa.Utils.GeneralUtils;
 
+import cat.CATinits;
 import framework.DriverBase;
 
 public class RealTimeTestReport extends DriverBase implements ITestListener {
@@ -35,6 +36,9 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
 						+ "</td><td></td><td></td></tr>");
+		
+		cat.CATinits test = new CATinits();
+		test.completeTest("PASS", "WebBookingTestIT", "AXRTYU", "comment", 1223 , "logs" +".log");
 
 	}
 
@@ -63,11 +67,16 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 						+ testResultContext.currentSilo + ");\">show image</a>" +"<img id='screenshotId" + 
 						testResultContext.currentSilo + "' " +"style='display:inline' height=\"40%\" width=\"auto\" src='" 
 						+ base64Screenshot + "'/>" +"</td></tr>");
+		cat.CATinits test = new CATinits();
+		test.completeTest("FAIL", "WebBookingTestIT", "AXRTYU", "comment", 1223 , "logs" +".log");
 	}
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
 		System.out.println("Test Skipped->" + result.getName());
+		
+		cat.CATinits test = new CATinits();
+		test.completeTest("SKIPPED", "WebBookingTestIT", "AXRTYU", "comment", 1223 , "logs" +".log");
 
 	}
 
