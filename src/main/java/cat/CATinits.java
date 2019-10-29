@@ -65,6 +65,7 @@ public final class CATinits {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(factory.serialize(jobCreationJson).toString());
             writer.flush();
+            System.out.println("response code" + connection.getResponseCode() );
             if (connection.getResponseCode() != 201) {
                 throw new Exception("jobCreationJson doesn't return HTTP 201");
             } else {

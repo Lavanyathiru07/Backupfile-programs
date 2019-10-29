@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.testng.Assert;
 import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -49,6 +50,7 @@ public class WebBookingTestIT extends DriverBase {
 	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
 	private ThreadLocal<DriverBase> DB = new ThreadLocal<DriverBase>();
 	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
+	
 	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
@@ -68,7 +70,7 @@ public class WebBookingTestIT extends DriverBase {
 	public void createSuite() {
 		//if (useCat) {
 		//	try {
-		CATint test= new CATint();
+		CATinits  test= new CATinits();
 		test.createSuite("BAT 2.0 Automation");
 				//caTint.createSuite("WebBookingTestIT");
 				System.out.println("inside before test WebBookingTestIT");
@@ -82,19 +84,24 @@ public class WebBookingTestIT extends DriverBase {
 	@Story("WWW One way Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getName()));
 
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
 		props.setProperty("log4j.appender.file.maxBackupIndex","0");
-		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + method.getAnnotation(Story.class).value() + ".log");
+		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + Thread.currentThread().getName()+ ".log");
 		props.setProperty("log4j.appender.file.threshold","DEBUG");
 		props.setProperty("log4j.appender.file.Append","false");
 		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
 		props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
-		props.setProperty("log4j.logger."+"Thread" + Thread.currentThread().getId(),"DEBUG, file");
+		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getName(),"DEBUG, file");
+		
 		PropertyConfigurator.configure(props);
+		
+		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
+		
+        
 
 
 		//synchronized (this) {
@@ -166,7 +173,7 @@ public class WebBookingTestIT extends DriverBase {
 			try {
 				setEarlyMarketCities(itn);
 			} catch (Exception e) {
-				log.info("Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
+				logger.get().info("Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
 				itn.setDepartureCity("FAT");
 				itn.setDestinationCity("LAS");
 			}
@@ -198,7 +205,7 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
-			log.info("Accoutn creation booking started");
+			logger.get().info("Accoutn creation booking started");
 			BookingFlow booking = new BookingFlow();
 			generateBooking(itn, silo, context, true);
 
@@ -206,7 +213,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 			// recevied");
-			log.info("Account creation started");
+			logger.get().info("Account creation started");
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");
@@ -225,7 +232,7 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	@AfterMethod
-	public void writeResult(Itinerary itn) {
+	public void writeResult(ITestResult result, Itinerary itn) {
 		System.out.println("inside after method");
 
 		if (DB.get().getSkip()) {
@@ -241,7 +248,7 @@ public class WebBookingTestIT extends DriverBase {
 			//if (useCat) {
 			//	try {
 			cat.CATinits test = new CATinits();
-					test.completeTest("FAIL", "WebBookingTestIT", "", "comment", testId.get(), "logs" +".log");
+					test.completeTest("FAIL", "WebBookingTestIT", "AXRTYU", "comment", testId.get(), "logs" +".log");
 			//	} catch (Exception e) {
 			//	}
 			//}}
@@ -302,7 +309,7 @@ public class WebBookingTestIT extends DriverBase {
 				context.setAttribute("description", description);
 				context.setAttribute("silo", silo);
 
-				log.info(
+				logger.get().info(
 						"Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
 
 			}
