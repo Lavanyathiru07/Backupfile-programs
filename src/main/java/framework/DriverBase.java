@@ -46,7 +46,7 @@ public class DriverBase {
 		System.out.println("##############################################");
 		//		try {
 
-		//test.createJob();
+		test.createJob();
 		System.out.println("inside before suite WebBookingTestIT");
 		//useCat = true;
 		//		} catch (Exception e) {

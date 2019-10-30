@@ -158,6 +158,26 @@ public class WebBookingTestIT extends DriverBase {
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
+		
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+
+		Properties props = new Properties();
+		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
+		props.setProperty("log4j.appender.file.maxFileSize","100MB");
+		props.setProperty("log4j.appender.file.maxBackupIndex","0");
+		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+				Thread.currentThread().getId()+ ".log");
+		props.setProperty("log4j.appender.file.threshold","DEBUG");
+		props.setProperty("log4j.appender.file.Append","false");
+		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
+		props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
+		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
+
+		PropertyConfigurator.configure(props);
+
+		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
+		
+		
 
 		if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
@@ -200,6 +220,25 @@ public class WebBookingTestIT extends DriverBase {
 	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
 			Method method) throws InterruptedException {
+		
+		
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+
+		Properties props = new Properties();
+		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
+		props.setProperty("log4j.appender.file.maxFileSize","100MB");
+		props.setProperty("log4j.appender.file.maxBackupIndex","0");
+		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+				Thread.currentThread().getId()+ ".log");
+		props.setProperty("log4j.appender.file.threshold","DEBUG");
+		props.setProperty("log4j.appender.file.Append","false");
+		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
+		props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
+		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
+
+		PropertyConfigurator.configure(props);
+
+		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
