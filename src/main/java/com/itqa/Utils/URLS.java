@@ -25,18 +25,13 @@ public enum URLS {
 	// INTERNATIONAL("int.nexus.intl");
 
 	private String url;
-	public static final String INTLPREFIX = "int.nexus.intl";
-	private final String NEXUSDOMAIN = "usw2.aws.allegiantair.com";
-
+	
 	URLS(String envUrl) {
 		this.url = envUrl;
 	}
 
 	public String getUrl(String env, Integer silo) {
-		if (env.contains("intl")) {
-			url = url.replace("allegiantair.com", NEXUSDOMAIN);
-			return url.replace("xxx", "www." + INTLPREFIX);
-		} else if (env.contains("nddprd")) {
+		 if (env.contains("nddprd")) {
 			URLS.AIS.url = URLS.AIS.url.replace("ais.xxx", "xxx-ais");
 			URLS.G4PLUS.url = URLS.G4PLUS.url.replace("g4plus-portal.xxx", "xxx-g4plus-portal");
 		}
