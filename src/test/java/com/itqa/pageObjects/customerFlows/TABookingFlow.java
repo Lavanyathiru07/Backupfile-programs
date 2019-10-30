@@ -42,27 +42,27 @@ public class TABookingFlow extends BasePage {
 	private ManageTravelVehiclePage ManageTravelVehiclePage;
 	private ManageTravelPaymentPage ManageTravelPaymentPage;
 
-	public TABookingFlow() {
-		this.logger = Logger.getLogger(TABookingFlow.class);
-
-		taSignInPage = new TaSignInPage();
-		landingPage = new LandingPage();
-		flightPage = new FlightPage();
-		hotelPage = new HotelPage();
-		vehiclePage = new VehiclePage();
-		travelerPage = new TravelerPage();
-		seatPage = new SeatPage();
-		paymentPage = new PaymentPage();
-		bagPage = new BagPage();
-		confirmationPage = new ConfirmationPage();
-		mod = new MOD();
-		EmailVerification = new EmailVerification();
-		ManageTravelLoginPage =new ManageTravelLoginPage();
-		ManageTravelBagPage = new ManageTravelBagPage();
-		ManageTravelSeatPage = new ManageTravelSeatPage();
-		ManageTravelHotelPage = new ManageTravelHotelPage();
-		ManageTravelVehiclePage = new ManageTravelVehiclePage();
-		ManageTravelPaymentPage = new ManageTravelPaymentPage();
+	public TABookingFlow(Logger log) {
+		//this.logger = Logger.getLogger(TABookingFlow.class);
+this.logger=log;
+		taSignInPage = new TaSignInPage(log);
+		landingPage = new LandingPage(log);
+		flightPage = new FlightPage(log);
+		hotelPage = new HotelPage(log);
+		vehiclePage = new VehiclePage(log);
+		travelerPage = new TravelerPage(log);
+		seatPage = new SeatPage(log);
+		paymentPage = new PaymentPage(log);
+		bagPage = new BagPage(log);
+		confirmationPage = new ConfirmationPage(log);
+		mod = new MOD(log);
+		EmailVerification = new EmailVerification(log);
+		ManageTravelLoginPage =new ManageTravelLoginPage(log);
+		ManageTravelBagPage = new ManageTravelBagPage(log);
+		ManageTravelSeatPage = new ManageTravelSeatPage(log);
+		ManageTravelHotelPage = new ManageTravelHotelPage(log);
+		ManageTravelVehiclePage = new ManageTravelVehiclePage(log);
+		ManageTravelPaymentPage = new ManageTravelPaymentPage(log);
 
 	}
 

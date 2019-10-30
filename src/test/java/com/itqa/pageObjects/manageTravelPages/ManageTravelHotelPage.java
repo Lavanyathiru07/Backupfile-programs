@@ -38,9 +38,10 @@ public class ManageTravelHotelPage {
     @FindBy(xpath = "//button[contains(text(),'Book')]")
     private WebElement firstBookButton;
 
-    public ManageTravelHotelPage() {
+    public ManageTravelHotelPage(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(ManageTravelHotelPage.class);
+       // this.logger = Logger.getLogger(ManageTravelHotelPage.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }

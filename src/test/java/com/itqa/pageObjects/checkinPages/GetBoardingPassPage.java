@@ -33,9 +33,10 @@ public class GetBoardingPassPage {
     @FindBy(xpath = "//embed[contains(@type,'pdf')]")
     private WebElement chromeBP;
 
-    public GetBoardingPassPage() {
+    public GetBoardingPassPage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(GetBoardingPassPage.class);
+       // this.logger = Logger.getLogger(GetBoardingPassPage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }

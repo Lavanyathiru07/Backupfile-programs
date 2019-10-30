@@ -48,9 +48,10 @@ public class G4PlusLoginPage extends BasePage {
 	@FindBy(css = "a[href='/login/logout']")
 	private WebElement logoutButton;
 
-	public G4PlusLoginPage() {
+	public G4PlusLoginPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(G4PlusLoginPage.class);
+		//this.logger = Logger.getLogger(G4PlusLoginPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}

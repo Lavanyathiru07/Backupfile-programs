@@ -138,9 +138,10 @@ public class PaymentPage extends BasePage {
 	@FindBy(xpath = "//h2[contains(text(),'Who Will Be Traveling?')]")
 	private WebElement travellersPageH2;
 
-	public PaymentPage() {
+	public PaymentPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(PaymentPage.class);
+		//this.logger = Logger.getLogger(PaymentPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
@@ -347,9 +348,9 @@ public class PaymentPage extends BasePage {
 
 		String amount = "";
 		double totalBookingFare = 0.00;
-		bagPage = new BagPage();
-		paymentPage = new PaymentPage();
-		travelerPage = new TravelerPage();
+		bagPage = new BagPage(logger);
+		paymentPage = new PaymentPage(logger);
+		travelerPage = new TravelerPage(logger);
 
 		logger.info("Will popup be called?  " + Popupflag);
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")

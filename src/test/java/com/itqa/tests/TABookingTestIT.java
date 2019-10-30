@@ -71,7 +71,7 @@ public class TABookingTestIT extends DriverBase {
 
 			}
 
-			TABookingFlow booking = new TABookingFlow();
+			TABookingFlow booking = new TABookingFlow(log);
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
@@ -100,7 +100,7 @@ public class TABookingTestIT extends DriverBase {
 				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
-			TABookingFlow booking = new TABookingFlow();
+			TABookingFlow booking = new TABookingFlow(log);
 			generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
@@ -138,7 +138,7 @@ public class TABookingTestIT extends DriverBase {
 
 	private TABookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context) {
 		String manifestId = "";
-		TABookingFlow booking = new TABookingFlow();
+		TABookingFlow booking = new TABookingFlow(log);
 
 		manifestId = booking.TABooking(itn, context);
 

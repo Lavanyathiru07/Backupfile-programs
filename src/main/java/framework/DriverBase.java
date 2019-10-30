@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -25,37 +26,34 @@ public class DriverBase {
 	private static List<DriverFactory> webDriverThreadPool = Collections.synchronizedList(new ArrayList<DriverFactory>());
 	private static ThreadLocal<DriverFactory> driverThread;
 	protected static boolean skip = false;
-	
-	protected boolean flag;
 
-	//protected static CATinits caTint;
+	protected boolean flag;
 	protected static Boolean useCat = true;
 	private boolean fail = false;
 	public static Map<String, String> status = new HashMap<String, String>();
 	private String comments = "";
-	
+
+	protected CATinits test = new CATinits();
+
 
 	//CAT
 	@BeforeSuite
 	public void initCat() throws Exception {
 		System.setProperty("startTime", (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()));
 
-	//	if (System.getenv("cat") != null) {
-	//		if (System.getenv("cat").contains("yes")) {
-				System.out.println("##############################################");
+		//	if (System.getenv("cat") != null) {
+		//		if (System.getenv("cat").contains("yes")) {
+		System.out.println("##############################################");
 		//		try {
-					cat.CATinits test = new CATinits();
-					test.createJob();
-					//caTint =new CATinits();
-					//    caTint = new CATint();
-					//caTint.createJob();
-					System.out.println("inside before suite WebBookingTestIT");
-					//useCat = true;
+
+		//test.createJob();
+		System.out.println("inside before suite WebBookingTestIT");
+		//useCat = true;
 		//		} catch (Exception e) {
 		//			e.printStackTrace();
 		//		}
 		//	}
-	//	}
+		//	}
 
 
 	}
@@ -76,6 +74,8 @@ public class DriverBase {
 		return driverThread.get().getDriver();
 	}
 
+
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult testResult) throws IOException {
 
@@ -89,16 +89,15 @@ public class DriverBase {
 	@AfterSuite(alwaysRun = true)
 	//CAT
 	public void tearDown() {
-	//	if (useCat) {
-	//		try {
-		cat.CATinits test = new CATinits();
+		//	if (useCat) {
+		//		try {
+
 		test.completeJob("COMPLETED");
-				//caTint.completeJob("COMPLETED");
-				System.out.println("***********After Suite**************");
-	//		} catch (Exception e) {
+		System.out.println("***********After Suite**************");
+		//		} catch (Exception e) {
 		//		e.printStackTrace();
 		//	}
-	//	}
+		//	}
 	}
 	public static void clearCookies() {
 		try {
@@ -110,14 +109,14 @@ public class DriverBase {
 	public boolean getFail() {
 		return fail;
 	}
-	
+
 	public void setFail(boolean fail) {
 		this.fail=fail;
 	}
 	public boolean getSkip() {
 		return skip;
 	}
-	
+
 	public void setSkip(boolean skip) {
 		DriverBase.skip=skip;
 	}

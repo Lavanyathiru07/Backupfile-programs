@@ -66,9 +66,10 @@ public class CheckinPaymentPage {
     @FindBy(css = "div.flight-details")
     private WebElement flightDetails;
 
-    public CheckinPaymentPage() {
+    public CheckinPaymentPage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(CheckedSeatPage.class);
+    //    this.logger = Logger.getLogger(CheckedSeatPage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }

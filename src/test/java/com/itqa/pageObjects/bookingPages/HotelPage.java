@@ -40,9 +40,10 @@ public class HotelPage extends BasePage {
     @FindBy(xpath = "//button[contains(text(),'Book')]")
     private WebElement firstBookButton;
 
-    public HotelPage() {
+    public HotelPage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(HotelPage.class);
+       // this.logger = Logger.getLogger(HotelPage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

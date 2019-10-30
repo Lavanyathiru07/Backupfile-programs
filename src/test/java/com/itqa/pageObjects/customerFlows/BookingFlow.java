@@ -28,7 +28,7 @@ import org.testng.ITestContext;
 public class BookingFlow extends BasePage {
 
 	private RemoteWebDriver driver;
-	private Logger logger = null;
+	public Logger logger = null;
 	private LandingPage landingPage;
 	private FlightPage flightPage;
 	private TripsPage tripsPage;
@@ -56,34 +56,35 @@ public class BookingFlow extends BasePage {
 	private ManageTravelVehiclePage ManageTravelVehiclePage;
 	private ManageTravelPaymentPage ManageTravelPaymentPage;
 
-	public BookingFlow() {
-		this.logger = Logger.getLogger(BookingFlow.class);
-		landingPage = new LandingPage();
-		flightPage = new FlightPage();
-		bundlePage = new BundlePage();
-		hotelPage = new HotelPage();
-		vehiclePage = new VehiclePage();
-		activityPage = new ActivityPage();
-		travelerPage = new TravelerPage();
-		seatPage = new SeatPage();
-		paymentPage = new PaymentPage();
-		bagPage = new BagPage();
-		confirmationPage = new ConfirmationPage();
-		tripsPage = new TripsPage();
-		loginPage = new LoginPage();
-		bagAndBoardingPage = new BagAndBoardingPage();
-		checkedSeatPage = new CheckedSeatPage();
-		checkinPaymentPage = new CheckinPaymentPage();
-		getBoardingPassPage = new GetBoardingPassPage();
-		mod = new MOD();
-		g4MenuPage = new G4MenuPage();
-		EmailVerification = new EmailVerification();
-		ManageTravelLoginPage = new ManageTravelLoginPage();
-		ManageTravelBagPage = new ManageTravelBagPage();
-		ManageTravelSeatPage = new ManageTravelSeatPage();
-		ManageTravelHotelPage = new ManageTravelHotelPage();
-		ManageTravelVehiclePage = new ManageTravelVehiclePage();
-		ManageTravelPaymentPage = new ManageTravelPaymentPage();
+	public BookingFlow(Logger log) {
+		this.logger = log;
+		//this.logger=log;
+		landingPage = new LandingPage(log);
+		flightPage = new FlightPage(log);
+		bundlePage = new BundlePage(log);
+		hotelPage = new HotelPage(log);
+		vehiclePage = new VehiclePage(log);
+		activityPage = new ActivityPage(log);
+		travelerPage = new TravelerPage(log);
+		seatPage = new SeatPage(log);
+		paymentPage = new PaymentPage(log);
+		bagPage = new BagPage(log);
+		confirmationPage = new ConfirmationPage(log);
+		tripsPage = new TripsPage(log);
+		loginPage = new LoginPage(log);
+		bagAndBoardingPage = new BagAndBoardingPage(log);
+		checkedSeatPage = new CheckedSeatPage(log);
+		checkinPaymentPage = new CheckinPaymentPage(log);
+		getBoardingPassPage = new GetBoardingPassPage(log);
+		mod = new MOD(log);
+		g4MenuPage = new G4MenuPage(log);
+		EmailVerification = new EmailVerification(log);
+		ManageTravelLoginPage = new ManageTravelLoginPage(log);
+		ManageTravelBagPage = new ManageTravelBagPage(log);
+		ManageTravelSeatPage = new ManageTravelSeatPage(log);
+		ManageTravelHotelPage = new ManageTravelHotelPage(log);
+		ManageTravelVehiclePage = new ManageTravelVehiclePage(log);
+		ManageTravelPaymentPage = new ManageTravelPaymentPage(log);
 	}
 
 	public String createWebBooking(Itinerary itn, ITestContext context) {

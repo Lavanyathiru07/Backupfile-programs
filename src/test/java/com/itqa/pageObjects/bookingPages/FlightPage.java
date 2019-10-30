@@ -52,10 +52,11 @@ public class FlightPage extends BasePage {
 	@FindBy(xpath = "//*[text()='New Search']")
 	private WebElement newSearch;
 
-	public FlightPage() {
+	public FlightPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(FlightPage.class);
-		landingPage = new LandingPage();
+		//this.logger = Logger.getLogger(FlightPage.class);
+		this.logger=log;
+		landingPage = new LandingPage(logger);
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
 	}

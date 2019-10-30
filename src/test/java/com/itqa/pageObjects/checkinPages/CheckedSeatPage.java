@@ -39,9 +39,10 @@ public class CheckedSeatPage extends BasePage {
     @FindBy(xpath = "//button[contains(@class,'yes_no_seats continue')]")
     private WebElement yesContinueButton;
 
-    public CheckedSeatPage() {
+    public CheckedSeatPage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(CheckedSeatPage.class);
+       // this.logger = Logger.getLogger(CheckedSeatPage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }

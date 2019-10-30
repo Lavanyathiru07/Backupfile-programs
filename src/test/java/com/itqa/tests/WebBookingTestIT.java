@@ -41,16 +41,17 @@ public class WebBookingTestIT extends DriverBase {
 	private final Boolean WITHACCOUNT = true;
 	private final Boolean WITHOUTACCOUNT = false;
 	private static Logger log = Logger.getLogger(WebBookingTestIT.class.getName());
+
 	private RemoteWebDriver driver;
 	private String env;
 	private TestResultContext trc;
 	//CAT
 	private static int testnum = 1;
-	private ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
+	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
 	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
 	private ThreadLocal<DriverBase> DB = new ThreadLocal<DriverBase>();
 	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
-	
+
 	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
@@ -70,10 +71,10 @@ public class WebBookingTestIT extends DriverBase {
 	public void createSuite() {
 		//if (useCat) {
 		//	try {
-		CATinits  test= new CATinits();
+		//CATinits  test= new CATinits();
 		test.createSuite("BAT 2.0 Automation");
-				//caTint.createSuite("WebBookingTestIT");
-				System.out.println("inside before test WebBookingTestIT");
+		//caTint.createSuite("WebBookingTestIT");
+		System.out.println("inside before test WebBookingTestIT");
 		//	} catch (Exception e) {}
 		//}
 	}
@@ -84,25 +85,23 @@ public class WebBookingTestIT extends DriverBase {
 	@Story("WWW One way Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getName()));
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
 		props.setProperty("log4j.appender.file.maxBackupIndex","0");
-		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + Thread.currentThread().getName()+ ".log");
+		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+				Thread.currentThread().getId()+ ".log");
 		props.setProperty("log4j.appender.file.threshold","DEBUG");
 		props.setProperty("log4j.appender.file.Append","false");
 		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
 		props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
-		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getName(),"DEBUG, file");
-		
-		PropertyConfigurator.configure(props);
-		
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		
-        
+		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
+		PropertyConfigurator.configure(props);
+
+		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 
 		synchronized (this) {
 			testId.set(testnum);
@@ -111,10 +110,10 @@ public class WebBookingTestIT extends DriverBase {
 
 		//if (useCat) {
 		//	try {
-		cat.CATinits test = new CATinits();
-				test.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		/* cat.CATinits test = new CATinits(); */
+		test.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
 		//	} catch (Exception e) {}
-	//	}
+		//	}
 
 
 
@@ -206,7 +205,7 @@ public class WebBookingTestIT extends DriverBase {
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			logger.get().info("Accoutn creation booking started");
-			BookingFlow booking = new BookingFlow();
+			BookingFlow booking = new BookingFlow(logger.get());
 			generateBooking(itn, silo, context, true);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
@@ -240,102 +239,102 @@ public class WebBookingTestIT extends DriverBase {
 		}
 		else if (DB.get().getFail()) {
 			isTestPass = false;
-			
+
 			//DriverBase.status.put(Iteration.get()+" Results", "FAIL");
 			//DriverBase.status.put(Iteration.get()+" Confirmation Number",itn.getItn());
 			//DriverBase.status.put(Iteration.get()+" Comments", DB.get().getComments());
 
 			//if (useCat) {
 			//	try {
-			cat.CATinits test = new CATinits();
-					test.completeTest("FAIL", "WebBookingTestIT", "AXRTYU", "comment", testId.get(), "logs" +".log");
+
+			test.completeTest("FAIL", "WebBookingTestIT", "AXRTYU", "comment", testId.get(), "logs" +".log");
 			//	} catch (Exception e) {
 			//	}
 			//}}
 			//else{
 
-				//if (useCat) {
-				//	try {
-					cat.CATinits test1 = new CATinits();
-						test1.completeTest("PASS", "WebBookingTestIT", "", "comment", testId.get(), "logs" +".log");
-				//	} catch (Exception e) {
-				//	}
+			//if (useCat) {
+			//	try {
+
+			test.completeTest("PASS", "WebBookingTestIT", "", "comment", testId.get(), "logs" +".log");
+			//	} catch (Exception e) {
 			//	}
-			}
-			System.out.println("status ==== "+Iteration.get() +"----"+DB.get().getFail());
-			}
-
-
-			@AfterTest
-			public void completeSuite() {
-			//	if (useCat) {
-			//		try {
-						cat.CATinits test = new CATinits();
-						test.completeSuite("WebBookingTestIT");
-				//	} catch (Exception e) {}
 			//	}
+		}
+		System.out.println("status ==== "+Iteration.get() +"----"+DB.get().getFail());
+	}
+
+
+	@AfterTest
+	public void completeSuite() {
+		//	if (useCat) {
+		//		try {
+
+		test.completeSuite("WebBookingTestIT");
+		//	} catch (Exception e) {}
+		//	}
+	}
+
+	private void setEarlyMarketCities(Itinerary itn) {
+		String[] earliestMarket = GeneralUtils.getEarlyFlight();
+		for (int i = 0; i < earliestMarket.length; i++) {
+			if (earliestMarket[i].contains("IWA")) {
+				earliestMarket[i] = "AZA";
 			}
-
-			private void setEarlyMarketCities(Itinerary itn) {
-				String[] earliestMarket = GeneralUtils.getEarlyFlight();
-				for (int i = 0; i < earliestMarket.length; i++) {
-					if (earliestMarket[i].contains("IWA")) {
-						earliestMarket[i] = "AZA";
-					}
-					if (earliestMarket[i].contains("GPI")) {
-						earliestMarket[i] = "FCA";
-					}
-					if (earliestMarket[i].contains("UTA")) {
-						earliestMarket[i] = "UTM";
-					}
-				}
-
-				itn.setDepartureCity(earliestMarket[0]);
-				itn.setDestinationCity(earliestMarket[1]);
+			if (earliestMarket[i].contains("GPI")) {
+				earliestMarket[i] = "FCA";
 			}
-
-			private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
-				Environment ev = new Environment();
-				ev.setCurrentSilo(silo);
-				driver = DriverBase.getDriver();
-				if (env.contains("aws")) {
-					driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
-				}else {
-					driver.get(URLS.WWW.getUrl(env, silo));
-				}
-				itn.setDescription(description);
-				trc.setSetSilo(silo.toString());
-
-				context.setAttribute("description", description);
-				context.setAttribute("silo", silo);
-
-				logger.get().info(
-						"Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
-
-			}
-
-			private void updateTextContext(Itinerary itn, ITestContext context) {
-				trc.setSetItn(itn.getItn());
-				itn.setItn(itn.getItn());
-				step("Booking created with itn " + itn.getItn());
-			}
-
-			private BookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context, Boolean withAccount) {
-				String manifestId = "";
-				itn.setSilo(silo.toString());
-				BookingFlow booking = new BookingFlow();
-
-				if (withAccount) {
-					manifestId = booking.createWebBookingWithAccount(silo, itn, context, withAccount);
-					log.info(manifestId);
-				} else {
-					manifestId = booking.createWebBookingWithOutAccount(silo, itn, context);
-				}
-
-				itn.setManifestId(manifestId);
-				step("Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "
-						+ itn.getDestinationCity());
-
-				return booking;
+			if (earliestMarket[i].contains("UTA")) {
+				earliestMarket[i] = "UTM";
 			}
 		}
+
+		itn.setDepartureCity(earliestMarket[0]);
+		itn.setDestinationCity(earliestMarket[1]);
+	}
+
+	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
+		Environment ev = new Environment();
+		ev.setCurrentSilo(silo);
+		driver = DriverBase.getDriver();
+		if (env.contains("aws")) {
+			driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
+		}else {
+			driver.get(URLS.WWW.getUrl(env, silo));
+		}
+		itn.setDescription(description);
+		trc.setSetSilo(silo.toString());
+
+		context.setAttribute("description", description);
+		context.setAttribute("silo", silo);
+
+		logger.get().info(
+				"Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
+
+	}
+
+	private void updateTextContext(Itinerary itn, ITestContext context) {
+		trc.setSetItn(itn.getItn());
+		itn.setItn(itn.getItn());
+		step("Booking created with itn " + itn.getItn());
+	}
+
+	private BookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context, Boolean withAccount) {
+		String manifestId = "";
+		itn.setSilo(silo.toString());
+		BookingFlow booking = new BookingFlow(logger.get());
+
+		if (withAccount) {
+			manifestId = booking.createWebBookingWithAccount(silo, itn, context, withAccount);
+			log.info(manifestId);
+		} else {
+			manifestId = booking.createWebBookingWithOutAccount(silo, itn, context);
+		}
+
+		itn.setManifestId(manifestId);
+		step("Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "
+				+ itn.getDestinationCity());
+
+		return booking;
+	}
+}

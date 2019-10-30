@@ -94,9 +94,10 @@ public class LandingPage extends BasePage {
 	@FindBy(xpath = "//span[contains(text(),'Close')]/..")
 	private WebElement popUpCloseButton;
 
-	public LandingPage() {
+	public LandingPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(LandingPage.class);
+		//this.logger = Logger.getLogger(LandingPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) this.driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(this.driver, 20), this);
 	}
@@ -115,6 +116,7 @@ public class LandingPage extends BasePage {
 					jse.executeScript(JSFIRSTARG, depCityDropDown);
 				}
 				Thread.sleep(1000);
+			
 				logger.info("city name is " + from);
 				jse.executeScript(JSFIRSTARG, driver.findElement(
 						By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(" + from + ")')]")));

@@ -78,10 +78,11 @@ public class G4PlusFlow extends BasePage {
 	private String stationUsername = "Q2hhbmF0YW4uQ2hhcm4udGVzdA==";
 	private String password = "QFNkMTUwNDEyMzQ1";
 	private String env=Environment.getEnv();
-	public G4PlusFlow() {
-		this.logger = Logger.getLogger(G4PlusFlow.class);
-		g4MenuPage = new G4MenuPage();
-		G4PlusLoginPage = new G4PlusLoginPage();
+	public G4PlusFlow(Logger log) {
+		//this.logger = Logger.getLogger(G4PlusFlow.class);
+		this.logger=log;
+		g4MenuPage = new G4MenuPage(log);
+		G4PlusLoginPage = new G4PlusLoginPage(log);
 		AisMenuPage = new AisMenuPage();
 		MaintenanceRecords = new MaintenanceRecords();
 		AircraftRecords = new AircraftRecords();
@@ -105,7 +106,7 @@ public class G4PlusFlow extends BasePage {
 		HOT = new HOT();
 		ATL = new ATL();
 		OFO = new OFO();
-		MOD = new MOD();
+		MOD = new MOD(logger);
 
 	}
 
@@ -499,7 +500,7 @@ public class G4PlusFlow extends BasePage {
 
 		DriverBase.getDriver().get("https://swap.allegiantair.com");
 
-		LoginPage loginPage = new LoginPage();
+		LoginPage loginPage = new LoginPage(logger);
 
 		try {
 			loginPage.openSwap();

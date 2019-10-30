@@ -50,9 +50,10 @@ public class BagPage extends BasePage {
     @FindBy(xpath = "//label[@id='boarding-pass-option-0']")
     private WebElement boardOption;
 
-    public BagPage() {
+    public BagPage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(BagPage.class);
+       // this.logger = Logger.getLogger(BagPage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

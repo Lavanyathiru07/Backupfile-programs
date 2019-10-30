@@ -48,9 +48,10 @@ public class LoginPage {
 	@FindBy(xpath = "//div[contains(@class,'ui-dialog-buttonset')]/button")
 	private WebElement modalContinueButton;
 
-	public LoginPage() {
+	public LoginPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(LoginPage.class);
+		//this.logger = Logger.getLogger(LoginPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
 	}

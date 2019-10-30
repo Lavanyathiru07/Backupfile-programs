@@ -163,7 +163,7 @@ public class CCBookingTestIT extends DriverBase {
 	private CCBookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context) {
 		String manifestId = "";
 		itn.setSilo(silo.toString());
-		CCBookingFlow booking = new CCBookingFlow();
+		CCBookingFlow booking = new CCBookingFlow(log);
 		manifestId = booking.CCBooking(itn, context);
 		itn.setManifestId(manifestId);
 		context.setAttribute("manifestid", manifestId);

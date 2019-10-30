@@ -61,9 +61,10 @@ public class G4MenuPage extends BasePage {
 
 	/*-------------------------------*/
 
-	public G4MenuPage() {
+	public G4MenuPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(G4MenuPage.class);
+		//this.logger = Logger.getLogger(G4MenuPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}

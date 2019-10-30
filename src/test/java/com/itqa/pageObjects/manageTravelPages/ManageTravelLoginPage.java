@@ -39,9 +39,10 @@ public class ManageTravelLoginPage {
     @FindBy(css = "a[href='#!&tab=bagchooser']")
     private WebElement bagTab;
 
-    public ManageTravelLoginPage() {
+    public ManageTravelLoginPage(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(ManageTravelLoginPage.class);
+     //   this.logger = Logger.getLogger(ManageTravelLoginPage.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }

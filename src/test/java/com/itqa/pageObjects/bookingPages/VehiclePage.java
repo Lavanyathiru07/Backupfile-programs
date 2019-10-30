@@ -35,9 +35,10 @@ public class VehiclePage extends BasePage {
     @FindBy(xpath = "//a[contains(@class,'no-item-selected')]")
     private WebElement noThanksButton;
 
-    public VehiclePage() {
+    public VehiclePage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(VehiclePage.class);
+       // this.logger = Logger.getLogger(VehiclePage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

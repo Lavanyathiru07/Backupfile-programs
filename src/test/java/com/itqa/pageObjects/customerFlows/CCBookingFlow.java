@@ -37,22 +37,23 @@ public class CCBookingFlow extends BasePage {
 	private EmailVerification EmailVerification;
 	private G4PlusLoginPage G4PlusLoginPage;
 
-	public CCBookingFlow() {
-		this.logger = Logger.getLogger(CCBookingFlow.class);
-		landingPage = new LandingPage();
-		flightPage = new FlightPage();
-		bundlePage = new BundlePage();
-		hotelPage = new HotelPage();
-		vehiclePage = new VehiclePage();
-		travelerPage = new TravelerPage();
-		seatPage = new SeatPage();
-		paymentPage = new PaymentPage();
-		bagPage = new BagPage();
-		confirmationPage = new ConfirmationPage();
-		mod = new MOD();
-		g4MenuPage = new G4MenuPage();
-		EmailVerification = new EmailVerification();
-		G4PlusLoginPage=new G4PlusLoginPage();
+	public CCBookingFlow(Logger log) {
+		//this.logger = Logger.getLogger(CCBookingFlow.class);
+		this.logger=log;
+		landingPage = new LandingPage(log);
+		flightPage = new FlightPage(log);
+		bundlePage = new BundlePage(log);
+		hotelPage = new HotelPage(log);
+		vehiclePage = new VehiclePage(log);
+		travelerPage = new TravelerPage(log);
+		seatPage = new SeatPage(log);
+		paymentPage = new PaymentPage(log);
+		bagPage = new BagPage(log);
+		confirmationPage = new ConfirmationPage(log);
+		mod = new MOD(log);
+		g4MenuPage = new G4MenuPage(log);
+		EmailVerification = new EmailVerification(log);
+		G4PlusLoginPage=new G4PlusLoginPage(log);
 	}
 
 	public String CCBooking(Itinerary itn, ITestContext context) {

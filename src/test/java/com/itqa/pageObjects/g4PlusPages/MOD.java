@@ -241,14 +241,15 @@ public class MOD extends BasePage {
 	@FindBy(xpath = "//*[contains(@class,'panel-section')]/a")
 	private WebElement voucher;
 
-	public MOD() {
+	public MOD(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(MOD.class);
+		//this.logger = Logger.getLogger(MOD.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 
-		g4MenuPage = new G4MenuPage();
-		g4LoginPage = new G4PlusLoginPage();
+		g4MenuPage = new G4MenuPage(log);
+		g4LoginPage = new G4PlusLoginPage(log);
 	}
 
 	public void accessMOD() {
