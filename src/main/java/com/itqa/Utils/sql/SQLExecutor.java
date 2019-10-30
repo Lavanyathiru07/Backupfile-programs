@@ -29,8 +29,6 @@ public class SQLExecutor {
         	url = urlPreFix + System.getProperty("awsenv").toLowerCase() + urlPostFix;
          else if (env.contains("nddprd"))
         	url = urlPreFix + "nddprddb2db03.prd.ndd.g4.corp" + urlPostFix;
-         else if (env.contains("intl")) 
-            url = urlPreFix + URLS.INTLPREFIX + urlPostFix;
          else 
         	url = urlPreFix + env.toLowerCase() + urlPostFix;
         
