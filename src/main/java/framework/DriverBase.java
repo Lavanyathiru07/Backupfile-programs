@@ -28,7 +28,7 @@ public class DriverBase {
 	protected static boolean skip = false;
 
 	protected boolean flag;
-	protected static Boolean useCat = true;
+	//protected static Boolean useCat = true;
 	private boolean fail = false;
 	public static Map<String, String> status = new HashMap<String, String>();
 	private String comments = "";
@@ -45,7 +45,6 @@ public class DriverBase {
 		//		if (System.getenv("cat").contains("yes")) {
 		System.out.println("##############################################");
 		//		try {
-
 		test.createJob();
 		System.out.println("inside before suite WebBookingTestIT");
 		//useCat = true;
@@ -91,7 +90,6 @@ public class DriverBase {
 	public void tearDown() {
 		//	if (useCat) {
 		//		try {
-
 		test.completeJob("COMPLETED");
 		System.out.println("***********After Suite**************");
 		//		} catch (Exception e) {

@@ -301,5 +301,6 @@ public final class CATinits {
         insideBody.put("resultLogs", logList);
         closeTestCaseJson.put("closeTestCaseJson", insideBody);
         Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(closeTestCaseJson).toString());
+   System.out.println("=============================Job creation conpleted=================================");
     }
 }

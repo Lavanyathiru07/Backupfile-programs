@@ -71,9 +71,7 @@ public class WebBookingTestIT extends DriverBase {
 	public void createSuite() {
 		//if (useCat) {
 		//	try {
-		//CATinits  test= new CATinits();
-		test.createSuite("BAT 2.0 Automation");
-		//caTint.createSuite("WebBookingTestIT");
+		test.createSuite("WebBookingTestIT");
 		System.out.println("inside before test WebBookingTestIT");
 		//	} catch (Exception e) {}
 		//}
@@ -269,38 +267,26 @@ public class WebBookingTestIT extends DriverBase {
 
 	}
 
-	//@AfterMethod
+	@AfterMethod
 	public void writeResult(ITestResult result, Itinerary itn) {
 		System.out.println("inside after method");
 
-		if (DB.get().getSkip()) {
-			//DriverBase.status.put(Iteration.get()+" Results", "SKIP");
+		if (result.getStatus()==ITestResult.SKIP) 
+		{
+			test.completeTest("SKIPPED", "WebBookingTestIT", "AXRTYU", "comment", 1, Thread.currentThread().getId() +".log");
+			System.out.println("SKIPPED" + ITestResult.SKIP);
 		}
-		else if (DB.get().getFail()) {
-			isTestPass = false;
-
-			//DriverBase.status.put(Iteration.get()+" Results", "FAIL");
-			//DriverBase.status.put(Iteration.get()+" Confirmation Number",itn.getItn());
-			//DriverBase.status.put(Iteration.get()+" Comments", DB.get().getComments());
-
-			//if (useCat) {
-			//	try {
-
-			test.completeTest("FAIL", "WebBookingTestIT", "AXRTYU", "comment", testId.get(), "logs" +".log");
-			//	} catch (Exception e) {
-			//	}
-			//}}
-			//else{
-
-			//if (useCat) {
-			//	try {
-
-			test.completeTest("PASS", "WebBookingTestIT", "", "comment", testId.get(), "logs" +".log");
-			//	} catch (Exception e) {
-			//	}
-			//	}
+		else if (result.getStatus()==ITestResult.FAILURE)
+		{
+			test.completeTest("FAIL", "WebBookingTestIT", "AXRTYU", "comment", 2, Thread.currentThread().getId() +".log");
+			System.out.println("FAIL" + ITestResult.FAILURE);
 		}
-		System.out.println("status ==== "+Iteration.get() +"----"+DB.get().getFail());
+		
+		else if(result.getStatus()==ITestResult.SUCCESS)
+		{
+			test.completeTest("PASS", "WebBookingTestIT", "", "comment", 3, Thread.currentThread().getId() +".log");
+			System.out.println("PASS" + ITestResult.SUCCESS);
+		}
 	}
 
 
@@ -308,7 +294,6 @@ public class WebBookingTestIT extends DriverBase {
 	public void completeSuite() {
 		//	if (useCat) {
 		//		try {
-
 		test.completeSuite("WebBookingTestIT");
 		//	} catch (Exception e) {}
 		//	}
