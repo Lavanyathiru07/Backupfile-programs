@@ -127,13 +127,11 @@ public class G4PlusFlow extends BasePage {
 
 	public void url() throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-		Thread.sleep(1500);
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 	}
 	
 	public void awsurl() throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
-		Thread.sleep(1500);
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
 	}
 
