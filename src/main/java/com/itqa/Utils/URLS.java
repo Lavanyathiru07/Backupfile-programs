@@ -21,9 +21,7 @@ public enum URLS {
 	RSFLTFEESEARCH("https://ais.xxx.allegiantair.com/c/public/index.php/mx/rsfltfee/search"),
 	JIRA("https://tech.allegiantair.com"), 
 	CONFLUENCE("https://confluence.allegiantair.com");
-
-	// INTERNATIONAL("int.nexus.intl");
-
+	
 	private String url;
 	
 	URLS(String envUrl) {
