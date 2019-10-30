@@ -31,7 +31,7 @@ public class NonBookingTestIT extends DriverBase {
 	private static Logger log = Logger.getLogger(NonBookingTestIT.class.getName());
 	private RemoteWebDriver driver;
 	private String env;
-	private String awsenv=null;
+	private String awsenv;
 	private TestResultContext trc;
 
 	private String debug(String methodName) {
