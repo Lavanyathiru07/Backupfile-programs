@@ -268,7 +268,7 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	@AfterMethod
-	public void writeResult(ITestResult result, Itinerary itn) {
+	public void writeResult(ITestResult result){
 		System.out.println("inside after method");
 
 		if (result.getStatus()==ITestResult.SKIP) 
