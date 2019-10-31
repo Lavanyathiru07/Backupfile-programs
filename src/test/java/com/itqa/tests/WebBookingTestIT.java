@@ -73,7 +73,7 @@ public class WebBookingTestIT extends DriverBase {
 	public void createSuite() {
 		//if (useCat) {
 		//	try {
-		test.createSuite("WebBookingTestIT");
+		cat.createSuite("WebBookingTestIT");
 		System.out.println("inside before test WebBookingTestIT");
 		//	} catch (Exception e) {}
 		//}
@@ -93,7 +93,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 		//if (useCat) {
 		//	try {
-		test.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(itinerary.get().getScenario(), "WebBookingTestIT", testId.get());
 		//	} catch (Exception e) {}
 		//	}
 
@@ -115,7 +115,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
 			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
+					itinerary.get().getScenario()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
 			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
@@ -158,7 +158,15 @@ public class WebBookingTestIT extends DriverBase {
 			throws InterruptedException {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));	
-
+		synchronized (this) {
+			testId.set(testnum);
+			testnum++;
+		}
+		//if (useCat) {
+		//	try {
+		cat.createTest(itinerary.get().getScenario(), "WebBookingTestIT", testId.get());
+		//	} catch (Exception e) {}
+		//	}
 
 		if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
@@ -176,7 +184,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
 			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-					itn.getDescription()+	Thread.currentThread().getId()+ ".log");
+					itinerary.get().getScenario()+	Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
 			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
@@ -215,7 +223,7 @@ public class WebBookingTestIT extends DriverBase {
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
 		props.setProperty("log4j.appender.file.maxBackupIndex","0");
 		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-				itn.getDescription()+	Thread.currentThread().getId()+ ".log");
+				itinerary.get().getScenario()+	Thread.currentThread().getId()+ ".log");
 		props.setProperty("log4j.appender.file.threshold","DEBUG");
 		props.setProperty("log4j.appender.file.Append","false");
 		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
@@ -235,7 +243,15 @@ public class WebBookingTestIT extends DriverBase {
 			Method method) throws InterruptedException {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
-
+		synchronized (this) {
+			testId.set(testnum);
+			testnum++;
+		}
+		//if (useCat) {
+		//	try {
+		cat.createTest(itinerary.get().getScenario(), "WebBookingTestIT", testId.get());
+		//	} catch (Exception e) {}
+		//	}
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
@@ -267,7 +283,7 @@ public class WebBookingTestIT extends DriverBase {
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
 		props.setProperty("log4j.appender.file.maxBackupIndex","0");
 		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-				itn.getDescription()+	Thread.currentThread().getId()+ ".log");
+				itinerary.get().getScenario()+	Thread.currentThread().getId()+ ".log");
 		props.setProperty("log4j.appender.file.threshold","DEBUG");
 		props.setProperty("log4j.appender.file.Append","false");
 		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
@@ -286,19 +302,20 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
-			test.completeTest("SKIPPED", "WebBookingTestIT", itinerary.get().getItn(), "", testId.get() , itinerary.get().getScenario() +".log");
+			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.get().getItn(), "", testId.get() , itinerary.get().getScenario() +".log");
 			System.out.println("SKIPPED" + ITestResult.SKIP);
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
 			String error = result.getThrowable().getMessage();
-			test.completeTest("FAIL", "WebBookingTestIT", itinerary.get().getItn(), error, testId.get(), itinerary.get().getScenario() +".log");
+			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.get().getItn(), error, testId.get(), itinerary.get().getScenario() +".log");
 			System.out.println("FAIL" + ITestResult.FAILURE);
 		}
 
 		else if(result.getStatus()==ITestResult.SUCCESS)
 		{
-			test.completeTest("PASS", "WebBookingTestIT", itinerary.get().getItn(), "", testId.get() , itinerary.get().getScenario() +".log");
+			cat.completeTest("PASS", "WebBookingTestIT", itinerary.get().getItn(), "", testId.get() , System.getProperty("user.dir") + "/target/" + 
+					itinerary.get().getScenario()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("PASS" + ITestResult.SUCCESS);
 		}
 	}
@@ -308,7 +325,7 @@ public class WebBookingTestIT extends DriverBase {
 	public void completeSuite() {
 		//	if (useCat) {
 		//		try {
-		test.completeSuite("WebBookingTestIT");
+		cat.completeSuite("WebBookingTestIT");
 		//	} catch (Exception e) {}
 		//	}
 	}

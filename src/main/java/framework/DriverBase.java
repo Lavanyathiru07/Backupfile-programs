@@ -33,7 +33,7 @@ public class DriverBase {
 	public static Map<String, String> status = new HashMap<String, String>();
 	private String comments = "";
 
-	protected CATinits test = new CATinits();
+	protected CATinits cat = new CATinits();
 
 
 	//CAT
@@ -45,7 +45,7 @@ public class DriverBase {
 		//		if (System.getenv("cat").contains("yes")) {
 		System.out.println("##############################################");
 		//		try {
-		test.createJob();
+		cat.createJob();
 		System.out.println("inside before suite WebBookingTestIT");
 		//useCat = true;
 		//		} catch (Exception e) {
@@ -90,7 +90,7 @@ public class DriverBase {
 	public void tearDown() {
 		//	if (useCat) {
 		//		try {
-		test.completeJob("COMPLETED");
+		cat.completeJob("COMPLETED");
 		System.out.println("***********After Suite**************");
 		//		} catch (Exception e) {
 		//		e.printStackTrace();
