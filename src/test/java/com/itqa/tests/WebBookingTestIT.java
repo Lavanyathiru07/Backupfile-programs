@@ -286,18 +286,19 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
-			test.completeTest("SKIPPED", "WebBookingTestIT", itinerary.get().getItn(), "comment", testId.get() , itinerary.get().getScenario() +".log");
+			test.completeTest("SKIPPED", "WebBookingTestIT", itinerary.get().getItn(), "", testId.get() , itinerary.get().getScenario() +".log");
 			System.out.println("SKIPPED" + ITestResult.SKIP);
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
-			test.completeTest("FAIL", "WebBookingTestIT", itinerary.get().getItn(), "comment", testId.get(), itinerary.get().getScenario() +".log");
+			String error = result.getThrowable().getMessage();
+			test.completeTest("FAIL", "WebBookingTestIT", itinerary.get().getItn(), error, testId.get(), itinerary.get().getScenario() +".log");
 			System.out.println("FAIL" + ITestResult.FAILURE);
 		}
 
 		else if(result.getStatus()==ITestResult.SUCCESS)
 		{
-			test.completeTest("PASS", "WebBookingTestIT", itinerary.get().getItn(), "comment", testId.get() , itinerary.get().getScenario() +".log");
+			test.completeTest("PASS", "WebBookingTestIT", itinerary.get().getItn(), "", testId.get() , itinerary.get().getScenario() +".log");
 			System.out.println("PASS" + ITestResult.SUCCESS);
 		}
 	}
