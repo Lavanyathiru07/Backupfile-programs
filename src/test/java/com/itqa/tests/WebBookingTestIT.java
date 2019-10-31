@@ -93,7 +93,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 		//if (useCat) {
 		//	try {
-		cat.createTest(itinerary.getDescription(), "WebBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 		//	} catch (Exception e) {}
 		//	}
 
@@ -168,7 +168,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 		//if (useCat) {
 		//	try {
-		cat.createTest(itinerary.getDescription(), "WebBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 		//	} catch (Exception e) {}
 		//	}
 
@@ -253,7 +253,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 		//if (useCat) {
 		//	try {
-		cat.createTest(itinerary.getDescription(), "WebBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 		//	} catch (Exception e) {}
 		//	}
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
@@ -304,7 +304,6 @@ public class WebBookingTestIT extends DriverBase {
 	@AfterMethod
 	public void writeResult(ITestResult result){
 		System.out.println("inside after method");
-		System.out.println("=============================================desc:" + itinerary.getDescription());
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
