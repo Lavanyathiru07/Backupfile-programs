@@ -51,8 +51,8 @@ public class WebBookingTestIT extends DriverBase {
 	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
 	private ThreadLocal<DriverBase> DB = new ThreadLocal<DriverBase>();
 	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
-	private ThreadLocal<Itinerary> itinerary = new ThreadLocal<>();
-
+	private Itinerary itinerary;
+	
 
 	static boolean isTestPass = true;
 
@@ -84,7 +84,9 @@ public class WebBookingTestIT extends DriverBase {
 
 	@Story("WWW One way Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
+		
+		itinerary = itn;
+		
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
@@ -93,7 +95,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 		//if (useCat) {
 		//	try {
-		cat.createTest(itinerary.get().getScenario(), "WebBookingTestIT", testId.get());
+		cat.createTest(itinerary.getDescription(), "WebBookingTestIT", testId.get());
 		//	} catch (Exception e) {}
 		//	}
 
@@ -115,7 +117,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
 			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-					itinerary.get().getScenario()	+Thread.currentThread().getId()+ ".log");
+					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
 			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
@@ -164,7 +166,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 		//if (useCat) {
 		//	try {
-		cat.createTest(itinerary.get().getScenario(), "WebBookingTestIT", testId.get());
+		cat.createTest(itinerary.getDescription(), "WebBookingTestIT", testId.get());
 		//	} catch (Exception e) {}
 		//	}
 
@@ -184,7 +186,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
 			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-					itinerary.get().getScenario()+	Thread.currentThread().getId()+ ".log");
+					itn.getDescription()+	Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
 			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
@@ -223,7 +225,7 @@ public class WebBookingTestIT extends DriverBase {
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
 		props.setProperty("log4j.appender.file.maxBackupIndex","0");
 		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-				itinerary.get().getScenario()+	Thread.currentThread().getId()+ ".log");
+				itn.getDescription()+	Thread.currentThread().getId()+ ".log");
 		props.setProperty("log4j.appender.file.threshold","DEBUG");
 		props.setProperty("log4j.appender.file.Append","false");
 		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
@@ -249,7 +251,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 		//if (useCat) {
 		//	try {
-		cat.createTest(itinerary.get().getScenario(), "WebBookingTestIT", testId.get());
+		cat.createTest(itinerary.getDescription(), "WebBookingTestIT", testId.get());
 		//	} catch (Exception e) {}
 		//	}
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
@@ -283,7 +285,7 @@ public class WebBookingTestIT extends DriverBase {
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
 		props.setProperty("log4j.appender.file.maxBackupIndex","0");
 		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-				itinerary.get().getScenario()+	Thread.currentThread().getId()+ ".log");
+				itn.getDescription()+	Thread.currentThread().getId()+ ".log");
 		props.setProperty("log4j.appender.file.threshold","DEBUG");
 		props.setProperty("log4j.appender.file.Append","false");
 		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
@@ -302,20 +304,22 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
-			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.get().getItn(), "", testId.get() , itinerary.get().getScenario() +".log");
+			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , System.getProperty("user.dir") + "/target/" + 
+					itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("SKIPPED" + ITestResult.SKIP);
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.get().getItn(), error, testId.get(), itinerary.get().getScenario() +".log");
+			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), System.getProperty("user.dir") + "/target/" + 
+					itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("FAIL" + ITestResult.FAILURE);
 		}
 
 		else if(result.getStatus()==ITestResult.SUCCESS)
 		{
-			cat.completeTest("PASS", "WebBookingTestIT", itinerary.get().getItn(), "", testId.get() , System.getProperty("user.dir") + "/target/" + 
-					itinerary.get().getScenario()+	Thread.currentThread().getId()+ ".log");
+			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , System.getProperty("user.dir") + "/target/" + 
+					itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("PASS" + ITestResult.SUCCESS);
 		}
 	}
