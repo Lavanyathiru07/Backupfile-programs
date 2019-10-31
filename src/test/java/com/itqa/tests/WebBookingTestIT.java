@@ -85,8 +85,6 @@ public class WebBookingTestIT extends DriverBase {
 	@Story("WWW One way Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		
-		itinerary = itn;
-		
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
@@ -112,6 +110,7 @@ public class WebBookingTestIT extends DriverBase {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
 			}
+			itinerary = itn;
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -131,6 +130,8 @@ public class WebBookingTestIT extends DriverBase {
 
 
 			System.out.println("desc:" + itn.getDescription());
+			
+			System.out.println("=============================================desc:" + itinerary.getDescription());
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
@@ -159,6 +160,7 @@ public class WebBookingTestIT extends DriverBase {
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 
+		
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));	
 		synchronized (this) {
 			testId.set(testnum);
@@ -180,7 +182,7 @@ public class WebBookingTestIT extends DriverBase {
 			} else {
 				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			}
-
+			itinerary = itn;
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -243,7 +245,7 @@ public class WebBookingTestIT extends DriverBase {
 	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
 			Method method) throws InterruptedException {
-
+		
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 		synchronized (this) {
 			testId.set(testnum);
@@ -280,6 +282,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
+		itinerary = itn;
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -301,24 +304,26 @@ public class WebBookingTestIT extends DriverBase {
 	@AfterMethod
 	public void writeResult(ITestResult result){
 		System.out.println("inside after method");
+		System.out.println("=============================================desc:" + itinerary.getDescription());
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
 			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , "");
-			System.out.println("SKIPPED" + ITestResult.SKIP);
+			System.out.println("SKIPPED");
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
-			System.out.println("FAIL" + ITestResult.FAILURE);
+			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			System.out.println("FAIL");
 		}
 
 		else if(result.getStatus()==ITestResult.SUCCESS)
 		{
 			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
-			System.out.println("PASS" + ITestResult.SUCCESS);
+			System.out.println("PASS");
 		}
+		itinerary = null;
 	}
 
 
