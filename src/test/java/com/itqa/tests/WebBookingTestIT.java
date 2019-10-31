@@ -322,7 +322,7 @@ public class WebBookingTestIT extends DriverBase {
 			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("PASS");
 		}
-		itinerary = null;
+		//itinerary = null;
 	}
 
 
