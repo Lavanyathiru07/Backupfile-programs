@@ -104,25 +104,4 @@ public class DriverBase {
 			System.err.println("Unable to delete cookies: " + ex);
 		}
 	}
-	public boolean getFail() {
-		return fail;
-	}
-
-	public void setFail(boolean fail) {
-		this.fail=fail;
-	}
-	public boolean getSkip() {
-		return skip;
-	}
-
-	public void setSkip(boolean skip) {
-		DriverBase.skip=skip;
-	}
-	public String getComments() {
-		return comments;
-	}
-
-	public void setComments(String comments) {
-		this.comments=comments;
-	}
 }
