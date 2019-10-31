@@ -93,7 +93,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 		//if (useCat) {
 		//	try {
-		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
 		//	} catch (Exception e) {}
 		//	}
 
@@ -307,7 +307,7 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
-			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , "");
+			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("SKIPPED");
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
