@@ -67,7 +67,7 @@ public class WebBookingTestIT extends DriverBase {
 	//CAT
 	@BeforeTest
 	public void createSuite() {
-		//cat.createSuite("WebBookingTestIT");
+		cat.createSuite("WebBookingTestIT");
 		System.out.println("inside before test WebBookingTestIT");
 	}
 
@@ -83,7 +83,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		//cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
 
 		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1)||(silo == 2)||(silo == 3))
 				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
@@ -288,19 +288,19 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
-			//cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("SKIPPED");
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
 			String error = result.getThrowable().getMessage();
-			//cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("FAIL");
 		}
 
 		else if(result.getStatus()==ITestResult.SUCCESS)
 		{
-			//cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
+			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("PASS");
 		}
 		itinerary = null;
@@ -309,7 +309,7 @@ public class WebBookingTestIT extends DriverBase {
 
 	@AfterTest
 	public void completeSuite() {
-		//cat.completeSuite("WebBookingTestIT");
+		cat.completeSuite("WebBookingTestIT");
 	}
 
 	private void setEarlyMarketCities(Itinerary itn) {

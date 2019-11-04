@@ -41,21 +41,11 @@ public class DriverBase {
 	public void initCat() throws Exception {
 		System.setProperty("startTime", (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()));
 
-		//	if (System.getenv("cat") != null) {
-		//		if (System.getenv("cat").contains("yes")) {
 		System.out.println("##############################################");
-		//		try {
 		cat.createJob();
 		System.out.println("inside before suite WebBookingTestIT");
-		//useCat = true;
-		//		} catch (Exception e) {
-		//			e.printStackTrace();
-		//		}
-		//	}
-		//	}
-
-
 	}
+	
 	@BeforeMethod(alwaysRun = true)
 	public static void instantiateDriverObject() {
 		driverThread = new ThreadLocal<DriverFactory>() {
@@ -88,14 +78,8 @@ public class DriverBase {
 	@AfterSuite(alwaysRun = true)
 	//CAT
 	public void tearDown() {
-		//	if (useCat) {
-		//		try {
 		cat.completeJob("COMPLETED");
 		System.out.println("***********After Suite**************");
-		//		} catch (Exception e) {
-		//		e.printStackTrace();
-		//	}
-		//	}
 	}
 	public static void clearCookies() {
 		try {
