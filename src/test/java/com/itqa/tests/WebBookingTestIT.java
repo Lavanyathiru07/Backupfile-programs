@@ -83,7 +83,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(itinerary.getDescription(), "WebBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 
 		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1)||(silo == 2)||(silo == 3))
 				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
@@ -293,8 +293,8 @@ public class WebBookingTestIT extends DriverBase {
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
-			//String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), "", testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			String error = result.getThrowable().getMessage();
+			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("FAIL");
 		}
 
