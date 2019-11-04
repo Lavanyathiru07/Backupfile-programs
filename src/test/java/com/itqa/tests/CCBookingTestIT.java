@@ -14,11 +14,15 @@ import io.qameta.allure.Story;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import org.apache.log4j.Logger;
-
+import org.apache.log4j.PropertyConfigurator;
 import org.testng.Assert;
 import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import listeners.TestReport;
@@ -27,6 +31,7 @@ import listeners.RealTimeTestReport;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.util.Properties;
 
 import static io.qameta.allure.Allure.step;
 
@@ -37,6 +42,13 @@ public class CCBookingTestIT extends DriverBase {
 	private RemoteWebDriver driver;
 	private String env;
 	private TestResultContext trc;
+	
+	//CAT
+		private static int testnum = 1;
+		protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
+		private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+		private Itinerary itinerary;
+		static boolean isTestPass = true;
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -50,13 +62,27 @@ public class CCBookingTestIT extends DriverBase {
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
-
+	//CAT
+		@BeforeTest
+		public void createSuite() {
+			cat.createSuite("WebBookingTestIT");
+			System.out.println("inside before test WebBookingTestIT");
+		}
 	
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
 			"simple", "bat" })
 	@Story(" CC Booking - Book with Hotel, Car with ssr (Oxygen concentrator) . Email Verification")
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
+		
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+
+		synchronized (this) {
+			testId.set(testnum);
+			testnum++;
+		}
+		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 1))
 				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
@@ -72,6 +98,23 @@ public class CCBookingTestIT extends DriverBase {
 			} else {
 				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			}
+			
+			itinerary = itn;
+			Properties props = new Properties();
+			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.file.maxFileSize","100MB");
+			props.setProperty("log4j.appender.file.maxBackupIndex","0");
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+					itinerary.getDescription()	+Thread.currentThread().getId()+ ".log");
+			props.setProperty("log4j.appender.file.threshold","DEBUG");
+			props.setProperty("log4j.appender.file.Append","false");
+			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
+			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
+
+			PropertyConfigurator.configure(props);
+
+			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
@@ -97,6 +140,15 @@ public class CCBookingTestIT extends DriverBase {
 	@Story(" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification Retrieve ITN in G4+ MOD & upsell bags & seats")
 	public void testCCBookRoundTripWithModification(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
+		
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+
+		synchronized (this) {
+			testId.set(testnum);
+			testnum++;
+		}
+		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		
 		if ((env.contains("stg") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 2))) {
@@ -110,6 +162,23 @@ public class CCBookingTestIT extends DriverBase {
 			} else {
 				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			}
+			
+			itinerary = itn;
+			Properties props = new Properties();
+			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.file.maxFileSize","100MB");
+			props.setProperty("log4j.appender.file.maxBackupIndex","0");
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+					itinerary.getDescription()	+Thread.currentThread().getId()+ ".log");
+			props.setProperty("log4j.appender.file.threshold","DEBUG");
+			props.setProperty("log4j.appender.file.Append","false");
+			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
+			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
+
+			PropertyConfigurator.configure(props);
+
+			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			
 			CCBookingFlow booking = generateBooking(itn, silo, context);
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
@@ -129,6 +198,36 @@ public class CCBookingTestIT extends DriverBase {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 
+	}
+	
+	@AfterMethod
+	public void writeResult(ITestResult result){
+		System.out.println("inside after method");
+
+		if (result.getStatus()==ITestResult.SKIP) 
+		{
+			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			System.out.println("SKIPPED");
+		}
+		else if (result.getStatus()==ITestResult.FAILURE)
+		{
+			String error = result.getThrowable().getMessage();
+			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			System.out.println("FAIL");
+		}
+
+		else if(result.getStatus()==ITestResult.SUCCESS)
+		{
+			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
+			System.out.println("PASS");
+		}
+		itinerary = null;
+	}
+
+
+	@AfterTest
+	public void completeSuite() {
+		cat.completeSuite("WebBookingTestIT");
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {

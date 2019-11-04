@@ -49,11 +49,7 @@ public class WebBookingTestIT extends DriverBase {
 	private static int testnum = 1;
 	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
 	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
-	private ThreadLocal<DriverBase> DB = new ThreadLocal<DriverBase>();
-	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
 	private Itinerary itinerary;
-	
-
 	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
@@ -71,12 +67,8 @@ public class WebBookingTestIT extends DriverBase {
 	//CAT
 	@BeforeTest
 	public void createSuite() {
-		//if (useCat) {
-		//	try {
-		cat.createSuite("WebBookingTestIT");
+		//cat.createSuite("WebBookingTestIT");
 		System.out.println("inside before test WebBookingTestIT");
-		//	} catch (Exception e) {}
-		//}
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
@@ -91,11 +83,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		//if (useCat) {
-		//	try {
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
-		//	} catch (Exception e) {}
-		//	}
+		//cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
 
 		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1)||(silo == 2)||(silo == 3))
 				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
@@ -166,11 +154,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		//if (useCat) {
-		//	try {
 		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
-		//	} catch (Exception e) {}
-		//	}
 
 		if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
@@ -251,11 +235,8 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		//if (useCat) {
-		//	try {
 		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
-		//	} catch (Exception e) {}
-		//	}
+		
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
@@ -307,32 +288,28 @@ public class WebBookingTestIT extends DriverBase {
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
-			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			//cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("SKIPPED");
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			//cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("FAIL");
 		}
 
 		else if(result.getStatus()==ITestResult.SUCCESS)
 		{
-			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
+			//cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("PASS");
 		}
-		//itinerary = null;
+		itinerary = null;
 	}
 
 
 	@AfterTest
 	public void completeSuite() {
-		//	if (useCat) {
-		//		try {
-		cat.completeSuite("WebBookingTestIT");
-		//	} catch (Exception e) {}
-		//	}
+		//cat.completeSuite("WebBookingTestIT");
 	}
 
 	private void setEarlyMarketCities(Itinerary itn) {
