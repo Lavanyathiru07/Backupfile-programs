@@ -316,7 +316,7 @@ public class WebBookingTestIT extends DriverBase {
 			System.out.println("Checking the ITN  : " + it);
 			System.out.println("Checking the Description  : " + desc.get());
 	
-			System.out.println("printing the value"+ TB.get().status.put(Iteration.get()+"confirmationnumberis",it));
+			//System.out.println("printing the value"+ TB.get().status.put(Iteration.get()+"confirmationnumberis",it));
 			
 			System.out.println("Test Pass->" + result.getName() + " on silo " + result.getTestContext().getAttribute("silo")
 					+ " on thread " + Thread.currentThread().getId());
