@@ -84,7 +84,6 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		//cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 
 		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1) || (silo == 2)
 				|| (silo == 3)) || (env.contains("prod") && ((silo == 1) || (silo == 2)))
@@ -122,7 +121,7 @@ public class WebBookingTestIT extends DriverBase {
 			desc=itn.getDescription();
 			System.out.println("=============================================desc:" + itn.getDescription());
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
-
+System.out.println("ITN AFTER BOOKING :" + itn.getItn() + "ITN:"+itn);
 			it = itn.getItn();
 
 			/*Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
@@ -157,8 +156,6 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
-
 		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
 				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
@@ -169,6 +166,7 @@ public class WebBookingTestIT extends DriverBase {
 			} else {
 				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			}
+			cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
@@ -245,8 +243,6 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
-
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
@@ -274,7 +270,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-
+		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize", "100MB");
@@ -295,26 +291,34 @@ public class WebBookingTestIT extends DriverBase {
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
-		System.out.println("inside after method");
-		System.out.println("Checking the ITN  : " + it);
-		System.out.println("Checking the Description  : " + desc);
+		/*
+		 * System.out.println("inside after method");
+		 * System.out.println("Checking the ITN  : " + it);
+		 * System.out.println("Checking the Description  : " + desc);
+		 */
 
 		if (result.getStatus() == ITestResult.SKIP) {
+			synchronized (this) {
 			cat.completeTest("SKIPPED", "WebBookingTestIT", it, "", testId.get(),
 					desc + Thread.currentThread().getId() + ".log");
-			System.out.println("SKIPPED");
+			System.out.println("SKIPPED");}
 		} else if (result.getStatus() == ITestResult.FAILURE) {
+			synchronized (this) {
 			String error = result.getThrowable().getMessage();
+			
 			cat.completeTest("FAIL", "WebBookingTestIT", "", it, testId.get(),
 					desc + Thread.currentThread().getId() + ".log");
 			System.out.println("FAIL");
-		}
+		}}
 
 		else if (result.getStatus() == ITestResult.SUCCESS) {
+			System.out.println("Checking the Description  : " + desc);
+			System.out.println("Checking the ITN  : " + it);
+			synchronized (this) {
 			cat.completeTest("PASS", "WebBookingTestIT", it, "", testId.get(),
 					desc + Thread.currentThread().getId() + ".log");
 			System.out.println("PASS");
-		}
+		}}
 	}
 
 	@AfterTest

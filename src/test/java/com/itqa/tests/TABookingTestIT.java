@@ -39,13 +39,14 @@ public class TABookingTestIT extends DriverBase {
 	private RemoteWebDriver driver;
 	private String env;
 	private TestResultContext trc;
-	
+
 	//CAT
-			private static int testnum = 1;
-			protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
-			private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
-			private Itinerary itinerary;
-			static boolean isTestPass = true;
+	private static int testnum = 1;
+	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
+	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+	private String it;
+	private String desc;
+	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -60,13 +61,13 @@ public class TABookingTestIT extends DriverBase {
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
-	
+
 	//CAT
-			@BeforeTest
-			public void createSuite() {
-				cat.createSuite("TABookingTestIT");
-				System.out.println("inside before test TABookingTestIT");
-			}
+	@BeforeTest
+	public void createSuite() {
+		cat.createSuite("TABookingTestIT");
+		System.out.println("inside before test TABookingTestIT");
+	}
 
 	// , retryAnalyzer = RetryFailure.class
 	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book a One Way Trip", groups = {
@@ -81,8 +82,7 @@ public class TABookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "TABookingTestIT", testId.get());
-		
+
 		if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("vipprod") && (silo == 0)) || (env.contains("prod") && (silo == 2))) {
 			if (env.contains("prod") && (silo == 2)) {
@@ -96,13 +96,13 @@ public class TABookingTestIT extends DriverBase {
 				} else {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
-				itinerary = itn;
+				cat.createTest(itn.getDescription(), "TABookingTestIT", testId.get());
 				Properties props = new Properties();
 				props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 				props.setProperty("log4j.appender.file.maxFileSize","100MB");
 				props.setProperty("log4j.appender.file.maxBackupIndex","0");
 				props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-						itinerary.getDescription()	+Thread.currentThread().getId()+ ".log");
+						itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 				props.setProperty("log4j.appender.file.threshold","DEBUG");
 				props.setProperty("log4j.appender.file.Append","false");
 				props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
@@ -110,8 +110,9 @@ public class TABookingTestIT extends DriverBase {
 				props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 				PropertyConfigurator.configure(props);
-
 				logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
+				desc=itn.getDescription();
+				it = itn.getItn();
 			}
 
 			TABookingFlow booking = new TABookingFlow(log);
@@ -127,13 +128,13 @@ public class TABookingTestIT extends DriverBase {
 
 			booking.TARefundAndCancellation(itn.getItn(), itn);
 		} else {
-			
+
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
 	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book aRound Trip", groups = {
-			"bat" })
+	"bat" })
 
 	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and Emails received.")
 	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -144,8 +145,7 @@ public class TABookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "TABookingTestIT", testId.get());
-		
+
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 2))
 				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
@@ -159,16 +159,16 @@ public class TABookingTestIT extends DriverBase {
 			updateTextContext(itn, context);
 			booking.TARefundAndCancellation(itn.getItn(), itn);
 		} else {
-			
+
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		itinerary = itn;
+		cat.createTest(itn.getDescription(), "TABookingTestIT", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
 		props.setProperty("log4j.appender.file.maxBackupIndex","0");
 		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-				itinerary.getDescription()	+Thread.currentThread().getId()+ ".log");
+				itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 		props.setProperty("log4j.appender.file.threshold","DEBUG");
 		props.setProperty("log4j.appender.file.Append","false");
 		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
@@ -176,32 +176,33 @@ public class TABookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-
+		desc=itn.getDescription();
+		it = itn.getItn();
 	}
-	@AfterMethod
-	public void writeResult(ITestResult result){
-		System.out.println("inside after method");
 
-		if (result.getStatus()==ITestResult.SKIP) 
-		{
-			cat.completeTest("SKIPPED", "TABookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+	@AfterMethod
+	public void writeResult(ITestResult result) {
+		System.out.println("inside after method");
+		System.out.println("Checking the ITN  : " + it);
+		System.out.println("Checking the Description  : " + desc);
+
+		if (result.getStatus() == ITestResult.SKIP) {
+			cat.completeTest("SKIPPED", "TABookingTestIT", it, "", testId.get(),
+					desc + Thread.currentThread().getId() + ".log");
 			System.out.println("SKIPPED");
-		}
-		else if (result.getStatus()==ITestResult.FAILURE)
-		{
+		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "TABookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			cat.completeTest("FAIL", "TABookingTestIT", "", it, testId.get(),
+					desc + Thread.currentThread().getId() + ".log");
 			System.out.println("FAIL");
 		}
 
-		else if(result.getStatus()==ITestResult.SUCCESS)
-		{
-			cat.completeTest("PASS", "TABookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
+		else if (result.getStatus() == ITestResult.SUCCESS) {
+			cat.completeTest("PASS", "TABookingTestIT", it, "", testId.get(),
+					desc + Thread.currentThread().getId() + ".log");
 			System.out.println("PASS");
 		}
-		itinerary = null;
 	}
 
 
@@ -216,7 +217,7 @@ public class TABookingTestIT extends DriverBase {
 		itn.setDescription(description);
 		driver = DriverBase.getDriver();
 		if (env.contains("aws")) {
-		     driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
+			driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
 		}else {
 			driver.get(URLS.TA.getUrl(env, silo));
 		}
