@@ -128,6 +128,7 @@ public class G4PlusFlow extends BasePage {
 	public void url() throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		g4MenuPage.verifyAIS();
 	}
 	
 	public void awsurl() throws InterruptedException {
