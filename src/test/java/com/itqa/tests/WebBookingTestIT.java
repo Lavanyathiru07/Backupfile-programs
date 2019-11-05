@@ -48,8 +48,11 @@ public class WebBookingTestIT extends DriverBase {
 	private static int testnum = 1;
 	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
 	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
+	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
+	private ThreadLocal<String> desc = new ThreadLocal<String>();
 	private String it;
-	private String desc;
+	//private String desc;
 	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
@@ -119,7 +122,10 @@ public class WebBookingTestIT extends DriverBase {
 			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 
 			System.out.println("desc:" + itn.getDescription());
-			desc=itn.getDescription();
+			
+			desc.set(itn.getDescription());
+			System.out.println("printiing every desc"+ desc );
+			
 			System.out.println("=============================================desc:" + itn.getDescription());
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
@@ -193,7 +199,7 @@ public class WebBookingTestIT extends DriverBase {
 				itn.setDepartureCity("FAT");
 				itn.setDestinationCity("LAS");
 			}
-			desc=itn.getDescription();
+			//desc=itn.getDescription();
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			it=itn.getItn();
@@ -248,7 +254,7 @@ public class WebBookingTestIT extends DriverBase {
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			logger.get().info("Accoutn creation booking started");
-			desc=itn.getDescription();
+			//desc=itn.getDescription();
 			BookingFlow booking = new BookingFlow(logger.get());
 			generateBooking(itn, silo, context, true);
 
@@ -293,23 +299,28 @@ public class WebBookingTestIT extends DriverBase {
 	@AfterMethod
 	public void writeResult(ITestResult result) {
 		System.out.println("inside after method");
-		System.out.println("Checking the ITN  : " + it);
-		System.out.println("Checking the Description  : " + desc);
+		
 
 		if (result.getStatus() == ITestResult.SKIP) {
 			cat.completeTest("SKIPPED", "WebBookingTestIT", it, "", testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
+				desc.get() + Thread.currentThread().getId() + ".log");
 			System.out.println("SKIPPED");
 		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
 			cat.completeTest("FAIL", "WebBookingTestIT", "", it, testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
+					desc.get() + Thread.currentThread().getId() + ".log");
 			System.out.println("FAIL");
 		}
 
 		else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "WebBookingTestIT", it, "", testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
+			System.out.println("Checking the ITN  : " + it);
+			System.out.println("Checking the Description  : " + desc.get());
+	
+			System.out.println("printing the value"+ TB.get().status.put(Iteration.get()+"confirmationnumberis",it));
+			
+			System.out.println("Test Pass->" + result.getName() + " on silo " + result.getTestContext().getAttribute("silo")
+					+ " on thread " + Thread.currentThread().getId());
+			cat.completeTest("PASS", "WebBookingTestIT", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 			System.out.println("PASS");
 		}
 	}
