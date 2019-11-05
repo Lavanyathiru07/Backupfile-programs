@@ -41,15 +41,15 @@ public class WebBookingTestIT extends DriverBase {
 	private final Boolean WITHACCOUNT = true;
 	private final Boolean WITHOUTACCOUNT = false;
 	private static Logger log = Logger.getLogger(WebBookingTestIT.class.getName());
-
 	private RemoteWebDriver driver;
 	private String env;
 	private TestResultContext trc;
-	//CAT
+	// CAT
 	private static int testnum = 1;
 	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
 	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
-	private Itinerary itinerary;
+	private String it;
+	private String desc;
 	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
@@ -59,15 +59,16 @@ public class WebBookingTestIT extends DriverBase {
 	@BeforeMethod(alwaysRun = true)
 	public void setup(ITestContext context) throws MalformedURLException {
 		driver = DriverBase.getDriver();
-		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
-				+ ", " + driver.getCurrentUrl());
+		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId() + ", "
+				+ driver.getCurrentUrl());
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
-	//CAT
+
+	// CAT
 	@BeforeTest
 	public void createSuite() {
-		cat.createSuite("WebBookingTestIT");
+		// cat.createSuite("WebBookingTestIT");
 		System.out.println("inside before test WebBookingTestIT");
 	}
 
@@ -76,17 +77,18 @@ public class WebBookingTestIT extends DriverBase {
 
 	@Story("WWW One way Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		
+
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+		// cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 
-		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1)||(silo == 2)||(silo == 3))
-				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
+		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1) || (silo == 2)
+				|| (silo == 3)) || (env.contains("prod") && ((silo == 1) || (silo == 2)))
+				|| (env.contains("vipprod") && (silo == 0))) {
 			if (env.contains("prod") || env.contains("aws")) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
@@ -98,31 +100,31 @@ public class WebBookingTestIT extends DriverBase {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
 			}
-			itinerary = itn;
 			Properties props = new Properties();
-			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
-			props.setProperty("log4j.appender.file.maxFileSize","100MB");
-			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-					itinerary.getDescription()	+Thread.currentThread().getId()+ ".log");
-			props.setProperty("log4j.appender.file.threshold","DEBUG");
-			props.setProperty("log4j.appender.file.Append","false");
-			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
-			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
-			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
+			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
+			props.setProperty("log4j.appender.file.maxBackupIndex", "0");
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/"
+					+ itn.getDescription() + Thread.currentThread().getId() + ".log");
+			props.setProperty("log4j.appender.file.threshold", "DEBUG");
+			props.setProperty("log4j.appender.file.Append", "false");
+			props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
+			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 			PropertyConfigurator.configure(props);
 
-			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-
-
+			logger.get()
+					.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 
 			System.out.println("desc:" + itn.getDescription());
-			
-			System.out.println("=============================================desc:" + itinerary.getDescription());
+			desc=itn.getDescription();
+			System.out.println("=============================================desc:" + itn.getDescription());
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
-			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+			it = itn.getItn();
+
+			/*Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 			// recevied");
@@ -131,7 +133,7 @@ public class WebBookingTestIT extends DriverBase {
 				booking.manageTravelModificationUpsellBagSeat(itn);
 				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
 				// recevied");
-			}
+			}*/
 			updateTextContext(itn, context);
 		} else {
 
@@ -141,22 +143,22 @@ public class WebBookingTestIT extends DriverBase {
 
 	}
 
-	//@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {
-	//"bat" })
+	/*@Test(dataProvider = "Web Use Cases", dataProviderClass =
+ ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {"bat"
+	})*/
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 
-		
-		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));	
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+		// cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 
-		if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
+		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
 				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
@@ -166,32 +168,36 @@ public class WebBookingTestIT extends DriverBase {
 			} else {
 				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			}
-			itinerary = itn;
 			Properties props = new Properties();
-			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
-			props.setProperty("log4j.appender.file.maxFileSize","100MB");
-			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-					itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
-			props.setProperty("log4j.appender.file.threshold","DEBUG");
-			props.setProperty("log4j.appender.file.Append","false");
-			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
-			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
-			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
+			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
+			props.setProperty("log4j.appender.file.maxBackupIndex", "0");
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/"
+					+ itn.getDescription() + Thread.currentThread().getId() + ".log");
+			props.setProperty("log4j.appender.file.threshold", "DEBUG");
+			props.setProperty("log4j.appender.file.Append", "false");
+			props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
+			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 			PropertyConfigurator.configure(props);
 
-			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
+			logger.get()
+					.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 
 			try {
 				setEarlyMarketCities(itn);
 			} catch (Exception e) {
-				logger.get().info("Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
+				logger.get().info(
+						"Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
 				itn.setDepartureCity("FAT");
 				itn.setDestinationCity("LAS");
 			}
+			desc=itn.getDescription();
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
+			it=itn.getItn();
+			
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
@@ -207,40 +213,44 @@ public class WebBookingTestIT extends DriverBase {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 		Properties props = new Properties();
-		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
-		props.setProperty("log4j.appender.file.maxFileSize","100MB");
-		props.setProperty("log4j.appender.file.maxBackupIndex","0");
-		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-				itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
-		props.setProperty("log4j.appender.file.threshold","DEBUG");
-		props.setProperty("log4j.appender.file.Append","false");
-		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
-		props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
-		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
+		props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
+		props.setProperty("log4j.appender.file.maxFileSize", "100MB");
+		props.setProperty("log4j.appender.file.maxBackupIndex", "0");
+		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + itn.getDescription()
+				+ Thread.currentThread().getId() + ".log");
+
+		props.setProperty("log4j.appender.file.threshold", "DEBUG");
+		props.setProperty("log4j.appender.file.Append", "false");
+		props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
+		props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
+		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 	}
 
-	//@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Create Account during booking andLogin", groups = {
-	//"bat" })
+	// @Test(dataProvider = "Web Use Cases", dataProviderClass =
+	// ItineraryDataProvider.class, description = "Create Account during booking
+	// andLogin", groups = {
+	// "bat" })
 
 	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
 			Method method) throws InterruptedException {
-		
+
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
-		
+		// cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			logger.get().info("Accoutn creation booking started");
+			desc=itn.getDescription();
 			BookingFlow booking = new BookingFlow(logger.get());
 			generateBooking(itn, silo, context, true);
 
@@ -263,18 +273,18 @@ public class WebBookingTestIT extends DriverBase {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		itinerary = itn;
+
 		Properties props = new Properties();
-		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
-		props.setProperty("log4j.appender.file.maxFileSize","100MB");
-		props.setProperty("log4j.appender.file.maxBackupIndex","0");
-		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-				itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
-		props.setProperty("log4j.appender.file.threshold","DEBUG");
-		props.setProperty("log4j.appender.file.Append","false");
-		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
-		props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
-		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
+		props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
+		props.setProperty("log4j.appender.file.maxFileSize", "100MB");
+		props.setProperty("log4j.appender.file.maxBackupIndex", "0");
+		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + itn.getDescription()
+				+ Thread.currentThread().getId() + ".log");
+		props.setProperty("log4j.appender.file.threshold", "DEBUG");
+		props.setProperty("log4j.appender.file.Append", "false");
+		props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
+		props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
+		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 		PropertyConfigurator.configure(props);
 
@@ -283,44 +293,33 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	@AfterMethod
-	public void writeResult(ITestResult result){
+	public void writeResult(ITestResult result) {
 		System.out.println("inside after method");
-		
-		if (result.getStatus()==ITestResult.SKIP) 
-		{
-			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
-			System.out.println("Test Skipped->" + result.getName());
-			System.out.println("itn values in skipped:" + itinerary.getItn());
-		}
-		else if (result.getStatus()==ITestResult.FAILURE)
-		{
+		System.out.println("Checking the ITN  : " + it);
+		System.out.println("Checking the Description  : " + desc);
+
+		if (result.getStatus() == ITestResult.SKIP) {
+			cat.completeTest("SKIPPED", "WebBookingTestIT", it, "", testId.get(),
+					desc + Thread.currentThread().getId() + ".log");
+			System.out.println("SKIPPED");
+		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			cat.completeTest("FAIL", "WebBookingTestIT", "", it, testId.get(),
+					desc + Thread.currentThread().getId() + ".log");
 			System.out.println("FAIL");
-			System.out.println("itn values in fail:" + itinerary.getItn());
 		}
 
-		else if(result.getStatus()==ITestResult.SUCCESS)
-			synchronized (this) {
-				TestResultContext testResultContext = new TestResultContext();
-				testResultContext.getTestResultContext(result);
-				GeneralUtils.writeToFile("passedTests.html",
-						"<tr><td align=\"left\">" + testResultContext.description
-								+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
-								+ "</td><td></td><td></td></tr>");
-			}
-			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
+		else if (result.getStatus() == ITestResult.SUCCESS) {
+			cat.completeTest("PASS", "WebBookingTestIT", it, "", testId.get(),
+					desc + Thread.currentThread().getId() + ".log");
 			System.out.println("PASS");
-			System.out.println("itn values in pass:" + itinerary.getItn());
-			
 		}
-		//itinerary = null;
-	
-
+		// itinerary = null;
+	}
 
 	@AfterTest
 	public void completeSuite() {
-		cat.completeSuite("WebBookingTestIT");
+		// cat.completeSuite("WebBookingTestIT");
 	}
 
 	private void setEarlyMarketCities(Itinerary itn) {
@@ -347,7 +346,7 @@ public class WebBookingTestIT extends DriverBase {
 		driver = DriverBase.getDriver();
 		if (env.contains("aws")) {
 			driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
-		}else {
+		} else {
 			driver.get(URLS.WWW.getUrl(env, silo));
 		}
 		itn.setDescription(description);
