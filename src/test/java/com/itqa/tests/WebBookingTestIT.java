@@ -105,7 +105,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex", "0");
 			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/"
-					+desc + Thread.currentThread().getId() + ".log");
+					+ itn.getDescription() + Thread.currentThread().getId() + ".log");
 			props.setProperty("log4j.appender.file.threshold", "DEBUG");
 			props.setProperty("log4j.appender.file.Append", "false");
 			props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
