@@ -66,8 +66,8 @@ public class NonBookingTestIT extends DriverBase {
 	//CAT
 			@BeforeTest
 			public void createSuite() {
-				cat.createSuite("WebBookingTestIT");
-				System.out.println("inside before test WebBookingTestIT");
+				cat.createSuite("NonBookingTestIT");
+				System.out.println("inside before test NonBookingTestIT");
 			}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Decoupled Code For MX - Action Requests")
@@ -80,7 +80,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			//silo=0;
@@ -118,7 +118,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -156,7 +156,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -195,7 +195,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -232,7 +232,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -254,7 +254,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -292,7 +292,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -330,7 +330,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -368,7 +368,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -405,7 +405,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -442,7 +442,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -480,7 +480,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -517,7 +517,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -554,7 +554,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -591,7 +591,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -613,7 +613,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -650,7 +650,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -687,7 +687,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -724,7 +724,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -761,7 +761,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -798,7 +798,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -835,7 +835,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -873,7 +873,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -910,7 +910,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "NonBookingTestIT", testId.get());
 		
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -942,19 +942,19 @@ public class NonBookingTestIT extends DriverBase {
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
-			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			cat.completeTest("SKIPPED", "NonBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("SKIPPED");
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			cat.completeTest("FAIL", "NonBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("FAIL");
 		}
 
 		else if(result.getStatus()==ITestResult.SUCCESS)
 		{
-			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
+			cat.completeTest("PASS", "NonBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("PASS");
 		}
 		itinerary = null;
@@ -963,7 +963,7 @@ public class NonBookingTestIT extends DriverBase {
 
 	@AfterTest
 	public void completeSuite() {
-		//cat.completeSuite("WebBookingTestIT");
+		//cat.completeSuite("NonBookingTestIT");
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {

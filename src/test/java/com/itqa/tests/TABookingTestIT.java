@@ -64,8 +64,8 @@ public class TABookingTestIT extends DriverBase {
 	//CAT
 			@BeforeTest
 			public void createSuite() {
-				cat.createSuite("WebBookingTestIT");
-				System.out.println("inside before test WebBookingTestIT");
+				cat.createSuite("TABookingTestIT");
+				System.out.println("inside before test TABookingTestIT");
 			}
 
 	// , retryAnalyzer = RetryFailure.class
@@ -81,7 +81,7 @@ public class TABookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "TABookingTestIT", testId.get());
 		
 		if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("vipprod") && (silo == 0)) || (env.contains("prod") && (silo == 2))) {
@@ -144,7 +144,7 @@ public class TABookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "TABookingTestIT", testId.get());
 		
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 2))
@@ -186,19 +186,19 @@ public class TABookingTestIT extends DriverBase {
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
-			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			cat.completeTest("SKIPPED", "TABookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("SKIPPED");
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			cat.completeTest("FAIL", "TABookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("FAIL");
 		}
 
 		else if(result.getStatus()==ITestResult.SUCCESS)
 		{
-			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
+			cat.completeTest("PASS", "TABookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("PASS");
 		}
 		itinerary = null;
@@ -207,7 +207,7 @@ public class TABookingTestIT extends DriverBase {
 
 	@AfterTest
 	public void completeSuite() {
-		cat.completeSuite("WebBookingTestIT");
+		cat.completeSuite("TABookingTestIT");
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {

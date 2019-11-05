@@ -65,8 +65,8 @@ public class CCBookingTestIT extends DriverBase {
 	//CAT
 		@BeforeTest
 		public void createSuite() {
-			cat.createSuite("WebBookingTestIT");
-			System.out.println("inside before test WebBookingTestIT");
+			cat.createSuite("CCBookingTestIT");
+			System.out.println("inside before test CCBookingTestIT");
 		}
 	
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
@@ -81,7 +81,7 @@ public class CCBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "CCBookingTestIT", testId.get());
 		
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 1))
@@ -147,7 +147,7 @@ public class CCBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		cat.createTest(method.getAnnotation(Story.class).value(), "WebBookingTestIT", testId.get());
+		cat.createTest(method.getAnnotation(Story.class).value(), "CCBookingTestIT", testId.get());
 		
 		if ((env.contains("stg") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
@@ -206,19 +206,19 @@ public class CCBookingTestIT extends DriverBase {
 
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
-			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			cat.completeTest("SKIPPED", "CCBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("SKIPPED");
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
+			cat.completeTest("FAIL", "CCBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("FAIL");
 		}
 
 		else if(result.getStatus()==ITestResult.SUCCESS)
 		{
-			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
+			cat.completeTest("PASS", "CCBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("PASS");
 		}
 		itinerary = null;
@@ -227,7 +227,7 @@ public class CCBookingTestIT extends DriverBase {
 
 	@AfterTest
 	public void completeSuite() {
-		cat.completeSuite("WebBookingTestIT");
+		cat.completeSuite("CCBookingTestIT");
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {

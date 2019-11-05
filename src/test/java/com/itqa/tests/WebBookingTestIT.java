@@ -68,7 +68,7 @@ public class WebBookingTestIT extends DriverBase {
 	// CAT
 	@BeforeTest
 	public void createSuite() {
-		 cat.createSuite("WebBookingTestIT");
+		cat.createSuite("WebBookingTestIT");
 		System.out.println("inside before test WebBookingTestIT");
 	}
 
@@ -84,7 +84,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		 cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+		//cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 
 		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1) || (silo == 2)
 				|| (silo == 3)) || (env.contains("prod") && ((silo == 1) || (silo == 2)))
@@ -100,6 +100,7 @@ public class WebBookingTestIT extends DriverBase {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
 			}
+			cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
@@ -115,7 +116,7 @@ public class WebBookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);
 
 			logger.get()
-					.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
+			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 
 			System.out.println("desc:" + itn.getDescription());
 			desc=itn.getDescription();
@@ -156,7 +157,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		 cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 
 		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
@@ -183,7 +184,7 @@ public class WebBookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);
 
 			logger.get()
-					.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
+			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 
 			try {
 				setEarlyMarketCities(itn);
@@ -197,7 +198,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			it=itn.getItn();
-			
+
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
@@ -217,7 +218,7 @@ public class WebBookingTestIT extends DriverBase {
 		props.setProperty("log4j.appender.file.maxFileSize", "100MB");
 		props.setProperty("log4j.appender.file.maxBackupIndex", "0");
 		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + itn.getDescription()
-				+ Thread.currentThread().getId() + ".log");
+		+ Thread.currentThread().getId() + ".log");
 
 		props.setProperty("log4j.appender.file.threshold", "DEBUG");
 		props.setProperty("log4j.appender.file.Append", "false");
@@ -244,7 +245,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		 cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
@@ -279,7 +280,7 @@ public class WebBookingTestIT extends DriverBase {
 		props.setProperty("log4j.appender.file.maxFileSize", "100MB");
 		props.setProperty("log4j.appender.file.maxBackupIndex", "0");
 		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + itn.getDescription()
-				+ Thread.currentThread().getId() + ".log");
+		+ Thread.currentThread().getId() + ".log");
 		props.setProperty("log4j.appender.file.threshold", "DEBUG");
 		props.setProperty("log4j.appender.file.Append", "false");
 		props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
@@ -314,12 +315,11 @@ public class WebBookingTestIT extends DriverBase {
 					desc + Thread.currentThread().getId() + ".log");
 			System.out.println("PASS");
 		}
-		// itinerary = null;
 	}
 
 	@AfterTest
 	public void completeSuite() {
-		 cat.completeSuite("WebBookingTestIT");
+		cat.completeSuite("WebBookingTestIT");
 	}
 
 	private void setEarlyMarketCities(Itinerary itn) {
