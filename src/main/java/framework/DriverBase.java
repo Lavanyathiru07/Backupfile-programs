@@ -42,7 +42,7 @@ public class DriverBase {
 		System.setProperty("startTime", (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()));
 
 		System.out.println("##############################################");
-		//cat.createJob();
+		cat.createJob();
 		System.out.println("inside before suite WebBookingTestIT");
 	}
 	
@@ -78,7 +78,7 @@ public class DriverBase {
 	@AfterSuite(alwaysRun = true)
 	//CAT
 	public void tearDown() {
-		//cat.completeJob("COMPLETED");
+		cat.completeJob("COMPLETED");
 		System.out.println("***********After Suite**************");
 	}
 	public static void clearCookies() {

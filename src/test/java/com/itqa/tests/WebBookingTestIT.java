@@ -68,7 +68,7 @@ public class WebBookingTestIT extends DriverBase {
 	// CAT
 	@BeforeTest
 	public void createSuite() {
-		// cat.createSuite("WebBookingTestIT");
+		 cat.createSuite("WebBookingTestIT");
 		System.out.println("inside before test WebBookingTestIT");
 	}
 
@@ -84,7 +84,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		// cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+		 cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 
 		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1) || (silo == 2)
 				|| (silo == 3)) || (env.contains("prod") && ((silo == 1) || (silo == 2)))
@@ -156,7 +156,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		// cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+		 cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 
 		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
@@ -244,7 +244,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		// cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+		 cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
 
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
@@ -319,7 +319,7 @@ public class WebBookingTestIT extends DriverBase {
 
 	@AfterTest
 	public void completeSuite() {
-		// cat.completeSuite("WebBookingTestIT");
+		 cat.completeSuite("WebBookingTestIT");
 	}
 
 	private void setEarlyMarketCities(Itinerary itn) {
