@@ -285,26 +285,37 @@ public class WebBookingTestIT extends DriverBase {
 	@AfterMethod
 	public void writeResult(ITestResult result){
 		System.out.println("inside after method");
-
+		
 		if (result.getStatus()==ITestResult.SKIP) 
 		{
 			cat.completeTest("SKIPPED", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
-			System.out.println("SKIPPED");
+			System.out.println("Test Skipped->" + result.getName());
+			System.out.println("itn values in skipped:" + itinerary.getItn());
 		}
 		else if (result.getStatus()==ITestResult.FAILURE)
 		{
 			String error = result.getThrowable().getMessage();
 			cat.completeTest("FAIL", "WebBookingTestIT", itinerary.getItn(), error, testId.get(), itinerary.getDescription()+Thread.currentThread().getId()+ ".log");
 			System.out.println("FAIL");
+			System.out.println("itn values in fail:" + itinerary.getItn());
 		}
 
 		else if(result.getStatus()==ITestResult.SUCCESS)
-		{
+			synchronized (this) {
+				TestResultContext testResultContext = new TestResultContext();
+				testResultContext.getTestResultContext(result);
+				GeneralUtils.writeToFile("passedTests.html",
+						"<tr><td align=\"left\">" + testResultContext.description
+								+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
+								+ "</td><td></td><td></td></tr>");
+			}
 			cat.completeTest("PASS", "WebBookingTestIT", itinerary.getItn(), "", testId.get() , itinerary.getDescription()+	Thread.currentThread().getId()+ ".log");
 			System.out.println("PASS");
+			System.out.println("itn values in pass:" + itinerary.getItn());
+			
 		}
 		//itinerary = null;
-	}
+	
 
 
 	@AfterTest

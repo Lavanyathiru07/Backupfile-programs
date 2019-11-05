@@ -8,9 +8,9 @@ public class TestResultContext {
     final int SILOINDEX = 0;
     final int ITNINDEX = 1;
     String currentSilo;
-    String description;
+    public String description;
     String manifestId;
-    String itn;
+    public String itn;
     String testName;
     
     public TestResultContext getTestResultContext(ITestResult result) {
