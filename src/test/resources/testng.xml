@@ -17,7 +17,7 @@
 		</classes>
 	</test>
 
-	<!-- <test name="TA Booking">
+	<test name="TA Booking">
 		<classes>
 
 
@@ -32,7 +32,7 @@
 			<class name="com.itqa.tests.CCBookingTestIT" />
 
 		</classes>
-	</test> -->
+	</test>
 
 	
 
