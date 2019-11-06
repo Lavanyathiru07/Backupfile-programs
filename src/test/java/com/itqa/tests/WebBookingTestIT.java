@@ -149,9 +149,9 @@ public class WebBookingTestIT extends DriverBase {
 
 	}
 
-	/*@Test(dataProvider = "Web Use Cases", dataProviderClass =
+	@Test(dataProvider = "Web Use Cases", dataProviderClass =
  ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {"bat"
-	})*/
+	})
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -217,28 +217,11 @@ public class WebBookingTestIT extends DriverBase {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		Properties props = new Properties();
-		props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
-		props.setProperty("log4j.appender.file.maxFileSize", "100MB");
-		props.setProperty("log4j.appender.file.maxBackupIndex", "0");
-		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + itn.getDescription()
-		+ Thread.currentThread().getId() + ".log");
-
-		props.setProperty("log4j.appender.file.threshold", "DEBUG");
-		props.setProperty("log4j.appender.file.Append", "false");
-		props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
-		props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
-		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
-
-		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 	}
 
-	// @Test(dataProvider = "Web Use Cases", dataProviderClass =
-	// ItineraryDataProvider.class, description = "Create Account during booking
-	// andLogin", groups = {
-	// "bat" })
+	@Test(dataProvider="Web Use Cases",dataProviderClass=ItineraryDataProvider.class,description="Create Account during bookingandLogin", groups = {"bat"
+
+	})
 
 	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
@@ -292,7 +275,8 @@ public class WebBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-
+		desc.set(itn.getDescription());
+		it=itn.getItn();
 	}
 
 	@AfterMethod
