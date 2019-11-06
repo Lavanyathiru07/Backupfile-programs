@@ -75,8 +75,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-			// recevied");
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 
 			if (env.contains("prod") && ((silo == 1) || (silo == 2))) {
 				booking.manageTravelModificationUpsellBagSeat(itn);
