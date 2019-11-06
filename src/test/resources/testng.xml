@@ -9,10 +9,10 @@
 	</suite-files>
 
 
-    <suite-files>
+   <!--  <suite-files>
 		<suite-file
 			path="D:/CATwithJAR/bat2.0withcatjar/src/main/java/framework/catSuiteCreate.xml" />
-	</suite-files>
+	</suite-files> -->
 
 	<test name="WWW Booking">
 		<classes>
@@ -38,9 +38,9 @@
 		</classes>
 	</test>
 
-	<suite-files>
+	<!-- <suite-files>
 		<suite-file path="/CATwithJAR/bat2.0withcatjar/src/main/java/framework/catSuiteClose.xml" />
-	</suite-files>
+	</suite-files> -->
 
 </suite>      
 
