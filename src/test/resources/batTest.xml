@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="BAT" parallel="tests" thread-count="2" data-provider-thread-count="5">
+    <test name="WWW Booking">
+		<classes>
+			<class name="com.itqa.tests.WebBookingTestIT" />
+		</classes>
+	</test>
+
+	<test name="TA Booking">
+		<classes>
+			<class name="com.itqa.tests.TABookingTestIT" />
+		</classes>
+	</test>
+
+	<test name="CC Booking">
+		<classes>
+			<class name="com.itqa.tests.CCBookingTestIT" />
+		</classes>
+	</test>
+
+	<test name="Non Booking">
+		<classes>
+			<class name="com.itqa.tests.NonBookingTestIT" />
+		</classes>
+	</test>
+</suite>
