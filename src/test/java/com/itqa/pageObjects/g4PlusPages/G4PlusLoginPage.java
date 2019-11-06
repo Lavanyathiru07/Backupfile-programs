@@ -58,7 +58,7 @@ public class G4PlusLoginPage extends BasePage {
 	public void g4plusLogin(Boolean station) {
 		try {
 			if (!station) {
-				if (Environment.getEnv().contains("prod")) {
+				if (Environment.getEnv().contains("prod")||Environment.getEnv().contains("nddprd")) {
 					userNameField.sendKeys(System.getProperty("username"));
 					Thread.sleep(500);
 					passwordField.sendKeys(System.getProperty("password"));
