@@ -183,14 +183,14 @@ public class TABookingTestIT extends DriverBase {
 	public void writeResult(ITestResult result) {
 
 		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "WebBookingTestIT", itineraryItn, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("SKIPPED", "TABookingTestIT", itineraryItn, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", error, itineraryItn, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "TABookingTestIT", error, itineraryItn, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "WebBookingTestIT", itineraryItn, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("PASS", "TABookingTestIT", itineraryItn, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
 

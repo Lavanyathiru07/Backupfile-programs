@@ -990,14 +990,14 @@ public class NonBookingTestIT extends DriverBase {
 	public void writeResult(ITestResult result) {
 
 		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "WebBookingTestIT", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("SKIPPED", "NonBookingTestIT", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", error, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "NonBookingTestIT", error, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "WebBookingTestIT", "", "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("PASS", "NonBookingTestIT", "", "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
 
