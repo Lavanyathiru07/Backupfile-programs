@@ -3,10 +3,10 @@
 	thread-count="25" preserve-order="false"
 	data-provider-thread-count="30">
 
-	<suite-files> 
+	<!-- <suite-files> 
 		<suite-file 
 		      path="/CATwithJAR/bat2.0withcatjar/src/main/java/framework/catSuiteCreate.xml" />
-	</suite-files>
+	</suite-files> -->
 
 
    <!--  <suite-files>
@@ -20,7 +20,7 @@
 		</classes>
 	</test>
 
-	<test name="TA Booking">
+	<!-- <test name="TA Booking">
 		<classes>
 			<class name="com.itqa.tests.TABookingTestIT" />
 		</classes>
@@ -36,7 +36,7 @@
 		<classes>
 			<class name="com.itqa.tests.NonBookingTestIT" />
 		</classes>
-	</test>
+	</test> -->
 
 	<!-- <suite-files>
 		<suite-file path="/CATwithJAR/bat2.0withcatjar/src/main/java/framework/catSuiteClose.xml" />
