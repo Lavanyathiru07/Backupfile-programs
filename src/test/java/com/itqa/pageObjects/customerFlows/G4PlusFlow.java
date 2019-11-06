@@ -109,22 +109,6 @@ public class G4PlusFlow extends BasePage {
 
 	}
 
-	public void Login() {
-		try {
-			driver = DriverBase.getDriver();
-			driver.get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-
-			driver.findElementById("username").sendKeys(new String(Base64.getDecoder().decode(username)));
-			driver.findElementById("password").sendKeys(new String(Base64.getDecoder().decode(password)));
-			driver.findElementByName("submitBtn").click();
-		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
-	}
-	
-
-
 	public void url() throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
@@ -169,11 +153,9 @@ public class G4PlusFlow extends BasePage {
 
 	public void accessAIS() {
 		logger.info(env);
-		if(env.contains("nddprd")) {
-			Login();
-		}else {
-			g4PlusSignin();
-		}
+		
+		g4PlusSignin();
+	
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectAIS();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
