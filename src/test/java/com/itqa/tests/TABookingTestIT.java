@@ -44,8 +44,11 @@ public class TABookingTestIT extends DriverBase {
 			private static int testnum = 1;
 			protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
 			private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+			private ThreadLocal<String> Iteration = new ThreadLocal<String>();
+			private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 			private ThreadLocal<String> desc = new ThreadLocal<String>();
-			private String itineraryItn;
+			private String it;
+			//private String desc;
 			static boolean isTestPass = true;
 
 	private String debug(String methodName) {
@@ -114,7 +117,7 @@ public class TABookingTestIT extends DriverBase {
 			desc.set(itn.getDescription());
 			TABookingFlow booking = new TABookingFlow(log);
 			generateBooking(itn, silo, context);
-			itineraryItn = itn.getItn();
+			it = itn.getItn();
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 			// recevied");
@@ -176,21 +179,21 @@ public class TABookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
-		itineraryItn = itn.getItn();
+		it = itn.getItn();
 	}
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
 
 		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "TABookingTestIT", itineraryItn, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("SKIPPED", "TABookingTestIT", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "TABookingTestIT", error, itineraryItn, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "TABookingTestIT", error, it, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "TABookingTestIT", itineraryItn, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("PASS", "TABookingTestIT", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
 
