@@ -19,6 +19,10 @@ public class DriverBase {
     private static ThreadLocal<DriverFactory> driverThread;
     protected static boolean skip = false;
 	protected boolean flag;
+	public static int flightAvailService = 0;
+	public static int paymentService = 0;
+	public static String flightAvailErrorMsg = "";
+	public static String paymentErrorMsg = "";
 	
     @BeforeMethod(alwaysRun = true)
     public static void instantiateDriverObject() {
