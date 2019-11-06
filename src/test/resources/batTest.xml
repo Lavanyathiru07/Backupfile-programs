@@ -6,7 +6,7 @@
 		</classes>
 	</test>
 
-	<test name="TA Booking">
+	<!-- <test name="TA Booking">
 		<classes>
 			<class name="com.itqa.tests.TABookingTestIT" />
 		</classes>
@@ -22,5 +22,5 @@
 		<classes>
 			<class name="com.itqa.tests.NonBookingTestIT" />
 		</classes>
-	</test>
+	</test> -->
 </suite>

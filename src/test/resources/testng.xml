@@ -3,10 +3,10 @@
 	thread-count="25" preserve-order="false"
 	data-provider-thread-count="30">
 
-	<suite-files> 
+	<!-- <suite-files> 
 		<suite-file 
 		      path="./catSuiteCreate.xml" />
-	</suite-files>
+	</suite-files> -->
 
    <suite-files> 
 		<suite-file 
@@ -14,9 +14,9 @@
 	</suite-files>
 	
 
-	<suite-files>
+	<!-- <suite-files>
 		<suite-file path="./catSuiteClose.xml" />
-	</suite-files>
+	</suite-files> -->
 
 </suite>      
 
