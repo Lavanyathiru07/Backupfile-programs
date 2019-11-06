@@ -76,15 +76,6 @@ public class PreBAT {
 	}
 
 	public void flightAvailVerification() throws JSONException {
-		int a = 400;
-		if (a == 400) {
-
-			DriverBase.flightAvailErrorMsg = "Flight getting service is Failing due to test data. Response code is : "
-					+ a;
-			DriverBase.flightAvailService = 1;
-			throw new Error("Flight getting service is Failing due to test data. Response code is : " + a);
-
-		}
 
 		JSONObject obj = new JSONObject(flightResponse.asString());
 		JSONArray pageName = (JSONArray) obj.get("error");
