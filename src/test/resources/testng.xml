@@ -19,15 +19,18 @@
 		
 		</classes>
 	</test>  -->   
-	<test name="Booking">
+	<!-- <test name="Booking">
 	<classes>
 		
 			<class name="com.itqa.tests.WebBookingTestIT" />
-			<!-- <class name="com.itqa.tests.TABookingTestIT" />-->
+			<class name="com.itqa.tests.TABookingTestIT" />
 			<class name="com.itqa.tests.CCBookingTestIT" />   
 		
 		</classes>
-	</test>   
+	</test>  -->  
+	<suite-files>
+        <suite-file path="batTest.xml"></suite-file>
+    </suite-files>
 
 </suite>      
 

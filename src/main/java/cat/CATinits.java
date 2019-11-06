@@ -107,7 +107,7 @@ public final class CATinits {
     }
 
     public void createSuite(String suiteName) {
-    	System.out.println("inside create suite WebBookingTestIT");
+    	
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
