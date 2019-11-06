@@ -109,44 +109,41 @@ public class G4PlusFlow extends BasePage {
 
 	}
 
-	public void Login() {
-		try {
-			driver = DriverBase.getDriver();
-			driver.get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-
-			driver.findElementById("username").sendKeys(new String(Base64.getDecoder().decode(username)));
-			driver.findElementById("password").sendKeys(new String(Base64.getDecoder().decode(password)));
-			driver.findElementByName("submitBtn").click();
-		} catch (Exception e) {
-			skip = true;
-			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
+	public void url() throws InterruptedException {
+		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		g4MenuPage.verifyAIS();
 	}
 	
-
+	public void awsurl() throws InterruptedException {
+		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
+	}
 
 	public void g4PlusSignin() {
 		try {
-			if (!Environment.getEnv().contains("ndd")&&!Environment.getEnv().contains("prod")) {
-				if (Environment.getEnv().contains("aws")) {
-					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
-					Thread.sleep(1500);
-					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
-					logger.info("Token Passed:"+DriverBase.getDriver().findElement(By.xpath("//h1[contains(text(),'Welcome to G4+')]")).isDisplayed());
-				}else {
-					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-					Thread.sleep(1000);
-					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-				}
+			if (!System.getProperty("env").contains("nddprd") && !System.getProperty("env").contains("prod")) {
+				if (System.getProperty("env").contains("aws")) {
+					try {
+						awsurl();
+					}catch(Exception e) {
+						awsurl();
+					}
+					
+				} else {
+					try {
+						url();
+					}catch(Exception e) {
+						url();
+					}
 				
-				/*DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-				G4PlusLoginPage.g4plusLogin(false);*/
-			} else if (Environment.getEnv().contains("prod")) {
+				}
+			}
+			else  {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				G4PlusLoginPage.g4plusLogin(false);
-			} else if (Environment.getEnv().contains("nddprd")){
-				Login();
-			}
+			}  
+			
 			
 		} catch (Exception e) {
 			skip = true;
@@ -156,11 +153,9 @@ public class G4PlusFlow extends BasePage {
 
 	public void accessAIS() {
 		logger.info(env);
-		if(env.contains("nddprd")) {
-			Login();
-		}else {
-			g4PlusSignin();
-		}
+		
+		g4PlusSignin();
+	
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectAIS();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
@@ -207,8 +202,8 @@ public class G4PlusFlow extends BasePage {
 
 		if (!System.getProperty("env").contains("nddprd") && !System.getProperty("env").contains("prod")) {
 			if (System.getProperty("env").contains("aws")) {
-				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("env"), 0));
-				DriverBase.getDriver().get(URLS.AIS.getUrl(System.getProperty("env"), 0));
+				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+				DriverBase.getDriver().get(URLS.AIS.getUrl(System.getProperty("awsenv"), 0));
 			} else {
 				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 				DriverBase.getDriver().get(URLS.AIS.getUrl(Environment.getEnv(), 0));
@@ -389,38 +384,32 @@ public class G4PlusFlow extends BasePage {
 	public void accessSVT() {
 
 		g4PlusSignin();
-
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectSVT();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
 		SVT.accessSVT();
 	}
 
 	public void accessCAR() {
 
 		g4PlusSignin();
-
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectCAR();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
 		CAR.accessCAR();
 	}
 
 	public void accessTF2() {
-		Login();
+		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectFM();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
 		FM.accessTF2();
 	}
 
 	public void accessRQ() {
 
 		g4PlusSignin();
-
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectRQ();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -429,7 +418,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessBAG() {
-		Login();
+		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectFM();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -438,8 +427,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessPB2() {
-		Login();
-
+		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectFM();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -459,7 +447,6 @@ public class G4PlusFlow extends BasePage {
 
 	public void accessATL() {
 		g4PlusSignin();
-
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectATL();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -468,7 +455,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessOFO() {
-		Login();
+		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectOFO();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
