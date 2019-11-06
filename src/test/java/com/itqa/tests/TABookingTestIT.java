@@ -40,13 +40,13 @@ public class TABookingTestIT extends DriverBase {
 	private String env;
 	private TestResultContext trc;
 
-	//CAT
-	private static int testnum = 1;
-	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
-	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
-	private String it;
-	private String desc;
-	static boolean isTestPass = true;
+	// CAT
+			private static int testnum = 1;
+			protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
+			private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+			private ThreadLocal<String> desc = new ThreadLocal<String>();
+			private String itineraryItn;
+			static boolean isTestPass = true;
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -66,7 +66,6 @@ public class TABookingTestIT extends DriverBase {
 	@BeforeTest
 	public void createSuite() {
 		cat.createSuite("TABookingTestIT");
-		System.out.println("inside before test TABookingTestIT");
 	}
 
 	// , retryAnalyzer = RetryFailure.class
@@ -96,27 +95,26 @@ public class TABookingTestIT extends DriverBase {
 				} else {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
-				cat.createTest(itn.getDescription(), "TABookingTestIT", testId.get());
-				Properties props = new Properties();
-				props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
-				props.setProperty("log4j.appender.file.maxFileSize","100MB");
-				props.setProperty("log4j.appender.file.maxBackupIndex","0");
-				props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-						itn.getDescription()	+Thread.currentThread().getId()+ ".log");
-				props.setProperty("log4j.appender.file.threshold","DEBUG");
-				props.setProperty("log4j.appender.file.Append","false");
-				props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
-				props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
-				props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
-
-				PropertyConfigurator.configure(props);
-				logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-				desc=itn.getDescription();
-				it = itn.getItn();
 			}
+			cat.createTest(itn.getDescription(), "TABookingTestIT", testId.get());
+			Properties props = new Properties();
+			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.file.maxFileSize","100MB");
+			props.setProperty("log4j.appender.file.maxBackupIndex","0");
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
+			props.setProperty("log4j.appender.file.threshold","DEBUG");
+			props.setProperty("log4j.appender.file.Append","false");
+			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
+			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
+			PropertyConfigurator.configure(props);
+			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
+			desc.set(itn.getDescription());
 			TABookingFlow booking = new TABookingFlow(log);
 			generateBooking(itn, silo, context);
+			itineraryItn = itn.getItn();
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 			// recevied");
@@ -177,33 +175,25 @@ public class TABookingTestIT extends DriverBase {
 
 		PropertyConfigurator.configure(props);
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		itineraryItn = itn.getItn();
 	}
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
-		System.out.println("inside after method");
-		System.out.println("Checking the ITN  : " + it);
-		System.out.println("Checking the Description  : " + desc);
 
 		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "TABookingTestIT", it, "", testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
-			System.out.println("SKIPPED");
-		} else if (result.getStatus() == ITestResult.FAILURE) {
-			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "TABookingTestIT", "", it, testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
-			System.out.println("FAIL");
+			cat.completeTest("SKIPPED", "WebBookingTestIT", itineraryItn, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
-
+		else if (result.getStatus() == ITestResult.FAILURE) {
+			String error = result.getThrowable().getMessage();
+			cat.completeTest("FAIL", "WebBookingTestIT", error, itineraryItn, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "TABookingTestIT", it, "", testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
-			System.out.println("PASS");
+			cat.completeTest("PASS", "WebBookingTestIT", itineraryItn, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
+
 
 
 	@AfterTest

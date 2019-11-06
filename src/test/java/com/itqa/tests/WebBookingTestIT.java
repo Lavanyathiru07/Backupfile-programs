@@ -48,10 +48,8 @@ public class WebBookingTestIT extends DriverBase {
 	private static int testnum = 1;
 	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
 	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
-	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
-	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
-	private String it;
+	private String itineraryItn;
 	//private String desc;
 	static boolean isTestPass = true;
 
@@ -72,7 +70,6 @@ public class WebBookingTestIT extends DriverBase {
 	@BeforeTest
 	public void createSuite() {
 		cat.createSuite("WebBookingTestIT");
-		System.out.println("inside before test WebBookingTestIT");
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
@@ -120,15 +117,11 @@ public class WebBookingTestIT extends DriverBase {
 			logger.get()
 			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 
-			System.out.println("desc:" + itn.getDescription());
-
 			desc.set(itn.getDescription());
-			System.out.println("printiing every desc"+ desc );
 
-			System.out.println("=============================================desc:" + itn.getDescription());
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
-			it = itn.getItn();
+			itineraryItn = itn.getItn();
 
 			/*Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
@@ -149,9 +142,8 @@ public class WebBookingTestIT extends DriverBase {
 
 	}
 
-	/*@Test(dataProvider = "Web Use Cases", dataProviderClass =
- ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {"bat"
-	})*/
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {
+	"bat" })
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -200,9 +192,7 @@ public class WebBookingTestIT extends DriverBase {
 			}
 			desc.set(itn.getDescription());
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
-
-			it=itn.getItn();
-
+			itineraryItn = itn.getItn();
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
@@ -214,31 +204,12 @@ public class WebBookingTestIT extends DriverBase {
 			booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
 			step("Upgraded bags and priority during OLCI.  Printed boarding pass");
 		} else {
-
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		Properties props = new Properties();
-		props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
-		props.setProperty("log4j.appender.file.maxFileSize", "100MB");
-		props.setProperty("log4j.appender.file.maxBackupIndex", "0");
-		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + itn.getDescription()
-		+ Thread.currentThread().getId() + ".log");
-
-		props.setProperty("log4j.appender.file.threshold", "DEBUG");
-		props.setProperty("log4j.appender.file.Append", "false");
-		props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
-		props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
-		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
-
-		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 	}
 
-	// @Test(dataProvider = "Web Use Cases", dataProviderClass =
-	// ItineraryDataProvider.class, description = "Create Account during booking
-	// andLogin", groups = {
-	// "bat" })
+	@Test(dataProvider="Web Use Cases",dataProviderClass=ItineraryDataProvider.class,description="Create Account during bookingandLogin", groups = 
+		{"bat"})
 
 	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
@@ -292,31 +263,22 @@ public class WebBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-
+		desc.set(itn.getDescription());
+		itineraryItn = itn.getItn();
 	}
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
-		System.out.println("inside after method");
-
 
 		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "WebBookingTestIT", it, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
-			System.out.println("SKIPPED");
-		} else if (result.getStatus() == ITestResult.FAILURE) {
-			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", "", it, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
-			System.out.println("FAIL");
+			cat.completeTest("SKIPPED", "WebBookingTestIT", itineraryItn, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
-
+		else if (result.getStatus() == ITestResult.FAILURE) {
+			String error = result.getThrowable().getMessage();
+			cat.completeTest("FAIL", "WebBookingTestIT", error, itineraryItn, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
-			System.out.println("Checking the ITN  : " + it);
-			System.out.println("Checking the Description  : " + desc.get());
-
-			System.out.println("Test Pass->" + result.getName() + " on silo " + result.getTestContext().getAttribute("silo")
-					+ " on thread " + Thread.currentThread().getId());
-			cat.completeTest("PASS", "WebBookingTestIT", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
-			System.out.println("PASS");
+			cat.completeTest("PASS", "WebBookingTestIT", itineraryItn, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
 

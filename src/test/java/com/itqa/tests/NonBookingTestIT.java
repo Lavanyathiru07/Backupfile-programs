@@ -39,13 +39,13 @@ public class NonBookingTestIT extends DriverBase {
 	private String awsenv=null;
 	private TestResultContext trc;
 
-	//CAT
-	private static int testnum = 1;
-	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
-	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
-	private String it;
-	private String desc;
-	static boolean isTestPass = true;
+	// CAT
+				private static int testnum = 1;
+				protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
+				private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+				private ThreadLocal<String> desc = new ThreadLocal<String>();
+				private String itineraryItn;
+				static boolean isTestPass = true;
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -68,7 +68,6 @@ public class NonBookingTestIT extends DriverBase {
 	@BeforeTest
 	public void createSuite() {
 		cat.createSuite("NonBookingTestIT");
-		System.out.println("inside before test NonBookingTestIT");
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Decoupled Code For MX - Action Requests")
@@ -106,8 +105,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Coupled Code For MX - Aircraft Records")
@@ -143,8 +142,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Run SPOE Reports - Line MX - MX Control - Reliabiliy - MX Records")
@@ -181,8 +180,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 
 	}
 
@@ -220,8 +219,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Inventory Maintenance")
@@ -258,8 +257,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Print Manifest")
@@ -296,8 +295,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Flight Schedule Maintenance")
@@ -335,8 +334,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Accounts Payable Maintenance - Look up Transaction")
@@ -373,8 +372,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Flight Flow")
@@ -411,8 +410,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Kayak Console")
@@ -449,8 +448,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4Portal: Access Customer Lookup")
@@ -488,8 +487,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access STS")
@@ -526,8 +525,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access ESP")
@@ -564,8 +563,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access SVT")
@@ -602,8 +601,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access CAR")
@@ -641,8 +640,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access TF2")
@@ -679,8 +678,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access RQ")
@@ -717,8 +716,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access BAG")
@@ -755,8 +754,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access PB2")
@@ -793,8 +792,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access HOT")
@@ -831,8 +830,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access ATL")
@@ -869,8 +868,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access OFO")
@@ -907,8 +906,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access MOD")
@@ -945,8 +944,8 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Swap: Access Swap")
@@ -983,38 +982,29 @@ public class NonBookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc=itn.getDescription();
-		it = itn.getItn();
+		desc.set(itn.getDescription());
+		//itineraryItn = itn.getItn();
 	}
 	
 	@AfterMethod
 	public void writeResult(ITestResult result) {
-		System.out.println("inside after method");
-		System.out.println("Checking the ITN  : " + it);
-		System.out.println("Checking the Description  : " + desc);
 
 		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "NoNBookingTestIT", it, "", testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
-			System.out.println("SKIPPED");
-		} else if (result.getStatus() == ITestResult.FAILURE) {
-			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "NoNBookingTestIT", "", it, testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
-			System.out.println("FAIL");
+			cat.completeTest("SKIPPED", "WebBookingTestIT", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
-
+		else if (result.getStatus() == ITestResult.FAILURE) {
+			String error = result.getThrowable().getMessage();
+			cat.completeTest("FAIL", "WebBookingTestIT", error, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "NoNBookingTestIT", it, "", testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
-			System.out.println("PASS");
+			cat.completeTest("PASS", "WebBookingTestIT", "", "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
 
 
 	@AfterTest
 	public void completeSuite() {
-		//cat.completeSuite("NonBookingTestIT");
+		cat.completeSuite("NonBookingTestIT");
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {

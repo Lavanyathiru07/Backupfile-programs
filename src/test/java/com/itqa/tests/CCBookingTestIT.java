@@ -43,13 +43,13 @@ public class CCBookingTestIT extends DriverBase {
 	private String env;
 	private TestResultContext trc;
 
-	//CAT
-	private static int testnum = 1;
-	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
-	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
-	private String it;
-	private String desc;
-	static boolean isTestPass = true;
+	// CAT
+		private static int testnum = 1;
+		protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
+		private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+		private ThreadLocal<String> desc = new ThreadLocal<String>();
+		private String itineraryItn;
+		static boolean isTestPass = true;
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -67,7 +67,6 @@ public class CCBookingTestIT extends DriverBase {
 	@BeforeTest
 	public void createSuite() {
 		cat.createSuite("CCBookingTestIT");
-		System.out.println("inside before test CCBookingTestIT");
 	}
 
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
@@ -115,9 +114,9 @@ public class CCBookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);
 
 			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-			desc=itn.getDescription();
-			it = itn.getItn();
+			desc.set(itn.getDescription());
 			CCBookingFlow booking = generateBooking(itn, silo, context);
+			itineraryItn = itn.getItn();
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			if ((env.contains("trn")
@@ -136,8 +135,8 @@ public class CCBookingTestIT extends DriverBase {
 	}
 
 	// , retryAnalyzer = RetryFailure.class
-	//@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a Round Trip with CC Modification", groups = {
-	//"bat" })
+	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a Round Trip with CC Modification", groups = {
+	"bat" })
 
 	@Story(" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification Retrieve ITN in G4+ MOD & upsell bags & seats")
 	public void testCCBookRoundTripWithModification(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -178,11 +177,11 @@ public class CCBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 			PropertyConfigurator.configure(props);
-			desc=itn.getDescription();
-			it = itn.getItn();
+			
 			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-
+			desc.set(itn.getDescription());
 			CCBookingFlow booking = generateBooking(itn, silo, context);
+			itineraryItn = itn.getItn();
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 			updateTextContext(itn, context);
@@ -204,27 +203,19 @@ public class CCBookingTestIT extends DriverBase {
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
-		System.out.println("inside after method");
-		System.out.println("Checking the ITN  : " + it);
-		System.out.println("Checking the Description  : " + desc);
 
 		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "CCBookingTestIT", it, "", testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
-			System.out.println("SKIPPED");
-		} else if (result.getStatus() == ITestResult.FAILURE) {
-			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "CCBookingTestIT", "", it, testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
-			System.out.println("FAIL");
+			cat.completeTest("SKIPPED", "WebBookingTestIT", itineraryItn, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
-
+		else if (result.getStatus() == ITestResult.FAILURE) {
+			String error = result.getThrowable().getMessage();
+			cat.completeTest("FAIL", "WebBookingTestIT", error, itineraryItn, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "CCBookingTestIT", it, "", testId.get(),
-					desc + Thread.currentThread().getId() + ".log");
-			System.out.println("PASS");
+			cat.completeTest("PASS", "WebBookingTestIT", itineraryItn, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
+
 
 
 	@AfterTest
