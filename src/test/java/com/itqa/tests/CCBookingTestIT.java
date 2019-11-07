@@ -72,8 +72,11 @@ public class CCBookingTestIT extends DriverBase {
 		cat.createSuite("CCBookingTestIT");
 	}
 
-	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
-			"simple", "bat" })
+	/*
+	 * @Test(dataProvider = "CC Use Cases", dataProviderClass =
+	 * ItineraryDataProvider.class, description =
+	 * "Call Center (CC) Can Book a One Way Trip ", groups = { "simple", "bat" })
+	 */
 	@Story(" CC Booking - Book with Hotel, Car with ssr (Oxygen concentrator) . Email Verification")
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
@@ -258,7 +261,7 @@ public class CCBookingTestIT extends DriverBase {
 	private CCBookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context) {
 		String manifestId = "";
 		itn.setSilo(silo.toString());
-		CCBookingFlow booking = new CCBookingFlow(log);
+		CCBookingFlow booking = new CCBookingFlow(logger.get());
 		manifestId = booking.CCBooking(itn, context);
 		itn.setManifestId(manifestId);
 		context.setAttribute("manifestid", manifestId);

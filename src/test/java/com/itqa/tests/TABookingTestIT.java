@@ -51,6 +51,7 @@ public class TABookingTestIT extends DriverBase {
 			//private String desc;
 			static boolean isTestPass = true;
 
+
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
 	}
@@ -115,7 +116,7 @@ public class TABookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);
 			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
-			TABookingFlow booking = new TABookingFlow(log);
+			TABookingFlow booking = new TABookingFlow(logger.get());
 			generateBooking(itn, silo, context);
 			it = itn.getItn();
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
@@ -134,8 +135,11 @@ public class TABookingTestIT extends DriverBase {
 		}
 	}
 
-	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book aRound Trip", groups = {
-	"bat" })
+	/*
+	 * @Test(dataProvider = "TA Use Cases", dataProviderClass =
+	 * ItineraryDataProvider.class, description =
+	 * "Travel Agent (TA) Can Book aRound Trip", groups = { "bat" })
+	 */
 
 	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and Emails received.")
 	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -152,8 +156,9 @@ public class TABookingTestIT extends DriverBase {
 				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
-			TABookingFlow booking = new TABookingFlow(log);
+			TABookingFlow booking = new TABookingFlow(logger.get());
 			generateBooking(itn, silo, context);
+			it = itn.getItn();
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 			// recevied");
@@ -179,7 +184,7 @@ public class TABookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
-		it = itn.getItn();
+		
 	}
 
 	@AfterMethod
@@ -228,7 +233,7 @@ public class TABookingTestIT extends DriverBase {
 
 	private TABookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context) {
 		String manifestId = "";
-		TABookingFlow booking = new TABookingFlow(log);
+		TABookingFlow booking = new TABookingFlow(logger.get());
 
 		manifestId = booking.TABooking(itn, context);
 
