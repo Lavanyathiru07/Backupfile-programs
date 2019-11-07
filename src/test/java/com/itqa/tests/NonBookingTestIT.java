@@ -31,7 +31,6 @@ public class NonBookingTestIT extends DriverBase {
 	private static Logger log = Logger.getLogger(NonBookingTestIT.class.getName());
 	private RemoteWebDriver driver;
 	private String env;
-	private String awsenv;
 	private TestResultContext trc;
 
 	private String debug(String methodName) {
@@ -45,9 +44,6 @@ public class NonBookingTestIT extends DriverBase {
 				+ ", " + driver.getCurrentUrl());
 
 		env = Environment.getEnv();
-		if(env.contains("aws")) {
-			awsenv = System.getProperty("awsenv").toUpperCase();
-		}
 		trc = new TestResultContext();
 		
 
