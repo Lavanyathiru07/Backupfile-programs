@@ -36,6 +36,7 @@ public class WebBookingTestIT extends DriverBase {
 	private static Logger log = Logger.getLogger(WebBookingTestIT.class.getName());
 	private RemoteWebDriver driver;
 	private String env;
+	private String awsenv;
 	private TestResultContext trc;
 
 	private String debug(String methodName) {
@@ -48,6 +49,12 @@ public class WebBookingTestIT extends DriverBase {
 		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
 				+ ", " + driver.getCurrentUrl());
 		env = Environment.getEnv();
+		if(env.contains("aws")) {
+			//awsenv = awsenv.toUpperCase();
+			awsenv = System.getProperty("awsenv");
+			awsenv=awsenv.toUpperCase();
+			System.out.println(">>>>>>>>>>>>>"+awsenv+"<<<<<<<<<<<");
+		}
 		trc = new TestResultContext();
 	}
 
