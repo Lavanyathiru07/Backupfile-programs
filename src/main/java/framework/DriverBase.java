@@ -38,14 +38,15 @@ public class DriverBase {
 
 	//CAT
 	
-	@BeforeSuite
-	public void initCat() throws Exception {
-		System.setProperty("startTime", (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()));
-
-		System.out.println("##############################################");
-		cat.createJob();
-		System.out.println("inside before suite WebBookingTestIT");
-	}
+	/*
+	 * @BeforeSuite public void initCat() throws Exception {
+	 * System.setProperty("startTime", (new
+	 * SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()));
+	 * 
+	 * System.out.println("##############################################");
+	 * cat.createJob(); System.out.println("inside before suite WebBookingTestIT");
+	 * }
+	 */
 	 
 	
 	@BeforeMethod(alwaysRun = true)
@@ -78,11 +79,11 @@ public class DriverBase {
 	}
 
 	
-	@AfterSuite(alwaysRun = true) // CAT
-	public void tearDown() {
-		cat.completeJob("COMPLETED");
-		System.out.println("***********After Suite**************");
-	}
+	/*
+	 * @AfterSuite(alwaysRun = true) // CAT public void tearDown() {
+	 * cat.completeJob("COMPLETED");
+	 * System.out.println("***********After Suite**************"); }
+	 */
 	 
 	public static void clearCookies() {
 		try {
