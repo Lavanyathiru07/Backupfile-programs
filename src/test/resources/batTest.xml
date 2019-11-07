@@ -9,6 +9,7 @@
 		</classes>
 	</test>
 
+
 	<!-- <test name="TA Booking">
 		<classes>
 			<class name="com.itqa.tests.TABookingTestIT" />
