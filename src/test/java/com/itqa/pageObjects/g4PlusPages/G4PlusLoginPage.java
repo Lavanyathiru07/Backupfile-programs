@@ -23,7 +23,6 @@ public class G4PlusLoginPage extends BasePage {
 	private WebDriver driver = null;
 	private JavascriptExecutor jse = null;
 
-	private String username = "Y2hhcm5raWp0YXdhcnVzaC5hdQ==";
 	private String stationUsername = "Q2hhbmF0YW4uQ2hhcm4udGVzdA==";
 	private String password = "QFNkMTUwNDEyMzQ1";
 
@@ -58,16 +57,11 @@ public class G4PlusLoginPage extends BasePage {
 	public void g4plusLogin(Boolean station) {
 		try {
 			if (!station) {
-				if (Environment.getEnv().contains("prod")) {
+				if (Environment.getEnv().contains("prod")||Environment.getEnv().contains("nddprd")) {
 					userNameField.sendKeys(System.getProperty("username"));
-					Thread.sleep(500);
 					passwordField.sendKeys(System.getProperty("password"));
-					Thread.sleep(500);
-				} else {
-					userNameField.sendKeys(new String(Base64.getDecoder().decode(username)));
-					passwordField.sendKeys(new String(Base64.getDecoder().decode(password)));
 				}
-			} else {
+				} else {
 				userNameField.sendKeys(new String(Base64.getDecoder().decode(stationUsername)));
 				passwordField.sendKeys(new String(Base64.getDecoder().decode(password)));
 			}
