@@ -46,7 +46,7 @@ public class NonBookingTestIT extends DriverBase {
 
 		env = Environment.getEnv();
 		if(env.contains("aws")) {
-			awsenv = System.getProperty("awsenv");
+			awsenv = System.getProperty("awsenv").toUpperCase();
 		}
 		trc = new TestResultContext();
 		
