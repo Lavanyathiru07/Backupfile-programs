@@ -35,8 +35,12 @@ public class TestReport implements IReporter {
             htmlStringBuilder.append("<title>Test Result</title><style>td {border: 1px solid black; padding: 2px;} table {border-collapse: collapse; width: 1000px;}</style></head>");
             htmlStringBuilder.append("<body>");
             htmlStringBuilder.append("<table>");
-           
-            htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("env").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");
+           if(System.getProperty("env").contains("aws")) {
+        	   htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("awsenv").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");
+           }else {
+        	   htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("env").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");   
+           }
+            
             
             htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>Release:</b></font></td><td width=\"70%\"></td></tr>");
             htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>Start Time:</b></font></td><td width=\"70%\">" + System.getProperty("startTime") + "</td></tr>");
