@@ -5,7 +5,7 @@
     <test name="WWW Booking">
 		<classes>
 			 <class name="com.itqa.tests.WebBookingTestIT" />
-			<class name="com.itqa.tests.CCBookingTestIT" />
+			 <class name="com.itqa.tests.CCBookingTestIT" />
 		</classes>
 	</test>
 

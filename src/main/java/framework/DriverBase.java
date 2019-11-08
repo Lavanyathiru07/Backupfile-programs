@@ -28,6 +28,7 @@ public class DriverBase {
 	public static Map<String, String> status = new HashMap<String, String>();
 	private String comments = "";
 	protected static CATinits cat;
+	
 	//protected CATinits cat = new CATinits();
 
 
