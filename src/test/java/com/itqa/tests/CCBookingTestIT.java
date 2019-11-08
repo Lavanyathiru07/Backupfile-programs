@@ -52,7 +52,7 @@ public class CCBookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
-			"simple", "bat" })
+			"bat","cc","booking" })
 	@Story(" CC Booking - Book with Hotel, Car with ssr (Oxygen concentrator) . Email Verification")
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
@@ -103,7 +103,7 @@ public class CCBookingTestIT extends DriverBase {
 
 	// , retryAnalyzer = RetryFailure.class
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a Round Trip with CC Modification", groups = {
-			"bat" })
+			"bat","cc","booking" })
 
 	@Story(" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification Retrieve ITN in G4+ MOD & upsell bags & seats")
 	public void testCCBookRoundTripWithModification(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -162,7 +162,7 @@ public class CCBookingTestIT extends DriverBase {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("awsenv"), silo));
 		} else if (env.contains("nddprd")) {
-			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));  
 		} else {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(env, 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(env, silo));
