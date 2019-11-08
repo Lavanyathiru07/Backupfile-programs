@@ -1,21 +1,16 @@
 package framework;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 
 import com.itqa.Utils.Screenshot;
 
@@ -32,11 +27,12 @@ public class DriverBase {
 	private boolean fail = false;
 	public static Map<String, String> status = new HashMap<String, String>();
 	private String comments = "";
-
-	protected CATinits cat = new CATinits();
+	protected static CATinits cat;
+	//protected CATinits cat = new CATinits();
 
 
 	//CAT
+	
 	
 	/*
 	 * @BeforeSuite public void initCat() throws Exception {
@@ -47,6 +43,7 @@ public class DriverBase {
 	 * cat.createJob(); System.out.println("inside before suite WebBookingTestIT");
 	 * }
 	 */
+	 
 	 
 	
 	@BeforeMethod(alwaysRun = true)
