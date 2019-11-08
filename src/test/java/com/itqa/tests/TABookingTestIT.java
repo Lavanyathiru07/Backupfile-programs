@@ -195,7 +195,7 @@ public class TABookingTestIT extends DriverBase {
 		}
 		else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "TABookingTestIT", error, it, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "TABookingTestIT", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
 			cat.completeTest("PASS", "TABookingTestIT", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");

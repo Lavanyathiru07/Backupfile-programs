@@ -216,7 +216,7 @@ public class CCBookingTestIT extends DriverBase {
 		}
 		else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "CCBookingTestIT", error, it, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "CCBookingTestIT", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
 			cat.completeTest("PASS", "CCBookingTestIT", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");

@@ -88,7 +88,7 @@ public class WebBookingTestIT extends DriverBase {
 			testnum++;
 		}
 
-		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1)) || (env.contains("prod") && ((silo == 1) || (silo == 2)||silo == 3))
+		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1)||(silo==2)) || (env.contains("prod") && ((silo == 1) || (silo == 2)||silo == 3))
 				|| (env.contains("vipprod") && (silo == 0))) {
 			if (env.contains("prod") || env.contains("aws")) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
@@ -288,7 +288,7 @@ public class WebBookingTestIT extends DriverBase {
 			System.out.println("SKIPPED");
 		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", "", it, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "WebBookingTestIT", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 			System.out.println("FAIL");
 		}
 
