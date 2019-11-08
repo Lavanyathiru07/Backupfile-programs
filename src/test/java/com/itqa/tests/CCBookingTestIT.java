@@ -141,8 +141,8 @@ public class CCBookingTestIT extends DriverBase {
 	}
 
 	// , retryAnalyzer = RetryFailure.class
-	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a Round Trip with CC Modification", groups = {
-	"bat" })
+	/*@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a Round Trip with CC Modification", groups = {
+	"bat" })*/
 
 	@Story(" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification Retrieve ITN in G4+ MOD & upsell bags & seats")
 	public void testCCBookRoundTripWithModification(Integer silo, Itinerary itn, ITestContext context, Method method)
