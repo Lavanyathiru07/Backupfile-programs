@@ -69,11 +69,11 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	// CAT
-	@BeforeTest
+	/*@BeforeTest
 	public void createSuite() {
 		cat.createSuite("WebBookingTestIT");
 		System.out.println("inside before test WebBookingTestIT");
-	}
+	}*/
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
 			"simple", "bat" })
@@ -303,10 +303,10 @@ public class WebBookingTestIT extends DriverBase {
 		}
 	}
 
-	@AfterTest
+	/*@AfterTest
 	public void completeSuite() {
 		cat.completeSuite("WebBookingTestIT");
-	}
+	}*/
 
 	private void setEarlyMarketCities(Itinerary itn) {
 		String[] earliestMarket = GeneralUtils.getEarlyFlight();

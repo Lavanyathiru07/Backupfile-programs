@@ -67,10 +67,10 @@ public class CCBookingTestIT extends DriverBase {
 		trc = new TestResultContext();
 	}
 	//CAT
-	@BeforeTest
+	/*@BeforeTest
 	public void createSuite() {
 		cat.createSuite("CCBookingTestIT");
-	}
+	}*/
 
 	/*
 	 * @Test(dataProvider = "CC Use Cases", dataProviderClass =
@@ -223,11 +223,11 @@ public class CCBookingTestIT extends DriverBase {
 	}
 
 
-
+/*
 	@AfterTest
 	public void completeSuite() {
 		cat.completeSuite("CCBookingTestIT");
-	}
+	}*/
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
 		Environment ev = new Environment();

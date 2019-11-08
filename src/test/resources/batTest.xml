@@ -5,15 +5,9 @@
     <test name="WWW Booking">
 		<classes>
 			<class name="com.itqa.tests.WebBookingTestIT" />
-		</classes>
-		<classes>
-			<class name="com.itqa.tests.TABookingTestIT" />
-		</classes>
-		<classes>
 			<class name="com.itqa.tests.CCBookingTestIT" />
 		</classes>
 	</test>
-
 
 	<!-- <test name="TA Booking">
 		<classes>
