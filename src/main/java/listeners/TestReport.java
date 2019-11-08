@@ -102,8 +102,8 @@ public class TestReport implements IReporter {
 					getStringFromFile(System.getProperty("user.dir") + "/failedTests.html"));
 			GeneralUtils.writeToFile("Result.html",
 					getStringFromFile(System.getProperty("user.dir") + "/passedTests.html"));
-			cleanUpTestReports("failedTests.html");
-			cleanUpTestReports("passedTests.html");
+			/*cleanUpTestReports("failedTests.html");
+			cleanUpTestReports("passedTests.html");*/
 		} catch (Exception e) {
 			System.out.println("There were no failed tests or passed tests files found. We are OK with that");
 		}
@@ -115,8 +115,8 @@ public class TestReport implements IReporter {
 					getStringFromFile(System.getProperty("user.dir") + "/nonBookingFailedTests.html"));
 			GeneralUtils.writeToFile("Result.html",
 					getStringFromFile(System.getProperty("user.dir") + "/nonBookingPassedTests.html"));
-			cleanUpTestReports("nonBookingFailedTests.html");
-			cleanUpTestReports("nonBookingPassedTests.html");
+			/*cleanUpTestReports("nonBookingFailedTests.html");
+			cleanUpTestReports("nonBookingPassedTests.html");*/
 		} catch (Exception e) {
 			System.out.println("There were no failed tests or passed tests files found. We are OK with that");
 		}

@@ -67,7 +67,8 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
-		System.out.println("Test Skipped->" + result.getName());
+		System.out.println("Test Skipped->" + result.getName() + " on silo "
+				+ result.getTestContext().getAttribute("silo") + " on thread " + Thread.currentThread().getId());
 
 	}
 
