@@ -26,4 +26,5 @@
 			<class name="com.itqa.tests.NonBookingTestIT" />
 		</classes>
 	</test> -->
+
 </suite>
