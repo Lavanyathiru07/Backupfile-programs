@@ -1,8 +1,10 @@
 package framework;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +12,9 @@ import java.util.Map;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
 import com.itqa.Utils.Screenshot;
 
@@ -35,15 +39,17 @@ public class DriverBase {
 	//CAT
 	
 	
-	/*
-	 * @BeforeSuite public void initCat() throws Exception {
-	 * System.setProperty("startTime", (new
-	 * SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()));
-	 * 
-	 * System.out.println("##############################################");
-	 * cat.createJob(); System.out.println("inside before suite WebBookingTestIT");
-	 * }
-	 */
+	
+	@BeforeSuite
+	public void initCat() throws Exception {
+		System.setProperty("startTime", (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()));
+
+		System.out.println("##############################################");
+		cat = new CATinits();
+		cat.createJob();
+		System.out.println("inside before suite WebBookingTestIT");
+	}
+	 
 	 
 	 
 	
@@ -77,12 +83,14 @@ public class DriverBase {
 	}
 
 	
-	/*
-	 * @AfterSuite(alwaysRun = true) // CAT public void tearDown() {
-	 * cat.completeJob("COMPLETED");
-	 * System.out.println("***********After Suite**************"); }
-	 */
-	 
+	
+	@AfterSuite(alwaysRun=true) // CAT 
+	public void tearDown() {
+	cat.completeJob("COMPLETED");
+	System.out.println("***********After Suite**************");
+
+	}
+
 	public static void clearCookies() {
 		try {
 			getDriver().manage().deleteAllCookies();
