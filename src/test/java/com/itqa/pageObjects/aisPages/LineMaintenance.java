@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
@@ -50,7 +51,7 @@ public class LineMaintenance extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void openReport() {
+    public void openReport(Itinerary itn) {
     	try{
     		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
     		reportsTab.click();
@@ -72,6 +73,7 @@ public class LineMaintenance extends BasePage{
     		jse.executeScript("arguments[0].click();", resultRow);
     		logger.info("Line MX Report displayed");
     	}catch(Exception e){
+    		itn.setItn("Failed due to QAA-338");
     		e.printStackTrace();
     	}
     }

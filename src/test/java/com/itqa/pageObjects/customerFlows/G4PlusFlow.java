@@ -224,7 +224,7 @@ public class G4PlusFlow extends BasePage {
 				DriverBase.getDriver().close();
 				Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 				DriverBase.getDriver().switchTo().window(tabs.iterator().next());
-			}
+			}   
 
 			Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 			AisMenuPage.selectMXandEngr();
@@ -233,7 +233,7 @@ public class G4PlusFlow extends BasePage {
 
 			GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-			LineMaintenance.openReport();
+			LineMaintenance.openReport(itn);
 			GeneralUtils.takeScreenshot(DriverBase.getDriver(),
 					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/1SPOE.png");
 
@@ -245,7 +245,7 @@ public class G4PlusFlow extends BasePage {
 
 				GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-				MaintenanceControl.openReport();
+				MaintenanceControl.openReport(itn);
 				GeneralUtils.takeScreenshot(DriverBase.getDriver(),
 						System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/2SPOE.png");
 

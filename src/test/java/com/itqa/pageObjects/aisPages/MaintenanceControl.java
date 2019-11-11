@@ -14,6 +14,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
@@ -51,11 +52,11 @@ public class MaintenanceControl extends BasePage {
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
 
-	public void openReport() {
+	public void openReport(Itinerary itn) {
 		try {
 			reportsTab.click();
 			flightLogTab.click();
-
+ 
 			jse.executeScript("arguments[0].setAttribute('value', '215NV');", tailField);
 
 			Calendar calendar = Calendar.getInstance();
@@ -71,6 +72,7 @@ public class MaintenanceControl extends BasePage {
 			jse.executeScript("arguments[0].click();", resultRow);
 			logger.info("MX Control Report displayed");
 		} catch (Exception e) {
+			itn.setItn("Failed due to QAA-338");
 			e.printStackTrace();
 		}
 	}
