@@ -2,9 +2,9 @@
 
 
 <suite name="BAT 2.0">
-	<suite-files>
+	<!-- <suite-files>
 		<suite-file path="src/test/resources/prebat.xml" />
-	</suite-files>
+	</suite-files> -->
 
 	<suite-files>
 		<suite-file path="src/test/resources/booknonbook.xml" />
