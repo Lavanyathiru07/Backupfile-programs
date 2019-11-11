@@ -6,12 +6,13 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import com.itqa.Utils.Environment;
 import com.itqa.Utils.GeneralUtils;
 
 import framework.DriverBase;
 
 public class RealTimeTestReport extends DriverBase implements ITestListener {
-
+	
 	@Override
 	public void onStart(ITestContext context) {
 		System.out.println("Start  Of Execution(TEST)->" + context.getName());
@@ -55,6 +56,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		System.out.println("Test Failed->" + result.getName() + " on silo "
 				+ result.getTestContext().getAttribute("silo") + " on thread " + Thread.currentThread().getId());
 		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
+		
 		GeneralUtils.writeToFile("failedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
@@ -63,12 +65,16 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
 						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
 						+ "</td></tr>");
+		
+		
+		
+		
 	}
-
+	
 	@Override
 	public void onTestSkipped(ITestResult result) {
 		System.out.println("Test Skipped->" + result.getName());
-
+		
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class FlightScheduleMaintenance extends BasePage{
@@ -33,12 +34,13 @@ public class FlightScheduleMaintenance extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void verifyFlightScheduleMX() {
+    public void verifyFlightScheduleMX(Itinerary itn) {
     	try{
         flightNumField.sendKeys("529" + Keys.ENTER);
         originText.click();
         logger.info("Flight Schedule Maintenance Displayed");
     	}catch(Exception e){
+    		itn.setItn("Failed due to ALGT-159980");
     		e.printStackTrace();
     		throw new Error("");
     	}

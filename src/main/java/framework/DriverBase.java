@@ -11,6 +11,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 
+import com.itqa.Utils.Environment;
 import com.itqa.Utils.Screenshot;
 
 public class DriverBase {
@@ -19,6 +20,7 @@ public class DriverBase {
     private static ThreadLocal<DriverFactory> driverThread;
     protected static boolean skip = false;
 	protected boolean flag;
+
 	
     @BeforeMethod(alwaysRun = true)
     public static void instantiateDriverObject() {

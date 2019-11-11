@@ -32,6 +32,7 @@ import com.itqa.pageObjects.g4PlusPages.RQ;
 import com.itqa.pageObjects.g4PlusPages.STS;
 import com.itqa.pageObjects.g4PlusPages.SVT;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.util.Base64;
@@ -199,78 +200,82 @@ public class G4PlusFlow extends BasePage {
 
 	}
 
-	public void runSPOEreport() {
-
-		if (!System.getProperty("env").contains("nddprd") && !System.getProperty("env").contains("prod")) {
-			if (System.getProperty("env").contains("aws")) {
-				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
-				DriverBase.getDriver().get(URLS.AIS.getUrl(System.getProperty("awsenv"), 0));
+	public void runSPOEreport(Itinerary itn) {
+		try {
+			if (!System.getProperty("env").contains("nddprd") && !System.getProperty("env").contains("prod")) {
+				if (System.getProperty("env").contains("aws")) {
+					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+					DriverBase.getDriver().get(URLS.AIS.getUrl(System.getProperty("awsenv"), 0));
+				} else {
+					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+					DriverBase.getDriver().get(URLS.AIS.getUrl(Environment.getEnv(), 0));
+				}
 			} else {
-				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-				DriverBase.getDriver().get(URLS.AIS.getUrl(Environment.getEnv(), 0));
+
+				if (System.getProperty("env").contains("nddprd")) {
+					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+
+				} else {
+					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+
+				}
+				G4PlusLoginPage.g4plusLogin(false);
+				g4MenuPage.selectAIS();
+				DriverBase.getDriver().close();
+				Set<String> tabs = DriverBase.getDriver().getWindowHandles();
+				DriverBase.getDriver().switchTo().window(tabs.iterator().next());
 			}
-		} else {
 
-			if (System.getProperty("env").contains("nddprd")) {
-				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+			Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+			AisMenuPage.selectMXandEngr();
 
-			} else {
-				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-
-			}
-			G4PlusLoginPage.g4plusLogin(false);
-			g4MenuPage.selectAIS();
-			DriverBase.getDriver().close();
-			Set<String> tabs = DriverBase.getDriver().getWindowHandles();
-			DriverBase.getDriver().switchTo().window(tabs.iterator().next());
-		}
-
-		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		AisMenuPage.selectMXandEngr();
-
-		AisMenuPage.selectLineMX();
-
-		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-		LineMaintenance.openReport();
-		GeneralUtils.takeScreenshot(DriverBase.getDriver(),
-				System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/1SPOE.png");
-
-		DriverBase.getDriver().close();
-		DriverBase.getDriver().switchTo().window(curTab.iterator().next());
-
-		if (!System.getProperty("env").contains("prod") && !System.getProperty("env").contains("trn")) {
-			AisMenuPage.selectMXControl();
+			AisMenuPage.selectLineMX();
 
 			GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-			MaintenanceControl.openReport();
+			LineMaintenance.openReport();
 			GeneralUtils.takeScreenshot(DriverBase.getDriver(),
-					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/2SPOE.png");
+					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/1SPOE.png");
 
 			DriverBase.getDriver().close();
 			DriverBase.getDriver().switchTo().window(curTab.iterator().next());
 
-			AisMenuPage.selectReliability();
+			if (!System.getProperty("env").contains("prod") && !System.getProperty("env").contains("trn")) {
+				AisMenuPage.selectMXControl();
+
+				GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+				MaintenanceControl.openReport();
+				GeneralUtils.takeScreenshot(DriverBase.getDriver(),
+						System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/2SPOE.png");
+
+				DriverBase.getDriver().close();
+				DriverBase.getDriver().switchTo().window(curTab.iterator().next());
+
+				AisMenuPage.selectReliability();
+
+				GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+				GeneralUtils.takeScreenshot(DriverBase.getDriver(),
+						System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/3SPOE.png");
+
+				DriverBase.getDriver().close();
+				DriverBase.getDriver().switchTo().window(curTab.iterator().next());
+
+			}
+
+			AisMenuPage.selectMXRecords();
 
 			GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-			GeneralUtils.takeScreenshot(DriverBase.getDriver(),
-					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/3SPOE.png");
+			MaintenanceRecords.openReport();
 
-			DriverBase.getDriver().close();
-			DriverBase.getDriver().switchTo().window(curTab.iterator().next());
-
+		} catch (Exception e) {
+			itn.setItn("Failed due to QAA-338");
+			e.printStackTrace();
+			throw new Error("");
 		}
-
-		AisMenuPage.selectMXRecords();
-
-		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-		MaintenanceRecords.openReport();
-
 	}
-
 	public void verifyFlightFollowing() {
 
 		accessAIS();
@@ -284,7 +289,7 @@ public class G4PlusFlow extends BasePage {
 		FlightFollowing.verifyFlightInformation();
 	}
 
-	public void accessInventoryMX() {
+	public void accessInventoryMX(Itinerary itn) {
 
 		accessAIS();
 
@@ -294,7 +299,7 @@ public class G4PlusFlow extends BasePage {
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		InventoryMaintenance.verifyInventoryMX();
+		InventoryMaintenance.verifyInventoryMX(itn);
 	}
 
 	public void verifyPrintManifest() {
@@ -310,7 +315,7 @@ public class G4PlusFlow extends BasePage {
 		PrintManifest.verifyPrintManifest();
 	}
 
-	public void verifyFlightScheduleMX() {
+	public void verifyFlightScheduleMX(Itinerary itn) {
 
 		accessAIS();
 
@@ -320,10 +325,10 @@ public class G4PlusFlow extends BasePage {
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		FlightScheduleMaintenance.verifyFlightScheduleMX();
+		FlightScheduleMaintenance.verifyFlightScheduleMX(itn);
 	}
 
-	public void lookupAccountsPayableMX() {
+	public void lookupAccountsPayableMX(Itinerary itn) {
 
 		accessAIS();
 
@@ -333,7 +338,7 @@ public class G4PlusFlow extends BasePage {
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		AccountsPayableMaintenance.lookupTransaction();
+		AccountsPayableMaintenance.lookupTransaction(itn);
 	}
 
 	public void verifyFlightFlow() {
