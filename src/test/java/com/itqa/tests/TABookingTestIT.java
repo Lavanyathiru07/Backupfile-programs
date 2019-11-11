@@ -42,15 +42,15 @@ public class TABookingTestIT extends DriverBase {
 	public void setup(ITestContext context) throws MalformedURLException {
 
 		driver = DriverBase.getDriver();
-		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
-				+ ", " + driver.getCurrentUrl());
+		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId() + ", "
+				+ driver.getCurrentUrl());
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
 
 	// , retryAnalyzer = RetryFailure.class
 	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book a One Way Trip", groups = {
-			"simple", "bat" })
+			"bat","cc","booking"})
 
 	@Story(" TA Flight + Hotel + Car booking Email confirmation received")
 	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
@@ -70,27 +70,39 @@ public class TABookingTestIT extends DriverBase {
 				}
 
 			}
+			//if (flightAvailService == 0 && paymentService == 0) {
+				TABookingFlow booking = new TABookingFlow();
+				generateBooking(itn, silo, context);
+				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+				// recevied");
+				if (env.contains("prod") && (silo == 2)) {
+					booking.TAmanageTravelModificationUpsellBag(itn, silo);
+					Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
+				}
+				updateTextContext(itn, context);
 
-			TABookingFlow booking = new TABookingFlow();
-			generateBooking(itn, silo, context);
-			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-			// recevied");
-			if (env.contains("prod") && (silo == 2)) {
-				booking.TAmanageTravelModificationUpsellBag(itn, silo);
-				Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
-			}
-			updateTextContext(itn, context);
+				booking.TARefundAndCancellation(itn.getItn(), itn);
+			/*} else {
+				if (flightAvailService != 0) {
+					itn.setItn(flightAvailErrorMsg);
+				} else if (paymentService != 0) {
+					itn.setItn(paymentErrorMsg);
+				}
+				throw new SkipException("Skipping Test Case as runmode set to NO");
 
-			booking.TARefundAndCancellation(itn.getItn(), itn);
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+				// recevied");
+
+			}*/
 		} else {
-			
+
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
 	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book aRound Trip", groups = {
-			"bat" })
+			"bat","cc","booking" })
 
 	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and Emails received.")
 	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -100,15 +112,28 @@ public class TABookingTestIT extends DriverBase {
 				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
-			TABookingFlow booking = new TABookingFlow();
-			generateBooking(itn, silo, context);
-			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-			// recevied");
-			updateTextContext(itn, context);
-			booking.TARefundAndCancellation(itn.getItn(), itn);
+			//if (flightAvailService == 0 && paymentService == 0) {
+				TABookingFlow booking = new TABookingFlow();
+				generateBooking(itn, silo, context);
+				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+				// recevied");
+				updateTextContext(itn, context);
+				booking.TARefundAndCancellation(itn.getItn(), itn);
+			/*} else {
+				if (flightAvailService != 0) {
+					itn.setItn(flightAvailErrorMsg);
+				} else if (paymentService != 0) {
+					itn.setItn(paymentErrorMsg);
+				}
+				throw new SkipException("Skipping Test Case as runmode set to NO");
+
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+				// recevied");
+
+			}*/
 		} else {
-			
+
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 
@@ -120,15 +145,14 @@ public class TABookingTestIT extends DriverBase {
 		itn.setDescription(description);
 		driver = DriverBase.getDriver();
 		if (env.contains("aws")) {
-		     driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
-		}else {
+			driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
+		} else {
 			driver.get(URLS.TA.getUrl(env, silo));
 		}
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);
-		log.info(
-				"Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
+		log.info("Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
 	}
 
 	private void updateTextContext(Itinerary itn, ITestContext context) {
