@@ -57,8 +57,8 @@ public class CCBookingTestIT extends DriverBase {
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
-				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 1))
-				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
+				|| ((env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
+				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1))
 				|| (env.contains("trn") && (silo == 1)) || (env.contains("prod") && (silo == 1))) {
 			if (env.contains("prod") && (silo == 1)) {
 				setUpTestContext(silo, "silo" + silo
@@ -115,7 +115,7 @@ public class CCBookingTestIT extends DriverBase {
 			if (env.contains("nddprd") && ((silo == 2) || (silo == 3))) {
 				setUpTestContext(silo, "silo" + silo + " CC Booking Creation- Confirmation Email received", context,
 						itn);
-			} else if ((env.contains("qa1") || env.contains("qa2")) && (silo == 2)) {
+			} else if ((env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 2)) {
 				setUpTestContext(silo, "silo" + silo
 						+ " CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification",
 						context, itn);
@@ -129,7 +129,7 @@ public class CCBookingTestIT extends DriverBase {
 				updateTextContext(itn, context);
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
-				if (!((env.contains("nddprd") || env.contains("qa1") || env.contains("qa2"))
+				if (!((env.contains("nddprd") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws"))
 						&& ((silo == 2) || (silo == 3)))) {
 					Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
 					// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not

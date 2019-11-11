@@ -57,9 +57,9 @@ public class WebBookingTestIT extends DriverBase {
 	@Story("WWW One way Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if (((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
+		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))
 				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
-			if (env.contains("prod") || env.contains("aws")) {
+			if (env.contains("prod")) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
 			} else {
@@ -77,7 +77,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 
-			if (env.contains("prod") && ((silo == 1) || (silo == 2))) {
+			if ((env.contains("prod") && ((silo == 1) || (silo == 2)))) {
 				booking.manageTravelModificationUpsellBagSeat(itn);
 				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
 				// recevied");
