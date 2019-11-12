@@ -38,7 +38,7 @@ public class TABookingTestIT extends DriverBase {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup(ITestContext context) throws MalformedURLException {
 
 		driver = DriverBase.getDriver();
