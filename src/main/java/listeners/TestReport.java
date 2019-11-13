@@ -36,8 +36,12 @@ public class TestReport implements IReporter {
             htmlStringBuilder.append("<body>");
             htmlStringBuilder.append("<table>");
            
-            htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("env").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");   
-           
+            if(System.getProperty("env").toLowerCase().equals("aws")) {
+                htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("awsenv").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");
+            } else {
+                htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("env").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");
+            }
+            
             htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>Release:</b></font></td><td width=\"70%\"></td></tr>");
             htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>Start Time:</b></font></td><td width=\"70%\">" + System.getProperty("startTime") + "</td></tr>");
             htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>End Time:</b></font></td><td width=\"70%\">" + (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()) + "</td></tr></table>");
