@@ -46,8 +46,8 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
 	@Override
 	public void onTestFailure(ITestResult result) {
-		/*String base64Screenshot = "data:image/png;base64,"
-				+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);*/
+		String base64Screenshot = "data:image/png;base64,"
+				+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
 
 		TestResultContext testResultContext = new TestResultContext();
 		testResultContext.getTestResultContext(result);
@@ -68,7 +68,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 						+ "</td><td>" + testResultContext.manifestId + "</td><td>"
 						+ "<a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo
 						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
-						+ "style='display:none' height=\"40%\" width=\"auto\" src='" + result.getAttribute("screenshot") + "'/>"
+						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
 						+ "</td></tr>");
 	}
 
