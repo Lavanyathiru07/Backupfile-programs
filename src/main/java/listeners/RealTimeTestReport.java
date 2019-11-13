@@ -1,5 +1,8 @@
 package listeners;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
@@ -11,6 +14,7 @@ import com.itqa.Utils.GeneralUtils;
 import framework.DriverBase;
 
 public class RealTimeTestReport extends DriverBase implements ITestListener {
+	
 
 	@Override
 	public void onStart(ITestContext context) {
@@ -19,6 +23,9 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
 	@Override
 	public void onTestStart(ITestResult result) {
+		System.setProperty("startTime", (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()));
+		
+		
 		System.out.println("Test Started->" + result.getName());
 	}
 
@@ -39,8 +46,8 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
 	@Override
 	public void onTestFailure(ITestResult result) {
-		String base64Screenshot = "data:image/png;base64,"
-				+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
+		/*String base64Screenshot = "data:image/png;base64,"
+				+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);*/
 
 		TestResultContext testResultContext = new TestResultContext();
 		testResultContext.getTestResultContext(result);
@@ -61,7 +68,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 						+ "</td><td>" + testResultContext.manifestId + "</td><td>"
 						+ "<a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo
 						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
-						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
+						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + System.getProperty("screenshot") + "'/>"
 						+ "</td></tr>");
 	}
 
