@@ -127,12 +127,12 @@ public class TestReport implements IReporter {
         System.out.println("started to generate Email report");
     	writeEmailReportHeader();
     	writeEmailPassedAndFailedTestReport();
-        writeReportFooter();
+    	writeEmailReportFooter();
         System.out.println("Generated Email report");
     }
     
     
-    /*public void generateEmailReport(List<XmlSuite> xmlTestSuiteList, List<ISuite> testSuite,
+   /* public void generateEmailReport(List<XmlSuite> xmlTestSuiteList, List<ISuite> testSuite,
                                String outputDirectory) {
     	System.out.println("started to generate report");
     	writeEmailReportHeader();
@@ -140,6 +140,13 @@ public class TestReport implements IReporter {
         writeReportFooter();
         System.out.println("Generated report");
     }*/
+    
+    public void writeEmailReportFooter() {
+    	GeneralUtils.writeToFile("EmailResult.html",
+				"<tr><td bgcolor=\"#FF9F33\" colspan=\"4\"><font color=\"White\"><b>RELEASE FUNCTIONAL</font></td></tr>");
+		GeneralUtils.writeToFile("EmailResult.html",
+				"<tr><td align=\"center\">&nbsp;</td><td>&nbsp;</td><td align=\"center\">&nbsp;</td><td>&nbsp;</td></tr>");
+    }
     
     public void writeEmailReportHeader() {
 
@@ -185,7 +192,7 @@ public class TestReport implements IReporter {
             htmlStringBuilder.append("<font color=\"white\"><b>DATA</b></font></td>");
             htmlStringBuilder.append("<td bgcolor=\"#FF9F33\" width=\"20%\" align=\"center\">");
             htmlStringBuilder.append("<font color=\"white\"><b>MANIFEST</b></font></td>");
-            GeneralUtils.writeToFile("Result.html", htmlStringBuilder.toString());
+            GeneralUtils.writeToFile("EmailResult.html", htmlStringBuilder.toString());
         } catch (Exception e) {
             System.err.println("Could not create report, exception -> " + e.getMessage() + " --->>> ");
             e.printStackTrace();

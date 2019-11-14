@@ -110,7 +110,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		DriverBase.getDriver().quit();
 		System.out.println("END Of Execution(TEST)->" + result.getName());
 		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
-
+		TestReport report = new TestReport();
 		/*
 		 * if (Environment.getCreateConfluenceSetting()) { UpdateConfluence page = new
 		 * UpdateConfluence(result); }
