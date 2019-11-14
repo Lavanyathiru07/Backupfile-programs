@@ -36,7 +36,10 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
 		System.out.println("Test Pass->" + result.getName() + " on silo " + result.getTestContext().getAttribute("silo")
 				+ " on thread " + Thread.currentThread().getId());
-
+		GeneralUtils.writeToFile("emailPassedTests.html",
+				"<tr><td align=\"left\">" + testResultContext.description
+						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
+						+ "</td></tr>");
 		GeneralUtils.writeToFile("passedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
@@ -57,15 +60,21 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 //            jira.createJira(result);
 //        }
 
-		System.out.println("Test Failed->" + result.getName());
-
 		System.out.println("Test Failed->" + result.getName() + " on silo "
 				+ result.getTestContext().getAttribute("silo") + " on thread " + Thread.currentThread().getId());
 		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
-		GeneralUtils.writeToFile("failedTests.html",
+		GeneralUtils.writeToFile("emailFailedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
 						+ "</td><td>" + testResultContext.manifestId + "</td></tr>");
+		GeneralUtils.writeToFile("failedTests.html",
+				"<tr><td align=\"left\">" + testResultContext.description
+						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
+						+ "</td><td>" + testResultContext.manifestId + "</td><td>"
+						+ "<a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo
+						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
+						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
+						+ "</td></tr>");
 	}
 
 	@Override
