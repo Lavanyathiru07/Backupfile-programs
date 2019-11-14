@@ -132,15 +132,6 @@ public class TestReport implements IReporter {
     }
     
     
-   /* public void generateEmailReport(List<XmlSuite> xmlTestSuiteList, List<ISuite> testSuite,
-                               String outputDirectory) {
-    	System.out.println("started to generate report");
-    	writeEmailReportHeader();
-    	writeEmailPassedAndFailedTestReport();
-        writeReportFooter();
-        System.out.println("Generated report");
-    }*/
-    
     public void writeEmailReportFooter() {
     	GeneralUtils.writeToFile("EmailResult.html",
 				"<tr><td bgcolor=\"#FF9F33\" colspan=\"4\"><font color=\"White\"><b>RELEASE FUNCTIONAL</font></td></tr>");
