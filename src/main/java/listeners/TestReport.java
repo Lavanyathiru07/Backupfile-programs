@@ -124,17 +124,22 @@ public class TestReport implements IReporter {
     	writePassedAndFailedTestReport();
         writeReportFooter();
         System.out.println("Generated report");
+        System.out.println("started to generate Email report");
+    	writeEmailReportHeader();
+    	writeEmailPassedAndFailedTestReport();
+        writeReportFooter();
+        System.out.println("Generated Email report");
     }
     
     
-    public void generateEmailReport(List<XmlSuite> xmlTestSuiteList, List<ISuite> testSuite,
+    /*public void generateEmailReport(List<XmlSuite> xmlTestSuiteList, List<ISuite> testSuite,
                                String outputDirectory) {
     	System.out.println("started to generate report");
     	writeEmailReportHeader();
     	writeEmailPassedAndFailedTestReport();
         writeReportFooter();
         System.out.println("Generated report");
-    }
+    }*/
     
     public void writeEmailReportHeader() {
 
