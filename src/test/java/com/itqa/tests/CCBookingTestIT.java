@@ -3,7 +3,7 @@ package com.itqa.tests;
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
-
+import com.itqa.Utils.Screenshot;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.CCBookingFlow;
 import com.itqa.pageObjects.g4PlusPages.G4PlusLoginPage;

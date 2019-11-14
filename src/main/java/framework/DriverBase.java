@@ -58,7 +58,7 @@ public class DriverBase {
         screenShotByteFile = Screenshot.saveScreenshot( testResult.getName(), getDriver());   
         testResult.setAttribute("screenshot", screenShotByteFile);
         //System.setProperty("scrsht", screenShotByteFile.toString());
-        Screenshot.takeScreenshot(getDriver(), System.getProperty("user.dir") + "/src/test/resources/bookingScreenshot/"+testResult.getAttribute("description")+".png");
+        //Screenshot.takeScreenshot(getDriver(), System.getProperty("user.dir") + "/src/test/resources/bookingScreenshot/"+testResult.getAttribute("description")+".png");
         getDriver().close();
         driverThread.get().quitDriver();
     }

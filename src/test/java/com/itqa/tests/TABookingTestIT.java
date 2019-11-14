@@ -15,6 +15,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.itqa.Utils.Environment;
+import com.itqa.Utils.Screenshot;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.TABookingFlow;
 
