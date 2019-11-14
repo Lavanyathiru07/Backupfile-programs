@@ -31,6 +31,9 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
+		String base64Screenshot = "data:image/png;base64,"
+				+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
+		
 		TestResultContext testResultContext = new TestResultContext();
 		testResultContext.getTestResultContext(result);
 
@@ -39,11 +42,15 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		GeneralUtils.writeToFile("emailPassedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
-						+ "</td></tr>");
+						+ "</td><td></td></tr>");
 		GeneralUtils.writeToFile("passedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
-						+ "</td><td></td></tr>");
+						+ "</td><td>"
+						+ "<a href=\"javascript:setImageVisible('show'," + testResultContext.currentSilo
+						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
+						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
+						+ "</td></tr>");
 
 	}
 
