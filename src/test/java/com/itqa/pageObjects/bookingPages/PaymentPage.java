@@ -354,16 +354,24 @@ public class PaymentPage extends BasePage {
 		logger.info("Will popup be called?  " + Popupflag);
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
 				|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
+			
+		try {
 			if (Popupflag) {
 				new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(tripFlexPopupNo));
 				jse.executeScript(JSFIRSTARG, tripFlexPopupNo);
 				// tripFlexPopupNo.click();
 				logger.info("Tripflex 'NO' popup is clicked");
 			}
+		}catch(Exception e) {
+			if (Popupflag) {
+				closePopup();
+			}
+		}
 		} else {
 			if (Popupflag) {
 				closePopup();
 			}
+		
 		}
 		try {
 			Thread.sleep(5000);

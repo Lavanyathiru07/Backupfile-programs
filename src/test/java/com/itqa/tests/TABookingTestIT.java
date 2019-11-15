@@ -15,6 +15,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.itqa.Utils.Environment;
+import com.itqa.Utils.Screenshot;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.TABookingFlow;
 
@@ -38,7 +39,7 @@ public class TABookingTestIT extends DriverBase {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup(ITestContext context) throws MalformedURLException {
 
 		driver = DriverBase.getDriver();
@@ -50,7 +51,7 @@ public class TABookingTestIT extends DriverBase {
 
 	// , retryAnalyzer = RetryFailure.class
 	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book a One Way Trip", groups = {
-			"bat","cc","booking"})
+			"bat","ta","booking"})
 
 	@Story(" TA Flight + Hotel + Car booking Email confirmation received")
 	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
@@ -102,7 +103,7 @@ public class TABookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book aRound Trip", groups = {
-			"bat","cc","booking" })
+			"bat","ta","booking" })
 
 	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and Emails received.")
 	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)

@@ -3,7 +3,7 @@ package com.itqa.tests;
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
-
+import com.itqa.Utils.Screenshot;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.CCBookingFlow;
 import com.itqa.pageObjects.g4PlusPages.G4PlusLoginPage;
@@ -42,7 +42,7 @@ public class CCBookingTestIT extends DriverBase {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup(ITestContext context) throws MalformedURLException {
 		driver = DriverBase.getDriver();
 		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId() + ", "

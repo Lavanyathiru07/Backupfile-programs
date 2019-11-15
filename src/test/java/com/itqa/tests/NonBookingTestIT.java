@@ -3,6 +3,7 @@ package com.itqa.tests;
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
+import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.G4PlusFlow;
 
 import data.*;
@@ -37,7 +38,7 @@ public class NonBookingTestIT extends DriverBase {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup(ITestContext context) throws MalformedURLException {
 		driver = DriverBase.getDriver();
 		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId() + ", "
@@ -45,6 +46,7 @@ public class NonBookingTestIT extends DriverBase {
 
 		env = Environment.getEnv();
 		trc = new TestResultContext();
+		
 
 	}
 
@@ -393,8 +395,20 @@ public class NonBookingTestIT extends DriverBase {
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
+		/*Environment ev = new Environment();
+		ev.setCurrentSilo(silo);
+		driver = DriverBase.getDriver();
+		if (env.contains("aws")) {
+			driver.get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
+		}else {
+			driver.get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		}
+		*/
 		itn.setDescription(description);
 		context.setAttribute("description", description);
+		
+		context.setAttribute("description", description);
+		context.setAttribute("silo", silo);
 		log.info("Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId());
 	}
 
