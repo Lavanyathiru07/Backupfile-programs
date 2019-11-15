@@ -67,9 +67,9 @@ public class CCBookingTestIT extends DriverBase {
 		trc = new TestResultContext();
 	}
 	//CAT
-	@BeforeTest
+	//@BeforeTest
 	public void createSuite() {
-		cat.createSuite("CCBookingTestIT");
+		//cat.createSuite("CCBookingTestIT");
 	}
 
 	
@@ -225,9 +225,9 @@ public class CCBookingTestIT extends DriverBase {
 
 
 
-	@AfterTest
+	//@AfterTest
 	public void completeSuite() {
-		cat.completeSuite("CCBookingTestIT");
+		//cat.completeSuite("CCBookingTestIT");
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {

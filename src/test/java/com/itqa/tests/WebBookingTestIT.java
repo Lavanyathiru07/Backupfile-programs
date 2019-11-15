@@ -69,9 +69,9 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	// CAT
-	@BeforeTest
+	//@BeforeTest
 	public void createSuite() {
-		cat.createSuite("WebBookingTestIT");
+		//cat.createSuite("WebBookingTestIT");
 		System.out.println("inside before test WebBookingTestIT");
 	}
 
@@ -148,9 +148,9 @@ public class WebBookingTestIT extends DriverBase {
 
 	}
 
-	/*@Test(dataProvider = "Web Use Cases", dataProviderClass =
+	@Test(dataProvider = "Web Use Cases", dataProviderClass =
  ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {"bat"
-	})*/
+	})
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -218,9 +218,9 @@ public class WebBookingTestIT extends DriverBase {
 		}
 	}
 
-	/*@Test(dataProvider="Web Use Cases",dataProviderClass=ItineraryDataProvider.class,description="Create Account during bookingandLogin", groups = {"bat"
+	@Test(dataProvider="Web Use Cases",dataProviderClass=ItineraryDataProvider.class,description="Create Account during bookingandLogin", groups = {"bat"
 
-	})*/
+	})
 
 	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
@@ -303,9 +303,9 @@ public class WebBookingTestIT extends DriverBase {
 		}
 	}
 
-	@AfterTest
+	//@AfterTest
 	public void completeSuite() {
-		cat.completeSuite("WebBookingTestIT");
+		//cat.completeSuite("WebBookingTestIT");
 	}
 
 	private void setEarlyMarketCities(Itinerary itn) {

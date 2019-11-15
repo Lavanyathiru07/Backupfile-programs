@@ -45,8 +45,10 @@ public class DriverBase {
 		System.setProperty("startTime", (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()));
 
 		System.out.println("##############################################");
+		
 		cat = new CATinits();
 		cat.createJob();
+		cat.createSuite("BAT 2.0");
 		System.out.println("inside before suite WebBookingTestIT");
 	}
 	 
@@ -86,7 +88,10 @@ public class DriverBase {
 	
 	@AfterSuite(alwaysRun=true) // CAT 
 	public void tearDown() {
+
+	cat.createSuite("BAT 2.0");
 	cat.completeJob("COMPLETED");
+	
 	System.out.println("***********After Suite**************");
 
 	}
