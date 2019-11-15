@@ -101,7 +101,7 @@ public class WebBookingTestIT extends DriverBase {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
 			}
-			cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
@@ -171,7 +171,7 @@ public class WebBookingTestIT extends DriverBase {
 			} else {
 				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			}
-			cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
@@ -258,7 +258,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "WebBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize", "100MB");
@@ -284,11 +284,11 @@ public class WebBookingTestIT extends DriverBase {
 
 
 		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "WebBookingTestIT", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 			System.out.println("SKIPPED");
 		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "WebBookingTestIT", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "BAT 2.0", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 			System.out.println("FAIL");
 		}
 
@@ -298,7 +298,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			System.out.println("Test Pass->" + result.getName() + " on silo " + result.getTestContext().getAttribute("silo")
 					+ " on thread " + Thread.currentThread().getId());
-			cat.completeTest("PASS", "WebBookingTestIT", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("PASS", "BAT 2.0", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 			System.out.println("PASS");
 		}
 	}
