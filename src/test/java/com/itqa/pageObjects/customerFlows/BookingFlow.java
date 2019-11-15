@@ -125,8 +125,12 @@ public class BookingFlow extends BasePage {
 			try {
 				itn.setDepartureCity("BLI");
 				itn.setDestinationCity("LAS");
-
-				DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+				driver = DriverBase.getDriver();
+				if (Environment.getEnv().contains("aws")) {
+				     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
+				}else {
+					driver.get(URLS.WWW.getUrl(Environment.getEnv(), silo));
+				}
 				manifestId = createWebBooking(itn, context);
 				paymentPage.fillPaymentPage(itn, createAccount, true);
 				confirmationPage.verifyConf(itn);
