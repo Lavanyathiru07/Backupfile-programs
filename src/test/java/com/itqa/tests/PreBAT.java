@@ -114,10 +114,14 @@ public class PreBAT {
 			}
 			RestAssured.baseURI = url;
 
-			getKey=	RestAssured.given().config(RestAssuredConfig.config().sslConfig(SSLConfig.sslConfig().relaxedHTTPSValidation())).when().get();
+			getKey=RestAssured.given().config(RestAssured.config().sslConfig(new SSLConfig().allowAllHostnames())).when().get();
 
-			System.out.println(getKey.asString());
-			//getKey = RestAssured.given().when().get();
+		/*	getKey = RestAssured.given()
+					.config(RestAssured.config().sslConfig(SSLConfig.sslConfig().relaxedHTTPSValidation())).when()
+					.get();*/
+
+		//	System.out.println(getKey.asString());
+			// getKey = RestAssured.given().when().get();
 
 			responseCodeVerification(getKey.getStatusCode(), "Get key");
 			if (getKey.getStatusCode() == 200 || getKey.getStatusCode() == 201) {
@@ -156,14 +160,10 @@ public class PreBAT {
 		mockEncryption = RestAssured.given().contentType(ContentType.JSON).body(requestBody).post();
 
 		responseCodeVerification(encryption.getStatusCode(), "Mock encryption");
-		if (encryption.getStatusCode() == 200 || encryption.getStatusCode() == 201) {
-			String[] split = mockEncryption.asString().split("-");
-			cardNum = split[0].trim();
-			CVV = split[split.length - 1].trim();
-		} else {
-			cardNum = "545454VVhBt8Mzn5454";
-			CVV = "BdFs";
-		}
+		String[] split = mockEncryption.asString().split("-");
+		cardNum = split[0].trim();
+		CVV = split[split.length - 1].trim();
+
 	}
 
 	public void paymentVerification() throws ParseException {
