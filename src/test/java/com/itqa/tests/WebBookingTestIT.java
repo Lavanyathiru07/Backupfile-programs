@@ -76,9 +76,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
-
 			if ((env.contains("prod") && ((silo == 1) || (silo == 2)))) {
 				booking.manageTravelModificationUpsellBagSeat(itn, silo);
 				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
