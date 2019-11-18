@@ -224,7 +224,6 @@ public class PreBAT{
 				.post("/pms/v4/api/orders");
 
 		responseCodeVerification(payment.getStatusCode(), "Payment");
-
 	}
 
 	public void responseCodeVerification(int resCode, String serviceName) {
