@@ -176,7 +176,7 @@ public class WebBookingTestIT extends DriverBase {
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");
-			if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1))
+			if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
 					|| (env.contains("prod") && (silo == 3))) {
 				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
 			}
