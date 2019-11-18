@@ -47,6 +47,7 @@ public class FlightFlow extends BasePage{
         logger.info("Flight Flow Table Displayed");
     	}catch(Exception e){
     		e.printStackTrace();
+    		throw new Error("FAIL");
     	}
     }
 }

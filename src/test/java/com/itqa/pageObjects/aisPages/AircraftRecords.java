@@ -14,6 +14,7 @@ import org.testng.SkipException;
 import com.itqa.pageObjects.BasePage;
 import com.itqa.pageObjects.g4PlusPages.G4MenuPage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class AircraftRecords extends BasePage {
         
     }
 
-    public void lookupAircraftPart() {
+    public void lookupAircraftPart(Itinerary itn) {
     	try{
     		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(lookupButton));
     		lookupButton.click();
@@ -51,11 +52,11 @@ public class AircraftRecords extends BasePage {
     			logger.info("Aircraft Records Lookup: " + aircraftRecordsResultRow.size() + " rows");
     			logger.info("The first row is: " + aircraftRecordsResultRow.get(0).getText().replaceAll("\n", " "));
     		}
-    		else {
-    			throw new Error("Aircraft Records returns no result.");
-    		}
+    		
     	}catch(Exception e){
+    		itn.setItn("Failed due to QAA-338");
     		e.printStackTrace();
+    		throw new Error("Aircraft Records returns no result.");
 
     	}
     }

@@ -171,7 +171,7 @@ public class G4PlusFlow extends BasePage {
 		CL.accessCL();
 	}
 
-	public void lookupActionRequest() {
+	public void lookupActionRequest(Itinerary itn) {
 
 		accessAIS();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
@@ -182,11 +182,11 @@ public class G4PlusFlow extends BasePage {
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		MaintenanceRecords.lookupActionRequest();
+		MaintenanceRecords.lookupActionRequest(itn);
 
 	}
 
-	public void lookupAircraftRecordsPart() {
+	public void lookupAircraftRecordsPart(Itinerary itn) {
 
 		accessAIS();
 
@@ -196,7 +196,7 @@ public class G4PlusFlow extends BasePage {
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		AircraftRecords.lookupAircraftPart();
+		AircraftRecords.lookupAircraftPart(itn);
 
 	}
 

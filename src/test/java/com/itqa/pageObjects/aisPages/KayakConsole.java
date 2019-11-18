@@ -38,6 +38,7 @@ public class KayakConsole extends BasePage{
         logger.info("Kayak Console Open");
     	}catch(Exception e){
     		e.printStackTrace();
+    		throw new Error("FAIL");
     	}
     }
 }

@@ -88,6 +88,7 @@ public class FlightFollowing extends BasePage{
     }catch(Exception e){
 		
 		e.printStackTrace();
+		throw new Error("FAIL - Flight Following - Cannot get element");
 	}
     }
 }

@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
@@ -67,7 +68,7 @@ public class MaintenanceRecords extends BasePage {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void lookupActionRequest() {
+    public void lookupActionRequest(Itinerary itn) {
     	try{
     	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(actionsTab));
         actionsTab.click();
@@ -80,12 +81,11 @@ public class MaintenanceRecords extends BasePage {
             logger.info("Action Requests Lookup: " + actionRequestsResultRow.size() + " rows");
             logger.info("The first row is: " + actionRequestsResultRow.get(0).getText().replaceAll("\n", " "));
         }
-        else {
-            throw new Error("Action Requests returns no result.");
-        }
+       
     	}catch(Exception e){
-    		
+    		itn.setItn("Failed due to QAA-338");
     		e.printStackTrace();
+    		 throw new Error("Action Requests returns no result.");
     	}
     }
 

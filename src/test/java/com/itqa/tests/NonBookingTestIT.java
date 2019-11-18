@@ -58,7 +58,8 @@ public class NonBookingTestIT extends DriverBase {
 			// silo=0;
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.lookupActionRequest();
+			nonBooking.lookupActionRequest(itn);
+			trc.setSetItn(itn.getItn());
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -72,7 +73,8 @@ public class NonBookingTestIT extends DriverBase {
 		if ((!env.contains("vipprod") && (silo == 1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.lookupAircraftRecordsPart();
+			nonBooking.lookupAircraftRecordsPart(itn);
+			trc.setSetItn(itn.getItn());
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}

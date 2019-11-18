@@ -79,6 +79,7 @@ public class PrintManifest extends BasePage {
         paxTable.click();
     	}catch(Exception e){
     		e.printStackTrace();
+    		throw new Error("FAIL");
     	}
     }
 }
