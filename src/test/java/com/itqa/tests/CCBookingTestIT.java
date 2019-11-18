@@ -185,7 +185,7 @@ public class CCBookingTestIT extends DriverBase {
 		String manifestId = "";
 		itn.setSilo(silo.toString());
 		CCBookingFlow booking = new CCBookingFlow();
-		manifestId = booking.CCBooking(silo,itn, context);
+		manifestId = booking.CCBooking(silo, itn, context);
 		itn.setManifestId(manifestId);
 		context.setAttribute("manifestid", manifestId);
 		step("CC Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "
