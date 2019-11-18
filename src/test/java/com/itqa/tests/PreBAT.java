@@ -15,7 +15,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-public class PreBAT{
+public class PreBAT {
 	Response flightResponse = null;
 	Response getKey = null;
 	Response encryption = null;
@@ -81,10 +81,7 @@ public class PreBAT{
 				&& pageName.toString().equalsIgnoreCase("[]")) {
 			log.info("Flight getting service is working fine " + flightResponse.getStatusCode());
 		} else if (flightResponse.getStatusCode() == 400) {
-			DriverBase.flightAvailErrorMsg = "Flight getting service is Failing due to test data. Response code is : "
-					+ flightResponse.getStatusCode();
-			DriverBase.flightAvailService = 1;
-			throw new Error("Flight getting service is Failing due to test data. Response code is : "
+			log.info("Flight getting service is Failing due to test data. Response code is : "
 					+ flightResponse.getStatusCode());
 		} else if (flightResponse.getStatusCode() > 400) {
 			DriverBase.flightAvailErrorMsg = "Flight getting service is Failing due to server error. Response code is : "
@@ -92,6 +89,7 @@ public class PreBAT{
 			DriverBase.flightAvailService = 1;
 			throw new Error("Flight getting service is Failing due to server error. Response code is : "
 					+ flightResponse.getStatusCode());
+			
 		}
 
 	}
@@ -240,4 +238,4 @@ public class PreBAT{
 			throw new Error(serviceName + " Failing due to server error. Response code is  :" + resCode);
 		}
 	}
-	}
+}
