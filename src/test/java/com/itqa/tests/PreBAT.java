@@ -15,7 +15,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-public class PreBAT {
+public class PreBAT{
 	Response flightResponse = null;
 	Response getKey = null;
 	Response encryption = null;
@@ -28,10 +28,9 @@ public class PreBAT {
 	@Test(priority = 1)
 	public void flightReq() throws JSONException {
 
-		if (!System.getProperty("env").toLowerCase().contains("prod")
-				|| !System.getProperty("env").toLowerCase().contains("nddprd")
-				|| !System.getProperty("env").toLowerCase().contains("aws")
-				|| !System.getProperty("env").toLowerCase().contains("trn")) {
+		if (System.getProperty("env").toLowerCase().contains("in")
+				|| System.getProperty("env").toLowerCase().contains("qa")
+				|| System.getProperty("env").toLowerCase().contains("stg")) {
 			flightAvail();
 			flightAvailVerification();
 		}
@@ -39,10 +38,9 @@ public class PreBAT {
 
 	@Test(priority = 2)
 	public void paymentReq() throws ParseException {
-		if (!System.getProperty("env").toLowerCase().contains("prod")
-				|| !System.getProperty("env").toLowerCase().contains("nddprd")
-				|| !System.getProperty("env").toLowerCase().contains("aws")
-				|| !System.getProperty("env").toLowerCase().contains("trn")) {
+		if (System.getProperty("env").toLowerCase().contains("in")
+				|| System.getProperty("env").toLowerCase().contains("qa")
+				|| System.getProperty("env").toLowerCase().contains("stg")) {
 			paymentGetKey();
 			paymentGetEncryption();
 			getKeyEncryption();
@@ -105,8 +103,13 @@ public class PreBAT {
 	}
 
 	public void paymentGetKey() {
-
-		RestAssured.baseURI = "https://fes.devshare.allegiantair.com/pie/v1/1/getkey.js?_=";
+		String url = "";
+		if (System.getProperty("env").toLowerCase().contains("stg")) {
+			url = "https://fes.stg.allegiantair.com/pie/v1/1/getkey.js?_=";
+		} else {
+			url = "https://fes.devshare.allegiantair.com/pie/v1/1/getkey.js?_=";
+		}
+		RestAssured.baseURI = url;
 
 		getKey = RestAssured.given().when().get();
 
@@ -115,7 +118,13 @@ public class PreBAT {
 
 	public void paymentGetEncryption() {
 
-		RestAssured.baseURI = "https://fes.devshare.allegiantair.com/pie/v1/1/encryption.js?_=";
+		String url = "";
+		if (System.getProperty("env").toLowerCase().contains("stg")) {
+			url = "https://fes.stg.allegiantair.com/pie/v1/1/encryption.js?_=";
+		} else {
+			url = "https://fes.devshare.allegiantair.com/pie/v1/1/encryption.js?_=";
+		}
+		RestAssured.baseURI = url;
 
 		encryption = RestAssured.given().when().get();
 
@@ -223,13 +232,12 @@ public class PreBAT {
 		if (resCode == 200 || resCode == 201) {
 			log.info(serviceName + " PASSED,  The response code is :" + resCode);
 		} else if (resCode == 400) {
-			DriverBase.paymentErrorMsg = serviceName + " Failing due to test data. Response code is : " + resCode;
-			DriverBase.flightAvailService = 1;
-			throw new Error(serviceName + " Failing due to test data. Response code is : " + resCode);
+			log.info(serviceName + " Failing due to test data. Response code is : " + resCode);
 		} else if (resCode > 400) {
 			DriverBase.paymentErrorMsg = serviceName + " Failing due to server error. Response code is  :" + resCode;
-			DriverBase.flightAvailService = 1;
+			DriverBase.paymentService = 1;
+			log.info(serviceName + " Failing due to server error. Response code is  :" + resCode);
 			throw new Error(serviceName + " Failing due to server error. Response code is  :" + resCode);
 		}
 	}
-}
+	}
