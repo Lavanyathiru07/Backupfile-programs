@@ -70,6 +70,8 @@ public class PreBAT {
 
 		flightResponse = RestAssured.given().contentType(ContentType.JSON).body(requestBody)
 				.post("/resweb/rest/flight/getFlightAvail");
+		
+		
 	}
 
 	public void flightAvailVerification() throws JSONException {
