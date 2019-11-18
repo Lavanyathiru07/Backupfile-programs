@@ -10,6 +10,7 @@
 			<class name="com.itqa.tests.NonBookingTestIT" />
 		</classes>
 	</test>
+	
 	<test name="Booking">
 		<classes>
 			<class name="com.itqa.tests.WebBookingTestIT" />
