@@ -33,6 +33,7 @@ public class PreBAT {
 				|| System.getProperty("env").toLowerCase().contains("stg")) {
 			flightAvail();
 			flightAvailVerification();
+			
 		}
 	}
 
