@@ -103,7 +103,7 @@ public class PreBAT {
 	}
 
 	public void paymentGetKey() {
-		for (int i = 0; i <= 2; i++) {
+		for (int i = 0; i <= 10; i++) {
 			String url = "";
 			if (System.getProperty("env").toLowerCase().contains("stg")) {
 				url = "https://fes.stg.allegiantair.com/pie/v1/1/getkey.js?_=";
