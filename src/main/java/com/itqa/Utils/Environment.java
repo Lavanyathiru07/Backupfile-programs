@@ -18,7 +18,7 @@ public class Environment {
 	private int[] in2 = { 1 };
 	private int[] intl = { 1 };
 	private int[] trn = { 0, 1 };
-	private int[] aws = { 1 };
+	private int[] aws = { 1, 2 };
 	private int[] nddprd = { 1, 2, 3 };
 	private int[] prod = { 1, 2, 3};
 	private int[] vipprod = { 0 };

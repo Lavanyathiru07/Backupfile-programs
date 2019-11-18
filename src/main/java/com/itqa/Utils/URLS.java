@@ -8,34 +8,30 @@ public enum URLS {
 	TA("https://ta-xxx.allegiantair.com/"), 
 	G4PLUS("https://g4plus-portal.xxx.allegiantair.com/"),
 	G4PLUSTOKEN(
-			"https://g4plus-res.xxx.allegiantair.com/test/token?roles=res_customer,res_booking,res_booking_agent,res_booking_"
-			+ "waiver,res_booking_override,res_booking_manager,call_center_agent,ops_airline_bags,ops_airline_pb,ops_airline_"
-			+ "seats,ops_eswap,res_airline_reaccom,ota_vehicle,ota_trip_flex,ota_payments,ota_surcharge,ota_surcharge_accounting,"
-			+ "ota_surcharge_revenue,ota_hotel,ota_hotel_revenue,ota_hotel_inventory,ota_hotel_inventory_manager,ota_shows,ota_"
-			+ "shows_inventory,ota_shows_revenue,ota_accounting,ota_accounting_invoicing,ota_accounting_atl,ota_accounting_"
-			+ "invoicing_suspended_managers,ota_accounting_invoicing_suspended_coordinators,ops_fee_management,ops_flight_"
-			+ "operations,ops_flight_operations_manager"),
+			"https://g4plus-res.xxx.allegiantair.com/test/token?aisId=09742&roles=ops_fee_management,ops_flight_operations,"
+			+ "ops_flight_operations_manager,res_customer,res_booking,res_booking_agent,res_booking_waiver,res_booking_override,"
+			+ "res_booking_manager,call_center_agent,ops_airline_bags,ops_airline_pb,ops_airline_seats,ops_eswap,res_airline_reaccom,"
+			+ "ota_vehicle,ota_trip_flex,ota_payments,ota_surcharge,ota_surcharge_accounting,ota_surcharge_revenue,ota_hotel,"
+			+ "ota_hotel_revenue,ota_hotel_inventory,ota_hotel_inventory_manager,ota_shows,ota_shows_inventory,ota_shows_revenue,"
+			+ "ota_accounting,ota_accounting_invoicing,ota_accounting_atl,ota_accounting_invoicing_suspended_managers,"
+			+ "ota_accounting_invoicing_suspended_coordinators,ota_loyalty_tech%20_admin,ota_loyalty_admin,OPS_FMM,"
+			+ "OPS_FMM_OCC_SUPER_USER"),
 	G4META("https://g4meta.xxx.allegiantair.com/"), 
 	AIS("https://ais.xxx.allegiantair.com/"),
 	RSFLTFEESEARCH("https://ais.xxx.allegiantair.com/c/public/index.php/mx/rsfltfee/search"),
 	JIRA("https://tech.allegiantair.com"), 
 	CONFLUENCE("https://confluence.allegiantair.com");
-
-	// INTERNATIONAL("int.nexus.intl");
-
+	
 	private String url;
-	public static final String INTLPREFIX = "int.nexus.intl";
-	private final String NEXUSDOMAIN = "usw2.aws.allegiantair.com";
-
+	
 	URLS(String envUrl) {
 		this.url = envUrl;
 	}
 
 	public String getUrl(String env, Integer silo) {
-		if (env.contains("intl")) {
-			url = url.replace("allegiantair.com", NEXUSDOMAIN);
-			return url.replace("xxx", "www." + INTLPREFIX);
-		} else if (env.contains("nddprd")) {
+
+		if (env.contains("nddprd")) {
+
 			URLS.AIS.url = URLS.AIS.url.replace("ais.xxx", "xxx-ais");
 			URLS.G4PLUS.url = URLS.G4PLUS.url.replace("g4plus-portal.xxx", "xxx-g4plus-portal");
 		}

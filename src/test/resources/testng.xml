@@ -1,19 +1,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="BAT 2.0 Automation" >
 
-	<!-- <suite-files> 
-		<suite-file 
-		      path="./catSuiteCreate.xml" />
-	</suite-files> -->
-
    <suite-files> 
 		<suite-file 
 		      path="./batTest.xml" />
 	</suite-files>
-	
-	<!-- <suite-files>
-		<suite-file path="./catSuiteClose.xml" />
-	</suite-files> -->
 
 </suite>      
 

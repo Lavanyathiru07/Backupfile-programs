@@ -149,7 +149,7 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass =
- ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {"bat"
+			ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {"bat"
 	})
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")

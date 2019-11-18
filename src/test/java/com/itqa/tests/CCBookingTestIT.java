@@ -44,15 +44,15 @@ public class CCBookingTestIT extends DriverBase {
 	private TestResultContext trc;
 
 	// CAT
-		private static int testnum = 1;
-		protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
-		private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
-		private ThreadLocal<String> Iteration = new ThreadLocal<String>();
-		private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
-		private ThreadLocal<String> desc = new ThreadLocal<String>();
-		private String it;
-		//private String desc;
-		static boolean isTestPass = true;
+	private static int testnum = 1;
+	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
+	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
+	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
+	private ThreadLocal<String> desc = new ThreadLocal<String>();
+	private String it;
+	//private String desc;
+	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -72,7 +72,7 @@ public class CCBookingTestIT extends DriverBase {
 		//cat.createSuite("CCBookingTestIT");
 	}
 
-	
+
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
 			"simple", "bat" })
 
@@ -140,10 +140,10 @@ public class CCBookingTestIT extends DriverBase {
 	}
 
 	// , retryAnalyzer = RetryFailure.class
-	
+
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a Round Trip with CC Modification", groups = {
-			"bat" })
-	 
+	"bat" })
+
 
 	@Story(" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification Retrieve ITN in G4+ MOD & upsell bags & seats")
 	public void testCCBookRoundTripWithModification(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -184,7 +184,7 @@ public class CCBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 			PropertyConfigurator.configure(props);
-			
+
 			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
 			CCBookingFlow booking = generateBooking(itn, silo, context);

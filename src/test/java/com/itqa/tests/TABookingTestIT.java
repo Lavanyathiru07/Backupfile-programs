@@ -41,15 +41,15 @@ public class TABookingTestIT extends DriverBase {
 	private TestResultContext trc;
 
 	// CAT
-			private static int testnum = 1;
-			protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
-			private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
-			private ThreadLocal<String> Iteration = new ThreadLocal<String>();
-			private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
-			private ThreadLocal<String> desc = new ThreadLocal<String>();
-			private String it;
-			//private String desc;
-			static boolean isTestPass = true;
+	private static int testnum = 1;
+	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
+	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
+	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
+	private ThreadLocal<String> desc = new ThreadLocal<String>();
+	private String it;
+	//private String desc;
+	static boolean isTestPass = true;
 
 
 	private String debug(String methodName) {
@@ -67,9 +67,9 @@ public class TABookingTestIT extends DriverBase {
 	}
 
 	//CAT
-	@BeforeTest
+	//@BeforeTest
 	public void createSuite() {
-		cat.createSuite("TABookingTestIT");
+		//cat.createSuite("TABookingTestIT");
 	}
 
 	// , retryAnalyzer = RetryFailure.class
@@ -100,7 +100,7 @@ public class TABookingTestIT extends DriverBase {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
 			}
-			cat.createTest(itn.getDescription(), "TABookingTestIT", testId.get());
+			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -135,11 +135,10 @@ public class TABookingTestIT extends DriverBase {
 		}
 	}
 
-	/*
-	 * @Test(dataProvider = "TA Use Cases", dataProviderClass =
-	 * ItineraryDataProvider.class, description =
-	 * "Travel Agent (TA) Can Book aRound Trip", groups = { "bat" })
-	 */
+
+	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book aRound Trip", groups = {
+	"bat" })
+
 
 	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and Emails received.")
 	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -168,7 +167,7 @@ public class TABookingTestIT extends DriverBase {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "TABookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -184,29 +183,29 @@ public class TABookingTestIT extends DriverBase {
 		PropertyConfigurator.configure(props);
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
-		
+
 	}
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
 
 		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "TABookingTestIT", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "TABookingTestIT", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "BAT 2.0", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "TABookingTestIT", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("PASS", "BAT 2.0", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
 
 
 
-	@AfterTest
+	//@AfterTest
 	public void completeSuite() {
-		cat.completeSuite("TABookingTestIT");
+		//cat.completeSuite("TABookingTestIT");
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {

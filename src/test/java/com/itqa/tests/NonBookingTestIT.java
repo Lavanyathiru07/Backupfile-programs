@@ -40,15 +40,15 @@ public class NonBookingTestIT extends DriverBase {
 	private TestResultContext trc;
 
 	// CAT
-				private static int testnum = 1;
-				protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
-				private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
-				private ThreadLocal<String> Iteration = new ThreadLocal<String>();
-				private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
-				private ThreadLocal<String> desc = new ThreadLocal<String>();
-				private String it;
-				//private String desc;
-				static boolean isTestPass = true;
+	private static int testnum = 1;
+	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
+	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
+	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
+	private ThreadLocal<String> desc = new ThreadLocal<String>();
+	private String it;
+	//private String desc;
+	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -68,7 +68,7 @@ public class NonBookingTestIT extends DriverBase {
 	}
 
 	//CAT
-	@BeforeTest
+	//@BeforeTest
 	public void createSuite() {
 		cat.createSuite("NonBookingTestIT");
 	}
@@ -87,12 +87,12 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("vipprod")&&(silo==1))) {
 			//silo=0;
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupActionRequest();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -124,12 +124,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupAircraftRecordsPart();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -162,12 +162,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.runSPOEreport();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -201,12 +201,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyFlightFollowing();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -239,12 +239,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessInventoryMX();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -277,12 +277,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyPrintManifest();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -315,13 +315,13 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyFlightScheduleMX();
 
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -354,12 +354,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupAccountsPayableMX();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -392,12 +392,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyFlightFlow();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -430,12 +430,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessKayakConsole();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -468,13 +468,13 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessCL();
 
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -507,12 +507,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessSTS();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -545,12 +545,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessESP();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -583,12 +583,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessSVT();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -621,13 +621,13 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessCAR();
 
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -660,12 +660,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessTF2();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -698,12 +698,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessRQ();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -736,12 +736,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessBAG();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -774,12 +774,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessPB2();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -812,12 +812,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessHOT();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -850,12 +850,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessATL();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -888,12 +888,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessOFO();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -926,12 +926,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessMOD();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -964,12 +964,12 @@ public class NonBookingTestIT extends DriverBase {
 
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			G4PlusFlow nonBooking = new G4PlusFlow(log);
+			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessSwap();
 		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "NoNBookingTestIT", testId.get());
+		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 		Properties props = new Properties();
 		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 		props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -988,24 +988,24 @@ public class NonBookingTestIT extends DriverBase {
 		desc.set(itn.getDescription());
 		//itineraryItn = itn.getItn();
 	}
-	
+
 	@AfterMethod
 	public void writeResult(ITestResult result) {
 
 		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "NonBookingTestIT", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "NonBookingTestIT", error, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "BAT 2.0", error, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}
 		else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "NonBookingTestIT", "", "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("PASS", "BAT 2.0", "", "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
 
 
-	@AfterTest
+	//@AfterTest
 	public void completeSuite() {
 		cat.completeSuite("NonBookingTestIT");
 	}
