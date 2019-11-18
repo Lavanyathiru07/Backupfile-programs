@@ -66,7 +66,7 @@ this.logger=log;
 
 	}
 
-	public String TABooking(Itinerary itn, ITestContext context) {
+	public String TABooking(Integer silo,Itinerary itn, ITestContext context) {
 		String manifestId = "";
 
 		try {
@@ -84,9 +84,32 @@ this.logger=log;
 			paymentPage.fillPaymentPage(itn, false, true);
 			confirmationPage.verifyConf(itn);
 		} catch (Exception e) {
-			logger.info("%%%%%% caught error: " + e.getMessage());
-			e.printStackTrace();
-			return manifestId;
+			try {
+				itn.setDepartureCity("CVG");
+				itn.setDestinationCity("SFB");
+				driver = DriverBase.getDriver();
+				if (Environment.getEnv().contains("aws")) {
+				     driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
+				}else {
+					driver.get(URLS.TA.getUrl(Environment.getEnv(), silo));
+				}
+				landingPage.selectFlightsOnLandingPage(itn);
+				flightPage.selectFlightPage(itn);
+				manifestId = ManifestId.getManifestId(driver);
+				itn.setManifestId(manifestId);
+				logger.info("Initiated flight, manifest id is " + manifestId);
+				hotelPage.selectHotel(itn);
+				vehiclePage.selectVehicle(itn);
+				seatPage.selectSeatPage(itn);
+				bagPage.selectBagPage(itn);
+				travelerPage.fillTravelerPage(itn);
+				paymentPage.fillPaymentPage(itn, false, true);
+				confirmationPage.verifyConf(itn);
+			} catch (Exception e1) {
+				logger.info("%%%%%% caught error: " + e.getMessage());
+				e.printStackTrace();
+				return manifestId;
+			}
 		}
 		return manifestId;
 	}

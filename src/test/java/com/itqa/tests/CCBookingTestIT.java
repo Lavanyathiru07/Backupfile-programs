@@ -3,7 +3,7 @@ package com.itqa.tests;
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
-
+import com.itqa.Utils.Screenshot;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.CCBookingFlow;
 import com.itqa.pageObjects.g4PlusPages.G4PlusLoginPage;
@@ -58,19 +58,18 @@ public class CCBookingTestIT extends DriverBase {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup(ITestContext context) throws MalformedURLException {
 		driver = DriverBase.getDriver();
-		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
-				+ ", " + driver.getCurrentUrl());
+		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId() + ", "
+				+ driver.getCurrentUrl());
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
 
 
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
-			"simple", "bat" })
-
+"bat","cc","booking" })
 	@Story(" CC Booking - Book with Hotel, Car with ssr (Oxygen concentrator) . Email Verification")
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
@@ -83,16 +82,16 @@ public class CCBookingTestIT extends DriverBase {
 		}
 
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
-				|| ((env.contains("qa1") || env.contains("qa2")) && (silo == 1))
-				|| ((env.contains("in1") || env.contains("in2") || env.contains("aws")) && (silo == 1))
+				|| ((env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
+				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1))
 				|| (env.contains("trn") && (silo == 1)) || (env.contains("prod") && (silo == 1))) {
 			if (env.contains("prod") && (silo == 1)) {
-				setUpTestContext(silo,
-						"silo"+ silo +" CC Booking Creation- OW- Confirmation Email received, CCModify - Upsell Bag & seat- Modification Emails received",
+				setUpTestContext(silo, "silo" + silo
+						+ " CC Booking Creation- OW- Confirmation Email received, CCModify - Upsell Bag & seat- Modification Emails received",
 						context, itn);
 			} else if ((env.contains("trn") || env.contains("aws") || env.contains("qa1") || env.contains("qa2"))
 					&& (silo == 1)) {
-				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value()
+				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ ", CCModify - Upsell Bag & seat- Modification Emails received", context, itn);
 			} else {
 				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
@@ -124,10 +123,19 @@ public class CCBookingTestIT extends DriverBase {
 					&& (silo == 1))) {
 				Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
 				//Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
-			}
+				}
 
-			updateTextContext(itn, context);
-			booking.CCRefundAndCancellation(itn.getItn(), itn);
+				updateTextContext(itn, context);
+				booking.CCRefundAndCancellation(itn.getItn(), itn);
+			/*} else {
+				if (flightAvailService != 0) {
+					itn.setItn(flightAvailErrorMsg);
+				} else if (paymentService != 0) {
+					itn.setItn(paymentErrorMsg);
+				}
+				throw new SkipException("Skipping Test Case as runmode set to NO");
+
+			}*/
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -136,9 +144,8 @@ public class CCBookingTestIT extends DriverBase {
 
 	// , retryAnalyzer = RetryFailure.class
 
-	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a Round Trip with CC Modification", groups = {
-	"bat" })
-
+	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a Round Trip with CC Modification",
+			groups = { "bat","cc","booking" })
 
 	@Story(" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification Retrieve ITN in G4+ MOD & upsell bags & seats")
 	public void testCCBookRoundTripWithModification(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -156,10 +163,11 @@ public class CCBookingTestIT extends DriverBase {
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 2))) {
 
 			if (env.contains("nddprd") && ((silo == 2) || (silo == 3))) {
-				setUpTestContext(silo, "silo"+ silo +" CC Booking Creation- Confirmation Email received", context, itn);
-			} else if ((env.contains("qa1") || env.contains("qa2")) && (silo == 2)) {
-				setUpTestContext(silo,
-						"silo"+ silo +" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification",
+				setUpTestContext(silo, "silo" + silo + " CC Booking Creation- Confirmation Email received", context,
+						itn);
+			} else if ((env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 2)) {
+				setUpTestContext(silo, "silo" + silo
+						+ " CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification",
 						context, itn);
 			} else {
 				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
@@ -189,19 +197,29 @@ public class CCBookingTestIT extends DriverBase {
 			updateTextContext(itn, context);
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 			// recevied");
-			if (!((env.contains("nddprd") || env.contains("qa1") || env.contains("qa2"))
+			if (!((env.contains("nddprd") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws"))
 					&& ((silo == 2) || (silo == 3)))) {
 				Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
-				//Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
+				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
+				// recevied");
 			}
 			booking.CCRefundAndCancellation(itn.getItn(), itn);
 			step("Modified seats & bags in CC MOD");
-		} else {
-
+		/*} else {
+			if (flightAvailService != 0) {
+				itn.setItn(flightAvailErrorMsg);
+			} else if (paymentService != 0) {
+				itn.setItn(paymentErrorMsg);
+			}
 			throw new SkipException("Skipping Test Case as runmode set to NO");
-		}
 
+		}*/
+	} else {
+
+		throw new SkipException("Skipping Test Case as runmode set to NO");
 	}
+
+}
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
@@ -224,7 +242,7 @@ public class CCBookingTestIT extends DriverBase {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("awsenv"), silo));
 		} else if (env.contains("nddprd")) {
-			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));  
 		} else {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(env, 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(env, silo));
@@ -233,8 +251,7 @@ public class CCBookingTestIT extends DriverBase {
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);
-		log.info(
-				"Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
+		log.info("Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
 	}
 
 	private void updateTextContext(Itinerary itn, ITestContext context) {
@@ -248,7 +265,7 @@ public class CCBookingTestIT extends DriverBase {
 		String manifestId = "";
 		itn.setSilo(silo.toString());
 		CCBookingFlow booking = new CCBookingFlow(logger.get());
-		manifestId = booking.CCBooking(itn, context);
+		manifestId = booking.CCBooking(silo, itn, context);
 		itn.setManifestId(manifestId);
 		context.setAttribute("manifestid", manifestId);
 		step("CC Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "

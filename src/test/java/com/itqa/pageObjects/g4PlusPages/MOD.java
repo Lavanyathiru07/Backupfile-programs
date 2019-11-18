@@ -342,7 +342,7 @@ public class MOD extends BasePage {
 			logger.info("Seach itn: " + Itn.getItn());
 
 			try {
-				new WebDriverWait(driver, 15).until(ExpectedConditions
+				new WebDriverWait(driver, 30).until(ExpectedConditions
 						.elementToBeClickable(By.cssSelector("a[href='/app/bookings/" + Itn.getItn() + "']")));
 				driver.findElement(By.cssSelector("a[href='/app/bookings/" + Itn.getItn() + "']")).click();
 			} catch (Exception e) {

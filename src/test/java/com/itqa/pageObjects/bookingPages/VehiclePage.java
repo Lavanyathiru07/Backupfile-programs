@@ -88,14 +88,7 @@ public class VehiclePage extends BasePage {
             }
             catch (Exception e) {}
 
-            try {
-                new WebDriverWait(driver, 0).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'attractionchooser')]")));
-                vehiclePage = false;
-                break;
-            }
-            catch (Exception e) {}
-
-            try {
+          try {
                 new WebDriverWait(driver, 0).until(ExpectedConditions.elementToBeClickable(By.xpath("//td[contains(@class,'allegiant_models_vendor_items')]//a")));
                 break;
             }

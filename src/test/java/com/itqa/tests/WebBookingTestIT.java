@@ -1,6 +1,8 @@
 package com.itqa.tests;
 
 import com.itqa.Utils.GeneralUtils;
+import com.itqa.Utils.Screenshot;
+
 import framework.DriverBase;
 
 import com.itqa.CATint;
@@ -69,11 +71,10 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
-			"simple", "bat" })
+			"bat","www","booking"})
 
 	@Story("WWW One way Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
@@ -81,9 +82,9 @@ public class WebBookingTestIT extends DriverBase {
 			testnum++;
 		}
 
-		if (((env.contains("stg") || env.contains("in2") || env.contains("aws")) && (silo == 1)||(silo==2)) || (env.contains("prod") && ((silo == 1) || (silo == 2)||silo == 3))
-				|| (env.contains("vipprod") && (silo == 0))) {
-			if (env.contains("prod") || env.contains("aws")) {
+		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))
+				|| (env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
+			if (env.contains("prod")) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
 			} else {
@@ -111,28 +112,31 @@ public class WebBookingTestIT extends DriverBase {
 
 			logger.get()
 			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-
-			System.out.println("desc:" + itn.getDescription());
-
 			desc.set(itn.getDescription());
-			System.out.println("printiing every desc"+ desc );
-
-			System.out.println("=============================================desc:" + itn.getDescription());
+			//if (flightAvailService == 0 && paymentService == 0) {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			it = itn.getItn();
 
 			/*Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-			// recevied");
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 
-			if (env.contains("prod") && ((silo == 1) || (silo == 2))) {
-				booking.manageTravelModificationUpsellBagSeat(itn);
+			if ((env.contains("prod") && ((silo == 1) || (silo == 2)))) {
+				booking.manageTravelModificationUpsellBagSeat(itn, silo);
 				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
 				// recevied");
 			}*/
 			updateTextContext(itn, context);
+			/*} else {
+				if (flightAvailService != 0) {
+					itn.setItn(flightAvailErrorMsg);
+				} else if (paymentService != 0) {
+					itn.setItn(paymentErrorMsg);
+				}
+				throw new SkipException("Skipping Test Case as runmode set to NO");
+
+			}*/
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -141,9 +145,8 @@ public class WebBookingTestIT extends DriverBase {
 
 	}
 
-	@Test(dataProvider = "Web Use Cases", dataProviderClass =
-			ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {"bat"
-	})
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {
+			"bat","www","booking","olci" })
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -154,7 +157,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		if (((env.contains("in1") || env.contains("in2")) && (silo == 1))
+			if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
 				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
@@ -181,9 +184,11 @@ public class WebBookingTestIT extends DriverBase {
 
 			logger.get()
 			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-
+			//if (flightAvailService == 0 && paymentService == 0) {
 			try {
-				setEarlyMarketCities(itn);
+				//setEarlyMarketCities(itn);
+				itn.setDepartureCity("FAT");
+				itn.setDestinationCity("LAS");
 			} catch (Exception e) {
 				logger.get().info(
 						"Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
@@ -192,9 +197,7 @@ public class WebBookingTestIT extends DriverBase {
 			}
 			desc.set(itn.getDescription());
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
-
 			it=itn.getItn();
-
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
@@ -205,15 +208,23 @@ public class WebBookingTestIT extends DriverBase {
 					"Could not print boarding pass");
 			booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
 			step("Upgraded bags and priority during OLCI.  Printed boarding pass");
+			/*} else {
+				if (flightAvailService != 0) {
+					itn.setItn(flightAvailErrorMsg);
+				} else if (paymentService != 0) {
+					itn.setItn(paymentErrorMsg);
+				}
+				throw new SkipException("Skipping Test Case as runmode set to NO");
+
+			}*/
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
 
-	@Test(dataProvider="Web Use Cases",dataProviderClass=ItineraryDataProvider.class,description="Create Account during bookingandLogin", groups = {"bat"
-
-	})
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Create Account during booking andLogin", groups = {
+			"bat","www","booking","account","voucher" })
 
 	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
@@ -240,13 +251,21 @@ public class WebBookingTestIT extends DriverBase {
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");
-			if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")) && (silo == 1))
+			if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
 					|| (env.contains("prod") && (silo == 3))) {
 				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
 			}
 			updateTextContext(itn, context);
 			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
+		/*} else {
+			if (flightAvailService != 0) {
+				itn.setItn(flightAvailErrorMsg);
+			} else if (paymentService != 0) {
+				itn.setItn(paymentErrorMsg);
+			}
+			throw new SkipException("Skipping Test Case as runmode set to NO");
 
+		}*/
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -324,6 +343,7 @@ public class WebBookingTestIT extends DriverBase {
 	private void updateTextContext(Itinerary itn, ITestContext context) {
 		trc.setSetItn(itn.getItn());
 		itn.setItn(itn.getItn());
+		
 		step("Booking created with itn " + itn.getItn());
 	}
 

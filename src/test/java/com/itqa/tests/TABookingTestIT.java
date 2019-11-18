@@ -21,6 +21,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.itqa.Utils.Environment;
+import com.itqa.Utils.Screenshot;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.TABookingFlow;
 
@@ -56,19 +57,19 @@ public class TABookingTestIT extends DriverBase {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup(ITestContext context) throws MalformedURLException {
 
 		driver = DriverBase.getDriver();
-		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
-				+ ", " + driver.getCurrentUrl());
+		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId() + ", "
+				+ driver.getCurrentUrl());
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
 	
 	// , retryAnalyzer = RetryFailure.class
 	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book a One Way Trip", groups = {
-			"simple", "bat" })
+			"bat","ta","booking"})
 
 	@Story(" TA Flight + Hotel + Car booking Email confirmation received")
 	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
@@ -121,8 +122,18 @@ public class TABookingTestIT extends DriverBase {
 				Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
 			}
 			updateTextContext(itn, context);
+				booking.TARefundAndCancellation(itn.getItn(), itn);
+			/*} else {
+				if (flightAvailService != 0) {
+					itn.setItn(flightAvailErrorMsg);
+				} else if (paymentService != 0) {
+					itn.setItn(paymentErrorMsg);
+				}
+				throw new SkipException("Skipping Test Case as runmode set to NO");
 
-			booking.TARefundAndCancellation(itn.getItn(), itn);
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+				// recevied");
+			}*/
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -131,8 +142,7 @@ public class TABookingTestIT extends DriverBase {
 
 
 	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book aRound Trip", groups = {
-	"bat" })
-
+			"bat","ta","booking" })
 
 	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and Emails received.")
 	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)
@@ -149,6 +159,7 @@ public class TABookingTestIT extends DriverBase {
 				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
+
 			TABookingFlow booking = new TABookingFlow(logger.get());
 			generateBooking(itn, silo, context);
 			it = itn.getItn();
@@ -157,6 +168,18 @@ public class TABookingTestIT extends DriverBase {
 			// recevied");
 			updateTextContext(itn, context);
 			booking.TARefundAndCancellation(itn.getItn(), itn);
+			/*} else {
+				if (flightAvailService != 0) {
+					itn.setItn(flightAvailErrorMsg);
+				} else if (paymentService != 0) {
+					itn.setItn(paymentErrorMsg);
+				}
+				throw new SkipException("Skipping Test Case as runmode set to NO");
+
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+				// recevied");
+
+			}*/
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -205,8 +228,7 @@ public class TABookingTestIT extends DriverBase {
 		trc.setSetSilo(silo.toString());
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);
-		log.info(
-				"Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
+		log.info("Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
 	}
 
 	private void updateTextContext(Itinerary itn, ITestContext context) {
@@ -218,7 +240,7 @@ public class TABookingTestIT extends DriverBase {
 		String manifestId = "";
 		TABookingFlow booking = new TABookingFlow(logger.get());
 
-		manifestId = booking.TABooking(itn, context);
+		manifestId = booking.TABooking(silo,itn, context);
 
 		context.setAttribute("manifestid", manifestId);
 		step("TA Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "

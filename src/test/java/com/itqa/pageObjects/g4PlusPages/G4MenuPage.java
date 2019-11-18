@@ -58,6 +58,9 @@ public class G4MenuPage extends BasePage {
 
 	@FindBy(xpath = "//span[contains(text(),'STNS')]")
 	private WebElement stnsApp;
+	
+	@FindBy(xpath = "//h1[contains(text(),'Welcome')]")
+	private WebElement gfourHome;
 
 	/*-------------------------------*/
 
@@ -171,6 +174,12 @@ public class G4MenuPage extends BasePage {
 			stnsApp.click();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void verifyAIS() {
+		if(gfourHome.isDisplayed()) {
+			logger.info(">>>>>Token passed properly<<<<<");
 		}
 	}
 

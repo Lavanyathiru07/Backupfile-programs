@@ -91,14 +91,7 @@ public class HotelPage extends BasePage {
             }
             catch (Exception e) {}
 
-            try {
-                new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'attractionchooser')]")));
-                hotelPage = false;
-                break;
-            }
-            catch (Exception e) {}
-
-            try {
+           try {
                 new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'transport')]")));
                 hotelPage = false;
                 break;

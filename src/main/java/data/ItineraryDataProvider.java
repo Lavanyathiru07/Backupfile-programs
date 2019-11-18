@@ -11,7 +11,6 @@ import java.util.List;
 
 public class ItineraryDataProvider {
 
-    // , Boolean random
     @DataProvider(name = "Web Use Cases", parallel = true)
     public static Iterator<Object[]> itineraryDataBuilder(ITestContext context, Method method) {
         ArrayList<Object[]> data = new ArrayList<>();

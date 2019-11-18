@@ -126,8 +126,12 @@ public class BookingFlow extends BasePage {
 			try {
 				itn.setDepartureCity("BLI");
 				itn.setDestinationCity("LAS");
-
-				DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+				driver = DriverBase.getDriver();
+				if (Environment.getEnv().contains("aws")) {
+				     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
+				}else {
+					driver.get(URLS.WWW.getUrl(Environment.getEnv(), silo));
+				}
 				manifestId = createWebBooking(itn, context);
 				paymentPage.fillPaymentPage(itn, createAccount, true);
 				confirmationPage.verifyConf(itn);
@@ -165,7 +169,13 @@ public class BookingFlow extends BasePage {
 	}
 
 	public Boolean processOnlineCheckinWithUpsellAndGetBoardingPass(Itinerary itn) {
-		DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+		
+		driver = DriverBase.getDriver();
+		if (Environment.getEnv().contains("aws")) {
+		     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), itn.getSiloIndex()));
+		}else {
+			driver.get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+		}
 		loginPage.doCheckin(itn);
 		bagAndBoardingPage.doBagandBoarding();
 		checkedSeatPage.selectUpgradeSeat();
@@ -213,8 +223,13 @@ public class BookingFlow extends BasePage {
 
 	}
 
-	public void manageTravelModificationUpsellBagSeat(Itinerary itn) {
-		DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+	public void manageTravelModificationUpsellBagSeat(Itinerary itn, Integer silo) {
+		driver = DriverBase.getDriver();
+		if (Environment.getEnv().contains("aws")) {
+		     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
+		}else {
+			driver.get(URLS.WWW.getUrl(Environment.getEnv(), silo));
+		}
 		ManageTravelLoginPage.doManageTravel(itn);
 		ManageTravelBagPage.selectBagPage(itn);
 		ManageTravelSeatPage.selectUpgradeSeat(itn);

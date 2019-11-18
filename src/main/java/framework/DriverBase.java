@@ -27,6 +27,7 @@ public class DriverBase {
 	protected static boolean skip = false;
 
 	protected boolean flag;
+
 	//protected static Boolean useCat = true;
 	private boolean fail = false;
 	public static Map<String, String> status = new HashMap<String, String>();
