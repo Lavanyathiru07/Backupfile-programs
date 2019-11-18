@@ -103,7 +103,7 @@ public class PreBAT {
 	}
 
 	public void paymentGetKey() {
-		for (int i = 0; i <= 10; i++) {
+		for (int i = 0; i <= 2; i++) {
 			String url = "";
 			if (System.getProperty("env").toLowerCase().contains("stg")) {
 				url = "https://fes.stg.allegiantair.com/pie/v1/1/getkey.js?_=";
@@ -111,6 +111,8 @@ public class PreBAT {
 				url = "https://fes.devshare.allegiantair.com/pie/v1/1/getkey.js?_=";
 			}
 			RestAssured.baseURI = url;
+
+			RestAssured.useRelaxedHTTPSValidation();
 
 			getKey = RestAssured.given().when().get();
 
@@ -248,11 +250,10 @@ public class PreBAT {
 		} else if (resCode == 400) {
 			log.info(serviceName + " Failing due to test data. Response code is : " + resCode);
 		} else if (resCode > 400) {
-				DriverBase.paymentErrorMsg = serviceName + " Failing due to server error. Response code is  :"
-						+ resCode;
-				DriverBase.paymentService = 1;
-				log.info(serviceName + " Failing due to server error. Response code is  :" + resCode);
-				throw new Error(serviceName + " Failing due to server error. Response code is  :" + resCode);
+			DriverBase.paymentErrorMsg = serviceName + " Failing due to server error. Response code is  :" + resCode;
+			DriverBase.paymentService = 1;
+			log.info(serviceName + " Failing due to server error. Response code is  :" + resCode);
+			throw new Error(serviceName + " Failing due to server error. Response code is  :" + resCode);
 		}
 	}
 }
