@@ -165,7 +165,7 @@ public class TABookingTestIT extends DriverBase {
 		String manifestId = "";
 		TABookingFlow booking = new TABookingFlow();
 
-		manifestId = booking.TABooking(itn, context);
+		manifestId = booking.TABooking(silo,itn, context);
 
 		context.setAttribute("manifestid", manifestId);
 		step("TA Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "
