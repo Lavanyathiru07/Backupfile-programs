@@ -12,6 +12,8 @@ import org.testng.annotations.Test;
 
 import framework.DriverBase;
 import io.restassured.RestAssured;
+import io.restassured.config.RestAssuredConfig;
+import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -112,9 +114,10 @@ public class PreBAT {
 			}
 			RestAssured.baseURI = url;
 
-			RestAssured.useRelaxedHTTPSValidation();
+			getKey=	RestAssured.given().config(RestAssuredConfig.config().sslConfig(SSLConfig.sslConfig().relaxedHTTPSValidation())).when().get();
 
-			getKey = RestAssured.given().when().get();
+			System.out.println(getKey.asString());
+			//getKey = RestAssured.given().when().get();
 
 			responseCodeVerification(getKey.getStatusCode(), "Get key");
 			if (getKey.getStatusCode() == 200 || getKey.getStatusCode() == 201) {
