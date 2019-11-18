@@ -47,6 +47,7 @@ public class PreBAT {
 			getKeyEncryption();
 			paymentVerification();
 		}
+		
 	}
 
 	public void flightAvail() {
