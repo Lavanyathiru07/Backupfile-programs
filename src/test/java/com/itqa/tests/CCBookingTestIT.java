@@ -66,11 +66,6 @@ public class CCBookingTestIT extends DriverBase {
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
-	//CAT
-	//@BeforeTest
-	public void createSuite() {
-		//cat.createSuite("CCBookingTestIT");
-	}
 
 
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
@@ -210,24 +205,14 @@ public class CCBookingTestIT extends DriverBase {
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
-
 		if (result.getStatus() == ITestResult.SKIP) {
 			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
-		}
-		else if (result.getStatus() == ITestResult.FAILURE) {
+		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
 			cat.completeTest("FAIL", "BAT 2.0", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
-		}
-		else if (result.getStatus() == ITestResult.SUCCESS) {
+		}	else if (result.getStatus() == ITestResult.SUCCESS) {
 			cat.completeTest("PASS", "BAT 2.0", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
-	}
-
-
-
-	//@AfterTest
-	public void completeSuite() {
-		//cat.completeSuite("CCBookingTestIT");
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {

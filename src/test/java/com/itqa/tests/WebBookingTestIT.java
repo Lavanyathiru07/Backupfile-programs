@@ -68,13 +68,6 @@ public class WebBookingTestIT extends DriverBase {
 		trc = new TestResultContext();
 	}
 
-	// CAT
-	//@BeforeTest
-	public void createSuite() {
-		//cat.createSuite("WebBookingTestIT");
-		System.out.println("inside before test WebBookingTestIT");
-	}
-
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
 			"simple", "bat" })
 
@@ -280,32 +273,14 @@ public class WebBookingTestIT extends DriverBase {
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
-		System.out.println("inside after method");
-
-
 		if (result.getStatus() == ITestResult.SKIP) {
 			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
-			System.out.println("SKIPPED");
 		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
 			cat.completeTest("FAIL", "BAT 2.0", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
-			System.out.println("FAIL");
-		}
-
-		else if (result.getStatus() == ITestResult.SUCCESS) {
-			System.out.println("Checking the ITN  : " + it);
-			System.out.println("Checking the Description  : " + desc.get());
-
-			System.out.println("Test Pass->" + result.getName() + " on silo " + result.getTestContext().getAttribute("silo")
-					+ " on thread " + Thread.currentThread().getId());
+		}	else if (result.getStatus() == ITestResult.SUCCESS) {
 			cat.completeTest("PASS", "BAT 2.0", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
-			System.out.println("PASS");
 		}
-	}
-
-	//@AfterTest
-	public void completeSuite() {
-		//cat.completeSuite("WebBookingTestIT");
 	}
 
 	private void setEarlyMarketCities(Itinerary itn) {

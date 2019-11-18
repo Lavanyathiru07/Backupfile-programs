@@ -67,12 +67,6 @@ public class NonBookingTestIT extends DriverBase {
 		trc = new TestResultContext();
 	}
 
-	//CAT
-	//@BeforeTest
-	public void createSuite() {
-		cat.createSuite("NonBookingTestIT");
-	}
-
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Decoupled Code For MX - Action Requests")
 	@Story("AIS: Search Decoupled Code For MX - Action Requests")
 	public void lookupActionRequest(Integer silo, Itinerary itn, ITestContext context, Method method) {
@@ -991,23 +985,14 @@ public class NonBookingTestIT extends DriverBase {
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
-
 		if (result.getStatus() == ITestResult.SKIP) {
 			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
-		}
-		else if (result.getStatus() == ITestResult.FAILURE) {
+		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "BAT 2.0", error, "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "BAT 2.0", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+		}	else if (result.getStatus() == ITestResult.SUCCESS) {
+			cat.completeTest("PASS", "BAT 2.0", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
-		else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "BAT 2.0", "", "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
-		}
-	}
-
-
-	//@AfterTest
-	public void completeSuite() {
-		cat.completeSuite("NonBookingTestIT");
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
