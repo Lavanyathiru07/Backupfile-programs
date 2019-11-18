@@ -33,7 +33,7 @@ public class PreBAT {
 				|| System.getProperty("env").toLowerCase().contains("stg")) {
 			flightAvail();
 			flightAvailVerification();
-			
+
 		}
 	}
 
@@ -47,7 +47,7 @@ public class PreBAT {
 			getKeyEncryption();
 			paymentVerification();
 		}
-		
+
 	}
 
 	public void flightAvail() {
@@ -72,8 +72,7 @@ public class PreBAT {
 
 		flightResponse = RestAssured.given().contentType(ContentType.JSON).body(requestBody)
 				.post("/resweb/rest/flight/getFlightAvail");
-		
-		
+
 	}
 
 	public void flightAvailVerification() throws JSONException {
@@ -92,7 +91,7 @@ public class PreBAT {
 			DriverBase.flightAvailService = 1;
 			throw new Error("Flight getting service is Failing due to server error. Response code is : "
 					+ flightResponse.getStatusCode());
-			
+
 		}
 
 	}
@@ -104,32 +103,42 @@ public class PreBAT {
 	}
 
 	public void paymentGetKey() {
-		String url = "";
-		if (System.getProperty("env").toLowerCase().contains("stg")) {
-			url = "https://fes.stg.allegiantair.com/pie/v1/1/getkey.js?_=";
-		} else {
-			url = "https://fes.devshare.allegiantair.com/pie/v1/1/getkey.js?_=";
+		for (int i = 0; i <= 2; i++) {
+			String url = "";
+			if (System.getProperty("env").toLowerCase().contains("stg")) {
+				url = "https://fes.stg.allegiantair.com/pie/v1/1/getkey.js?_=";
+			} else {
+				url = "https://fes.devshare.allegiantair.com/pie/v1/1/getkey.js?_=";
+			}
+			RestAssured.baseURI = url;
+
+			getKey = RestAssured.given().when().get();
+
+			responseCodeVerification(getKey.getStatusCode(), "Get key");
+			if (getKey.getStatusCode() == 200 || getKey.getStatusCode() == 201) {
+				break;
+			}
 		}
-		RestAssured.baseURI = url;
-
-		getKey = RestAssured.given().when().get();
-
-		responseCodeVerification(getKey.getStatusCode(), "Get key");
 	}
 
 	public void paymentGetEncryption() {
+		for (int i = 0; i <= 2; i++) {
 
-		String url = "";
-		if (System.getProperty("env").toLowerCase().contains("stg")) {
-			url = "https://fes.stg.allegiantair.com/pie/v1/1/encryption.js?_=";
-		} else {
-			url = "https://fes.devshare.allegiantair.com/pie/v1/1/encryption.js?_=";
+			String url = "";
+			if (System.getProperty("env").toLowerCase().contains("stg")) {
+				url = "https://fes.stg.allegiantair.com/pie/v1/1/encryption.js?_=";
+			} else {
+				url = "https://fes.devshare.allegiantair.com/pie/v1/1/encryption.js?_=";
+			}
+			RestAssured.baseURI = url;
+
+			encryption = RestAssured.given().when().get();
+
+			responseCodeVerification(encryption.getStatusCode(), "Encryption");
+			if (encryption.getStatusCode() == 200 || encryption.getStatusCode() == 201) {
+				break;
+			}
 		}
-		RestAssured.baseURI = url;
-
-		encryption = RestAssured.given().when().get();
-
-		responseCodeVerification(encryption.getStatusCode(), "Encryption");
 
 	}
 
@@ -142,9 +151,14 @@ public class PreBAT {
 		mockEncryption = RestAssured.given().contentType(ContentType.JSON).body(requestBody).post();
 
 		responseCodeVerification(encryption.getStatusCode(), "Mock encryption");
-		String[] split = mockEncryption.asString().split("-");
-		cardNum = split[0].trim();
-		CVV = split[split.length - 1].trim();
+		if (encryption.getStatusCode() == 200 || encryption.getStatusCode() == 201) {
+			String[] split = mockEncryption.asString().split("-");
+			cardNum = split[0].trim();
+			CVV = split[split.length - 1].trim();
+		} else {
+			cardNum = "545454VVhBt8Mzn5454";
+			CVV = "BdFs";
+		}
 	}
 
 	public void paymentVerification() throws ParseException {
@@ -225,7 +239,6 @@ public class PreBAT {
 				.post("/pms/v4/api/orders");
 
 		responseCodeVerification(payment.getStatusCode(), "Payment");
-		log.info("Payment service is working fine");
 
 	}
 
@@ -235,10 +248,11 @@ public class PreBAT {
 		} else if (resCode == 400) {
 			log.info(serviceName + " Failing due to test data. Response code is : " + resCode);
 		} else if (resCode > 400) {
-			DriverBase.paymentErrorMsg = serviceName + " Failing due to server error. Response code is  :" + resCode;
-			DriverBase.paymentService = 1;
-			log.info(serviceName + " Failing due to server error. Response code is  :" + resCode);
-			throw new Error(serviceName + " Failing due to server error. Response code is  :" + resCode);
+				DriverBase.paymentErrorMsg = serviceName + " Failing due to server error. Response code is  :"
+						+ resCode;
+				DriverBase.paymentService = 1;
+				log.info(serviceName + " Failing due to server error. Response code is  :" + resCode);
+				throw new Error(serviceName + " Failing due to server error. Response code is  :" + resCode);
 		}
 	}
 }
