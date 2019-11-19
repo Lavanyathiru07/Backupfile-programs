@@ -106,7 +106,7 @@ public class G4PlusFlow extends BasePage {
 		HOT = new HOT();
 		ATL = new ATL();
 		OFO = new OFO();
-		MOD = new MOD(logger);
+		MOD = new MOD(log);
 
 	}
 
