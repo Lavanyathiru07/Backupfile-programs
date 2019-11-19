@@ -72,7 +72,7 @@ public class DriverBase {
 
 	@AfterSuite(alwaysRun=true) // CAT 
 	public void tearDown() {
-		cat.createSuite("BAT 2.0");
+		cat.completeSuite("BAT 2.0");
 		cat.completeJob("COMPLETED");
 	}
 
