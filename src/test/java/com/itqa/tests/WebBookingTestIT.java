@@ -95,6 +95,7 @@ public class WebBookingTestIT extends DriverBase {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
 			}
+
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
@@ -113,12 +114,12 @@ public class WebBookingTestIT extends DriverBase {
 			logger.get()
 			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
-			//if (flightAvailService == 0 && paymentService == 0) {
-			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
+			if (flightAvailService == 0 && paymentService == 0) {
+			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 			it = itn.getItn();
 
-			/*Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 
@@ -126,9 +127,9 @@ public class WebBookingTestIT extends DriverBase {
 				booking.manageTravelModificationUpsellBagSeat(itn, silo);
 				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
 				// recevied");
-			}*/
+			}
 			updateTextContext(itn, context);
-			/*} else {
+			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -136,7 +137,7 @@ public class WebBookingTestIT extends DriverBase {
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
 
-			}*/
+			}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -167,6 +168,7 @@ public class WebBookingTestIT extends DriverBase {
 			} else {
 				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			}
+
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
@@ -184,7 +186,8 @@ public class WebBookingTestIT extends DriverBase {
 
 			logger.get()
 			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-			//if (flightAvailService == 0 && paymentService == 0) {
+			
+			if (flightAvailService == 0 && paymentService == 0) {
 			try {
 				//setEarlyMarketCities(itn);
 				itn.setDepartureCity("FAT");
@@ -208,7 +211,7 @@ public class WebBookingTestIT extends DriverBase {
 					"Could not print boarding pass");
 			booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
 			step("Upgraded bags and priority during OLCI.  Printed boarding pass");
-			/*} else {
+			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -216,7 +219,7 @@ public class WebBookingTestIT extends DriverBase {
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
 
-			}*/
+			}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -240,9 +243,11 @@ public class WebBookingTestIT extends DriverBase {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			logger.get().info("Accoutn creation booking started");
 			desc.set(itn.getDescription());
+		
+			if (flightAvailService == 0 && paymentService == 0) {
+			log.info("Accoutn creation booking started");
 			BookingFlow booking = new BookingFlow(logger.get());
 			generateBooking(itn, silo, context, true);
-
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
@@ -257,7 +262,7 @@ public class WebBookingTestIT extends DriverBase {
 			}
 			updateTextContext(itn, context);
 			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
-		/*} else {
+		} else {
 			if (flightAvailService != 0) {
 				itn.setItn(flightAvailErrorMsg);
 			} else if (paymentService != 0) {
@@ -265,7 +270,7 @@ public class WebBookingTestIT extends DriverBase {
 			}
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 
-		}*/
+		}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");

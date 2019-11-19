@@ -25,9 +25,11 @@ public class DriverBase {
 	private static List<DriverFactory> webDriverThreadPool = Collections.synchronizedList(new ArrayList<DriverFactory>());
 	private static ThreadLocal<DriverFactory> driverThread;
 	protected static boolean skip = false;
-
 	protected boolean flag;
-
+	public static int flightAvailService = 0;
+	public static int paymentService = 0;
+	public static String flightAvailErrorMsg = "";
+	public static String paymentErrorMsg = "";
 	//protected static Boolean useCat = true;
 	private boolean fail = false;
 	public static Map<String, String> status = new HashMap<String, String>();

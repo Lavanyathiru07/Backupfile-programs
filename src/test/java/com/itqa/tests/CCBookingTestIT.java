@@ -114,20 +114,23 @@ public class CCBookingTestIT extends DriverBase {
 
 			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
-			CCBookingFlow booking = generateBooking(itn, silo, context);
-			it = itn.getItn();
-			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			//Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
-			if ((env.contains("trn")
-					|| (env.contains("prod") || env.contains("aws") || env.contains("qa1") || env.contains("qa2"))
-					&& (silo == 1))) {
-				Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
-				//Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
+			if (flightAvailService == 0 && paymentService == 0) {
+				CCBookingFlow booking = generateBooking(itn, silo, context);
+				it = itn.getItn();
+				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+				// recevied");
+				if ((env.contains("trn")
+						|| (env.contains("prod") || env.contains("aws") || env.contains("qa1") || env.contains("qa2"))
+								&& (silo == 1))) {
+					Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
+					// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
+					// recevied");
 				}
 
 				updateTextContext(itn, context);
 				booking.CCRefundAndCancellation(itn.getItn(), itn);
-			/*} else {
+			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -135,7 +138,7 @@ public class CCBookingTestIT extends DriverBase {
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
 
-			}*/
+			}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -187,33 +190,35 @@ public class CCBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 			PropertyConfigurator.configure(props);
-
 			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
-			CCBookingFlow booking = generateBooking(itn, silo, context);
-			it = itn.getItn();
-			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
-			updateTextContext(itn, context);
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-			// recevied");
-			if (!((env.contains("nddprd") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws"))
-					&& ((silo == 2) || (silo == 3)))) {
-				Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
-				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
+			if (flightAvailService == 0 && paymentService == 0) {
+				CCBookingFlow booking = generateBooking(itn, silo, context);
+				it = itn.getItn();
+				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+
+				updateTextContext(itn, context);
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
-			}
-			booking.CCRefundAndCancellation(itn.getItn(), itn);
-			step("Modified seats & bags in CC MOD");
-		/*} else {
-			if (flightAvailService != 0) {
-				itn.setItn(flightAvailErrorMsg);
-			} else if (paymentService != 0) {
-				itn.setItn(paymentErrorMsg);
-			}
-			throw new SkipException("Skipping Test Case as runmode set to NO");
+				if (!((env.contains("nddprd") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws"))
+						&& ((silo == 2) || (silo == 3)))) {
+					Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
+					// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
+					// recevied");
+				}
+				booking.CCRefundAndCancellation(itn.getItn(), itn);
+				step("Modified seats & bags in CC MOD");
+			} else {
+				if (flightAvailService != 0) {
+					itn.setItn(flightAvailErrorMsg);
+				} else if (paymentService != 0) {
+					itn.setItn(paymentErrorMsg);
+				}
+				throw new SkipException("Skipping Test Case as runmode set to NO");
 
-		}*/
+			}
+
 	} else {
 
 		throw new SkipException("Skipping Test Case as runmode set to NO");

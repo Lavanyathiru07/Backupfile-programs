@@ -95,6 +95,7 @@ public class TABookingTestIT extends DriverBase {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
 			}
+
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
@@ -111,19 +112,22 @@ public class TABookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);
 			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
-			TABookingFlow booking = new TABookingFlow(logger.get());
-			generateBooking(itn, silo, context);
-			it = itn.getItn();
-			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-			// recevied");
-			if (env.contains("prod") && (silo == 2)) {
-				booking.TAmanageTravelModificationUpsellBag(itn, silo);
-				Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
-			}
-			updateTextContext(itn, context);
+			
+			if (flightAvailService == 0 && paymentService == 0) {
+				TABookingFlow booking = new TABookingFlow(logger.get());
+				it = itn.getItn();
+				generateBooking(itn, silo, context);
+				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+				// recevied");
+				if (env.contains("prod") && (silo == 2)) {
+					booking.TAmanageTravelModificationUpsellBag(itn, silo);
+					Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
+				}
+				updateTextContext(itn, context);
+
 				booking.TARefundAndCancellation(itn.getItn(), itn);
-			/*} else {
+			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -133,7 +137,8 @@ public class TABookingTestIT extends DriverBase {
 
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
-			}*/
+
+			}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -160,15 +165,17 @@ public class TABookingTestIT extends DriverBase {
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 
-			TABookingFlow booking = new TABookingFlow(logger.get());
-			generateBooking(itn, silo, context);
-			it = itn.getItn();
-			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-			// recevied");
-			updateTextContext(itn, context);
-			booking.TARefundAndCancellation(itn.getItn(), itn);
-			/*} else {
+		 if (flightAvailService == 0 && paymentService == 0) {
+				TABookingFlow booking = new TABookingFlow(logger.get());
+				generateBooking(itn, silo, context);
+				it = itn.getItn();
+				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+				// recevied");
+				updateTextContext(itn, context);
+				booking.TARefundAndCancellation(itn.getItn(), itn);
+			} else {
+
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -179,7 +186,7 @@ public class TABookingTestIT extends DriverBase {
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
 
-			}*/
+			}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");

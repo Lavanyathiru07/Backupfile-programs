@@ -9,4 +9,5 @@
 		<suite-file 
 		      path="./batTest.xml" />
 	</suite-files>
+	
 </suite>
