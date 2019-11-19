@@ -54,7 +54,7 @@ public class WebBookingTestIT extends DriverBase {
 	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
 	private String it;
-	//private String desc;
+
 	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
