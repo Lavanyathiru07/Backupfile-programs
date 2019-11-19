@@ -2,7 +2,7 @@
 
 <suite name="BAT 2.0">
 	<!-- <suite-files>
-		<suite-file path="src/test/resources/prebat.xml" />
+		<suite-file path="./prebat.xml" />
 	</suite-files> -->
 
 	<suite-files> 
