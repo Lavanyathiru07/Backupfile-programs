@@ -71,7 +71,7 @@ public class CCBookingTestIT extends DriverBase {
 			} else {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			}
-			//if (flightAvailService == 0 && paymentService == 0) {
+			if (flightAvailService == 0 && paymentService == 0) {
 				CCBookingFlow booking = generateBooking(itn, silo, context);
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
@@ -86,7 +86,7 @@ public class CCBookingTestIT extends DriverBase {
 
 				updateTextContext(itn, context);
 				booking.CCRefundAndCancellation(itn.getItn(), itn);
-			/*} else {
+			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -94,7 +94,7 @@ public class CCBookingTestIT extends DriverBase {
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
 
-			}*/
+			}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -122,7 +122,7 @@ public class CCBookingTestIT extends DriverBase {
 			} else {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			}
-			//if (flightAvailService == 0 && paymentService == 0) {
+			if (flightAvailService == 0 && paymentService == 0) {
 				CCBookingFlow booking = generateBooking(itn, silo, context);
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
@@ -137,7 +137,7 @@ public class CCBookingTestIT extends DriverBase {
 				}
 				booking.CCRefundAndCancellation(itn.getItn(), itn);
 				step("Modified seats & bags in CC MOD");
-			/*} else {
+			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -145,7 +145,7 @@ public class CCBookingTestIT extends DriverBase {
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
 
-			}*/
+			}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -185,7 +185,7 @@ public class CCBookingTestIT extends DriverBase {
 		String manifestId = "";
 		itn.setSilo(silo.toString());
 		CCBookingFlow booking = new CCBookingFlow();
-		manifestId = booking.CCBooking(itn, context);
+		manifestId = booking.CCBooking(silo, itn, context);
 		itn.setManifestId(manifestId);
 		context.setAttribute("manifestid", manifestId);
 		step("CC Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "

@@ -1,8 +1,6 @@
 package com.itqa.tests;
 
 import com.itqa.Utils.GeneralUtils;
-import com.itqa.Utils.Screenshot;
-
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
@@ -72,7 +70,7 @@ public class WebBookingTestIT extends DriverBase {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
 			}
-			//if (flightAvailService == 0 && paymentService == 0) {
+			if (flightAvailService == 0 && paymentService == 0) {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
@@ -83,7 +81,7 @@ public class WebBookingTestIT extends DriverBase {
 				// recevied");
 			}
 			updateTextContext(itn, context);
-			/*} else {
+			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -91,7 +89,7 @@ public class WebBookingTestIT extends DriverBase {
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
 
-			}*/
+			}
 		} else {
 			
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -116,9 +114,11 @@ public class WebBookingTestIT extends DriverBase {
 			} else {
 				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			}
-			//if (flightAvailService == 0 && paymentService == 0) {
+			if (flightAvailService == 0 && paymentService == 0) {
 			try {
-				setEarlyMarketCities(itn);
+				//setEarlyMarketCities(itn);
+				itn.setDepartureCity("FAT");
+				itn.setDestinationCity("LAS");
 			} catch (Exception e) {
 				log.info("Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
 				itn.setDepartureCity("FAT");
@@ -136,7 +136,7 @@ public class WebBookingTestIT extends DriverBase {
 					"Could not print boarding pass");
 			booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
 			step("Upgraded bags and priority during OLCI.  Printed boarding pass");
-			/*} else {
+			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -144,7 +144,7 @@ public class WebBookingTestIT extends DriverBase {
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
 
-			}*/
+			}
 		} else {
 			 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -161,7 +161,7 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
-			//if (flightAvailService == 0 && paymentService == 0) {
+			if (flightAvailService == 0 && paymentService == 0) {
 			log.info("Accoutn creation booking started");
 			BookingFlow booking = new BookingFlow();
 			generateBooking(itn, silo, context, true);
@@ -174,13 +174,14 @@ public class WebBookingTestIT extends DriverBase {
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");
-			if (((env.contains("stg") || env.contains("aws") || env.contains("qa1") || env.contains("qa2")) && (silo == 1))
+
+			if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
 					|| (env.contains("prod") && (silo == 3))) {
 				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
 			}
 			updateTextContext(itn, context);
 			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
-		/*} else {
+		} else {
 			if (flightAvailService != 0) {
 				itn.setItn(flightAvailErrorMsg);
 			} else if (paymentService != 0) {
@@ -188,7 +189,7 @@ public class WebBookingTestIT extends DriverBase {
 			}
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 
-		}*/
+		}
 		} else {
 			 
 			throw new SkipException("Skipping Test Case as runmode set to NO");

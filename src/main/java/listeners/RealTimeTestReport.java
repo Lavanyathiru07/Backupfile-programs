@@ -92,11 +92,14 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 	@Override
 	public void onTestSkipped(ITestResult result) {
 
+
 		System.out.println("Test Skipped->" + result.getName());
 		
 
 
-		/*TestResultContext testResultContext = new TestResultContext();
+		TestResultContext testResultContext = new TestResultContext();
+
+		
 		testResultContext.getTestResultContext(result);
 
 			if ((flightAvailService != 0 || paymentService != 0) && (!testResultContext.description.isEmpty())) {
@@ -109,7 +112,9 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		System.out.println("Test Skipped->" + result.getName() + " on silo "
 				+ result.getTestContext().getAttribute("silo") + " on thread " + Thread.currentThread().getId());
 
-*/
+
+
+
 
 	}
 

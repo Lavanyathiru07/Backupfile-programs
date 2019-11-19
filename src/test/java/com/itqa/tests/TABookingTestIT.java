@@ -71,7 +71,7 @@ public class TABookingTestIT extends DriverBase {
 				}
 
 			}
-			//if (flightAvailService == 0 && paymentService == 0) {
+			if (flightAvailService == 0 && paymentService == 0) {
 				TABookingFlow booking = new TABookingFlow();
 				generateBooking(itn, silo, context);
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
@@ -84,7 +84,7 @@ public class TABookingTestIT extends DriverBase {
 				updateTextContext(itn, context);
 
 				booking.TARefundAndCancellation(itn.getItn(), itn);
-			/*} else {
+			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -95,7 +95,7 @@ public class TABookingTestIT extends DriverBase {
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
 
-			}*/
+			}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -113,7 +113,7 @@ public class TABookingTestIT extends DriverBase {
 				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
-			//if (flightAvailService == 0 && paymentService == 0) {
+		 if (flightAvailService == 0 && paymentService == 0) {
 				TABookingFlow booking = new TABookingFlow();
 				generateBooking(itn, silo, context);
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
@@ -121,7 +121,7 @@ public class TABookingTestIT extends DriverBase {
 				// recevied");
 				updateTextContext(itn, context);
 				booking.TARefundAndCancellation(itn.getItn(), itn);
-			/*} else {
+			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
 				} else if (paymentService != 0) {
@@ -132,7 +132,7 @@ public class TABookingTestIT extends DriverBase {
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
 
-			}*/
+			}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -165,7 +165,7 @@ public class TABookingTestIT extends DriverBase {
 		String manifestId = "";
 		TABookingFlow booking = new TABookingFlow();
 
-		manifestId = booking.TABooking(itn, context);
+		manifestId = booking.TABooking(silo,itn, context);
 
 		context.setAttribute("manifestid", manifestId);
 		step("TA Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "
