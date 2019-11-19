@@ -74,9 +74,6 @@ public class DriverBase {
 	public void tearDown() {
 		cat.completeSuite("BAT 2.0");
 		cat.completeJob("COMPLETED");
-	}
-
-	public static void clearCookies() {
 		try {
 			getDriver().manage().deleteAllCookies();
 		} catch (Exception ex) {

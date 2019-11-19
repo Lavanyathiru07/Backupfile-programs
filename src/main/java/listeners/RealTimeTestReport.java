@@ -11,7 +11,6 @@ import org.testng.ITestResult;
 
 import com.itqa.Utils.GeneralUtils;
 
-import cat.CATinits;
 import framework.DriverBase;
 
 public class RealTimeTestReport extends DriverBase implements ITestListener {
