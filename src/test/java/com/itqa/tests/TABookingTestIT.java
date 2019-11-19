@@ -66,7 +66,7 @@ public class TABookingTestIT extends DriverBase {
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
-	
+
 	// , retryAnalyzer = RetryFailure.class
 	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book a One Way Trip", groups = {
 			"bat","ta","booking"})
@@ -112,7 +112,7 @@ public class TABookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);
 			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
-			
+
 			if (flightAvailService == 0 && paymentService == 0) {
 				TABookingFlow booking = new TABookingFlow(logger.get());
 				it = itn.getItn();
@@ -165,7 +165,7 @@ public class TABookingTestIT extends DriverBase {
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 
-		 if (flightAvailService == 0 && paymentService == 0) {
+			if (flightAvailService == 0 && paymentService == 0) {
 				TABookingFlow booking = new TABookingFlow(logger.get());
 				generateBooking(itn, silo, context);
 				it = itn.getItn();

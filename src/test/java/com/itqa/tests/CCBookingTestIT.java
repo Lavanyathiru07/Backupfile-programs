@@ -69,7 +69,7 @@ public class CCBookingTestIT extends DriverBase {
 
 
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
-"bat","cc","booking" })
+			"bat","cc","booking" })
 	@Story(" CC Booking - Book with Hotel, Car with ssr (Oxygen concentrator) . Email Verification")
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
@@ -122,7 +122,7 @@ public class CCBookingTestIT extends DriverBase {
 				// recevied");
 				if ((env.contains("trn")
 						|| (env.contains("prod") || env.contains("aws") || env.contains("qa1") || env.contains("qa2"))
-								&& (silo == 1))) {
+						&& (silo == 1))) {
 					Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
 					// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
 					// recevied");
@@ -219,12 +219,12 @@ public class CCBookingTestIT extends DriverBase {
 
 			}
 
-	} else {
+		} else {
 
-		throw new SkipException("Skipping Test Case as runmode set to NO");
+			throw new SkipException("Skipping Test Case as runmode set to NO");
+		}
+
 	}
-
-}
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
