@@ -9,11 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.SkipException;
-
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
-import com.itqa.pageObjects.g4PlusPages.G4MenuPage;
-
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -53,12 +50,14 @@ public class AircraftRecords extends BasePage {
     			logger.info("The first row is: " + aircraftRecordsResultRow.get(0).getText().replaceAll("\n", " "));
     		}
     		
-    	}catch(Exception e){
-    		itn.setItn("Failed due to QAA-338");
-    		e.printStackTrace();
-    		throw new Error("Aircraft Records returns no result.");
+		} catch (Exception e) {
+			if (Environment.getEnv().contains("aws")) {
+				itn.setItn("Failed due to QAA-338");
+			}
+			e.printStackTrace();
+			throw new Error(">>>Aircraft Records returns no result<<<");
 
-    	}
+		}
     }
 
 	

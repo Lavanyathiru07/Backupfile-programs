@@ -14,8 +14,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.SkipException;
-
 import java.util.Set;
 
 public class PrintManifest extends BasePage {
@@ -79,7 +77,7 @@ public class PrintManifest extends BasePage {
         paxTable.click();
     	}catch(Exception e){
     		e.printStackTrace();
-    		throw new Error("FAIL");
+    		throw new Error(">>>verify PrintManifest FAIL<<<");
     	}
     }
 }

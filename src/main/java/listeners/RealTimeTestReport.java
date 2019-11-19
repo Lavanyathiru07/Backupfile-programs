@@ -8,8 +8,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-
-import com.itqa.Utils.Environment;
 import com.itqa.Utils.GeneralUtils;
 
 import framework.DriverBase;
@@ -122,7 +120,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		DriverBase.getDriver().quit();
 		System.out.println("END Of Execution(TEST)->" + result.getName());
 		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
-		TestReport report = new TestReport();
+		
 		/*
 		 * if (Environment.getCreateConfluenceSetting()) { UpdateConfluence page = new
 		 * UpdateConfluence(result); }

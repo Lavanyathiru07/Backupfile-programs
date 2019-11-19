@@ -8,8 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
-import org.testng.SkipException;
-
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
 import data.Itinerary;
@@ -39,10 +38,12 @@ public class FlightScheduleMaintenance extends BasePage{
         flightNumField.sendKeys("529" + Keys.ENTER);
         originText.click();
         logger.info("Flight Schedule Maintenance Displayed");
-    	}catch(Exception e){
-    		itn.setItn("Failed due to ALGT-159980");
-    		e.printStackTrace();
-    		throw new Error("");
-    	}
+		} catch (Exception e) {
+			if (Environment.getEnv().contains("stg")) {
+				itn.setItn("Failed due to QAA-338");
+			}
+			e.printStackTrace();
+			throw new Error(">>>Flight Schedule MX Fail<<<");
+		}
     }
 }

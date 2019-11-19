@@ -9,11 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.SkipException;
-
 import com.itqa.pageObjects.BasePage;
-
-import data.Itinerary;
 import framework.DriverBase;
 
 public class AisMenuPage extends BasePage {

@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
 import data.Itinerary;
@@ -83,9 +84,11 @@ public class MaintenanceRecords extends BasePage {
         }
        
     	}catch(Exception e){
-    		itn.setItn("Failed due to QAA-338");
-    		e.printStackTrace();
-    		 throw new Error("Action Requests returns no result.");
+    		if(Environment.getEnv().contains("aws")) {
+    			itn.setItn("Failed due to QAA-338");
+    		}
+    		 e.printStackTrace();
+    		 throw new Error(">>>Action Requests returns no result<<<");
     	}
     }
 
@@ -112,7 +115,7 @@ public class MaintenanceRecords extends BasePage {
         logger.info("MX Records Report displayed");
     	}catch(Exception e){
     		e.printStackTrace();
-    		throw new Error("");
+    		throw new Error(">>>Reports cant find<<<");
     	}
     }
 }

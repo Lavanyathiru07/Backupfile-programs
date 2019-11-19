@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
 import data.Itinerary;
@@ -69,13 +70,15 @@ public class InventoryMaintenance extends BasePage{
         else {
             logger.info("Inventory Maintenance Transaction displayed");
         }
-    	}catch(Exception e){
-    		itn.setItn("Failed due to QAA-337");
-    		e.printStackTrace();
-    		throw new Error("");
-    		
-    		
-			
-    	}
+		} catch (Exception e) {
+
+			if (Environment.getEnv().contains("aws")) {
+				itn.setItn("Failed due to QAA-337");
+			}
+
+			e.printStackTrace();
+			throw new Error(">>>Inventory Maintenance Fail<<< ");
+
+		}
     }
 }

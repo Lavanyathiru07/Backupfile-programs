@@ -10,8 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.SkipException;
 
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
 import data.Itinerary;
@@ -121,9 +121,12 @@ public class AccountsPayableMaintenance extends BasePage{
         }
     
     }catch(Exception e){
-    	itn.setItn("Failed due to QAA-336");
+    	if (Environment.getEnv().contains("aws")) {
+    		itn.setItn("Failed due to QAA-336");
+		}
+    	
 		e.printStackTrace();
-		throw new Error("");
+		throw new Error(">>>Account Payable MX FAIL<<<");
 	}
 }
 }

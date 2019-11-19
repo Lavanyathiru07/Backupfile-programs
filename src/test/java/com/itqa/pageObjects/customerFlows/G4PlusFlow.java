@@ -271,9 +271,11 @@ public class G4PlusFlow extends BasePage {
 			MaintenanceRecords.openReport();
 
 		} catch (Exception e) {
-			itn.setItn("Failed due to QAA-338");
-			e.printStackTrace();
-			throw new Error("");
+			  		if(Environment.getEnv().contains("aws")) {
+	    			itn.setItn("Failed due to QAA-338");
+	    		}
+	    	e.printStackTrace();
+			throw new Error(">>>Reports cant find<<<");
 		}
 	}
 	public void verifyFlightFollowing() {
