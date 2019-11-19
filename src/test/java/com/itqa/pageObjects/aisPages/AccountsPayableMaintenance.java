@@ -122,7 +122,7 @@ public class AccountsPayableMaintenance extends BasePage{
     
     }catch(Exception e){
     	if (Environment.getEnv().contains("aws")) {
-    		itn.setItn("Failed due to QAA-336");
+    		itn.setItn("Failed due to QAA-338");
 		}
     	
 		e.printStackTrace();

@@ -40,7 +40,7 @@ public class FlightScheduleMaintenance extends BasePage{
         logger.info("Flight Schedule Maintenance Displayed");
 		} catch (Exception e) {
 			if (Environment.getEnv().contains("stg")) {
-				itn.setItn("Failed due to QAA-338");
+				itn.setItn("Failed due to QAA-336");
 			}
 			e.printStackTrace();
 			throw new Error(">>>Flight Schedule MX Fail<<<");
