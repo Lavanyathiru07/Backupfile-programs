@@ -164,7 +164,22 @@ public class TABookingTestIT extends DriverBase {
 				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
+			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			Properties props = new Properties();
+			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.file.maxFileSize","100MB");
+			props.setProperty("log4j.appender.file.maxBackupIndex","0");
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
+			props.setProperty("log4j.appender.file.threshold","DEBUG");
+			props.setProperty("log4j.appender.file.Append","false");
+			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
+			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
+			PropertyConfigurator.configure(props);
+			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
+			desc.set(itn.getDescription());
 			if (flightAvailService == 0 && paymentService == 0) {
 				TABookingFlow booking = new TABookingFlow(logger.get());
 				generateBooking(itn, silo, context);
@@ -191,23 +206,6 @@ public class TABookingTestIT extends DriverBase {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
-		Properties props = new Properties();
-		props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
-		props.setProperty("log4j.appender.file.maxFileSize","100MB");
-		props.setProperty("log4j.appender.file.maxBackupIndex","0");
-		props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
-				itn.getDescription()	+Thread.currentThread().getId()+ ".log");
-		props.setProperty("log4j.appender.file.threshold","DEBUG");
-		props.setProperty("log4j.appender.file.Append","false");
-		props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
-		props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
-		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
-
-		PropertyConfigurator.configure(props);
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-		desc.set(itn.getDescription());
-
 	}
 
 	@AfterMethod
