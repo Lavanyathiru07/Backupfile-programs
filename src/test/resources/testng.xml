@@ -1,9 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="BAT 2.0">
-	<!-- <suite-files>
-		<suite-file path="./prebat.xml" />
-	</suite-files> -->
 
 	<suite-files> 
 		<suite-file 
