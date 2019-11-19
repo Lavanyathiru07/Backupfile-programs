@@ -41,9 +41,9 @@ public class Reliability extends BasePage{
     @FindBy(id = "result_row")
     private WebElement resultRow;
 
-    public Reliability() {
+    public Reliability(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(Reliability.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

@@ -52,7 +52,6 @@ public class BagPage extends BasePage {
 
     public BagPage(Logger log) {
         this.driver = DriverBase.getDriver();
-       // this.logger = Logger.getLogger(BagPage.class);
         this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);

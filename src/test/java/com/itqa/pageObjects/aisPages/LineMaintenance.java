@@ -43,9 +43,9 @@ public class LineMaintenance extends BasePage{
     @FindBy(id = "result_row")
     private WebElement resultRow;
 
-    public LineMaintenance() {
+    public LineMaintenance(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(LineMaintenance.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

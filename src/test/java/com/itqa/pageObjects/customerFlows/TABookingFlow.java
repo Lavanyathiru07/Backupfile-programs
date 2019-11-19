@@ -43,8 +43,8 @@ public class TABookingFlow extends BasePage {
 	private ManageTravelPaymentPage ManageTravelPaymentPage;
 
 	public TABookingFlow(Logger log) {
-		//this.logger = Logger.getLogger(TABookingFlow.class);
-this.logger=log;
+
+		this.logger=log;
 		taSignInPage = new TaSignInPage(log);
 		landingPage = new LandingPage(log);
 		flightPage = new FlightPage(log);
@@ -89,7 +89,7 @@ this.logger=log;
 				itn.setDestinationCity("SFB");
 				driver = DriverBase.getDriver();
 				if (Environment.getEnv().contains("aws")) {
-				     driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
+					driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
 				}else {
 					driver.get(URLS.TA.getUrl(Environment.getEnv(), silo));
 				}
@@ -120,7 +120,7 @@ this.logger=log;
 			mod.cancelWholeItn(itn.getItn());
 		}
 	}
-	
+
 	public Boolean emailVerification(Itinerary itn, String mailToValidation) {
 		try {
 			EmailVerification.openGmail(itn,mailToValidation);
@@ -128,19 +128,19 @@ this.logger=log;
 		}catch(Exception e) {
 			return false;
 		}
-				
+
 	}
 	public void TAmanageTravelModificationUpsellBag(Itinerary itn,Integer silo) throws Exception {
 		DriverBase.getDriver().get(URLS.TA.getUrl(Environment.getEnv(),silo));
-	//	taSignInPage.taSignin();
+		//	taSignInPage.taSignin();
 		ManageTravelLoginPage.doManageTravel(itn);
 		ManageTravelBagPage.selectBagPage(itn);
 		ManageTravelSeatPage.selectUpgradeSeat(itn);
 		ManageTravelHotelPage.selectHotel();
 		ManageTravelVehiclePage.selectVehicle();
 		ManageTravelPaymentPage.fillPaymentPage(itn);
-		
-		
+
+
 	}
 
 }

@@ -140,7 +140,6 @@ public class PaymentPage extends BasePage {
 
 	public PaymentPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		//this.logger = Logger.getLogger(PaymentPage.class);
 		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);

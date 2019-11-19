@@ -49,7 +49,6 @@ public class G4PlusLoginPage extends BasePage {
 
 	public G4PlusLoginPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		//this.logger = Logger.getLogger(G4PlusLoginPage.class);
 		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);

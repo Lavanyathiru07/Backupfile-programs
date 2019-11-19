@@ -51,9 +51,9 @@ public class PrintManifest extends BasePage {
     @FindBy(id = "flight-manifest")
     private WebElement paxTable;
 
-    public PrintManifest() {
+    public PrintManifest(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(PrintManifest.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

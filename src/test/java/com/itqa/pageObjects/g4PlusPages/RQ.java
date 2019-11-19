@@ -32,9 +32,9 @@ public class RQ extends BasePage{
     @FindBy(xpath = "//tr[contains(@class,'ng-scope')]")
     private WebElement resultRow;
 
-    public RQ() {
+    public RQ(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(RQ.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

@@ -44,7 +44,6 @@ public class BundlePage extends BasePage {
 
 	public BundlePage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		//this.logger = Logger.getLogger(BundlePage.class);
 		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);

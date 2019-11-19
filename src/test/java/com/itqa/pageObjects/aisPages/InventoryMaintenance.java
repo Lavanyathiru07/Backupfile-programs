@@ -31,9 +31,9 @@ public class InventoryMaintenance extends BasePage{
     @FindBy(id = "TransactionsTab")
     private WebElement transactionTab;
 
-    public InventoryMaintenance() {
+    public InventoryMaintenance(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(InventoryMaintenance.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

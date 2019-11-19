@@ -79,7 +79,6 @@ public class G4PlusFlow extends BasePage {
 	private String password = "QFNkMTUwNDEyMzQ1";
 	private String env=Environment.getEnv();
 	public G4PlusFlow(Logger log) {
-		//this.logger = Logger.getLogger(G4PlusFlow.class);
 		this.logger=log;
 		g4MenuPage = new G4MenuPage(log);
 		G4PlusLoginPage = new G4PlusLoginPage(log);
@@ -115,7 +114,7 @@ public class G4PlusFlow extends BasePage {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		g4MenuPage.verifyAIS();
 	}
-	
+
 	public void awsurl() throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
@@ -130,22 +129,22 @@ public class G4PlusFlow extends BasePage {
 					}catch(Exception e) {
 						awsurl();
 					}
-					
+
 				} else {
 					try {
 						url();
 					}catch(Exception e) {
 						url();
 					}
-				
+
 				}
 			}
 			else  {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				G4PlusLoginPage.g4plusLogin(false);
 			}  
-			
-			
+
+
 		} catch (Exception e) {
 			skip = true;
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -154,9 +153,9 @@ public class G4PlusFlow extends BasePage {
 
 	public void accessAIS() {
 		logger.info(env);
-		
+
 		g4PlusSignin();
-	
+
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectAIS();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
@@ -478,7 +477,7 @@ public class G4PlusFlow extends BasePage {
 			capabilities.setCapability("name", "Access Swap");
 			capabilities.setCapability("idleTimeout", 60);
 			capabilities.setCapability("tz", "America/Los_Angeles");
-			
+
 		} catch (Exception e) {
 			throw new Error(e);
 		}

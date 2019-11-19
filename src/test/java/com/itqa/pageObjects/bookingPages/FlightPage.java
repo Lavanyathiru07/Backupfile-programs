@@ -54,7 +54,6 @@ public class FlightPage extends BasePage {
 
 	public FlightPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		//this.logger = Logger.getLogger(FlightPage.class);
 		this.logger=log;
 		landingPage = new LandingPage(logger);
 		jse = (JavascriptExecutor) driver;

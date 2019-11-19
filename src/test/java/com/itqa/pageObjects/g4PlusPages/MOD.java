@@ -243,7 +243,6 @@ public class MOD extends BasePage {
 
 	public MOD(Logger log) {
 		this.driver = DriverBase.getDriver();
-		//this.logger = Logger.getLogger(MOD.class);
 		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);

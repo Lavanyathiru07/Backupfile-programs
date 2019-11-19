@@ -46,7 +46,6 @@ public class ActivityPage extends BasePage {
 
     public ActivityPage(Logger log) {
         this.driver = DriverBase.getDriver();
-      //  this.logger = Logger.getLogger(ActivityPage.class);
         this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);

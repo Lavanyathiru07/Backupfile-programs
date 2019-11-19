@@ -38,7 +38,6 @@ public class CCBookingFlow extends BasePage {
 	private G4PlusLoginPage G4PlusLoginPage;
 
 	public CCBookingFlow(Logger log) {
-		//this.logger = Logger.getLogger(CCBookingFlow.class);
 		this.logger=log;
 		landingPage = new LandingPage(log);
 		flightPage = new FlightPage(log);
@@ -88,7 +87,7 @@ public class CCBookingFlow extends BasePage {
 					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 					DriverBase.getDriver().get(URLS.CC.getUrl(Environment.getEnv(), silo));
 				}
-				
+
 				if(System.getProperty("env").contains("nddprd")) {
 					G4PlusLoginPage.g4plusLogin(false);
 					DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("env"), Environment.getCurrentSilo()));
@@ -111,7 +110,7 @@ public class CCBookingFlow extends BasePage {
 				e.printStackTrace();
 				return manifestId;
 			}
-			
+
 		}
 		return manifestId;
 	}
@@ -124,9 +123,9 @@ public class CCBookingFlow extends BasePage {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		}
-		
+
 		return mod.modUpsell(itn);
-		}  
+	}  
 
 	public void CCRefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
 		if (Environment.getEnv().contains("prod")) {
@@ -134,7 +133,7 @@ public class CCBookingFlow extends BasePage {
 			mod.cancelWholeItn(itn.getItn());
 		}     
 	}
-	
+
 	public Boolean emailVerification(Itinerary itn, String mailToValidation) {
 		try {
 			EmailVerification.openGmail(itn,mailToValidation);
@@ -142,7 +141,7 @@ public class CCBookingFlow extends BasePage {
 		}catch(Exception e) {
 			return false;
 		}
-				
+
 	}
 
 }

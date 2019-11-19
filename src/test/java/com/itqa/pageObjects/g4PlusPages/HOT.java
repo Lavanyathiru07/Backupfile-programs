@@ -56,9 +56,9 @@ public class HOT extends BasePage{
     @FindBy(xpath = "//tr[contains(@class,'ng-scope') and contains(@ng-repeat,'reportItems')]")
     private WebElement reportsRow;
 
-    public HOT() {
+    public HOT(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(HOT.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

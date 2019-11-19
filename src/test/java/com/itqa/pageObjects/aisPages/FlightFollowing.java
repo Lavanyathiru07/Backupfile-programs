@@ -34,9 +34,9 @@ public class FlightFollowing extends BasePage{
     @FindBy(xpath = "//div[contains(@title,'Program/version=FLFOLLOW/')]")
     private WebElement flightHeader;
 
-    public FlightFollowing() {
+    public FlightFollowing(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(FlightFollowing.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

@@ -32,9 +32,9 @@ public class OFO extends BasePage {
     @FindBy(xpath = "//a[contains(@href,'dispositions/search')]")
     private WebElement searchDispButton;
 
-    public OFO() {
+    public OFO(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(OFO.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

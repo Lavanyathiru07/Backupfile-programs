@@ -39,7 +39,6 @@ public class BagAndBoardingPage {
 
     public BagAndBoardingPage(Logger log) {
         this.driver = DriverBase.getDriver();
-       // this.logger = Logger.getLogger(BagAndBoardingPage.class);
         this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);

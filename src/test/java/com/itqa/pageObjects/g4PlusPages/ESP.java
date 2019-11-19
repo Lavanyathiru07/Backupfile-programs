@@ -25,9 +25,9 @@ public class ESP extends BasePage{
     @FindBy(xpath = "//td[contains(text(),'31B')]")
     private WebElement mapRow;
 
-    public ESP() {
+    public ESP(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(ESP.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

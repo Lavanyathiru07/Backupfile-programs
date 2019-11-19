@@ -34,9 +34,9 @@ public class AircraftRecords extends BasePage {
     @FindBy(xpath = "//div[contains(text(),'Tail')]/following-sibling::div/input")
     private WebElement entryAirCraftRecordTailNumber;
 
-    public AircraftRecords() {        
+    public AircraftRecords(Logger log) {        
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(AircraftRecords.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
         

@@ -24,9 +24,9 @@ public class KayakConsole extends BasePage{
     @FindBy(xpath = "//table[contains(@class,'tablesorter')]")
     private WebElement kayakTable;
 
-    public KayakConsole() {
+    public KayakConsole(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(KayakConsole.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

@@ -68,7 +68,6 @@ public class ManageTravelPaymentPage {
 
     public ManageTravelPaymentPage(Logger log) {
     	this.driver = DriverBase.getDriver();
-     //   this.logger = Logger.getLogger(ManageTravelPaymentPage.class);
     	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);

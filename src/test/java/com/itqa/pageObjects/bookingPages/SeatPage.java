@@ -65,7 +65,6 @@ public class SeatPage extends BasePage {
 
     public SeatPage(Logger log) {
         this.driver = DriverBase.getDriver();
-       // this.logger = Logger.getLogger(SeatPage.class);
         this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);

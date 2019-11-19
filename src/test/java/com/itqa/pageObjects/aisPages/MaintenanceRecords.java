@@ -60,9 +60,9 @@ public class MaintenanceRecords extends BasePage {
     @FindBy(id = "result_row")
     private WebElement resultRow;
 
-    public MaintenanceRecords() {
+    public MaintenanceRecords(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(MaintenanceRecords.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

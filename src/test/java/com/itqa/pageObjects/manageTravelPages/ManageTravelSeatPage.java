@@ -38,7 +38,6 @@ public class ManageTravelSeatPage {
 
     public ManageTravelSeatPage(Logger log) {
     	 this.driver = DriverBase.getDriver();
-      //   this.logger = Logger.getLogger(ManageTravelSeatPage.class);
     	 this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);

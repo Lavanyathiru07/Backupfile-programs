@@ -42,9 +42,9 @@ public class SVT extends BasePage{
     @FindBy(xpath = "//tr[contains(@class,'ng-scope')]")
     private WebElement resultRow;
 
-    public SVT() {
+    public SVT(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(SVT.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

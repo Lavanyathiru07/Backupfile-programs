@@ -31,9 +31,9 @@ public class FlightFlow extends BasePage{
     @FindBy(xpath = "//table[contains(@class,'main')]")
     private WebElement mainTable;
 
-    public FlightFlow() {
+    public FlightFlow(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(FlightFlow.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

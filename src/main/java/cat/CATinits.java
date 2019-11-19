@@ -35,10 +35,6 @@ public final class CATinits {
     private final Logger logger = LoggerFactory.getLogger(CATinits.class);
     private String jobid;
 
-	/*
-	 * public CATinits() { }
-	 */
-
     public void createJob() throws Exception {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");

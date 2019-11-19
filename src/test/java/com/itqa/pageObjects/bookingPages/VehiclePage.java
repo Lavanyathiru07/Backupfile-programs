@@ -37,7 +37,6 @@ public class VehiclePage extends BasePage {
 
     public VehiclePage(Logger log) {
         this.driver = DriverBase.getDriver();
-       // this.logger = Logger.getLogger(VehiclePage.class);
         this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);

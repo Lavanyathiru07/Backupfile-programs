@@ -58,7 +58,6 @@ public class BookingFlow extends BasePage {
 
 	public BookingFlow(Logger log) {
 		this.logger = log;
-		//this.logger=log;
 		landingPage = new LandingPage(log);
 		flightPage = new FlightPage(log);
 		bundlePage = new BundlePage(log);

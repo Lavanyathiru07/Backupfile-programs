@@ -28,9 +28,9 @@ public class CL extends BasePage{
     @FindBy(id = "email")
     private WebElement emailField;
 
-    public CL() { 
+    public CL(Logger log) { 
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(CL.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
         

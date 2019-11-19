@@ -89,9 +89,9 @@ public class AisMenuPage extends BasePage {
 	@FindBy(xpath = "//span[contains(text(),'ITINERARY MAINTENANCE')]")
 	private WebElement itnMXTab;
 
-	public AisMenuPage() {
+	public AisMenuPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(AisMenuPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}

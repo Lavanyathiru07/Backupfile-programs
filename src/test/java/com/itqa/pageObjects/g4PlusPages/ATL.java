@@ -47,9 +47,9 @@ public class ATL extends BasePage{
     @FindBy(id = "invoiceStartDate")
     private WebElement invoiceDateField;
 
-    public ATL() {
+    public ATL(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(ATL.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

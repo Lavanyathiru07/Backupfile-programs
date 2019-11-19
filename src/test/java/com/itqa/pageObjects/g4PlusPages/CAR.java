@@ -44,9 +44,9 @@ public class CAR extends BasePage{
     @FindBy(css = "tr[ng-init='parentIndex = $index; rates = ratesByCode[code]']")
     private WebElement resultRow;
 
-    public CAR() {
+    public CAR(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(CAR.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

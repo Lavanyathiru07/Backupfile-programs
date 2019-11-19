@@ -31,9 +31,9 @@ public class STS extends BasePage {
     @FindBy(xpath = "//h2[contains(text(),'Seat Pricing')]")
     private WebElement seatPricingTitle;
 
-    public STS() {
+    public STS(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(STS.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

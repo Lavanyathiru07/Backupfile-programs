@@ -35,9 +35,9 @@ public class FM extends BasePage{
     @FindBy(css = "tr[class='ng-scope']")
     private WebElement resultRow;
 
-    public FM() {
+    public FM(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(FM.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

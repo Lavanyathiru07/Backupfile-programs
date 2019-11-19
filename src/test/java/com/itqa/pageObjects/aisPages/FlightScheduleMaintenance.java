@@ -26,9 +26,9 @@ public class FlightScheduleMaintenance extends BasePage{
     @FindBy(xpath = "//td[contains(text(),'Origin')]/following-sibling::td[contains(text(),'-')]")
     private WebElement originText;
 
-    public FlightScheduleMaintenance() {
+    public FlightScheduleMaintenance(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(FlightScheduleMaintenance.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }

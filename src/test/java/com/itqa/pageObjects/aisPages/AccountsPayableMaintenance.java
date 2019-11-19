@@ -49,9 +49,9 @@ public class AccountsPayableMaintenance extends BasePage{
     @FindBy(name = "paymentRow.paymentId")
     private WebElement paymentIdField;
 
-    public AccountsPayableMaintenance() {
+    public AccountsPayableMaintenance(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(AccountsPayableMaintenance.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
