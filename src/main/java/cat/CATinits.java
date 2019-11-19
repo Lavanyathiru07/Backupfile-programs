@@ -40,7 +40,6 @@ public final class CATinits {
 	 */
 
     public void createJob() throws Exception {
-    	System.out.println("inside create job WebBookingTestIT");
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -54,7 +53,6 @@ public final class CATinits {
         insideBody.put("startDateTime", timestamp);
         insideBody.put("parentJobDetails", (Object)null);
         jobCreationJson.put("jobCreationJson", insideBody);
-        System.out.println(factory.serialize(jobCreationJson).toString());
         String response = "";
 
         try {
@@ -65,7 +63,6 @@ public final class CATinits {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(factory.serialize(jobCreationJson).toString());
             writer.flush();
-            System.out.println("response code" + connection.getResponseCode() );
             if (connection.getResponseCode() != 201) {
                 throw new Exception("jobCreationJson doesn't return HTTP 201");
             } else {
@@ -76,7 +73,6 @@ public final class CATinits {
 
                 writer.close();
                 reader.close();
-                System.out.println(response);
                 Map responseMap = (Map)JsonFactory.create().readValue(response, Map.class);
                 this.jobid = responseMap.get("_id").toString();
                 if (this.jobid == "") {
@@ -89,7 +85,6 @@ public final class CATinits {
     }
 
     public void completeJob(String status) {
-    	System.out.println("inside complete job WebBookingTestIT");
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -101,9 +96,7 @@ public final class CATinits {
         insideBody.put("endDateTime", timestamp);
         insideBody.put("jobStatus", status);
         jobClosingJson.put("jobClosingJson", insideBody);
-        System.out.println(factory.serialize(jobClosingJson).toString());
         Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(jobClosingJson).toString());
-        System.out.println(response.status() + ": " + response.payloadAsString());
     }
 
     public void createSuite(String suiteName) {
@@ -121,9 +114,7 @@ public final class CATinits {
         insideBody.put("buildReference", System.getenv("buildReference"));
         insideBody.put("testCollectionName", suiteName);
         testCollectionCreation.put("testcollectionCreation", insideBody);
-        System.out.println(factory.serialize(testCollectionCreation).toString());
         Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testCollectionCreation).toString());
-        System.out.println(response.status() + ": " + response.payloadAsString());
     }
 
     public void completeSuite(String suiteName) {
@@ -140,9 +131,7 @@ public final class CATinits {
         insideBody.put("buildReference", System.getenv("buildReference"));
         insideBody.put("testCollectionName", suiteName);
         testCollectionClosing.put("testcollectionClosing", insideBody);
-        System.out.println(factory.serialize(testCollectionClosing).toString());
         Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testCollectionClosing).toString());
-        System.out.println(response.status() + ": " + response.payloadAsString());
     }
 
     public void createTest(String caseName, String suiteName, int testId) {
@@ -301,6 +290,5 @@ public final class CATinits {
         insideBody.put("resultLogs", logList);
         closeTestCaseJson.put("closeTestCaseJson", insideBody);
         Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(closeTestCaseJson).toString());
-   System.out.println("=============================Job creation conpleted=================================");
     }
 }
