@@ -53,7 +53,6 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("AIS: Search Decoupled Code For MX - Action Requests")
 	public void lookupActionRequest(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		if ((!env.contains("vipprod") && (silo == 1))) {
-			// silo=0;
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.lookupActionRequest(itn);
