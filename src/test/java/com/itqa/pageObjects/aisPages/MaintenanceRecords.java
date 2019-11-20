@@ -71,12 +71,13 @@ public class MaintenanceRecords extends BasePage {
 
     public void lookupActionRequest(Itinerary itn) {
     	try{
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(actionsTab));
+    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionsTab));
         actionsTab.click();
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(actionRequestsTab));
+    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionRequestsTab));
         actionRequestsTab.click();
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(actionRequestsLookupButton));
-        actionRequestsLookupButton.click();
+    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionRequestsLookupButton));
+    	if(actionRequestsLookupButton.isDisplayed()) {
+        actionRequestsLookupButton.click();}
 
         if (actionRequestsResultRow.size() > 0) {
             logger.info("Action Requests Lookup: " + actionRequestsResultRow.size() + " rows");

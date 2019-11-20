@@ -15,7 +15,6 @@ import data.Itinerary;
 import framework.DriverBase;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class AircraftRecords extends BasePage {
 	private JavascriptExecutor jse = null;
@@ -43,8 +42,10 @@ public class AircraftRecords extends BasePage {
     public void lookupAircraftPart(Itinerary itn) {
     	try{
     		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(lookupButton));
-    		lookupButton.click();
-    		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+    		if(lookupButton.isDisplayed()) {
+    		lookupButton.click();}
+    		new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf((WebElement) aircraftRecordsResultRow));
+    		//driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
     		if (aircraftRecordsResultRow.size() > 0) {
     			logger.info("Aircraft Records Lookup: " + aircraftRecordsResultRow.size() + " rows");
     			logger.info("The first row is: " + aircraftRecordsResultRow.get(0).getText().replaceAll("\n", " "));
