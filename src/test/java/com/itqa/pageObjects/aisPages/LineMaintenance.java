@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
 import data.Itinerary;
@@ -73,8 +74,11 @@ public class LineMaintenance extends BasePage{
     		jse.executeScript("arguments[0].click();", resultRow);
     		logger.info("Line MX Report displayed");
     	}catch(Exception e){
-    		itn.setItn("Failed due to QAA-338");
+    		if (Environment.getEnv().contains("aws")) {
+				itn.setItn("Failed due to QAA-338");
+			}
     		e.printStackTrace();
+    		throw new Error(">>>Records returns no result<<<");
     	}
     }
 }

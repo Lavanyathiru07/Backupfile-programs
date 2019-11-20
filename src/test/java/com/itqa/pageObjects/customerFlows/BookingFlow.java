@@ -160,9 +160,11 @@ public class BookingFlow extends BasePage {
 			return tripsPage.checkMyTrips(itn.getItn());
 		}catch(Exception e) {
 			if (System.getProperty("env").contains("qa1")) {
-			itn.setItn(""+"Failed due to CES-1101");
-		}}
-		return null;
+			itn.setItn(itn.getItn()+"Failed due to CES-1101");
+		}
+			return false;
+		}
+		
 	}
 
 	public Boolean processOnlineCheckinAndGetBoardingPass(Itinerary itn) {
@@ -239,6 +241,7 @@ public class BookingFlow extends BasePage {
 
 	public void manageTravelModificationUpsellBagSeat(Itinerary itn, Integer silo) {
 		driver = DriverBase.getDriver();
+		try {
 		if (Environment.getEnv().contains("aws")) {
 		     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
 		}else {
@@ -252,5 +255,8 @@ public class BookingFlow extends BasePage {
 		ManageTravelVehiclePage.selectVehicle();
 		ManageTravelPaymentPage.fillPaymentPage(itn);
 
+	}catch (Exception e) {
+		e.printStackTrace();
+		throw new Error(">>>manageTravelModificationUpsellBagSeat FAIL<<<");
 	}
-}
+}}
