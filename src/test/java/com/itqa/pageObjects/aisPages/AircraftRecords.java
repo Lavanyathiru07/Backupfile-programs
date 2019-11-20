@@ -43,17 +43,12 @@ public class AircraftRecords extends BasePage {
     }
 
     public void lookupAircraftPart(Itinerary itn) {
-//    	if(flag.isDisplayed()) {
-//    		itn.setItn("Failed due to QAA-338");
-//    		throw new Error(">>>Aircraft Records returns no result<<<");    			
-//    	}else {
     		try{
     	
     		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(lookupButton));
     		if(lookupButton.isDisplayed()) {
     		lookupButton.click();}
     		new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf((WebElement) aircraftRecordsResultRow));
-    		//driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
     		if (aircraftRecordsResultRow.size() > 0) {
     			logger.info("Aircraft Records Lookup: " + aircraftRecordsResultRow.size() + " rows");
     			logger.info("The first row is: " + aircraftRecordsResultRow.get(0).getText().replaceAll("\n", " "));
@@ -66,8 +61,7 @@ public class AircraftRecords extends BasePage {
 			e.printStackTrace();
 			throw new Error(">>>Aircraft Records returns no result<<<");
 
-		//}
-    }}
+		    }}
 
 	
 }

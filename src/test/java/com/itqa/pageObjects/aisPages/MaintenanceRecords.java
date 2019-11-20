@@ -73,10 +73,6 @@ public class MaintenanceRecords extends BasePage {
     }
 
     public void lookupActionRequest(Itinerary itn) {
-//    	if(flag.isDisplayed()) {
-//    		itn.setItn("Failed due to QAA-338");
-//    		throw new Error(">>>Aircraft Records returns no result<<<");    			
-//    	}else {
     	try{
     	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionsTab));
         actionsTab.click();
@@ -97,7 +93,6 @@ public class MaintenanceRecords extends BasePage {
     		}
     		 e.printStackTrace();
     		 throw new Error(">>>Action Requests returns no result<<<");
-//    	}
     }
     }
     public void openReport() {
