@@ -43,10 +43,10 @@ public class AircraftRecords extends BasePage {
     }
 
     public void lookupAircraftPart(Itinerary itn) {
-    	if(flag.isDisplayed()) {
-    		itn.setItn("Failed due to QAA-338");
-    		throw new Error(">>>Aircraft Records returns no result<<<");    			
-    	}else {
+//    	if(flag.isDisplayed()) {
+//    		itn.setItn("Failed due to QAA-338");
+//    		throw new Error(">>>Aircraft Records returns no result<<<");    			
+//    	}else {
     		try{
     	
     		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(lookupButton));
@@ -66,7 +66,7 @@ public class AircraftRecords extends BasePage {
 			e.printStackTrace();
 			throw new Error(">>>Aircraft Records returns no result<<<");
 
-		}
+		//}
     }}
 
 	
