@@ -2,7 +2,7 @@
 
 
 <suite name="BAT 2.0 Automation" verbose="1" parallel="methods"
-	thread-count="25" preserve-order="false" data-provider-thread-count="30">
+	thread-count="40" preserve-order="false" data-provider-thread-count="30">
 	
 	<test name="Non Booking and PreBAT">
 		<classes>
@@ -16,6 +16,7 @@
 			<class name="com.itqa.tests.WebBookingTestIT" />
 			<class name="com.itqa.tests.TABookingTestIT" />
 			<class name="com.itqa.tests.CCBookingTestIT" />
+			
 		</classes>
 	</test>
 	
