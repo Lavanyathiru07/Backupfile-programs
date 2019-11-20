@@ -1001,7 +1001,7 @@ public class NonBookingTestIT extends DriverBase {
 			String error = result.getThrowable().getMessage();
 			cat.completeTest("FAIL", "BAT 2.0", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}	else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "BAT 2.0", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("PASS", "BAT 2.0", "", "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
 
