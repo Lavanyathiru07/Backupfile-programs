@@ -30,6 +30,9 @@ public class AircraftRecords extends BasePage {
 
     @FindBy(xpath = "//div[contains(text(),'Tail')]/following-sibling::div/input")
     private WebElement entryAirCraftRecordTailNumber;
+    
+    @FindBy(xpath = ("//div[contains(text(),'AIS Error')]"))
+    private WebElement flag;
 
     public AircraftRecords() {        
         this.driver = DriverBase.getDriver();
@@ -40,7 +43,12 @@ public class AircraftRecords extends BasePage {
     }
 
     public void lookupAircraftPart(Itinerary itn) {
-    	try{
+    	if(flag.isDisplayed()) {
+    		itn.setItn("Failed due to QAA-338");
+    		throw new Error(">>>Aircraft Records returns no result<<<");    			
+    	}else {
+    		try{
+    	
     		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(lookupButton));
     		if(lookupButton.isDisplayed()) {
     		lookupButton.click();}
@@ -59,7 +67,7 @@ public class AircraftRecords extends BasePage {
 			throw new Error(">>>Aircraft Records returns no result<<<");
 
 		}
-    }
+    }}
 
 	
 }

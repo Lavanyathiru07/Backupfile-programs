@@ -61,6 +61,9 @@ public class MaintenanceRecords extends BasePage {
 
     @FindBy(id = "result_row")
     private WebElement resultRow;
+    
+    @FindBy(xpath = ("//div[contains(text(),'AIS Error')]"))
+    private WebElement flag;
 
     public MaintenanceRecords() {
     	this.driver = DriverBase.getDriver();
@@ -70,6 +73,10 @@ public class MaintenanceRecords extends BasePage {
     }
 
     public void lookupActionRequest(Itinerary itn) {
+    	if(flag.isDisplayed()) {
+    		itn.setItn("Failed due to QAA-338");
+    		throw new Error(">>>Aircraft Records returns no result<<<");    			
+    	}else {
     	try{
     	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionsTab));
         actionsTab.click();
@@ -92,7 +99,7 @@ public class MaintenanceRecords extends BasePage {
     		 throw new Error(">>>Action Requests returns no result<<<");
     	}
     }
-
+    }
     public void openReport() {
     	try{
     	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
