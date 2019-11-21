@@ -127,8 +127,7 @@ public class CCBookingTestIT extends DriverBase {
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 				updateTextContext(itn, context);
-				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-				// recevied");
+				 Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 				if (!((env.contains("nddprd") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws"))
 						&& ((silo == 2) || (silo == 3)))) {
 					Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
