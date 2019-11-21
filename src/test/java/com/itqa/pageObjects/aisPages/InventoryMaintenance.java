@@ -12,8 +12,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class InventoryMaintenance extends BasePage{
@@ -38,7 +40,7 @@ public class InventoryMaintenance extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void verifyInventoryMX() {
+    public void verifyInventoryMX(Itinerary itn) {
     	try{
     	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectedPart));
         selectedPart.click();
@@ -68,12 +70,15 @@ public class InventoryMaintenance extends BasePage{
         else {
             logger.info("Inventory Maintenance Transaction displayed");
         }
-    	}catch(Exception e){
-    		e.printStackTrace();
-    		throw new Error("");
-    		
-    		
-			
-    	}
+		} catch (Exception e) {
+
+			if (Environment.getEnv().contains("aws")) {
+				itn.setItn("Failed due to QAA-337");
+			}
+
+			e.printStackTrace();
+			throw new Error(">>>Inventory Maintenance Fail<<< ");
+
+		}
     }
 }

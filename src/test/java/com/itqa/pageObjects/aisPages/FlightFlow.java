@@ -10,8 +10,6 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.SkipException;
-
 import com.itqa.pageObjects.BasePage;
 
 import framework.DriverBase;
@@ -47,6 +45,7 @@ public class FlightFlow extends BasePage{
         logger.info("Flight Flow Table Displayed");
     	}catch(Exception e){
     		e.printStackTrace();
+    		throw new Error(">>>Fligh Flow FAIL<<<");
     	}
     }
 }

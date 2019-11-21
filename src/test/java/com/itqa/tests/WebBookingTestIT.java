@@ -1,8 +1,6 @@
 package com.itqa.tests;
 
 import com.itqa.Utils.GeneralUtils;
-import com.itqa.Utils.Screenshot;
-
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
@@ -76,9 +74,7 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
-
 			if ((env.contains("prod") && ((silo == 1) || (silo == 2)))) {
 				booking.manageTravelModificationUpsellBagSeat(itn, silo);
 				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
@@ -178,6 +174,7 @@ public class WebBookingTestIT extends DriverBase {
 			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
 			step("Logged in and verified account");
+
 			if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
 					|| (env.contains("prod") && (silo == 3))) {
 				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
