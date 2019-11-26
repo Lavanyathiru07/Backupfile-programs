@@ -64,6 +64,7 @@ public class SVT extends BasePage{
         logger.info("SVT Menu Open");
     	}catch(Exception e){
     		e.printStackTrace();
+    		throw new Error("FAIL");
     	}
     }
 }

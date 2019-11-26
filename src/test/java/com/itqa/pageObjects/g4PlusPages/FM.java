@@ -62,6 +62,7 @@ public class FM extends BasePage{
         logger.info("BAG Menu Open");
     }catch(Exception e){
     	e.printStackTrace();
+    	throw new Error("FAIL");
 	}
     }
 
@@ -85,6 +86,7 @@ public class FM extends BasePage{
         logger.info("PB2 Menu Open");
     }catch(Exception e){
     	e.printStackTrace();
+    	throw new Error("FAIL");
 	}
     }
 
@@ -109,6 +111,7 @@ public class FM extends BasePage{
         logger.info("TF2 Menu Open");
     	}catch(Exception e){
     		e.printStackTrace();
+    		throw new Error("FAIL");
     	}
     }
 }

@@ -62,6 +62,8 @@ public class NonBookingTestIT extends DriverBase {
 
 		env = Environment.getEnv();
 		trc = new TestResultContext();
+		
+
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Decoupled Code For MX - Action Requests", groups = {
@@ -80,7 +82,8 @@ public class NonBookingTestIT extends DriverBase {
 			//silo=0;
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.lookupActionRequest();
+			nonBooking.lookupActionRequest(itn);
+			trc.setSetItn(itn.getItn());
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -118,7 +121,8 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.lookupAircraftRecordsPart();
+			nonBooking.lookupAircraftRecordsPart(itn);
+			trc.setSetItn(itn.getItn());
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -156,8 +160,10 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.runSPOEreport();
-		} else {
+			nonBooking.runSPOEreport(itn);
+			trc.setSetItn(itn.getItn());
+		}else {
+
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
@@ -232,8 +238,9 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessInventoryMX();
-		} else {
+			nonBooking.accessInventoryMX(itn);
+			trc.setSetItn(itn.getItn());
+		}else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
@@ -308,9 +315,10 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.verifyFlightScheduleMX();
+			nonBooking.verifyFlightScheduleMX(itn);
+			trc.setSetItn(itn.getItn());
+		}else {
 
-		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
@@ -348,8 +356,10 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("vipprod")&&(silo==1))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.lookupAccountsPayableMX();
-		} else {
+			nonBooking.lookupAccountsPayableMX(itn);
+			trc.setSetItn(itn.getItn());
+		}else {
+
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
@@ -1014,10 +1024,10 @@ public class NonBookingTestIT extends DriverBase {
 		}else {
 			driver.get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		}
-		 */
+		*/
 		itn.setDescription(description);
 		context.setAttribute("description", description);
-
+		
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);
 		log.info("Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId());
@@ -1026,6 +1036,7 @@ public class NonBookingTestIT extends DriverBase {
 	private void updateTextContext(Itinerary itn, ITestContext context) {
 		trc.setSetItn(itn.getItn());
 		itn.setItn(itn.getItn());
+		
 		step("NonBooking created with itn " + itn.getItn(), null);
 	}
 

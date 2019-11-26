@@ -452,7 +452,7 @@ public class PaymentPage extends BasePage {
 				return true;
 			}
 		}
-		logger.info("Actual amount (" + toCheckValue + ") is matching with decline amount: FALSE");
+		//logger.info("Actual amount (" + toCheckValue + ") is matching with decline amount: FALSE");
 		return false;
 	}
 }

@@ -78,6 +78,7 @@ public class ATL extends BasePage{
         logger.info("ATL Menu Open");
     	}catch(Exception e){
     		e.printStackTrace();
+    		throw new Error("FAIL");
     	}
     }
 }

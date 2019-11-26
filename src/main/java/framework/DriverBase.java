@@ -30,7 +30,7 @@ public class DriverBase {
 	public static int paymentService = 0;
 	public static String flightAvailErrorMsg = "";
 	public static String paymentErrorMsg = "";
-	//protected static Boolean useCat = true;
+	
 	private boolean fail = false;
 	public static Map<String, String> status = new HashMap<String, String>();
 	private String comments = "";
@@ -51,6 +51,7 @@ public class DriverBase {
 			protected DriverFactory initialValue() {
 				DriverFactory webDriverThread = new DriverFactory();
 				webDriverThreadPool.add(webDriverThread);
+
 				return webDriverThread;
 			}
 		};
@@ -59,13 +60,15 @@ public class DriverBase {
 	public static RemoteWebDriver getDriver() {
 		return driverThread.get().getDriver();
 	}
-
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult testResult) throws IOException {
 
 		byte[] screenShotByteFile;
-		screenShotByteFile = Screenshot.saveScreenshot( testResult.getName(), getDriver());   
+		screenShotByteFile = Screenshot.saveScreenshot(testResult.getName(), getDriver());
 		testResult.setAttribute("screenshot", screenShotByteFile);
+		// System.setProperty("scrsht", screenShotByteFile.toString());
+		// Screenshot.takeScreenshot(getDriver(), System.getProperty("user.dir") +
+		// "/src/test/resources/bookingScreenshot/"+testResult.getAttribute("description")+".png");
 		getDriver().close();
 		driverThread.get().quitDriver();
 	}

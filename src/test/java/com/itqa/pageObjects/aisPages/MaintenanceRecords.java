@@ -11,8 +11,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
@@ -59,6 +61,9 @@ public class MaintenanceRecords extends BasePage {
 
     @FindBy(id = "result_row")
     private WebElement resultRow;
+    
+    @FindBy(xpath = ("//div[contains(text(),'AIS Error')]"))
+    private WebElement flag;
 
     public MaintenanceRecords(Logger log) {
     	this.driver = DriverBase.getDriver();
@@ -67,28 +72,29 @@ public class MaintenanceRecords extends BasePage {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void lookupActionRequest() {
+    public void lookupActionRequest(Itinerary itn) {
     	try{
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(actionsTab));
+    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionsTab));
         actionsTab.click();
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(actionRequestsTab));
+    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionRequestsTab));
         actionRequestsTab.click();
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(actionRequestsLookupButton));
-        actionRequestsLookupButton.click();
+    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionRequestsLookupButton));
+    	if(actionRequestsLookupButton.isDisplayed()) {
+        actionRequestsLookupButton.click();}
 
         if (actionRequestsResultRow.size() > 0) {
             logger.info("Action Requests Lookup: " + actionRequestsResultRow.size() + " rows");
             logger.info("The first row is: " + actionRequestsResultRow.get(0).getText().replaceAll("\n", " "));
         }
-        else {
-            throw new Error("Action Requests returns no result.");
-        }
+       
     	}catch(Exception e){
-    		
-    		e.printStackTrace();
-    	}
+    		if(Environment.getEnv().contains("aws")) {
+    			itn.setItn("Failed due to QAA-338");
+    		}
+    		 e.printStackTrace();
+    		 throw new Error(">>>Action Requests returns no result<<<");
     }
-
+    }
     public void openReport() {
     	try{
     	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
@@ -112,7 +118,7 @@ public class MaintenanceRecords extends BasePage {
         logger.info("MX Records Report displayed");
     	}catch(Exception e){
     		e.printStackTrace();
-    		throw new Error("");
+    		throw new Error(">>>Reports cant find<<<");
     	}
     }
 }

@@ -10,10 +10,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.SkipException;
 
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class AccountsPayableMaintenance extends BasePage{
@@ -56,7 +57,7 @@ public class AccountsPayableMaintenance extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void lookupTransaction() {
+    public void lookupTransaction(Itinerary itn) {
     	try{
         //new Select(vendorStatField).selectByValue("A");
         locationField.sendKeys("HQ" + Keys.ENTER);
@@ -120,8 +121,12 @@ public class AccountsPayableMaintenance extends BasePage{
         }
     
     }catch(Exception e){
+    	if (Environment.getEnv().contains("aws")) {
+    		itn.setItn("Failed due to QAA-338");
+		}
+    	
 		e.printStackTrace();
-		throw new Error("");
+		throw new Error(">>>Account Payable MX FAIL<<<");
 	}
 }
 }

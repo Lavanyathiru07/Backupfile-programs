@@ -57,6 +57,7 @@ public class RQ extends BasePage{
     	}catch(Exception e){
     
     		e.printStackTrace();
+    		throw new Error("FAIL");
     	}
     }
 }

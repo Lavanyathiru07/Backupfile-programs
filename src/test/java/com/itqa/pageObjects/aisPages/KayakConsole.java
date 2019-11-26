@@ -9,8 +9,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.SkipException;
-
 import com.itqa.pageObjects.BasePage;
 
 import framework.DriverBase;
@@ -38,6 +36,7 @@ public class KayakConsole extends BasePage{
         logger.info("Kayak Console Open");
     	}catch(Exception e){
     		e.printStackTrace();
+    		throw new Error(">>>Kayak Access FAIL<<<");
     	}
     }
 }

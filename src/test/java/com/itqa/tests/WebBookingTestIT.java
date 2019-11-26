@@ -64,8 +64,8 @@ public class WebBookingTestIT extends DriverBase {
 	@BeforeMethod(alwaysRun = true)
 	public void setup(ITestContext context) throws MalformedURLException {
 		driver = DriverBase.getDriver();
-		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId() + ", "
-				+ driver.getCurrentUrl());
+		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
+				+ ", " + driver.getCurrentUrl());
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
@@ -119,16 +119,14 @@ public class WebBookingTestIT extends DriverBase {
 				BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 				it = itn.getItn();
 
-				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-
-				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
-
-				if ((env.contains("prod") && ((silo == 1) || (silo == 2)))) {
-					booking.manageTravelModificationUpsellBagSeat(itn, silo);
-					// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
-					// recevied");
-				}
-				updateTextContext(itn, context);
+			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+			if ((env.contains("prod") && ((silo == 1) || (silo == 2)))) {
+				booking.manageTravelModificationUpsellBagSeat(itn, silo);
+				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
+				// recevied");
+			}
+			updateTextContext(itn, context);
 			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
@@ -139,7 +137,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			}
 		} else {
-
+			
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 
 		}
@@ -188,29 +186,28 @@ public class WebBookingTestIT extends DriverBase {
 			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 
 			if (flightAvailService == 0 && paymentService == 0) {
-				try {
-					//setEarlyMarketCities(itn);
-					itn.setDepartureCity("FAT");
-					itn.setDestinationCity("LAS");
-				} catch (Exception e) {
-					logger.get().info(
-							"Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
-					itn.setDepartureCity("FAT");
-					itn.setDestinationCity("LAS");
-				}
+			try {
+				//setEarlyMarketCities(itn);
+				itn.setDepartureCity("FAT");
+				itn.setDestinationCity("LAS");
+			} catch (Exception e) {
+				logger.get().info("Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
+				itn.setDepartureCity("FAT");
+				itn.setDestinationCity("LAS");
+			}
 				desc.set(itn.getDescription());
-				BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
+			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 				it=itn.getItn();
-				Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
-				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-				// recevied");
-				updateTextContext(itn, context);
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+			// recevied");
+			updateTextContext(itn, context);
 
-				Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
-						"Could not print boarding pass");
-				booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
-				step("Upgraded bags and priority during OLCI.  Printed boarding pass");
+			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
+					"Could not print boarding pass");
+			booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
+			step("Upgraded bags and priority during OLCI.  Printed boarding pass");
 			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
@@ -221,7 +218,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			}
 		} else {
-
+			 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
@@ -245,34 +242,36 @@ public class WebBookingTestIT extends DriverBase {
 			desc.set(itn.getDescription());
 
 			if (flightAvailService == 0 && paymentService == 0) {
-				log.info("Accoutn creation booking started");
-				BookingFlow booking = new BookingFlow(logger.get());
-				generateBooking(itn, silo, context, true);
-				Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+			log.info("Accoutn creation booking started");
+			BookingFlow booking = new BookingFlow(logger.get());
+			generateBooking(itn, silo, context, true);
 
-				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-				// recevied");
-				logger.get().info("Account creation started");
-				Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
+			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 
-				step("Logged in and verified account");
-				if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
-						|| (env.contains("prod") && (silo == 3))) {
-					Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
-				}
-				updateTextContext(itn, context);
-				booking.WWWRefundAndCancelItn(itn.getItn(), itn);
-			} else {
-				if (flightAvailService != 0) {
-					itn.setItn(flightAvailErrorMsg);
-				} else if (paymentService != 0) {
-					itn.setItn(paymentErrorMsg);
-				}
-				throw new SkipException("Skipping Test Case as runmode set to NO");
+			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+			// recevied");
+			logger.get().info("Account creation started");
+			Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
 
+			step("Logged in and verified account");
+
+			if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
+					|| (env.contains("prod") && (silo == 3))) {
+				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
 			}
+			updateTextContext(itn, context);
+			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
 		} else {
+			if (flightAvailService != 0) {
+				itn.setItn(flightAvailErrorMsg);
+			} else if (paymentService != 0) {
+				itn.setItn(paymentErrorMsg);
+			}
+			throw new SkipException("Skipping Test Case as runmode set to NO");
 
+		}
+		} else {
+			 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 		cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
@@ -330,8 +329,8 @@ public class WebBookingTestIT extends DriverBase {
 		ev.setCurrentSilo(silo);
 		driver = DriverBase.getDriver();
 		if (env.contains("aws")) {
-			driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
-		} else {
+		     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
+		}else {
 			driver.get(URLS.WWW.getUrl(env, silo));
 		}
 		itn.setDescription(description);
@@ -348,7 +347,7 @@ public class WebBookingTestIT extends DriverBase {
 	private void updateTextContext(Itinerary itn, ITestContext context) {
 		trc.setSetItn(itn.getItn());
 		itn.setItn(itn.getItn());
-
+		
 		step("Booking created with itn " + itn.getItn());
 	}
 
