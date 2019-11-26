@@ -33,9 +33,33 @@ public class Environment {
 	
 	public ArrayList<Integer> getSilos() {
 		ArrayList<Integer> siloList =new ArrayList<Integer>();
+		if(System.getProperty("Scenario").equals(null)) {
+			if(getEnv().contains("trn")) {
+				siloList.add(0);
+				siloList.add(1);
+				siloList.add(4);
+			} else if(getEnv().contains("in")) {
+				siloList.add(1);
+				siloList.add(4);
+			}else if(getEnv().contains("qa")||getEnv().contains("aws")) {
+				siloList.add(1);
+				siloList.add(2);
+				siloList.add(4);
+				siloList.add(5);
+			}else if(getEnv().contains("stg")||getEnv().contains("nddprd")||getEnv().contains("prod")) {
+				siloList.add(1);
+				siloList.add(2);
+				siloList.add(3);
+				siloList.add(4);
+				siloList.add(5);
+			}else {
+				siloList.add(0);
+			}
+			
+		}
+		return siloList;
 		
-		
-		if(System.getProperty("Scenario").equals("silo")) {
+		/*if(System.getProperty("Scenario").equals("silo")) {
 			if(getEnv().contains("in")) {
 				siloList.add(1);
 			}else if(getEnv().contains("qa")||getEnv().contains("aws")) {
@@ -51,26 +75,26 @@ public class Environment {
 			}else {
 				siloList.add(0);
 			}
-			return siloList;
+			
 		}else if(System.getProperty("Scenario").contains("0")) {
 			siloList.add(0);
-			return siloList;
+			
 		}else if(System.getProperty("Scenario").contains("1")) {
 			siloList.add(1);
-			return siloList;
+			
 		}else if(System.getProperty("Scenario").contains("2")) {
 			siloList.add(2);
-			return siloList;
+			
 		}
 		else if(System.getProperty("Scenario").contains("3")) {
 			siloList.add(3);
-			return siloList;
+			
 		}else if(System.getProperty("Scenario").equalsIgnoreCase("ais")) {
 			siloList.add(4);
-			return siloList;
+			
 		}else if(System.getProperty("Scenario").equalsIgnoreCase("g4plus")) {
 			siloList.add(5);
-			return siloList;
+			
 		}else {
 			if(getEnv().contains("trn")) {
 				siloList.add(0);
@@ -93,8 +117,9 @@ public class Environment {
 			}else {
 				siloList.add(0);
 			}
-			return siloList;
+			
 		}
+		return siloList;*/
 		
 	}
 
