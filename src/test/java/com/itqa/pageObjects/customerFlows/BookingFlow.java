@@ -63,7 +63,6 @@ public class BookingFlow extends BasePage {
 		bundlePage = new BundlePage();
 		hotelPage = new HotelPage();
 		vehiclePage = new VehiclePage();
-		activityPage = new ActivityPage();
 		travelerPage = new TravelerPage();
 		seatPage = new SeatPage();
 		paymentPage = new PaymentPage();
@@ -99,7 +98,6 @@ public class BookingFlow extends BasePage {
 			bundlePage.selectBundle(itn);
 			hotelPage.selectHotel(itn);
 			vehiclePage.selectVehicle(itn);
-			activityPage.selectActivity(itn);
 			travelerPage.fillTravelerPage(itn);
 			seatPage.selectSeatPage(itn);
 			bagPage.selectBagPage(itn);

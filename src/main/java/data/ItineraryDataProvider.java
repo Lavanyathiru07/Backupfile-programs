@@ -14,8 +14,8 @@ public class ItineraryDataProvider {
     @DataProvider(name = "Web Use Cases", parallel = true)
     public static Iterator<Object[]> itineraryDataBuilder(ITestContext context, Method method) {
         ArrayList<Object[]> data = new ArrayList<>();
-        ArrayList<Integer> silos = new Environment().getSilos();
-
+        //ArrayList<Integer> silos = new Environment().getSilos();
+        List<Integer> silos = new Environment().getSiloList();
 
         if (method.getName().contains("OLCI")) {
                 for (Integer silo: silos) {
@@ -63,8 +63,8 @@ public class ItineraryDataProvider {
     @DataProvider(name = "TA Use Cases", parallel = true)
     public Iterator<Object[]> itineraryDataBuilderforTA(ITestContext context, Method method) {
         ArrayList<Object[]> data = new ArrayList<>();
-        ArrayList<Integer> silos = new Environment().getSilos();
-       // List<Integer> silos = new Environment().getSiloList();
+       // ArrayList<Integer> silos = new Environment().getSilos();
+        List<Integer> silos = new Environment().getSiloList();
         if (method.getName().contains("RoundTripWith2bags")) {
             for (Integer silo: silos) {
                 Itinerary itnRoundTrip = new ItineraryBuilder()
@@ -97,8 +97,8 @@ public class ItineraryDataProvider {
     @DataProvider(name = "CC Use Cases", parallel = true)
     public Iterator<Object[]> itineraryDataBuilderforCC(ITestContext context, Method method) {
         ArrayList<Object[]> data = new ArrayList<>();
-        ArrayList<Integer> silos = new Environment().getSilos();
-        //List<Integer> silos = new Environment().getSiloList();
+        //ArrayList<Integer> silos = new Environment().getSilos();
+        List<Integer> silos = new Environment().getSiloList();
         
         if (method.getName().contains("RoundTrip")) {
             for (Integer silo: silos) {
@@ -132,8 +132,8 @@ public class ItineraryDataProvider {
     @DataProvider(name = "NonBooking Use Cases", parallel = true)
     public Iterator<Object[]> itineraryDataBuilderforNonBooking(ITestContext context, Method method) {
     	ArrayList<Object[]> data = new ArrayList<>();
-    	ArrayList<Integer> silos = new Environment().getSilos();
-       // List<Integer> silos = new Environment().getSiloList();
+    	//ArrayList<Integer> silos = new Environment().getSilos();
+       List<Integer> silos = new Environment().getSiloList();
         for (Integer silo: silos) {
             Itinerary itnRoundTrip = new ItineraryBuilder()
                       .build();
