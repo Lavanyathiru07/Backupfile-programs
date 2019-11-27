@@ -14,7 +14,6 @@ import listeners.TestResultContext;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import org.apache.log4j.Logger;
-
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
@@ -102,7 +101,7 @@ public class WebBookingTestIT extends DriverBase {
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
-			throws InterruptedException {
+			throws InterruptedException, Exception {
 			if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
 				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
@@ -126,6 +125,8 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+			
+			
 
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			updateTextContext(itn, context);
