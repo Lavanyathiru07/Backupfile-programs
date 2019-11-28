@@ -14,8 +14,8 @@ public class ItineraryDataProvider {
     @DataProvider(name = "Web Use Cases", parallel = true)
     public static Iterator<Object[]> itineraryDataBuilder(ITestContext context, Method method) {
         ArrayList<Object[]> data = new ArrayList<>();
-        //List<Integer> silos = new Environment().getSilos();
-        List<Integer> silos = new Environment().getSiloList();
+        List<Integer> silos = new Environment().getSilos();
+        //List<Integer> silos = new Environment().getSiloList();
 
         if (method.getName().contains("OLCI")) {
                 for (Integer silo: silos) {
