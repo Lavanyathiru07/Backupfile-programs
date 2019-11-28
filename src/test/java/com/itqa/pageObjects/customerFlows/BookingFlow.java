@@ -55,7 +55,7 @@ public class BookingFlow extends BasePage {
 	private ManageTravelHotelPage ManageTravelHotelPage;
 	private ManageTravelVehiclePage ManageTravelVehiclePage;
 	private ManageTravelPaymentPage ManageTravelPaymentPage;
-
+	
 	public BookingFlow(Logger log) {
 		this.logger = log;
 		landingPage = new LandingPage(log);
@@ -84,6 +84,7 @@ public class BookingFlow extends BasePage {
 		ManageTravelHotelPage = new ManageTravelHotelPage(log);
 		ManageTravelVehiclePage = new ManageTravelVehiclePage(log);
 		ManageTravelPaymentPage = new ManageTravelPaymentPage(log);
+
 	}
 
 	public String createWebBooking(Itinerary itn, ITestContext context) {
@@ -99,7 +100,6 @@ public class BookingFlow extends BasePage {
 			bundlePage.selectBundle(itn);
 			hotelPage.selectHotel(itn);
 			vehiclePage.selectVehicle(itn);
-			activityPage.selectActivity(itn);
 			travelerPage.fillTravelerPage(itn);
 			seatPage.selectSeatPage(itn);
 			bagPage.selectBagPage(itn);

@@ -70,16 +70,12 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Search Decoupled Code For MX - Action Requests")
 	public void lookupActionRequest(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
-
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
-			//silo=0;
+		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupActionRequest(itn);
@@ -110,15 +106,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Search Coupled Code For MX - Aircraft Records")
 	public void lookupAircraftRecordsPart(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
+		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupAircraftRecordsPart(itn);
@@ -149,15 +143,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Run SPOE Reports - Line MX - MX Control - Reliabiliy - MX Records")
 	public void runSPOEreport(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
+		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.runSPOEreport(itn);
@@ -189,15 +181,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Flight Information - Flight Following")
 	public void verifyFlightFollowing(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
+		if ((!env.contains("vipprod") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyFlightFollowing();
@@ -227,15 +217,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Access Inventory Maintenance")
 	public void accessInventoryMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
+		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessInventoryMX(itn);
@@ -266,15 +254,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Access Print Manifest- search and select a flight")
 	public void verifyPrintManifest(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
+		if ((!env.contains("vipprod") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyPrintManifest();
@@ -304,15 +290,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Access Flight Schedule Maintenance")
 	public void verifyFlightScheduleMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
+		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyFlightScheduleMX(itn);
@@ -345,15 +329,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Access Accounts Payable Maintenance - Look up Transaction")
 	public void lookupAccountsPayableMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
+		if ((!env.contains("vipprod") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupAccountsPayableMX(itn);
@@ -385,15 +367,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Access Flight Flow")
 	public void verifyFlightFlow(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
+		if ((!env.contains("vipprod") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyFlightFlow();
@@ -423,15 +403,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Access Kayak Console")
 	public void accessKayakConsole(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
+		if ((!env.contains("vipprod") && (silo==4)&&!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessKayakConsole();
@@ -461,15 +439,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "g4plus" })
 	@Story("G4+: Access Customer Lookup")
 	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessCL();
@@ -507,9 +483,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
-
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) && (!env.contains("nddprd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessSTS();
@@ -539,15 +513,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "g4plus" })
 	@Story("G4+: Access ESP")
 	public void accessESP(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
+		if ((!env.contains("prod")) && (silo==5) && (!env.contains("in")) && (!env.contains("nddprd")) && (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessESP();
@@ -577,16 +549,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "g4plus" })
 	@Story("G4+: Access SVT")
 	public void accessSVT(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
-
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessSVT();
@@ -616,15 +585,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "g4plus" })
 	@Story("G4+: Access CAR")
 	public void accessCAR(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))) {
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) && (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessCAR();
@@ -655,16 +622,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "g4plus" })
 	@Story("G4+: Access TF2")
 	public void accessTF2(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
-
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessTF2();
@@ -701,9 +665,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
-
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessRQ();
@@ -733,16 +695,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "g4plus" })
 	@Story("G4+: Access BAG")
 	public void accessBAG(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
-
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessBAG();
@@ -772,16 +731,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "g4plus" })
 	@Story("G4+: Access PB2")
 	public void accessPB2(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
-
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessPB2();
@@ -818,9 +774,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
-
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessHOT();
@@ -850,16 +804,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "g4plus" })
 	@Story("G4+: Access ATL")
 	public void accessATL(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
-
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessATL();
@@ -889,16 +840,13 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "g4plus" })
 	@Story("G4+: Access OFO")
 	public void accessOFO(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
-
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessOFO();
@@ -928,16 +876,14 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "g4plus" })
 	@Story("G4+: Access MOD")
 	public void accessMOD(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
+		
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("prod"))&&(silo==1)&&(!env.contains("in")) && (!env.contains("aws"))&& (!env.contains("ndd"))&& (!env.contains("trn"))){
-
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessMOD();
@@ -966,17 +912,14 @@ public class NonBookingTestIT extends DriverBase {
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Swap: Access Swap", groups = {
 			"bat", "g4plus" })
 	@Story("Swap: Access Swap")
-
-	public void accessSwap(Integer silo,ITestContext context, Method method,Itinerary itn) {
-
+	public void accessSwap(Integer silo, ITestContext context, Method method, Itinerary itn) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
-		if((!env.contains("vipprod")&&(silo==1))) {
+		if ((!env.contains("vipprod") && (silo==5))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessSwap();

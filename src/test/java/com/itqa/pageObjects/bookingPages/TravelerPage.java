@@ -57,7 +57,7 @@ public class TravelerPage extends BasePage {
     @FindBy(xpath = "//input[contains(@value,'PPOC')]")
     private WebElement ppocCheckbox;
 
-    @FindBy(xpath = MONTHDROPDOWNXPATH)
+    @FindBy(xpath = "//select[contains(@name,'dmy[m]')]")
     private WebElement dropDownMonth;
 
     @FindBy(xpath = "//select[contains(@name,'dmy[d]')]")
@@ -91,16 +91,18 @@ public class TravelerPage extends BasePage {
                 jse.executeScript(JSFIRSTARG, femaleGenderList.get(i));
             }
             try {
-                dobList.get(i).sendKeys(month + "/" + day + "/" + year);
-            } catch (IndexOutOfBoundsException e) {
-                logger.info("Using new traveler page");
-                Select optionMonth = new Select(dropDownMonth);
+            	Select optionMonth = new Select(dropDownMonth);
                 optionMonth.selectByIndex(Integer.parseInt(dobMonth[i]));
 
                 Select optionDay = new Select(dropDownDay);
                 optionDay.selectByIndex(Integer.parseInt(dobDay[i]));
 
                 textYear.sendKeys(dobYear[i]);
+                
+            } catch (IndexOutOfBoundsException e) {
+            	logger.info("Using old traveler page");
+                
+            	dobList.get(i).sendKeys(month + "/" + day + "/" + year);
             }
             phoneList.get(i).sendKeys("7025555555");
             emailList.get(i).sendKeys(email);
