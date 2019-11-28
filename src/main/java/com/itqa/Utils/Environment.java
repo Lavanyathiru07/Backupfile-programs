@@ -58,7 +58,6 @@ public class Environment {
 			
 		}
 		return siloList;*/
-		System.out.println("Scenario is = "+System.getProperty("Scenario"));
 		if(System.getProperty("Scenario").equals("silo")) {
 			if(getEnv().contains("in")) {
 				siloList.add(1);
@@ -119,6 +118,7 @@ public class Environment {
 			}
 			
 		}
+		System.out.println("Silo list is ="+siloList);
 		return siloList;
 		
 	}
