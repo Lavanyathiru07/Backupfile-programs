@@ -8,6 +8,7 @@ import com.itqa.Utils.Environment;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.BookingFlow;
 
+import clearingITN.DHSClear;
 import data.*;
 import io.qameta.allure.Story;
 import listeners.TestResultContext;
@@ -125,6 +126,12 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+			try {
+				DHSClear doDHS = new DHSClear();
+				doDHS.dhs(env, itn.getItn());
+			}catch(Exception e) {
+				log.info("error getting while clear the DHS");
+			}
 			
 			
 
