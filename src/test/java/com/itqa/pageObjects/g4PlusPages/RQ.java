@@ -52,7 +52,6 @@ public class RQ extends BasePage{
         }
         new Select(queueTypeSelect).selectByVisibleText("Cancel");
         jse.executeScript("arguments[0].click();", submitButton);
-        jse.executeScript("arguments[0].click();", resultRow);
         logger.info("RQ Menu Open");
     	}catch(Exception e){
     
