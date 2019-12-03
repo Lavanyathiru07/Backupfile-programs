@@ -37,7 +37,7 @@ public class Itinerary {
 	private String silo;
 	private String description;
 	private String manifestId;
-	private String logForError;
+	private String errorLog;
 
 	private float total;
 	private boolean skip;
@@ -295,12 +295,12 @@ public class Itinerary {
 		return this.manifestId;
 	}
 
-	public void setErrorLog(String logForError) {
-		this.logForError = logForError;
+	public void setErrorLog(String errorLog) {
+		this.errorLog = errorLog;
 	}
 
 	public String getErrorLog() {
-		return this.logForError;
+		return this.errorLog;
 	}
 
 }

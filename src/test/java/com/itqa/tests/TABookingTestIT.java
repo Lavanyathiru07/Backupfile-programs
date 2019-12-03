@@ -48,7 +48,7 @@ public class TABookingTestIT extends DriverBase {
 	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
 	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
-	private String it;
+	private String itinerary;
 
 	static boolean isTestPass = true;
 
@@ -115,7 +115,7 @@ public class TABookingTestIT extends DriverBase {
 
 			if (flightAvailService == 0 && paymentService == 0) {
 				TABookingFlow booking = new TABookingFlow(logger.get());
-				it = itn.getItn();
+				itinerary = itn.getItn();
 				generateBooking(itn, silo, context);
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
@@ -183,7 +183,7 @@ public class TABookingTestIT extends DriverBase {
 			if (flightAvailService == 0 && paymentService == 0) {
 				TABookingFlow booking = new TABookingFlow(logger.get());
 				generateBooking(itn, silo, context);
-				it = itn.getItn();
+				itinerary = itn.getItn();
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
@@ -216,7 +216,7 @@ public class TABookingTestIT extends DriverBase {
 			String error = result.getThrowable().getMessage();
 			cat.completeTest("FAIL", "BAT 2.0", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}	else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "BAT 2.0", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("PASS", "BAT 2.0", itinerary, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
 

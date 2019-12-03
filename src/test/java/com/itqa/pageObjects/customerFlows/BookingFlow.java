@@ -117,6 +117,7 @@ public class BookingFlow extends BasePage {
 	public String createWebBookingWithAccount(Integer silo, Itinerary itn, ITestContext context,
 			Boolean createAccount) {
 		String manifestId = "";
+		String errorLog ="";
 
 		try {
 			manifestId = createWebBooking(itn, context);

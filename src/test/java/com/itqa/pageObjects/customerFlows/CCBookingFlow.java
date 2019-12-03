@@ -57,7 +57,7 @@ public class CCBookingFlow extends BasePage {
 
 	public String CCBooking(Integer silo,Itinerary itn, ITestContext context) {
 		String manifestId = "";
-		String logForError ="";
+		String errorLog ="";
 		try {
 			if(System.getProperty("env").contains("nddprd")) {
 				G4PlusLoginPage.g4plusLogin(false);

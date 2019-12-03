@@ -46,7 +46,7 @@ public class NonBookingTestIT extends DriverBase {
 	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
 	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
-	private String it;
+	private String itinerary;
 	
 	static boolean isTestPass = true;
 

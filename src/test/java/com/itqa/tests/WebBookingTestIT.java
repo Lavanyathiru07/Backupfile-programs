@@ -53,7 +53,7 @@ public class WebBookingTestIT extends DriverBase {
 	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
 	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
-	private String it;
+	private String itinerary;
 
 	static boolean isTestPass = true;
 
@@ -115,7 +115,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			if (flightAvailService == 0 && paymentService == 0) {
 				BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
-				it = itn.getItn();
+				itinerary = itn.getItn();
 
 			Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
@@ -194,7 +194,7 @@ public class WebBookingTestIT extends DriverBase {
 			}
 				desc.set(itn.getDescription());
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
-				it=itn.getItn();
+			itinerary = itn.getItn();
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 			try {
 				DHSClear doDHS = new DHSClear();
@@ -295,7 +295,7 @@ public class WebBookingTestIT extends DriverBase {
 
 		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
-		it=itn.getItn();
+		itinerary = itn.getItn();
 	}
 
 	@AfterMethod
@@ -306,7 +306,7 @@ public class WebBookingTestIT extends DriverBase {
 			String error = result.getThrowable().getMessage();
 			cat.completeTest("FAIL", "BAT 2.0", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}	else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "BAT 2.0", it, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("PASS", "BAT 2.0", itinerary, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
 	}
 

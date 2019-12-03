@@ -68,6 +68,7 @@ public class TABookingFlow extends BasePage {
 
 	public String TABooking(Integer silo,Itinerary itn, ITestContext context) {
 		String manifestId = "";
+		String errorLog ="";
 
 		try {
 			taSignInPage.taSignin(itn);
