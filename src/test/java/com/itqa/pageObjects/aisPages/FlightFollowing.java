@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class FlightFollowing extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void verifyFlightInformation() {
+    public void verifyFlightInformation(Itinerary itn) {
     	try{
     	DriverBase.getDriver().switchTo().frame(fllistFrame);
         for (int loop=0; loop<10; loop++) {
@@ -72,19 +73,21 @@ public class FlightFollowing extends BasePage{
                         } catch (Exception e) {
                         }
                     } else {
+                    	itn.setErrorLog("FLight Information not displayed properly :");
                         throw new Error("FAIL - Flight Information not displayed properly");
                     }
                 }
             }
             catch (Exception e) {
                 if (loop == 4) {
+                	itn.setErrorLog("Error while finding element Flight following :" + e.getMessage());
                     throw new Error("FAIL - Flight Following - Cannot get element");
                 }
             }
         }
     
     }catch(Exception e){
-		
+    	itn.setErrorLog("Error while verifying FlightInformation :" + e.getMessage());
 		e.printStackTrace();
 		throw new Error("FAIL - Flight Following - Cannot get element");
 	}

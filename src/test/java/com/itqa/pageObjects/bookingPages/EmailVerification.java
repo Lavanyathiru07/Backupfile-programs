@@ -113,7 +113,7 @@ public class EmailVerification extends BasePage {
 		if (itn.getItn().equalsIgnoreCase(ExpectedConfNumber)) {
 			logger.info("The Confirmation Number is matched with Email: " + ExpectedConfNumber);
 		} else {
-			logger.error("The Confirmation Number is not matched with Email");
+			itn.setErrorLog("The Confirmation Number is not matched with Emial :");
 		}
 		
 	}

@@ -61,10 +61,13 @@ public class InventoryMaintenance extends BasePage{
                 found = true;
                 break;
             }
-            catch (Exception e) {}
+            catch (Exception e) {
+            	itn.setErrorLog("Error in verifying Inventory MX :" + e.getMessage());
+            }
         }
 
         if (!found) {
+        	itn.setErrorLog("Error displying the inventory maintenance transaction :" );
             throw new Error("Inventory Maintenance Transaction not displayed");
         }
         else {
@@ -75,7 +78,7 @@ public class InventoryMaintenance extends BasePage{
 			if (Environment.getEnv().contains("aws")) {
 				itn.setItn("Failed due to QAA-337");
 			}
-
+			itn.setErrorLog("Error in verifying Inventory maintenance :" + e.getMessage());
 			e.printStackTrace();
 			throw new Error(">>>Inventory Maintenance Fail<<< ");
 

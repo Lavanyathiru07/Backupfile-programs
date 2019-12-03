@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class KayakConsole extends BasePage{
@@ -29,13 +30,14 @@ public class KayakConsole extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void editKayakConsole() {
+    public void editKayakConsole(Itinerary itn) {
     	try{
     	 new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakTable));
         kayakTable.click();
         logger.info("Kayak Console Open");
     	}catch(Exception e){
     		e.printStackTrace();
+    		itn.setErrorLog("Error while editing kayal console :" + e.getMessage());
     		throw new Error(">>>Kayak Access FAIL<<<");
     	}
     }

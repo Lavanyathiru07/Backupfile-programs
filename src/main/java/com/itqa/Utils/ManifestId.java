@@ -1,10 +1,12 @@
 package com.itqa.Utils;
 
 import framework.DriverBase;
+import org.apache.log4j.Logger;
 
 import org.openqa.selenium.WebDriver;
 
 public class ManifestId {
+	private static Logger logger = null;
 	public static String getManifestId(WebDriver driver) {
         String url;
         try {
@@ -19,7 +21,7 @@ public class ManifestId {
             }
         }
         catch(Exception e) {
-        	System.out.println("Error getting manifestid");
+        	logger.error("Error getting manifestid : ");
             e.printStackTrace();
             return "-1";
         }

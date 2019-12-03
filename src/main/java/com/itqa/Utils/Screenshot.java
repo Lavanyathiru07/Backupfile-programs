@@ -5,11 +5,14 @@ import io.qameta.allure.Attachment;
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
+
 public class Screenshot {
+	private static Logger logger = null;
     @Attachment(value = "Screenshot of {0}", type = "image/png")
     public static byte[] saveScreenshot(String name, WebDriver driver) {
 
@@ -28,6 +31,7 @@ public class Screenshot {
             FileUtils.copyFile(file, desFile);
         }
         catch (Exception e) {
+        	logger.error("Error copying file : ");
             e.getMessage();
         }
 

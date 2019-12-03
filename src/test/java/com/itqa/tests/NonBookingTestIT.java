@@ -190,7 +190,7 @@ public class NonBookingTestIT extends DriverBase {
 		if ((!env.contains("vipprod") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.verifyFlightFollowing();
+			nonBooking.verifyFlightFollowing(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -263,7 +263,7 @@ public class NonBookingTestIT extends DriverBase {
 		if ((!env.contains("vipprod") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.verifyPrintManifest();
+			nonBooking.verifyPrintManifest(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -376,7 +376,7 @@ public class NonBookingTestIT extends DriverBase {
 		if ((!env.contains("vipprod") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.verifyFlightFlow();
+			nonBooking.verifyFlightFlow(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -412,7 +412,7 @@ public class NonBookingTestIT extends DriverBase {
 		if ((!env.contains("vipprod") && (silo==4)&&!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessKayakConsole();
+			nonBooking.accessKayakConsole(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -448,7 +448,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessCL();
+			nonBooking.accessCL(itn);
 
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -486,7 +486,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) && (!env.contains("nddprd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessSTS();
+			nonBooking.accessSTS(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -522,7 +522,7 @@ public class NonBookingTestIT extends DriverBase {
 		if ((!env.contains("prod")) && (silo==5) && (!env.contains("in")) && (!env.contains("nddprd")) && (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessESP();
+			nonBooking.accessESP(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -558,7 +558,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessSVT();
+			nonBooking.accessSVT(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -594,7 +594,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) && (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessCAR();
+			nonBooking.accessCAR(itn);
 
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -631,7 +631,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessTF2();
+			nonBooking.accessTF2(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -668,7 +668,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessRQ();
+			nonBooking.accessRQ(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -704,7 +704,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessBAG();
+			nonBooking.accessBAG(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -740,7 +740,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessPB2();
+			nonBooking.accessPB2(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -777,7 +777,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessHOT();
+			nonBooking.accessHOT(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -813,7 +813,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessATL();
+			nonBooking.accessATL(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -849,7 +849,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessOFO();
+			nonBooking.accessOFO(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -886,7 +886,7 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessMOD();
+			nonBooking.accessMOD(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -922,7 +922,7 @@ public class NonBookingTestIT extends DriverBase {
 		if ((!env.contains("vipprod") && (silo==5))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
-			nonBooking.accessSwap();
+			nonBooking.accessSwap(itn);
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}

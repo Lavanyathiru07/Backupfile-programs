@@ -77,6 +77,7 @@ public class LineMaintenance extends BasePage{
     		if (Environment.getEnv().contains("aws")) {
 				itn.setItn("Failed due to QAA-338");
 			}
+    		itn.setErrorLog("Error while opening the report of line maintiance :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error(">>>Records returns no result<<<");
     	}

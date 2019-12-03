@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class STS extends BasePage {
@@ -38,7 +39,7 @@ public class STS extends BasePage {
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessSTS() {
+    public void accessSTS(Itinerary itn) {
     	try{
     	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatMapTitle));	
         seatMapTitle.click();
@@ -48,6 +49,7 @@ public class STS extends BasePage {
         seatPricingTitle.click();
         logger.info("STS Menu Open");
     	}catch(Exception e){
+    		itn.setErrorLog("Error while accessing STS :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error("FAIL");
     	}

@@ -11,6 +11,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class G4MenuPage extends BasePage {
@@ -71,107 +72,120 @@ public class G4MenuPage extends BasePage {
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
 
-	public void selectMOD() {
+	public void selectMOD(Itinerary itn) {
 		try {
 			modApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting MOD :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectAIS() {
+	public void selectAIS(Itinerary itn) {
 		try {
 			aisApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting AIS :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectSTS() {
+	public void selectSTS(Itinerary itn) {
 		try {
 			stsApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting STS :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectESP() {
+	public void selectESP(Itinerary itn) {
 		try {
 			espApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting ESP :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectSVT() {
+	public void selectSVT(Itinerary itn) {
 		try {
 			svtApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting SVT :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectCAR() {
+	public void selectCAR(Itinerary itn) {
 		try {
 			carApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting CAR :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectFM() {
+	public void selectFM(Itinerary itn) {
 		try {
 			fmApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting FM :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectRQ() {
+	public void selectRQ(Itinerary itn) {
 		try {
 			rqApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting RQ :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectHOT() {
+	public void selectHOT(Itinerary itn) {
 		try {
 			hotApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting HOT :" + e.getMessage());
 			e.printStackTrace();
 		}
 
 	}
 
-	public void selectATL() {
+	public void selectATL(Itinerary itn) {
 		try {
 			atlApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting ATL :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectCL() {
+	public void selectCL(Itinerary itn) {
 		try {
 			clApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting CL :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectOFO() {
+	public void selectOFO(Itinerary itn) {
 		try {
 			ofoApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting OFO :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectSTNS() {
+	public void selectSTNS(Itinerary itn) {
 		try {
 			stnsApp.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting STNS :"+ e.getMessage());
 			e.printStackTrace();
 		}
 	}

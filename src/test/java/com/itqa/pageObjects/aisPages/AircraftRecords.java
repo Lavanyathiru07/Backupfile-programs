@@ -59,6 +59,7 @@ public class AircraftRecords extends BasePage {
 			if (Environment.getEnv().contains("aws")) {
 				itn.setItn("Failed due to QAA-338");
 			}
+			itn.setErrorLog("Aircraft Records returns no result :" + e.getMessage());
 			e.printStackTrace();
 			throw new Error(">>>Aircraft Records returns no result<<<");
 

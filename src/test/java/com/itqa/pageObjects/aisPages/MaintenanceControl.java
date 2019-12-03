@@ -76,6 +76,7 @@ public class MaintenanceControl extends BasePage {
 			if (Environment.getEnv().contains("aws")) {
 				itn.setItn("Failed due to QAA-338");
 			}
+			itn.setErrorLog("Error while opening the report :" + e.getMessage());
 			e.printStackTrace();
 			throw new Error(">>>Records returns no result<<<");
 		}

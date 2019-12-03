@@ -14,6 +14,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
@@ -49,7 +50,7 @@ public class SVT extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessSVT() {
+    public void accessSVT(Itinerary itn) {
     	try{
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
@@ -63,6 +64,7 @@ public class SVT extends BasePage{
         resultRow.click();
         logger.info("SVT Menu Open");
     	}catch(Exception e){
+    		itn.setErrorLog("Error whilr accessing SVT :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error("FAIL");
     	}

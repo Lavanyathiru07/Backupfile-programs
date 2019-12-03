@@ -70,6 +70,7 @@ public class FlightPage extends BasePage {
 						depFlightList.get(0).findElement(By.xpath("//span[contains(@class,'flight-departs')]//time"))
 								.getAttribute("dateTime"));
 			} catch (Exception e) {
+				itn.setErrorLog("Error while selecting the depature flight :" + e.getMessage());
 				e.printStackTrace();
 				throw new Error();
 			}
@@ -86,7 +87,7 @@ public class FlightPage extends BasePage {
 		try {
 			Common.click(driver, depFlightList.get(num));
 		} catch (IndexOutOfBoundsException e) {
-			logger.error("Could not select a departing flight");
+			itn.setErrorLog("Could not select a departing flight :" + e.getMessage());
 			Screenshot.saveScreenshot("Could not select departing flight", driver);
 		}
 

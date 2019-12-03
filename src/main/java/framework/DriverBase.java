@@ -31,9 +31,7 @@ public class DriverBase {
 	public static String flightAvailErrorMsg = "";
 	public static String paymentErrorMsg = "";
 	
-	private boolean fail = false;
 	public static Map<String, String> status = new HashMap<String, String>();
-	private String comments = "";
 	protected static CATinits cat;
 
 	@BeforeSuite

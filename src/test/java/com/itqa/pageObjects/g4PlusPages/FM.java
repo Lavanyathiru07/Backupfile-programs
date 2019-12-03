@@ -14,6 +14,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class FM extends BasePage{
@@ -42,7 +43,7 @@ public class FM extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessBag() {
+    public void accessBag(Itinerary itn) {
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
@@ -51,6 +52,7 @@ public class FM extends BasePage{
             }
             catch (Exception e) {
                 if (loop == 9) {
+                	itn.setErrorLog("Error while access BAG :" + e.getMessage());
                     throw new Error(e);
                 }
                 else {
@@ -61,12 +63,13 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("BAG Menu Open");
     }catch(Exception e){
+    	itn.setErrorLog("Error while access BAG :" + e.getMessage());
     	e.printStackTrace();
     	throw new Error("FAIL");
 	}
     }
 
-    public void accessPB2() {
+    public void accessPB2(Itinerary itn) {
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
@@ -75,6 +78,7 @@ public class FM extends BasePage{
             }
             catch (Exception e) {
                 if (loop == 9) {
+                	itn.setErrorLog("Error while access PB2 :" + e.getMessage());
                     throw new Error(e);
                 }
                 else {
@@ -85,12 +89,13 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("PB2 Menu Open");
     }catch(Exception e){
+    	itn.setErrorLog("Error while access PB2 :" + e.getMessage());
     	e.printStackTrace();
     	throw new Error("FAIL");
 	}
     }
 
-    public void accessTF2() {
+    public void accessTF2(Itinerary itn) {
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
@@ -100,6 +105,7 @@ public class FM extends BasePage{
             }
             catch (Exception e) {
                 if (loop == 9) {
+                	itn.setErrorLog("Error while access TF2 :" + e.getMessage());
                     throw new Error(e);
                 }
                 else {
@@ -110,6 +116,7 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("TF2 Menu Open");
     	}catch(Exception e){
+    		itn.setErrorLog("FAIL to access TF2 :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error("FAIL");
     	}

@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class ESP extends BasePage{
@@ -32,12 +33,13 @@ public class ESP extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessESP() {
+    public void accessESP(Itinerary itn) {
     	try{
     	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mapRow));
         mapRow.click();
         logger.info("ESP Menu Open");
     	}catch(Exception e){
+    		itn.setErrorLog("Error while access ESP :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error("FAIL");
     	}

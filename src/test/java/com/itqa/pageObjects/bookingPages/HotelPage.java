@@ -101,8 +101,9 @@ public class HotelPage extends BasePage {
                 new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//h3[contains(@class,'hotel-name')]")));
                 break;
             }
-            catch (Exception e) {}
-
+            catch (Exception e) {
+            	itn.setErrorLog("Error while getting Hotel name :" + e.getMessage());
+            }
             try {Thread.sleep(1000);} catch (Exception e) {}
         }
         if (hotelPage) {
@@ -117,6 +118,7 @@ public class HotelPage extends BasePage {
         }
         else {
             if (itn.getHotel()) {
+            	itn.setErrorLog("Error while getting hotel name and the page skipped :");
                 throw new Error("Hotel Required..but the page was skipped");
             }
         }

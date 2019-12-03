@@ -3,6 +3,7 @@ package com.itqa.pageObjects.g4PlusPages;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
@@ -54,7 +55,7 @@ public class ATL extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessATL() {
+    public void accessATL(Itinerary itn) {
     	try{
         rulesTab.click();
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(hotelOverPercentField));
@@ -77,6 +78,7 @@ public class ATL extends BasePage{
 
         logger.info("ATL Menu Open");
     	}catch(Exception e){
+    		itn.setErrorLog("Error while access ATL :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error("FAIL");
     	}

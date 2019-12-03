@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class CL extends BasePage{
@@ -36,7 +37,7 @@ public class CL extends BasePage{
         
     }
 
-    public void accessCL() {
+    public void accessCL(Itinerary itn) {
     	try{
     	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(fnameField));
         fnameField.click();
@@ -44,7 +45,8 @@ public class CL extends BasePage{
         emailField.click();
         logger.info("CL Menu Open");
 
-    	}catch(Exception e){    		
+    	}catch(Exception e){  
+    		itn.setErrorLog("Error whilr access CL :" + e.getMessage());
     		e.printStackTrace();
     	}
     }

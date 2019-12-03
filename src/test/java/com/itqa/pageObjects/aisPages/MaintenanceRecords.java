@@ -91,11 +91,12 @@ public class MaintenanceRecords extends BasePage {
     		if(Environment.getEnv().contains("aws")) {
     			itn.setItn("Failed due to QAA-338");
     		}
+    		itn.setErrorLog("Error while getting actions requests :" + e.getMessage());
     		 e.printStackTrace();
     		 throw new Error(">>>Action Requests returns no result<<<");
     }
     }
-    public void openReport() {
+    public void openReport(Itinerary itn) {
     	try{
     	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
         reportsTab.click();
@@ -117,6 +118,7 @@ public class MaintenanceRecords extends BasePage {
         jse.executeScript("arguments[0].click();", resultRow);
         logger.info("MX Records Report displayed");
     	}catch(Exception e){
+    		itn.setErrorLog("Error while opening the report of maintenance record :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error(">>>Reports cant find<<<");
     	}

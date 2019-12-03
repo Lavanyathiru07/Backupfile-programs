@@ -12,6 +12,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class RQ extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessRQ() {
+    public void accessRQ(Itinerary itn) {
     	try{
         for (int i=0; i<20; i++) {
             List<WebElement> queueList = new Select(queueTypeSelect).getOptions();
@@ -54,7 +55,7 @@ public class RQ extends BasePage{
         jse.executeScript("arguments[0].click();", submitButton);
         logger.info("RQ Menu Open");
     	}catch(Exception e){
-    
+    		itn.setErrorLog("Error while accessing RQ :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error("FAIL");
     	}

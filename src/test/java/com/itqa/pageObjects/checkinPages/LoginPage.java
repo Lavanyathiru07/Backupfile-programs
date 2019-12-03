@@ -92,6 +92,7 @@ public class LoginPage {
 				driver.findElement(By.xpath("//h2[contains(text(),'re sorry..')]"));
 				throw new Error("Booking is not within the correct date range");
 			} catch (Exception e) {
+				itn.setErrorLog("Error if the date rage is wrong :" + e.getMessage());
 			}
 
 			try {
@@ -117,11 +118,12 @@ public class LoginPage {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 	}
 
-	public void openSwap() {
+	public void openSwap(Itinerary itn) {
 		try {
 			usernameField.click();
 			logger.info("Swap Page Open");
 		} catch (Exception e) {
+			itn.setErrorLog("Error while opening the swap page :" + e.getMessage());
 			throw new Error("Swap Page NOT Open");
 		} finally {
 			GeneralUtils.takeScreenshot(driver,

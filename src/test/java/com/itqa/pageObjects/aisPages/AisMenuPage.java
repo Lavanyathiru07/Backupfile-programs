@@ -10,6 +10,8 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.pageObjects.BasePage;
+
+import data.Itinerary;
 import framework.DriverBase;
 
 public class AisMenuPage extends BasePage {
@@ -93,7 +95,7 @@ public class AisMenuPage extends BasePage {
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
 
-	public void selectaccountsPayableMaintenance() {
+	public void selectaccountsPayableMaintenance(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(APTab));
 			APTab.click();
@@ -104,48 +106,48 @@ public class AisMenuPage extends BasePage {
 			logger.info("Accept Security Alert");
 
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting accounts payable maintenance :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectKayakConsole() {
+	public void selectKayakConsole(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(ADTab));
 			ADTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakConsoleTab));
 			kayakConsoleTab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting kayak console :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectFlightFollowing() {
+	public void selectFlightFollowing(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(FFTab));
 			FFTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightFollowingTab));
 			flightFollowingTab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting flight following :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectFlightFlow() {
+	public void selectFlightFlow(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(FFTab));
 			FFTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightFlowTab));
 			flightFlowTab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting flight flow :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectinventoryMaintenance() {
+	public void selectinventoryMaintenance(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(INTab));
 			INTab.click();
@@ -154,114 +156,117 @@ public class AisMenuPage extends BasePage {
 			DriverBase.getDriver().switchTo().alert().accept();
 			logger.info("Accept Security Alert");
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting Inventory maintenance :" + e.getMessage());
 			logger.info("Security Alert not display");
 			e.printStackTrace();
 
 		}
 	}
 
-	public void selectAircraftRecords() {
+	public void selectAircraftRecords(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(MXTab));
 			MXTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(aircraftRecordsTab));
 			aircraftRecordsTab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting Aircraft records :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectMXandEngr() {
+	public void selectMXandEngr(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(METab));
 			METab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting MX and Engr records :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectLineMX() {
+	public void selectLineMX(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(lineMXTab));
 			lineMXTab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting line MX :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectMXControl() {
+	public void selectMXControl(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxControlTab));
 			mxControlTab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting MX Control :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectReliability() {
+	public void selectReliability(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reliabilityTab));
 			reliabilityTab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting reliablity :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectMXRecords() {
+	public void selectMXRecords(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxRecordsTab));
 			mxRecordsTab.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting MX records :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectFlightScheduleMX() {
+	public void selectFlightScheduleMX(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(OPTab));
 			OPTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightScheduleMXTab));
 			flightScheduleMXTab.click();
 		} catch (Exception e) {
+			itn.setErrorLog("Error while selecting flight schedule MX :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectAirOnly() {
+	public void selectAirOnly(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(rsTab));
 			rsTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(airOnlyTab));
 			airOnlyTab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting Air only :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectPrintManifest() {
+	public void selectPrintManifest(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(rsTab));
 			rsTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(printManifestTab));
 			printManifestTab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting printmanifest :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	public void selectITNMX() {
+	public void selectITNMX(Itinerary itn) {
 		try {
 			rsTab.click();
 			itnMXTab.click();
 		} catch (Exception e) {
-
+			itn.setErrorLog("Error while selecting ITN MX :" + e.getMessage());
 			e.printStackTrace();
 		}
 	}

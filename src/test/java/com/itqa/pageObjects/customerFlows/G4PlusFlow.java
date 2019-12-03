@@ -153,32 +153,32 @@ public class G4PlusFlow extends BasePage {
 		}
 	}
 
-	public void accessAIS() {
+	public void accessAIS(Itinerary itn) {
 		logger.info(env);
 
 		g4PlusSignin();
 
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectAIS();
+		g4MenuPage.selectAIS(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
 	}
 
-	public void accessCL() {
+	public void accessCL(Itinerary itn) {
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectCL();
+		g4MenuPage.selectCL(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		CL.accessCL();
+		CL.accessCL(itn);
 	}
 
 	public void lookupActionRequest(Itinerary itn) {
 
-		accessAIS();
+		accessAIS(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
-		AisMenuPage.selectMXandEngr();
+		AisMenuPage.selectMXandEngr(itn);
 
-		AisMenuPage.selectMXRecords();
+		AisMenuPage.selectMXRecords(itn);
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
@@ -188,11 +188,11 @@ public class G4PlusFlow extends BasePage {
 
 	public void lookupAircraftRecordsPart(Itinerary itn) {
 
-		accessAIS();
+		accessAIS(itn);
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
-		AisMenuPage.selectAircraftRecords();
+		AisMenuPage.selectAircraftRecords(itn);
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
@@ -220,16 +220,16 @@ public class G4PlusFlow extends BasePage {
 
 				}
 				G4PlusLoginPage.g4plusLogin(false);
-				g4MenuPage.selectAIS();
+				g4MenuPage.selectAIS(itn);
 				DriverBase.getDriver().close();
 				Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 				DriverBase.getDriver().switchTo().window(tabs.iterator().next());
 			}   
 
 			Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-			AisMenuPage.selectMXandEngr();
+			AisMenuPage.selectMXandEngr(itn);
 
-			AisMenuPage.selectLineMX();
+			AisMenuPage.selectLineMX(itn);
 
 			GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
@@ -241,7 +241,7 @@ public class G4PlusFlow extends BasePage {
 			DriverBase.getDriver().switchTo().window(curTab.iterator().next());
 
 			if (!System.getProperty("env").contains("prod") && !System.getProperty("env").contains("trn")) {
-				AisMenuPage.selectMXControl();
+				AisMenuPage.selectMXControl(itn);
 
 				GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
@@ -252,7 +252,7 @@ public class G4PlusFlow extends BasePage {
 				DriverBase.getDriver().close();
 				DriverBase.getDriver().switchTo().window(curTab.iterator().next());
 
-				AisMenuPage.selectReliability();
+				AisMenuPage.selectReliability(itn);
 
 				GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
@@ -264,66 +264,67 @@ public class G4PlusFlow extends BasePage {
 
 			}
 
-			AisMenuPage.selectMXRecords();
+			AisMenuPage.selectMXRecords(itn);
 
 			GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-			MaintenanceRecords.openReport();
+			MaintenanceRecords.openReport(itn);
 
 		} catch (Exception e) {
 			  		if(Environment.getEnv().contains("aws")) {
 	    			itn.setItn("Failed due to QAA-338");
 	    		}
+			  		itn.setErrorLog("Error while getting SPOE report :" + e.getMessage());
 	    	e.printStackTrace();
 			throw new Error(">>>Reports cant find<<<");
 		}
 	}
-	public void verifyFlightFollowing() {
+	public void verifyFlightFollowing(Itinerary itn) {
 
-		accessAIS();
+		accessAIS(itn);
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
-		AisMenuPage.selectFlightFollowing();
+		AisMenuPage.selectFlightFollowing(itn);
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		FlightFollowing.verifyFlightInformation();
+		FlightFollowing.verifyFlightInformation(itn);
 	}
 
 	public void accessInventoryMX(Itinerary itn) {
 
-		accessAIS();
+		accessAIS(itn);
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
-		AisMenuPage.selectinventoryMaintenance();
+		AisMenuPage.selectinventoryMaintenance(itn);
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
 		InventoryMaintenance.verifyInventoryMX(itn);
 	}
 
-	public void verifyPrintManifest() {
+	public void verifyPrintManifest(Itinerary itn) {
 
-		accessAIS();
+		accessAIS(itn);
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
-		AisMenuPage.selectPrintManifest();
+		AisMenuPage.selectPrintManifest(itn);
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		PrintManifest.verifyPrintManifest();
+		PrintManifest.verifyPrintManifest(itn);
 	}
 
 	public void verifyFlightScheduleMX(Itinerary itn) {
 
-		accessAIS();
+		accessAIS(itn);
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
-		AisMenuPage.selectFlightScheduleMX();
+		AisMenuPage.selectFlightScheduleMX(itn);
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
@@ -332,153 +333,153 @@ public class G4PlusFlow extends BasePage {
 
 	public void lookupAccountsPayableMX(Itinerary itn) {
 
-		accessAIS();
+		accessAIS(itn);
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
-		AisMenuPage.selectaccountsPayableMaintenance();
+		AisMenuPage.selectaccountsPayableMaintenance(itn);
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
 		AccountsPayableMaintenance.lookupTransaction(itn);
 	}
 
-	public void verifyFlightFlow() {
+	public void verifyFlightFlow(Itinerary itn) {
 
-		accessAIS();
-
-		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-
-		AisMenuPage.selectFlightFlow();
-
-		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-
-		FlightFlow.openFlightFlow();
-	}
-
-	public void accessKayakConsole() {
-
-		accessAIS();
+		accessAIS(itn);
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 
-		AisMenuPage.selectKayakConsole();
+		AisMenuPage.selectFlightFlow(itn);
 
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		KayakConsole.editKayakConsole();
+		FlightFlow.openFlightFlow(itn);
 	}
 
-	public void accessSTS() {
+	public void accessKayakConsole(Itinerary itn) {
+
+		accessAIS(itn);
+
+		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+
+		AisMenuPage.selectKayakConsole(itn);
+
+		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+
+		KayakConsole.editKayakConsole(itn);
+	}
+
+	public void accessSTS(Itinerary itn) {
 
 		g4PlusSignin();
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectSTS();
+		g4MenuPage.selectSTS(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		STS.accessSTS();
+		STS.accessSTS(itn);
 	}
 
-	public void accessESP() {
+	public void accessESP(Itinerary itn) {
 
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectESP();
+		g4MenuPage.selectESP(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		ESP.accessESP();
+		ESP.accessESP(itn);
 	}
 
-	public void accessSVT() {
+	public void accessSVT(Itinerary itn) {
 
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectSVT();
+		g4MenuPage.selectSVT(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		SVT.accessSVT();
+		SVT.accessSVT(itn);
 	}
 
-	public void accessCAR() {
+	public void accessCAR(Itinerary itn) {
 
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectCAR();
+		g4MenuPage.selectCAR(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		CAR.accessCAR();
+		CAR.accessCAR(itn);
 	}
 
-	public void accessTF2() {
+	public void accessTF2(Itinerary itn) {
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectFM();
+		g4MenuPage.selectFM(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		FM.accessTF2();
+		FM.accessTF2(itn);
 	}
 
-	public void accessRQ() {
+	public void accessRQ(Itinerary itn) {
 
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectRQ();
+		g4MenuPage.selectRQ(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		RQ.accessRQ();
+		RQ.accessRQ(itn);
 	}
 
-	public void accessBAG() {
+	public void accessBAG(Itinerary itn) {
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectFM();
+		g4MenuPage.selectFM(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		FM.accessBag();
+		FM.accessBag(itn);
 	}
 
-	public void accessPB2() {
+	public void accessPB2(Itinerary itn) {
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectFM();
+		g4MenuPage.selectFM(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		FM.accessPB2();
+		FM.accessPB2(itn);
 	}
 
-	public void accessHOT() {
+	public void accessHOT(Itinerary itn) {
 		g4PlusSignin();
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectHOT();
+		g4MenuPage.selectHOT(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		HOT.accessHOT();
+		HOT.accessHOT(itn);
 	}
 
-	public void accessATL() {
+	public void accessATL(Itinerary itn) {
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectATL();
+		g4MenuPage.selectATL(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 
-		ATL.accessATL();
+		ATL.accessATL(itn);
 	}
 
-	public void accessOFO() {
+	public void accessOFO(Itinerary itn) {
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectOFO();
+		g4MenuPage.selectOFO(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		OFO.accessOFO();
+		OFO.accessOFO(itn);
 	}
 
-	public void accessMOD() {
+	public void accessMOD(Itinerary itn) {
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectMOD();
+		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		MOD.accessMOD();
+		MOD.accessMOD(itn);
 	}
 
-	public void accessSwap() {
+	public void accessSwap(Itinerary itn) {
 
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		try {
@@ -487,6 +488,7 @@ public class G4PlusFlow extends BasePage {
 			capabilities.setCapability("tz", "America/Los_Angeles");
 
 		} catch (Exception e) {
+			itn.setErrorLog("Error while accessing swap :" + e.getMessage());
 			throw new Error(e);
 		}
 
@@ -495,8 +497,9 @@ public class G4PlusFlow extends BasePage {
 		LoginPage loginPage = new LoginPage(logger);
 
 		try {
-			loginPage.openSwap();
+			loginPage.openSwap(itn);
 		} catch (Exception e) {
+			itn.setErrorLog("Error while accessing swap :" + e.getMessage());
 			throw new Error();
 		}
 

@@ -57,6 +57,7 @@ public class CCBookingFlow extends BasePage {
 
 	public String CCBooking(Integer silo,Itinerary itn, ITestContext context) {
 		String manifestId = "";
+		String logForError ="";
 		try {
 			if(System.getProperty("env").contains("nddprd")) {
 				G4PlusLoginPage.g4plusLogin(false);
@@ -66,7 +67,7 @@ public class CCBookingFlow extends BasePage {
 			flightPage.selectFlightPage(itn);
 			manifestId = ManifestId.getManifestId(driver);
 			itn.setManifestId(manifestId);
-			logger.info("Initiated flight, manifest id is " + manifestId);
+			logger.info("Initiated flight, manifest id is " + manifestId);		
 			bundlePage.selectBundle(itn);
 			hotelPage.selectHotel(itn);
 			vehiclePage.selectVehicle(itn);
@@ -96,17 +97,19 @@ public class CCBookingFlow extends BasePage {
 				flightPage.selectFlightPage(itn);
 				manifestId = ManifestId.getManifestId(driver);
 				itn.setManifestId(manifestId);
+				itn.setErrorLog(e.getMessage());
 				logger.info("Initiated flight, manifest id is " + manifestId);
 				bundlePage.selectBundle(itn);
 				hotelPage.selectHotel(itn);
 				vehiclePage.selectVehicle(itn);
 				seatPage.selectSeatPage(itn);
 				bagPage.selectBagPage(itn);
+				//itn.setErrorLog("Error while CC Booking :  "+e.getMessage());
 				travelerPage.fillTravelerPage(itn);  
 				paymentPage.fillPaymentPage(itn, false, true);
 				confirmationPage.verifyConf(itn);
 			} catch (Exception e1) {
-				logger.info("%%%%%% caught error: " + e.getMessage());
+				itn.setErrorLog("Error while CC Booking" + e.getMessage());
 				e.printStackTrace();
 				return manifestId;
 			}
@@ -130,7 +133,7 @@ public class CCBookingFlow extends BasePage {
 	public void CCRefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
 		if (Environment.getEnv().contains("prod")) {
 			mod.refundWholeAmountInMod(itin, itn);
-			mod.cancelWholeItn(itn.getItn());
+			mod.cancelWholeItn(itn.getItn(), itn);
 		}     
 	}
 

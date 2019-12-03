@@ -3,6 +3,7 @@ package com.itqa.pageObjects.aisPages;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
@@ -56,7 +57,7 @@ public class PrintManifest extends BasePage {
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void verifyPrintManifest() {
+    public void verifyPrintManifest(Itinerary itn) {
     	try{
     	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(locationSelect));
         locationSelect.click();
@@ -76,6 +77,7 @@ public class PrintManifest extends BasePage {
         new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(paxTable));
         paxTable.click();
     	}catch(Exception e){
+    		itn.setErrorLog("Error while verifying the print manifest :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error(">>>verify PrintManifest FAIL<<<");
     	}

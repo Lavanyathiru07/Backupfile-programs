@@ -161,7 +161,7 @@ public class PaymentPage extends BasePage {
 		}
 	}
 
-	public void selectTripFlex(Boolean tf, String scenario) {
+	public void selectTripFlex(Boolean tf, String scenario,Itinerary itn) {
 		for (int loop = 0; loop < 5; loop++) {
 			try {
 				if (!scenario.toLowerCase().contains("web")) {
@@ -183,6 +183,7 @@ public class PaymentPage extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (loop == 4) {
+					itn.setErrorLog("Error while selecting trip flex :" + e.getMessage());
 					throw new Error(e);
 				} else {
 					try {
@@ -202,7 +203,7 @@ public class PaymentPage extends BasePage {
 		}
 	}
 
-	public void fillCardInfo(String cardNo) throws Exception {
+	public void fillCardInfo(String cardNo,Itinerary itn) throws Exception {
 		String expiredMonth;
 		String expiredYear;
 		String cardNumber;
@@ -281,6 +282,7 @@ public class PaymentPage extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (loop == 4) {
+					itn.setErrorLog("Error while selecting state in payment page :" + e.getMessage());
 					throw new Error(e.getMessage());
 				} else {
 					try {
@@ -377,6 +379,7 @@ public class PaymentPage extends BasePage {
 			Thread.sleep(5000);
 			amount = totalAmount.getText().trim();
 		} catch (StaleElementReferenceException e) {
+			itn.setErrorLog("Error while getting the text of amount :" + e.getMessage());
 			logger.info(e);
 		}
 		totalBookingFare = ConvertPrice(amount);
@@ -418,6 +421,7 @@ public class PaymentPage extends BasePage {
 				}
 				paymentPage.fillPaymentPage(itn, createAccount, false);
 			} catch (Exception e) {
+				itn.setErrorLog("Error in payment page :" + e.getMessage());
 				e.printStackTrace();
 			}
 			// wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
@@ -425,10 +429,10 @@ public class PaymentPage extends BasePage {
 		} else {
 			if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
 					|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
-				selectTripFlex(itn.getTripFlex(), itn.getScenario());
+				selectTripFlex(itn.getTripFlex(), itn.getScenario(), itn);
 			}
 
-			fillCardInfo(itn.getCardNo());
+			fillCardInfo(itn.getCardNo(), itn);
 
 			if (createAccount) {
 				itn.setEmail("tsqa.automation+" + System.currentTimeMillis() + "@tridentsqa.com");

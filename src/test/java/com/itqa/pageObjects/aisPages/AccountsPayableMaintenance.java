@@ -70,6 +70,7 @@ public class AccountsPayableMaintenance extends BasePage{
                 }
                 catch (Exception e) {
                     if (loop == 9) {
+                    	itn.setErrorLog("Vendor details is not displayed in lookup transaction :  "+e.getMessage());
                         throw new Error("Vendor 000005 not found");
                     }
                 }
@@ -83,6 +84,7 @@ public class AccountsPayableMaintenance extends BasePage{
                 }
                 catch (Exception e) {
                     if (loop == 5) {
+                    	itn.setErrorLog("Vendor details is not displayed in lookup transaction :  "+e.getMessage());
                         throw new Error("Vendor 000005 not found");
                     }
                 }
@@ -100,6 +102,7 @@ public class AccountsPayableMaintenance extends BasePage{
                 logger.info("Invoice Found");
             }
             else {
+            	itn.setErrorLog("Invoice not found :");
                 throw new Error("Invoice not found");
             }
         }
@@ -108,6 +111,7 @@ public class AccountsPayableMaintenance extends BasePage{
                 logger.info("Order Found");
             }
             else {
+            	itn.setErrorLog("Order not found :");
                 throw new Error("Order not found");
             }
         }
@@ -116,6 +120,7 @@ public class AccountsPayableMaintenance extends BasePage{
                 logger.info("Payment Found");
             }
             else {
+            	itn.setErrorLog("Payment not found :");
                 throw new Error("Payment not found");
             }
         }
@@ -126,6 +131,7 @@ public class AccountsPayableMaintenance extends BasePage{
 		}
     	
 		e.printStackTrace();
+		itn.setErrorLog("Account Payable MX FAIL :" + e.getMessage());
 		throw new Error(">>>Account Payable MX FAIL<<<");
 	}
 }

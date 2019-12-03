@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class FlightFlow extends BasePage{
@@ -36,7 +37,7 @@ public class FlightFlow extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void openFlightFlow() {
+    public void openFlightFlow(Itinerary itn) {
     	try{
         new Select(acGroupSelect).selectByVisibleText("ALL");
         new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(submitButton));
@@ -44,6 +45,7 @@ public class FlightFlow extends BasePage{
         mainTable.isDisplayed();
         logger.info("Flight Flow Table Displayed");
     	}catch(Exception e){
+    		itn.setErrorLog("Error while opening flight flow :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error(">>>Fligh Flow FAIL<<<");
     	}

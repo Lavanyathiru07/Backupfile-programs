@@ -12,6 +12,7 @@ import org.testng.SkipException;
 import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.util.Base64;
@@ -74,7 +75,7 @@ public class G4PlusLoginPage extends BasePage {
 		
 	}
 
-	public void selectCompany() {
+	public void selectCompany(Itinerary itn) {
 		try {
 			companyButton.click();
 			companyButton.click();
@@ -82,17 +83,19 @@ public class G4PlusLoginPage extends BasePage {
 			logger.info("Select company");
 		} catch (Exception e) {
 			skip = true;
+			itn.setErrorLog("Scenario failed :" + e.getMessage());
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
 
-	public void logOut() {
+	public void logOut(Itinerary itn) {
 		for (int i = 0; i < 10; i++) {
 			try {
 				userDropDown.click();
 				break;
 			} catch (Exception e) {
 				if (i == 9) {
+					itn.setErrorLog("Error while logout :" + e.getMessage());
 					throw new Error(e);
 				}
 				try {

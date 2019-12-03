@@ -3,6 +3,7 @@ package com.itqa.pageObjects.g4PlusPages;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
@@ -63,7 +64,7 @@ public class HOT extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessHOT() {
+    public void accessHOT(Itinerary itn) {
     	try{
         for (int loop=0; loop<10; loop++) {
             try {
@@ -74,6 +75,7 @@ public class HOT extends BasePage{
             }
             catch (Exception e) {
                 if (loop == 9) {
+                	itn.setErrorLog("Error while access HOT :" + e.getMessage());
                     throw new Error(e);
                 }
                 else {
@@ -102,6 +104,7 @@ public class HOT extends BasePage{
         logger.info("HOT Menu Open");
     
     }catch(Exception e){
+    	itn.setErrorLog("Error while accessing HOT :" + e.getMessage());
     	e.printStackTrace();
     	throw new Error("FAIL");
 	}

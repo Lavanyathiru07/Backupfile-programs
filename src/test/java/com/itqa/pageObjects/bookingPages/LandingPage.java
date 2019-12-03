@@ -101,7 +101,7 @@ public class LandingPage extends BasePage {
 		PageFactory.initElements(new AjaxElementLocatorFactory(this.driver, 20), this);
 	}
 
-	public void selectDepCity(String from) {
+	public void selectDepCity(String from, Itinerary itn) {
 		for (int loop = 0; loop < 5; loop++) {
 			Boolean flag = false;
 			logger.info("city name is " + from);
@@ -125,6 +125,7 @@ public class LandingPage extends BasePage {
 				}
 			} catch (Exception e) {
 				if (loop == 4) {
+					itn.setErrorLog("Error while seleting depature city :" + e.getMessage());
 					throw new Error(e);
 				}
 			}
@@ -132,7 +133,7 @@ public class LandingPage extends BasePage {
 		logger.info("Select " + from + " as departure city");
 	}
 
-	public void selectDesCity(String to) {
+	public void selectDesCity(String to,Itinerary itn) {
 		for (int loop = 0; loop < 5; loop++) {
 			Boolean flag = false;
 			try {
@@ -153,6 +154,7 @@ public class LandingPage extends BasePage {
 				}
 			} catch (Exception e) {
 				if (loop == 4) {
+					itn.setErrorLog("Error while selecting destination city :" + e.getMessage());
 					throw new Error(e);
 				}
 			}
@@ -160,7 +162,7 @@ public class LandingPage extends BasePage {
 		logger.info("Select " + to + " as destination city");
 	}
 
-	public void selectTripType(Boolean roundTrip) {
+	public void selectTripType(Boolean roundTrip,Itinerary itn) {
 		Boolean maximizer = true;
 		for (int loop = 0; loop < 5; loop++) {
 			try {
@@ -225,6 +227,7 @@ public class LandingPage extends BasePage {
 							break;
 						} else {
 							if (loop == 9) {
+								itn.setErrorLog("Error occured :" + e.getMessage());
 								throw new Error(e);
 							}
 						}
@@ -289,11 +292,12 @@ public class LandingPage extends BasePage {
 		logger.info("Click Search");
 	}
 
-	public void signIn(String accountEmail) {
+	public void signIn(String accountEmail,Itinerary itn) {
 
 		try {
 			Common.clickWithTimeOut(driver, popUpCloseButton);
 		} catch (Exception e) {
+			itn.setErrorLog("Error while closing popup :" + e.getMessage());
 			// this pop up is not always displayed
 		}
 		new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(loginButton));
@@ -325,9 +329,9 @@ public class LandingPage extends BasePage {
 		}
 		logger.info(driver.getCurrentUrl());
 		logger.info("Login succesful");
-		selectDepCity(itn.getDepartureCity());
-		selectDesCity(itn.getDestinationCity());
-		selectTripType(itn.getRoundTrip());
+		selectDepCity(itn.getDepartureCity(), itn);
+		selectDesCity(itn.getDestinationCity(), itn);
+		selectTripType(itn.getRoundTrip(), itn);
 		selectDepDate(itn.getDepartureDateIndex());
 		if (itn.getRoundTrip()) {
 			selectRetDate(itn.getReturningDateIndex());

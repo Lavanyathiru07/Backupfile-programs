@@ -14,6 +14,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
@@ -51,7 +52,7 @@ public class CAR extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessCAR() {
+    public void accessCAR(Itinerary itn) {
     	try{
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 1);
@@ -74,7 +75,7 @@ public class CAR extends BasePage{
         resultRow.click();
         logger.info("CAR Menu Open");
     	}catch(Exception e){
-
+    		itn.setErrorLog("Error while accerss CAR :" + e.getMessage());
     		e.printStackTrace();
     		throw new Error("FAIL");
     	}

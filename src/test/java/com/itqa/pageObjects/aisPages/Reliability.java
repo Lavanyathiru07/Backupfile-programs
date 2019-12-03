@@ -11,6 +11,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
@@ -48,7 +49,7 @@ public class Reliability extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void openReport() {
+    public void openReport(Itinerary itn) {
     	try{
         reportsTab.click();
         flightLogTab.click();
@@ -68,6 +69,7 @@ public class Reliability extends BasePage{
         logger.info("Reliability Report displayed");
     	}catch(Exception e){
     		skip = true;
+    		itn.setErrorLog("Error while opening the reliablity :" + e.getMessage());
     		DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
     	}

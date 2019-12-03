@@ -70,7 +70,7 @@ public class TABookingFlow extends BasePage {
 		String manifestId = "";
 
 		try {
-			taSignInPage.taSignin();
+			taSignInPage.taSignin(itn);
 			landingPage.selectFlightsOnLandingPage(itn);
 			flightPage.selectFlightPage(itn);
 			manifestId = ManifestId.getManifestId(driver);
@@ -97,6 +97,7 @@ public class TABookingFlow extends BasePage {
 				flightPage.selectFlightPage(itn);
 				manifestId = ManifestId.getManifestId(driver);
 				itn.setManifestId(manifestId);
+				itn.setErrorLog("Error while TA Booking :  "+ e.getMessage());
 				logger.info("Initiated flight, manifest id is " + manifestId);
 				hotelPage.selectHotel(itn);
 				vehiclePage.selectVehicle(itn);
@@ -117,7 +118,7 @@ public class TABookingFlow extends BasePage {
 	public void TARefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
 		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprod") ) {
 			mod.refundWholeAmountInMod(itin, itn);
-			mod.cancelWholeItn(itn.getItn());
+			mod.cancelWholeItn(itn.getItn(), itn);
 		}
 	}
 

@@ -70,7 +70,7 @@ public class SeatPage extends BasePage {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void chooseSeat(int num, Boolean firstLeg, Boolean secondLeg) {
+    public void chooseSeat(int num, Boolean firstLeg, Boolean secondLeg,Itinerary itn) {
         if (firstLeg) {
             for (int i = 0; i < num; i++) {
                 int seatInd = new Random().nextInt(availSeatList.size());
@@ -90,6 +90,7 @@ public class SeatPage extends BasePage {
                     }
                     catch (Exception e) {
                         if (loop == 4) {
+                        	itn.setErrorLog("Could not select a departing flight :" + e.getMessage());
                             throw new Error(e.getMessage());
                         }
                         else {
@@ -166,7 +167,7 @@ public class SeatPage extends BasePage {
     	Common.elementToBeClickable(driver,seatTable, "Seat map");
         
         if (itn.getSeat() || itn.getSeatRT()) {
-            chooseSeat(itn.getPaxNum(), itn.getSeat(), itn.getSeatRT());
+            chooseSeat(itn.getPaxNum(), itn.getSeat(), itn.getSeatRT(), itn);
             clickContinue(itn.getRoundTrip(), itn.getSeat(), itn.getSeatRT(), itn.getScenario());
         } else {
             logger.info("No seat selected");

@@ -120,6 +120,7 @@ public class ActivityPage extends BasePage {
         }
         else {
             if (itn.getActivity()) {
+            	itn.setErrorLog("Activity required..but the page is skipped :" );
                 throw new Error("Activity Required..but the page was skipped");
             }
         }
