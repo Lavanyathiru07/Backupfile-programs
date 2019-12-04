@@ -94,7 +94,6 @@ public class Environment {
 			}
 			
 		}
-		System.out.println("Silo list is ="+siloList);
 		return siloList;
 		
 	}

@@ -36,8 +36,6 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		TestResultContext testResultContext = new TestResultContext();
 		testResultContext.getTestResultContext(result);
 
-		System.out.println("Test Pass->" + result.getName() + " on silo " + result.getTestContext().getAttribute("silo")
-				+ " on thread " + Thread.currentThread().getId());
 		GeneralUtils.writeToFile("emailPassedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
@@ -65,11 +63,6 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 //            Jira jira = new Jira();
 //            jira.createJira(result);
 //        }
-
-		System.out.println("Test Failed->" + result.getName() + " on silo "
-				+ result.getTestContext().getAttribute("silo") + " on thread " + Thread.currentThread().getId());
-		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
-
 		GeneralUtils.writeToFile("emailFailedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
@@ -88,12 +81,10 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 	
 	@Override
 	public void onTestSkipped(ITestResult result) {
-
-
-		System.out.println("Test Skipped->" + result.getName());
-		TestResultContext testResultContext = new TestResultContext();
+		
+			TestResultContext testResultContext = new TestResultContext();
 	
-		testResultContext.getTestResultContext(result);
+			testResultContext.getTestResultContext(result);
 
 			if ((flightAvailService != 0 || paymentService != 0) && (!testResultContext.description.isEmpty())) {
 				
