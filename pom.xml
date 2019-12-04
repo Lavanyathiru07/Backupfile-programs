@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -86,11 +87,14 @@
 			<artifactId>webdrivermanager</artifactId>
 			<version>3.3.0</version>
 		</dependency>
+
 		<dependency>
-			<groupId>com.itqa</groupId>
-			<artifactId>CATint</artifactId>
-			<version>0.04</version>
+			<groupId>io.fastjson</groupId>
+			<artifactId>boon</artifactId>
+			<version>0.32</version>
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
@@ -124,7 +128,7 @@
 			<artifactId>httpcore</artifactId>
 			<version>4.4.6</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>ClearDHS</groupId>
 			<artifactId>ClearDHS</artifactId>
@@ -157,22 +161,6 @@
 	</build>
 
 	<repositories>
-		<!-- <repository>
-			<id>central</id>
-			<name>Central Repository</name>
-			<url>https://repo.maven.apache.org/maven2</url>
-		</repository>
-		<repository>
-			<id>allegiant-nexus-repository</id>
-			<url>https://nexus.allegiantair.com/content/repositories/thirdparty</url>
-		</repository>
-		<repository>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<id>shareJars</id>
-			<url>https://git.allegiantair.com:8443/users/c.charnkijtawarush/repos/sharejars/raw/</url>
-		</repository> -->
 		<repository>
 			<id>central</id>
 			<name>Central Repository</name>
@@ -189,7 +177,7 @@
 			<id>g4dhsjars</id>
 			<url>https://git.allegiantair.com:8443/users/ck3i/repos/g4dhsjars/raw</url>
 		</repository>
-		
+
 	</repositories>
 
 	<reporting>

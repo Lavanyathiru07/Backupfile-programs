@@ -5,7 +5,6 @@ import com.itqa.Utils.Screenshot;
 
 import framework.DriverBase;
 
-import com.itqa.CATint;
 import com.itqa.Utils.Environment;
 
 import com.itqa.Utils.URLS;

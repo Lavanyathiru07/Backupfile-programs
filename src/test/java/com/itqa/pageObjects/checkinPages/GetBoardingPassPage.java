@@ -47,7 +47,7 @@ public class GetBoardingPassPage {
         return curTab;
     }
 
-    public void checkBP(Set<String> curTab, String itn, Itinerary itin) {
+    public void checkBP(Set<String> curTab, String pnr, Itinerary itn) {
         GeneralUtils.switchNextTab(driver, curTab);
 
         if (chromeBP.isDisplayed()) {
@@ -55,7 +55,7 @@ public class GetBoardingPassPage {
             logger.info("Boarding pass printed");
         }
         else {
-        	itin.setErrorLog("Incorrect iyn, bag, priority boardng information on the boarding pass");
+        	itn.setErrorLog("Incorrect iyn, bag, priority boardng information on the boarding pass");
             throw new Error("Incorrect itn, bag, priority boarding information on the boarding pass");
         }
         Screenshot.saveScreenshot("BoardingPass", driver);
