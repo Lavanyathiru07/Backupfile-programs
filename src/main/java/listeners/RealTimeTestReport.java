@@ -83,10 +83,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
 						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
 						+ "</td></tr>");
-		
-		
-		
-		
+			
 	}
 	
 	@Override
@@ -94,12 +91,8 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
 
 		System.out.println("Test Skipped->" + result.getName());
-		
-
-
 		TestResultContext testResultContext = new TestResultContext();
-
-		
+	
 		testResultContext.getTestResultContext(result);
 
 			if ((flightAvailService != 0 || paymentService != 0) && (!testResultContext.description.isEmpty())) {
@@ -112,15 +105,10 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		System.out.println("Test Skipped->" + result.getName() + " on silo "
 				+ result.getTestContext().getAttribute("silo") + " on thread " + Thread.currentThread().getId());
 
-
-
-
-
 	}
 
 	@Override
 	public void onFinish(ITestContext result) {
-		
 		
 		DriverBase.getDriver().quit();
 		System.out.println("END Of Execution(TEST)->" + result.getName());

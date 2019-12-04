@@ -15,8 +15,7 @@ public class ItineraryDataProvider {
     public static Iterator<Object[]> itineraryDataBuilder(ITestContext context, Method method) {
         ArrayList<Object[]> data = new ArrayList<>();
         List<Integer> silos = new Environment().getSilos();
-        //List<Integer> silos = new Environment().getSiloList();
-
+       
         if (method.getName().contains("OLCI")) {
                 for (Integer silo: silos) {
                     Itinerary itnOneWay = new ItineraryBuilder()
@@ -64,7 +63,7 @@ public class ItineraryDataProvider {
     public Iterator<Object[]> itineraryDataBuilderforTA(ITestContext context, Method method) {
         ArrayList<Object[]> data = new ArrayList<>();
         List<Integer> silos = new Environment().getSilos();
-        //List<Integer> silos = new Environment().getSiloList();
+       
         if (method.getName().contains("RoundTripWith2bags")) {
             for (Integer silo: silos) {
                 Itinerary itnRoundTrip = new ItineraryBuilder()
@@ -98,7 +97,6 @@ public class ItineraryDataProvider {
     public Iterator<Object[]> itineraryDataBuilderforCC(ITestContext context, Method method) {
         ArrayList<Object[]> data = new ArrayList<>();
         List<Integer> silos = new Environment().getSilos();
-        //List<Integer> silos = new Environment().getSiloList();
         
         if (method.getName().contains("RoundTrip")) {
             for (Integer silo: silos) {
@@ -133,7 +131,7 @@ public class ItineraryDataProvider {
     public Iterator<Object[]> itineraryDataBuilderforNonBooking(ITestContext context, Method method) {
     	ArrayList<Object[]> data = new ArrayList<>();
     	List<Integer> silos = new Environment().getSilos();
-       //List<Integer> silos = new Environment().getSiloList();
+       
         for (Integer silo: silos) {
             Itinerary itnRoundTrip = new ItineraryBuilder()
                       .build();

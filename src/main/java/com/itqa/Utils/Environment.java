@@ -33,31 +33,7 @@ public class Environment {
 	
 	public List<Integer> getSilos() {
 		List<Integer> siloList =new ArrayList<Integer>();
-		/*if(System.getProperty("Scenario").equals("")) {
-			if(getEnv().contains("trn")) {
-				siloList.add(0);
-				siloList.add(1);
-				siloList.add(4);
-			} else if(getEnv().contains("in")) {
-				siloList.add(1);
-				siloList.add(4);
-			}else if(getEnv().contains("qa")||getEnv().contains("aws")) {
-				siloList.add(1);
-				siloList.add(2);
-				siloList.add(4);
-				siloList.add(5);
-			}else if(getEnv().contains("stg")||getEnv().contains("nddprd")||getEnv().contains("prod")) {
-				siloList.add(1);
-				siloList.add(2);
-				siloList.add(3);
-				siloList.add(4);
-				siloList.add(5);
-			}else {
-				siloList.add(0);
-			}
-			
-		}
-		return siloList;*/
+		
 		if(System.getProperty("Scenario").equals("silo")) {
 			if(getEnv().contains("in")) {
 				siloList.add(1);

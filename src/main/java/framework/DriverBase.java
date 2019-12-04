@@ -43,7 +43,6 @@ public class DriverBase {
 	@AfterSuite(alwaysRun = true)
 	public static void clearCookies() {
 		try {
-			// getDriver().quit();
 			getDriver().manage().deleteAllCookies();
 		} catch (Exception ex) {
 			System.err.println("Unable to delete cookies: " + ex);
@@ -56,9 +55,6 @@ public class DriverBase {
 		byte[] screenShotByteFile;
 		screenShotByteFile = Screenshot.saveScreenshot(testResult.getName(), getDriver());
 		testResult.setAttribute("screenshot", screenShotByteFile);
-		// System.setProperty("scrsht", screenShotByteFile.toString());
-		// Screenshot.takeScreenshot(getDriver(), System.getProperty("user.dir") +
-		// "/src/test/resources/bookingScreenshot/"+testResult.getAttribute("description")+".png");
 		getDriver().close();
 		driverThread.get().quitDriver();
 	}
