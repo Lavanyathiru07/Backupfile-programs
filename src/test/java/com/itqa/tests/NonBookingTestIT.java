@@ -156,7 +156,7 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Access Accounts Payable Maintenance - Look up Transaction")
 	public void lookupAccountsPayableMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && (silo==4))) {
+		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.lookupAccountsPayableMX(itn);
