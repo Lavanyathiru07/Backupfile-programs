@@ -30,8 +30,14 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
-		String base64Screenshot = "data:image/png;base64,"
-				+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
+		String base64Screenshot ="";
+		try {
+			 base64Screenshot = "data:image/png;base64,"
+					+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 		TestResultContext testResultContext = new TestResultContext();
 		testResultContext.getTestResultContext(result);
@@ -53,9 +59,13 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 
 	@Override
 	public void onTestFailure(ITestResult result) {
-		String base64Screenshot = "data:image/png;base64,"
-				+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
-
+		String base64Screenshot ="";
+		try {
+			 base64Screenshot = "data:image/png;base64,"
+					+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		TestResultContext testResultContext = new TestResultContext();
 		testResultContext.getTestResultContext(result);
 
@@ -101,7 +111,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 	@Override
 	public void onFinish(ITestContext result) {
 		
-		DriverBase.getDriver().quit();
+		//DriverBase.getDriver().quit();
 		System.out.println("END Of Execution(TEST)->" + result.getName());
 		System.out.println("**** on finish manifestid: " + result.getAttribute("manifestid"));
 		
