@@ -55,7 +55,7 @@ public class CCBookingFlow extends BasePage {
 		G4PlusLoginPage=new G4PlusLoginPage();
 	}
 
-	public String CCBooking(Itinerary itn, ITestContext context) {
+	public String CCBooking(Integer silo,Itinerary itn, ITestContext context) {
 		String manifestId = "";
 		try {
 			if(System.getProperty("env").contains("nddprd")) {
@@ -72,30 +72,66 @@ public class CCBookingFlow extends BasePage {
 			vehiclePage.selectVehicle(itn);
 			seatPage.selectSeatPage(itn);
 			bagPage.selectBagPage(itn);
-			travelerPage.fillTravelerPage(itn);
+			travelerPage.fillTravelerPage(itn);  
 			paymentPage.fillPaymentPage(itn, false, true);
 			confirmationPage.verifyConf(itn);
 		} catch (Exception e) {
-			logger.info("%%%%%% caught error: " + e.getMessage());
-			e.printStackTrace();
-			return manifestId;
+			try {
+				itn.setDepartureCity("BLI");
+				itn.setDestinationCity("LAS");
+				driver = DriverBase.getDriver();
+				if (Environment.getEnv().contains("aws")) {
+					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+					DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("awsenv"), silo));
+				} else {
+					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+					DriverBase.getDriver().get(URLS.CC.getUrl(Environment.getEnv(), silo));
+				}
+				
+				if(System.getProperty("env").contains("nddprd")) {
+					G4PlusLoginPage.g4plusLogin(false);
+					DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("env"), Environment.getCurrentSilo()));
+				}
+				landingPage.selectFlightsOnLandingPage(itn);
+				flightPage.selectFlightPage(itn);
+				manifestId = ManifestId.getManifestId(driver);
+				itn.setManifestId(manifestId);
+				logger.info("Initiated flight, manifest id is " + manifestId);
+				bundlePage.selectBundle(itn);
+				hotelPage.selectHotel(itn);
+				vehiclePage.selectVehicle(itn);
+				seatPage.selectSeatPage(itn);
+				bagPage.selectBagPage(itn);
+				travelerPage.fillTravelerPage(itn);  
+				paymentPage.fillPaymentPage(itn, false, true);
+				confirmationPage.verifyConf(itn);
+			} catch (Exception e1) {
+				logger.info("%%%%%% caught error: " + e.getMessage());
+				e.printStackTrace();
+				return manifestId;
+			}
+			
 		}
 		return manifestId;
 	}
 
-
 	public Boolean processCCModification(Itinerary itn) {
-		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-		return mod.modUpsell(itn);
+		if (Environment.getEnv().contains("aws")) {
+			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
+		}else {
+			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		}
 		
-	}
+		return mod.modUpsell(itn);
+		}  
 
 	public void CCRefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
 		if (Environment.getEnv().contains("prod")) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn());
-		}
+		}     
 	}
 	
 	public Boolean emailVerification(Itinerary itn, String mailToValidation) {

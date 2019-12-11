@@ -63,7 +63,6 @@ public class BookingFlow extends BasePage {
 		bundlePage = new BundlePage();
 		hotelPage = new HotelPage();
 		vehiclePage = new VehiclePage();
-		activityPage = new ActivityPage();
 		travelerPage = new TravelerPage();
 		seatPage = new SeatPage();
 		paymentPage = new PaymentPage();
@@ -99,7 +98,6 @@ public class BookingFlow extends BasePage {
 			bundlePage.selectBundle(itn);
 			hotelPage.selectHotel(itn);
 			vehiclePage.selectVehicle(itn);
-			activityPage.selectActivity(itn);
 			travelerPage.fillTravelerPage(itn);
 			seatPage.selectSeatPage(itn);
 			bagPage.selectBagPage(itn);
@@ -125,8 +123,12 @@ public class BookingFlow extends BasePage {
 			try {
 				itn.setDepartureCity("BLI");
 				itn.setDestinationCity("LAS");
-
-				DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+				driver = DriverBase.getDriver();
+				if (Environment.getEnv().contains("aws")) {
+				     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
+				}else {
+					driver.get(URLS.WWW.getUrl(Environment.getEnv(), silo));
+				}
 				manifestId = createWebBooking(itn, context);
 				paymentPage.fillPaymentPage(itn, createAccount, true);
 				confirmationPage.verifyConf(itn);
@@ -141,22 +143,34 @@ public class BookingFlow extends BasePage {
 	}
 
 	public Boolean signInAndVerifyAccount(Itinerary itn) throws InterruptedException {
-		String logoutUrl;
-		if (System.getProperty("env").contains("aws")) {
-			logoutUrl = URLS.WWW.getUrl(System.getProperty("awsenv"), itn.getSiloIndex()) + "user/logout";
-		} else {
-			logoutUrl = URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()) + "user/logout";
+		try {
+			String logoutUrl;
+			if (System.getProperty("env").contains("aws")) {
+				logoutUrl = URLS.WWW.getUrl(System.getProperty("awsenv"), itn.getSiloIndex()) + "user/logout";
+			} else {
+				logoutUrl = URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()) + "user/logout";
+			}
+			// driver.get(logoutUrl);
+			Thread.sleep(3000);
+			DriverBase.getDriver().get(logoutUrl);
+			logger.info(logoutUrl);
+			landingPage.signIn(itn.getEmail());
+			return tripsPage.checkMyTrips(itn.getItn());
+		}catch(Exception e) {
+			if (System.getProperty("env").contains("qa1")) {
+			itn.setItn(itn.getItn()+"Failed due to CES-1101");
 		}
-		// driver.get(logoutUrl);
-		Thread.sleep(3000);
-		DriverBase.getDriver().get(logoutUrl);
-		logger.info(logoutUrl);
-		landingPage.signIn(itn.getEmail());
-		return tripsPage.checkMyTrips(itn.getItn());
+			return false;
+		}
+		
 	}
 
 	public Boolean processOnlineCheckinAndGetBoardingPass(Itinerary itn) {
-		DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+		if (System.getProperty("env").contains("aws")) {
+			DriverBase.getDriver().get(URLS.WWW.getUrl(System.getProperty("awsenv"), itn.getSiloIndex()));
+		}else {
+			DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+		}
 		loginPage.doCheckin(itn);
 		bagAndBoardingPage.doBagandBoardingNoUpsell();
 		checkedSeatPage.acceptDefaultSeat();
@@ -164,7 +178,14 @@ public class BookingFlow extends BasePage {
 	}
 
 	public Boolean processOnlineCheckinWithUpsellAndGetBoardingPass(Itinerary itn) {
-		DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+
+		driver = DriverBase.getDriver();
+		if (Environment.getEnv().contains("aws")) {
+		     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), itn.getSiloIndex()));
+		}else {
+			driver.get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+		}
+
 		loginPage.doCheckin(itn);
 		bagAndBoardingPage.doBagandBoarding();
 		checkedSeatPage.selectUpgradeSeat();
@@ -177,9 +198,13 @@ public class BookingFlow extends BasePage {
 		if (Environment.getEnv().contains("PROD")) {
 
 		} else {
-			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
-			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-		}
+			if (System.getProperty("env").contains("aws")) {
+				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
+				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
+			}else {
+				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+			}}
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectMOD();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -212,8 +237,15 @@ public class BookingFlow extends BasePage {
 
 	}
 
-	public void manageTravelModificationUpsellBagSeat(Itinerary itn) {
-		DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
+	public void manageTravelModificationUpsellBagSeat(Itinerary itn, Integer silo) {
+		driver = DriverBase.getDriver();
+		try {
+		if (Environment.getEnv().contains("aws")) {
+		     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
+		}else {
+			driver.get(URLS.WWW.getUrl(Environment.getEnv(), silo));
+		}
+
 		ManageTravelLoginPage.doManageTravel(itn);
 		ManageTravelBagPage.selectBagPage(itn);
 		ManageTravelSeatPage.selectUpgradeSeat(itn);
@@ -221,5 +253,8 @@ public class BookingFlow extends BasePage {
 		ManageTravelVehiclePage.selectVehicle();
 		ManageTravelPaymentPage.fillPaymentPage(itn);
 
+	}catch (Exception e) {
+		e.printStackTrace();
+		throw new Error(">>>manageTravelModificationUpsellBagSeat FAIL<<<");
 	}
-}
+}}

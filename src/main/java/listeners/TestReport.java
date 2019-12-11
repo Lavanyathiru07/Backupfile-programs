@@ -35,9 +35,13 @@ public class TestReport implements IReporter {
             htmlStringBuilder.append("<title>Test Result</title><style>td {border: 1px solid black; padding: 2px;} table {border-collapse: collapse; width: 1000px;}</style></head>");
             htmlStringBuilder.append("<body>");
             htmlStringBuilder.append("<table>");
-           
-            htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("env").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");
-            
+
+            if(System.getProperty("env").toLowerCase().equals("aws")) {
+                htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("awsenv").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");
+            } else {
+                htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("env").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");
+            }
+
             htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>Release:</b></font></td><td width=\"70%\"></td></tr>");
             htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>Start Time:</b></font></td><td width=\"70%\">" + System.getProperty("startTime") + "</td></tr>");
             htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>End Time:</b></font></td><td width=\"70%\">" + (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()) + "</td></tr></table>");
@@ -109,18 +113,7 @@ public class TestReport implements IReporter {
 		}
 	}
 
-	public void nonBookingWritePassedAndFailedTestReport() {
-		try {
-			GeneralUtils.writeToFile("Result.html",
-					getStringFromFile(System.getProperty("user.dir") + "/nonBookingFailedTests.html"));
-			GeneralUtils.writeToFile("Result.html",
-					getStringFromFile(System.getProperty("user.dir") + "/nonBookingPassedTests.html"));
-			cleanUpTestReports("nonBookingFailedTests.html");
-			cleanUpTestReports("nonBookingPassedTests.html");
-		} catch (Exception e) {
-			System.out.println("There were no failed tests or passed tests files found. We are OK with that");
-		}
-	}
+	
 
 
     @Override
@@ -128,10 +121,88 @@ public class TestReport implements IReporter {
                                String outputDirectory) {
     	System.out.println("started to generate report");
     	writeReportHeader();
-    	//nonBookingWritePassedAndFailedTestReport();
-        writePassedAndFailedTestReport();
+    	writePassedAndFailedTestReport();
         writeReportFooter();
         System.out.println("Generated report");
+        System.out.println("started to generate Email report");
+    	writeEmailReportHeader();
+    	writeEmailPassedAndFailedTestReport();
+    	writeEmailReportFooter();
+        System.out.println("Generated Email report");
     }
+    
+    
+    public void writeEmailReportFooter() {
+    	GeneralUtils.writeToFile("EmailResult.html",
+				"<tr><td bgcolor=\"#FF9F33\" colspan=\"4\"><font color=\"White\"><b>RELEASE FUNCTIONAL</font></td></tr>");
+		GeneralUtils.writeToFile("EmailResult.html",
+				"<tr><td align=\"center\">&nbsp;</td><td>&nbsp;</td><td align=\"center\">&nbsp;</td><td>&nbsp;</td></tr>");
+    }
+    
+    public void writeEmailReportHeader() {
+
+        try {
+        	
+        	 File file = new File("EmailResult.html");
+        	 
+             if (file.exists()) {
+                 file.delete();
+             }
+            StringBuilder htmlStringBuilder = new StringBuilder();
+            htmlStringBuilder.append("<html><head>");
+            htmlStringBuilder.append("<script>function setImageVisible(action, id) {\n" +
+                    " if (action === 'show') {" +
+                    "    var img = document.getElementById('screenshotId' + id);\n" +
+                    "    img.style.display = 'block';\n" +
+                    "}}</script>");
+            htmlStringBuilder.append("<title>Test Result</title><style>td {border: 1px solid black; padding: 2px;} table {border-collapse: collapse; width: 1000px;}</style></head>");
+            htmlStringBuilder.append("<body>");
+            htmlStringBuilder.append("<table>");
+           
+            if(System.getProperty("env").toLowerCase().equals("aws")) {
+                htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("awsenv").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");
+            } else {
+                htmlStringBuilder.append("<tr><td bgcolor=\"#3633FF\" align=\"center\" colspan=\"2\"><font size=\"5\" color=\"white\"><b>" + System.getProperty("env").toUpperCase() + " Basic Acceptance Testing</b></font></td></tr>");
+            }
+            
+            htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>Release:</b></font></td><td width=\"70%\"></td></tr>");
+            htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>Start Time:</b></font></td><td width=\"70%\">" + System.getProperty("startTime") + "</td></tr>");
+            htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"30%\"><font color=\"white\"><b>End Time:</b></font></td><td width=\"70%\">" + (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()) + "</td></tr></table>");
+            htmlStringBuilder.append("<br>");
+            htmlStringBuilder.append("<table>");
+            htmlStringBuilder.append("<tr><td bgcolor=\"yellow\" colspan=\"3\"><font color=\"Black\"><b>ISSUES</b></font></td></tr>");
+            htmlStringBuilder.append("<tr><td width=\"20%\">JIRA#</td><td width=\"60%\">DESCRIPTION OF ISSUE</td><td width=\"20%\">COMMENT</td></tr>");
+            htmlStringBuilder.append("<tr><td width=\"20%\">&nbsp;</td><td width=\"60%\"></td><td width=\"20%\"></td></tr></table>");
+            htmlStringBuilder.append("<br>");
+            htmlStringBuilder.append("<table>");
+            htmlStringBuilder.append("<tr><td bgcolor=\"#FF9F33\" width=\"10%\" align=\"center\">");
+            htmlStringBuilder.append("<font color=\"white\"><b>TESTCASE Description</b></font></td>");
+            htmlStringBuilder.append("<td bgcolor=\"#FF9F33\" width=\"15%\" align=\"center\"><font color=\"white\">");
+            htmlStringBuilder.append("<b>STATUS</b></font></td>");
+            htmlStringBuilder.append("<td bgcolor=\"#FF9F33\" width=\"20%\" align=\"center\">");
+            htmlStringBuilder.append("<font color=\"white\"><b>DATA</b></font></td>");
+            htmlStringBuilder.append("<td bgcolor=\"#FF9F33\" width=\"20%\" align=\"center\">");
+            htmlStringBuilder.append("<font color=\"white\"><b>MANIFEST</b></font></td>");
+            GeneralUtils.writeToFile("EmailResult.html", htmlStringBuilder.toString());
+        } catch (Exception e) {
+            System.err.println("Could not create report, exception -> " + e.getMessage() + " --->>> ");
+            e.printStackTrace();
+        }
+    
+    }
+    
+    public void writeEmailPassedAndFailedTestReport() {
+		try {
+			GeneralUtils.writeToFile("EmailResult.html",
+					getStringFromFile(System.getProperty("user.dir") + "/emailFailedTests.html"));
+			GeneralUtils.writeToFile("EmailResult.html",
+					getStringFromFile(System.getProperty("user.dir") + "/emailPassedTests.html"));
+			cleanUpTestReports("emailFailedTests.html");
+			cleanUpTestReports("emailPassedTests.html");
+		} catch (Exception e) {
+			System.out.println("There were no failed tests or passed tests files found. We are OK with that");
+		}
+	}
+    
 
 }

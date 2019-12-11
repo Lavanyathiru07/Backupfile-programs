@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -21,7 +20,22 @@
 	</properties>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>4.1.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-path</artifactId>
+			<version>4.1.2</version>
+		</dependency>
 		<dependency>
 			<groupId>io.qameta.allure</groupId>
 			<artifactId>allure-testng</artifactId>
@@ -72,11 +86,7 @@
 			<artifactId>webdrivermanager</artifactId>
 			<version>3.3.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.itqa</groupId>
-			<artifactId>CATint</artifactId>
-			<version>0.04</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
@@ -103,22 +113,28 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20090211</version>
+			<version>20190722</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
 			<version>4.4.6</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>ClearDHS</groupId>
+			<artifactId>ClearDHS</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
-		<plugins>		
+		<plugins>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.14.1</version>
 				<configuration>
-					
+
 					<suiteXmlFiles>
 						<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
@@ -137,6 +153,7 @@
 	</build>
 
 	<repositories>
+		
 		<repository>
 			<id>central</id>
 			<name>Central Repository</name>
@@ -150,9 +167,10 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-			<id>shareJars</id>
-			<url>https://git.allegiantair.com:8443/users/c.charnkijtawarush/repos/sharejars/raw/</url>
+			<id>g4dhsjars</id>
+			<url>https://git.allegiantair.com:8443/users/ck3i/repos/g4dhsjars/raw</url>
 		</repository>
+		
 	</repositories>
 
 	<reporting>

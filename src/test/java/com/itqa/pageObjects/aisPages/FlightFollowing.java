@@ -8,8 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
-import org.testng.SkipException;
-
 import com.itqa.pageObjects.BasePage;
 
 import framework.DriverBase;
@@ -88,6 +86,7 @@ public class FlightFollowing extends BasePage{
     }catch(Exception e){
 		
 		e.printStackTrace();
+		throw new Error("FAIL - Flight Following - Cannot get element");
 	}
     }
 }

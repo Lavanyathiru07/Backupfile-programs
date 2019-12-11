@@ -12,6 +12,7 @@ public class TestResultContext {
 	String manifestId;
 	String itn;
 	String testName;
+	Object screenshot;
 
 	public TestResultContext getTestResultContext(ITestResult result) {
 		Itinerary currentItn = (Itinerary) result.getParameters()[ITNINDEX];
@@ -22,6 +23,7 @@ public class TestResultContext {
 		this.itn = currentItn.getItn();
 		this.description = currentItn.getDescription();
 		this.manifestId = currentItn.getManifestId();
+		this.screenshot=result.getAttribute("screenshot");
 
 		return new TestResultContext();
 	}

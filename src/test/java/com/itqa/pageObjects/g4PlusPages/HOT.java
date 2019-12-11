@@ -99,36 +99,11 @@ public class HOT extends BasePage{
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(airportLabel));
         airportLabel.click();
 
-        dashboardTab.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(notifRow));
-        notifRow.click();
-
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-        Boolean found = false;
-        for (int loop=0; loop<30; loop++){
-            try {
-            	driver.findElement(By.xpath("//tr[contains(@class,'ng-scope') and contains(@ng-repeat,'reportItems')]"));
-                found = true;
-                break;
-            }
-            catch (Exception e) {}
-
-            try {
-            	driver.findElement(By.xpath("//span[contains(text(),'There are currently no items with zero costs.')]"));
-                found = true;
-                break;
-            }
-            catch (Exception e) {}
-        }
-
-        if (!found) {
-            throw new Error("Hotels Report not Found");
-        }
-
         logger.info("HOT Menu Open");
     
     }catch(Exception e){
     	e.printStackTrace();
+    	throw new Error("FAIL");
 	}
     }
 }

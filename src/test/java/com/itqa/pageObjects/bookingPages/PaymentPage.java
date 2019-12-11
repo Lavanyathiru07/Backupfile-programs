@@ -1,12 +1,8 @@
 package com.itqa.pageObjects.bookingPages;
 
-import java.io.Console;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.mozilla.javascript.Undefined;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -19,7 +15,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.itqa.pageObjects.BasePage;
 
 import common.Common;
@@ -354,16 +349,24 @@ public class PaymentPage extends BasePage {
 		logger.info("Will popup be called?  " + Popupflag);
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
 				|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta.")) {
+			
+		try {
 			if (Popupflag) {
 				new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(tripFlexPopupNo));
 				jse.executeScript(JSFIRSTARG, tripFlexPopupNo);
 				// tripFlexPopupNo.click();
 				logger.info("Tripflex 'NO' popup is clicked");
 			}
+		}catch(Exception e) {
+			if (Popupflag) {
+				closePopup();
+			}
+		}
 		} else {
 			if (Popupflag) {
 				closePopup();
 			}
+		
 		}
 		try {
 			Thread.sleep(5000);
@@ -444,7 +447,7 @@ public class PaymentPage extends BasePage {
 				return true;
 			}
 		}
-		logger.info("Actual amount (" + toCheckValue + ") is matching with decline amount: FALSE");
+		//logger.info("Actual amount (" + toCheckValue + ") is matching with decline amount: FALSE");
 		return false;
 	}
 }
