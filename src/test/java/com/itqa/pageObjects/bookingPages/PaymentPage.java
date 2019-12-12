@@ -1,12 +1,8 @@
 package com.itqa.pageObjects.bookingPages;
 
-import java.io.Console;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.mozilla.javascript.Undefined;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -19,7 +15,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.itqa.pageObjects.BasePage;
 
 import common.Common;

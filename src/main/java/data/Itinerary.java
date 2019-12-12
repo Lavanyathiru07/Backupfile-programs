@@ -20,8 +20,8 @@ public class Itinerary {
 	private final String child;
 
 	private String bundle;
-	private final Boolean hotel;
-	private final Boolean vehicle;
+	private Boolean hotel;
+	private Boolean vehicle;
 	private final Boolean activity;
 
 	private final String ssr;
@@ -162,7 +162,7 @@ public class Itinerary {
 	public Boolean getHotel() {
 		return hotel;
 	}
-
+	
 	public Boolean getVehicle() {
 		return vehicle;
 	}
@@ -302,5 +302,11 @@ public class Itinerary {
 	public String getErrorLog() {
 		return this.errorLog;
 	}
-
+	
+	public void setHotel(boolean hotel) {
+		this.hotel = hotel;
+	}
+	public void setVehicle(boolean vehicle) {
+		this.vehicle = vehicle;
+	}
 }

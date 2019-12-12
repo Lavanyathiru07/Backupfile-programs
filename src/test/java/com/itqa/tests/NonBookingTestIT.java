@@ -335,7 +335,8 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		if ((!env.contains("vipprod") && (silo==4))) {
+		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
+
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupAccountsPayableMX(itn);

@@ -57,7 +57,7 @@ public class TravelerPage extends BasePage {
     @FindBy(xpath = "//input[contains(@value,'PPOC')]")
     private WebElement ppocCheckbox;
 
-    @FindBy(xpath = "//select[contains(@name,'dmy[m]')]")
+    @FindBy(xpath = MONTHDROPDOWNXPATH)
     private WebElement dropDownMonth;
 
     @FindBy(xpath = "//select[contains(@name,'dmy[d]')]")

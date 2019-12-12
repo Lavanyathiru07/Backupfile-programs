@@ -87,14 +87,11 @@
 			<artifactId>webdrivermanager</artifactId>
 			<version>3.3.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>io.fastjson</groupId>
 			<artifactId>boon</artifactId>
 			<version>0.32</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
@@ -127,8 +124,7 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
 			<version>4.4.6</version>
-		</dependency>
-
+		</dependency>		
 		<dependency>
 			<groupId>ClearDHS</groupId>
 			<artifactId>ClearDHS</artifactId>
@@ -161,6 +157,7 @@
 	</build>
 
 	<repositories>
+		
 		<repository>
 			<id>central</id>
 			<name>Central Repository</name>
@@ -170,14 +167,14 @@
 			<id>allegiant-nexus-repository</id>
 			<url>https://nexus.allegiantair.com/content/repositories/thirdparty</url>
 		</repository>
-		<repository>
+		<!-- <repository>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 			<id>g4dhsjars</id>
 			<url>https://git.allegiantair.com:8443/users/ck3i/repos/g4dhsjars/raw</url>
-		</repository>
-
+		</repository> -->
+		
 	</repositories>
 
 	<reporting>

@@ -1,41 +1,36 @@
 package com.itqa.tests;
 
-import com.itqa.Utils.GeneralUtils;
-import com.itqa.Utils.Screenshot;
-
-import framework.DriverBase;
-
-import com.itqa.Utils.Environment;
-
-import com.itqa.Utils.URLS;
-import com.itqa.pageObjects.customerFlows.BookingFlow;
-import cat.CATinits;
-import clearingITN.DHSClear;
-import data.*;
-import io.qameta.allure.Story;
-import listeners.TestResultContext;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.testng.Assert;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
-import org.testng.SkipException;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
-import listeners.TestReport;
-import listeners.RealTimeTestReport;
+import static io.qameta.allure.Allure.step;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.Properties;
 
-import static io.qameta.allure.Allure.step;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.Assert;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
+import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+
+import com.itqa.Utils.Environment;
+import com.itqa.Utils.GeneralUtils;
+import com.itqa.Utils.URLS;
+import com.itqa.pageObjects.customerFlows.BookingFlow;
+
+//import clearingITN.DHSClear;
+import data.Itinerary;
+import data.ItineraryDataProvider;
+import framework.DriverBase;
+import io.qameta.allure.Story;
+import listeners.RealTimeTestReport;
+import listeners.TestReport;
+import listeners.TestResultContext;
 
 @Listeners({ TestReport.class, RealTimeTestReport.class })
 public class WebBookingTestIT extends DriverBase {
@@ -183,9 +178,9 @@ public class WebBookingTestIT extends DriverBase {
 
 			if (flightAvailService == 0 && paymentService == 0) {
 			try {
-				//setEarlyMarketCities(itn);
-				itn.setDepartureCity("FAT");
-				itn.setDestinationCity("LAS");
+				setEarlyMarketCities(itn);
+				//itn.setDepartureCity("FAT");
+				//itn.setDestinationCity("LAS");
 			} catch (Exception e) {
 				logger.get().info("Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
 				itn.setDepartureCity("FAT");
@@ -195,12 +190,12 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 			itinerary = itn.getItn();
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
-			try {
+			/*try {
 				DHSClear doDHS = new DHSClear();
 				doDHS.dhs(env, itn.getItn());
 			}catch(Exception e) {
 				log.info("error getting while clear the DHS");
-			}
+			}*/
 			
 			
 

@@ -58,15 +58,13 @@ public class DriverBase {
 	public static RemoteWebDriver getDriver() {
 		return driverThread.get().getDriver();
 	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult testResult) throws IOException {
 
 		byte[] screenShotByteFile;
 		screenShotByteFile = Screenshot.saveScreenshot(testResult.getName(), getDriver());
 		testResult.setAttribute("screenshot", screenShotByteFile);
-		// System.setProperty("scrsht", screenShotByteFile.toString());
-		// Screenshot.takeScreenshot(getDriver(), System.getProperty("user.dir") +
-		// "/src/test/resources/bookingScreenshot/"+testResult.getAttribute("description")+".png");
 		getDriver().close();
 		driverThread.get().quitDriver();
 	}

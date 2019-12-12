@@ -598,10 +598,16 @@ public class MOD extends BasePage {
 				By.xpath("//*[contains(@class,'input-misc-fee chk-reverse-all chk-select-all')]"), 0));
 		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(
 				By.xpath("//*[contains(@class,'input-misc-fee chk-reverse-all chk-select-all')]")));
-		for (int i = 0; i < reverseWholeItemList.size(); i++) {
-			reverseWholeItemList.get(i).click();
-			logger.info("Reverse whole item button is clicked");
+		try {
+			for (int i = 0; i < reverseWholeItemList.size(); i++) {
+				logger.info("111111"+i);
+				reverseWholeItemList.get(i).click();
+				logger.info("Reverse whole item button is clicked");
+			}
+		}catch(Exception e) {
+			logger.info(e);
 		}
+		
 
 		new Select(reasonSelect).selectByIndex(1);
 		applyReverseButton.click();
