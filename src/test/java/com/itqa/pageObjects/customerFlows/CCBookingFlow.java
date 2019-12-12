@@ -122,6 +122,9 @@ public class CCBookingFlow extends BasePage {
 		if (Environment.getEnv().contains("aws")) {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
+		}else if(Environment.getEnv().contains("prod")) {
+			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+			G4PlusLoginPage.g4plusLogin(false);
 		}else {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
