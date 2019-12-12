@@ -38,7 +38,7 @@ public class NonBookingTestIT extends DriverBase {
 
 	@BeforeMethod(alwaysRun = true)
 	public void setup(ITestContext context) throws MalformedURLException {
-		
+		driver = DriverBase.getDriver();
 		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId() + ", "
 				+ driver.getCurrentUrl());
 
@@ -394,7 +394,6 @@ public class NonBookingTestIT extends DriverBase {
 			driver.get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		}
 		*/
-		driver = DriverBase.getDriver();
 		itn.setDescription(description);
 		context.setAttribute("description", description);
 		
