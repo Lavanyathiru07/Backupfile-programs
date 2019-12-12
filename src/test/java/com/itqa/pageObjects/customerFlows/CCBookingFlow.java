@@ -61,6 +61,9 @@ public class CCBookingFlow extends BasePage {
 			if(System.getProperty("env").contains("nddprd")) {
 				G4PlusLoginPage.g4plusLogin(false);
 				DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("env"), Environment.getCurrentSilo()));
+			}else if(System.getProperty("env").contains("prod")) {
+				G4PlusLoginPage.g4plusLogin(false);
+				DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("env"), Environment.getCurrentSilo()));
 			}
 			landingPage.selectFlightsOnLandingPage(itn);
 			flightPage.selectFlightPage(itn);
