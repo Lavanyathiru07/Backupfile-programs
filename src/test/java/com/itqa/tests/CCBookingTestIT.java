@@ -162,7 +162,9 @@ public class CCBookingTestIT extends DriverBase {
 			DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("awsenv"), silo));
 		} else if (env.contains("nddprd")) {
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));  
-		} else {
+		} else if (env.contains("prod")) {
+			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));  
+		}else {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(env, 0));
 			DriverBase.getDriver().get(URLS.CC.getUrl(env, silo));
 		}
