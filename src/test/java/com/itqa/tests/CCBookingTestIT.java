@@ -85,7 +85,7 @@ public class CCBookingTestIT extends DriverBase {
 				}
 
 				updateTextContext(itn, context);
-				booking.CCRefundAndCancellation(itn.getItn(), itn);
+				//booking.CCRefundAndCancellation(itn.getItn(), itn);
 			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
@@ -134,7 +134,7 @@ public class CCBookingTestIT extends DriverBase {
 					// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
 					// recevied");
 				}
-				booking.CCRefundAndCancellation(itn.getItn(), itn);
+				//booking.CCRefundAndCancellation(itn.getItn(), itn);
 				step("Modified seats & bags in CC MOD");
 			} else {
 				if (flightAvailService != 0) {

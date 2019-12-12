@@ -140,7 +140,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
 					"Could not print boarding pass");
-			booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
+			//booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
 			step("Upgraded bags and priority during OLCI.  Printed boarding pass");
 			} else {
 				if (flightAvailService != 0) {
@@ -186,7 +186,7 @@ public class WebBookingTestIT extends DriverBase {
 				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
 			}
 			updateTextContext(itn, context);
-			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
+			//booking.WWWRefundAndCancelItn(itn.getItn(), itn);
 		} else {
 			if (flightAvailService != 0) {
 				itn.setItn(flightAvailErrorMsg);
