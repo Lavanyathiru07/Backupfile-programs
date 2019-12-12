@@ -121,11 +121,11 @@
 			<version>4.4.6</version>
 		</dependency>
 		
-		<dependency>
+		<!-- <dependency>
 			<groupId>ClearDHS</groupId>
 			<artifactId>ClearDHS</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>
@@ -163,13 +163,13 @@
 			<id>allegiant-nexus-repository</id>
 			<url>https://nexus.allegiantair.com/content/repositories/thirdparty</url>
 		</repository>
-		<repository>
+		<!-- <repository>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 			<id>g4dhsjars</id>
 			<url>https://git.allegiantair.com:8443/users/ck3i/repos/g4dhsjars/raw</url>
-		</repository>
+		</repository> -->
 		
 	</repositories>
 
