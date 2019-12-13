@@ -55,7 +55,7 @@ public class WebBookingTestIT extends DriverBase {
 			"bat","www","booking"})
 
 	@Story("WWW One way Booking Creation & Verify email confirmation")
-	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
+	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
 
 		if ((env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
 			if (env.contains("prod")) {
@@ -79,6 +79,7 @@ public class WebBookingTestIT extends DriverBase {
 				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
 				// recevied");
 			}
+			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
 			updateTextContext(itn, context);
 			} else {
 				if (flightAvailService != 0) {
@@ -105,7 +106,7 @@ public class WebBookingTestIT extends DriverBase {
 			throws InterruptedException, Exception {
 			if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
-				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
+				|| (env.contains("stg") && ((silo == 1)|| (silo == 2) || (silo == 3) ))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("trn") && (silo == 0)) || (env.contains("prod") && (silo == 3))) {
 			if (silo != 0) {
@@ -140,7 +141,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			Assert.assertTrue(booking.processOnlineCheckinWithUpsellAndGetBoardingPass(itn),
 					"Could not print boarding pass");
-			//booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
+			booking.WWWUncheckRefundAndCancelItn(itn.getItn(), itn);
 			step("Upgraded bags and priority during OLCI.  Printed boarding pass");
 			} else {
 				if (flightAvailService != 0) {
@@ -186,7 +187,7 @@ public class WebBookingTestIT extends DriverBase {
 				Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
 			}
 			updateTextContext(itn, context);
-			//booking.WWWRefundAndCancelItn(itn.getItn(), itn);
+			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
 		} else {
 			if (flightAvailService != 0) {
 				itn.setItn(flightAvailErrorMsg);

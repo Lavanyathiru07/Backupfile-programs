@@ -8,6 +8,7 @@ import com.itqa.pageObjects.BasePage;
 import com.itqa.pageObjects.bookingPages.*;
 import com.itqa.pageObjects.checkinPages.*;
 import com.itqa.pageObjects.g4PlusPages.G4MenuPage;
+import com.itqa.pageObjects.g4PlusPages.G4PlusLoginPage;
 import com.itqa.pageObjects.g4PlusPages.MOD;
 import com.itqa.pageObjects.manageTravelPages.ManageTravelBagPage;
 import com.itqa.pageObjects.manageTravelPages.ManageTravelHotelPage;
@@ -55,6 +56,7 @@ public class BookingFlow extends BasePage {
 	private ManageTravelHotelPage ManageTravelHotelPage;
 	private ManageTravelVehiclePage ManageTravelVehiclePage;
 	private ManageTravelPaymentPage ManageTravelPaymentPage;
+	private G4PlusLoginPage g4LoginPage;
 
 	public BookingFlow() {
 		this.logger = Logger.getLogger(BookingFlow.class);
@@ -83,6 +85,7 @@ public class BookingFlow extends BasePage {
 		ManageTravelHotelPage = new ManageTravelHotelPage();
 		ManageTravelVehiclePage = new ManageTravelVehiclePage();
 		ManageTravelPaymentPage = new ManageTravelPaymentPage();
+		g4LoginPage = new G4PlusLoginPage();
 	}
 
 	public String createWebBooking(Itinerary itn, ITestContext context) {
@@ -195,8 +198,9 @@ public class BookingFlow extends BasePage {
 
 	public Boolean createVoucher(Itinerary itn) {
 
-		if (Environment.getEnv().contains("PROD")) {
-
+		if (Environment.getEnv().contains("prod")) {
+			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+			g4LoginPage.g4plusLogin(false);
 		} else {
 			if (System.getProperty("env").contains("aws")) {
 				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
