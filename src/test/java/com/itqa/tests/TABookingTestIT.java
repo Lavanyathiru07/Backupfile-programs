@@ -83,7 +83,7 @@ public class TABookingTestIT extends DriverBase {
 				}
 				updateTextContext(itn, context);
 
-				//booking.TARefundAndCancellation(itn.getItn(), itn);
+				booking.TARefundAndCancellation(itn.getItn(), itn);
 			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
