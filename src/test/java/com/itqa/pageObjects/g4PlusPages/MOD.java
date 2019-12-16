@@ -722,7 +722,11 @@ public class MOD extends BasePage {
 
 	public void refundWholeAmountInMod(String itin, Itinerary itn) throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-		g4LoginPage.g4plusLogin(false);
+		try {
+			if(userNameField.isDisplayed()) {
+				g4LoginPage.g4plusLogin(false);
+			}
+		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
 		g4MenuPage.selectMOD();
 		GeneralUtils.switchNextTab(driver, curTab);
