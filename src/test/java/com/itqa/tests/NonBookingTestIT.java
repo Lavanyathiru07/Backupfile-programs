@@ -186,7 +186,7 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS: Access Kayak Console")
 	public void accessKayakConsole(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && (silo==4)&&!env.contains("trn"))) {
+		if ((!env.contains("vipprod") && (silo==4)&&!env.contains("trn")&&!env.contains("prod"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessKayakConsole();
