@@ -62,7 +62,11 @@ public class TABookingTestIT extends DriverBase {
 				setUpTestContext(silo, "silo" + silo + " "
 						+ "TA Booking Creation- OW- Confirmation Email received, Modification - Upsell Bag & seat- Modification Emails received",
 						context, itn);
-			} else {
+			}else if (env.contains("vipprd") && (silo == 0)) {
+				setUpTestContext(silo, "silo" + silo + " "
+						+ "TA Booking Creation- OW until payment page verification",
+						context, itn);
+			}else {
 				if (silo != 0) {
 					setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context,
 							itn);

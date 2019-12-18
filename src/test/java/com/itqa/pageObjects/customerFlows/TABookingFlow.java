@@ -106,8 +106,10 @@ public class TABookingFlow extends BasePage {
 				seatPage.selectSeatPage(itn);
 				bagPage.selectBagPage(itn);
 				travelerPage.fillTravelerPage(itn);
-				paymentPage.fillPaymentPage(itn, false, true);
-				confirmationPage.verifyConf(itn);
+				if(!Environment.getEnv().contains("vipprd")) {
+					paymentPage.fillPaymentPage(itn, false, true);
+					confirmationPage.verifyConf(itn);
+				}
 			} catch (Exception e1) {
 				logger.info("%%%%%% caught error: " + e.getMessage());
 				e.printStackTrace();
