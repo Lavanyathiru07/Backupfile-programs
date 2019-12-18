@@ -20,7 +20,7 @@ public class Environment {
 	private int[] aws = { 1, 2 };
 	private int[] nddprd = { 1, 2, 3 };
 	private int[] prod = { 1, 2, 3};
-	private int[] vipprod = { 0 };
+	private int[] vipprd = { 0 };
 
 	public static String getEnv() {
 		envUnderTest = System.getProperty("env");
@@ -133,8 +133,8 @@ public class Environment {
 			return stream(nddprd).boxed().collect(Collectors.toList());
 		case "prod":
 			return stream(prod).boxed().collect(Collectors.toList());
-		case "vipprod":
-			return stream(vipprod).boxed().collect(Collectors.toList());
+		case "vipprd":
+			return stream(vipprd).boxed().collect(Collectors.toList());
 		default:
 			return stream(stg).boxed().collect(Collectors.toList());
 

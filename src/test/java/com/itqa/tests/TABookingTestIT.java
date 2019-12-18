@@ -57,7 +57,7 @@ public class TABookingTestIT extends DriverBase {
 	public void testTABookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
 
 		if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 1))
-				|| (env.contains("vipprod") && (silo == 0)) || (env.contains("prod") && (silo == 2))) {
+				|| (env.contains("vipprd") && (silo == 0)) || (env.contains("prod") && (silo == 2))) {
 			if (env.contains("prod") && (silo == 2)) {
 				setUpTestContext(silo, "silo" + silo + " "
 						+ "TA Booking Creation- OW- Confirmation Email received, Modification - Upsell Bag & seat- Modification Emails received",
