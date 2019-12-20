@@ -116,13 +116,6 @@ public class PreBAT {
 
 			getKey=RestAssured.given().config(RestAssured.config().sslConfig(new SSLConfig().allowAllHostnames())).when().get();
 
-		/*	getKey = RestAssured.given()
-					.config(RestAssured.config().sslConfig(SSLConfig.sslConfig().relaxedHTTPSValidation())).when()
-					.get();*/
-
-		//	System.out.println(getKey.asString());
-			// getKey = RestAssured.given().when().get();
-
 			responseCodeVerification(getKey.getStatusCode(), "Get key");
 			if (getKey.getStatusCode() == 200 || getKey.getStatusCode() == 201) {
 				break;

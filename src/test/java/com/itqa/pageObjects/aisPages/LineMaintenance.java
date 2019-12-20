@@ -76,6 +76,8 @@ public class LineMaintenance extends BasePage{
     	}catch(Exception e){
     		if (Environment.getEnv().contains("aws")) {
 				itn.setItn("Failed due to QAA-338");
+			}else if((Environment.getEnv().contains("trn"))) {
+				itn.setItn("No results found");
 			}
     		e.printStackTrace();
     		throw new Error(">>>Records returns no result<<<");
