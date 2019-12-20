@@ -52,7 +52,7 @@ public final class CATinits {
         String response = "";
 
         try {
-            HttpURLConnection connection = (HttpURLConnection)(new URL("https://cat.allegiantair.com/api/buildresults/jobs/push")).openConnection();
+            HttpURLConnection connection = (HttpURLConnection)(new URL("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push")).openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("content-type", "application/json");
@@ -92,7 +92,7 @@ public final class CATinits {
         insideBody.put("endDateTime", timestamp);
         insideBody.put("jobStatus", status);
         jobClosingJson.put("jobClosingJson", insideBody);
-        Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(jobClosingJson).toString());
+        Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(jobClosingJson).toString());
     }
 
     public void createSuite(String suiteName) {
@@ -110,7 +110,7 @@ public final class CATinits {
         insideBody.put("buildReference", System.getenv("buildReference"));
         insideBody.put("testCollectionName", suiteName);
         testCollectionCreation.put("testcollectionCreation", insideBody);
-        Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testCollectionCreation).toString());
+        Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testCollectionCreation).toString());
     }
 
     public void completeSuite(String suiteName) {
@@ -127,7 +127,7 @@ public final class CATinits {
         insideBody.put("buildReference", System.getenv("buildReference"));
         insideBody.put("testCollectionName", suiteName);
         testCollectionClosing.put("testcollectionClosing", insideBody);
-        Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testCollectionClosing).toString());
+        Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testCollectionClosing).toString());
     }
 
     public void createTest(String caseName, String suiteName, int testId) {
@@ -151,7 +151,7 @@ public final class CATinits {
         insideBody.put("testDescription", insideDescBody);
         insideBody.put("testParameters", paramList);
         testcaseCreation.put("testcaseCreation", insideBody);
-        Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testcaseCreation).toString());
+        Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testcaseCreation).toString());
     }
 
     public void completeTest(String status, String suiteName, String itn, String comment, int testId, String loc) {
@@ -285,6 +285,6 @@ public final class CATinits {
         logList.add(logMap);
         insideBody.put("resultLogs", logList);
         closeTestCaseJson.put("closeTestCaseJson", insideBody);
-        Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(closeTestCaseJson).toString());
+        Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(closeTestCaseJson).toString());
     }
 }
