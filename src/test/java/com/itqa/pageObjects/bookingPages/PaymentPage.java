@@ -1,12 +1,8 @@
 package com.itqa.pageObjects.bookingPages;
 
-import java.io.Console;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.mozilla.javascript.Undefined;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -19,7 +15,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.itqa.pageObjects.BasePage;
 
 import common.Common;
@@ -211,7 +206,7 @@ public class PaymentPage extends BasePage {
 
 		// Common.elementToBeClickable(driver, expireMonthField, "exp month");
 
-		if (System.getProperty("env").contains("prod")) {
+		if (System.getProperty("env").contains("prod")||System.getProperty("env").contains("vipprd")) {
 			expiredMonth = System.getProperty("expiration").split("-")[0].replace("0", "");
 			expiredYear = System.getProperty("expiration").split("-")[1];
 			cardNumber = System.getProperty("cardno");

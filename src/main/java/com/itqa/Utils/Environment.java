@@ -20,7 +20,7 @@ public class Environment {
 	private int[] aws = { 1, 2 };
 	private int[] nddprd = { 1, 2, 3 };
 	private int[] prod = { 1, 2, 3};
-	private int[] vipprod = { 0 };
+	private int[] vipprd = { 0 };
 
 	public static String getEnv() {
 		envUnderTest = System.getProperty("env");
@@ -31,35 +31,10 @@ public class Environment {
 		return envUnderTest;
 	}
 	
-	public ArrayList<Integer> getSilos() {
-		ArrayList<Integer> siloList =new ArrayList<Integer>();
-		if(System.getProperty("Scenario").equals(null)) {
-			if(getEnv().contains("trn")) {
-				siloList.add(0);
-				siloList.add(1);
-				siloList.add(4);
-			} else if(getEnv().contains("in")) {
-				siloList.add(1);
-				siloList.add(4);
-			}else if(getEnv().contains("qa")||getEnv().contains("aws")) {
-				siloList.add(1);
-				siloList.add(2);
-				siloList.add(4);
-				siloList.add(5);
-			}else if(getEnv().contains("stg")||getEnv().contains("nddprd")||getEnv().contains("prod")) {
-				siloList.add(1);
-				siloList.add(2);
-				siloList.add(3);
-				siloList.add(4);
-				siloList.add(5);
-			}else {
-				siloList.add(0);
-			}
-			
-		}
-		return siloList;
+	public List<Integer> getSilos() {
+		List<Integer> siloList =new ArrayList<Integer>();
 		
-		/*if(System.getProperty("Scenario").equals("silo")) {
+		if(System.getProperty("Scenario").equals("silo")) {
 			if(getEnv().contains("in")) {
 				siloList.add(1);
 			}else if(getEnv().contains("qa")||getEnv().contains("aws")) {
@@ -119,7 +94,7 @@ public class Environment {
 			}
 			
 		}
-		return siloList;*/
+		return siloList;
 		
 	}
 
@@ -158,8 +133,8 @@ public class Environment {
 			return stream(nddprd).boxed().collect(Collectors.toList());
 		case "prod":
 			return stream(prod).boxed().collect(Collectors.toList());
-		case "vipprod":
-			return stream(vipprod).boxed().collect(Collectors.toList());
+		case "vipprd":
+			return stream(vipprd).boxed().collect(Collectors.toList());
 		default:
 			return stream(stg).boxed().collect(Collectors.toList());
 
