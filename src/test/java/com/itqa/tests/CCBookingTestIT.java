@@ -58,13 +58,13 @@ public class CCBookingTestIT extends DriverBase {
 			throws InterruptedException {
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
-				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1))
+				|| ((env.contains("in1") || env.contains("in2") || env.contains("sb1")) && (silo == 1))
 				|| (env.contains("trn") && (silo == 1)) || (env.contains("prod") && (silo == 1))) {
 			if (env.contains("prod") && (silo == 1)) {
 				setUpTestContext(silo, "silo" + silo
 						+ " CC Booking Creation- OW- Confirmation Email received, CCModify - Upsell Bag & seat- Modification Emails received",
 						context, itn);
-			} else if ((env.contains("trn") || env.contains("aws") || env.contains("qa1") || env.contains("qa2"))
+			} else if ((env.contains("trn") || env.contains("aws") || env.contains("sb1")|| env.contains("qa1") || env.contains("qa2"))
 					&& (silo == 1)) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ ", CCModify - Upsell Bag & seat- Modification Emails received", context, itn);
@@ -77,7 +77,7 @@ public class CCBookingTestIT extends DriverBase {
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
 				if ((env.contains("trn")
-						|| (env.contains("prod") || env.contains("aws") || env.contains("qa1") || env.contains("qa2"))
+						|| (env.contains("prod") || env.contains("aws")|| env.contains("sb1") || env.contains("qa1") || env.contains("qa2"))
 								&& (silo == 1))) {
 					booking.processCCModification(itn);
 					//Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");

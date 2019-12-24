@@ -114,7 +114,7 @@ public class TABookingTestIT extends DriverBase {
 			throws InterruptedException {
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 2))
-				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
+				|| ((env.contains("in1") || env.contains("in2")|| env.contains("sb1")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 		 if (flightAvailService == 0 && paymentService == 0) {
