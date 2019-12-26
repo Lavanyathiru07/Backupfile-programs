@@ -44,7 +44,7 @@ public final class CATinits {
         Map jobCreationJson = new HashMap();
         Map insideBody = new HashMap();
         insideBody.put("jobName", System.getenv("jobName"));
-        insideBody.put("environment", System.getenv("env"));
+        insideBody.put("environment", System.getProperty("env"));
         insideBody.put("buildReference", System.getenv("buildNo"));
         insideBody.put("startDateTime", timestamp);
         insideBody.put("parentJobDetails", (Object)null);
