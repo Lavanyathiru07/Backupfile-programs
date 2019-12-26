@@ -240,6 +240,9 @@ public class MOD extends BasePage {
 
 	@FindBy(xpath = "//*[contains(@class,'panel-section')]/a")
 	private WebElement voucher;
+	
+	@FindBy(id = "username")
+	private WebElement userNameField;
 
 	public MOD(Logger log) {
 		this.driver = DriverBase.getDriver();
@@ -601,7 +604,8 @@ public class MOD extends BasePage {
 		try {
 			for (int i = 0; i < reverseWholeItemList.size(); i++) {
 				logger.info("111111"+i);
-				reverseWholeItemList.get(i).click();
+				jse.executeScript("arguments[0].click()", reverseWholeItemList.get(i));
+				//reverseWholeItemList.get(i).click();
 				logger.info("Reverse whole item button is clicked");
 			}
 		}catch(Exception e) {
@@ -725,7 +729,11 @@ public class MOD extends BasePage {
 
 	public void refundWholeAmountInMod(String itin, Itinerary itn) throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-		g4LoginPage.g4plusLogin(false);
+		try {
+			if(userNameField.isDisplayed()) {
+				g4LoginPage.g4plusLogin(false);
+			}
+		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
@@ -735,7 +743,12 @@ public class MOD extends BasePage {
 
 	public void cancelWholeItn(String pnr, Itinerary itn) {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-		g4LoginPage.g4plusLogin(false);
+		try {
+			if(userNameField.isDisplayed()) {
+				g4LoginPage.g4plusLogin(false);
+			}
+		}catch(Exception e) {}
+		
 		Set<String> curTab = driver.getWindowHandles();
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);

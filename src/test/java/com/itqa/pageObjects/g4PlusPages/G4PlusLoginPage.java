@@ -10,6 +10,7 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.testng.SkipException;
 
 import com.itqa.Utils.Environment;
+import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.BasePage;
 
 import data.Itinerary;
@@ -61,6 +62,9 @@ public class G4PlusLoginPage extends BasePage {
 				if (Environment.getEnv().contains("prod")||Environment.getEnv().contains("nddprd")) {
 					userNameField.sendKeys(System.getProperty("username"));
 					passwordField.sendKeys(System.getProperty("password"));
+				}else {
+					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
+					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				}
 				} else {
 				userNameField.sendKeys(new String(Base64.getDecoder().decode(stationUsername)));

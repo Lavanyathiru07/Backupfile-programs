@@ -82,12 +82,16 @@ public class TABookingTestIT extends DriverBase {
 		}
 
 		if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 1))
-				|| (env.contains("vipprod") && (silo == 0)) || (env.contains("prod") && (silo == 2))) {
+				|| (env.contains("vipprd") && (silo == 0)) || (env.contains("prod") && (silo == 2))) {
 			if (env.contains("prod") && (silo == 2)) {
 				setUpTestContext(silo, "silo" + silo + " "
 						+ "TA Booking Creation- OW- Confirmation Email received, Modification - Upsell Bag & seat- Modification Emails received",
 						context, itn);
-			} else {
+			}else if (env.contains("vipprd") && (silo == 0)) {
+				setUpTestContext(silo, "silo" + silo + " "
+						+ "TA Booking Creation- OW until payment page verification",
+						context, itn);
+			}else {
 				if (silo != 0) {
 					setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context,
 							itn);
@@ -160,7 +164,7 @@ public class TABookingTestIT extends DriverBase {
 
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 2))
-				|| ((env.contains("in1") || env.contains("in2")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
+				|| ((env.contains("in1") || env.contains("in2")|| env.contains("sb1")) && (silo == 1)) || (env.contains("trn") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
@@ -186,7 +190,7 @@ public class TABookingTestIT extends DriverBase {
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
 				updateTextContext(itn, context);
-				booking.TARefundAndCancellation(itn.getItn(), itn);
+				//booking.TARefundAndCancellation(itn.getItn(), itn);
 			} else {
 
 				if (flightAvailService != 0) {

@@ -68,7 +68,7 @@ public class WebBookingTestIT extends DriverBase {
 			"bat","www","booking"})
 
 	@Story("WWW One way Booking Creation & Verify email confirmation")
-	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
+	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
@@ -115,6 +115,7 @@ public class WebBookingTestIT extends DriverBase {
 				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
 				// recevied");
 			}
+			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
 			updateTextContext(itn, context);
 			} else {
 				if (flightAvailService != 0) {
@@ -144,9 +145,9 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-			if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
+			if (((env.contains("in1") || env.contains("in2") || env.contains("sb1")) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
-				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
+				|| (env.contains("stg") && ((silo == 1)|| (silo == 2) || (silo == 3) ))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("trn") && (silo == 0)) || (env.contains("prod") && (silo == 3))) {
 			if (silo != 0) {

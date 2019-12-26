@@ -37,7 +37,7 @@ public enum URLS {
 		}
 
 		if (silo == 0) {
-			if (env.contains("vipprod")) {
+			if (env.contains("vipprd")) {
 				if (url.contains("cc-") || url.contains("cc.")) {
 					url = url.replace("cc-", "cc.");
 				} else if (url.contains("ta-") || url.contains("ta.")) {

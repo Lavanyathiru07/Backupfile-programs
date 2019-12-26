@@ -82,8 +82,11 @@ public class TABookingFlow extends BasePage {
 			seatPage.selectSeatPage(itn);
 			bagPage.selectBagPage(itn);
 			travelerPage.fillTravelerPage(itn);
-			paymentPage.fillPaymentPage(itn, false, true);
-			confirmationPage.verifyConf(itn);
+			if(!Environment.getEnv().contains("vipprd")) {
+				paymentPage.fillPaymentPage(itn, false, true);
+				confirmationPage.verifyConf(itn);
+			}
+			
 		} catch (Exception e) {
 			try {
 				itn.setDepartureCity("CVG");
@@ -105,8 +108,10 @@ public class TABookingFlow extends BasePage {
 				seatPage.selectSeatPage(itn);
 				bagPage.selectBagPage(itn);
 				travelerPage.fillTravelerPage(itn);
-				paymentPage.fillPaymentPage(itn, false, true);
-				confirmationPage.verifyConf(itn);
+				if(!Environment.getEnv().contains("vipprd")) {
+					paymentPage.fillPaymentPage(itn, false, true);
+					confirmationPage.verifyConf(itn);
+				}
 			} catch (Exception e1) {
 				logger.info("%%%%%% caught error: " + e.getMessage());
 				e.printStackTrace();
@@ -117,7 +122,7 @@ public class TABookingFlow extends BasePage {
 	}
 
 	public void TARefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprod") ) {
+		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd") ) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn(), itn);
 		}

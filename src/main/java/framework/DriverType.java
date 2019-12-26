@@ -41,6 +41,16 @@ public enum DriverType implements DriverSetup {
             chromePreferences.put("profile.password_manager_enabled", false);
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
+            
+            System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+            
+            options.addArguments("test-type");
+            options.addArguments("ignore-certificate-errors");
+            options.setAcceptInsecureCerts(true);
+
+            //WebDriver driver = new ChromeDriver(options);
+            
+            
             options.merge(capabilities);
             options.setHeadless(HEADLESS);
             options.addArguments("--no-default-browser-check");
