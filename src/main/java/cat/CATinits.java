@@ -44,7 +44,7 @@ public final class CATinits {
         Map jobCreationJson = new HashMap();
         Map insideBody = new HashMap();
         insideBody.put("jobName", System.getenv("jobName"));
-        insideBody.put("environment", System.getenv("ENVJOB"));
+        insideBody.put("environment", System.getenv("env"));
         insideBody.put("buildReference", System.getenv("buildNo"));
         insideBody.put("startDateTime", timestamp);
         insideBody.put("parentJobDetails", (Object)null);
@@ -71,6 +71,7 @@ public final class CATinits {
                 reader.close();
                 Map responseMap = (Map)JsonFactory.create().readValue(response, Map.class);
                 this.jobid = responseMap.get("_id").toString();
+                System.out.println("job id is :" + jobid);
                 if (this.jobid == "") {
                     throw new Exception("Empty jobID......not using CAT Portal");
                 }
@@ -93,6 +94,7 @@ public final class CATinits {
         insideBody.put("jobStatus", status);
         jobClosingJson.put("jobClosingJson", insideBody);
         Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(jobClosingJson).toString());
+        System.out.println("job id is :" + jobid);
     }
 
     public void createSuite(String suiteName) {
