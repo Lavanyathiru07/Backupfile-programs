@@ -95,23 +95,37 @@ public class MaintenanceRecords extends BasePage {
     		 throw new Error(">>>Action Requests returns no result<<<");
     }
     }
-    public void openReport() {
-    	try{
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
-        reportsTab.click();
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
-        flightLogTab.click();
-        if (Environment.getEnv().contains("trn")) {
-    		jse.executeScript("arguments[0].setAttribute('value', '217NV');", tailField);
-    		}else {
-    			jse.executeScript("arguments[0].setAttribute('value', '215NV');", tailField);
-    		}
-		
-        Calendar calendar = Calendar.getInstance();
+
+	public void openReport() {
+		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
+			reportsTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
+			flightLogTab.click();
+			try {
+				verifyReport("215NV");
+			} catch (Exception d) {
+				try {
+					verifyReport("217NV");
+				} catch (Exception f) {
+					try {
+						verifyReport("301NV");
+					} catch (Exception g) {
+
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Error(">>>Reports cant find<<<");
+		}
+	}
+    public void verifyReport(String tail) {
+    	tailField.sendKeys(tail);
+    	Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -90);
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         String selectDate = format.format(calendar.getTime());
-
         jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
         jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
         new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
@@ -119,9 +133,5 @@ public class MaintenanceRecords extends BasePage {
         new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
         jse.executeScript("arguments[0].click();", resultRow);
         logger.info("MX Records Report displayed");
-    	}catch(Exception e){
-    		e.printStackTrace();
-    		throw new Error(">>>Reports cant find<<<");
-    	}
     }
 }

@@ -57,25 +57,26 @@ public class MaintenanceControl extends BasePage {
 		try {
 			reportsTab.click();
 			flightLogTab.click();
-			if (Environment.getEnv().contains("trn")) {
-	    		jse.executeScript("arguments[0].setAttribute('value', '217NV');", tailField);
-	    		}else {
-	    			jse.executeScript("arguments[0].setAttribute('value', '215NV');", tailField);
-	    		}
+//			if (Environment.getEnv().contains("trn")) {
+//	    		jse.executeScript("arguments[0].setAttribute('value', '217NV');", tailField);
+//	    		}else {
+//	    			jse.executeScript("arguments[0].setAttribute('value', '215NV');", tailField);
+//	    		}
+			try {
+    			verifyReport("215NV");
+    		}catch(Exception d){
+    			try{
+    				verifyReport("217NV");
+    			}catch(Exception f){
+    				try{
+        				verifyReport("301NV");
+        			}catch(Exception g){
+        				
+        			}
+    			}
+    		}
+
 			
-
-			Calendar calendar = Calendar.getInstance();
-			calendar.add(Calendar.DATE, -90);
-			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-			String selectDate = format.format(calendar.getTime());
-
-			jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
-			jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
-			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
-			jse.executeScript("arguments[0].click();", runReportButton);
-			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(resultRow));
-			jse.executeScript("arguments[0].click();", resultRow);
-			logger.info("MX Control Report displayed");
 		} catch (Exception e) {
 			if (Environment.getEnv().contains("aws")) {
 				itn.setItn("Failed due to QAA-338");
@@ -83,5 +84,19 @@ public class MaintenanceControl extends BasePage {
 			e.printStackTrace();
 			throw new Error(">>>Records returns no result<<<");
 		}
+	}
+	public void verifyReport(String tail) {
+		tailField.sendKeys(tail);
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -90);
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		String selectDate = format.format(calendar.getTime());
+		jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
+		jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
+		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
+		jse.executeScript("arguments[0].click();", runReportButton);
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(resultRow));
+		jse.executeScript("arguments[0].click();", resultRow);
+		logger.info("MX Control Report displayed");
 	}
 }
