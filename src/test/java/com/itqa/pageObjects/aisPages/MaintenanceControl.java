@@ -57,8 +57,12 @@ public class MaintenanceControl extends BasePage {
 		try {
 			reportsTab.click();
 			flightLogTab.click();
- 
-			jse.executeScript("arguments[0].setAttribute('value', '215NV');", tailField);
+			if (Environment.getEnv().contains("trn")) {
+	    		jse.executeScript("arguments[0].setAttribute('value', '217NV');", tailField);
+	    		}else {
+	    			jse.executeScript("arguments[0].setAttribute('value', '215NV');", tailField);
+	    		}
+			
 
 			Calendar calendar = Calendar.getInstance();
 			calendar.add(Calendar.DATE, -90);

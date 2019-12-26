@@ -256,7 +256,8 @@ public class NonBookingTestIT extends DriverBase {
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) && (!env.contains("trn")&& !env.contains("vipprd"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessCAR();
+			nonBooking.accessCAR(itn);
+			trc.setSetItn(itn.getItn());
 
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");

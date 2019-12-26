@@ -398,13 +398,13 @@ public class G4PlusFlow extends BasePage {
 		SVT.accessSVT();
 	}
 
-	public void accessCAR() {
+	public void accessCAR(Itinerary itn) {
 
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectCAR();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		CAR.accessCAR();
+		CAR.accessCAR(itn);
 	}
 
 	public void accessTF2() {

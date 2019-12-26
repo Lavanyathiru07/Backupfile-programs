@@ -58,14 +58,16 @@ public class LineMaintenance extends BasePage{
     		reportsTab.click();
     		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
     		flightLogTab.click();
-
-    		jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
-
+    		if (Environment.getEnv().contains("trn")) {
+    		jse.executeScript("arguments[0].setAttribute('value', '217NV');", tailField);
+    		}else {
+    		jse.executeScript("arguments[0].setAttribute('value', '301NV');", tailField);
+    		}
     		Calendar calendar = Calendar.getInstance();
     		calendar.add(Calendar.DATE, -90);
     		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
     		String selectDate = format.format(calendar.getTime());
-
+    		new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(startingDateField));
     		jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
     		jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
     		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
