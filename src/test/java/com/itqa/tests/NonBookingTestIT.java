@@ -97,8 +97,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -134,8 +132,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -172,8 +168,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -208,8 +202,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -245,8 +237,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -281,8 +271,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -319,8 +307,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 
 	}
@@ -359,8 +345,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -395,8 +379,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -431,8 +413,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -468,8 +448,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -505,8 +483,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -541,8 +517,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -577,8 +551,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -614,8 +586,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -650,8 +620,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -687,8 +655,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -723,8 +689,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -759,8 +723,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -796,8 +758,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -832,8 +792,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -868,8 +826,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -905,8 +861,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 	}
 
@@ -941,8 +895,6 @@ public class NonBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 		//itineraryItn = itn.getItn();
 	}

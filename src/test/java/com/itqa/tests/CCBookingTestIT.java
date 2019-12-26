@@ -114,7 +114,6 @@ public class CCBookingTestIT extends DriverBase {
 
 			PropertyConfigurator.configure(props);
 
-			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
 			if (flightAvailService == 0 && paymentService == 0) {
 				CCBookingFlow booking = generateBooking(itn, silo, context);
@@ -192,7 +191,6 @@ public class CCBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 			PropertyConfigurator.configure(props);
-			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
 
 			if (flightAvailService == 0 && paymentService == 0) {

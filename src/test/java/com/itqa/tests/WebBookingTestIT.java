@@ -102,9 +102,6 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 			PropertyConfigurator.configure(props);
-
-			logger.get()
-			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
 
 			if (flightAvailService == 0 && paymentService == 0) {
@@ -173,9 +170,6 @@ public class WebBookingTestIT extends DriverBase {
 
 			PropertyConfigurator.configure(props);
 
-			logger.get()
-			.info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
-
 			if (flightAvailService == 0 && paymentService == 0) {
 			try {
 				setEarlyMarketCities(itn);
@@ -186,7 +180,7 @@ public class WebBookingTestIT extends DriverBase {
 				itn.setDepartureCity("FAT");
 				itn.setDestinationCity("LAS");
 			}
-				desc.set(itn.getDescription());
+			desc.set(itn.getDescription());
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 			itinerary = itn.getItn();
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
@@ -236,16 +230,14 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
-			logger.get().info("Accoutn creation booking started");
+			logger.get().info("Accout creation booking started");
 			desc.set(itn.getDescription());
 
 			if (flightAvailService == 0 && paymentService == 0) {
 			log.info("Accoutn creation booking started");
 			BookingFlow booking = new BookingFlow(logger.get());
 			generateBooking(itn, silo, context, true);
-
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
-
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 			// recevied");
 			logger.get().info("Account creation started");
@@ -286,8 +278,6 @@ public class WebBookingTestIT extends DriverBase {
 		props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 		PropertyConfigurator.configure(props);
-
-		logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 		desc.set(itn.getDescription());
 		itinerary = itn.getItn();
 	}

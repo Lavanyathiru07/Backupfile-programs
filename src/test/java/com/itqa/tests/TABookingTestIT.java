@@ -110,7 +110,6 @@ public class TABookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 			PropertyConfigurator.configure(props);
-			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
 
 			if (flightAvailService == 0 && paymentService == 0) {
@@ -178,7 +177,6 @@ public class TABookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 			PropertyConfigurator.configure(props);
-			logger.get().info("\n****************Start case: " + method.getAnnotation(Story.class) + "*****************");
 			desc.set(itn.getDescription());
 			if (flightAvailService == 0 && paymentService == 0) {
 				TABookingFlow booking = new TABookingFlow(logger.get());
