@@ -75,17 +75,10 @@ public class LineMaintenance extends BasePage{
 				}
 			}
 
-//    		if (Environment.getEnv().contains("trn")) {
-//    		jse.executeScript("arguments[0].setAttribute('value', '217NV');", tailField);
-//    		}else {
-//    		jse.executeScript("arguments[0].setAttribute('value', '301NV');", tailField);
-//    		}
 			logger.info("LineMaintenance Report Scenario -> Pass");
 		} catch (Exception e) {
 			logger.error("LineMaintenance Report Scenario -> Fail");
-			if (Environment.getEnv().contains("aws")) {
-				itn.setItn("Failed due to QAA-338");
-			} else if ((Environment.getEnv().contains("trn"))) {
+			if ((Environment.getEnv().contains("trn"))) {
 				itn.setItn("No results found");
 			}
 			e.printStackTrace();
@@ -104,7 +97,6 @@ public class LineMaintenance extends BasePage{
 		jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
 		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
 		jse.executeScript("arguments[0].click();", runReportButton);
-
 		jse.executeScript("arguments[0].click();", resultRow);
 		logger.info("Line MX Report displayed");
 	}

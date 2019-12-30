@@ -115,10 +115,6 @@ public class AccountsPayableMaintenance extends BasePage{
 			logger.info("lookupTransaction Scenario -> Pass");
 		} catch (Exception e) {
 			logger.error("lookupTransaction Scenario -> Fail");
-			if (Environment.getEnv().contains("aws")) {
-				itn.setItn("Failed due to QAA-338");
-			}
-
 			e.printStackTrace();
 			throw new Error(">>>Account Payable MX FAIL<<<");
 		}

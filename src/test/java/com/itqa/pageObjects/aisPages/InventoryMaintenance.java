@@ -73,11 +73,6 @@ public class InventoryMaintenance extends BasePage{
 			logger.info("Inventory Maintenance Scenario -> Pass");
 		} catch (Exception e) {
 			logger.error("Inventory Maintenance Scenario -> Fail");
-
-			if (Environment.getEnv().contains("aws")) {
-				itn.setItn("Failed due to QAA-337");
-			}
-
 			e.printStackTrace();
 			throw new Error(">>>Inventory Maintenance Fail<<< ");
 

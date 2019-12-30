@@ -58,9 +58,6 @@ public class AircraftRecords extends BasePage {
     		logger.info("lookupAircraftPart Scenario -> Pass");
 		} catch (Exception e) {
 			logger.error("lookupAircraftPart Scenario -> Fail");
-			if (Environment.getEnv().contains("aws")) {
-				itn.setItn("Failed due to QAA-338");
-			}
 			e.printStackTrace();
 			throw new Error(">>>Aircraft Records returns no result<<<");
 

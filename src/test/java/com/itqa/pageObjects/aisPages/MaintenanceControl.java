@@ -58,11 +58,6 @@ public class MaintenanceControl extends BasePage {
 			logger.info("MaintenanceControl Report Verify -> Started");
 			reportsTab.click();
 			flightLogTab.click();
-//			if (Environment.getEnv().contains("trn")) {
-//	    		jse.executeScript("arguments[0].setAttribute('value', '217NV');", tailField);
-//	    		}else {
-//	    			jse.executeScript("arguments[0].setAttribute('value', '215NV');", tailField);
-//	    		}
 			try {
 				verifyReport("215NV");
 			} catch (Exception d) {
@@ -80,9 +75,6 @@ public class MaintenanceControl extends BasePage {
 			logger.info("MaintenanceControl Report Scenario -> Pass");
 		} catch (Exception e) {
 			logger.error("MaintenanceControl Report Scenario -> Pass");
-			if (Environment.getEnv().contains("aws")) {
-				itn.setItn("Failed due to QAA-338");
-			}
 			e.printStackTrace();
 			throw new Error(">>>Records returns no result<<<");
 		}
