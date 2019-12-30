@@ -102,7 +102,7 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Coupled Code For MX - Aircraft Records", groups = {
 			"bat", "ais" })
-	@Story("AIS: Search Coupled Code For MX - Aircraft Records")
+	@Story("AIS - Search Coupled Code For MX - Aircraft Records")
 	public void lookupAircraftRecordsPart(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
@@ -319,7 +319,7 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Accounts Payable Maintenance - Look up Transaction", groups = {
 			"bat", "ais" })
-	@Story("AIS: Access Accounts Payable Maintenance - Look up Transaction")
+	@Story("AIS - Access Accounts Payable Maintenance - Look up Transaction")
 	public void lookupAccountsPayableMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
