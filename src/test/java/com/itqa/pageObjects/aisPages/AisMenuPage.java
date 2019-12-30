@@ -97,67 +97,77 @@ public class AisMenuPage extends BasePage {
 
 	public void selectaccountsPayableMaintenance(Itinerary itn) {
 		try {
+			logger.info("AccountsPayableMaintenance Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(APTab));
 			APTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(accountsPayableMXTab));
 			accountsPayableMXTab.click();
-
 			driver.switchTo().alert().accept();
 			logger.info("Accept Security Alert");
+			logger.info("AccountsPayableMaintenance Scenario -> Pass");
 
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting accounts payable maintenance :" + e.getMessage());
+			itn.setErrorLog("AccountsPayableMaintenance Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectKayakConsole(Itinerary itn) {
 		try {
+			logger.info("Kayak Console Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(ADTab));
 			ADTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakConsoleTab));
 			kayakConsoleTab.click();
+			logger.info("Kayak Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting kayak console :" + e.getMessage());
+			itn.setErrorLog("Kayak Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectFlightFollowing(Itinerary itn) {
 		try {
+			logger.info("Flight Following Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(FFTab));
 			FFTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightFollowingTab));
 			flightFollowingTab.click();
+			logger.info("Flight Following Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting flight following :" + e.getMessage());
+			itn.setErrorLog("Flight Following Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectFlightFlow(Itinerary itn) {
 		try {
+			logger.info("Flight Follow Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(FFTab));
 			FFTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightFlowTab));
 			flightFlowTab.click();
+			logger.info("Flight Follow Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting flight flow :" + e.getMessage());
+			itn.setErrorLog("Flight Follow Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectinventoryMaintenance(Itinerary itn) {
 		try {
+			logger.info("Inventory Maintenance Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(INTab));
 			INTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(inventoryMXTab));
 			inventoryMXTab.click();
 			DriverBase.getDriver().switchTo().alert().accept();
 			logger.info("Accept Security Alert");
+			logger.info("Inventory Maintenance Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while selecting Inventory maintenance :" + e.getMessage());
 			logger.info("Security Alert not display");
+			logger.error("Inventory Maintenance Scenario -> Fail");
 			e.printStackTrace();
 
 		}
@@ -165,108 +175,128 @@ public class AisMenuPage extends BasePage {
 
 	public void selectAircraftRecords(Itinerary itn) {
 		try {
+			logger.info("Aircraft Records Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(MXTab));
 			MXTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(aircraftRecordsTab));
 			aircraftRecordsTab.click();
+			logger.info("Aircraft Records -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting Aircraft records :" + e.getMessage());
+			itn.setErrorLog("Aircraft Records Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectMXandEngr(Itinerary itn) {
 		try {
+			logger.info("MXandEngr Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(METab));
 			METab.click();
+			logger.info("MXandEngr Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting MX and Engr records :" + e.getMessage());
+			itn.setErrorLog("MXandEngr Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectLineMX(Itinerary itn) {
 		try {
+			logger.info("LineMX Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(lineMXTab));
 			lineMXTab.click();
+			logger.info("LineMX Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting line MX :" + e.getMessage());
+			itn.setErrorLog("LineMX Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectMXControl(Itinerary itn) {
 		try {
+			logger.info("MXControl Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxControlTab));
 			mxControlTab.click();
+			logger.info("MXControl Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting MX Control :" + e.getMessage());
+			itn.setErrorLog("MXControl Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectReliability(Itinerary itn) {
 		try {
+			logger.info("Reliability Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reliabilityTab));
 			reliabilityTab.click();
+			logger.info("Reliability Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting reliablity :" + e.getMessage());
+			itn.setErrorLog("Reliability Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectMXRecords(Itinerary itn) {
 		try {
+			logger.info("MXRecords opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxRecordsTab));
 			mxRecordsTab.click();
+			logger.info("MXRecords Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting MX records :" + e.getMessage());
+			itn.setErrorLog("MXRecords Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectFlightScheduleMX(Itinerary itn) {
 		try {
+			logger.info("FlightScheduleMX Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(OPTab));
 			OPTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightScheduleMXTab));
 			flightScheduleMXTab.click();
+			logger.info("FlightScheduleMX Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting flight schedule MX :" + e.getMessage());
+			itn.setErrorLog("FlightScheduleMX Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectAirOnly(Itinerary itn) {
 		try {
+			logger.info("Aironly Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(rsTab));
 			rsTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(airOnlyTab));
 			airOnlyTab.click();
+			logger.info("Aironly Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting Air only :" + e.getMessage());
+			itn.setErrorLog("Aironly Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectPrintManifest(Itinerary itn) {
 		try {
+			logger.info("PrintManifest Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(rsTab));
 			rsTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(printManifestTab));
 			printManifestTab.click();
+			logger.info("PrintManifest Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting printmanifest :" + e.getMessage());
+			itn.setErrorLog("PrintManifest Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectITNMX(Itinerary itn) {
 		try {
+			logger.info("ITN-MX Opened");
 			rsTab.click();
 			itnMXTab.click();
+			logger.info("ITNMX Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting ITN MX :" + e.getMessage());
+			itn.setErrorLog("ITNMX Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}

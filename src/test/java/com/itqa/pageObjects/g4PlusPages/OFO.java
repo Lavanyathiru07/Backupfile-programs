@@ -40,17 +40,18 @@ public class OFO extends BasePage {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessOFO(Itinerary itn) {
-    	try{
-        pendingDisp.isDisplayed();
-        appChart.isDisplayed();
-        todayOE.isDisplayed();
-        searchDispButton.isDisplayed();
-        logger.info("OFO Menu Open");
-    	}catch(Exception e){
-    		itn.setErrorLog("Error while accesing OFO :" + e.getMessage());
-    		e.printStackTrace();
-    		throw new Error("FAIL");
-    	}
-    }
+	public void accessOFO(Itinerary itn) {
+		try {
+			logger.info("OFO Verify -> Started");
+			pendingDisp.isDisplayed();
+			appChart.isDisplayed();
+			todayOE.isDisplayed();
+			searchDispButton.isDisplayed();
+			logger.info("OFO Scenario -> Pass");
+		} catch (Exception e) {
+			itn.setErrorLog("OFO Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error("FAIL");
+		}
+	}
 }

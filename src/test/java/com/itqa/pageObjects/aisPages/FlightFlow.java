@@ -44,6 +44,7 @@ public class FlightFlow extends BasePage{
         submitButton.click();
         mainTable.isDisplayed();
         logger.info("Flight Flow Table Displayed");
+        logger.info("FlightFlow Scenario -> Pass");
     	}catch(Exception e){
     		itn.setErrorLog("Error while opening flight flow :" + e.getMessage());
     		e.printStackTrace();

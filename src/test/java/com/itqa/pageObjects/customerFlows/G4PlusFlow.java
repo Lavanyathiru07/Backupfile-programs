@@ -114,12 +114,14 @@ public class G4PlusFlow extends BasePage {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		g4MenuPage.verifyAIS();
+		logger.info("<<< Login Successfull >>>");
 	}
 
 	public void awsurl() throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
 		g4MenuPage.verifyAIS();   
+		logger.info("<<< AWS Login Successfull >>>");
 	}
 
 	public void g4PlusSignin() {
@@ -157,7 +159,6 @@ public class G4PlusFlow extends BasePage {
 		logger.info(env);
 
 		g4PlusSignin();
-
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectAIS(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
@@ -271,11 +272,11 @@ public class G4PlusFlow extends BasePage {
 			MaintenanceRecords.openReport(itn);
 
 		} catch (Exception e) {
-			  		if(Environment.getEnv().contains("aws")) {
-	    			itn.setItn("Failed due to QAA-338");
-	    		}
-			  		itn.setErrorLog("Error while getting SPOE report :" + e.getMessage());
-	    	e.printStackTrace();
+			if(Environment.getEnv().contains("aws")) {
+				itn.setItn("Failed due to QAA-338");
+			}
+			itn.setErrorLog("Error while getting SPOE report :" + e.getMessage());
+			e.printStackTrace();
 			throw new Error(">>>Reports cant find<<<");
 		}
 	}
@@ -483,6 +484,7 @@ public class G4PlusFlow extends BasePage {
 
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		try {
+
 			capabilities.setCapability("name", "Access Swap");
 			capabilities.setCapability("idleTimeout", 60);
 			capabilities.setCapability("tz", "America/Los_Angeles");
@@ -494,12 +496,14 @@ public class G4PlusFlow extends BasePage {
 
 		DriverBase.getDriver().get("https://swap.allegiantair.com");
 
+		logger.info("Swap Verify -> Started");
 		LoginPage loginPage = new LoginPage(logger);
 
 		try {
 			loginPage.openSwap(itn);
+			logger.info("Swap Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while accessing swap :" + e.getMessage());
+			itn.setErrorLog("Swap Scenario -> Fail");
 			throw new Error();
 		}
 

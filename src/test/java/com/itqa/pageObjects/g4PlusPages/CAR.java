@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
 import data.Itinerary;
@@ -75,9 +76,13 @@ public class CAR extends BasePage{
         resultRow.click();
         logger.info("CAR Menu Open");
     	}catch(Exception e){
-    		itn.setErrorLog("Error while accerss CAR :" + e.getMessage());
-    		e.printStackTrace();
-    		throw new Error("FAIL");
+    		itn.setErrorLog("CAR Scenario -> Fail");
+    		if (Environment.getEnv().contains("nddprd")) {
+				itn.setItn("Failed due to CES-1505");
+				itn.setErrorLog("CAR Scenario -> Fail : CES-1505");
+			}
+			e.printStackTrace();
+			throw new Error("FAIL");
     	}
     }
 }

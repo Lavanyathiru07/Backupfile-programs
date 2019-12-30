@@ -76,11 +76,12 @@ public class ATL extends BasePage{
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(glPostingRow));
         glPostingRow.click();
 
-        logger.info("ATL Menu Open");
+        logger.info("ATL Scenario -> Pass");
     	}catch(Exception e){
-    		itn.setErrorLog("Error while access ATL :" + e.getMessage());
+    		itn.setErrorLog("ATL Scenario -> Fail");
     		e.printStackTrace();
     		throw new Error("FAIL");
     	}
     }
+
 }

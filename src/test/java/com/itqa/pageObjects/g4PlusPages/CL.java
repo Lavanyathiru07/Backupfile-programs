@@ -39,6 +39,7 @@ public class CL extends BasePage{
 
     public void accessCL(Itinerary itn) {
     	try{
+    		logger.info("CL Verify -> Started");
     	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(fnameField));
         fnameField.click();
         new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(emailField));
@@ -46,7 +47,7 @@ public class CL extends BasePage{
         logger.info("CL Menu Open");
 
     	}catch(Exception e){  
-    		itn.setErrorLog("Error whilr access CL :" + e.getMessage());
+    		itn.setErrorLog("Customer Lookup Scenario -> Fail");
     		e.printStackTrace();
     	}
     }

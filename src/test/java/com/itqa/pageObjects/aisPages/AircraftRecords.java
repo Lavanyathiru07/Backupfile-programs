@@ -45,6 +45,7 @@ public class AircraftRecords extends BasePage {
 
     public void lookupAircraftPart(Itinerary itn) {
     	try{
+    		logger.info("lookupAircraftPart Verify -> Started");
     		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(lookupButton));
     		if(lookupButton.isDisplayed()) {
     		lookupButton.click();
@@ -54,12 +55,9 @@ public class AircraftRecords extends BasePage {
     			logger.info("Aircraft Records Lookup: " + aircraftRecordsResultRow.size() + " rows");
     			logger.info("The first row is: " + aircraftRecordsResultRow.get(0).getText().replaceAll("\n", " "));
     		}
-    		
+    		logger.info("lookupAircraftPart Scenario -> Pass");
 		} catch (Exception e) {
-			if (Environment.getEnv().contains("aws")) {
-				itn.setItn("Failed due to QAA-338");
-			}
-			itn.setErrorLog("Aircraft Records returns no result :" + e.getMessage());
+			itn.setErrorLog("lookupAircraftPart Scenario -> Fail");
 			e.printStackTrace();
 			throw new Error(">>>Aircraft Records returns no result<<<");
 

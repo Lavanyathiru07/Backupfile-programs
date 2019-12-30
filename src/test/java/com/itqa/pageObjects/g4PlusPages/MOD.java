@@ -256,10 +256,11 @@ public class MOD extends BasePage {
 
 	public void accessMOD(Itinerary itn) {
 		try {
+			logger.info("MOD Verify -> Started");
 			confirmationNumField.click();
-			logger.info("MOD menu open");
+			logger.info("MOD Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("Error accessing MOD :" + e.getMessage());
+			itn.setErrorLog("MOD Scenario -> Fail");
 			e.printStackTrace();
 			throw new Error("FAIL");
 		}

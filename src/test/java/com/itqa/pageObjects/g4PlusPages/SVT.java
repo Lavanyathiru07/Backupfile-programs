@@ -50,23 +50,24 @@ public class SVT extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessSVT(Itinerary itn) {
-    	try{
-        Calendar calendar = Calendar.getInstance();
-        Date date = calendar.getTime();
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+	public void accessSVT(Itinerary itn) {
+		try {
+			logger.info("SVT Verify -> Started");
+			Calendar calendar = Calendar.getInstance();
+			Date date = calendar.getTime();
+			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 
-        new Select(searchBySelect).selectByValue("authDateTime");
-        new Select(operationSelect).selectByValue("equals");
-        valueField.sendKeys(format.format(date));
-        searchButton.click();
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
-        resultRow.click();
-        logger.info("SVT Menu Open");
-    	}catch(Exception e){
-    		itn.setErrorLog("Error whilr accessing SVT :" + e.getMessage());
-    		e.printStackTrace();
-    		throw new Error("FAIL");
-    	}
-    }
+			new Select(searchBySelect).selectByValue("authDateTime");
+			new Select(operationSelect).selectByValue("equals");
+			valueField.sendKeys(format.format(date));
+			searchButton.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
+			resultRow.click();
+			logger.info("SVT Scenario -> Pass");
+		} catch (Exception e) {
+			itn.setErrorLog("SVT Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error("FAIL");
+		}
+	}
 }

@@ -31,13 +31,14 @@ public class KayakConsole extends BasePage{
     }
 
     public void editKayakConsole(Itinerary itn) {
-    	try{
-    	 new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakTable));
-        kayakTable.click();
-        logger.info("Kayak Console Open");
-    	}catch(Exception e){
+		try {
+			logger.info("Kayak Console Open");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakTable));
+			kayakTable.click();
+			logger.info("Kayak Scenario -> Pass");
+		}catch(Exception e){
+			itn.setErrorLog("Kayak Scenario -> Fail");
     		e.printStackTrace();
-    		itn.setErrorLog("Error while editing kayal console :" + e.getMessage());
     		throw new Error(">>>Kayak Access FAIL<<<");
     	}
     }

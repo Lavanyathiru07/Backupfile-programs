@@ -43,6 +43,7 @@ public class FlightFollowing extends BasePage{
     public void verifyFlightInformation(Itinerary itn) {
     	try{
     	DriverBase.getDriver().switchTo().frame(fllistFrame);
+    	logger.info("FlightInformation Verify -> Started");
         for (int loop=0; loop<10; loop++) {
             if (DriverBase.getDriver().findElements(By.xpath("//td[contains(@class,'norm')]")).size() == 0) {
             	DriverBase.getDriver().switchTo().defaultContent();
@@ -85,9 +86,9 @@ public class FlightFollowing extends BasePage{
                 }
             }
         }
-    
+        logger.info("FlightInformation Scenario -> Pass");
     }catch(Exception e){
-    	itn.setErrorLog("Error while verifying FlightInformation :" + e.getMessage());
+    	itn.setErrorLog("FlightInformation Scenario -> Fail");
 		e.printStackTrace();
 		throw new Error("FAIL - Flight Following - Cannot get element");
 	}

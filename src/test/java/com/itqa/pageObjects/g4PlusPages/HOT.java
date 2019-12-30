@@ -64,49 +64,53 @@ public class HOT extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessHOT(Itinerary itn) {
-    	try{
-        for (int loop=0; loop<10; loop++) {
-            try {
-            	new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(payloadTab));
-                payloadTab.click();
-                
-                break;
-            }
-            catch (Exception e) {
-                if (loop == 9) {
-                	itn.setErrorLog("Error while access HOT :" + e.getMessage());
-                    throw new Error(e);
-                }
-                else {
-                    try {Thread.sleep(1000);} catch (Exception e1) {}
-                }
-            }
-        }
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(hotelProviderIdField));
-        hotelProviderIdField.click();
-        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/1HOT.png");
+	public void accessHOT(Itinerary itn) {
+		try {
+			logger.info("HOT Verify -> Started");
+			for (int loop = 0; loop < 10; loop++) {
+				try {
+					new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(payloadTab));
+					payloadTab.click();
 
-        fulfillmentTab.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(locationLabel));
-        locationLabel.click();
-        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/2HOT.png");
+					break;
+				} catch (Exception e) {
+					if (loop == 9) {
+						throw new Error(e);
+					} else {
+						try {
+							Thread.sleep(1000);
+						} catch (Exception e1) {
+						}
+					}
+				}
+			}
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(hotelProviderIdField));
+			hotelProviderIdField.click();
+			GeneralUtils.takeScreenshot(driver,
+					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/1HOT.png");
 
-        revenueTab.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(locationLabel));
-        locationLabel.click();
-        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/3HOT.png");
+			fulfillmentTab.click();
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(locationLabel));
+			locationLabel.click();
+			GeneralUtils.takeScreenshot(driver,
+					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/2HOT.png");
 
-        inventoryTab.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(airportLabel));
-        airportLabel.click();
+			revenueTab.click();
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(locationLabel));
+			locationLabel.click();
+			GeneralUtils.takeScreenshot(driver,
+					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/3HOT.png");
 
-        logger.info("HOT Menu Open");
-    
-    }catch(Exception e){
-    	itn.setErrorLog("Error while accessing HOT :" + e.getMessage());
-    	e.printStackTrace();
-    	throw new Error("FAIL");
+			inventoryTab.click();
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(airportLabel));
+			airportLabel.click();
+
+			logger.info("HOT Scenario -> Pass");
+
+		} catch (Exception e) {
+			itn.setErrorLog("HOT Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error("FAIL");
+		}
 	}
-    }
 }

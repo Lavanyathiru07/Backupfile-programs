@@ -69,9 +69,9 @@ public class Reliability extends BasePage{
         logger.info("Reliability Report displayed");
     	}catch(Exception e){
     		skip = true;
-    		itn.setErrorLog("Error while opening the reliablity :" + e.getMessage());
+    		itn.setErrorLog("Reliability Report Scenario -> Fail");
     		DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
-    	}
-    }
+    		throw new SkipException("Scenario fails so execution stoped");
+		}
+	}
 }

@@ -76,6 +76,7 @@ public class PrintManifest extends BasePage {
         allPaxButton.click();
         new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(paxTable));
         paxTable.click();
+        logger.info("PrintManifest Scenario -> Pass");
     	}catch(Exception e){
     		itn.setErrorLog("Error while verifying the print manifest :" + e.getMessage());
     		e.printStackTrace();

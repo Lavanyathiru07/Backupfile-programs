@@ -75,8 +75,9 @@ public class G4MenuPage extends BasePage {
 	public void selectMOD(Itinerary itn) {
 		try {
 			modApp.click();
+			logger.info("<<< MOD App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting MOD :" + e.getMessage());
+			itn.setErrorLog("<<< MOD App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -84,8 +85,9 @@ public class G4MenuPage extends BasePage {
 	public void selectAIS(Itinerary itn) {
 		try {
 			aisApp.click();
+			logger.info("<<< AIS App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting AIS :" + e.getMessage());
+			itn.setErrorLog("<<< AIS App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -93,8 +95,9 @@ public class G4MenuPage extends BasePage {
 	public void selectSTS(Itinerary itn) {
 		try {
 			stsApp.click();
+			logger.info("<<< STS App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting STS :" + e.getMessage());
+			itn.setErrorLog("<<< STS App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -102,8 +105,9 @@ public class G4MenuPage extends BasePage {
 	public void selectESP(Itinerary itn) {
 		try {
 			espApp.click();
+			logger.info("<<< ESP App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting ESP :" + e.getMessage());
+			itn.setErrorLog("<<< ESP App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -111,8 +115,9 @@ public class G4MenuPage extends BasePage {
 	public void selectSVT(Itinerary itn) {
 		try {
 			svtApp.click();
+			logger.info("<<< SVT App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting SVT :" + e.getMessage());
+			itn.setErrorLog("<<< SVT App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -120,8 +125,9 @@ public class G4MenuPage extends BasePage {
 	public void selectCAR(Itinerary itn) {
 		try {
 			carApp.click();
+			logger.info("<<< CAR App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting CAR :" + e.getMessage());
+			itn.setErrorLog("<<< CAR App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -129,8 +135,9 @@ public class G4MenuPage extends BasePage {
 	public void selectFM(Itinerary itn) {
 		try {
 			fmApp.click();
+			logger.info("<<< FM App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting FM :" + e.getMessage());
+			itn.setErrorLog("<<< FM App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -138,8 +145,9 @@ public class G4MenuPage extends BasePage {
 	public void selectRQ(Itinerary itn) {
 		try {
 			rqApp.click();
+			logger.info("<<< RQ App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting RQ :" + e.getMessage());
+			itn.setErrorLog("<<< RQ App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -147,8 +155,9 @@ public class G4MenuPage extends BasePage {
 	public void selectHOT(Itinerary itn) {
 		try {
 			hotApp.click();
+			logger.info("<<< RQ App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting HOT :" + e.getMessage());
+			itn.setErrorLog("<<< RQ App !Clicked >>>");
 			e.printStackTrace();
 		}
 
@@ -157,8 +166,9 @@ public class G4MenuPage extends BasePage {
 	public void selectATL(Itinerary itn) {
 		try {
 			atlApp.click();
+			logger.info("<<< ATL App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting ATL :" + e.getMessage());
+			itn.setErrorLog("<<< ATL App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -166,8 +176,9 @@ public class G4MenuPage extends BasePage {
 	public void selectCL(Itinerary itn) {
 		try {
 			clApp.click();
+			logger.info("<<< CL App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting CL :" + e.getMessage());
+			itn.setErrorLog("<<< CL App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -175,8 +186,9 @@ public class G4MenuPage extends BasePage {
 	public void selectOFO(Itinerary itn) {
 		try {
 			ofoApp.click();
+			logger.info("<<< OFO App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting OFO :" + e.getMessage());
+			itn.setErrorLog("<<< OFO App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -184,15 +196,16 @@ public class G4MenuPage extends BasePage {
 	public void selectSTNS(Itinerary itn) {
 		try {
 			stnsApp.click();
+			logger.info("<<< STNS App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting STNS :"+ e.getMessage());
+			itn.setErrorLog("<<< STNS App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
 	
 	public void verifyAIS() {
 		if(gfourHome.isDisplayed()) {
-			logger.info(">>>>>Token passed properly<<<<<");
+			logger.info(">>>>> Token passed properly <<<<<");
 		}
 	}
 

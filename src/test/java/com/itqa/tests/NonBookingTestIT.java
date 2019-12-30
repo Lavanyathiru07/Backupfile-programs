@@ -565,6 +565,7 @@ public class NonBookingTestIT extends DriverBase {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessCAR(itn);
+			trc.setSetItn(itn.getItn());
 
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");

@@ -58,81 +58,66 @@ public class AccountsPayableMaintenance extends BasePage{
     }
 
     public void lookupTransaction(Itinerary itn) {
-    	try{
-        //new Select(vendorStatField).selectByValue("A");
-        locationField.sendKeys("HQ" + Keys.ENTER);
-        if (System.getProperty("env").contains("in")) {
-            for (int loop=0; loop<10; loop++) {
-                try {
-                	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectVendorIN));
-                    selectVendorIN.click();
-                    break;
-                }
-                catch (Exception e) {
-                    if (loop == 9) {
-                    	itn.setErrorLog("Vendor details is not displayed in lookup transaction :  "+e.getMessage());
-                        throw new Error("Vendor 000005 not found");
-                    }
-                }
-            }
-        }
-        else {
-            for (int loop=0; loop<10; loop++) {
-                try {
-                    selectedVendor.click();
-                    break;
-                }
-                catch (Exception e) {
-                    if (loop == 5) {
-                    	itn.setErrorLog("Vendor details is not displayed in lookup transaction :  "+e.getMessage());
-                        throw new Error("Vendor 000005 not found");
-                    }
-                }
-            }
-        }
-        logger.info("Vendor id: 000005 found");
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(analysisTab));
-        analysisTab.click();
 
-        String num = selectedTransaction.getText();
-        String type = selectedTransaction.getAttribute("href");
-        selectedTransaction.click();
-        if (type.contains("lookupInvoice")) {
-            if (invoiceIdField.getAttribute("value").equals(num)) {
-                logger.info("Invoice Found");
-            }
-            else {
-            	itn.setErrorLog("Invoice not found :");
-                throw new Error("Invoice not found");
-            }
-        }
-        else if (type.contains("lookupOrder")) {
-            if (orderIdField.getAttribute("value").equals(num)) {
-                logger.info("Order Found");
-            }
-            else {
-            	itn.setErrorLog("Order not found :");
-                throw new Error("Order not found");
-            }
-        }
-        else if (type.contains("lookupPayment")) {
-            if (paymentIdField.getAttribute("value").equals(num)) {
-                logger.info("Payment Found");
-            }
-            else {
-            	itn.setErrorLog("Payment not found :");
-                throw new Error("Payment not found");
-            }
-        }
-    
-    }catch(Exception e){
-    	if (Environment.getEnv().contains("aws")) {
-    		itn.setItn("Failed due to QAA-338");
+		try {
+			logger.info("lookupTransaction Verify -> Started");
+			// new Select(vendorStatField).selectByValue("A");
+			locationField.sendKeys("HQ" + Keys.ENTER);
+			if (System.getProperty("env").contains("in")) {
+				for (int loop = 0; loop < 10; loop++) {
+					try {
+						new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectVendorIN));
+						selectVendorIN.click();
+						break;
+					} catch (Exception e) {
+						if (loop == 9) {
+							throw new Error("Vendor 000005 not found");
+						}
+					}
+				}
+			} else {
+				for (int loop = 0; loop < 10; loop++) {
+					try {
+						selectedVendor.click();
+						break;
+					} catch (Exception e) {
+						if (loop == 5) {
+							throw new Error("Vendor 000005 not found");
+						}
+					}
+				}
+			}
+			logger.info("Vendor id: 000005 found");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(analysisTab));
+			analysisTab.click();
+
+			String num = selectedTransaction.getText();
+			String type = selectedTransaction.getAttribute("href");
+			selectedTransaction.click();
+			if (type.contains("lookupInvoice")) {
+				if (invoiceIdField.getAttribute("value").equals(num)) {
+					logger.info("Invoice Found");
+				} else {
+					throw new Error("Invoice not found");
+				}
+			} else if (type.contains("lookupOrder")) {
+				if (orderIdField.getAttribute("value").equals(num)) {
+					logger.info("Order Found");
+				} else {
+					throw new Error("Order not found");
+				}
+			} else if (type.contains("lookupPayment")) {
+				if (paymentIdField.getAttribute("value").equals(num)) {
+					logger.info("Payment Found");
+				} else {
+					throw new Error("Payment not found");
+				}
+			}
+			logger.info("lookupTransaction Scenario -> Pass");
+		} catch (Exception e) {
+			itn.setErrorLog("lookupTransaction Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error(">>>Account Payable MX FAIL<<<");
 		}
-    	
-		e.printStackTrace();
-		itn.setErrorLog("Account Payable MX FAIL :" + e.getMessage());
-		throw new Error(">>>Account Payable MX FAIL<<<");
-	}
 }
 }

@@ -33,12 +33,15 @@ public class FlightScheduleMaintenance extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void verifyFlightScheduleMX(Itinerary itn) {
-    	try{
-        flightNumField.sendKeys("529" + Keys.ENTER);
-        originText.click();
-        logger.info("Flight Schedule Maintenance Displayed");
+	public void verifyFlightScheduleMX(Itinerary itn) {
+		try {
+			logger.info("FlightScheduleMX Verify -> Started");
+			flightNumField.sendKeys("529" + Keys.ENTER);
+			originText.click();
+			logger.info("Flight Schedule Maintenance Displayed");
+			logger.info("FlightScheduleMX Scenario -> Pass");
 		} catch (Exception e) {
+			itn.setErrorLog("FlightScheduleMX Scenario -> Fail");
 			if (Environment.getEnv().contains("stg")) {
 				itn.setItn("Failed due to ALGT-159980");
 			}
@@ -46,5 +49,5 @@ public class FlightScheduleMaintenance extends BasePage{
 			e.printStackTrace();
 			throw new Error(">>>Flight Schedule MX Fail<<<");
 		}
-    }
+	}
 }
