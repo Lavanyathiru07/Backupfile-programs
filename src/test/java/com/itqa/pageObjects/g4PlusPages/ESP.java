@@ -32,14 +32,16 @@ public class ESP extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessESP() {
-    	try{
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mapRow));
-        mapRow.click();
-        logger.info("ESP Menu Open");
-    	}catch(Exception e){
-    		e.printStackTrace();
-    		throw new Error("FAIL");
-    	}
-    	}
+	public void accessESP() {
+		try {
+			logger.info("ESP Verify -> Started");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mapRow));
+			mapRow.click();
+			logger.info("ESP Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("ESP Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error("FAIL");
+		}
+	}
 }

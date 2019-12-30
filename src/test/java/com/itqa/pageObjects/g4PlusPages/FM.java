@@ -42,32 +42,36 @@ public class FM extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessBag() {
-    	try{
-        for (int loop=0; loop<10; loop++) {
-            try {
-            	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(bagTab));
-                bagTab.click();
-            }
-            catch (Exception e) {
-                if (loop == 9) {
-                    throw new Error(e);
-                }
-                else {
-                    try {Thread.sleep(1000);} catch (Exception e1) {}
-                }
-            }
-        }
-        resultRow.click();
-        logger.info("BAG Menu Open");
-    }catch(Exception e){
-    	e.printStackTrace();
-    	throw new Error("FAIL");
+	public void accessBag() {
+		try {
+			logger.info("BAG Verify -> Started");
+			for (int loop = 0; loop < 10; loop++) {
+				try {
+					new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(bagTab));
+					bagTab.click();
+				} catch (Exception e) {
+					if (loop == 9) {
+						throw new Error(e);
+					} else {
+						try {
+							Thread.sleep(1000);
+						} catch (Exception e1) {
+						}
+					}
+				}
+			}
+			resultRow.click();
+			logger.info("BAG Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("BAG Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error("FAIL");
+		}
 	}
-    }
 
     public void accessPB2() {
     	try{
+    		logger.info("PB2 Verify -> Started");
         for (int loop=0; loop<10; loop++) {
             try {
                 pbTab.click();
@@ -83,35 +87,39 @@ public class FM extends BasePage{
             }
         }
         resultRow.click();
-        logger.info("PB2 Menu Open");
+        logger.info("PB2 Scenario -> Pass");
     }catch(Exception e){
+    	 logger.error("PB2 Scenario -> Fail");
     	e.printStackTrace();
     	throw new Error("FAIL");
 	}
     }
 
-    public void accessTF2() {
-    	try{
-        for (int loop=0; loop<10; loop++) {
-            try {
-            	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(tfTab));
-                tfTab.click();
-                break;
-            }
-            catch (Exception e) {
-                if (loop == 9) {
-                    throw new Error(e);
-                }
-                else {
-                    try {Thread.sleep(1000);} catch (Exception e1) {}
-                }
-            }
-        }
-        resultRow.click();
-        logger.info("TF2 Menu Open");
-    	}catch(Exception e){
-    		e.printStackTrace();
-    		throw new Error("FAIL");
-    	}
-    }
+	public void accessTF2() {
+		try {
+			logger.info("TF2 Verify -> Started");
+			for (int loop = 0; loop < 10; loop++) {
+				try {
+					new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(tfTab));
+					tfTab.click();
+					break;
+				} catch (Exception e) {
+					if (loop == 9) {
+						throw new Error(e);
+					} else {
+						try {
+							Thread.sleep(1000);
+						} catch (Exception e1) {
+						}
+					}
+				}
+			}
+			resultRow.click();
+			logger.info("TF2 Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("TF2 Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error("FAIL");
+		}
+	}
 }

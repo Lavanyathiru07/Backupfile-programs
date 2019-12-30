@@ -36,16 +36,18 @@ public class CL extends BasePage{
         
     }
 
-    public void accessCL() {
-    	try{
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(fnameField));
-        fnameField.click();
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(emailField));
-        emailField.click();
-        logger.info("CL Menu Open");
+	public void accessCL() {
+		try {
+			logger.info("CL Verify -> Started");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(fnameField));
+			fnameField.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(emailField));
+			emailField.click();
+			logger.info("CL Scenario -> Pass");
 
-    	}catch(Exception e){    		
-    		e.printStackTrace();
-    	}
-    }
+		} catch (Exception e) {
+			logger.error("Customer Lookup Scenario -> Fail");
+			e.printStackTrace();
+		}
+	}
 }

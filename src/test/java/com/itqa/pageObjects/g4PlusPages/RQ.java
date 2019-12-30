@@ -39,24 +39,27 @@ public class RQ extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessRQ() {
-    	try{
-        for (int i=0; i<20; i++) {
-            List<WebElement> queueList = new Select(queueTypeSelect).getOptions();
-            if (queueList.size() > 1) {
-                break;
-            }
-            else {
-                try {Thread.sleep(500);} catch (Exception e) {}
-            }
-        }
-        new Select(queueTypeSelect).selectByVisibleText("Cancel");
-        jse.executeScript("arguments[0].click();", submitButton);
-        logger.info("RQ Menu Open");
-    	}catch(Exception e){
-    
-    		e.printStackTrace();
-    		throw new Error("FAIL");
-    	}
-    }
+	public void accessRQ() {
+		try {
+			logger.info("RQ Verify -> Started");
+			for (int i = 0; i < 20; i++) {
+				List<WebElement> queueList = new Select(queueTypeSelect).getOptions();
+				if (queueList.size() > 1) {
+					break;
+				} else {
+					try {
+						Thread.sleep(500);
+					} catch (Exception e) {
+					}
+				}
+			}
+			new Select(queueTypeSelect).selectByVisibleText("Cancel");
+			jse.executeScript("arguments[0].click();", submitButton);
+			logger.info("RQ Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("RQ Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error("FAIL");
+		}
+	}
 }

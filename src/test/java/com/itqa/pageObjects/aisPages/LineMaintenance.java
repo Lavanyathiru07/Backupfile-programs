@@ -52,33 +52,52 @@ public class LineMaintenance extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void openReport(Itinerary itn) {
-    	try{
-    		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
-    		reportsTab.click();
-    		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
-    		flightLogTab.click();
+	public void openReport(Itinerary itn) {
+		try {
+			logger.info("LineMaintenance Report Verify -> Started");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
+			reportsTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
+			flightLogTab.click();
 
-    		jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
-
-    		Calendar calendar = Calendar.getInstance();
-    		calendar.add(Calendar.DATE, -90);
-    		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-    		String selectDate = format.format(calendar.getTime());
-
-    		jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
-    		jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
-    		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
-    		jse.executeScript("arguments[0].click();", runReportButton);
-
-    		jse.executeScript("arguments[0].click();", resultRow);
-    		logger.info("Line MX Report displayed");
-    	}catch(Exception e){
-    		if (Environment.getEnv().contains("aws")) {
-				itn.setItn("Failed due to QAA-338");
+			try {
+				verifyReport("215NV");
+			} catch (Exception d) {
+				try {
+					verifyReport("217NV");
+				} catch (Exception f) {
+					try {
+						verifyReport("301NV");
+					} catch (Exception g) {
+						g.printStackTrace();
+						throw new Error(">>>Records returns no result<<<");
+					}
+				}
 			}
-    		e.printStackTrace();
-    		throw new Error(">>>Records returns no result<<<");
-    	}
-    }
+
+			logger.info("LineMaintenance Report Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("LineMaintenance Report Scenario -> Fail");
+			if ((Environment.getEnv().contains("trn"))) {
+				itn.setItn("No results found");
+			}
+			e.printStackTrace();
+			throw new Error(">>>Records returns no result<<<");
+		}
+
+	}
+    public void verifyReport(String tail) {
+    	tailField.sendKeys(tail);
+   		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -90);
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		String selectDate = format.format(calendar.getTime());
+		new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(startingDateField));
+		jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
+		jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
+		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
+		jse.executeScript("arguments[0].click();", runReportButton);
+		jse.executeScript("arguments[0].click();", resultRow);
+		logger.info("Line MX Report displayed");
+	}
 }

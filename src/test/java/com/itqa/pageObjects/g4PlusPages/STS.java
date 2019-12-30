@@ -38,18 +38,21 @@ public class STS extends BasePage {
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessSTS() {
-    	try{
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatMapTitle));	
-        seatMapTitle.click();
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatMaskingTitle));
-        seatMaskingTitle.click();
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatPricingTitle));
-        seatPricingTitle.click();
-        logger.info("STS Menu Open");
-    	}catch(Exception e){
-    		e.printStackTrace();
-    		throw new Error("FAIL");
-    	}
-    }
+	public void accessSTS() {
+		try {
+			logger.info("STS Verify -> Started");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatMapTitle));
+			seatMapTitle.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatMaskingTitle));
+			seatMaskingTitle.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatPricingTitle));
+			seatPricingTitle.click();
+			logger.info("STS Scenario -> Pass");
+
+		} catch (Exception e) {
+			logger.error("STS Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error("FAIL");
+		}
+	}
 }

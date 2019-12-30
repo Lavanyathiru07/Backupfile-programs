@@ -30,11 +30,13 @@ public class KayakConsole extends BasePage{
     }
 
     public void editKayakConsole() {
-    	try{
-    	 new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakTable));
-        kayakTable.click();
-        logger.info("Kayak Console Open");
-    	}catch(Exception e){
+		try {
+			logger.info("Kayak Console Open");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakTable));
+			kayakTable.click();
+			logger.info("Kayak Scenario -> Pass");
+		}catch(Exception e){
+			logger.error("Kayak Scenario -> Fail");
     		e.printStackTrace();
     		throw new Error(">>>Kayak Access FAIL<<<");
     	}
