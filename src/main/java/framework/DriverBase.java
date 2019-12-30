@@ -30,6 +30,7 @@ public class DriverBase {
 	public static int paymentService = 0;
 	public static String flightAvailErrorMsg = "";
 	public static String paymentErrorMsg = "";
+	protected static int testnum = 1;
 	
 	public static Map<String, String> status = new HashMap<String, String>();
 	protected static CATinits cat;
