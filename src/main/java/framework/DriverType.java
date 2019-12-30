@@ -42,7 +42,7 @@ public enum DriverType implements DriverSetup {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
             
-            //System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
             
             options.addArguments("test-type");
             options.addArguments("ignore-certificate-errors");
