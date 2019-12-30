@@ -40,37 +40,39 @@ public class InventoryMaintenance extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void verifyInventoryMX(Itinerary itn) {
-    	try{
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectedPart));
-        selectedPart.click();
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(transactionTab));
-        transactionTab.click();
+	public void verifyInventoryMX(Itinerary itn) {
+		try {
+			logger.info("InventoryMX Verify -> Started");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectedPart));
+			selectedPart.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(transactionTab));
+			transactionTab.click();
 
-        Boolean found = false;
-        for (int loop=0; loop<30; loop++){
-            try {
-            	DriverBase.getDriver().findElement(By.xpath("//h2[contains(text(),'No Transactions')]"));
-                found = true;
-                break;
-            }
-            catch (Exception e) {}
+			Boolean found = false;
+			for (int loop = 0; loop < 30; loop++) {
+				try {
+					DriverBase.getDriver().findElement(By.xpath("//h2[contains(text(),'No Transactions')]"));
+					found = true;
+					break;
+				} catch (Exception e) {
+				}
 
-            try {
-            	DriverBase.getDriver().findElement(By.xpath("//a[contains(text(),'Rec Id')]"));
-                found = true;
-                break;
-            }
-            catch (Exception e) {}
-        }
+				try {
+					DriverBase.getDriver().findElement(By.xpath("//a[contains(text(),'Rec Id')]"));
+					found = true;
+					break;
+				} catch (Exception e) {
+				}
+			}
 
-        if (!found) {
-            throw new Error("Inventory Maintenance Transaction not displayed");
-        }
-        else {
-            logger.info("Inventory Maintenance Transaction displayed");
-        }
+			if (!found) {
+				throw new Error("Inventory Maintenance Transaction not displayed");
+			} else {
+				logger.info("Inventory Maintenance Transaction displayed");
+			}
+			logger.info("Inventory Maintenance Scenario -> Pass");
 		} catch (Exception e) {
+			logger.error("Inventory Maintenance Scenario -> Fail");
 
 			if (Environment.getEnv().contains("aws")) {
 				itn.setItn("Failed due to QAA-337");
@@ -80,5 +82,5 @@ public class InventoryMaintenance extends BasePage{
 			throw new Error(">>>Inventory Maintenance Fail<<< ");
 
 		}
-    }
+	}
 }

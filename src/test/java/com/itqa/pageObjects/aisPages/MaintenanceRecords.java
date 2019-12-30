@@ -72,32 +72,36 @@ public class MaintenanceRecords extends BasePage {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void lookupActionRequest(Itinerary itn) {
-    	try{
-    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionsTab));
-        actionsTab.click();
-    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionRequestsTab));
-        actionRequestsTab.click();
-    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionRequestsLookupButton));
-    	if(actionRequestsLookupButton.isDisplayed()) {
-        actionRequestsLookupButton.click();}
+	public void lookupActionRequest(Itinerary itn) {
+		try {
+			logger.info("lookupActionRequest Verify -> Started");
+			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionsTab));
+			actionsTab.click();
+			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionRequestsTab));
+			actionRequestsTab.click();
+			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionRequestsLookupButton));
+			if (actionRequestsLookupButton.isDisplayed()) {
+				actionRequestsLookupButton.click();
+			}
 
-        if (actionRequestsResultRow.size() > 0) {
-            logger.info("Action Requests Lookup: " + actionRequestsResultRow.size() + " rows");
-            logger.info("The first row is: " + actionRequestsResultRow.get(0).getText().replaceAll("\n", " "));
-        }
-       
-    	}catch(Exception e){
-    		if(Environment.getEnv().contains("aws")) {
-    			itn.setItn("Failed due to QAA-338");
-    		}
-    		 e.printStackTrace();
-    		 throw new Error(">>>Action Requests returns no result<<<");
-    }
-    }
+			if (actionRequestsResultRow.size() > 0) {
+				logger.info("Action Requests Lookup: " + actionRequestsResultRow.size() + " rows");
+				logger.info("The first row is: " + actionRequestsResultRow.get(0).getText().replaceAll("\n", " "));
+			}
+			logger.info("lookupActionRequest Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("lookupActionRequest Scenario -> Fail");
+			if (Environment.getEnv().contains("aws")) {
+				itn.setItn("Failed due to QAA-338");
+			}
+			e.printStackTrace();
+			throw new Error(">>>Action Requests returns no result<<<");
+		}
+	}
 
 	public void openReport() {
 		try {
+			logger.info("lookupActionRequest Report Verify -> Started");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
 			reportsTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
@@ -111,11 +115,14 @@ public class MaintenanceRecords extends BasePage {
 					try {
 						verifyReport("301NV");
 					} catch (Exception g) {
-
+						g.printStackTrace();
+						throw new Error(">>>Records returns no result<<<");
 					}
 				}
 			}
+			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
+			logger.error("lookupActionRequest Scenario -> Fail");
 			e.printStackTrace();
 			throw new Error(">>>Reports cant find<<<");
 		}

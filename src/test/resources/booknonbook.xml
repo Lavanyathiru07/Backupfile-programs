@@ -6,7 +6,7 @@
 	
 	<test name="Non Booking and PreBAT">
 		<classes>
-			<class name="com.itqa.tests.PreBAT" />
+			<!-- <class name="com.itqa.tests.PreBAT" /> -->
 			<class name="com.itqa.tests.NonBookingTestIT" />
 		</classes>
 	</test>
@@ -14,9 +14,9 @@
 	<test name="Booking">
 		<classes>
 			
-			<class name="com.itqa.tests.WebBookingTestIT" />
+			<!-- <class name="com.itqa.tests.WebBookingTestIT" />
 			<class name="com.itqa.tests.TABookingTestIT" />
-			<class name="com.itqa.tests.CCBookingTestIT" />
+			<class name="com.itqa.tests.CCBookingTestIT" /> -->
 
 		</classes>
 	</test>

@@ -36,16 +36,19 @@ public class FlightFlow extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void openFlightFlow() {
-    	try{
-        new Select(acGroupSelect).selectByVisibleText("ALL");
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(submitButton));
-        submitButton.click();
-        mainTable.isDisplayed();
-        logger.info("Flight Flow Table Displayed");
-    	}catch(Exception e){
-    		e.printStackTrace();
-    		throw new Error(">>>Fligh Flow FAIL<<<");
-    	}
-    }
+	public void openFlightFlow() {
+		try {
+			logger.info("FlightFlow Verify -> Started");
+			new Select(acGroupSelect).selectByVisibleText("ALL");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(submitButton));
+			submitButton.click();
+			mainTable.isDisplayed();
+			logger.info("Flight Flow Table Displayed");
+			logger.info("FlightFlow Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("FlightFlow Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error(">>>Fligh Flow FAIL<<<");
+		}
+	}
 }

@@ -52,44 +52,47 @@ public class LineMaintenance extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void openReport(Itinerary itn) {
-    	try{
-    		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
-    		reportsTab.click();
-    		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
-    		flightLogTab.click();
-    		
-    		try {
-    			verifyReport("215NV");
-    		}catch(Exception d){
-    			try{
-    				verifyReport("217NV");
-    			}catch(Exception f){
-    				try{
-        				verifyReport("301NV");
-        			}catch(Exception g){
-        				
-        			}
-    			}
-    		}
-    		
+	public void openReport(Itinerary itn) {
+		try {
+			logger.info("LineMaintenance Report Verify -> Started");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
+			reportsTab.click();
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
+			flightLogTab.click();
+
+			try {
+				verifyReport("215NV");
+			} catch (Exception d) {
+				try {
+					verifyReport("217NV");
+				} catch (Exception f) {
+					try {
+						verifyReport("301NV");
+					} catch (Exception g) {
+						g.printStackTrace();
+						throw new Error(">>>Records returns no result<<<");
+					}
+				}
+			}
+
 //    		if (Environment.getEnv().contains("trn")) {
 //    		jse.executeScript("arguments[0].setAttribute('value', '217NV');", tailField);
 //    		}else {
 //    		jse.executeScript("arguments[0].setAttribute('value', '301NV');", tailField);
 //    		}
-    		
-    	}catch(Exception e){
-    		if (Environment.getEnv().contains("aws")) {
+			logger.info("LineMaintenance Report Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("LineMaintenance Report Scenario -> Fail");
+			if (Environment.getEnv().contains("aws")) {
 				itn.setItn("Failed due to QAA-338");
-			}else if((Environment.getEnv().contains("trn"))) {
+			} else if ((Environment.getEnv().contains("trn"))) {
 				itn.setItn("No results found");
 			}
-    		e.printStackTrace();
-    		throw new Error(">>>Records returns no result<<<");
-    	}
-    	
-    }
+			e.printStackTrace();
+			throw new Error(">>>Records returns no result<<<");
+		}
+
+	}
     public void verifyReport(String tail) {
     	tailField.sendKeys(tail);
    		Calendar calendar = Calendar.getInstance();
