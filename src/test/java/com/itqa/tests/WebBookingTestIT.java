@@ -46,7 +46,7 @@ public class WebBookingTestIT extends DriverBase {
 	public void setup(ITestContext context) throws MalformedURLException {
 		driver = DriverBase.getDriver();
 		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
-				+ ", " + driver.getCurrentUrl());
+				+ ", " + driver.getCurrentUrl()); 
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
