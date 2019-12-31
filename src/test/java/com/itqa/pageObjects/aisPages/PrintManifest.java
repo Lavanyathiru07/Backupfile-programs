@@ -40,7 +40,7 @@ public class PrintManifest extends BasePage {
     @FindBy(id = "filter-submit")
     private WebElement submitButton;
 
-    @FindBy(xpath = "//tr[contains(@class,'-flight') and not(@style)]/td[10][not(text()='0')]/preceding-sibling::td[8]/a")
+    @FindBy(xpath = "//tr[contains(@class,'-flight')]//preceding-sibling::a[@class='data-link']")
     private WebElement selectFlight;
 
     @FindBy(xpath = "//img[contains(@title,'ALL PASSENGERS')]")
