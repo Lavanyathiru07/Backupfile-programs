@@ -37,7 +37,10 @@ public class Environment {
 		if(System.getProperty("Scenario").equals("silo")) {
 			if(getEnv().contains("in")) {
 				siloList.add(1);
-			}else if(getEnv().contains("qa")||getEnv().contains("aws")) {
+			}else if(getEnv().contains("sb1")) {
+				siloList.add(1);
+			}
+			else if(getEnv().contains("qa")||getEnv().contains("aws")) {
 				siloList.add(1);
 				siloList.add(2);
 			}else if(getEnv().contains("stg")||getEnv().contains("nddprd")||getEnv().contains("prod")) {
@@ -76,6 +79,9 @@ public class Environment {
 				siloList.add(1);
 				siloList.add(4);
 			} else if(getEnv().contains("in")) {
+				siloList.add(1);
+				siloList.add(4);
+			}else if(getEnv().contains("sb1")) {
 				siloList.add(1);
 				siloList.add(4);
 			}else if(getEnv().contains("qa")||getEnv().contains("aws")) {
