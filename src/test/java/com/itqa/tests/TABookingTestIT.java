@@ -215,7 +215,7 @@ public class TABookingTestIT extends DriverBase {
 			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "BAT 2.0", "", error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "BAT 2.0", itinerary, error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		}	else if (result.getStatus() == ITestResult.SUCCESS) {
 			cat.completeTest("PASS", "BAT 2.0", itinerary, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 		}
