@@ -231,7 +231,7 @@ public class WebBookingTestIT extends DriverBase {
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			logger.get().info("Accout creation booking started");
-			desc.set(itn.getDescription());
+			
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
