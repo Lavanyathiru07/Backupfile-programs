@@ -117,8 +117,8 @@ public class TABookingTestIT extends DriverBase {
 
 			if (flightAvailService == 0 && paymentService == 0) {
 				TABookingFlow booking = new TABookingFlow(logger.get());
-				itinerary = itn.getItn();
 				generateBooking(itn, silo, context);
+				itinerary = itn.getItn();
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
@@ -238,9 +238,7 @@ public class TABookingTestIT extends DriverBase {
 	}
 
 	private void updateTextContext(Itinerary itn, ITestContext context) {
-		//context.setAttribute("itn", itn.getItn());
-		trc.setSetItn(itn.getItn());
-		itn.setItn(itn.getItn());
+		context.setAttribute("itn", itn.getItn());
 		step("TA Booking created with itn " + itn.getItn());
 	}
 
