@@ -169,7 +169,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 			PropertyConfigurator.configure(props);
-
+			desc.set(itn.getDescription());
 			if (flightAvailService == 0 && paymentService == 0) {
 			try {
 				setEarlyMarketCities(itn);
@@ -180,7 +180,7 @@ public class WebBookingTestIT extends DriverBase {
 				itn.setDepartureCity("FAT");
 				itn.setDestinationCity("LAS");
 			}
-			desc.set(itn.getDescription());
+			
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 			itinerary = itn.getItn();
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
