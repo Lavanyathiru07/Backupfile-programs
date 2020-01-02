@@ -238,7 +238,9 @@ public class TABookingTestIT extends DriverBase {
 	}
 
 	private void updateTextContext(Itinerary itn, ITestContext context) {
-		context.setAttribute("itn", itn.getItn());
+		//context.setAttribute("itn", itn.getItn());
+		trc.setSetItn(itn.getItn());
+		itn.setItn(itn.getItn());
 		step("TA Booking created with itn " + itn.getItn());
 	}
 
