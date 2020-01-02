@@ -230,6 +230,8 @@ public class WebBookingTestIT extends DriverBase {
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
+			logger.get().info("Accout creation booking started");
+			desc.set(itn.getDescription());
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
@@ -244,9 +246,8 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 			PropertyConfigurator.configure(props);
-			logger.get().info("Accout creation booking started");
 			desc.set(itn.getDescription());
-
+			
 			if (flightAvailService == 0 && paymentService == 0) {
 			log.info("Accoutn creation booking started");
 			BookingFlow booking = new BookingFlow(logger.get());
@@ -266,7 +267,6 @@ public class WebBookingTestIT extends DriverBase {
 			}
 			updateTextContext(itn, context);
 			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
-			
 		} else {
 			if (flightAvailService != 0) {
 				itn.setItn(flightAvailErrorMsg);
