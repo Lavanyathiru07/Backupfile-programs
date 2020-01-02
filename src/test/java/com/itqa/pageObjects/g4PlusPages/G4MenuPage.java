@@ -74,7 +74,9 @@ public class G4MenuPage extends BasePage {
 	public void selectMOD() {
 		try {
 			modApp.click();
+			logger.info("<<< MOD App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< MOD App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -82,7 +84,9 @@ public class G4MenuPage extends BasePage {
 	public void selectAIS() {
 		try {
 			aisApp.click();
+			logger.info("<<< AIS App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< AIS App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -90,7 +94,9 @@ public class G4MenuPage extends BasePage {
 	public void selectSTS() {
 		try {
 			stsApp.click();
+			logger.info("<<< STS App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< STS App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -98,7 +104,9 @@ public class G4MenuPage extends BasePage {
 	public void selectESP() {
 		try {
 			espApp.click();
+			logger.info("<<< ESP App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< ESP App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -106,7 +114,9 @@ public class G4MenuPage extends BasePage {
 	public void selectSVT() {
 		try {
 			svtApp.click();
+			logger.info("<<< SVT App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< SVT App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -114,7 +124,9 @@ public class G4MenuPage extends BasePage {
 	public void selectCAR() {
 		try {
 			carApp.click();
+			logger.info("<<< CAR App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< CAR App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -122,7 +134,9 @@ public class G4MenuPage extends BasePage {
 	public void selectFM() {
 		try {
 			fmApp.click();
+			logger.info("<<< FM App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< FM App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -130,7 +144,9 @@ public class G4MenuPage extends BasePage {
 	public void selectRQ() {
 		try {
 			rqApp.click();
+			logger.info("<<< RQ App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< RQ App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -138,7 +154,9 @@ public class G4MenuPage extends BasePage {
 	public void selectHOT() {
 		try {
 			hotApp.click();
+			logger.info("<<< RQ App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< RQ App !Clicked >>>");
 			e.printStackTrace();
 		}
 
@@ -147,7 +165,9 @@ public class G4MenuPage extends BasePage {
 	public void selectATL() {
 		try {
 			atlApp.click();
+			logger.info("<<< ATL App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< ATL App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -155,7 +175,9 @@ public class G4MenuPage extends BasePage {
 	public void selectCL() {
 		try {
 			clApp.click();
+			logger.info("<<< CL App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< CL App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -163,7 +185,9 @@ public class G4MenuPage extends BasePage {
 	public void selectOFO() {
 		try {
 			ofoApp.click();
+			logger.info("<<< OFO App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< OFO App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
@@ -171,14 +195,16 @@ public class G4MenuPage extends BasePage {
 	public void selectSTNS() {
 		try {
 			stnsApp.click();
+			logger.info("<<< STNS App Clicked >>>");
 		} catch (Exception e) {
+			logger.error("<<< STNS App !Clicked >>>");
 			e.printStackTrace();
 		}
 	}
 	
 	public void verifyAIS() {
 		if(gfourHome.isDisplayed()) {
-			logger.info(">>>>>Token passed properly<<<<<");
+			logger.info(">>>>> Token passed properly <<<<<");
 		}
 	}
 

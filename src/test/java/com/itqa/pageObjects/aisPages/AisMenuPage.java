@@ -95,58 +95,61 @@ public class AisMenuPage extends BasePage {
 
 	public void selectaccountsPayableMaintenance() {
 		try {
+			logger.info("AccountsPayableMaintenance Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(APTab));
 			APTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(accountsPayableMXTab));
 			accountsPayableMXTab.click();
-
 			driver.switchTo().alert().accept();
 			logger.info("Accept Security Alert");
-
 		} catch (Exception e) {
-
+			logger.error("AccountsPayableMaintenance Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectKayakConsole() {
 		try {
+			logger.info("Kayak Console Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(ADTab));
 			ADTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakConsoleTab));
-			kayakConsoleTab.click();
+			kayakConsoleTab.click();			
 		} catch (Exception e) {
-
+			logger.error("Kayak Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectFlightFollowing() {
 		try {
+			logger.info("Flight Following Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(FFTab));
 			FFTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightFollowingTab));
 			flightFollowingTab.click();
 		} catch (Exception e) {
-
+			logger.error("Flight Following Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectFlightFlow() {
 		try {
+			logger.info("Flight Follow Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(FFTab));
 			FFTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightFlowTab));
 			flightFlowTab.click();
 		} catch (Exception e) {
-
+			logger.error("Flight Follow Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectinventoryMaintenance() {
 		try {
+			logger.info("Inventory Maintenance Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(INTab));
 			INTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(inventoryMXTab));
@@ -155,6 +158,7 @@ public class AisMenuPage extends BasePage {
 			logger.info("Accept Security Alert");
 		} catch (Exception e) {
 			logger.info("Security Alert not display");
+			logger.error("Inventory Maintenance Scenario -> Fail");
 			e.printStackTrace();
 
 		}
@@ -162,106 +166,118 @@ public class AisMenuPage extends BasePage {
 
 	public void selectAircraftRecords() {
 		try {
+			logger.info("Aircraft Records Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(MXTab));
 			MXTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(aircraftRecordsTab));
-			aircraftRecordsTab.click();
+			aircraftRecordsTab.click();			
 		} catch (Exception e) {
-
+			logger.error("Aircraft Records Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectMXandEngr() {
 		try {
+			logger.info("MXandEngr Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(METab));
-			METab.click();
+			METab.click();		
 		} catch (Exception e) {
-
+			logger.error("MXandEngr Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectLineMX() {
 		try {
+			logger.info("LineMX Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(lineMXTab));
-			lineMXTab.click();
+			lineMXTab.click();			
 		} catch (Exception e) {
-
+			logger.error("LineMX Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectMXControl() {
 		try {
+			logger.info("MXControl Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxControlTab));
-			mxControlTab.click();
+			mxControlTab.click();			
 		} catch (Exception e) {
-
+			logger.error("MXControl Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectReliability() {
 		try {
+			logger.info("Reliability Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reliabilityTab));
-			reliabilityTab.click();
+			reliabilityTab.click();			
 		} catch (Exception e) {
-
+			logger.error("Reliability Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectMXRecords() {
 		try {
+			logger.info("MXRecords opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxRecordsTab));
-			mxRecordsTab.click();
+			mxRecordsTab.click();			
 		} catch (Exception e) {
+			logger.error("MXRecords Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectFlightScheduleMX() {
 		try {
+			logger.info("FlightScheduleMX Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(OPTab));
 			OPTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightScheduleMXTab));
 			flightScheduleMXTab.click();
 		} catch (Exception e) {
+			logger.error("FlightScheduleMX Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectAirOnly() {
 		try {
+			logger.info("Aironly Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(rsTab));
 			rsTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(airOnlyTab));
 			airOnlyTab.click();
 		} catch (Exception e) {
-
+			logger.error("Aironly Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectPrintManifest() {
 		try {
+			logger.info("PrintManifest Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(rsTab));
 			rsTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(printManifestTab));
 			printManifestTab.click();
 		} catch (Exception e) {
-
+			logger.error("PrintManifest Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
 
 	public void selectITNMX() {
 		try {
+			logger.info("ITN-MX Opened");
 			rsTab.click();
 			itnMXTab.click();
 		} catch (Exception e) {
-
+			logger.error("ITNMX Scenario -> Fail");
 			e.printStackTrace();
 		}
 	}
