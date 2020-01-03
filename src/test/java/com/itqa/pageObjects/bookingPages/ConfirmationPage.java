@@ -50,9 +50,8 @@ public class ConfirmationPage extends BasePage {
     public void verifyConf(Itinerary itn) {
 
         try {
-        	
-        	Common.elementToBeClickable(driver, confNumber, "confirmation Number");
-            confNumber.isDisplayed();
+        	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(confNumber));
+        	confNumber.isDisplayed();
             logger.info("Confirmation Number Found: " + confNumber.getText());
             itn.setItn(confNumber.getText());
             if (System.getProperty("env").contains("prod")) {

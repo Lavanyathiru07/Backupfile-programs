@@ -76,8 +76,7 @@ public class WebBookingTestIT extends DriverBase {
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			if ((env.contains("prod") && ((silo == 1) || (silo == 2)))) {
 				booking.manageTravelModificationUpsellBagSeat(itn, silo);
-				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
-				// recevied");
+				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
 			}
 			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
 			updateTextContext(itn, context);

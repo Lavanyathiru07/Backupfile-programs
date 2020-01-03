@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.itqa.pageObjects.BasePage;
 
@@ -72,21 +74,20 @@ public class EmailVerification extends BasePage {
 		Common.clickWithTimeOut(driver, EmailIdNext);
 		//Password.sendKeys("autoM@tion");
 		Common.typeTextWithTimeOut(driver, Password, "autoM@tion", 5);
-		
-		Common.elementToBeClickable(driver,PasswordNext, "PasswordNext");
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(PasswordNext));
 		PasswordNext.click();
 		logger.info("Gmail HTML Version Opened Successfully	");
 		
 		// Searching For the Subject booking
 		if (mailToValidation.contains("Booking")) {
-			Common.elementToBeClickable(driver,SearchTextBox, "SearchTextBox");
+			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(SearchTextBox));
 			SearchTextBox.click();
 			SearchTextBox.sendKeys("AllegiantAir.com - Itinerary #" + itn.getItn());
 			SearchButton.click();
 		}
 		// Searching For the Subject Modification
 		if (mailToValidation.contains("Modification")) {
-			Common.elementToBeClickable(driver,SearchTextBox, "SearchTextBox");
+			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(SearchTextBox));
 			SearchTextBox.sendKeys("Your booking has been updated #" + itn.getItn());
 			SearchButton.click();
 		}
