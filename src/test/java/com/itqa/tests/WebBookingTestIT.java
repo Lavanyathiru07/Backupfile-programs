@@ -290,8 +290,10 @@ public class WebBookingTestIT extends DriverBase {
 		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
 			cat.completeTest("FAIL", "BAT 2.0", itinerary, error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			System.out.println(itinerary+" : "+testId.get());
 		}	else if (result.getStatus() == ITestResult.SUCCESS) {
 			cat.completeTest("PASS", "BAT 2.0", itinerary, "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			System.out.println(itinerary+" : "+testId.get());
 		}
 	}
 
