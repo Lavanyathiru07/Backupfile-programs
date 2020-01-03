@@ -315,13 +315,13 @@ public class WebBookingTestIT extends DriverBase {
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
 		Environment ev = new Environment();
 		ev.setCurrentSilo(silo);
+		itn.setDescription(description);
 		driver = DriverBase.getDriver();
 		if (env.contains("aws")) {
 		     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
 		}else {
 			driver.get(URLS.WWW.getUrl(env, silo));
 		}
-		itn.setDescription(description);
 		trc.setSetSilo(silo.toString());
 
 		context.setAttribute("description", description);
@@ -350,8 +350,8 @@ public class WebBookingTestIT extends DriverBase {
 		} else {
 			manifestId = booking.createWebBookingWithOutAccount(silo, itn, context);
 		}
-
 		itn.setManifestId(manifestId);
+		context.setAttribute("manifestid", manifestId);
 		step("Booking created on " + env + ", silo " + silo + ". Market: " + itn.getDepartureCity() + " - "
 				+ itn.getDestinationCity());
 
