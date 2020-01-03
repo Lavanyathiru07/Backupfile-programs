@@ -250,8 +250,9 @@ public class WebBookingTestIT extends DriverBase {
 			
 			if (flightAvailService == 0 && paymentService == 0) {
 			log.info("Accoutn creation booking started");
-			BookingFlow booking = new BookingFlow(logger.get());
-			generateBooking(itn, silo, context, true);
+			//BookingFlow booking = new BookingFlow(logger.get());
+			
+			BookingFlow booking = generateBooking(itn, silo, context, true);
 			itinerary = itn.getItn();
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
