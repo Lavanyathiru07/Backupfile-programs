@@ -51,6 +51,9 @@ public class BagPage extends BasePage {
     
     @FindBy(xpath = "//label[@id='boarding-pass-option-0']")
     private WebElement boardOption;
+    
+    @FindBy(xpath = "//h4[contains(text(),'boarding options')]")
+	private  boolean boardingBar;
 
     public BagPage() {
         this.driver = DriverBase.getDriver();
@@ -81,7 +84,7 @@ public class BagPage extends BasePage {
         }
         else {
         	try {
-                if(boardOption.isDisplayed()) {
+                if(boardingBar) {
                     boardOptionList.get(ind).click();
                     logger.info("Select boarding option: " + boardOptionList.get(ind).getText().replaceAll("\n", " "));
                 }else{
@@ -106,8 +109,7 @@ public class BagPage extends BasePage {
     }
 
     public void selectBagPage(Itinerary itn) throws Exception {
-    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(carryOnBag));
-		
+    	
     	chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority());
                 if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.") 
         		||driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
