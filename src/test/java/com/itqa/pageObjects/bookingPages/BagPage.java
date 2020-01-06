@@ -84,7 +84,7 @@ public class BagPage extends BasePage {
         }
         else {
         	try {
-                if(boardingBar) {
+                if(boardOption.isDisplayed()) {
                     boardOptionList.get(ind).click();
                     logger.info("Select boarding option: " + boardOptionList.get(ind).getText().replaceAll("\n", " "));
                 }else{
