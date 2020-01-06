@@ -47,7 +47,6 @@ public class WebBookingTestIT extends DriverBase {
 	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
 	private ThreadLocal<String> itinerary = new ThreadLocal<String>();
-	//private String itinerary;
 
 	static boolean isTestPass = true;
 
@@ -124,14 +123,11 @@ public class WebBookingTestIT extends DriverBase {
 					itn.setItn(paymentErrorMsg);
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
-
 			}
 		} else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
-
 		}
-
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {
@@ -224,6 +220,7 @@ public class WebBookingTestIT extends DriverBase {
 			Method method) throws InterruptedException {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+		
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
@@ -260,7 +257,6 @@ public class WebBookingTestIT extends DriverBase {
 				// recevied");
 				logger.get().info("Account creation started");
 				Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
-
 				step("Logged in and verified account");
 
 				if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
@@ -276,7 +272,6 @@ public class WebBookingTestIT extends DriverBase {
 					itn.setItn(paymentErrorMsg);
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
-
 			}
 		} else {
 
@@ -313,7 +308,6 @@ public class WebBookingTestIT extends DriverBase {
 				earliestMarket[i] = "UTM";
 			}
 		}
-
 		itn.setDepartureCity(earliestMarket[0]);
 		itn.setDestinationCity(earliestMarket[1]);
 	}
@@ -329,10 +323,8 @@ public class WebBookingTestIT extends DriverBase {
 			driver.get(URLS.WWW.getUrl(env, silo));
 		}
 		trc.setSetSilo(silo.toString());
-
 		context.setAttribute("description", description);
 		context.setAttribute("silo", silo);
-
 		logger.get().info(
 				"Test Case " + description + " with Thread Id:- " + Thread.currentThread().getId() + " silo: " + silo);
 
@@ -341,7 +333,6 @@ public class WebBookingTestIT extends DriverBase {
 	private void updateTextContext(Itinerary itn, ITestContext context) {
 		trc.setSetItn(itn.getItn());
 		itn.setItn(itn.getItn());
-
 		step("Booking created with itn " + itn.getItn());
 	}
 

@@ -45,7 +45,6 @@ public class NonBookingTestIT extends DriverBase {
 	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
 	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
-	//private String itinerary;
 
 	static boolean isTestPass = true;
 
@@ -61,8 +60,6 @@ public class NonBookingTestIT extends DriverBase {
 
 		env = Environment.getEnv();
 		trc = new TestResultContext();
-
-
 	}
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Decoupled Code For MX - Action Requests", groups = {
@@ -70,9 +67,11 @@ public class NonBookingTestIT extends DriverBase {
 	@Story("AIS - Search Decoupled Code For MX - Action Requests")
 	public void lookupActionRequest(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+
 		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
+
 		}
 		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
@@ -130,8 +129,6 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupAircraftRecordsPart(itn);
 			trc.setSetItn(itn.getItn());
-
-
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
@@ -167,8 +164,6 @@ public class NonBookingTestIT extends DriverBase {
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.runSPOEreport(itn);
 			trc.setSetItn(itn.getItn());
-
-
 		}else {
 
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -933,7 +928,6 @@ public class NonBookingTestIT extends DriverBase {
 	private void updateTextContext(Itinerary itn, ITestContext context) {
 		trc.setSetItn(itn.getItn());
 		itn.setItn(itn.getItn());
-
 		step("NonBooking created with itn " + itn.getItn(), null);
 	}
 

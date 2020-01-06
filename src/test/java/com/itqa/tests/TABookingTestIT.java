@@ -48,7 +48,6 @@ public class TABookingTestIT extends DriverBase {
 	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
 	private ThreadLocal<String> itinerary = new ThreadLocal<String>();
-	//private String itinerary;
 
 	static boolean isTestPass = true;
 
@@ -67,7 +66,6 @@ public class TABookingTestIT extends DriverBase {
 		trc = new TestResultContext();
 	}
 
-	// , retryAnalyzer = RetryFailure.class
 	@Test(dataProvider = "TA Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Travel Agent (TA) Can Book a One Way Trip", groups = {
 			"bat","ta","booking"})
 

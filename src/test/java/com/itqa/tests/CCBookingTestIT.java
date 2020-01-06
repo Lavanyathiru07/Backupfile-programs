@@ -50,7 +50,6 @@ public class CCBookingTestIT extends DriverBase {
 	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
 	private ThreadLocal<String> itinerary = new ThreadLocal<String>();
-	//private String itinerary;
 	
 	static boolean isTestPass = true;
 
@@ -67,8 +66,6 @@ public class CCBookingTestIT extends DriverBase {
 		trc = new TestResultContext();
 	}
 
-
-	
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
 			"bat", "cc", "booking" })
 	 
@@ -113,7 +110,6 @@ public class CCBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
 			PropertyConfigurator.configure(props);
-
 			desc.set(itn.getDescription());
 			if (flightAvailService == 0 && paymentService == 0) {
 				CCBookingFlow booking = generateBooking(itn, silo, context);
@@ -139,7 +135,6 @@ public class CCBookingTestIT extends DriverBase {
 					itn.setItn(paymentErrorMsg);
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
-
 			}
 		} else {
 
@@ -198,7 +193,6 @@ public class CCBookingTestIT extends DriverBase {
 				CCBookingFlow booking = generateBooking(itn, silo, context);
 				itinerary.set(itn.getItn());
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-
 				updateTextContext(itn, context);
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 				if (!((env.contains("nddprd") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws"))
@@ -216,14 +210,11 @@ public class CCBookingTestIT extends DriverBase {
 					itn.setItn(paymentErrorMsg);
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
-
 			}
 
 		} else {
-
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
-
 	}
 
 	@AfterMethod
