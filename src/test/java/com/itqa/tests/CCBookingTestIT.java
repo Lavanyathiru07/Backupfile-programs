@@ -49,7 +49,8 @@ public class CCBookingTestIT extends DriverBase {
 	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
 	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
-	private String itinerary;
+	private ThreadLocal<String> itinerary = new ThreadLocal<String>();
+	//private String itinerary;
 	
 	static boolean isTestPass = true;
 
@@ -116,7 +117,7 @@ public class CCBookingTestIT extends DriverBase {
 			desc.set(itn.getDescription());
 			if (flightAvailService == 0 && paymentService == 0) {
 				CCBookingFlow booking = generateBooking(itn, silo, context);
-				itinerary = itn.getItn();
+				itinerary.set(itn.getItn());
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
@@ -195,7 +196,7 @@ public class CCBookingTestIT extends DriverBase {
 
 			if (flightAvailService == 0 && paymentService == 0) {
 				CCBookingFlow booking = generateBooking(itn, silo, context);
-				itinerary = itn.getItn();
+				itinerary.set(itn.getItn());
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 
 				updateTextContext(itn, context);
@@ -227,15 +228,17 @@ public class CCBookingTestIT extends DriverBase {
 
 	@AfterMethod
 	public void writeResult(ITestResult result) {
+		synchronized (this) {
 		if (result.getStatus() == ITestResult.SKIP) {
 			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 		} else if (result.getStatus() == ITestResult.FAILURE) {
 			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "BAT 2.0", itinerary , error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("FAIL", "BAT 2.0", itinerary.get() , error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
 			System.out.println(itinerary+" : "+testId.get());
 		}	else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "BAT 2.0", itinerary , "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			cat.completeTest("PASS", "BAT 2.0", itinerary.get() , "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
 			System.out.println(itinerary+" : "+testId.get());
+		}
 		}
 	}
 
