@@ -20,6 +20,7 @@ import java.util.List;
 
 public class BagPage extends BasePage {
 
+
     private Logger logger = null;
 
     private WebDriver driver = null;
@@ -117,5 +118,5 @@ public class BagPage extends BasePage {
         }
         clickContinue();
     }
-}
 
+}

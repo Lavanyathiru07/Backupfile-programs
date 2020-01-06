@@ -61,10 +61,10 @@ public class LineMaintenance extends BasePage{
 			flightLogTab.click();
 
 			try {
-				verifyReport("215NV");
+				verifyReport("217NV");
 			} catch (Exception d) {
 				try {
-					verifyReport("217NV");
+					verifyReport("215NV");
 				} catch (Exception f) {
 					try {
 						verifyReport("301NV");

@@ -107,10 +107,10 @@ public class MaintenanceRecords extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
 			flightLogTab.click();
 			try {
-				verifyReport("215NV");
+				verifyReport("217NV");
 			} catch (Exception d) {
 				try {
-					verifyReport("217NV");
+					verifyReport("215NV");
 				} catch (Exception f) {
 					try {
 						verifyReport("301NV");
