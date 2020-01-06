@@ -58,7 +58,7 @@ public class WebBookingTestIT extends DriverBase {
 	public void setup(ITestContext context) throws MalformedURLException {
 		driver = DriverBase.getDriver();
 		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
-				+ ", " + driver.getCurrentUrl());
+				+ ", " + driver.getCurrentUrl()); 
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
@@ -86,7 +86,6 @@ public class WebBookingTestIT extends DriverBase {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
 			}
-
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");

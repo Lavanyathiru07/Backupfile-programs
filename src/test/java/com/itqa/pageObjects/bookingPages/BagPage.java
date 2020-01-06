@@ -10,7 +10,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.itqa.pageObjects.BasePage;
 
@@ -49,6 +51,9 @@ public class BagPage extends BasePage {
     
     @FindBy(xpath = "//label[@id='boarding-pass-option-0']")
     private WebElement boardOption;
+    
+    @FindBy(xpath = "//h4[contains(text(),'boarding options')]")
+	private  boolean boardingBar;
 
     public BagPage(Logger log) {
         this.driver = DriverBase.getDriver();
@@ -79,7 +84,7 @@ public class BagPage extends BasePage {
         }
         else {
         	try {
-                if(boardOption.isDisplayed()) {
+                if(boardingBar) {
                     boardOptionList.get(ind).click();
                     logger.info("Select boarding option: " + boardOptionList.get(ind).getText().replaceAll("\n", " "));
                 }else{
@@ -105,8 +110,7 @@ public class BagPage extends BasePage {
     }
 
     public void selectBagPage(Itinerary itn) throws Exception {
-    	Common.elementToBeClickable(driver, carryOnBag, "Bags page");
-        chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority(), itn);
+            chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority(), itn);
                 if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.") 
         		||driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
             chooseBoardingOption(0, itn);

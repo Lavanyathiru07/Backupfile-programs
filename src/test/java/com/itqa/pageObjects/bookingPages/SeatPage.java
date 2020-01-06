@@ -154,8 +154,8 @@ public class SeatPage extends BasePage {
     public void selectSeatPage(Itinerary itn) throws Exception {
     	
     	if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {
-        	Common.elementToBeClickable(driver, ssrPopupOkButton, "SSR pop up");
-            if (!itn.getSsr().isEmpty()) {
+    		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(ssrPopupOkButton));
+    		if (!itn.getSsr().isEmpty()) {
                 selectSSR(itn.getPaxNum(), itn.getSsr());
             }
             else {
@@ -164,8 +164,8 @@ public class SeatPage extends BasePage {
                 logger.info("SSR popup closed");
             }
         }
-    	Common.elementToBeClickable(driver,seatTable, "Seat map");
-        
+    	new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(seatTable));
+		
         if (itn.getSeat() || itn.getSeatRT()) {
             chooseSeat(itn.getPaxNum(), itn.getSeat(), itn.getSeatRT(), itn);
             clickContinue(itn.getRoundTrip(), itn.getSeat(), itn.getSeatRT(), itn.getScenario());
