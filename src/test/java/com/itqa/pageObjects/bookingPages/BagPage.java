@@ -110,8 +110,6 @@ public class BagPage extends BasePage {
     }
 
     public void selectBagPage(Itinerary itn) throws Exception {
-    	//new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(carryOnBag));
-	
     	chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority());
                 if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.") 
         		||driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
