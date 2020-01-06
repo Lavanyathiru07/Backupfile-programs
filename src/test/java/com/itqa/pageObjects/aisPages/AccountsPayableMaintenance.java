@@ -77,7 +77,9 @@ public class AccountsPayableMaintenance extends BasePage{
 			} else {
 				for (int loop = 0; loop < 10; loop++) {
 					try {
+						new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectedVendor));
 						selectedVendor.click();
+						logger.info("Vendor clicked");
 						break;
 					} catch (Exception e) {
 						if (loop == 5) {
@@ -90,7 +92,7 @@ public class AccountsPayableMaintenance extends BasePage{
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(analysisTab));
 			analysisTab.click();
 
-			String num = selectedTransaction.getText();
+			String num = selectedTransaction.getText(); 
 			String type = selectedTransaction.getAttribute("href");
 			selectedTransaction.click();
 			if (type.contains("lookupInvoice")) {
@@ -115,6 +117,7 @@ public class AccountsPayableMaintenance extends BasePage{
 			logger.info("lookupTransaction Scenario -> Pass");
 		} catch (Exception e) {
 			logger.error("lookupTransaction Scenario -> Fail");
+			itn.setItn("Failed due to FOS-1012");
 			e.printStackTrace();
 			throw new Error(">>>Account Payable MX FAIL<<<");
 		}
