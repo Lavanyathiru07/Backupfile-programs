@@ -20,6 +20,7 @@ import java.util.List;
 
 public class BagPage extends BasePage {
 
+
     private Logger logger = null;
 
     private WebDriver driver = null;
@@ -109,7 +110,6 @@ public class BagPage extends BasePage {
     }
 
     public void selectBagPage(Itinerary itn) throws Exception {
-    	
     	chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority());
                 if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.") 
         		||driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
@@ -117,5 +117,5 @@ public class BagPage extends BasePage {
         }
         clickContinue();
     }
-}
 
+}
