@@ -13,12 +13,12 @@ public class ItineraryBuilder {
     Boolean vehicle = false;
     Boolean activity = false;
 
-    String firstName = "qatest";
-    String lastName = "account";
-    String gender = "f";
+    String firstName = "Prasanna";
+    String lastName = "Venkatesh";
+    String gender = "m";
     Integer dobMonth = 1;
     Integer dobDay = 1;
-    Integer dobYear = 1950;
+    Integer dobYear = 1990;
     String email = "tsqa.automation@tridentsqa.com";
 
     String adult = "1";
