@@ -17,7 +17,7 @@ public class ItineraryBuilder {
     String lastName = "Venkatesh";
     String gender = "m";
     Integer dobMonth = 1;
-    Integer dobDay = 1;
+    Integer dobDay = 2;
     Integer dobYear = 1990;
     String email = "tsqa.automation@tridentsqa.com";
 
