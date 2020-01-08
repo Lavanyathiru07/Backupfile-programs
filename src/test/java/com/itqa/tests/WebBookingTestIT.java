@@ -229,22 +229,6 @@ public class WebBookingTestIT extends DriverBase {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			logger.get().info("Accout creation booking started");
 
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
-			Properties props = new Properties();
-			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
-			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
-			props.setProperty("log4j.appender.file.maxBackupIndex", "0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + itn.getDescription()
-			+ Thread.currentThread().getId() + ".log");
-			props.setProperty("log4j.appender.file.threshold", "DEBUG");
-			props.setProperty("log4j.appender.file.Append", "false");
-			props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
-			props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
-			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
-
-			PropertyConfigurator.configure(props);
-			desc.set(itn.getDescription());
-
 			if (flightAvailService == 0 && paymentService == 0) {
 				log.info("Accoutn creation booking started");
 				//BookingFlow booking = new BookingFlow(logger.get());
@@ -264,6 +248,21 @@ public class WebBookingTestIT extends DriverBase {
 				}
 				updateTextContext(itn, context);
 				booking.WWWRefundAndCancelItn(itn.getItn(), itn);
+				cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+				Properties props = new Properties();
+				props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
+				props.setProperty("log4j.appender.file.maxFileSize", "100MB");
+				props.setProperty("log4j.appender.file.maxBackupIndex", "0");
+				props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + itn.getDescription()
+				+ Thread.currentThread().getId() + ".log");
+				props.setProperty("log4j.appender.file.threshold", "DEBUG");
+				props.setProperty("log4j.appender.file.Append", "false");
+				props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
+				props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
+				props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
+
+				PropertyConfigurator.configure(props);
+				desc.set(itn.getDescription());
 			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
