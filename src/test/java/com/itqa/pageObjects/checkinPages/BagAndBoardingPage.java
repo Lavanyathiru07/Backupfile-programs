@@ -79,7 +79,7 @@ public class BagAndBoardingPage {
             jse.executeScript("arguments[0].click();", hazardContinue);
             logger.info("Click CONTINUE from hazard page");
         }catch(Exception e){
-        	itn.setErrorLog("Error while clicking on continue of hazard page :" + e.getMessage());
+        	itn.setErrorLog("Error while clicking on continue of hazard page " );
         }
     }
 

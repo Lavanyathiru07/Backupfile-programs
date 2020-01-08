@@ -121,7 +121,7 @@ public class ManageTravelPaymentPage {
             }
             catch (Exception e) {
                 if (loop == 9) {
-                	itn.setErrorLog("Error :" + e.getMessage());
+                	itn.setErrorLog("Error" );
                     throw new Error(e);
                 }
                 else {
@@ -146,7 +146,7 @@ public class ManageTravelPaymentPage {
             }
             catch (Exception e) {
                 if (loop == 4) {
-                	itn.setErrorLog("Error :" + e.getMessage());
+                	itn.setErrorLog("Error" );
                     throw new Error(e.getMessage());
                 }
                 else {

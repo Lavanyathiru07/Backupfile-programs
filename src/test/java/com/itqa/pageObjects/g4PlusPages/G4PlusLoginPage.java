@@ -86,7 +86,7 @@ public class G4PlusLoginPage extends BasePage {
 			logger.info("Select company");
 		} catch (Exception e) {
 			skip = true;
-			itn.setErrorLog("Scenario failed :" + e.getMessage());
+			itn.setErrorLog("Scenario failed ");
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
@@ -98,7 +98,7 @@ public class G4PlusLoginPage extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (i == 9) {
-					itn.setErrorLog("Error while logout :" + e.getMessage());
+					itn.setErrorLog("Error while logout " );
 					throw new Error(e);
 				}
 				try {

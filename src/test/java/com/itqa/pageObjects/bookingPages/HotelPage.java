@@ -102,7 +102,7 @@ public class HotelPage extends BasePage {
                 break;
             }
             catch (Exception e) {
-            	itn.setErrorLog("Error while getting Hotel name :" + e.getMessage());
+            	itn.setErrorLog("Error while getting Hotel name " );
             }
             try {Thread.sleep(1000);} catch (Exception e) {}
         }

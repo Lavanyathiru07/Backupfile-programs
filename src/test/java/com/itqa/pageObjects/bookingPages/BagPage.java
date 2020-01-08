@@ -91,7 +91,7 @@ public class BagPage extends BasePage {
                 }else{
                     logger.info("Select boarding option: NOT Displayed ");
                 }}catch(Exception e) {
-                	itn.setErrorLog("Error while choosing the boarding option :" + e.getMessage());
+                	itn.setErrorLog("Error while choosing the boarding option" );
                 logger.info("Exception while Selecting boarding option");
             }
         }

@@ -81,7 +81,7 @@ public class FlightFollowing extends BasePage{
             }
             catch (Exception e) {
                 if (loop == 4) {
-                	itn.setErrorLog("Error while finding element Flight following :" + e.getMessage());
+                	itn.setErrorLog("Error while finding element Flight following " );
                     throw new Error("FAIL - Flight Following - Cannot get element");
                 }
             }

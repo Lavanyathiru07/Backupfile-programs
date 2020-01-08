@@ -78,7 +78,7 @@ public class PrintManifest extends BasePage {
         paxTable.click();
         logger.info("PrintManifest Scenario -> Pass");
     	}catch(Exception e){
-    		itn.setErrorLog("Error while verifying the print manifest :" + e.getMessage());
+    		itn.setErrorLog("Error while verifying the print manifest " );
     		throw new Error(">>>verify PrintManifest FAIL<<<");
     	}
     }

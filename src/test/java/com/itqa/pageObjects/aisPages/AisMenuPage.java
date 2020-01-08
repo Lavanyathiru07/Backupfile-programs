@@ -155,7 +155,7 @@ public class AisMenuPage extends BasePage {
 			DriverBase.getDriver().switchTo().alert().accept();
 			logger.info("Accept Security Alert");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting Inventory maintenance :" + e.getMessage());
+			itn.setErrorLog("Error while selecting Inventory maintenance " );
 			logger.info("Security Alert not display");
 			logger.error("Inventory Maintenance Scenario -> Fail");
 		}

@@ -125,7 +125,7 @@ public class LandingPage extends BasePage {
 				}
 			} catch (Exception e) {
 				if (loop == 4) {
-					itn.setErrorLog("Error while seleting depature city :" + e.getMessage());
+					itn.setErrorLog("Error while seleting depature city " );
 					throw new Error(e);
 				}
 			}
@@ -154,7 +154,7 @@ public class LandingPage extends BasePage {
 				}
 			} catch (Exception e) {
 				if (loop == 4) {
-					itn.setErrorLog("Error while selecting destination city :" + e.getMessage());
+					itn.setErrorLog("Error while selecting destination city " );
 					throw new Error(e);
 				}
 			}
@@ -227,7 +227,7 @@ public class LandingPage extends BasePage {
 							break;
 						} else {
 							if (loop == 9) {
-								itn.setErrorLog("Error occured :" + e.getMessage());
+								itn.setErrorLog("Error occured " );
 								throw new Error(e);
 							}
 						}
@@ -297,7 +297,7 @@ public class LandingPage extends BasePage {
 		try {
 			Common.clickWithTimeOut(driver, popUpCloseButton);
 		} catch (Exception e) {
-			itn.setErrorLog("Error while closing popup :" + e.getMessage());
+			itn.setErrorLog("Error while closing popup " );
 			// this pop up is not always displayed
 		}
 		new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(loginButton));

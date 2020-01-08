@@ -112,7 +112,7 @@ public class CCBookingFlow extends BasePage {
 				paymentPage.fillPaymentPage(itn, false, true);
 				confirmationPage.verifyConf(itn);
 			} catch (Exception e1) {
-				itn.setErrorLog("Error while CC Booking" + e.getMessage());
+				itn.setErrorLog("Error while CC Booking" );
 				return manifestId;
 			}
 

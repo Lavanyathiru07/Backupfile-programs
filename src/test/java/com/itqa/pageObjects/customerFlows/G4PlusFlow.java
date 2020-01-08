@@ -275,7 +275,7 @@ public class G4PlusFlow extends BasePage {
 			if(Environment.getEnv().contains("aws")) {
 				itn.setItn("Failed due to QAA-338");
 			}
-			itn.setErrorLog("Error while getting SPOE report :" + e.getMessage());
+			itn.setErrorLog("Error while getting SPOE report " );
 			throw new Error(">>>Reports cant find<<<");
 		}
 	}
@@ -489,7 +489,7 @@ public class G4PlusFlow extends BasePage {
 			capabilities.setCapability("tz", "America/Los_Angeles");
 
 		} catch (Exception e) {
-			itn.setErrorLog("Error while accessing swap :" + e.getMessage());
+			itn.setErrorLog("Error while accessing swap " );
 			throw new Error(e);
 		}
 

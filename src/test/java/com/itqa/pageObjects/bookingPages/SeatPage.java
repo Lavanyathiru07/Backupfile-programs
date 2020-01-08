@@ -90,7 +90,7 @@ public class SeatPage extends BasePage {
                     }
                     catch (Exception e) {
                         if (loop == 4) {
-                        	itn.setErrorLog("Could not select a departing flight :" + e.getMessage());
+                        	itn.setErrorLog("Could not select a departing flight " );
                             throw new Error(e.getMessage());
                         }
                         else {

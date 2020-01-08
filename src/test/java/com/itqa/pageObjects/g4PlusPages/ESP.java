@@ -40,7 +40,7 @@ public class ESP extends BasePage{
         mapRow.click();
         logger.info("ESP Menu Open");
     	}catch(Exception e){
-    		itn.setErrorLog("Error while access ESP :" + e.getMessage());
+    		itn.setErrorLog("Error while access ESP " );
     		throw new Error("FAIL");
     	}
     	}

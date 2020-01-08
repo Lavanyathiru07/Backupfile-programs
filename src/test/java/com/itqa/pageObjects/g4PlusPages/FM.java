@@ -79,7 +79,7 @@ public class FM extends BasePage{
             }
             catch (Exception e) {
                 if (loop == 9) {
-                	itn.setErrorLog("Error while access PB2 :" + e.getMessage());
+                	itn.setErrorLog("Error while access PB2 " );
                     throw new Error(e);
                 }
                 else {

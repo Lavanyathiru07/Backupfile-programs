@@ -127,7 +127,7 @@ public class BookingFlow extends BasePage {
 			confirmationPage.verifyConf(itn);
 		} catch (Exception e) {
 			try {
-				itn.setErrorLog("Error while Create Booking :  "+ e.getMessage());
+				itn.setErrorLog("Error while Create Booking ");
 				itn.setDepartureCity("BLI");
 				itn.setDestinationCity("LAS");
 				driver = DriverBase.getDriver();
@@ -141,8 +141,8 @@ public class BookingFlow extends BasePage {
 				paymentPage.fillPaymentPage(itn, createAccount, true);
 				confirmationPage.verifyConf(itn);
 			} catch (Exception e1) {
-				itn.setErrorLog("Error while creating web booking :" + e.getMessage());
-				logger.info("%%%%%% caught error: " + e.getMessage());
+				itn.setErrorLog("Error while creating web booking " );
+				logger.info("%%%%%% caught error ");
 				return manifestId;
 			}
 
@@ -263,7 +263,7 @@ public class BookingFlow extends BasePage {
 		ManageTravelPaymentPage.fillPaymentPage(itn);
 
 	}catch (Exception e) {
-		itn.setErrorLog("Error in manage travel while modifiying the bags and seats :" + e.getMessage());
+		itn.setErrorLog("Error in manage travel while modifiying the bags and seats " );
 		throw new Error(">>>manageTravelModificationUpsellBagSeat FAIL<<<");
 	}
 }}

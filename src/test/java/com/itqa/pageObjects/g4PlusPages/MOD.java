@@ -307,7 +307,7 @@ public class MOD extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (loop == 4) {
-					itn.setErrorLog("Error while checking voucher received from field :" + e.getMessage());
+					itn.setErrorLog("Error while checking voucher received from field " );
 					throw new Error(e.getMessage());
 				}
 			}
@@ -450,7 +450,7 @@ public class MOD extends BasePage {
 						.elementToBeClickable(By.xpath("//div[contains(@class,'flight-panel-target')]")));
 				return true;
 			} catch (Exception e) {
-				Itn.setErrorLog("Error getting upsell bags and seats :" + e.getMessage());
+				Itn.setErrorLog("Error getting upsell bags and seats " );
 				return false;
 			}
 		
@@ -469,7 +469,7 @@ public class MOD extends BasePage {
 					break;
 				} catch (Exception e) {
 					if (j == 4) {
-						itn.setErrorLog("Error while reverse all is clicked :" + e.getMessage());
+						itn.setErrorLog("Error while reverse all is clicked " );
 						throw new Error(e);
 					}
 					try {
@@ -511,7 +511,7 @@ public class MOD extends BasePage {
 					break;
 				} catch (Exception e) {
 					if (j == 4) {
-						itn.setErrorLog("Error while reverse button is clicked :" + e.getMessage());
+						itn.setErrorLog("Error while reverse button is clicked " );
 						throw new Error(e);
 					}
 					try {
@@ -768,7 +768,7 @@ public class MOD extends BasePage {
 				logger.info("Voucher is displayed in customer lookup -- Voucher number is  : " + voucher.getText());
 			}
 		} catch (Exception e) {
-			itn.setErrorLog("Error while verifying the voucher.Please check manually" + e.getMessage());
+			itn.setErrorLog("Error while verifying the voucher.Please check manually" );
 			logger.info("Error while verifying the voucher.Please check manually");
 
 		}

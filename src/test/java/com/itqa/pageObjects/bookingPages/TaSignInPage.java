@@ -50,7 +50,7 @@ public class TaSignInPage extends BasePage {
 			logger.info("TA signed in");
 		} catch (Exception e) {
 			logger.info("Could not loaded Ta login page");
-			itn.setErrorLog("Error while TA login :" + e.getMessage());
+			itn.setErrorLog("Error while TA login " );
 			throw new Error(e);
 		}
 
