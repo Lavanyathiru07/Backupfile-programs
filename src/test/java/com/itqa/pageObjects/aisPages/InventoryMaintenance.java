@@ -73,7 +73,6 @@ public class InventoryMaintenance extends BasePage{
 			logger.info("Inventory Maintenance Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("Inventory Maintenance Scenario -> Fail");
-			e.printStackTrace();
 			throw new Error(">>>Inventory Maintenance Fail<<< ");
 
 		}

@@ -94,7 +94,6 @@ public class MaintenanceRecords extends BasePage {
 			if (Environment.getEnv().contains("aws")) {
 				itn.setItn("Failed due to QAA-338");
 			}
-			e.printStackTrace();
 			throw new Error(">>>Action Requests returns no result<<<");
 		}
 	}
@@ -123,7 +122,6 @@ public class MaintenanceRecords extends BasePage {
 			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("lookupActionRequest Scenario -> Fail");
-			e.printStackTrace();
 			throw new Error(">>>Reports cant find<<<");
 		}
 	}

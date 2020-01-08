@@ -47,7 +47,6 @@ public class FlightFlow extends BasePage{
         logger.info("FlightFlow Scenario -> Pass");
     	}catch(Exception e){
     		itn.setErrorLog("Error while opening flight flow :" + e.getMessage());
-    		e.printStackTrace();
     		throw new Error(">>>Fligh Flow FAIL<<<");
     	}
     }

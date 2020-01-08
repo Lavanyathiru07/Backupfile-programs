@@ -41,7 +41,6 @@ public class UpdateConfluence {
 				} 
 			catch (Exception e){
 				logger.error("Error while updating the Confluence page result ");
-			e.printStackTrace();
 				}
 		}
 		

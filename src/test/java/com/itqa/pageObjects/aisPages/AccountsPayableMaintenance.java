@@ -119,7 +119,6 @@ public class AccountsPayableMaintenance extends BasePage{
 		} catch (Exception e) {
 			itn.setErrorLog("lookupTransaction Scenario -> Fail");
 			itn.setItn("Failed due to FOS-1012");
-			e.printStackTrace();
 			throw new Error(">>>Account Payable MX FAIL<<<");
 		}
 	}

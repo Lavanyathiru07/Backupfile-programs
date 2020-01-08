@@ -74,7 +74,6 @@ public class G4PlusLoginPage extends BasePage {
 			logger.info("Signin to G4Plus-Portal");
 		} catch (Exception e) {
 			skip=true;
-			e.printStackTrace();
 		}
 		
 	}

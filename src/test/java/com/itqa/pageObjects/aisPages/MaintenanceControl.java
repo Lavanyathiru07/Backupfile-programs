@@ -75,7 +75,6 @@ public class MaintenanceControl extends BasePage {
 			logger.info("MaintenanceControl Report Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("MaintenanceControl Report Scenario -> Fail");
-			e.printStackTrace();
 			throw new Error(">>>Records returns no result<<<");
 		}
 	}

@@ -59,7 +59,6 @@ public class RQ extends BasePage{
 			logger.info("RQ Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("RQ Scenario -> Fail");
-			e.printStackTrace();
 			throw new Error("FAIL");
 		}
 	}

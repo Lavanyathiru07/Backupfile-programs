@@ -35,7 +35,6 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 			 base64Screenshot = "data:image/png;base64,"
 					+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
 		}catch(Exception e) {
-			e.printStackTrace();
 		}
 		
 		
@@ -63,7 +62,6 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 			 base64Screenshot = "data:image/png;base64,"
 					+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
 		}catch(Exception e) {
-			e.printStackTrace();
 		}
 		TestResultContext testResultContext = new TestResultContext();
 		testResultContext.getTestResultContext(result);

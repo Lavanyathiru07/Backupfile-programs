@@ -48,7 +48,6 @@ public class CL extends BasePage{
 
     	}catch(Exception e){  
     		itn.setErrorLog("Customer Lookup Scenario -> Fail");
-    		e.printStackTrace();
     	}
     }
 }

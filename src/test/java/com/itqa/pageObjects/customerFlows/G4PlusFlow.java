@@ -276,7 +276,6 @@ public class G4PlusFlow extends BasePage {
 				itn.setItn("Failed due to QAA-338");
 			}
 			itn.setErrorLog("Error while getting SPOE report :" + e.getMessage());
-			e.printStackTrace();
 			throw new Error(">>>Reports cant find<<<");
 		}
 	}

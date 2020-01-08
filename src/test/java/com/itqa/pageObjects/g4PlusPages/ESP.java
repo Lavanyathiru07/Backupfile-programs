@@ -41,7 +41,6 @@ public class ESP extends BasePage{
         logger.info("ESP Menu Open");
     	}catch(Exception e){
     		itn.setErrorLog("Error while access ESP :" + e.getMessage());
-    		e.printStackTrace();
     		throw new Error("FAIL");
     	}
     	}

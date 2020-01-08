@@ -417,7 +417,6 @@ public class PaymentPage extends BasePage {
 				paymentPage.fillPaymentPage(itn, createAccount, false);
 			} catch (Exception e) {
 				itn.setErrorLog("Error in payment page :" + e.getMessage());
-				e.printStackTrace();
 			}
 			// wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
 

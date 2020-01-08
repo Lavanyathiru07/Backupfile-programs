@@ -78,7 +78,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< MOD App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< MOD App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -88,7 +87,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< AIS App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< AIS App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -98,7 +96,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< STS App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< STS App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -108,7 +105,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< ESP App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< ESP App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -118,7 +114,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< SVT App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< SVT App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -128,7 +123,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< CAR App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< CAR App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -138,7 +132,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< FM App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< FM App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -148,7 +141,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< RQ App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< RQ App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -158,7 +150,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< RQ App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< RQ App !Clicked >>>");
-			e.printStackTrace();
 		}
 
 	}
@@ -169,7 +160,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< ATL App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< ATL App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -179,7 +169,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< CL App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< CL App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -189,7 +178,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< OFO App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< OFO App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 
@@ -199,7 +187,6 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< STNS App Clicked >>>");
 		} catch (Exception e) {
 			itn.setErrorLog("<<< STNS App !Clicked >>>");
-			e.printStackTrace();
 		}
 	}
 	

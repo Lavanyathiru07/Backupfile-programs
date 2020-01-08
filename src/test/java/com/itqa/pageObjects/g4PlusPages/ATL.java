@@ -79,7 +79,6 @@ public class ATL extends BasePage{
         logger.info("ATL Scenario -> Pass");
     	}catch(Exception e){
     		itn.setErrorLog("ATL Scenario -> Fail");
-    		e.printStackTrace();
     		throw new Error("FAIL");
     	}
     }

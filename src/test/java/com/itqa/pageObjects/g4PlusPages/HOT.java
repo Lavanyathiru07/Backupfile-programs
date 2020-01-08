@@ -109,7 +109,6 @@ public class HOT extends BasePage{
 
 		} catch (Exception e) {
 			itn.setErrorLog("HOT Scenario -> Fail");
-			e.printStackTrace();
 			throw new Error("FAIL");
 		}
 	}

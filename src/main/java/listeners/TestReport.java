@@ -69,7 +69,7 @@ public class TestReport implements IReporter {
             GeneralUtils.writeToFile("Result.html", htmlStringBuilder.toString());
         } catch (Exception e) {
             System.err.println("Could not create report, exception -> " + e.getMessage() + " --->>> ");
-            e.printStackTrace();
+   
         }
     }
 	    
@@ -190,7 +190,6 @@ public class TestReport implements IReporter {
             GeneralUtils.writeToFile("EmailResult.html", htmlStringBuilder.toString());
         } catch (Exception e) {
             System.err.println("Could not create report, exception -> " + e.getMessage() + " --->>> ");
-            e.printStackTrace();
         }
     
     }

@@ -22,7 +22,6 @@ public class ManifestId {
         }
         catch(Exception e) {
         	logger.error("Error getting manifestid : ");
-            e.printStackTrace();
             return "-1";
         }
     }

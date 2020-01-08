@@ -106,7 +106,6 @@ public class AisMenuPage extends BasePage {
 			logger.info("Accept Security Alert");
 		} catch (Exception e) {
 			itn.setErrorLog("AccountsPayableMaintenance Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -119,7 +118,6 @@ public class AisMenuPage extends BasePage {
 			kayakConsoleTab.click();			
 		} catch (Exception e) {
 			itn.setErrorLog("Kayak Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -132,7 +130,6 @@ public class AisMenuPage extends BasePage {
 			flightFollowingTab.click();
 		} catch (Exception e) {
 			itn.setErrorLog("Flight Following Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -145,7 +142,6 @@ public class AisMenuPage extends BasePage {
 			flightFlowTab.click();
 		} catch (Exception e) {
 			itn.setErrorLog("Flight Follow Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -162,8 +158,6 @@ public class AisMenuPage extends BasePage {
 			itn.setErrorLog("Error while selecting Inventory maintenance :" + e.getMessage());
 			logger.info("Security Alert not display");
 			logger.error("Inventory Maintenance Scenario -> Fail");
-			e.printStackTrace();
-
 		}
 	}
 
@@ -176,7 +170,6 @@ public class AisMenuPage extends BasePage {
 			aircraftRecordsTab.click();			
 		} catch (Exception e) {
 			itn.setErrorLog("Aircraft Records Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -187,7 +180,6 @@ public class AisMenuPage extends BasePage {
 			METab.click();		
 		} catch (Exception e) {
 			itn.setErrorLog("MXandEngr Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -198,7 +190,6 @@ public class AisMenuPage extends BasePage {
 			lineMXTab.click();			
 		} catch (Exception e) {
 			itn.setErrorLog("LineMX Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -209,7 +200,6 @@ public class AisMenuPage extends BasePage {
 			mxControlTab.click();			
 		} catch (Exception e) {
 			itn.setErrorLog("MXControl Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -220,7 +210,6 @@ public class AisMenuPage extends BasePage {
 			reliabilityTab.click();			
 		} catch (Exception e) {
 			itn.setErrorLog("Reliability Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -231,7 +220,6 @@ public class AisMenuPage extends BasePage {
 			mxRecordsTab.click();			
 		} catch (Exception e) {
 			itn.setErrorLog("MXRecords Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -244,7 +232,6 @@ public class AisMenuPage extends BasePage {
 			flightScheduleMXTab.click();
 		} catch (Exception e) {
 			itn.setErrorLog("FlightScheduleMX Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -257,7 +244,6 @@ public class AisMenuPage extends BasePage {
 			airOnlyTab.click();
 		} catch (Exception e) {
 			itn.setErrorLog("Aironly Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -270,7 +256,6 @@ public class AisMenuPage extends BasePage {
 			printManifestTab.click();
 		} catch (Exception e) {
 			itn.setErrorLog("PrintManifest Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 
@@ -281,7 +266,6 @@ public class AisMenuPage extends BasePage {
 			itnMXTab.click();
 		} catch (Exception e) {
 			itn.setErrorLog("ITNMX Scenario -> Fail");
-			e.printStackTrace();
 		}
 	}
 

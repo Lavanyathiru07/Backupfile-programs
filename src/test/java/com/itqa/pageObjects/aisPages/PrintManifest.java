@@ -79,7 +79,6 @@ public class PrintManifest extends BasePage {
         logger.info("PrintManifest Scenario -> Pass");
     	}catch(Exception e){
     		itn.setErrorLog("Error while verifying the print manifest :" + e.getMessage());
-    		e.printStackTrace();
     		throw new Error(">>>verify PrintManifest FAIL<<<");
     	}
     }

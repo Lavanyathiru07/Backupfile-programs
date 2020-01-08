@@ -143,7 +143,6 @@ public class BookingFlow extends BasePage {
 			} catch (Exception e1) {
 				itn.setErrorLog("Error while creating web booking :" + e.getMessage());
 				logger.info("%%%%%% caught error: " + e.getMessage());
-				e.printStackTrace();
 				return manifestId;
 			}
 
@@ -265,7 +264,6 @@ public class BookingFlow extends BasePage {
 
 	}catch (Exception e) {
 		itn.setErrorLog("Error in manage travel while modifiying the bags and seats :" + e.getMessage());
-		e.printStackTrace();
 		throw new Error(">>>manageTravelModificationUpsellBagSeat FAIL<<<");
 	}
 }}

@@ -114,7 +114,6 @@ public class TABookingFlow extends BasePage {
 				}
 			} catch (Exception e1) {
 				logger.info("%%%%%% caught error: " + e.getMessage());
-				e.printStackTrace();
 				return manifestId;
 			}
 		}

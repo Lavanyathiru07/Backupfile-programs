@@ -71,7 +71,6 @@ public class FlightPage extends BasePage {
 								.getAttribute("dateTime"));
 			} catch (Exception e) {
 				itn.setErrorLog("Error while selecting the depature flight :" + e.getMessage());
-				e.printStackTrace();
 				throw new Error();
 			}
 

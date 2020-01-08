@@ -65,7 +65,6 @@ public class FM extends BasePage{
 			logger.info("BAG Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("BAG Scenario -> Fail");
-			e.printStackTrace();
 			throw new Error("FAIL");
 		}
 	}
@@ -92,7 +91,6 @@ public class FM extends BasePage{
         logger.info("PB2 Scenario -> Pass");
     }catch(Exception e){
     	itn.setErrorLog("PB2 Scenario -> Fail");
-    	e.printStackTrace();
     	throw new Error("FAIL");
 	}
     }
@@ -120,7 +118,6 @@ public class FM extends BasePage{
 			logger.info("TF2 Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("TF2 Scenario -> Fail");
-			e.printStackTrace();
 			throw new Error("FAIL");
 		}
 	}

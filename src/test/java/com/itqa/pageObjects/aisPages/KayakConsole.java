@@ -38,7 +38,6 @@ public class KayakConsole extends BasePage{
 			logger.info("Kayak Scenario -> Pass");
 		}catch(Exception e){
 			itn.setErrorLog("Kayak Scenario -> Fail");
-    		e.printStackTrace();
     		throw new Error(">>>Kayak Access FAIL<<<");
     	}
     }

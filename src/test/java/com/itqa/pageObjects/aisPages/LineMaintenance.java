@@ -80,7 +80,6 @@ public class LineMaintenance extends BasePage{
 			if ((Environment.getEnv().contains("trn"))) {
 				itn.setItn("No results found");
 			}
-			e.printStackTrace();
 			throw new Error(">>>Records returns no result<<<");
 		}
 

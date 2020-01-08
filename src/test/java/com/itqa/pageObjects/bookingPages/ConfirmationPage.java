@@ -65,7 +65,6 @@ public class ConfirmationPage extends BasePage {
         }
         catch (Exception e) {
         	itn.setErrorLog("Error while verifying confirmation number :" + e.getMessage());
-            e.printStackTrace();
             throw new Error("Booking Failed: no confirmation number");
         }
     }

@@ -113,7 +113,6 @@ public class CCBookingFlow extends BasePage {
 				confirmationPage.verifyConf(itn);
 			} catch (Exception e1) {
 				itn.setErrorLog("Error while CC Booking" + e.getMessage());
-				e.printStackTrace();
 				return manifestId;
 			}
 
