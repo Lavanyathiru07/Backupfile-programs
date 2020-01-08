@@ -100,14 +100,12 @@ public class CCBookingFlow extends BasePage {
 				flightPage.selectFlightPage(itn);
 				manifestId = ManifestId.getManifestId(driver);
 				itn.setManifestId(manifestId);
-				itn.setErrorLog(e.getMessage());
 				logger.info("Initiated flight, manifest id is " + manifestId);
 				bundlePage.selectBundle(itn);
 				hotelPage.selectHotel(itn);
 				vehiclePage.selectVehicle(itn);
 				seatPage.selectSeatPage(itn);
 				bagPage.selectBagPage(itn);
-				//itn.setErrorLog("Error while CC Booking :  "+e.getMessage());
 				travelerPage.fillTravelerPage(itn);  
 				paymentPage.fillPaymentPage(itn, false, true);
 				confirmationPage.verifyConf(itn);

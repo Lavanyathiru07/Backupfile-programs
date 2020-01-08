@@ -55,7 +55,7 @@ public class GetBoardingPassPage {
             logger.info("Boarding pass printed");
         }
         else {
-        	itn.setErrorLog("Incorrect iyn, bag, priority boardng information on the boarding pass");
+        	itn.setErrorLog("Incorrect itn, bag, priority boardng information on the boarding pass");
             throw new Error("Incorrect itn, bag, priority boarding information on the boarding pass");
         }
         Screenshot.saveScreenshot("BoardingPass", driver);
