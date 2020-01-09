@@ -250,7 +250,7 @@ public class WebBookingTestIT extends DriverBase {
 				//BookingFlow booking = new BookingFlow(logger.get());
 
 				BookingFlow booking = generateBooking(itn, silo, context, true);
-				itinerary.set(itn.getItn());
+				
 				Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
@@ -264,6 +264,7 @@ public class WebBookingTestIT extends DriverBase {
 				}
 				updateTextContext(itn, context);
 				booking.WWWRefundAndCancelItn(itn.getItn(), itn);
+				itinerary.set(itn.getItn());
 			} else {
 				if (flightAvailService != 0) {
 					itn.setItn(flightAvailErrorMsg);
