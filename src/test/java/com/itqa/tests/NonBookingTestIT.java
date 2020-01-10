@@ -109,7 +109,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
+		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
@@ -144,7 +144,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
+		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
@@ -181,7 +181,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		if ((!env.contains("vipprod") && (silo==4))) {
+		if ((!env.contains("vipprd") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
@@ -217,7 +217,7 @@ public class NonBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
+		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
