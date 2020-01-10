@@ -52,7 +52,7 @@ public class STS extends BasePage {
 
 		} catch (Exception e) {
 			itn.setErrorLog("STS Scenario -> Fail");
-			throw new Error("FAIL");
+			throw new Error("STS Scenario -> Fail");
 		}
 	}
 }

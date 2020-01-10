@@ -50,7 +50,7 @@ public class OFO extends BasePage {
 			logger.info("OFO Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("OFO Scenario -> Fail");
-			throw new Error("FAIL");
+			throw new Error("OFO Scenario -> Fail");
 		}
 	}
 }

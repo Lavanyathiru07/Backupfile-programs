@@ -261,7 +261,7 @@ public class MOD extends BasePage {
 			logger.info("MOD Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("MOD Scenario -> Fail");
-			throw new Error("FAIL");
+			throw new Error("MOD Scenario -> Fail");
 		}
 	}
 
