@@ -74,7 +74,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
-		if ((env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
+		if ((env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprd") && (silo == 0))) {
 			if (env.contains("prod")) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
