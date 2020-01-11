@@ -12,8 +12,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
+import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
@@ -51,32 +53,37 @@ public class CAR extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessCAR() {
-    	try{
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 1);
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        String selectDate = format.format(calendar.getTime());
-        pickupDateField.sendKeys("1");
-        pickupDateField.clear();
-        pickupDateField.sendKeys(selectDate + " 12:00PM");
+	public void accessCAR(Itinerary itn) {
+		try {
+			logger.info("CAR Verify -> Started");
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.DATE, 1);
+			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+			String selectDate = format.format(calendar.getTime());
+			pickupDateField.sendKeys("1");
+			pickupDateField.clear();
+			pickupDateField.sendKeys(selectDate + " 12:00PM");
 
-        calendar.add(Calendar.DATE, 2);
-        selectDate = format.format(calendar.getTime());
-        returnDateField.sendKeys("1");
-        returnDateField.clear();
-        returnDateField.sendKeys(selectDate + " 12:00PM");
+			calendar.add(Calendar.DATE, 2);
+			selectDate = format.format(calendar.getTime());
+			returnDateField.sendKeys("1");
+			returnDateField.clear();
+			returnDateField.sendKeys(selectDate + " 12:00PM");
 
-        bookLocField.sendKeys("LAS" + Keys.ENTER);
-        pickupLocField.sendKeys("LAS" + Keys.ENTER);
-        jse.executeScript("arguments[0].click();", checkRateButton);
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
-        resultRow.click();
-        logger.info("CAR Menu Open");
-    	}catch(Exception e){
-
-    		e.printStackTrace();
-    		throw new Error("FAIL");
-    	}
-    }
+			bookLocField.sendKeys("LAS" + Keys.ENTER);
+			pickupLocField.sendKeys("LAS" + Keys.ENTER);
+			jse.executeScript("arguments[0].click();", checkRateButton);
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
+			resultRow.click();
+			logger.info("CAR Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("CAR Scenario -> Fail");
+			if (Environment.getEnv().contains("nddprd")) {
+				itn.setItn("Failed due to CES-1505");
+				logger.error("CAR Scenario -> Fail : CES-1505");
+			}
+			e.printStackTrace();
+			throw new Error("FAIL");
+		}
+	}
 }

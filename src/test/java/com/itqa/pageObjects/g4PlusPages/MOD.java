@@ -240,6 +240,9 @@ public class MOD extends BasePage {
 
 	@FindBy(xpath = "//*[contains(@class,'panel-section')]/a")
 	private WebElement voucher;
+	
+	@FindBy(id = "username")
+	private WebElement userNameField;
 
 	public MOD() {
 		this.driver = DriverBase.getDriver();
@@ -253,10 +256,11 @@ public class MOD extends BasePage {
 
 	public void accessMOD() {
 		try {
+			logger.info("MOD Verify -> Started");
 			confirmationNumField.click();
-			logger.info("MOD menu open");
+			logger.info("MOD Scenario -> Pass");
 		} catch (Exception e) {
-
+			logger.error("MOD Scenario -> Fail");
 			e.printStackTrace();
 			throw new Error("FAIL");
 		}
@@ -593,10 +597,17 @@ public class MOD extends BasePage {
 				By.xpath("//*[contains(@class,'input-misc-fee chk-reverse-all chk-select-all')]"), 0));
 		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(
 				By.xpath("//*[contains(@class,'input-misc-fee chk-reverse-all chk-select-all')]")));
-		for (int i = 0; i < reverseWholeItemList.size(); i++) {
-			reverseWholeItemList.get(i).click();
-			logger.info("Reverse whole item button is clicked");
+		try {
+			for (int i = 0; i < reverseWholeItemList.size(); i++) {
+				logger.info("111111"+i);
+				jse.executeScript("arguments[0].click()", reverseWholeItemList.get(i));
+				//reverseWholeItemList.get(i).click();
+				logger.info("Reverse whole item button is clicked");
+			}
+		}catch(Exception e) {
+			logger.info(e);
 		}
+		
 
 		new Select(reasonSelect).selectByIndex(1);
 		applyReverseButton.click();
@@ -712,7 +723,11 @@ public class MOD extends BasePage {
 
 	public void refundWholeAmountInMod(String itin, Itinerary itn) throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-		g4LoginPage.g4plusLogin(false);
+		try {
+			if(userNameField.isDisplayed()) {
+				g4LoginPage.g4plusLogin(false);
+			}
+		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
 		g4MenuPage.selectMOD();
 		GeneralUtils.switchNextTab(driver, curTab);
@@ -722,7 +737,12 @@ public class MOD extends BasePage {
 
 	public void cancelWholeItn(String itn) {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-		g4LoginPage.g4plusLogin(false);
+		try {
+			if(userNameField.isDisplayed()) {
+				g4LoginPage.g4plusLogin(false);
+			}
+		}catch(Exception e) {}
+		
 		Set<String> curTab = driver.getWindowHandles();
 		g4MenuPage.selectMOD();
 		GeneralUtils.switchNextTab(driver, curTab);

@@ -206,7 +206,7 @@ public class PaymentPage extends BasePage {
 
 		// Common.elementToBeClickable(driver, expireMonthField, "exp month");
 
-		if (System.getProperty("env").contains("prod")) {
+		if (System.getProperty("env").contains("prod")||System.getProperty("env").contains("vipprd")) {
 			expiredMonth = System.getProperty("expiration").split("-")[0].replace("0", "");
 			expiredYear = System.getProperty("expiration").split("-")[1];
 			cardNumber = System.getProperty("cardno");

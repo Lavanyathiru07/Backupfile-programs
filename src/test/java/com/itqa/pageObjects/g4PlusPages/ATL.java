@@ -54,31 +54,36 @@ public class ATL extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void accessATL() {
-    	try{
-        rulesTab.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(hotelOverPercentField));
-        hotelOverPercentField.click();
-        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/1ATL.png");
+	public void accessATL() {
+		try {
+			logger.info("ATL Verify -> Started");
+			rulesTab.click();
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(hotelOverPercentField));
+			hotelOverPercentField.click();
+			GeneralUtils.takeScreenshot(driver,
+					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/1ATL.png");
 
-        reportsTab.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(typeField));
-        typeField.click();
-        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/2ATL.png");
+			reportsTab.click();
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(typeField));
+			typeField.click();
+			GeneralUtils.takeScreenshot(driver,
+					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/2ATL.png");
 
-        invoicesTab.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(invoiceDateField));
-        invoiceDateField.click();
-        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/3ATL.png");
+			invoicesTab.click();
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(invoiceDateField));
+			invoiceDateField.click();
+			GeneralUtils.takeScreenshot(driver,
+					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/3ATL.png");
 
-        atlTab.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(glPostingRow));
-        glPostingRow.click();
+			atlTab.click();
+			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(glPostingRow));
+			glPostingRow.click();
 
-        logger.info("ATL Menu Open");
-    	}catch(Exception e){
-    		e.printStackTrace();
-    		throw new Error("FAIL");
-    	}
-    }
+			logger.info("ATL Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("ATL Scenario -> Fail");
+			e.printStackTrace();
+			throw new Error("FAIL");
+		}
+	}
 }

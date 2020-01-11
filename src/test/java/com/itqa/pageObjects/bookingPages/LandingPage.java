@@ -299,11 +299,8 @@ public class LandingPage extends BasePage {
 		jse.executeScript("arguments[0].click()", loginButton);
 		logger.info("Login button is clicked");
 		editNameField.sendKeys(accountEmail);
-		if (System.getProperty("env").contains("prod")) {
-			editPassField.sendKeys("QAtest1234");
-		} else {
-			editPassField.sendKeys(PASSWORD);
-		}
+		editPassField.sendKeys(PASSWORD);
+		
 		Common.clickWithTimeOut(driver, signinButton);
 	}
 

@@ -83,8 +83,6 @@ public class ItineraryDataProvider {
                         .withScenario(method.getName())
                         .withDepartureCity("BLI")
                         .withDestinationCity("LAS")
-                        .withHotel(true)
-                        .withVehicle(true)
                         .build();
                 data.add(new Object[]{silo, itnRoundTrip});
             }

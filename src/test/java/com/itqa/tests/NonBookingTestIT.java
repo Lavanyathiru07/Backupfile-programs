@@ -50,9 +50,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Decoupled Code For MX - Action Requests", groups = {
 			"bat", "ais" })
-	@Story("AIS: Search Decoupled Code For MX - Action Requests")
+	@Story("AIS - Search Decoupled Code For MX - Action Requests")
 	public void lookupActionRequest(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
+		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.lookupActionRequest(itn);
@@ -65,9 +65,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Search Coupled Code For MX - Aircraft Records", groups = {
 			"bat", "ais" })
-	@Story("AIS: Search Coupled Code For MX - Aircraft Records")
+	@Story("AIS - Search Coupled Code For MX - Aircraft Records")
 	public void lookupAircraftRecordsPart(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
+		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.lookupAircraftRecordsPart(itn);
@@ -80,9 +80,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Run SPOE Reports - Line MX - MX Control - Reliabiliy - MX Records", groups = {
 			"bat", "ais" })
-	@Story("AIS: Run SPOE Reports - Line MX - MX Control - Reliabiliy - MX Records")
+	@Story("AIS - Run SPOE Reports - Line MX - MX Control - Reliabiliy - MX Records")
 	public void runSPOEreport(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
+		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.runSPOEreport(itn);
@@ -96,9 +96,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Flight Information - Flight Following", groups = {
 			"bat", "ais" })
-	@Story("AIS: Flight Information - Flight Following")
+	@Story("AIS - Flight Information - Flight Following")
 	public void verifyFlightFollowing(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && (silo==4))) {
+		if ((!env.contains("vipprd") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.verifyFlightFollowing();
@@ -109,9 +109,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Inventory Maintenance", groups = {
 			"bat", "ais" })
-	@Story("AIS: Access Inventory Maintenance")
+	@Story("AIS - Access Inventory Maintenance")
 	public void accessInventoryMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
+		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessInventoryMX(itn);
@@ -124,9 +124,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Print Manifest", groups = {
 			"bat", "ais" })
-	@Story("AIS: Access Print Manifest- search and select a flight")
+	@Story("AIS - Access Print Manifest- search and select a flight")
 	public void verifyPrintManifest(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && (silo==4))) {
+		if ((!env.contains("vipprd") && !env.contains("sb1") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.verifyPrintManifest();
@@ -138,9 +138,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Flight Schedule Maintenance", groups = {
 			"bat", "ais" })
-	@Story("AIS: Access Flight Schedule Maintenance")
+	@Story("AIS - Access Flight Schedule Maintenance")
 	public void verifyFlightScheduleMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
+		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.verifyFlightScheduleMX(itn);
@@ -154,9 +154,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Accounts Payable Maintenance - Look up Transaction", groups = {
 			"bat", "ais" })
-	@Story("AIS: Access Accounts Payable Maintenance - Look up Transaction")
+	@Story("AIS - Access Accounts Payable Maintenance - Look up Transaction")
 	public void lookupAccountsPayableMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && !env.contains("aws") && (silo==4))) {
+		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.lookupAccountsPayableMX(itn);
@@ -170,9 +170,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Flight Flow", groups = {
 			"bat", "ais" })
-	@Story("AIS: Access Flight Flow")
+	@Story("AIS - Access Flight Flow")
 	public void verifyFlightFlow(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && (silo==4))) {
+		if ((!env.contains("vipprd") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.verifyFlightFlow();
@@ -184,9 +184,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "AIS: Access Kayak Console", groups = {
 			"bat", "ais" })
-	@Story("AIS: Access Kayak Console")
+	@Story("AIS - Access Kayak Console")
 	public void accessKayakConsole(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("vipprod") && (silo==4)&&!env.contains("trn"))) {
+		if ((!env.contains("vipprd") && (silo==4)&&!env.contains("trn")&&!env.contains("prod") && !env.contains("sb1"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessKayakConsole();
@@ -197,9 +197,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4Portal: Access Customer Lookup", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access Customer Lookup")
+	@Story("G4+ - Access Customer Lookup")
 	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("trn"))) {
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) && !env.contains("vipprd") && !env.contains("sb1")&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessCL();
@@ -211,10 +211,10 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access STS", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access STS")
+	@Story("G4+ - Access STS")
 	public void accessSTS(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) && (!env.contains("nddprd"))&& (!env.contains("trn"))) {
+		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in"))&& !env.contains("sb1")&& !env.contains("vipprd") && (!env.contains("nddprd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSTS();
@@ -225,9 +225,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access ESP", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access ESP")
+	@Story("G4+ - Access ESP")
 	public void accessESP(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if ((!env.contains("prod")) && (silo==5) && (!env.contains("in")) && (!env.contains("nddprd")) && (!env.contains("trn"))) {
+		if ((!env.contains("prod")) && !env.contains("vipprd")&& !env.contains("sb1") && (silo==5) && (!env.contains("in")) && (!env.contains("nddprd")) && (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessESP();
@@ -238,9 +238,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access SVT", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access SVT")
+	@Story("G4+ - Access SVT")
 	public void accessSVT(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))) {
+		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in"))&& !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSVT();
@@ -251,12 +251,13 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access CAR", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access CAR")
+	@Story("G4+ - Access CAR")
 	public void accessCAR(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) && (!env.contains("trn"))) {
+		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in")) && (!env.contains("trn")&& !env.contains("vipprd"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
-			nonBooking.accessCAR();
+			nonBooking.accessCAR(itn);
+			trc.setSetItn(itn.getItn());
 
 		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -265,9 +266,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access TF2", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access TF2")
+	@Story("G4+ - Access TF2")
 	public void accessTF2(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
+		if((!env.contains("prod"))&& !env.contains("sb1")&& !env.contains("vipprd")&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessTF2();
@@ -278,10 +279,10 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access RQ", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access RQ")
+	@Story("G4+ - Access RQ")
 	public void accessRQ(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
+		if((!env.contains("prod"))&& !env.contains("sb1")&& !env.contains("vipprd")&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessRQ();
@@ -292,9 +293,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access BAG", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access BAG")
+	@Story("G4+ - Access BAG")
 	public void accessBAG(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
+		if((!env.contains("prod"))&& !env.contains("sb1")&&(silo==5)&&(!env.contains("in")) && !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessBAG();
@@ -305,9 +306,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access PB2", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access PB2")
+	@Story("G4+ - Access PB2")
 	public void accessPB2(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
+		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in")) && !env.contains("vipprd")&&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessPB2();
@@ -318,10 +319,10 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access HOT", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access HOT")
+	@Story("G4+ - Access HOT")
 	public void accessHOT(Integer silo, Itinerary itn, ITestContext context, Method method) {
 
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
+		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in")) && !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessHOT();
@@ -332,9 +333,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access ATL", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access ATL")
+	@Story("G4+ - Access ATL")
 	public void accessATL(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
+		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in"))&& !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessATL();
@@ -345,9 +346,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access OFO", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access OFO")
+	@Story("G4+ - Access OFO")
 	public void accessOFO(Integer silo, Itinerary itn, ITestContext context, Method method) {
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
+		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in"))&& !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessOFO();
@@ -359,10 +360,10 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "G4+: Access MOD", groups = {
 			"bat", "g4plus" })
-	@Story("G4+: Access MOD")
+	@Story("G4+ - Access MOD")
 	public void accessMOD(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		
-		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
+		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in")) && !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessMOD();
@@ -373,9 +374,9 @@ public class NonBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "NonBooking Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Swap: Access Swap", groups = {
 			"bat", "g4plus" })
-	@Story("Swap: Access Swap")
+	@Story("Swap - Access Swap")
 	public void accessSwap(Integer silo, ITestContext context, Method method, Itinerary itn) {
-		if ((!env.contains("vipprod") && (silo==5))) {
+		if ((!env.contains("vipprd")&& !env.contains("sb1") && (silo==5))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			G4PlusFlow nonBooking = new G4PlusFlow();
 			nonBooking.accessSwap();

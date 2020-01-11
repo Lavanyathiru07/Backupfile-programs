@@ -8,7 +8,7 @@ import com.itqa.Utils.Environment;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.BookingFlow;
 
-import clearingITN.DHSClear;
+//import clearingITN.DHSClear;
 import data.*;
 import io.qameta.allure.Story;
 import listeners.TestResultContext;
@@ -46,7 +46,7 @@ public class WebBookingTestIT extends DriverBase {
 	public void setup(ITestContext context) throws MalformedURLException {
 		driver = DriverBase.getDriver();
 		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
-				+ ", " + driver.getCurrentUrl());
+				+ ", " + driver.getCurrentUrl()); 
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
@@ -55,9 +55,9 @@ public class WebBookingTestIT extends DriverBase {
 			"bat","www","booking"})
 
 	@Story("WWW One way Booking Creation & Verify email confirmation")
-	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) {
+	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
 
-		if ((env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprod") && (silo == 0))) {
+		if ((env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprd") && (silo == 0))) {
 			if (env.contains("prod")) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
@@ -76,9 +76,9 @@ public class WebBookingTestIT extends DriverBase {
 			// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 			if ((env.contains("prod") && ((silo == 1) || (silo == 2)))) {
 				booking.manageTravelModificationUpsellBagSeat(itn, silo);
-				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
-				// recevied");
+				// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
 			}
+			booking.WWWRefundAndCancelItn(itn.getItn(), itn);
 			updateTextContext(itn, context);
 			} else {
 				if (flightAvailService != 0) {
@@ -103,9 +103,9 @@ public class WebBookingTestIT extends DriverBase {
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException, Exception {
-			if (((env.contains("in1") || env.contains("in2") ) && (silo == 1))
+			if (((env.contains("in1") || env.contains("in2") || env.contains("sb1")) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
-				|| (env.contains("stg") && ((silo == 1) || (silo == 2) || (silo == 3)))
+				|| (env.contains("stg") && ((silo == 1)|| (silo == 2) || (silo == 3) ))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| (env.contains("trn") && (silo == 0)) || (env.contains("prod") && (silo == 3))) {
 			if (silo != 0) {
@@ -126,12 +126,12 @@ public class WebBookingTestIT extends DriverBase {
 			BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 
 			Assert.assertNotNull(itn.getItn(), "ITN could not be created");
-			try {
+			/*try {
 				DHSClear doDHS = new DHSClear();
 				doDHS.dhs(env, itn.getItn());
 			}catch(Exception e) {
 				log.info("error getting while clear the DHS");
-			}
+			}*/
 			
 			
 

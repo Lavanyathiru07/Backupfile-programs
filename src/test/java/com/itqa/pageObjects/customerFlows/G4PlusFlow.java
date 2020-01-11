@@ -114,12 +114,14 @@ public class G4PlusFlow extends BasePage {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		g4MenuPage.verifyAIS();
+		logger.info("<<< Login Successfull >>>");
 	}
 	
 	public void awsurl() throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
 		g4MenuPage.verifyAIS();   
+		logger.info("<<< AWS Login Successfull >>>");
 	}
 
 	public void g4PlusSignin() {
@@ -157,7 +159,6 @@ public class G4PlusFlow extends BasePage {
 		logger.info(env);
 		
 		g4PlusSignin();
-	
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectAIS();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
@@ -398,13 +399,13 @@ public class G4PlusFlow extends BasePage {
 		SVT.accessSVT();
 	}
 
-	public void accessCAR() {
+	public void accessCAR(Itinerary itn) {
 
 		g4PlusSignin();
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectCAR();
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-		CAR.accessCAR();
+		CAR.accessCAR(itn);
 	}
 
 	public void accessTF2() {
@@ -482,21 +483,25 @@ public class G4PlusFlow extends BasePage {
 
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		try {
+
 			capabilities.setCapability("name", "Access Swap");
 			capabilities.setCapability("idleTimeout", 60);
 			capabilities.setCapability("tz", "America/Los_Angeles");
-			
+
 		} catch (Exception e) {
+
 			throw new Error(e);
 		}
 
 		DriverBase.getDriver().get("https://swap.allegiantair.com");
-
+		logger.info("Swap Verify -> Started");
 		LoginPage loginPage = new LoginPage();
 
 		try {
 			loginPage.openSwap();
+			logger.info("Swap Scenario -> Pass");
 		} catch (Exception e) {
+			logger.error("Swap Scenario -> Fail");
 			throw new Error();
 		}
 

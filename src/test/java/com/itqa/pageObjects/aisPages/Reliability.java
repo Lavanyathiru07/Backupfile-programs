@@ -48,28 +48,31 @@ public class Reliability extends BasePage{
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void openReport() {
-    	try{
-        reportsTab.click();
-        flightLogTab.click();
+	public void openReport() {
+		try {
+			logger.info("Reliability Report Verify -> Started");
+			reportsTab.click();
+			flightLogTab.click();
 
-        jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
+			jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -90);
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        String selectDate = format.format(calendar.getTime());
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.DATE, -90);
+			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+			String selectDate = format.format(calendar.getTime());
 
-        jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
-        jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
-        jse.executeScript("arguments[0].click();", runReportButton);
+			jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
+			jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
+			jse.executeScript("arguments[0].click();", runReportButton);
 
-        jse.executeScript("arguments[0].click();", resultRow);
-        logger.info("Reliability Report displayed");
-    	}catch(Exception e){
-    		skip = true;
-    		DriverBase.getDriver().quit();
+			jse.executeScript("arguments[0].click();", resultRow);
+			logger.info("Reliability Report displayed");
+			logger.info("Reliability Report Scenario -> Pass");
+		} catch (Exception e) {
+			logger.error("Reliability Report Scenario -> Fail");
+			skip = true;
+			DriverBase.getDriver().quit();
 			throw new SkipException("Scenario fails so execution stoped");
-    	}
-    }
+		}
+	}
 }
