@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.util.List;
@@ -32,14 +33,14 @@ public class FlightFollowing extends BasePage{
     @FindBy(xpath = "//div[contains(@title,'Program/version=FLFOLLOW/')]")
     private WebElement flightHeader;
 
-    public FlightFollowing() {
+    public FlightFollowing(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(FlightFollowing.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void verifyFlightInformation() {
+    public void verifyFlightInformation(Itinerary itn) {
     	try{
     	DriverBase.getDriver().switchTo().frame(fllistFrame);
     	logger.info("FlightInformation Verify -> Started");
@@ -73,20 +74,21 @@ public class FlightFollowing extends BasePage{
                         } catch (Exception e) {
                         }
                     } else {
+                    	itn.setErrorLog("FLight Information not displayed properly :");
                         throw new Error("FAIL - Flight Information not displayed properly");
                     }
                 }
             }
             catch (Exception e) {
                 if (loop == 4) {
+                	itn.setErrorLog("Error while finding element Flight following " );
                     throw new Error("FAIL - Flight Following - Cannot get element");
                 }
             }
         }
         logger.info("FlightInformation Scenario -> Pass");
     }catch(Exception e){
-    	logger.error("FlightInformation Scenario -> Fail");
-		e.printStackTrace();
+    	itn.setErrorLog("FlightInformation Scenario -> Fail");
 		throw new Error("FAIL - Flight Following - Cannot get element");
 	}
     }

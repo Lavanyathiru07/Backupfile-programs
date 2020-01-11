@@ -35,7 +35,6 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 			 base64Screenshot = "data:image/png;base64,"
 					+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
 		}catch(Exception e) {
-			e.printStackTrace();
 		}
 		
 		
@@ -45,7 +44,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		GeneralUtils.writeToFile("emailPassedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
-						+ "</td><td></td></tr>");
+						+ "</td><td></td><td></td></tr>");
 		GeneralUtils.writeToFile("passedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
@@ -53,8 +52,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 						+ "<a href=\"javascript:setImageVisible('show'," + testResultContext.currentSilo
 						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
 						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
-						+ "</td></tr>");
-
+						+ "</td><td></td></tr>");
 	}
 
 	@Override
@@ -64,7 +62,6 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 			 base64Screenshot = "data:image/png;base64,"
 					+ ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
 		}catch(Exception e) {
-			e.printStackTrace();
 		}
 		TestResultContext testResultContext = new TestResultContext();
 		testResultContext.getTestResultContext(result);
@@ -76,17 +73,17 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		GeneralUtils.writeToFile("emailFailedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
-						+ "</td><td>" + testResultContext.manifestId + "</td></tr>");
+						+ "</td><td>" + testResultContext.manifestId + "</td><td>" + testResultContext.logForError + "</td></tr>");
 
 		GeneralUtils.writeToFile("failedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
-						+ "</td><td>" + testResultContext.manifestId + "</td><td>"
+						+ "</td><td>" + testResultContext.manifestId +  "</td><td>"
 						+ "<a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo
 						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
 						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
-						+ "</td></tr>");
-			
+						+ "</td><td>" + testResultContext.logForError + "</td></tr>");
+	
 	}
 	
 	@Override

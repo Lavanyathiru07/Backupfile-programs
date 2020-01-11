@@ -56,14 +56,14 @@ public class BagPage extends BasePage {
     @FindBy(xpath = "//h4[contains(text(),'boarding options')]")
 	private  boolean boardingBar;
 
-    public BagPage() {
+    public BagPage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(BagPage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void chooseBag(int num, int carryOnBag, int checkedBag, String prio) {
+    public void chooseBag(int num, int carryOnBag, int checkedBag, String prio, Itinerary itn) {
         for (int i=0; i<num; i++) {
             new Select(binBagList.get(i)).selectByValue(String.valueOf(carryOnBag));
             new Select(checkedBagList.get(i)).selectByValue(String.valueOf(checkedBag));
@@ -71,14 +71,14 @@ public class BagPage extends BasePage {
         }
         logger.info("Select " + carryOnBag + " carry-on, " + checkedBag + " checked, and " + prio + " priority boarding");
         if(!taCCboardingOption.isEmpty()) {
-        	chooseBoardingOption(0);
+        	chooseBoardingOption(0, itn);
         	clickContinue();
         }else {
         clickContinue();
         }
     }
 
-    public void chooseBoardingOption(int ind) {
+    public void chooseBoardingOption(int ind, Itinerary itn) {
         if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("cc.") || driver.getCurrentUrl().contains("ta.")) {
         	taCCboardingOption.get(ind).click();
             logger.info("Select boarding option: " + taCCboardingOption.get(ind).getText().replaceAll("\n", " "));
@@ -91,6 +91,7 @@ public class BagPage extends BasePage {
                 }else{
                     logger.info("Select boarding option: NOT Displayed ");
                 }}catch(Exception e) {
+                	itn.setErrorLog("Error while choosing the boarding option" );
                 logger.info("Exception while Selecting boarding option");
             }
         }
@@ -110,10 +111,10 @@ public class BagPage extends BasePage {
     }
 
     public void selectBagPage(Itinerary itn) throws Exception {
-    	chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority());
+            chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority(), itn);
                 if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.") 
         		||driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
-            chooseBoardingOption(0);
+            chooseBoardingOption(0, itn);
         }
         clickContinue();
     }

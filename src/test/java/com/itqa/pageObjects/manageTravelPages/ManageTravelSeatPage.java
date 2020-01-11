@@ -36,9 +36,9 @@ public class ManageTravelSeatPage {
     @FindBy(xpath = "//button[contains(@class,'yes_no_seats continue')]")
     private WebElement yesContinueButton;
 
-    public ManageTravelSeatPage() {
+    public ManageTravelSeatPage(Logger log) {
     	 this.driver = DriverBase.getDriver();
-         this.logger = Logger.getLogger(ManageTravelSeatPage.class);
+    	 this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }

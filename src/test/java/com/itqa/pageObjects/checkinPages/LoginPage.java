@@ -48,9 +48,9 @@ public class LoginPage {
 	@FindBy(xpath = "//div[contains(@class,'ui-dialog-buttonset')]/button")
 	private WebElement modalContinueButton;
 
-	public LoginPage() {
+	public LoginPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(LoginPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
 	}
@@ -92,6 +92,7 @@ public class LoginPage {
 				driver.findElement(By.xpath("//h2[contains(text(),'re sorry..')]"));
 				throw new Error("Booking is not within the correct date range");
 			} catch (Exception e) {
+				itn.setErrorLog("Error if the date rage is wrong " );
 			}
 
 			try {
@@ -117,11 +118,12 @@ public class LoginPage {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 	}
 
-	public void openSwap() {
+	public void openSwap(Itinerary itn) {
 		try {
 			usernameField.click();
 			logger.info("Swap Page Open");
 		} catch (Exception e) {
+			itn.setErrorLog("Error while opening the swap page " );
 			throw new Error("Swap Page NOT Open");
 		} finally {
 			GeneralUtils.takeScreenshot(driver,

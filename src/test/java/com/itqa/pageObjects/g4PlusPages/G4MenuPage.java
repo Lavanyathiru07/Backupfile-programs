@@ -11,6 +11,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class G4MenuPage extends BasePage {
@@ -64,141 +65,128 @@ public class G4MenuPage extends BasePage {
 
 	/*-------------------------------*/
 
-	public G4MenuPage() {
+	public G4MenuPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(G4MenuPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
 
-	public void selectMOD() {
+	public void selectMOD(Itinerary itn) {
 		try {
 			modApp.click();
 			logger.info("<<< MOD App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< MOD App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< MOD App !Clicked >>>");
 		}
 	}
 
-	public void selectAIS() {
+	public void selectAIS(Itinerary itn) {
 		try {
 			aisApp.click();
 			logger.info("<<< AIS App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< AIS App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< AIS App !Clicked >>>");
 		}
 	}
 
-	public void selectSTS() {
+	public void selectSTS(Itinerary itn) {
 		try {
 			stsApp.click();
 			logger.info("<<< STS App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< STS App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< STS App !Clicked >>>");
 		}
 	}
 
-	public void selectESP() {
+	public void selectESP(Itinerary itn) {
 		try {
 			espApp.click();
 			logger.info("<<< ESP App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< ESP App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< ESP App !Clicked >>>");
 		}
 	}
 
-	public void selectSVT() {
+	public void selectSVT(Itinerary itn) {
 		try {
 			svtApp.click();
 			logger.info("<<< SVT App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< SVT App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< SVT App !Clicked >>>");
 		}
 	}
 
-	public void selectCAR() {
+	public void selectCAR(Itinerary itn) {
 		try {
 			carApp.click();
 			logger.info("<<< CAR App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< CAR App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< CAR App !Clicked >>>");
 		}
 	}
 
-	public void selectFM() {
+	public void selectFM(Itinerary itn) {
 		try {
 			fmApp.click();
 			logger.info("<<< FM App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< FM App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< FM App !Clicked >>>");
 		}
 	}
 
-	public void selectRQ() {
+	public void selectRQ(Itinerary itn) {
 		try {
 			rqApp.click();
 			logger.info("<<< RQ App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< RQ App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< RQ App !Clicked >>>");
 		}
 	}
 
-	public void selectHOT() {
+	public void selectHOT(Itinerary itn) {
 		try {
 			hotApp.click();
 			logger.info("<<< RQ App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< RQ App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< RQ App !Clicked >>>");
 		}
 
 	}
 
-	public void selectATL() {
+	public void selectATL(Itinerary itn) {
 		try {
 			atlApp.click();
 			logger.info("<<< ATL App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< ATL App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< ATL App !Clicked >>>");
 		}
 	}
 
-	public void selectCL() {
+	public void selectCL(Itinerary itn) {
 		try {
 			clApp.click();
 			logger.info("<<< CL App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< CL App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< CL App !Clicked >>>");
 		}
 	}
 
-	public void selectOFO() {
+	public void selectOFO(Itinerary itn) {
 		try {
 			ofoApp.click();
 			logger.info("<<< OFO App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< OFO App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< OFO App !Clicked >>>");
 		}
 	}
 
-	public void selectSTNS() {
+	public void selectSTNS(Itinerary itn) {
 		try {
 			stnsApp.click();
 			logger.info("<<< STNS App Clicked >>>");
 		} catch (Exception e) {
-			logger.error("<<< STNS App !Clicked >>>");
-			e.printStackTrace();
+			itn.setErrorLog("<<< STNS App !Clicked >>>");
 		}
 	}
 	

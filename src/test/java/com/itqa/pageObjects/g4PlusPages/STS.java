@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class STS extends BasePage {
@@ -31,14 +32,14 @@ public class STS extends BasePage {
     @FindBy(xpath = "//h2[contains(text(),'Seat Pricing')]")
     private WebElement seatPricingTitle;
 
-    public STS() {
+    public STS(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(STS.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void accessSTS() {
+	public void accessSTS(Itinerary itn) {
 		try {
 			logger.info("STS Verify -> Started");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatMapTitle));
@@ -50,9 +51,8 @@ public class STS extends BasePage {
 			logger.info("STS Scenario -> Pass");
 
 		} catch (Exception e) {
-			logger.error("STS Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error("FAIL");
+			itn.setErrorLog("STS Scenario -> Fail");
+			throw new Error("STS Scenario -> Fail");
 		}
 	}
 }

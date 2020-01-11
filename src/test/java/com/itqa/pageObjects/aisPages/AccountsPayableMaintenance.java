@@ -19,45 +19,46 @@ import framework.DriverBase;
 
 public class AccountsPayableMaintenance extends BasePage{
 
-    private Logger logger = null;
-    private JavascriptExecutor jse = null;
-    private WebDriver driver = null;
+	private Logger logger = null;
+	private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
 
-    @FindBy(id = "vendor_lid")
-    private WebElement locationField;
+	@FindBy(id = "vendor_lid")
+	private WebElement locationField;
 
-    @FindBy(id = "vendor_status")
-    private WebElement vendorStatField;
+	@FindBy(id = "vendor_status")
+	private WebElement vendorStatField;
 
-    @FindBy(id = "vendor_000005")
-    private WebElement selectedVendor;
+	@FindBy(id = "vendor_000005")
+	private WebElement selectedVendor;
 
-    @FindBy(xpath = "//a[contains(@href,'vendorId=000005')]")
-    private WebElement selectVendorIN;
+	@FindBy(xpath = "//a[contains(@href,'vendorId=000005')]")
+	private WebElement selectVendorIN;
 
-    @FindBy(id = "analysisTab")
-    private WebElement analysisTab;
+	@FindBy(id = "analysisTab")
+	private WebElement analysisTab;
 
-    @FindBy(xpath = "//a[contains(@href,'lookup.do?dispatch')]")
-    private WebElement selectedTransaction;
+	@FindBy(xpath = "//a[contains(@href,'lookup.do?dispatch')]")
+	private WebElement selectedTransaction;
 
-    @FindBy(id = "invoiceId")
-    private WebElement invoiceIdField;
+	@FindBy(id = "invoiceId")
+	private WebElement invoiceIdField;
 
-    @FindBy(id = "orderId")
-    private WebElement orderIdField;
+	@FindBy(id = "orderId")
+	private WebElement orderIdField;
 
-    @FindBy(name = "paymentRow.paymentId")
-    private WebElement paymentIdField;
+	@FindBy(name = "paymentRow.paymentId")
+	private WebElement paymentIdField;
 
-    public AccountsPayableMaintenance() {
-    	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(AccountsPayableMaintenance.class);
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public AccountsPayableMaintenance(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
-    public void lookupTransaction(Itinerary itn) {
+	public void lookupTransaction(Itinerary itn) {
+
 		try {
 			logger.info("lookupTransaction Verify -> Started");
 			// new Select(vendorStatField).selectByValue("A");
@@ -116,10 +117,9 @@ public class AccountsPayableMaintenance extends BasePage{
 			}
 			logger.info("lookupTransaction Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("lookupTransaction Scenario -> Fail");
+			itn.setErrorLog("lookupTransaction Scenario -> Fail");
 			itn.setItn("Failed due to FOS-1012");
-			e.printStackTrace();
 			throw new Error(">>>Account Payable MX FAIL<<<");
 		}
-}
+	}
 }

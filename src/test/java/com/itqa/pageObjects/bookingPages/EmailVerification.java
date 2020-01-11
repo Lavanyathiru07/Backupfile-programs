@@ -55,9 +55,9 @@ public class EmailVerification extends BasePage {
 	private WebElement ViewEntierMessage;
 
 	
-	public EmailVerification() {
+	public EmailVerification(Logger log) {
 		this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(FlightPage.class);
+		this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
         
@@ -114,7 +114,7 @@ public class EmailVerification extends BasePage {
 		if (itn.getItn().equalsIgnoreCase(ExpectedConfNumber)) {
 			logger.info("The Confirmation Number is matched with Email: " + ExpectedConfNumber);
 		} else {
-			logger.error("The Confirmation Number is not matched with Email");
+			itn.setErrorLog("The Confirmation Number is not matched with Emial :");
 		}
 		
 	}

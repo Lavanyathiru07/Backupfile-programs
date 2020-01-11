@@ -40,9 +40,9 @@ public class HotelPage extends BasePage {
     @FindBy(xpath = "//button[contains(text(),'Book')]")
     private WebElement firstBookButton;
 
-    public HotelPage() {
+    public HotelPage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(HotelPage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
@@ -101,8 +101,9 @@ public class HotelPage extends BasePage {
                 new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//h3[contains(@class,'hotel-name')]")));
                 break;
             }
-            catch (Exception e) {}
-
+            catch (Exception e) {
+            	itn.setErrorLog("Error while getting Hotel name " );
+            }
             try {Thread.sleep(1000);} catch (Exception e) {}
         }
         if (hotelPage) {
@@ -117,6 +118,7 @@ public class HotelPage extends BasePage {
         }
         else {
             if (itn.getHotel()) {
+            	itn.setErrorLog("Error while getting hotel name and the page skipped :");
                 throw new Error("Hotel Required..but the page was skipped");
             }
         }

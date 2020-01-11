@@ -37,26 +37,27 @@ public class CCBookingFlow extends BasePage {
 	private EmailVerification EmailVerification;
 	private G4PlusLoginPage G4PlusLoginPage;
 
-	public CCBookingFlow() {
-		this.logger = Logger.getLogger(CCBookingFlow.class);
-		landingPage = new LandingPage();
-		flightPage = new FlightPage();
-		bundlePage = new BundlePage();
-		hotelPage = new HotelPage();
-		vehiclePage = new VehiclePage();
-		travelerPage = new TravelerPage();
-		seatPage = new SeatPage();
-		paymentPage = new PaymentPage();
-		bagPage = new BagPage();
-		confirmationPage = new ConfirmationPage();
-		mod = new MOD();
-		g4MenuPage = new G4MenuPage();
-		EmailVerification = new EmailVerification();
-		G4PlusLoginPage=new G4PlusLoginPage();
+	public CCBookingFlow(Logger log) {
+		this.logger=log;
+		landingPage = new LandingPage(log);
+		flightPage = new FlightPage(log);
+		bundlePage = new BundlePage(log);
+		hotelPage = new HotelPage(log);
+		vehiclePage = new VehiclePage(log);
+		travelerPage = new TravelerPage(log);
+		seatPage = new SeatPage(log);
+		paymentPage = new PaymentPage(log);
+		bagPage = new BagPage(log);
+		confirmationPage = new ConfirmationPage(log);
+		mod = new MOD(log);
+		g4MenuPage = new G4MenuPage(log);
+		EmailVerification = new EmailVerification(log);
+		G4PlusLoginPage=new G4PlusLoginPage(log);
 	}
 
 	public String CCBooking(Integer silo,Itinerary itn, ITestContext context) {
 		String manifestId = "";
+		String errorLog ="";
 		try {
 			if(System.getProperty("env").contains("nddprd")) {
 				G4PlusLoginPage.g4plusLogin(false);
@@ -69,7 +70,7 @@ public class CCBookingFlow extends BasePage {
 			flightPage.selectFlightPage(itn);
 			manifestId = ManifestId.getManifestId(driver);
 			itn.setManifestId(manifestId);
-			logger.info("Initiated flight, manifest id is " + manifestId);
+			logger.info("Initiated flight, manifest id is " + manifestId);		
 			bundlePage.selectBundle(itn);
 			hotelPage.selectHotel(itn);
 			vehiclePage.selectVehicle(itn);
@@ -90,7 +91,7 @@ public class CCBookingFlow extends BasePage {
 					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 					DriverBase.getDriver().get(URLS.CC.getUrl(Environment.getEnv(), silo));
 				}
-				
+
 				if(System.getProperty("env").contains("nddprd")) {
 					G4PlusLoginPage.g4plusLogin(false);
 					DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("env"), Environment.getCurrentSilo()));
@@ -109,11 +110,10 @@ public class CCBookingFlow extends BasePage {
 				paymentPage.fillPaymentPage(itn, false, true);
 				confirmationPage.verifyConf(itn);
 			} catch (Exception e1) {
-				logger.info("%%%%%% caught error: " + e.getMessage());
-				e.printStackTrace();
+				itn.setErrorLog("Error while CC Booking" );
 				return manifestId;
 			}
-			
+
 		}
 		return manifestId;
 	}
@@ -129,17 +129,17 @@ public class CCBookingFlow extends BasePage {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		}
-		
+
 		return mod.modUpsell(itn);
-		}  
+	}  
 
 	public void CCRefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
 		if (Environment.getEnv().contains("prod")) {
 			mod.refundWholeAmountInMod(itin, itn);
-			mod.cancelWholeItn(itn.getItn());
+			mod.cancelWholeItn(itn.getItn(), itn);
 		}     
 	}
-	
+
 	public Boolean emailVerification(Itinerary itn, String mailToValidation) {
 		try {
 			EmailVerification.openGmail(itn,mailToValidation);
@@ -147,7 +147,7 @@ public class CCBookingFlow extends BasePage {
 		}catch(Exception e) {
 			return false;
 		}
-				
+
 	}
 
 }

@@ -133,9 +133,9 @@ public class PaymentPage extends BasePage {
 	@FindBy(xpath = "//h2[contains(text(),'Who Will Be Traveling?')]")
 	private WebElement travellersPageH2;
 
-	public PaymentPage() {
+	public PaymentPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(PaymentPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
@@ -156,7 +156,7 @@ public class PaymentPage extends BasePage {
 		}
 	}
 
-	public void selectTripFlex(Boolean tf, String scenario) {
+	public void selectTripFlex(Boolean tf, String scenario,Itinerary itn) {
 		for (int loop = 0; loop < 5; loop++) {
 			try {
 				if (!scenario.toLowerCase().contains("web")) {
@@ -178,6 +178,7 @@ public class PaymentPage extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (loop == 4) {
+					itn.setErrorLog("Error while selecting trip flex " );
 					throw new Error(e);
 				} else {
 					try {
@@ -197,7 +198,7 @@ public class PaymentPage extends BasePage {
 		}
 	}
 
-	public void fillCardInfo(String cardNo) throws Exception {
+	public void fillCardInfo(String cardNo,Itinerary itn) throws Exception {
 		String expiredMonth;
 		String expiredYear;
 		String cardNumber;
@@ -276,6 +277,7 @@ public class PaymentPage extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (loop == 4) {
+					itn.setErrorLog("Error while selecting state in payment page " );
 					throw new Error(e.getMessage());
 				} else {
 					try {
@@ -342,9 +344,9 @@ public class PaymentPage extends BasePage {
 
 		String amount = "";
 		double totalBookingFare = 0.00;
-		bagPage = new BagPage();
-		paymentPage = new PaymentPage();
-		travelerPage = new TravelerPage();
+		bagPage = new BagPage(logger);
+		paymentPage = new PaymentPage(logger);
+		travelerPage = new TravelerPage(logger);
 
 		logger.info("Will popup be called?  " + Popupflag);
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
@@ -372,6 +374,7 @@ public class PaymentPage extends BasePage {
 			Thread.sleep(5000);
 			amount = totalAmount.getText().trim();
 		} catch (StaleElementReferenceException e) {
+			itn.setErrorLog("Error while getting the text of amount " );
 			logger.info(e);
 		}
 		totalBookingFare = ConvertPrice(amount);
@@ -413,17 +416,17 @@ public class PaymentPage extends BasePage {
 				}
 				paymentPage.fillPaymentPage(itn, createAccount, false);
 			} catch (Exception e) {
-				e.printStackTrace();
+				itn.setErrorLog("Error in payment page " );
 			}
 			// wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
 
 		} else {
 			if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
 					|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
-				selectTripFlex(itn.getTripFlex(), itn.getScenario());
+				selectTripFlex(itn.getTripFlex(), itn.getScenario(), itn);
 			}
 
-			fillCardInfo(itn.getCardNo());
+			fillCardInfo(itn.getCardNo(), itn);
 
 			if (createAccount) {
 				itn.setEmail("tsqa.automation+" + System.currentTimeMillis() + "@tridentsqa.com");

@@ -36,6 +36,7 @@ public class GeneralUtils {
             FileUtils.copyFile(file, desFile);
         }
         catch (Exception e) {
+        	logger.error("Error while copying file : ");
             e.getMessage();
         }
 
@@ -56,6 +57,7 @@ public class GeneralUtils {
             try {
                 file.createNewFile();
             } catch (IOException e) {
+            	logger.error("Cannot create result file ");
                 throw new Error("Cannot create result file " + path + " " + e.getMessage());
             }
         }
@@ -65,6 +67,7 @@ public class GeneralUtils {
         try {
             oStream = new FileOutputStream(file.getAbsoluteFile(), true);
         } catch (FileNotFoundException e) {
+        	logger.error("File not found ");
             throw new Error("File not found. " + e.getStackTrace().toString());
         }
 
@@ -74,6 +77,7 @@ public class GeneralUtils {
             writer.append(body);
             writer.close();
         } catch (IOException e) {
+        	logger.error("Fail when trying to write to output file. ");
             throw new Error("Fail when trying to write to output file. " + e.getStackTrace().toString());
         }
     }
@@ -90,6 +94,7 @@ public class GeneralUtils {
             return res;
         }
         catch (IOException e) {
+        	logger.error("Fail when trying to read input file. ");
             throw new Error("Fail when trying to read input file. " + e.getStackTrace().toString());
         }
     }
@@ -126,7 +131,7 @@ public class GeneralUtils {
         }
         catch (SQLException e) {
             sql_executor.closeConnection();
-            e.printStackTrace();
+            logger.error("Fail to obtain flights from sql");
       //      throw new Error("Fail to obtain flights from sql");
         }
 

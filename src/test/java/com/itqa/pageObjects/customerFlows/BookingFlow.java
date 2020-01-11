@@ -29,7 +29,7 @@ import org.testng.ITestContext;
 public class BookingFlow extends BasePage {
 
 	private RemoteWebDriver driver;
-	private Logger logger = null;
+	public Logger logger = null;
 	private LandingPage landingPage;
 	private FlightPage flightPage;
 	private TripsPage tripsPage;
@@ -57,35 +57,36 @@ public class BookingFlow extends BasePage {
 	private ManageTravelVehiclePage ManageTravelVehiclePage;
 	private ManageTravelPaymentPage ManageTravelPaymentPage;
 	private G4PlusLoginPage g4LoginPage;
-
-	public BookingFlow() {
-		this.logger = Logger.getLogger(BookingFlow.class);
-		landingPage = new LandingPage();
-		flightPage = new FlightPage();
-		bundlePage = new BundlePage();
-		hotelPage = new HotelPage();
-		vehiclePage = new VehiclePage();
-		travelerPage = new TravelerPage();
-		seatPage = new SeatPage();
-		paymentPage = new PaymentPage();
-		bagPage = new BagPage();
-		confirmationPage = new ConfirmationPage();
-		tripsPage = new TripsPage();
-		loginPage = new LoginPage();
-		bagAndBoardingPage = new BagAndBoardingPage();
-		checkedSeatPage = new CheckedSeatPage();
-		checkinPaymentPage = new CheckinPaymentPage();
-		getBoardingPassPage = new GetBoardingPassPage();
-		mod = new MOD();
-		g4MenuPage = new G4MenuPage();
-		EmailVerification = new EmailVerification();
-		ManageTravelLoginPage = new ManageTravelLoginPage();
-		ManageTravelBagPage = new ManageTravelBagPage();
-		ManageTravelSeatPage = new ManageTravelSeatPage();
-		ManageTravelHotelPage = new ManageTravelHotelPage();
-		ManageTravelVehiclePage = new ManageTravelVehiclePage();
-		ManageTravelPaymentPage = new ManageTravelPaymentPage();
-		g4LoginPage = new G4PlusLoginPage();
+	
+	public BookingFlow(Logger log) {
+		this.logger = log;
+		landingPage = new LandingPage(log);
+		flightPage = new FlightPage(log);
+		bundlePage = new BundlePage(log);
+		hotelPage = new HotelPage(log);
+		vehiclePage = new VehiclePage(log);
+		activityPage = new ActivityPage(log);
+		travelerPage = new TravelerPage(log);
+		seatPage = new SeatPage(log);
+		paymentPage = new PaymentPage(log);
+		bagPage = new BagPage(log);
+		confirmationPage = new ConfirmationPage(log);
+		tripsPage = new TripsPage(log);
+		loginPage = new LoginPage(log);
+		bagAndBoardingPage = new BagAndBoardingPage(log);
+		checkedSeatPage = new CheckedSeatPage(log);
+		checkinPaymentPage = new CheckinPaymentPage(log);
+		getBoardingPassPage = new GetBoardingPassPage(log);
+		mod = new MOD(log);
+		g4MenuPage = new G4MenuPage(log);
+		EmailVerification = new EmailVerification(log);
+		ManageTravelLoginPage = new ManageTravelLoginPage(log);
+		ManageTravelBagPage = new ManageTravelBagPage(log);
+		ManageTravelSeatPage = new ManageTravelSeatPage(log);
+		ManageTravelHotelPage = new ManageTravelHotelPage(log);
+		ManageTravelVehiclePage = new ManageTravelVehiclePage(log);
+		ManageTravelPaymentPage = new ManageTravelPaymentPage(log);
+		g4LoginPage = new G4PlusLoginPage(log);
 	}
 
 	public String createWebBooking(Itinerary itn, ITestContext context) {
@@ -105,6 +106,7 @@ public class BookingFlow extends BasePage {
 			seatPage.selectSeatPage(itn);
 			bagPage.selectBagPage(itn);
 		} catch (Exception e) {
+			itn.setErrorLog("Error while Create Booking  ");
 			return manifestId;
 		}
 		return manifestId;
@@ -117,6 +119,7 @@ public class BookingFlow extends BasePage {
 	public String createWebBookingWithAccount(Integer silo, Itinerary itn, ITestContext context,
 			Boolean createAccount) {
 		String manifestId = "";
+		String errorLog ="";
 
 		try {
 			manifestId = createWebBooking(itn, context);
@@ -124,6 +127,7 @@ public class BookingFlow extends BasePage {
 			confirmationPage.verifyConf(itn);
 		} catch (Exception e) {
 			try {
+				itn.setErrorLog("Error while Create Booking ");
 				itn.setDepartureCity("BLI");
 				itn.setDestinationCity("LAS");
 				driver = DriverBase.getDriver();
@@ -133,11 +137,12 @@ public class BookingFlow extends BasePage {
 					driver.get(URLS.WWW.getUrl(Environment.getEnv(), silo));
 				}
 				manifestId = createWebBooking(itn, context);
+				
 				paymentPage.fillPaymentPage(itn, createAccount, true);
 				confirmationPage.verifyConf(itn);
 			} catch (Exception e1) {
-				logger.info("%%%%%% caught error: " + e.getMessage());
-				e.printStackTrace();
+				itn.setErrorLog("Error while creating web booking " );
+				logger.info("%%%%%% caught error ");
 				return manifestId;
 			}
 
@@ -157,7 +162,7 @@ public class BookingFlow extends BasePage {
 			Thread.sleep(3000);
 			DriverBase.getDriver().get(logoutUrl);
 			logger.info(logoutUrl);
-			landingPage.signIn(itn.getEmail());
+			landingPage.signIn(itn.getEmail(), itn);
 			return tripsPage.checkMyTrips(itn.getItn());
 		}catch(Exception e) {
 			if (System.getProperty("env").contains("qa1")) {
@@ -175,7 +180,7 @@ public class BookingFlow extends BasePage {
 			DriverBase.getDriver().get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
 		}
 		loginPage.doCheckin(itn);
-		bagAndBoardingPage.doBagandBoardingNoUpsell();
+		bagAndBoardingPage.doBagandBoardingNoUpsell(itn);
 		checkedSeatPage.acceptDefaultSeat();
 		return getBoardingPassPage.boardingPassPrinted(itn);
 	}
@@ -190,7 +195,7 @@ public class BookingFlow extends BasePage {
 		}
 
 		loginPage.doCheckin(itn);
-		bagAndBoardingPage.doBagandBoarding();
+		bagAndBoardingPage.doBagandBoarding(itn);
 		checkedSeatPage.selectUpgradeSeat();
 		checkinPaymentPage.fillCheckinPaymentPage(itn);
 		return getBoardingPassPage.boardingPassPrinted(itn);
@@ -210,7 +215,7 @@ public class BookingFlow extends BasePage {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 			}}
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-		g4MenuPage.selectMOD();
+		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
 		return mod.createVoucher(itn);
 
@@ -218,16 +223,16 @@ public class BookingFlow extends BasePage {
 
 	public void WWWUncheckRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
 		if (Environment.getEnv().contains("prod")) {
-			mod.stationUncheckPax(itn.getItn());
+			mod.stationUncheckPax(itn.getItn(), itn);
 			mod.refundWholeAmountInMod(itin, itn);
-			mod.cancelWholeItn(itn.getItn());
+			mod.cancelWholeItn(itn.getItn(), itn);
 		}
 	}
 
 	public void WWWRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
 		if (Environment.getEnv().contains("prod")) {
 			mod.refundWholeAmountInMod(itin, itn);
-			mod.cancelWholeItn(itn.getItn());
+			mod.cancelWholeItn(itn.getItn(), itn);
 		}
 	}
 
@@ -258,7 +263,7 @@ public class BookingFlow extends BasePage {
 		ManageTravelPaymentPage.fillPaymentPage(itn);
 
 	}catch (Exception e) {
-		e.printStackTrace();
+		itn.setErrorLog("Error in manage travel while modifiying the bags and seats " );
 		throw new Error(">>>manageTravelModificationUpsellBagSeat FAIL<<<");
 	}
 }}

@@ -13,6 +13,7 @@ import com.itqa.Utils.Environment;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.util.Base64;
@@ -48,9 +49,9 @@ public class G4PlusLoginPage extends BasePage {
 	@FindBy(css = "a[href='/login/logout']")
 	private WebElement logoutButton;
 
-	public G4PlusLoginPage() {
+	public G4PlusLoginPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(G4PlusLoginPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
@@ -73,12 +74,11 @@ public class G4PlusLoginPage extends BasePage {
 			logger.info("Signin to G4Plus-Portal");
 		} catch (Exception e) {
 			skip=true;
-			e.printStackTrace();
 		}
 		
 	}
 
-	public void selectCompany() {
+	public void selectCompany(Itinerary itn) {
 		try {
 			companyButton.click();
 			companyButton.click();
@@ -86,17 +86,19 @@ public class G4PlusLoginPage extends BasePage {
 			logger.info("Select company");
 		} catch (Exception e) {
 			skip = true;
+			itn.setErrorLog("Scenario failed ");
 			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
 
-	public void logOut() {
+	public void logOut(Itinerary itn) {
 		for (int i = 0; i < 10; i++) {
 			try {
 				userDropDown.click();
 				break;
 			} catch (Exception e) {
 				if (i == 9) {
+					itn.setErrorLog("Error while logout " );
 					throw new Error(e);
 				}
 				try {

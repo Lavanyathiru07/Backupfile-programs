@@ -26,9 +26,9 @@ public class ManageTravelSummaryPage {
     @FindBy(css = "div.confirmation-title.green-message")
     private WebElement confirmationMessage;
 
-    public ManageTravelSummaryPage() {
+    public ManageTravelSummaryPage(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(ManageTravelSummaryPage.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 60), this);
     }

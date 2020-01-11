@@ -37,9 +37,9 @@ public class TripsPage {
 	@FindBy(xpath = "//span[text()='My Trips']")
 	private WebElement tripsTitle;
 
-	public TripsPage() {
+	public TripsPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(TripsPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
 	}

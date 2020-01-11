@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class ESP extends BasePage{
@@ -25,23 +26,22 @@ public class ESP extends BasePage{
     @FindBy(xpath = "//td[contains(text(),'31B')]")
     private WebElement mapRow;
 
-    public ESP() {
+    public ESP(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(ESP.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void accessESP() {
-		try {
-			logger.info("ESP Verify -> Started");
-			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mapRow));
-			mapRow.click();
-			logger.info("ESP Scenario -> Pass");
-		} catch (Exception e) {
-			logger.error("ESP Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error("FAIL");
-		}
-	}
+    public void accessESP(Itinerary itn) {
+    	try{
+    		logger.info("ESP Verify -> Started");
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mapRow));
+        mapRow.click();
+        logger.info("ESP Menu Open");
+    	}catch(Exception e){
+    		itn.setErrorLog("Error while access ESP " );
+    		throw new Error("Error while access ESP");
+    	}
+    	}
 }

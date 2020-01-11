@@ -45,9 +45,9 @@ public class LineMaintenance extends BasePage{
     @FindBy(id = "result_row")
     private WebElement resultRow;
 
-    public LineMaintenance() {
+    public LineMaintenance(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(LineMaintenance.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
@@ -74,14 +74,12 @@ public class LineMaintenance extends BasePage{
 					}
 				}
 			}
-
 			logger.info("LineMaintenance Report Scenario -> Pass");
 		} catch (Exception e) {
 			logger.error("LineMaintenance Report Scenario -> Fail");
 			if ((Environment.getEnv().contains("trn"))) {
 				itn.setItn("No results found");
 			}
-			e.printStackTrace();
 			throw new Error(">>>Records returns no result<<<");
 		}
 

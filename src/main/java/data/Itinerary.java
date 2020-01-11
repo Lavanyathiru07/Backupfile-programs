@@ -37,6 +37,7 @@ public class Itinerary {
 	private String silo;
 	private String description;
 	private String manifestId;
+	private String errorLog;
 
 	private float total;
 	private boolean skip;
@@ -293,6 +294,15 @@ public class Itinerary {
 	public String getManifestId() {
 		return this.manifestId;
 	}
+
+	public void setErrorLog(String errorLog) {
+		this.errorLog = errorLog;
+	}
+
+	public String getErrorLog() {
+		return this.errorLog;
+	}
+	
 	public void setHotel(boolean hotel) {
 		this.hotel = hotel;
 	}

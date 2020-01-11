@@ -3,6 +3,7 @@ package com.itqa.pageObjects.aisPages;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
@@ -49,38 +50,36 @@ public class PrintManifest extends BasePage {
     @FindBy(id = "flight-manifest")
     private WebElement paxTable;
 
-    public PrintManifest() {
+    public PrintManifest(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(PrintManifest.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void verifyPrintManifest() {
-		try {
-			logger.info("PrintManifest Verify -> Started");
-			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(locationSelect));
-			locationSelect.click();
-			new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(locationField));
-			locationField.sendKeys("LAS");
-			logger.info("Select Location: LAS");
-			new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(selectCity));
-			selectCity.click();
-			submitButton.click();
+    public void verifyPrintManifest(Itinerary itn) {
+    	try{
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(locationSelect));
+        locationSelect.click();
+        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(locationField));
+        locationField.sendKeys("LAS");
+        logger.info("Select Location: LAS");
+        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(selectCity));
+        selectCity.click();
+        submitButton.click();
 
-			Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-			new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(selectFlight));
-			selectFlight.click();
-			GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-			new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(allPaxButton));
-			allPaxButton.click();
-			new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(paxTable));
-			paxTable.click();
-			logger.info("PrintManifest Scenario -> Pass");
-		} catch (Exception e) {
-			logger.error("PrintManifest Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error(">>>verify PrintManifest FAIL<<<");
-		}
-	}
+        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(selectFlight));
+        selectFlight.click();
+        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(allPaxButton));
+        allPaxButton.click();
+        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(paxTable));
+        paxTable.click();
+        logger.info("PrintManifest Scenario -> Pass");
+    	}catch(Exception e){
+    		itn.setErrorLog("Error while verifying the print manifest " );
+    		throw new Error(">>>verify PrintManifest FAIL<<<");
+    	}
+    }
 }

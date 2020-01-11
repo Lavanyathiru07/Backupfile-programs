@@ -12,6 +12,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.util.List;
@@ -32,14 +33,14 @@ public class RQ extends BasePage{
     @FindBy(xpath = "//tr[contains(@class,'ng-scope')]")
     private WebElement resultRow;
 
-    public RQ() {
+    public RQ(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(RQ.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void accessRQ() {
+	public void accessRQ(Itinerary itn) {
 		try {
 			logger.info("RQ Verify -> Started");
 			for (int i = 0; i < 20; i++) {
@@ -57,9 +58,8 @@ public class RQ extends BasePage{
 			jse.executeScript("arguments[0].click();", submitButton);
 			logger.info("RQ Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("RQ Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error("FAIL");
+			itn.setErrorLog("RQ Scenario -> Fail");
+			throw new Error("RQ Scenario -> Fail");
 		}
 	}
 }

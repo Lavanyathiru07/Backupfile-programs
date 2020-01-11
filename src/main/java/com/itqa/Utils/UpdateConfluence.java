@@ -40,7 +40,7 @@ public class UpdateConfluence {
 			updateConfluencePage(result);
 				} 
 			catch (Exception e){
-			e.printStackTrace();
+				logger.error("Error while updating the Confluence page result ");
 				}
 		}
 		

@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class FlightFlow extends BasePage{
@@ -29,26 +30,24 @@ public class FlightFlow extends BasePage{
     @FindBy(xpath = "//table[contains(@class,'main')]")
     private WebElement mainTable;
 
-    public FlightFlow() {
+    public FlightFlow(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(FlightFlow.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void openFlightFlow() {
-		try {
-			logger.info("FlightFlow Verify -> Started");
-			new Select(acGroupSelect).selectByVisibleText("ALL");
-			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(submitButton));
-			submitButton.click();
-			mainTable.isDisplayed();
-			logger.info("Flight Flow Table Displayed");
-			logger.info("FlightFlow Scenario -> Pass");
-		} catch (Exception e) {
-			logger.error("FlightFlow Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error(">>>Fligh Flow FAIL<<<");
-		}
-	}
+    public void openFlightFlow(Itinerary itn) {
+    	try{
+        new Select(acGroupSelect).selectByVisibleText("ALL");
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(submitButton));
+        submitButton.click();
+        mainTable.isDisplayed();
+        logger.info("Flight Flow Table Displayed");
+        logger.info("FlightFlow Scenario -> Pass");
+    	}catch(Exception e){
+    		itn.setErrorLog("Error while opening flight flow " );
+    		throw new Error(">>>Fligh Flow FAIL<<<");
+    	}
+    }
 }

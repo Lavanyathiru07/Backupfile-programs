@@ -66,9 +66,9 @@ public class ManageTravelPaymentPage {
     @FindBy(xpath = "//input[contains(@name,'payment_details[terms_accepted]')]/..")
     private WebElement termAcceptField;
 
-    public ManageTravelPaymentPage() {
+    public ManageTravelPaymentPage(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(ManageTravelPaymentPage.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }
@@ -121,6 +121,7 @@ public class ManageTravelPaymentPage {
             }
             catch (Exception e) {
                 if (loop == 9) {
+                	itn.setErrorLog("Error" );
                     throw new Error(e);
                 }
                 else {
@@ -145,6 +146,7 @@ public class ManageTravelPaymentPage {
             }
             catch (Exception e) {
                 if (loop == 4) {
+                	itn.setErrorLog("Error" );
                     throw new Error(e.getMessage());
                 }
                 else {
