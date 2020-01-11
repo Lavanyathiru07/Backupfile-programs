@@ -8,8 +8,8 @@ public class Itinerary {
 	private final Integer departureDateIndex;
 	private final Integer returningDateIndex;
 
-	private final String firstName;
-	private final String lastName;
+	private String firstName;
+	private String lastName;
 	private final String gender;
 	private final Integer dobMonth;
 	private final Integer dobDate;
@@ -118,11 +118,17 @@ public class Itinerary {
 	public String getFirstName() {
 		return this.firstName;
 	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
 	public String getLastName() {
 		return this.lastName;
 	}
-
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 	public Integer getDobMonth() {
 		return this.dobMonth;
 	}

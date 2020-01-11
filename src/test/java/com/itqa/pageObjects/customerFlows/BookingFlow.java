@@ -93,6 +93,10 @@ public class BookingFlow extends BasePage {
 		String manifestId = "";
 
 		try {
+			if(Environment.getEnv().contains("prod")||Environment.getEnv().contains("vipprd")) {
+				itn.setFirstName("QAPROD");
+				itn.setLastName("PLZIGNORE");
+			}
 			landingPage.selectFlightsOnLandingPage(itn);
 			flightPage.selectFlightPage(itn);
 			logger.info("Running on " + DriverBase.getDriver().getCurrentUrl());

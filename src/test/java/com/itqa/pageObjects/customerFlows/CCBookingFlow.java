@@ -59,6 +59,10 @@ public class CCBookingFlow extends BasePage {
 		String manifestId = "";
 		String errorLog ="";
 		try {
+			if(Environment.getEnv().contains("prod")||Environment.getEnv().contains("vipprd")) {
+				itn.setFirstName("QAPROD");
+				itn.setLastName("PLZIGNORE");
+			}
 			if(System.getProperty("env").contains("nddprd")) {
 				G4PlusLoginPage.g4plusLogin(false);
 				DriverBase.getDriver().get(URLS.CC.getUrl(System.getProperty("env"), Environment.getCurrentSilo()));

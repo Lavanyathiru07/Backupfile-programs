@@ -71,6 +71,10 @@ public class TABookingFlow extends BasePage {
 		String errorLog ="";
 
 		try {
+			if(Environment.getEnv().contains("prod")||Environment.getEnv().contains("vipprd")) {
+				itn.setFirstName("QAPROD");
+				itn.setLastName("PLZIGNORE");
+			}
 			taSignInPage.taSignin(itn);
 			landingPage.selectFlightsOnLandingPage(itn);
 			flightPage.selectFlightPage(itn);
