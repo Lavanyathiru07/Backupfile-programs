@@ -272,9 +272,6 @@ public class G4PlusFlow extends BasePage {
 			MaintenanceRecords.openReport(itn);
 
 		} catch (Exception e) {
-			if(Environment.getEnv().contains("aws")) {
-				itn.setItn("Failed due to QAA-338");
-			}
 			itn.setErrorLog("Error while getting SPOE report " );
 			throw new Error(">>>Reports cant find<<<");
 		}

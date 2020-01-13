@@ -42,9 +42,6 @@ public class FlightScheduleMaintenance extends BasePage{
 			logger.info("FlightScheduleMX Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("FlightScheduleMX Scenario -> Fail");
-			if (Environment.getEnv().contains("stg")) {
-				itn.setItn("Failed due to ALGT-159980");
-			}
 			itn.setErrorLog("Error while verifying the flight schedule MX " );
 			throw new Error(">>>Flight Schedule MX Fail<<<");
 		}

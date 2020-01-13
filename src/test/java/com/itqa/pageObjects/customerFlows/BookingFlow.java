@@ -170,9 +170,6 @@ public class BookingFlow extends BasePage {
 			landingPage.signIn(itn.getEmail(), itn);
 			return tripsPage.checkMyTrips(itn.getItn());
 		}catch(Exception e) {
-			if (System.getProperty("env").contains("qa1")) {
-			itn.setItn(itn.getItn()+"Failed due to CES-1101");
-		}
 			return false;
 		}
 		

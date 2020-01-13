@@ -260,7 +260,7 @@ public class MOD extends BasePage {
 			confirmationNumField.click();
 			logger.info("MOD Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("MOD Scenario -> Fail");
+			itn.setErrorLog("Error while verifying MOD Scenario");
 			throw new Error("MOD Scenario -> Fail");
 		}
 	}

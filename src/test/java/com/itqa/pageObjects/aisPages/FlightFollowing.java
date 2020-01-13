@@ -88,7 +88,7 @@ public class FlightFollowing extends BasePage{
         }
         logger.info("FlightInformation Scenario -> Pass");
     }catch(Exception e){
-    	itn.setErrorLog("FlightInformation Scenario -> Fail");
+    	itn.setErrorLog("Error while verifying FlightInformation Scenario");
 		throw new Error("FAIL - Flight Following - Cannot get element");
 	}
     }

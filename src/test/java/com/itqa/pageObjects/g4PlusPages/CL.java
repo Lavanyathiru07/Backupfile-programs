@@ -47,7 +47,7 @@ public class CL extends BasePage{
         logger.info("CL Menu Open");
 
     	}catch(Exception e){  
-    		itn.setErrorLog("Customer Lookup Scenario -> Fail");
+    		itn.setErrorLog("Error while verifying Customer Lookup Scenario");
     	}
     }
 }

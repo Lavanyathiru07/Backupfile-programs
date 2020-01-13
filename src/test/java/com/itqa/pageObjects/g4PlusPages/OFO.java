@@ -49,7 +49,7 @@ public class OFO extends BasePage {
 			searchDispButton.isDisplayed();
 			logger.info("OFO Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("OFO Scenario -> Fail");
+			itn.setErrorLog("Error while verifying OFO Scenario");
 			throw new Error("OFO Scenario -> Fail");
 		}
 	}
