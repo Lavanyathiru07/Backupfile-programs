@@ -85,6 +85,8 @@ public class CCBookingFlow extends BasePage {
 			confirmationPage.verifyConf(itn);
 		} catch (Exception e) {
 			try {
+				
+				logger.info("Started Re-executing test case");
 				itn.setDepartureCity("BLI");
 				itn.setDestinationCity("LAS");
 				driver = DriverBase.getDriver();

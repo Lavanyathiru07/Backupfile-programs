@@ -131,6 +131,7 @@ public class BookingFlow extends BasePage {
 			confirmationPage.verifyConf(itn);
 		} catch (Exception e) {
 			try {
+				logger.info("Started Re-executing test case");
 				itn.setErrorLog("Error while Create Booking ");
 				itn.setDepartureCity("BLI");
 				itn.setDestinationCity("LAS");

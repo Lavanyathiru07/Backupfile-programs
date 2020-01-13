@@ -93,6 +93,7 @@ public class TABookingFlow extends BasePage {
 			
 		} catch (Exception e) {
 			try {
+				logger.info("Started Re-executing test case");
 				itn.setDepartureCity("CVG");
 				itn.setDestinationCity("SFB");
 				driver = DriverBase.getDriver();
