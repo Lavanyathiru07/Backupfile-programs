@@ -76,7 +76,7 @@ public class CAR extends BasePage{
         resultRow.click();
         logger.info("CAR Menu Open");
     	}catch(Exception e){
-    		itn.setErrorLog("CAR Scenario -> Fail");
+    		itn.setErrorLog("Error while verifying CAR Scenario");
     		throw new Error("CAR Scenario -> Fail");
     	}
     }

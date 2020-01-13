@@ -65,7 +65,7 @@ public class SVT extends BasePage{
 			resultRow.click();
 			logger.info("SVT Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("SVT Scenario -> Fail");
+			itn.setErrorLog("Error while verifying SVT Scenario");
 			throw new Error("SVT Scenario -> Fail");
 		}
 	}

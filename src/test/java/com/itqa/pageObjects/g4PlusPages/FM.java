@@ -64,7 +64,7 @@ public class FM extends BasePage{
 			resultRow.click();
 			logger.info("BAG Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("BAG Scenario -> Fail");
+			itn.setErrorLog("Error while verifying BAG Scenario");
 			throw new Error("BAG Scenario -> Fail");
 		}
 	}
@@ -90,7 +90,7 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("PB2 Scenario -> Pass");
     }catch(Exception e){
-    	itn.setErrorLog("PB2 Scenario -> Fail");
+    	itn.setErrorLog("Error while verifying PB2 Scenario");
     	throw new Error("PB2 Scenario -> Fail");
 	}
     }
@@ -117,7 +117,7 @@ public class FM extends BasePage{
 			resultRow.click();
 			logger.info("TF2 Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("TF2 Scenario -> Fail");
+			itn.setErrorLog("Error while verifying TF2 Scenario");
 			throw new Error("TF2 Scenario -> Fail");
 		}
 	}

@@ -90,7 +90,7 @@ public class MaintenanceRecords extends BasePage {
 			}
 			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("lookupActionRequest Scenario -> Fail");
+			itn.setErrorLog("Error while verifiying lookupActionRequest Scenario");
 			throw new Error(">>>Action Requests returns no result<<<");
 		}
 	}
@@ -118,7 +118,7 @@ public class MaintenanceRecords extends BasePage {
 			}
 			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("lookupActionRequest Scenario -> Fail");
+			itn.setErrorLog("Error while verifying lookupActionRequest Scenario");
 			throw new Error(">>>Reports cant find<<<");
 		}
 	}

@@ -58,7 +58,7 @@ public class RQ extends BasePage{
 			jse.executeScript("arguments[0].click();", submitButton);
 			logger.info("RQ Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("RQ Scenario -> Fail");
+			itn.setErrorLog("Error while verifying RQ Scenario");
 			throw new Error("RQ Scenario -> Fail");
 		}
 	}
