@@ -75,11 +75,11 @@ public class CCBookingTestIT extends DriverBase {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-
+*/
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
 				|| ((env.contains("in1") || env.contains("in2") || env.contains("sb1")) && (silo == 1))
@@ -96,7 +96,7 @@ public class CCBookingTestIT extends DriverBase {
 				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			}
 
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -109,7 +109,7 @@ public class CCBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			if (flightAvailService == 0 && paymentService == 0) {
 				CCBookingFlow booking = generateBooking(itn, silo, context);
@@ -153,10 +153,10 @@ public class CCBookingTestIT extends DriverBase {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 
 		if ((env.contains("stg") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
@@ -173,7 +173,7 @@ public class CCBookingTestIT extends DriverBase {
 				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			}
 
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -186,7 +186,7 @@ public class CCBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
 			if (flightAvailService == 0 && paymentService == 0) {
@@ -217,7 +217,7 @@ public class CCBookingTestIT extends DriverBase {
 		}
 	}
 
-	@AfterMethod
+	//@AfterMethod
 	public void writeResult(ITestResult result) {
 		synchronized (this) {
 		if (result.getStatus() == ITestResult.SKIP) {

@@ -70,10 +70,10 @@ public class WebBookingTestIT extends DriverBase {
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprd") && (silo == 0))) {
 			if (env.contains("prod")) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
@@ -86,7 +86,7 @@ public class WebBookingTestIT extends DriverBase {
 					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 				}
 			}
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
@@ -99,7 +99,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
 			if (flightAvailService == 0 && paymentService == 0) {
@@ -136,10 +136,10 @@ public class WebBookingTestIT extends DriverBase {
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException, Exception {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if (((env.contains("in1") || env.contains("in2") || env.contains("sb1")) && (silo == 1))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
 				|| (env.contains("stg") && ((silo == 1)|| (silo == 2) || (silo == 3) ))
@@ -151,7 +151,7 @@ public class WebBookingTestIT extends DriverBase {
 				setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			}
 
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
@@ -164,7 +164,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			if (flightAvailService == 0 && paymentService == 0) {
 				try {
@@ -220,16 +220,16 @@ public class WebBookingTestIT extends DriverBase {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 		
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
 				|| (env.contains("prod") && (silo == 3))) {
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			logger.get().info("Accout creation booking started");
 
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
@@ -242,7 +242,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
 			if (flightAvailService == 0 && paymentService == 0) {
@@ -279,7 +279,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 	}
 
-	@AfterMethod
+	//@AfterMethod
 	public void writeResult(ITestResult result) {
 		synchronized (this) {
 			if (result.getStatus() == ITestResult.SKIP) {

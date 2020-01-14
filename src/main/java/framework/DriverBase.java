@@ -38,9 +38,9 @@ public class DriverBase {
 	@BeforeSuite
 	public void initCat() throws Exception {
 		System.setProperty("startTime", (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date()));		
-		cat = new CATinits();
+		/*cat = new CATinits();
 		cat.createJob();
-		cat.createSuite("BAT 2.0");
+		cat.createSuite("BAT 2.0");*/
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -72,8 +72,8 @@ public class DriverBase {
 
 	@AfterSuite(alwaysRun=true) // CAT 
 	public void tearDown() {
-		cat.completeSuite("BAT 2.0");
-		cat.completeJob("COMPLETED");
+		/*cat.completeSuite("BAT 2.0");
+		cat.completeJob("COMPLETED");*/
 		try {
 			getDriver().manage().deleteAllCookies();
 		} catch (Exception ex) {

@@ -52,7 +52,7 @@ public final class CATinits {
         String response = "";
 
         try {
-            HttpURLConnection connection = (HttpURLConnection)(new URL("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push")).openConnection();
+            HttpURLConnection connection = (HttpURLConnection)(new URL("https://cat.allegiantair.com/api/buildresults/jobs/push")).openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("content-type", "application/json");

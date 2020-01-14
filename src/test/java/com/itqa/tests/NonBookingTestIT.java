@@ -68,14 +68,14 @@ public class NonBookingTestIT extends DriverBase {
 	public void lookupActionRequest(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 
-		}
+		}*/
 		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -88,7 +88,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupActionRequest(itn);
@@ -105,13 +105,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void lookupAircraftRecordsPart(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -124,7 +124,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupAircraftRecordsPart(itn);
@@ -140,13 +140,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void runSPOEreport(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -159,7 +159,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.runSPOEreport(itn);
@@ -177,13 +177,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void verifyFlightFollowing(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("vipprd") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -196,7 +196,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyFlightFollowing(itn);
@@ -213,13 +213,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessInventoryMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -232,7 +232,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessInventoryMX(itn);
@@ -248,13 +248,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void verifyPrintManifest(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("vipprd") && !env.contains("sb1") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -267,7 +267,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyPrintManifest(itn);
@@ -282,13 +282,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void verifyFlightScheduleMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -301,7 +301,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyFlightScheduleMX(itn);
@@ -318,13 +318,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void lookupAccountsPayableMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -337,7 +337,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.lookupAccountsPayableMX(itn);
@@ -353,13 +353,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void verifyFlightFlow(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("vipprd") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -372,7 +372,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.verifyFlightFlow(itn);
@@ -387,13 +387,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessKayakConsole(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("vipprd") && (silo==4)&&!env.contains("trn")&&!env.contains("prod") && !env.contains("sb1"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -406,7 +406,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessKayakConsole(itn);
@@ -421,13 +421,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessCL(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in")) && !env.contains("vipprd") && !env.contains("sb1")&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -440,7 +440,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessCL(itn);
@@ -456,13 +456,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessSTS(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&&(silo==5)&&(!env.contains("in"))&& !env.contains("sb1")&& !env.contains("vipprd") && (!env.contains("nddprd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -475,7 +475,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessSTS(itn);
@@ -490,13 +490,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessESP(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("prod")) && !env.contains("vipprd")&& !env.contains("sb1") && (silo==5) && (!env.contains("in")) && (!env.contains("nddprd")) && (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -509,7 +509,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessESP(itn);
@@ -524,13 +524,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessSVT(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in"))&& !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -543,7 +543,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessSVT(itn);
@@ -558,13 +558,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessCAR(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in")) && (!env.contains("trn")&& !env.contains("vipprd"))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -577,7 +577,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessCAR(itn);
@@ -594,13 +594,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessTF2(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&& !env.contains("sb1")&& !env.contains("vipprd")&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -613,7 +613,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessTF2(itn);
@@ -628,13 +628,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessRQ(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&& !env.contains("sb1")&& !env.contains("vipprd")&&(silo==5)&&(!env.contains("in")) &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -647,7 +647,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessRQ(itn);
@@ -662,13 +662,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessBAG(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&& !env.contains("sb1")&&(silo==5)&&(!env.contains("in")) && !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -681,7 +681,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessBAG(itn);
@@ -696,13 +696,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessPB2(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in")) && !env.contains("vipprd")&&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -715,7 +715,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessPB2(itn);
@@ -730,13 +730,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessHOT(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in")) && !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -749,7 +749,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessHOT(itn);
@@ -764,13 +764,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessATL(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in"))&& !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -783,7 +783,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessATL(itn);
@@ -798,13 +798,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessOFO(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in"))&& !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -817,7 +817,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessOFO(itn);
@@ -832,13 +832,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessMOD(Integer silo, Itinerary itn, ITestContext context, Method method) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if((!env.contains("prod"))&&(silo==5)&& !env.contains("sb1")&&(!env.contains("in")) && !env.contains("vipprd") &&  (!env.contains("nddprd"))&& (!env.contains("trn"))){
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -851,7 +851,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessMOD(itn);
@@ -866,13 +866,13 @@ public class NonBookingTestIT extends DriverBase {
 	public void accessSwap(Integer silo, ITestContext context, Method method, Itinerary itn) {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		synchronized (this) {
+		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}
+		}*/
 		if ((!env.contains("vipprd")&& !env.contains("sb1") && (silo==5))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -885,7 +885,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);
+			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 			G4PlusFlow nonBooking = new G4PlusFlow(logger.get());
 			nonBooking.accessSwap(itn);
@@ -895,7 +895,7 @@ public class NonBookingTestIT extends DriverBase {
 		//itineraryItn = itn.getItn();
 	}
 
-	@AfterMethod
+	//@AfterMethod
 	public void writeResult(ITestResult result) {
 		if (result.getStatus() == ITestResult.SKIP) {
 			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
