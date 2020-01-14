@@ -108,7 +108,7 @@ public class HOT extends BasePage{
 			logger.info("HOT Scenario -> Pass");
 
 		} catch (Exception e) {
-			itn.setErrorLog("HOT Scenario -> Fail");
+			itn.setErrorLog("Error while verifying HOT Scenario");
 			throw new Error("HOT Scenario -> Fail");
 		}
 	}

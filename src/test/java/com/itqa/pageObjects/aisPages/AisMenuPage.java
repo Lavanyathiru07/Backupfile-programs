@@ -179,7 +179,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(METab));
 			METab.click();		
 		} catch (Exception e) {
-			itn.setErrorLog("MXandEngr Scenario -> Fail");
+			itn.setErrorLog("Error while verifying MXandEngr Scenario");
 		}
 	}
 
@@ -189,7 +189,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(lineMXTab));
 			lineMXTab.click();			
 		} catch (Exception e) {
-			itn.setErrorLog("LineMX Scenario -> Fail");
+			itn.setErrorLog("Error while verifying LineMX Scenario");
 		}
 	}
 
@@ -199,7 +199,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxControlTab));
 			mxControlTab.click();			
 		} catch (Exception e) {
-			itn.setErrorLog("MXControl Scenario -> Fail");
+			itn.setErrorLog("Error while verifying MXControl Scenario");
 		}
 	}
 
@@ -209,7 +209,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reliabilityTab));
 			reliabilityTab.click();			
 		} catch (Exception e) {
-			itn.setErrorLog("Reliability Scenario -> Fail");
+			itn.setErrorLog("Error while verifying  Reliability Scenario");
 		}
 	}
 
@@ -219,7 +219,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxRecordsTab));
 			mxRecordsTab.click();			
 		} catch (Exception e) {
-			itn.setErrorLog("MXRecords Scenario -> Fail");
+			itn.setErrorLog("Error while verifying MXRecords Scenario");
 		}
 	}
 
@@ -231,7 +231,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightScheduleMXTab));
 			flightScheduleMXTab.click();
 		} catch (Exception e) {
-			itn.setErrorLog("FlightScheduleMX Scenario -> Fail");
+			itn.setErrorLog("Error while verifying FlightScheduleMX Scenario");
 		}
 	}
 
@@ -243,7 +243,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(airOnlyTab));
 			airOnlyTab.click();
 		} catch (Exception e) {
-			itn.setErrorLog("Aironly Scenario -> Fail");
+			itn.setErrorLog("Error while verifying Aironly Scenario");
 		}
 	}
 
@@ -255,7 +255,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(printManifestTab));
 			printManifestTab.click();
 		} catch (Exception e) {
-			itn.setErrorLog("PrintManifest Scenario -> Fail");
+			itn.setErrorLog("Error while verifying PrintManifest Scenario");
 		}
 	}
 
@@ -265,7 +265,7 @@ public class AisMenuPage extends BasePage {
 			rsTab.click();
 			itnMXTab.click();
 		} catch (Exception e) {
-			itn.setErrorLog("ITNMX Scenario -> Fail");
+			itn.setErrorLog("Error while verifying ITNMX Scenario");
 		}
 	}
 

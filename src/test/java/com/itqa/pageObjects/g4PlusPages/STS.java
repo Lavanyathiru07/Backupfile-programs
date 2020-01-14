@@ -51,7 +51,7 @@ public class STS extends BasePage {
 			logger.info("STS Scenario -> Pass");
 
 		} catch (Exception e) {
-			itn.setErrorLog("STS Scenario -> Fail");
+			itn.setErrorLog("Error while verifying STS Scenario");
 			throw new Error("STS Scenario -> Fail");
 		}
 	}

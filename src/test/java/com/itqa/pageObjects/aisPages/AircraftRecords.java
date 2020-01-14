@@ -57,7 +57,7 @@ public class AircraftRecords extends BasePage {
     		}
     		logger.info("lookupAircraftPart Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("lookupAircraftPart Scenario -> Fail");
+			itn.setErrorLog("Error while verifying lookupAircraftPart Scenario");
 			throw new Error(">>>Aircraft Records returns no result<<<");
 
 		}

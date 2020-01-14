@@ -76,12 +76,8 @@ public class CAR extends BasePage{
         resultRow.click();
         logger.info("CAR Menu Open");
     	}catch(Exception e){
-    		itn.setErrorLog("CAR Scenario -> Fail");
-    		if (Environment.getEnv().contains("nddprd")) {
-				itn.setItn("Failed due to CES-1505");
-				itn.setErrorLog("CAR Scenario -> Fail : CES-1505");
-			}
-			throw new Error("CAR Scenario -> Fail : CES-1505");
+    		itn.setErrorLog("Error while verifying CAR Scenario");
+    		throw new Error("CAR Scenario -> Fail");
     	}
     }
 }

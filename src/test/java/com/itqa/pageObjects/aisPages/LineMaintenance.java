@@ -77,9 +77,6 @@ public class LineMaintenance extends BasePage{
 			logger.info("LineMaintenance Report Scenario -> Pass");
 		} catch (Exception e) {
 			logger.error("LineMaintenance Report Scenario -> Fail");
-			if ((Environment.getEnv().contains("trn"))) {
-				itn.setItn("No results found");
-			}
 			throw new Error(">>>Records returns no result<<<");
 		}
 
