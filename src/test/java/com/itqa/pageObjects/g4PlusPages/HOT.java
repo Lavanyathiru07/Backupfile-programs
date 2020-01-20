@@ -3,6 +3,7 @@ package com.itqa.pageObjects.g4PlusPages;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
@@ -56,14 +57,14 @@ public class HOT extends BasePage{
     @FindBy(xpath = "//tr[contains(@class,'ng-scope') and contains(@ng-repeat,'reportItems')]")
     private WebElement reportsRow;
 
-    public HOT() {
+    public HOT(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(HOT.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void accessHOT() {
+	public void accessHOT(Itinerary itn) {
 		try {
 			logger.info("HOT Verify -> Started");
 			for (int loop = 0; loop < 10; loop++) {
@@ -107,9 +108,8 @@ public class HOT extends BasePage{
 			logger.info("HOT Scenario -> Pass");
 
 		} catch (Exception e) {
-			logger.error("HOT Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error("FAIL");
+			itn.setErrorLog("Error while verifying HOT Scenario");
+			throw new Error("HOT Scenario -> Fail");
 		}
 	}
 }

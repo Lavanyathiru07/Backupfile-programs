@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class KayakConsole extends BasePage{
@@ -22,22 +23,21 @@ public class KayakConsole extends BasePage{
     @FindBy(xpath = "//table[contains(@class,'tablesorter')]")
     private WebElement kayakTable;
 
-    public KayakConsole() {
+    public KayakConsole(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(KayakConsole.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void editKayakConsole() {
+    public void editKayakConsole(Itinerary itn) {
 		try {
 			logger.info("Kayak Console Open");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakTable));
 			kayakTable.click();
 			logger.info("Kayak Scenario -> Pass");
 		}catch(Exception e){
-			logger.error("Kayak Scenario -> Fail");
-    		e.printStackTrace();
+			itn.setErrorLog("Error while verifying Kayak Scenario");
     		throw new Error(">>>Kayak Access FAIL<<<");
     	}
     }

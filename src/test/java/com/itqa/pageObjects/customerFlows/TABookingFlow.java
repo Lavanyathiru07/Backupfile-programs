@@ -42,35 +42,40 @@ public class TABookingFlow extends BasePage {
 	private ManageTravelVehiclePage ManageTravelVehiclePage;
 	private ManageTravelPaymentPage ManageTravelPaymentPage;
 
-	public TABookingFlow() {
-		this.logger = Logger.getLogger(TABookingFlow.class);
+	public TABookingFlow(Logger log) {
 
-		taSignInPage = new TaSignInPage();
-		landingPage = new LandingPage();
-		flightPage = new FlightPage();
-		hotelPage = new HotelPage();
-		vehiclePage = new VehiclePage();
-		travelerPage = new TravelerPage();
-		seatPage = new SeatPage();
-		paymentPage = new PaymentPage();
-		bagPage = new BagPage();
-		confirmationPage = new ConfirmationPage();
-		mod = new MOD();
-		EmailVerification = new EmailVerification();
-		ManageTravelLoginPage =new ManageTravelLoginPage();
-		ManageTravelBagPage = new ManageTravelBagPage();
-		ManageTravelSeatPage = new ManageTravelSeatPage();
-		ManageTravelHotelPage = new ManageTravelHotelPage();
-		ManageTravelVehiclePage = new ManageTravelVehiclePage();
-		ManageTravelPaymentPage = new ManageTravelPaymentPage();
+		this.logger=log;
+		taSignInPage = new TaSignInPage(log);
+		landingPage = new LandingPage(log);
+		flightPage = new FlightPage(log);
+		hotelPage = new HotelPage(log);
+		vehiclePage = new VehiclePage(log);
+		travelerPage = new TravelerPage(log);
+		seatPage = new SeatPage(log);
+		paymentPage = new PaymentPage(log);
+		bagPage = new BagPage(log);
+		confirmationPage = new ConfirmationPage(log);
+		mod = new MOD(log);
+		EmailVerification = new EmailVerification(log);
+		ManageTravelLoginPage =new ManageTravelLoginPage(log);
+		ManageTravelBagPage = new ManageTravelBagPage(log);
+		ManageTravelSeatPage = new ManageTravelSeatPage(log);
+		ManageTravelHotelPage = new ManageTravelHotelPage(log);
+		ManageTravelVehiclePage = new ManageTravelVehiclePage(log);
+		ManageTravelPaymentPage = new ManageTravelPaymentPage(log);
 
 	}
 
 	public String TABooking(Integer silo,Itinerary itn, ITestContext context) {
 		String manifestId = "";
+		String errorLog ="";
 
 		try {
-			taSignInPage.taSignin();
+			if(Environment.getEnv().contains("prod")||Environment.getEnv().contains("vipprd")) {
+				itn.setFirstName("QAPROD");
+				itn.setLastName("PLZIGNORE");
+			}
+			taSignInPage.taSignin(itn);
 			landingPage.selectFlightsOnLandingPage(itn);
 			flightPage.selectFlightPage(itn);
 			manifestId = ManifestId.getManifestId(driver);
@@ -88,11 +93,12 @@ public class TABookingFlow extends BasePage {
 			
 		} catch (Exception e) {
 			try {
+				logger.info("Started Re-executing test case");
 				itn.setDepartureCity("CVG");
 				itn.setDestinationCity("SFB");
 				driver = DriverBase.getDriver();
 				if (Environment.getEnv().contains("aws")) {
-				     driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
+					driver.get(URLS.TA.getUrl(System.getProperty("awsenv"), silo));
 				}else {
 					driver.get(URLS.TA.getUrl(Environment.getEnv(), silo));
 				}
@@ -100,6 +106,7 @@ public class TABookingFlow extends BasePage {
 				flightPage.selectFlightPage(itn);
 				manifestId = ManifestId.getManifestId(driver);
 				itn.setManifestId(manifestId);
+				itn.setErrorLog("Error while TA Booking " );
 				logger.info("Initiated flight, manifest id is " + manifestId);
 				hotelPage.selectHotel(itn);
 				vehiclePage.selectVehicle(itn);
@@ -111,8 +118,7 @@ public class TABookingFlow extends BasePage {
 					confirmationPage.verifyConf(itn);
 				}
 			} catch (Exception e1) {
-				logger.info("%%%%%% caught error: " + e.getMessage());
-				e.printStackTrace();
+				logger.info("%%%%%% caught error " );
 				return manifestId;
 			}
 		}
@@ -122,10 +128,10 @@ public class TABookingFlow extends BasePage {
 	public void TARefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
 		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd") ) {
 			mod.refundWholeAmountInMod(itin, itn);
-			mod.cancelWholeItn(itn.getItn());
+			mod.cancelWholeItn(itn.getItn(), itn);
 		}
 	}
-	
+
 	public Boolean emailVerification(Itinerary itn, String mailToValidation) {
 		try {
 			EmailVerification.openGmail(itn,mailToValidation);
@@ -133,19 +139,19 @@ public class TABookingFlow extends BasePage {
 		}catch(Exception e) {
 			return false;
 		}
-				
+
 	}
 	public void TAmanageTravelModificationUpsellBag(Itinerary itn,Integer silo) throws Exception {
 		DriverBase.getDriver().get(URLS.TA.getUrl(Environment.getEnv(),silo));
-	//	taSignInPage.taSignin();
+		//	taSignInPage.taSignin();
 		ManageTravelLoginPage.doManageTravel(itn);
 		ManageTravelBagPage.selectBagPage(itn);
 		ManageTravelSeatPage.selectUpgradeSeat(itn);
 		ManageTravelHotelPage.selectHotel();
 		ManageTravelVehiclePage.selectVehicle();
 		ManageTravelPaymentPage.fillPaymentPage(itn);
-		
-		
+
+
 	}
 
 }

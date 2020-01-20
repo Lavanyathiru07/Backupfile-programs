@@ -14,6 +14,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class FM extends BasePage{
@@ -35,14 +36,14 @@ public class FM extends BasePage{
     @FindBy(css = "tr[class='ng-scope']")
     private WebElement resultRow;
 
-    public FM() {
+    public FM(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(FM.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void accessBag() {
+	public void accessBag(Itinerary itn) {
 		try {
 			logger.info("BAG Verify -> Started");
 			for (int loop = 0; loop < 10; loop++) {
@@ -63,13 +64,12 @@ public class FM extends BasePage{
 			resultRow.click();
 			logger.info("BAG Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("BAG Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error("FAIL");
+			itn.setErrorLog("Error while verifying BAG Scenario");
+			throw new Error("BAG Scenario -> Fail");
 		}
 	}
 
-    public void accessPB2() {
+    public void accessPB2(Itinerary itn) {
     	try{
     		logger.info("PB2 Verify -> Started");
         for (int loop=0; loop<10; loop++) {
@@ -79,6 +79,7 @@ public class FM extends BasePage{
             }
             catch (Exception e) {
                 if (loop == 9) {
+                	itn.setErrorLog("Error while access PB2 " );
                     throw new Error(e);
                 }
                 else {
@@ -89,13 +90,12 @@ public class FM extends BasePage{
         resultRow.click();
         logger.info("PB2 Scenario -> Pass");
     }catch(Exception e){
-    	 logger.error("PB2 Scenario -> Fail");
-    	e.printStackTrace();
-    	throw new Error("FAIL");
+    	itn.setErrorLog("Error while verifying PB2 Scenario");
+    	throw new Error("PB2 Scenario -> Fail");
 	}
     }
 
-	public void accessTF2() {
+	public void accessTF2(Itinerary itn) {
 		try {
 			logger.info("TF2 Verify -> Started");
 			for (int loop = 0; loop < 10; loop++) {
@@ -117,9 +117,8 @@ public class FM extends BasePage{
 			resultRow.click();
 			logger.info("TF2 Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("TF2 Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error("FAIL");
+			itn.setErrorLog("Error while verifying TF2 Scenario");
+			throw new Error("TF2 Scenario -> Fail");
 		}
 	}
 }

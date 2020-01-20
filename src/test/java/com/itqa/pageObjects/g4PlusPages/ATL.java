@@ -3,6 +3,7 @@ package com.itqa.pageObjects.g4PlusPages;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
@@ -47,43 +48,39 @@ public class ATL extends BasePage{
     @FindBy(id = "invoiceStartDate")
     private WebElement invoiceDateField;
 
-    public ATL() {
+    public ATL(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(ATL.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void accessATL() {
-		try {
-			logger.info("ATL Verify -> Started");
-			rulesTab.click();
-			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(hotelOverPercentField));
-			hotelOverPercentField.click();
-			GeneralUtils.takeScreenshot(driver,
-					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/1ATL.png");
+    public void accessATL(Itinerary itn) {
+    	try{
+        rulesTab.click();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(hotelOverPercentField));
+        hotelOverPercentField.click();
+        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/1ATL.png");
 
-			reportsTab.click();
-			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(typeField));
-			typeField.click();
-			GeneralUtils.takeScreenshot(driver,
-					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/2ATL.png");
+        reportsTab.click();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(typeField));
+        typeField.click();
+        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/2ATL.png");
 
-			invoicesTab.click();
-			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(invoiceDateField));
-			invoiceDateField.click();
-			GeneralUtils.takeScreenshot(driver,
-					System.getProperty("user.dir") + "/src/test/resources/nonBookingScreenshot/3ATL.png");
+        invoicesTab.click();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(invoiceDateField));
+        invoiceDateField.click();
+        GeneralUtils.takeScreenshot(driver, System.getProperty("user.dir")+"/src/test/resources/nonBookingScreenshot/3ATL.png");
 
-			atlTab.click();
-			new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(glPostingRow));
-			glPostingRow.click();
+        atlTab.click();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(glPostingRow));
+        glPostingRow.click();
 
-			logger.info("ATL Scenario -> Pass");
-		} catch (Exception e) {
-			logger.error("ATL Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error("FAIL");
-		}
-	}
+        logger.info("ATL Scenario -> Pass");
+    	}catch(Exception e){
+    		itn.setErrorLog("Error while verifying ATL Scenario");
+    		throw new Error("ATL Scenario -> Fail");
+    	}
+    }
+
 }

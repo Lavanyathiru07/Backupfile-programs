@@ -26,9 +26,9 @@ public class FlightScheduleMaintenance extends BasePage{
     @FindBy(xpath = "//td[contains(text(),'Origin')]/following-sibling::td[contains(text(),'-')]")
     private WebElement originText;
 
-    public FlightScheduleMaintenance() {
+    public FlightScheduleMaintenance(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(FlightScheduleMaintenance.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
@@ -41,11 +41,8 @@ public class FlightScheduleMaintenance extends BasePage{
 			logger.info("Flight Schedule Maintenance Displayed");
 			logger.info("FlightScheduleMX Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("FlightScheduleMX Scenario -> Fail");
-			if (Environment.getEnv().contains("stg")) {
-				itn.setItn("Failed due to ALGT-159980");
-			}
-			e.printStackTrace();
+			itn.setErrorLog("FlightScheduleMX Scenario -> Fail");
+			itn.setErrorLog("Error while verifying the flight schedule MX " );
 			throw new Error(">>>Flight Schedule MX Fail<<<");
 		}
 	}

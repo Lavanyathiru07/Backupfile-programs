@@ -11,6 +11,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
@@ -41,38 +42,36 @@ public class Reliability extends BasePage{
     @FindBy(id = "result_row")
     private WebElement resultRow;
 
-    public Reliability() {
+    public Reliability(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(Reliability.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void openReport() {
-		try {
-			logger.info("Reliability Report Verify -> Started");
-			reportsTab.click();
-			flightLogTab.click();
+    public void openReport(Itinerary itn) {
+    	try{
+        reportsTab.click();
+        flightLogTab.click();
 
-			jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
+        jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.add(Calendar.DATE, -90);
-			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-			String selectDate = format.format(calendar.getTime());
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -90);
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        String selectDate = format.format(calendar.getTime());
 
-			jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
-			jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
-			jse.executeScript("arguments[0].click();", runReportButton);
+        jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
+        jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
+        jse.executeScript("arguments[0].click();", runReportButton);
 
-			jse.executeScript("arguments[0].click();", resultRow);
-			logger.info("Reliability Report displayed");
-			logger.info("Reliability Report Scenario -> Pass");
-		} catch (Exception e) {
-			logger.error("Reliability Report Scenario -> Fail");
-			skip = true;
-			DriverBase.getDriver().quit();
-			throw new SkipException("Scenario fails so execution stoped");
+        jse.executeScript("arguments[0].click();", resultRow);
+        logger.info("Reliability Report displayed");
+    	}catch(Exception e){
+    		skip = true;
+    		itn.setErrorLog("Reliability Report Scenario -> Fail");
+    		DriverBase.getDriver().quit();
+    		throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
 }

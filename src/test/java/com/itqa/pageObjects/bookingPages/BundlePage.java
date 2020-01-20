@@ -42,9 +42,9 @@ public class BundlePage extends BasePage {
 	@FindBy(className = "bundles")
 	private WebElement bundle;
 
-	public BundlePage() {
+	public BundlePage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(BundlePage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
@@ -77,6 +77,7 @@ public class BundlePage extends BasePage {
 				logger.info("Continue is clicked");
 			}
 		} catch (NoSuchElementException e) {
+			itn.setErrorLog("Bundles page is skipping " );
 			logger.info("Bundles page is skipping");
 		}
 	}

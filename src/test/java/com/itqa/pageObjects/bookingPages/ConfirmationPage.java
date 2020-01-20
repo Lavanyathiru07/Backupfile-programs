@@ -40,9 +40,9 @@ public class ConfirmationPage extends BasePage {
     @FindBy(css = "tbody.allegiant_models_price_payment td")
     private WebElement totalPaidCC;
 
-    public ConfirmationPage() {
+    public ConfirmationPage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(ConfirmationPage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
@@ -64,7 +64,7 @@ public class ConfirmationPage extends BasePage {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+        	itn.setErrorLog("Error while verifying confirmation number " );
             throw new Error("Booking Failed: no confirmation number");
         }
     }

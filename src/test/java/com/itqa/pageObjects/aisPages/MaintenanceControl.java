@@ -46,9 +46,9 @@ public class MaintenanceControl extends BasePage {
 	@FindBy(id = "result_row")
 	private WebElement resultRow;
 
-	public MaintenanceControl() {
+	public MaintenanceControl(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(MaintenanceControl.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
@@ -74,8 +74,7 @@ public class MaintenanceControl extends BasePage {
 			}
 			logger.info("MaintenanceControl Report Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("MaintenanceControl Report Scenario -> Pass");
-			e.printStackTrace();
+			itn.setErrorLog("MaintenanceControl Report Scenario -> Fail");
 			throw new Error(">>>Records returns no result<<<");
 		}
 	}

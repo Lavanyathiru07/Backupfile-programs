@@ -33,9 +33,9 @@ public class GetBoardingPassPage {
     @FindBy(xpath = "//embed[contains(@type,'pdf')]")
     private WebElement chromeBP;
 
-    public GetBoardingPassPage() {
+    public GetBoardingPassPage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(GetBoardingPassPage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }
@@ -47,7 +47,7 @@ public class GetBoardingPassPage {
         return curTab;
     }
 
-    public void checkBP(Set<String> curTab, String itn) {
+    public void checkBP(Set<String> curTab, String pnr, Itinerary itn) {
         GeneralUtils.switchNextTab(driver, curTab);
 
         if (chromeBP.isDisplayed()) {
@@ -55,6 +55,7 @@ public class GetBoardingPassPage {
             logger.info("Boarding pass printed");
         }
         else {
+        	itn.setErrorLog("Incorrect itn, bag, priority boardng information on the boarding pass");
             throw new Error("Incorrect itn, bag, priority boarding information on the boarding pass");
         }
         Screenshot.saveScreenshot("BoardingPass", driver);
@@ -62,7 +63,7 @@ public class GetBoardingPassPage {
 
     public boolean boardingPassPrinted(Itinerary itn) {
         try {
-            checkBP(printBP(), itn.getItn());
+            checkBP(printBP(), itn.getItn(), itn);
         } catch (Exception e) {
             logger.info("Error getting boarding pass");
             return false;

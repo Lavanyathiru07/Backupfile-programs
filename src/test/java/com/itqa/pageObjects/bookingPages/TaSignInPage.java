@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
+
 public class TaSignInPage extends BasePage {
 
 	private Logger logger = null;
@@ -30,14 +32,14 @@ public class TaSignInPage extends BasePage {
 	@FindBy(id = "edit-submit")
 	private WebElement taSigninButton;
 
-	public TaSignInPage() {
+	public TaSignInPage(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(TaSignInPage.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) this.driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(this.driver, 20), this);
 	}
 
-	public void taSignin() throws Exception {
+	public void taSignin(Itinerary itn) throws Exception {
 
 		try {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(agentNameField));
@@ -48,7 +50,7 @@ public class TaSignInPage extends BasePage {
 			logger.info("TA signed in");
 		} catch (Exception e) {
 			logger.info("Could not loaded Ta login page");
-			e.printStackTrace();
+			itn.setErrorLog("Error while TA login " );
 			throw new Error(e);
 		}
 

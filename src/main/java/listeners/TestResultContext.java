@@ -13,6 +13,7 @@ public class TestResultContext {
 	String itn;
 	String testName;
 	Object screenshot;
+	String logForError;
 
 	public TestResultContext getTestResultContext(ITestResult result) {
 		Itinerary currentItn = (Itinerary) result.getParameters()[ITNINDEX];
@@ -24,6 +25,7 @@ public class TestResultContext {
 		this.description = currentItn.getDescription();
 		this.manifestId = currentItn.getManifestId();
 		this.screenshot=result.getAttribute("screenshot");
+		this.logForError=currentItn.getErrorLog();
 
 		return new TestResultContext();
 	}

@@ -14,11 +14,15 @@ import io.qameta.allure.Story;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import org.apache.log4j.Logger;
-
+import org.apache.log4j.PropertyConfigurator;
 import org.testng.Assert;
 import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import listeners.TestReport;
@@ -27,6 +31,7 @@ import listeners.RealTimeTestReport;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.util.Properties;
 
 import static io.qameta.allure.Allure.step;
 
@@ -37,6 +42,16 @@ public class CCBookingTestIT extends DriverBase {
 	private RemoteWebDriver driver;
 	private String env;
 	private TestResultContext trc;
+
+	// CAT
+	protected ThreadLocal<Logger> logger = new ThreadLocal<Logger>();
+	private ThreadLocal<Integer> testId = new ThreadLocal<Integer>();
+	private ThreadLocal<String> Iteration = new ThreadLocal<String>();
+	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
+	private ThreadLocal<String> desc = new ThreadLocal<String>();
+	private ThreadLocal<String> itinerary = new ThreadLocal<String>();
+	
+	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
 		return methodName + " running on Thread " + Thread.currentThread().getId() + " with instance as " + this;
@@ -52,10 +67,19 @@ public class CCBookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
-			"bat","cc","booking" })
+			"bat", "cc", "booking" })
+	 
 	@Story(" CC Booking - Book with Hotel, Car with ssr (Oxygen concentrator) . Email Verification")
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
+
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+
+		/*synchronized (this) {
+			testId.set(testnum);
+			testnum++;
+		}
+*/
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
 				|| ((env.contains("in1") || env.contains("in2") || env.contains("sb1")) && (silo == 1))
@@ -69,10 +93,27 @@ public class CCBookingTestIT extends DriverBase {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ ", CCModify - Upsell Bag & seat- Modification Emails received", context, itn);
 			} else {
-				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
+				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			}
+
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			Properties props = new Properties();
+			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.file.maxFileSize","100MB");
+			props.setProperty("log4j.appender.file.maxBackupIndex","0");
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
+			props.setProperty("log4j.appender.file.threshold","DEBUG");
+			props.setProperty("log4j.appender.file.Append","false");
+			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
+			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
+
+			PropertyConfigurator.configure(props);*/
+			desc.set(itn.getDescription());
 			if (flightAvailService == 0 && paymentService == 0) {
 				CCBookingFlow booking = generateBooking(itn, silo, context);
+				itinerary.set(itn.getItn());
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
@@ -94,7 +135,6 @@ public class CCBookingTestIT extends DriverBase {
 					itn.setItn(paymentErrorMsg);
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
-
 			}
 		} else {
 
@@ -103,12 +143,21 @@ public class CCBookingTestIT extends DriverBase {
 	}
 
 	// , retryAnalyzer = RetryFailure.class
-	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a Round Trip with CC Modification", groups = {
-			"bat","cc","booking" })
+
+	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a Round Trip with CC Modification",
+			groups = { "bat","cc","booking" })
 
 	@Story(" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification Retrieve ITN in G4+ MOD & upsell bags & seats")
 	public void testCCBookRoundTripWithModification(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
+
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+
+		/*synchronized (this) {
+			testId.set(testnum);
+			testnum++;
+		}*/
+
 		if ((env.contains("stg") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && (silo == 2))) {
@@ -121,12 +170,29 @@ public class CCBookingTestIT extends DriverBase {
 						+ " CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification",
 						context, itn);
 			} else {
-				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
+				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			}
+
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			Properties props = new Properties();
+			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.file.maxFileSize","100MB");
+			props.setProperty("log4j.appender.file.maxBackupIndex","0");
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
+			props.setProperty("log4j.appender.file.threshold","DEBUG");
+			props.setProperty("log4j.appender.file.Append","false");
+			props.setProperty("log4j.appender.file.layout","org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
+			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
+
+			PropertyConfigurator.configure(props);*/
+			desc.set(itn.getDescription());
+
 			if (flightAvailService == 0 && paymentService == 0) {
 				CCBookingFlow booking = generateBooking(itn, silo, context);
+				itinerary.set(itn.getItn());
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-
 				updateTextContext(itn, context);
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 				if (!((env.contains("nddprd") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws"))
@@ -144,13 +210,27 @@ public class CCBookingTestIT extends DriverBase {
 					itn.setItn(paymentErrorMsg);
 				}
 				throw new SkipException("Skipping Test Case as runmode set to NO");
-
 			}
-		} else {
 
+		} else {
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
+	}
 
+	//@AfterMethod
+	public void writeResult(ITestResult result) {
+		synchronized (this) {
+		if (result.getStatus() == ITestResult.SKIP) {
+			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+		} else if (result.getStatus() == ITestResult.FAILURE) {
+			String error = result.getThrowable().getMessage();
+			cat.completeTest("FAIL", "BAT 2.0", itinerary.get() , error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			System.out.println(itinerary+" : "+testId.get());
+		}	else if (result.getStatus() == ITestResult.SUCCESS) {
+			cat.completeTest("PASS", "BAT 2.0", itinerary.get() , "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			System.out.println(itinerary+" : "+testId.get());
+		}
+		}
 	}
 
 	private void setUpTestContext(Integer silo, String description, ITestContext context, Itinerary itn) {
@@ -186,7 +266,7 @@ public class CCBookingTestIT extends DriverBase {
 	private CCBookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context) {
 		String manifestId = "";
 		itn.setSilo(silo.toString());
-		CCBookingFlow booking = new CCBookingFlow();
+		CCBookingFlow booking = new CCBookingFlow(logger.get());
 		manifestId = booking.CCBooking(silo, itn, context);
 		itn.setManifestId(manifestId);
 		context.setAttribute("manifestid", manifestId);

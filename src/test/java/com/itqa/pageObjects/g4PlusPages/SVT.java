@@ -14,6 +14,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 import java.text.SimpleDateFormat;
@@ -42,14 +43,14 @@ public class SVT extends BasePage{
     @FindBy(xpath = "//tr[contains(@class,'ng-scope')]")
     private WebElement resultRow;
 
-    public SVT() {
+    public SVT(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(SVT.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void accessSVT() {
+	public void accessSVT(Itinerary itn) {
 		try {
 			logger.info("SVT Verify -> Started");
 			Calendar calendar = Calendar.getInstance();
@@ -64,9 +65,8 @@ public class SVT extends BasePage{
 			resultRow.click();
 			logger.info("SVT Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("SVT Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error("FAIL");
+			itn.setErrorLog("Error while verifying SVT Scenario");
+			throw new Error("SVT Scenario -> Fail");
 		}
 	}
 }

@@ -35,9 +35,9 @@ public class AircraftRecords extends BasePage {
     @FindBy(xpath = ("//div[contains(text(),'AIS Error')]"))
     private WebElement flag;
 
-    public AircraftRecords() {        
+    public AircraftRecords(Logger log) {        
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(AircraftRecords.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
         
@@ -57,8 +57,7 @@ public class AircraftRecords extends BasePage {
     		}
     		logger.info("lookupAircraftPart Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("lookupAircraftPart Scenario -> Fail");
-			e.printStackTrace();
+			itn.setErrorLog("Error while verifying lookupAircraftPart Scenario");
 			throw new Error(">>>Aircraft Records returns no result<<<");
 
 		}

@@ -244,25 +244,24 @@ public class MOD extends BasePage {
 	@FindBy(id = "username")
 	private WebElement userNameField;
 
-	public MOD() {
+	public MOD(Logger log) {
 		this.driver = DriverBase.getDriver();
-		this.logger = Logger.getLogger(MOD.class);
+		this.logger=log;
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 
-		g4MenuPage = new G4MenuPage();
-		g4LoginPage = new G4PlusLoginPage();
+		g4MenuPage = new G4MenuPage(log);
+		g4LoginPage = new G4PlusLoginPage(log);
 	}
 
-	public void accessMOD() {
+	public void accessMOD(Itinerary itn) {
 		try {
 			logger.info("MOD Verify -> Started");
 			confirmationNumField.click();
 			logger.info("MOD Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("MOD Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error("FAIL");
+			itn.setErrorLog("Error while verifying MOD Scenario");
+			throw new Error("MOD Scenario -> Fail");
 		}
 	}
 
@@ -308,6 +307,7 @@ public class MOD extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (loop == 4) {
+					itn.setErrorLog("Error while checking voucher received from field " );
 					throw new Error(e.getMessage());
 				}
 			}
@@ -323,7 +323,7 @@ public class MOD extends BasePage {
 		if (voucher.equals("")) {
 			return false;
 		} else {
-			voucherVerification();
+			voucherVerification(itn);
 			return true;
 		}
 		
@@ -440,7 +440,7 @@ public class MOD extends BasePage {
 	public boolean modUpsell(Itinerary Itn) {
 		
 			Set<String> curTab = driver.getWindowHandles();
-			g4MenuPage.selectMOD();
+			g4MenuPage.selectMOD(Itn);
 			GeneralUtils.switchNextTab(driver, curTab);
 
 			upsell(Itn);
@@ -450,13 +450,13 @@ public class MOD extends BasePage {
 						.elementToBeClickable(By.xpath("//div[contains(@class,'flight-panel-target')]")));
 				return true;
 			} catch (Exception e) {
-				logger.info("Error getting while upsell bags & Seats");
+				Itn.setErrorLog("Error getting upsell bags and seats " );
 				return false;
 			}
 		
 	}
 
-	public void reversing() {
+	public void reversing(Itinerary itn) {
 		new WebDriverWait(driver, 10).until(ExpectedConditions.numberOfElementsToBeMoreThan(
 				By.xpath("//td[contains(text(),'PAYMENT')]/..//button/i[@class='fa fa-mail-reply-all']"), 0));
 		int total = reverseAll.size();
@@ -469,6 +469,7 @@ public class MOD extends BasePage {
 					break;
 				} catch (Exception e) {
 					if (j == 4) {
+						itn.setErrorLog("Error while reverse all is clicked " );
 						throw new Error(e);
 					}
 					try {
@@ -497,7 +498,7 @@ public class MOD extends BasePage {
 		}
 	}
 
-	public void reversevoucher() throws InterruptedException {
+	public void reversevoucher(Itinerary itn) throws InterruptedException {
 		new WebDriverWait(driver, 10).until(ExpectedConditions.numberOfElementsToBeMoreThan(
 				By.xpath("//td[contains(text(),'CREDIT VOUCHER')]/..//button/i[@class='fa fa-reply']"), 0));
 		int total = reversevoucher.size();
@@ -510,6 +511,7 @@ public class MOD extends BasePage {
 					break;
 				} catch (Exception e) {
 					if (j == 4) {
+						itn.setErrorLog("Error while reverse button is clicked " );
 						throw new Error(e);
 					}
 					try {
@@ -531,10 +533,10 @@ public class MOD extends BasePage {
 		}
 	}
 
-	public void unCheckPax(String itn) {
+	public void unCheckPax(String pnr, Itinerary itn) {
 		searchBtn.click();
 		logger.info("Search button is clicked");
-		itnField.sendKeys(itn);
+		itnField.sendKeys(pnr);
 		logger.info("Itn is entered." + itn + Keys.TAB);
 		jse.executeScript("arguments[0].click();", submitBtn);
 		logger.info("Submit button is clicked");
@@ -548,13 +550,14 @@ public class MOD extends BasePage {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.numberOfElementsToBe(By.className("eligible"), 0));
 			logger.info("Uncheck passenger(s)");
 		} catch (Exception e) {
+			itn.setErrorLog("Error while uncheck passanger");
 			throw new Error(e);
 		}
 	}
 
-	public void refundWholeAmount(String itn, Itinerary itin) throws InterruptedException {
+	public void refundWholeAmount(String pnr, Itinerary itn) throws InterruptedException {
 
-		confirmationNumField.sendKeys(itn.split(" | ")[0]);
+		confirmationNumField.sendKeys(pnr.split(" | ")[0]);
 		searchButton.click();
 
 		// driver.get("https://g4plus-res.stg.allegiantair.com/app/bookings/" + itn);
@@ -573,6 +576,7 @@ public class MOD extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (i == 9) {
+					itn.setErrorLog("Error while clicking on payment tab");
 					throw new Error(e);
 				}
 				try {
@@ -582,8 +586,8 @@ public class MOD extends BasePage {
 			}
 		}
 
-		if (itin.getDescription().toLowerCase().contains("voucher")) {
-			reversevoucher();
+		if (itn.getDescription().toLowerCase().contains("voucher")) {
+			reversevoucher(itn);
 		}
 
 		new WebDriverWait(driver, 10).until(
@@ -619,6 +623,7 @@ public class MOD extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (i == 4) {
+					itn.setErrorLog("Error while clicking on continue");
 					throw new Error(e);
 				}
 				try {
@@ -628,7 +633,7 @@ public class MOD extends BasePage {
 			}
 		}
 
-		reversing();
+		reversing(itn);
 
 		logger.info("Refund all amounts");
 
@@ -636,9 +641,9 @@ public class MOD extends BasePage {
 				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[href='#booking-transactions']")));
 	}
 
-	public void cancelItn(String itn) {
+	public void cancelItn(String pnr, Itinerary itn) {
 
-		confirmationNumField.sendKeys(itn.split(" | ")[0]);
+		confirmationNumField.sendKeys(pnr.split(" | ")[0]);
 		searchButton.click();
 
 		// driver.get("https://g4plus-res.stg.allegiantair.com/app/bookings/" + itn);
@@ -659,6 +664,7 @@ public class MOD extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (i == 9) {
+					itn.setErrorLog("Error while clicking on additional option");
 					throw new Error(e);
 				}
 				try {
@@ -712,13 +718,13 @@ public class MOD extends BasePage {
 		logger.info("\n**********Cancel Whole Itn Done************");
 	}
 
-	public void stationUncheckPax(String itn) {
+	public void stationUncheckPax(String pnr, Itinerary itn) {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		g4LoginPage.g4plusLogin(true);
 		Set<String> curTab = driver.getWindowHandles();
-		g4MenuPage.selectSTNS();
+		g4MenuPage.selectSTNS(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
-		unCheckPax(itn);
+		unCheckPax(pnr, itn);
 	}
 
 	public void refundWholeAmountInMod(String itin, Itinerary itn) throws InterruptedException {
@@ -729,13 +735,13 @@ public class MOD extends BasePage {
 			}
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
-		g4MenuPage.selectMOD();
+		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 
 		refundWholeAmount(itin, itn);
 	}
 
-	public void cancelWholeItn(String itn) {
+	public void cancelWholeItn(String pnr, Itinerary itn) {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		try {
 			if(userNameField.isDisplayed()) {
@@ -744,13 +750,13 @@ public class MOD extends BasePage {
 		}catch(Exception e) {}
 		
 		Set<String> curTab = driver.getWindowHandles();
-		g4MenuPage.selectMOD();
+		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 
-		cancelItn(itn);
+		cancelItn(pnr, itn);
 	}
 
-	public void voucherVerification() {
+	public void voucherVerification(Itinerary itn) {
 		jse.executeScript("arguments[0].click()", customer);
 		logger.info("Customer tab is clicked");
 		Set<String> curTab = driver.getWindowHandles();
@@ -762,6 +768,7 @@ public class MOD extends BasePage {
 				logger.info("Voucher is displayed in customer lookup -- Voucher number is  : " + voucher.getText());
 			}
 		} catch (Exception e) {
+			itn.setErrorLog("Error while verifying the voucher.Please check manually" );
 			logger.info("Error while verifying the voucher.Please check manually");
 
 		}

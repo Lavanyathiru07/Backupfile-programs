@@ -33,9 +33,9 @@ public class InventoryMaintenance extends BasePage{
     @FindBy(id = "TransactionsTab")
     private WebElement transactionTab;
 
-    public InventoryMaintenance() {
+    public InventoryMaintenance(Logger log) {
     	this.driver = DriverBase.getDriver();
-    	this.logger = Logger.getLogger(InventoryMaintenance.class);
+    	this.logger=log;
     	jse = (JavascriptExecutor) driver;
     	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
@@ -72,8 +72,7 @@ public class InventoryMaintenance extends BasePage{
 			}
 			logger.info("Inventory Maintenance Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("Inventory Maintenance Scenario -> Fail");
-			e.printStackTrace();
+			itn.setErrorLog("Error while verifying Inventory Maintenance Scenario");
 			throw new Error(">>>Inventory Maintenance Fail<<< ");
 
 		}

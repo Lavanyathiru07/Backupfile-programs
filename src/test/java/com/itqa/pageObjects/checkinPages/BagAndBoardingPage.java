@@ -3,6 +3,8 @@ package com.itqa.pageObjects.checkinPages;
 //import org.boon.core.Sys;
 
 import com.graphbuilder.struc.Bag;
+
+import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
@@ -37,9 +39,9 @@ public class BagAndBoardingPage {
     @FindBy(xpath = "//strong[contains(text(),'restricted articles')]/../following-sibling::div/div/button[contains(@class,'continue')]")
     private WebElement hazardContinue;
 
-    public BagAndBoardingPage() {
+    public BagAndBoardingPage(Logger log) {
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(BagAndBoardingPage.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }
@@ -72,22 +74,24 @@ public class BagAndBoardingPage {
         logger.info("Click CONTINUE from bag and boading page");
     }
 
-    public void clickContinueHazard() {
+    public void clickContinueHazard(Itinerary itn) {
         try {
             jse.executeScript("arguments[0].click();", hazardContinue);
             logger.info("Click CONTINUE from hazard page");
-        }catch(Exception e){}
+        }catch(Exception e){
+        	itn.setErrorLog("Error while clicking on continue of hazard page " );
+        }
     }
 
-    public void doBagandBoarding() {
+    public void doBagandBoarding(Itinerary itn) {
         addBagsAndPriority();
         clickContinue();
-        clickContinueHazard();
+        clickContinueHazard(itn);
     }
 
-    public void doBagandBoardingNoUpsell() {
+    public void doBagandBoardingNoUpsell(Itinerary itn) {
         customizeBagsAndPriorityDuringChecking("0", "0", "false");
         clickContinue();
-        clickContinueHazard();
+        clickContinueHazard(itn);
     }
 }

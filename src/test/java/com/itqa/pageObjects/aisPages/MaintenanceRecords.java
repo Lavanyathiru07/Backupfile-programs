@@ -65,14 +65,14 @@ public class MaintenanceRecords extends BasePage {
     @FindBy(xpath = ("//div[contains(text(),'AIS Error')]"))
     private WebElement flag;
 
-    public MaintenanceRecords() {
+    public MaintenanceRecords(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(MaintenanceRecords.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void lookupActionRequest(Itinerary itn) {
+    public void lookupActionRequest(Itinerary itn) {
 		try {
 			logger.info("lookupActionRequest Verify -> Started");
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionsTab));
@@ -90,16 +90,12 @@ public class MaintenanceRecords extends BasePage {
 			}
 			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("lookupActionRequest Scenario -> Fail");
-			if (Environment.getEnv().contains("aws")) {
-				itn.setItn("Failed due to QAA-338");
-			}
-			e.printStackTrace();
+			itn.setErrorLog("Error while verifiying lookupActionRequest Scenario");
 			throw new Error(">>>Action Requests returns no result<<<");
 		}
 	}
 
-	public void openReport() {
+	public void openReport(Itinerary itn) {
 		try {
 			logger.info("lookupActionRequest Report Verify -> Started");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
@@ -122,8 +118,7 @@ public class MaintenanceRecords extends BasePage {
 			}
 			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("lookupActionRequest Scenario -> Fail");
-			e.printStackTrace();
+			itn.setErrorLog("Error while verifying lookupActionRequest Scenario");
 			throw new Error(">>>Reports cant find<<<");
 		}
 	}

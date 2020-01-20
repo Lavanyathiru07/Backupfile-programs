@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class CL extends BasePage{
@@ -28,26 +29,25 @@ public class CL extends BasePage{
     @FindBy(id = "email")
     private WebElement emailField;
 
-    public CL() { 
+    public CL(Logger log) { 
         this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(CL.class);
+        this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
         
     }
 
-	public void accessCL() {
-		try {
-			logger.info("CL Verify -> Started");
-			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(fnameField));
-			fnameField.click();
-			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(emailField));
-			emailField.click();
-			logger.info("CL Scenario -> Pass");
+    public void accessCL(Itinerary itn) {
+    	try{
+    		logger.info("CL Verify -> Started");
+    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(fnameField));
+        fnameField.click();
+        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(emailField));
+        emailField.click();
+        logger.info("CL Menu Open");
 
-		} catch (Exception e) {
-			logger.error("Customer Lookup Scenario -> Fail");
-			e.printStackTrace();
-		}
-	}
+    	}catch(Exception e){  
+    		itn.setErrorLog("Error while verifying Customer Lookup Scenario");
+    	}
+    }
 }

@@ -11,6 +11,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import data.Itinerary;
 import framework.DriverBase;
 
 public class OFO extends BasePage {
@@ -32,14 +33,14 @@ public class OFO extends BasePage {
     @FindBy(xpath = "//a[contains(@href,'dispositions/search')]")
     private WebElement searchDispButton;
 
-    public OFO() {
+    public OFO(Logger log) {
     	this.driver = DriverBase.getDriver();
-        this.logger = Logger.getLogger(OFO.class);
+    	this.logger=log;
         jse = (JavascriptExecutor) driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-	public void accessOFO() {
+	public void accessOFO(Itinerary itn) {
 		try {
 			logger.info("OFO Verify -> Started");
 			pendingDisp.isDisplayed();
@@ -48,9 +49,8 @@ public class OFO extends BasePage {
 			searchDispButton.isDisplayed();
 			logger.info("OFO Scenario -> Pass");
 		} catch (Exception e) {
-			logger.error("OFO Scenario -> Fail");
-			e.printStackTrace();
-			throw new Error("FAIL");
+			itn.setErrorLog("Error while verifying OFO Scenario");
+			throw new Error("OFO Scenario -> Fail");
 		}
 	}
 }
