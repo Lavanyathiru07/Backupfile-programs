@@ -1,1 +1,10 @@
 /target/
+
+.DS_Store
+.idea/
+EmailResult.html
+Result.html
+SDLC_BAT.iml
+allure-results/
+chromedriver.exe
+src/test/resources/nonBookingScreenshot/
