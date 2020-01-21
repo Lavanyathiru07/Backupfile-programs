@@ -16,6 +16,8 @@ import com.itqa.pageObjects.manageTravelPages.ManageTravelVehiclePage;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
 
@@ -126,9 +128,27 @@ public class TABookingFlow extends BasePage {
 	}
 
 	public void TARefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd") ) {
+		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd")
+				|| Environment.getEnv().contains("stg")) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn(), itn);
+			try{
+				driver = DriverBase.getDriver();
+				String refundedTotal = driver.findElement(
+						By.xpath("//td/abbr[text()='Refunded']/following::td[@class='amount'][1]")).getText().toString();
+
+				refundedTotal = refundedTotal.replace("$","");
+				if( refundedTotal.contains(",")){
+					refundedTotal=refundedTotal.replace(",", "");
+				}
+				float tempRefund = Float.valueOf(refundedTotal );
+				itn.setRefundAmount(tempRefund);
+
+			}catch( WebDriverException e){
+				logger.info("Total Amount was not able to be retrieve: " + e);
+			}catch( NumberFormatException e){
+				logger.info("Could not convert number: " + e);
+			}
 		}
 	}
 

@@ -114,6 +114,9 @@ public class TABookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
+			if( env.contains("stg") || env.contains("prd")){
+				itn.setRefundApplicable(true);
+			}
 			if (flightAvailService == 0 && paymentService == 0) {
 				TABookingFlow booking = new TABookingFlow(logger.get());
 				generateBooking(itn, silo, context);

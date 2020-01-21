@@ -378,6 +378,10 @@ public class PaymentPage extends BasePage {
 			logger.info(e);
 		}
 		totalBookingFare = ConvertPrice(amount);
+		if( amount.contains(",") ){
+			amount = amount.replace(",","");
+		}
+		itn.setTotal(Float.valueOf(amount.replace("$","")));
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
 		int arr[] = { 201, 204, 249, 253, 257, 258, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521,
