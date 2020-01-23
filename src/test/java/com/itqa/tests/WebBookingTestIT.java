@@ -78,7 +78,6 @@ public class WebBookingTestIT extends DriverBase {
 			if (env.contains("prod")) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
 						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
-				itn.setRefundApplicable(true);
 			} else {
 				if (silo != 0) {
 					setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context,
@@ -103,6 +102,9 @@ public class WebBookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
+			if( env.contains("prod") ){
+				itn.setRefundApplicable(true);
+			}
 			if (flightAvailService == 0 && paymentService == 0) {
 				BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 				itinerary.set(itn.getItn());
@@ -166,7 +168,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 			PropertyConfigurator.configure(props);*/
-			if( env.contains("stg") || env.contains("prd")) {
+			if(  env.contains("prod")) {
 				itn.setRefundApplicable(true);
 			}
 			desc.set(itn.getDescription());
@@ -248,7 +250,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
-			if( env.contains("stg") || env.contains("prd") ){
+			if( env.contains("prod") ){
 				itn.setRefundApplicable(true);
 			}
 			if (flightAvailService == 0 && paymentService == 0) {

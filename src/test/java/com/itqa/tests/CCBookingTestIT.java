@@ -111,7 +111,7 @@ public class CCBookingTestIT extends DriverBase {
 
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
-			if( env.contains("prd") || env.contains("stg")){
+			if( env.contains("prod") ) {
 				itn.setRefundApplicable(true);
 			}
 			if (flightAvailService == 0 && paymentService == 0) {
@@ -192,7 +192,7 @@ public class CCBookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
-			if( env.contains("prd") || env.contains("stg")){
+			if( env.contains("prod") ){
 				itn.setRefundApplicable(true);
 			}
 			if (flightAvailService == 0 && paymentService == 0) {

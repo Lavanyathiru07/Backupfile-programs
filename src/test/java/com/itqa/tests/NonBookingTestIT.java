@@ -80,7 +80,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -116,7 +116,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -151,7 +151,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -188,7 +188,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -224,7 +224,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -259,7 +259,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -280,22 +280,20 @@ public class NonBookingTestIT extends DriverBase {
 			"bat", "ais" })
 	@Story("AIS - Access Flight Schedule Maintenance")
 	public void verifyFlightScheduleMX(Integer silo, Itinerary itn, ITestContext context, Method method) {
-
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}*/
-		//if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
-		if( false ){
+		if ((!env.contains("vipprd") && !env.contains("aws") && (silo==4))) {
 			setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
 			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -331,7 +329,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -366,7 +364,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -400,7 +398,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -434,7 +432,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -469,7 +467,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -503,7 +501,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -537,7 +535,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -571,7 +569,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -607,7 +605,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -641,7 +639,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -675,7 +673,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -709,7 +707,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -743,7 +741,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -777,7 +775,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -811,7 +809,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -845,7 +843,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");
@@ -879,7 +877,7 @@ public class NonBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");

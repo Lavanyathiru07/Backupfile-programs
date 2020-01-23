@@ -227,7 +227,7 @@ public class BookingFlow extends BasePage {
 
 	public void WWWUncheckRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
 
-		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("stg")) {
+		if (Environment.getEnv().contains("prod") ) {
 			mod.stationUncheckPax(itn.getItn(), itn);
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn(), itn);
@@ -252,7 +252,7 @@ public class BookingFlow extends BasePage {
 	}
 
 	public void WWWRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("stg")) {
+		if (Environment.getEnv().contains("prod") ) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn(), itn);
 			try{
