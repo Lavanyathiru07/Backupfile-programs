@@ -118,7 +118,6 @@ public class AccountsPayableMaintenance extends BasePage{
 			logger.info("lookupTransaction Scenario -> Pass");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while verifying lookupTransaction Scenario");
-			logger.error("Reason for failure: " + e );
 			throw new Error(">>>Account Payable MX FAIL<<<");
 		}
 	}

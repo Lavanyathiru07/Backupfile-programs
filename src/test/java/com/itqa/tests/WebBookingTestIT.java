@@ -102,7 +102,7 @@ public class WebBookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
-			if( env.contains("prod") ){
+			if( env.contains("prod") || env.contains("vipprd")){
 				itn.setRefundApplicable(true);
 			}
 			if (flightAvailService == 0 && paymentService == 0) {

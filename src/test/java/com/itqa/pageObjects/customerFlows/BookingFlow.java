@@ -252,7 +252,7 @@ public class BookingFlow extends BasePage {
 	}
 
 	public void WWWRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("prod") ) {
+		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd") ) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn(), itn);
 			try{

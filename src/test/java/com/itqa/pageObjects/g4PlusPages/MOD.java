@@ -428,7 +428,7 @@ public class MOD extends BasePage {
 			jse.executeScript("arguments[0].click();", confirmRedisplayButton);
 			logger.info("Confirm & Redisplay Appears");
 
-			if (System.getProperty("env").contains("prod") || System.getProperty("env").contains("stg")) {
+			if (System.getProperty("env").contains("prod") ) {
 				Itn.setTotal(Itn.getTotal() + tempBalance);
 			}
 
