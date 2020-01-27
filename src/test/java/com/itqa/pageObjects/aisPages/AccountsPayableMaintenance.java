@@ -93,7 +93,7 @@ public class AccountsPayableMaintenance extends BasePage{
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(analysisTab));
 			analysisTab.click();
 
-			String num = selectedTransaction.getText(); 
+			String num = selectedTransaction.getText();
 			String type = selectedTransaction.getAttribute("href");
 			selectedTransaction.click();
 			if (type.contains("lookupInvoice")) {

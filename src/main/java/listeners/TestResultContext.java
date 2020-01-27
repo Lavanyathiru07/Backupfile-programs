@@ -15,6 +15,11 @@ public class TestResultContext {
 	Object screenshot;
 	String logForError;
 
+	boolean refundApplicable=false;
+	float refundAmount;
+	float amountPaid;
+
+
 	public TestResultContext getTestResultContext(ITestResult result) {
 		Itinerary currentItn = (Itinerary) result.getParameters()[ITNINDEX];
 		String currentSilo = (String) result.getParameters()[SILOINDEX].toString();
@@ -26,6 +31,9 @@ public class TestResultContext {
 		this.manifestId = currentItn.getManifestId();
 		this.screenshot=result.getAttribute("screenshot");
 		this.logForError=currentItn.getErrorLog();
+		this.refundApplicable= currentItn.isRefundApplicable();
+		this.amountPaid= currentItn.getTotal();
+		this.refundAmount = currentItn.getRefundAmount();
 
 		return new TestResultContext();
 	}

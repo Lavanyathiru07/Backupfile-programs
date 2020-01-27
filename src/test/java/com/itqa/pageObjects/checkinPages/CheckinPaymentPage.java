@@ -66,6 +66,9 @@ public class CheckinPaymentPage {
     @FindBy(css = "div.flight-details")
     private WebElement flightDetails;
 
+    @FindBy(xpath = "//strong[@class= 'balance']" )
+    private WebElement upsellBalance;
+
     public CheckinPaymentPage(Logger log) {
         this.driver = DriverBase.getDriver();
         this.logger=log;
@@ -136,6 +139,7 @@ public class CheckinPaymentPage {
 
     public void fillCheckinPaymentPage(Itinerary itn) {
         fillCardInfo();
+        tempBalance = Float.valueOf(upsellBalance.getText().toString().replace("$",""));
         Screenshot.saveScreenshot("Upsell payment form", driver);
         clickPurchase();
         Screenshot.saveScreenshot("Upsell payment confirmation", driver);

@@ -42,6 +42,9 @@ public class Itinerary {
 	private float total;
 	private boolean skip;
 
+	private boolean isRefundApplicable = false;
+	private float refundAmount;
+
 	public Itinerary(String scenario, String departureCity, String destinationCity, Boolean roundTrip,
 			Integer departureDateIndex, Integer returningDateIndex, String bundle, Boolean hotel, Boolean vehicle,
 			Boolean activity, String firstName, String lastName, String gender, Integer dobMonth, Integer dobDate,
@@ -88,7 +91,8 @@ public class Itinerary {
 		this.description = description;
 		this.manifestId = manifestId;
 		this.skip = skip;
-
+		this.total=0.0f;
+		this.refundAmount=0.0f;
 	}
 
 	public String getScenario() {
@@ -181,6 +185,21 @@ public class Itinerary {
 		return this.ssr;
 	}
 
+	public boolean isRefundApplicable() {
+		return isRefundApplicable;
+	}
+
+	public void setRefundApplicable(boolean refundApplicable) {
+		isRefundApplicable = refundApplicable;
+	}
+
+	public float getRefundAmount() {
+		return refundAmount;
+	}
+
+	public void setRefundAmount(float refundAmount) {
+		this.refundAmount = refundAmount;
+	}
 	public void setSeat(boolean seat) {
 		this.seat = seat;
 		;

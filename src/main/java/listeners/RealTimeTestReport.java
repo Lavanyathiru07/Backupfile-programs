@@ -44,10 +44,15 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		GeneralUtils.writeToFile("emailPassedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
-						+ "</td><td></td><td></td></tr>");
+						+ (testResultContext.refundApplicable ? ("<br><br> Amount Refunded: "
+						+ testResultContext.refundAmount + "<br> Amount Paid: " + testResultContext.amountPaid): "")
+						+ "</td><td></td></tr>");
+
 		GeneralUtils.writeToFile("passedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
+						+ (testResultContext.refundApplicable ? ("<br><br> Amount Refunded: "
+						+ testResultContext.refundAmount + "<br> Amount Paid: " + testResultContext.amountPaid): "")
 						+ "</td><td></td><td>"
 						+ "<a href=\"javascript:setImageVisible('show'," + testResultContext.currentSilo
 						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
@@ -73,12 +78,16 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 		GeneralUtils.writeToFile("emailFailedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
-						+ "</td><td>" + testResultContext.manifestId + "</td><td>" + testResultContext.logForError + "</td></tr>");
+						+ (testResultContext.refundApplicable ? ("<br><br> Amount Refunded: "
+						+ testResultContext.refundAmount + "<br> Amount Paid: " + testResultContext.amountPaid): "")
+						+ "</td><td>" + testResultContext.manifestId + "</td></tr>");
 
 		GeneralUtils.writeToFile("failedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>FAILED</font></td><td>" + testResultContext.itn
-						+ "</td><td>" + testResultContext.manifestId +  "</td><td>"
+						+ (testResultContext.refundApplicable ? ("<br><br> Amount Refunded: "
+						+ testResultContext.refundAmount + "<br> Amount Paid: " + testResultContext.amountPaid): "")
+						+ "</td><td>" + testResultContext.manifestId + "</td><td>"
 						+ "<a href=\"javascript:setImageVisible('show', " + testResultContext.currentSilo
 						+ ");\">show image</a>" + "<img id='screenshotId" + testResultContext.currentSilo + "' "
 						+ "style='display:inline' height=\"40%\" width=\"auto\" src='" + base64Screenshot + "'/>"
@@ -97,6 +106,8 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 				
 				GeneralUtils.writeToFile("failedTests.html", "<tr><td align=\"left\">" + testResultContext.description
 						+ "</td><td align=\"center\"><font color='red'>SKIPPED</font></td><td>" + testResultContext.itn
+						+ (testResultContext.refundApplicable ? ("<br><br> Amount Refunded: "
+						+ testResultContext.refundAmount + "<br> Amount Paid: " + testResultContext.amountPaid): "")
 						+ "</td><td>" + testResultContext.manifestId + "</td><td></td></tr>");
 			}
 

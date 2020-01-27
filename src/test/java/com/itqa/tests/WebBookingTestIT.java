@@ -58,7 +58,7 @@ public class WebBookingTestIT extends DriverBase {
 	public void setup(ITestContext context) throws MalformedURLException {
 		driver = DriverBase.getDriver();
 		log.info("Test Case " + " in before method " + " with Thread Id:- " + Thread.currentThread().getId()
-				+ ", " + driver.getCurrentUrl()); 
+				+ ", " + driver.getCurrentUrl());
 		env = Environment.getEnv();
 		trc = new TestResultContext();
 	}
@@ -102,6 +102,9 @@ public class WebBookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
+			if( env.contains("prod") || env.contains("vipprd")){
+				itn.setRefundApplicable(true);
+			}
 			if (flightAvailService == 0 && paymentService == 0) {
 				BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
 				itinerary.set(itn.getItn());
@@ -165,6 +168,9 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 			PropertyConfigurator.configure(props);*/
+			if(  env.contains("prod")) {
+				itn.setRefundApplicable(true);
+			}
 			desc.set(itn.getDescription());
 			if (flightAvailService == 0 && paymentService == 0) {
 				try {
@@ -216,10 +222,10 @@ public class WebBookingTestIT extends DriverBase {
 
 	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
-			Method method) throws InterruptedException {
+														  Method method) throws InterruptedException {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
-		
+
 		/*synchronized (this) {
 			testId.set(testnum);
 			testnum++;
@@ -244,13 +250,15 @@ public class WebBookingTestIT extends DriverBase {
 
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
-
+			if( env.contains("prod") ){
+				itn.setRefundApplicable(true);
+			}
 			if (flightAvailService == 0 && paymentService == 0) {
 				log.info("Accoutn creation booking started");
 				//BookingFlow booking = new BookingFlow(logger.get());
 
 				BookingFlow booking = generateBooking(itn, silo, context, true);
-				
+
 				Assert.assertNotNull(itn.getItn(), "ITN could not be created");
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
