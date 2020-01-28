@@ -90,9 +90,10 @@ public class LoginPage {
 
 			try {
 				driver.findElement(By.xpath("//h2[contains(text(),'re sorry..')]"));
+				itn.setErrorLog("Booking is not within the correct date range " );
 				throw new Error("Booking is not within the correct date range");
 			} catch (Exception e) {
-				itn.setErrorLog("Error if the date rage is wrong " );
+				logger.info("We retrieved ITN successfully in check-in path");
 			}
 
 			try {
