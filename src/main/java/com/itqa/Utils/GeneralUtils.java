@@ -117,6 +117,10 @@ public class GeneralUtils {
                 "AND FLSTATUS = 'OT' " +
                 "AND CATEGORY = 'SF' " +
                 "AND FLTYPE = 'RF' " +
+          		"AND S_ORG!='IWA'"+
+                "AND S_DST!='IWA'"+
+                "AND S_ORG!='AZA'"+
+                "AND S_DST!='AZA'"+
                 "ORDER BY SL_OUT ASC";
 
         String[] res = new String[2];
