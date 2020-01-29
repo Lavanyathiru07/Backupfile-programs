@@ -13,8 +13,8 @@ public class ItineraryBuilder {
     Boolean vehicle = false;
     Boolean activity = false;
 
-    String firstName = "Prasanna";
-    String lastName = "Venkatesh";
+    String firstName = "QAATEST";
+    String lastName = "Lower";
     String gender = "m";
     Integer dobMonth = 1;
     Integer dobDay = 2;
