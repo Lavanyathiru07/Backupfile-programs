@@ -92,10 +92,10 @@ public class PaymentPage extends BasePage {
 	@FindBy(xpath = "//button[contains(@class,'purchase')]")
 	private WebElement purchaseButton;
 
-	@FindBy(xpath = "//div[contains(@class,'ui-dialog')]//strong[contains(text(),'Yes,')]")
+	@FindBy(xpath = "//strong[contains(text(),'Yes,')]")
 	private WebElement taCCyesTripFlex;
 
-	@FindBy(xpath = "//div[contains(@class,'ui-dialog')]//strong[contains(text(),'No,')]")
+	@FindBy(xpath = "//strong[contains(text(),'No,')]")
 	private WebElement taCCnoTripFlex;
 
 	@FindBy(name = "payment_details[requestor_name]")
