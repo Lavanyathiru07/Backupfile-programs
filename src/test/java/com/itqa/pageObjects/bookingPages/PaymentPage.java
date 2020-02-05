@@ -425,9 +425,10 @@ public class PaymentPage extends BasePage {
 			// wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
 
 		} else {
-			if ((driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
-					|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
+			try {
 				selectTripFlex(itn.getTripFlex(), itn.getScenario(), itn);
+			}catch(Exception e) {
+				logger.info("Not required to select the tripflex ");
 			}
 
 			fillCardInfo(itn.getCardNo(), itn);
