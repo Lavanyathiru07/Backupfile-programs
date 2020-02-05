@@ -425,7 +425,7 @@ public class PaymentPage extends BasePage {
 			// wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
 
 		} else {
-			if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
+			if ((driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
 					|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
 				selectTripFlex(itn.getTripFlex(), itn.getScenario(), itn);
 			}
