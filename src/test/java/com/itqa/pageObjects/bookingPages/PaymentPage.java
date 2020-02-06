@@ -354,7 +354,7 @@ public class PaymentPage extends BasePage {
 			
 		try {
 			if (Popupflag) {
-				new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(tripFlexPopupNo));
+				new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(tripFlexPopupNo));
 				jse.executeScript(JSFIRSTARG, tripFlexPopupNo);
 				// tripFlexPopupNo.click();
 				logger.info("Tripflex 'NO' popup is clicked");
@@ -444,7 +444,6 @@ public class PaymentPage extends BasePage {
 				fillEmail(itn.getEmail());
 			}
 			jse.executeScript("arguments[0].click();", termAcceptField);
-			//termAcceptField.click();
 			clickPurchase();
 		}
 	}

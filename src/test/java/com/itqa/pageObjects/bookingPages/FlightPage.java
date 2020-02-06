@@ -100,7 +100,7 @@ public class FlightPage extends BasePage {
 
 	public void clickContinue() {
 		try {
-			new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(continueButton));
+			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(continueButton));
 			jse.executeScript("arguments[0].click();", continueButton);
 			logger.info("Click Continue");
 		}catch(Exception e) {

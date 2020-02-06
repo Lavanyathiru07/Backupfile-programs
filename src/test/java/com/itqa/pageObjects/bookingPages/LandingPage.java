@@ -298,7 +298,6 @@ public class LandingPage extends BasePage {
 			Common.clickWithTimeOut(driver, popUpCloseButton);
 		} catch (Exception e) {
 			logger.info("pop up not displayed");
-			//itn.setErrorLog("Error while closing popup " );
 			// this pop up is not always displayed
 		}
 		new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(loginButton));
