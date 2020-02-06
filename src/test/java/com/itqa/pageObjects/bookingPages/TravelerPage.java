@@ -80,7 +80,7 @@ public class TravelerPage extends BasePage {
         String[] dobMonth = (month + ",").split(",");
         String[] dobDay = (day + ",").split(",");
         String[] dobYear = (year + ",").split(",");
-
+        
         for (int i =0; i<num; i++) {
             firstNameList.get(i).sendKeys(firstName[i]);
             lastNameList.get(i).sendKeys(lastName[i]);

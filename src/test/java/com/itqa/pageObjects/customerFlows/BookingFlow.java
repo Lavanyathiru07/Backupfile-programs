@@ -112,6 +112,8 @@ public class BookingFlow extends BasePage {
 			seatPage.selectSeatPage(itn);
 			bagPage.selectBagPage(itn);
 		} catch (Exception e) {
+			
+			e.printStackTrace();
 			itn.setErrorLog("Error while Create Booking  ");
 			return manifestId;
 		}

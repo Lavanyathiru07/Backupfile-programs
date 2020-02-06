@@ -37,7 +37,7 @@ public class FlightPage extends BasePage {
 	@FindBy(xpath = "//div[contains(@id,'flightchooser-returning')]//li")
 	private List<WebElement> retFlightList;
 
-	@FindBy(xpath = "//button[contains(text(),'Continue')]")
+	@FindBy(xpath = "//button[@class='continue enabled']")
 	private WebElement continueButton;
 
 	@FindBy(xpath = "//div[contains(@id,'flightchooser-departing')]//li")
@@ -99,8 +99,14 @@ public class FlightPage extends BasePage {
 	}
 
 	public void clickContinue() {
-		continueButton.click();
-		logger.info("Click Continue");
+		try {
+			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(continueButton));
+			jse.executeScript("arguments[0].click();", continueButton);
+			logger.info("Click Continue");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void selectFlightPage(Itinerary itn) throws Exception {
