@@ -443,7 +443,8 @@ public class PaymentPage extends BasePage {
 			} else {
 				fillEmail(itn.getEmail());
 			}
-			termAcceptField.click();
+			jse.executeScript("arguments[0].click();", termAcceptField);
+			//termAcceptField.click();
 			clickPurchase();
 		}
 	}

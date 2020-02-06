@@ -72,8 +72,8 @@ public class ItineraryDataProvider {
             for (Integer silo: silos) {
                 Itinerary itnRoundTrip = new ItineraryBuilder()
                         .withScenario(method.getName())
-                        .withDepartureCity("LAS")
-                        .withDestinationCity("BLI")
+                        .withDepartureCity("MEM")
+                        .withDestinationCity("LAS")
                         .withRoundTrip(true)
                         .withCarryOnBag(1)
                         .withCheckedBag(2)
@@ -116,8 +116,8 @@ public class ItineraryDataProvider {
         	for (Integer silo: silos) {
                 Itinerary itnRoundTrip = new ItineraryBuilder()
                         .withScenario(method.getName())
-                        .withDepartureCity("CVG")
-                        .withDestinationCity("SFB")
+                        .withDepartureCity("AUS")
+                        .withDestinationCity("LAS")
                         .withHotel(true)
                         .withVehicle(true)
                         .withSsr("PPOC")

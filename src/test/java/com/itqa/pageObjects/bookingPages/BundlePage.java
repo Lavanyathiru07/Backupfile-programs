@@ -26,7 +26,7 @@ public class BundlePage extends BasePage {
 
 	private WebDriver driver = null;
 	private JavascriptExecutor jse = null;
-
+	
 	@FindBy(xpath = "//*[text()='Select your bundle']")
 	private WebElement bundleTitle;
 
@@ -72,8 +72,7 @@ public class BundlePage extends BasePage {
 					}
 					selectAllegiantTotal.click();
 				}
-
-				continueButton.click();
+				jse.executeScript("arguments[0].click();", continueButton);
 				logger.info("Continue is clicked");
 			}
 		} catch (NoSuchElementException e) {
