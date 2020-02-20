@@ -114,7 +114,7 @@ public class TABookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
-			if( env.contains("vipprd") || env.contains("prod")){
+			if( env.contains("vipprd") || env.contains("prod") || env.contains("stg")){
 				itn.setRefundApplicable(true);
 			}
 			if (flightAvailService == 0 && paymentService == 0) {

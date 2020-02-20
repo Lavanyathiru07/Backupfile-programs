@@ -128,7 +128,7 @@ public class TABookingFlow extends BasePage {
 	}
 
 	public void TARefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd") ) {
+		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd") || Environment.getEnv().contains("stg") ) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn(), itn);
 			try{

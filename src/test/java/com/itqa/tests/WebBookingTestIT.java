@@ -102,7 +102,7 @@ public class WebBookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
-			if( env.contains("prod") || env.contains("vipprd")){
+			if( env.contains("prod") || env.contains("vipprd") || env.contains("stg")){
 				itn.setRefundApplicable(true);
 			}
 			if (flightAvailService == 0 && paymentService == 0) {
@@ -168,7 +168,7 @@ public class WebBookingTestIT extends DriverBase {
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
 
 			PropertyConfigurator.configure(props);*/
-			if(  env.contains("prod")) {
+			if(  env.contains("prod") || env.contains("stg")) {
 				itn.setRefundApplicable(true);
 			}
 			desc.set(itn.getDescription());
@@ -250,7 +250,7 @@ public class WebBookingTestIT extends DriverBase {
 
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
-			if( env.contains("prod") ){
+			if( env.contains("prod") || env.contains("stg") ){
 				itn.setRefundApplicable(true);
 			}
 			if (flightAvailService == 0 && paymentService == 0) {
