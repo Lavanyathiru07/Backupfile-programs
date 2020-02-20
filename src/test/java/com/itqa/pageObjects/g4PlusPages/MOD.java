@@ -19,6 +19,7 @@ import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.BasePage;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -395,9 +396,12 @@ public class MOD extends BasePage {
 
 		String upSellTemp = upsellbalance.getText().replace("$","");
 		Float tempTotal = Itn.getTotal() + Float.valueOf(upSellTemp);
+		DecimalFormat df = new DecimalFormat("#.##");
+		String decimal = df.format(tempTotal);
 		Itn.setTotal(  tempTotal );
 		logger.info("Upsell occurred of : " + upSellTemp  );
 		logger.info("New Total : " + Itn.getTotal()  );
+		logger.info("Decimal value : " + decimal );
 
 
 		jse.executeScript("arguments[0].click();", acceptContinueButton);
