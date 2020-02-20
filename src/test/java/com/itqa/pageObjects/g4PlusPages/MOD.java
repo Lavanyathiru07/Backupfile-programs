@@ -398,10 +398,9 @@ public class MOD extends BasePage {
 		Float tempTotal = Itn.getTotal() + Float.valueOf(upSellTemp);
 		DecimalFormat df = new DecimalFormat("#.##");
 		String decimal = df.format(tempTotal);
-		Itn.setTotal(  tempTotal );
+		Itn.setTotal(  Float.valueOf(decimal) );
 		logger.info("Upsell occurred of : " + upSellTemp  );
 		logger.info("New Total : " + Itn.getTotal()  );
-		logger.info("Decimal value : " + decimal );
 
 
 		jse.executeScript("arguments[0].click();", acceptContinueButton);
