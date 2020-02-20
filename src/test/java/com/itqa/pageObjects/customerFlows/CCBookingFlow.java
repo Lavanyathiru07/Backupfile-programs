@@ -142,7 +142,7 @@ public class CCBookingFlow extends BasePage {
 	}  
 
 	public void CCRefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
-		if (Environment.getEnv().contains("prod") ){
+		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("stg") ){
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn() , itn);
 			try{
