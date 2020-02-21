@@ -72,7 +72,7 @@ public class ItineraryDataProvider {
             for (Integer silo: silos) {
                 Itinerary itnRoundTrip = new ItineraryBuilder()
                         .withScenario(method.getName())
-                        .withDepartureCity("FAT")
+                        .withDepartureCity("RNO")
                         .withDestinationCity("LAS")
                         .withRoundTrip(true)
                         .withCarryOnBag(1)
