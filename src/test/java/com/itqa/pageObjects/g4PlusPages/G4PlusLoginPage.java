@@ -26,7 +26,7 @@ public class G4PlusLoginPage extends BasePage {
 	private JavascriptExecutor jse = null;
 
 	private String stationUsername ="ZnYycw==";//s"Q2hhbmF0YW4uQ2hhcm4udGVzdA==";
-	private String password = "SGFwcHkxOTk0IQ==";//"QFNkMTUwNDEyMzQ1";
+	private String password = "SGFwcHk0NDAzIQ==";//"QFNkMTUwNDEyMzQ1";SGFwcHk0NDAzIQ==
 
 	@FindBy(id = "username")
 	private WebElement userNameField;
