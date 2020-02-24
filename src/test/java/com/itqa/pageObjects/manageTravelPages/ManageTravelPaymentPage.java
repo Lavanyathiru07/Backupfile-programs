@@ -14,6 +14,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.text.DecimalFormat;
+
 public class ManageTravelPaymentPage {
 
     private Logger logger = null;
@@ -65,6 +67,9 @@ public class ManageTravelPaymentPage {
 
     @FindBy(xpath = "//input[contains(@name,'payment_details[terms_accepted]')]/..")
     private WebElement termAcceptField;
+
+    @FindBy(xpath = "//strong[@class='balance']")
+    private WebElement upsellBalance;
 
     public ManageTravelPaymentPage(Logger log) {
     	this.driver = DriverBase.getDriver();
@@ -179,7 +184,18 @@ public class ManageTravelPaymentPage {
     }
 
     public void fillPaymentPage(Itinerary itn) {
+        try {
 
+            String upSellTemp = upsellBalance.getText().replace("$","");
+            Float tempTotal = itn.getTotal() + Float.valueOf(upSellTemp);
+            DecimalFormat df = new DecimalFormat("#.##");
+            String decimal = df.format(tempTotal);
+            itn.setTotal(  Float.valueOf(decimal) );
+            logger.info("Upsell occurred of : " + upSellTemp  );
+            logger.info("New Total : " + itn.getTotal()  );
+        } catch (Exception e) {
+            logger.info("Issue getting upsell balance");
+        }
         fillCardInfo(itn);
         termAcceptField.click();
         clickPurchase();
