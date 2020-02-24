@@ -143,7 +143,7 @@ public class CheckinPaymentPage {
         Screenshot.saveScreenshot("Upsell payment form", driver);
         clickPurchase();
         Screenshot.saveScreenshot("Upsell payment confirmation", driver);
-        if (System.getProperty("env").contains("prod") || System.getProperty("env").contains("vipprd")|| System.getProperty("env").contains("stg")) {
+        if (System.getProperty("env").contains("prod") || System.getProperty("env").contains("vipprd")) {
             checkConfirmationAndLogBalance(itn);
         }
     }
