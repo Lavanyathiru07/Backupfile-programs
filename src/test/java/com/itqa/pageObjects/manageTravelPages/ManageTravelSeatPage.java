@@ -56,15 +56,16 @@ public class ManageTravelSeatPage {
 
     public void selectUpgradeSeat(Itinerary itn) {
         //if (System.getProperty("env").contains("prod") && params.getScenario().contains("WWW") && params.getScenario().contains("silo2")) {
-            chooseSeat(itn);
+            
             //jse.executeScript("arguments[0].click();", continueButton);
        // }
         try {
+        	chooseSeat(itn);
             new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'seatchooser-wrapper') and contains(@aria-hidden,'false')]")));
             jse.executeScript("arguments[0].click();", continueButton);
             jse.executeScript("arguments[0].click();", yesContinueButton);
        }catch(Exception e) {}
-
+        itn.setErrorLog("Error in manage travel while upgrade the seats " );
         logger.info("Click Continue");
     }
 }

@@ -10,7 +10,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.bookingPages.VehiclePage;
@@ -47,7 +49,7 @@ public class ManageTravelBagPage {
     }
 
     public void chooseBag(Itinerary itn) {
-        //if (Environment.getEnv().contains("prod") && (silo==1)) {
+    	//if (Environment.getEnv().contains("prod") && (silo==1)) {
             new Select(binBagList.get(0)).selectByValue("1");
         //}
 
@@ -55,13 +57,19 @@ public class ManageTravelBagPage {
     }
 
     public void clickContinue() {
-        continueButton.click();
+    	jse.executeScript("arguments[0].click();", continueButton);
         logger.info("Click continue");
     }
 
     public void selectBagPage(Itinerary itn) {
-        chooseBag(itn);
+    	try {
+    		 chooseBag(itn);
 
-        clickContinue();
+    	       clickContinue();
+    	}catch(Exception e) {
+    		itn.setErrorLog("Error in manage travel while selecting the bags Page " );
+    		e.printStackTrace();
+    	}
+       
     }
 }
