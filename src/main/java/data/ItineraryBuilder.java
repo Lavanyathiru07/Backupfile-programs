@@ -5,8 +5,8 @@ public class ItineraryBuilder {
     String departureCity = "CVG";
     String destinationCity = "SFB";
     Boolean roundTrip = false;
-    Integer departureDateIndex = 3;
-    Integer returnDateIndex = 3;
+    Integer departureDateIndex = 15;
+    Integer returnDateIndex = 15;
 
     String bundle = "";
     Boolean hotel = false;
