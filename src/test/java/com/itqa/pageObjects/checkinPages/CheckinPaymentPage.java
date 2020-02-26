@@ -98,10 +98,6 @@ public class CheckinPaymentPage {
             cvv = "123";
         }
 
-        if (System.getProperty("env").contains("prod")) {
-            tempBalance = Float.parseFloat(balance.getText().substring(1));
-        }
-
         //Some strange AJAX call is made around here and mess with entering CC
         //Wait a lil for that call to pass
         try {Thread.sleep(5000);} catch (Exception e) {}
@@ -143,7 +139,7 @@ public class CheckinPaymentPage {
         Screenshot.saveScreenshot("Upsell payment form", driver);
         clickPurchase();
         Screenshot.saveScreenshot("Upsell payment confirmation", driver);
-        if (System.getProperty("env").contains("prod")) {
+        if (System.getProperty("env").contains("prod") || System.getProperty("env").contains("vipprd")) {
             checkConfirmationAndLogBalance(itn);
         }
     }

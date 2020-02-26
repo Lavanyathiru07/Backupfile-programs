@@ -114,7 +114,7 @@ public class TABookingTestIT extends DriverBase {
 			PropertyConfigurator.configure(props);*/
 			desc.set(itn.getDescription());
 
-			if( env.contains("vipprd") || env.contains("prod")){
+			if( env.contains("vipprd") || env.contains("prod") ){
 				itn.setRefundApplicable(true);
 			}
 			if (flightAvailService == 0 && paymentService == 0) {
@@ -124,7 +124,7 @@ public class TABookingTestIT extends DriverBase {
 				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
 				// recevied");
-				if (env.contains("prod") && (silo == 2)) {
+				if ( env.contains("prod") && (silo == 2) ) {
 					booking.TAmanageTravelModificationUpsellBag(itn, silo);
 					//Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not recevied");
 				}
@@ -173,7 +173,7 @@ public class TABookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
 			props.setProperty("log4j.appender.file.maxBackupIndex","0");
-			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + 
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" +
 					itn.getDescription()	+Thread.currentThread().getId()+ ".log");
 			props.setProperty("log4j.appender.file.threshold","DEBUG");
 			props.setProperty("log4j.appender.file.Append","false");

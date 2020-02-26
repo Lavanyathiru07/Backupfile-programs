@@ -19,6 +19,7 @@ import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.BasePage;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -244,6 +245,9 @@ public class MOD extends BasePage {
 	@FindBy(id = "username")
 	private WebElement userNameField;
 
+	@FindBy(xpath = "//tr[@class='text-danger']//*[text()='Balance']//following::td")
+	private WebElement upsellbalance;
+
 	public MOD(Logger log) {
 		this.driver = DriverBase.getDriver();
 		this.logger=log;
@@ -390,7 +394,16 @@ public class MOD extends BasePage {
 			jse.executeScript("arguments[0].click();", doneButton);
 			logger.info("Bags & Priority Boarding Added");
 
-			jse.executeScript("arguments[0].click();", acceptContinueButton);
+		String upSellTemp = upsellbalance.getText().replace("$","");
+		Float tempTotal = Itn.getTotal() + Float.valueOf(upSellTemp);
+		DecimalFormat df = new DecimalFormat("#.##");
+		String decimal = df.format(tempTotal);
+		Itn.setTotal(  Float.valueOf(decimal) );
+		logger.info("Upsell occurred of : " + upSellTemp  );
+		logger.info("New Total : " + Itn.getTotal()  );
+
+
+		jse.executeScript("arguments[0].click();", acceptContinueButton);
 
 			for (int i = 0; i < 10; i++) {
 				try {
