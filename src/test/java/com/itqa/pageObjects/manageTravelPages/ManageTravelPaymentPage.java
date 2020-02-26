@@ -194,6 +194,7 @@ public class ManageTravelPaymentPage {
             logger.info("Upsell occurred of : " + upSellTemp  );
             logger.info("New Total : " + itn.getTotal()  );
         } catch (Exception e) {
+        	itn.setErrorLog("Issue getting upsell balance in modification payment page " );
             logger.info("Issue getting upsell balance");
         }
         fillCardInfo(itn);
