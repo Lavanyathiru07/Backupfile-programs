@@ -335,15 +335,28 @@ public class MOD extends BasePage {
 
 	public void upsell(Itinerary Itn) {
 		
-			String expiredMonth;
-			String expiredYear;
-			// String cardNumber;
-			String cvv;
+		
+		String expiredMonth;
+		String expiredYear;
+		String cardNumber;
+		String cvv;
+		String cardName;
+		
+		if (System.getProperty("env").contains("prod")||System.getProperty("env").contains("vipprd")) {
+			expiredMonth = System.getProperty("expiration").split("-")[0];
+			expiredYear = System.getProperty("expiration").split("-")[1];
+			cardNumber = System.getProperty("cardno");
+			cardName = System.getProperty("cardname");
+			cvv = System.getProperty("cvv");
+		}else {
+				expiredMonth = "03";
+				expiredYear = "2020";
+				cardNumber = "5454545454545454";
+				cvv = "123";
+		}
+		 	
 
-			expiredMonth = "03";
-			expiredYear = "2020";
-			// cardNumber = "5454545454545454";
-			cvv = "123";
+			
 
 			confirmationNumField.sendKeys(Itn.getItn());
 			searchButton.click();
@@ -408,7 +421,7 @@ public class MOD extends BasePage {
 			for (int i = 0; i < 10; i++) {
 				try {
 					cardNoField.clear();
-					cardNoField.sendKeys(Itn.getCardNo());
+					cardNoField.sendKeys(cardNumber);
 					break;
 				} catch (Exception e) {
 					try {
