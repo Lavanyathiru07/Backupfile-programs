@@ -62,12 +62,13 @@ public class DriverBase {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult testResult) throws IOException {
-
-		byte[] screenShotByteFile;
-		screenShotByteFile = Screenshot.saveScreenshot(testResult.getName(), getDriver());
-		testResult.setAttribute("screenshot", screenShotByteFile);
-		getDriver().close();
-		driverThread.get().quitDriver();
+		try {
+			getDriver().close();
+			driverThread.get().quitDriver();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	@AfterSuite(alwaysRun=true) // CAT 
