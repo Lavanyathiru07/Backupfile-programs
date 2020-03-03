@@ -1,6 +1,7 @@
 package data;
 
 import com.itqa.Utils.Environment;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
 
@@ -70,16 +71,30 @@ public class ItineraryDataProvider {
        
         if (method.getName().contains("RoundTripWith2bags")) {
             for (Integer silo: silos) {
-                Itinerary itnRoundTrip = new ItineraryBuilder()
-                        .withScenario(method.getName())
-                        .withDepartureCity("RNO")
-                        .withDestinationCity("LAS")
-                        .withRoundTrip(true)
-                        .withCarryOnBag(1)
-                        .withCheckedBag(2)
-                        .withPriority("true")
-                        .build();
-                data.add(new Object[]{silo, itnRoundTrip});
+                if( silo == 3){
+                    Itinerary itnRoundTrip = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("VPS")
+                            .withDestinationCity("BLV")
+                            .withRoundTrip(true)
+                            .withCarryOnBag(1)
+                            .withCheckedBag(2)
+                            .withPriority("true")
+                            .build();
+                    data.add(new Object[]{silo, itnRoundTrip});
+                }else{
+                    Itinerary itnRoundTrip = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("RNO")
+                            .withDestinationCity("LAS")
+                            .withRoundTrip(true)
+                            .withCarryOnBag(1)
+                            .withCheckedBag(2)
+                            .withPriority("true")
+                            .build();
+                    data.add(new Object[]{silo, itnRoundTrip});
+                }
+
             }
         }else if (method.getName().contains("OneWay")) {
             for (Integer silo: silos) {
