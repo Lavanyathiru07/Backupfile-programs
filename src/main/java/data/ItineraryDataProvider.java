@@ -104,6 +104,8 @@ public class ItineraryDataProvider {
             for (Integer silo: silos) {
                 Itinerary itnRoundTrip = new ItineraryBuilder()
                         .withScenario(method.getName())
+                        .withDepartureCity("VPS")
+                        .withDestinationCity("CVG")
                         .withRoundTrip(true)
                         .withSsr("PPOC")
                         .withPriority("true")
