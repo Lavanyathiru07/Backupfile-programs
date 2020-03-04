@@ -130,7 +130,7 @@ public class CCBookingTestIT extends DriverBase {
 				throw new SkipException("Skipping Test Case as runmode set to NO");
 			}
 		} else {
-			DriverBase.getDriver().quit();
+			DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
@@ -209,7 +209,7 @@ public class CCBookingTestIT extends DriverBase {
 			}
 
 		} else {
-			DriverBase.getDriver().quit();
+			DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}

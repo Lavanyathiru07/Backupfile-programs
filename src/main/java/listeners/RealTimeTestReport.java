@@ -112,7 +112,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 			}
 
 		System.out.println("Test Skipped->" + result.getName() + " on silo "
-				+ result.getTestContext().getAttribute("silo") + " on thread " );//+ Thread.currentThread().getId());
+				+ result.getTestContext().getAttribute("silo") + " on thread " + Thread.currentThread().getId());
 
 	}
 
