@@ -3,26 +3,18 @@ package com.itqa.tests;
 import framework.DriverBase;
 
 import com.itqa.Utils.Environment;
-import com.itqa.Utils.Screenshot;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.CCBookingFlow;
-import com.itqa.pageObjects.g4PlusPages.G4PlusLoginPage;
-import com.itqa.pageObjects.g4PlusPages.MOD;
-
 import data.*;
 import io.qameta.allure.Story;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.SkipException;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import listeners.TestReport;
@@ -31,8 +23,6 @@ import listeners.RealTimeTestReport;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.util.Properties;
-
 import static io.qameta.allure.Allure.step;
 
 @Listeners({ TestReport.class, RealTimeTestReport.class })
@@ -140,7 +130,7 @@ public class CCBookingTestIT extends DriverBase {
 				throw new SkipException("Skipping Test Case as runmode set to NO");
 			}
 		} else {
-
+			DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
@@ -219,6 +209,7 @@ public class CCBookingTestIT extends DriverBase {
 			}
 
 		} else {
+			DriverBase.getDriver().close();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
