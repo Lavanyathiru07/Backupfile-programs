@@ -144,7 +144,7 @@ public class TABookingTestIT extends DriverBase {
 
 			}
 		} else {
-			DriverBase.getDriver().close();
+			DriverBase.getDriver().quit();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
@@ -206,7 +206,7 @@ public class TABookingTestIT extends DriverBase {
 
 			}
 		} else {
-			DriverBase.getDriver().close();
+			DriverBase.getDriver().quit();
 			throw new SkipException("Skipping Test Case as runmode set to NO");
 		}
 	}
