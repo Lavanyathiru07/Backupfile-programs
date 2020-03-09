@@ -3,11 +3,7 @@ package com.itqa.pageObjects.bookingPages;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -446,6 +442,28 @@ public class PaymentPage extends BasePage {
 			}
 			jse.executeScript("arguments[0].click();", termAcceptField);
 			clickPurchase();
+
+			Thread.sleep(2500);
+			  try {
+					   if (driver.findElement(By.xpath("//h2[contains(text(), 'sorry')]")).isDisplayed()) {
+							   System.out.println("----------------------------------------");
+							   driver.findElement(By.xpath("//span[contains(text(),'Continue')]/parent::button")).sendKeys(Keys.RETURN);
+							   fillCardInfo(itn.getCardNo(), itn);
+							   driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
+							   Thread.sleep(1500);
+							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN); }
+			   }catch (Exception e ){}
+			  try {
+					  if (driver.findElement(By.xpath("//div[contains(@class , 'message-inner')]")).isDisplayed()) {
+							  System.out.println("2----------------------------------------");
+							   driver.findElement(By.xpath("//button[contains(text(), 'Return')]")).sendKeys(Keys.RETURN);
+							   fillCardInfo(itn.getCardNo(), itn);
+							  driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
+							  Thread.sleep(1500);
+							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN);
+					  }
+			  }catch (Exception e ){}
+
 		}
 	}
 
