@@ -5,12 +5,12 @@ import com.itqa.Utils.Screenshot;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Set;
 
@@ -42,7 +42,12 @@ public class GetBoardingPassPage {
 
     public Set printBP() {
         Set<String > curTab = driver.getWindowHandles();
-        printAllButton.click();
+        try {
+            printAllButton.click();
+        }catch (Exception e){
+            new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(printAllButton));
+            driver.findElement(By.xpath("//a[contains(@class,'print-all')]")).sendKeys(Keys.RETURN);
+        }
         logger.info("Print All Boarding Passes Clicked");
         return curTab;
     }

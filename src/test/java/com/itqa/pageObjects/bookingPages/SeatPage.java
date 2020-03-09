@@ -111,7 +111,7 @@ public class SeatPage extends BasePage {
         jse.executeScript(JSFIRSTARG, continueButton);
         if (!roundtrip) {
         	try {
-        		 new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(yesContinueButton));
+        		 new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(yesContinueButton));
                  jse.executeScript(JSFIRSTARG, yesContinueButton);
         	}catch(Exception e) {}
             /*if (!firstLeg && !driver.getCurrentUrl().contains("cc-")&&!driver.getCurrentUrl().contains("cc.") ) {

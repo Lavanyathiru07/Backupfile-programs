@@ -7,13 +7,13 @@ import com.graphbuilder.struc.Bag;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -70,8 +70,13 @@ public class BagAndBoardingPage {
     }
 
     public void clickContinue() {
-        continueButton.click();
-        logger.info("Click CONTINUE from bag and boading page");
+        try {
+            continueButton.click();
+            logger.info("Click CONTINUE from bag and boading page");
+        }catch (Exception e){
+            new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(continueButton));
+            driver.findElement(By.xpath("//*[contains(text(),'Continue')]")).sendKeys(Keys.RETURN);
+        }
     }
 
     public void clickContinueHazard(Itinerary itn) {

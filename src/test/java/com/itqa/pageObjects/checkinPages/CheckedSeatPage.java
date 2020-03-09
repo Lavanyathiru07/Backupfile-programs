@@ -2,10 +2,7 @@ package com.itqa.pageObjects.checkinPages;
 
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -51,7 +48,12 @@ public class CheckedSeatPage extends BasePage {
             int num = new Random().nextInt(availSeatList.size());
             logger.info("Upgrading seat: " + availSeatList.get(num).getAttribute("aria-label") + " for pax " + (i + 1));
             jse.executeScript(JSFIRSTARG, availSeatList.get(num));
-            yesUpgradeButton.click();
+            try {
+                yesUpgradeButton.click();
+            }catch(WebDriverException e){
+                new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'OK')]")));
+                driver.findElement(By.xpath("//button[contains(text(),'OK')]")).sendKeys(Keys.RETURN);
+            }
         }
     }
 
