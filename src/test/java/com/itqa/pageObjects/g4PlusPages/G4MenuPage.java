@@ -2,6 +2,7 @@ package com.itqa.pageObjects.g4PlusPages;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -77,8 +78,11 @@ public class G4MenuPage extends BasePage {
 			modApp.click();
 			logger.info("MOD App Clicked");
 		} catch (Exception e) {
-			logger.info("Error while clicking on MOD");
-			itn.setErrorLog("MOD App not Clicked ");
+		    try{
+		        modApp.sendKeys(Keys.RETURN);
+            }catch( Exception q) {
+				itn.setErrorLog("<<< MOD App !Clicked >>>");
+			}
 		}
 	}
 
@@ -89,6 +93,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on AIS");
 			itn.setErrorLog("AIS App not Clicked");
+			try {
+				aisApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< AIS App !Clicked >>>");
+			}
 		}
 	}
 
@@ -99,6 +108,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on STS");
 			itn.setErrorLog("STS App not Clicked");
+			try {
+				stsApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< STS App !Clicked >>>");
+			}
 		}
 	}
 
@@ -109,7 +123,13 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on ESP");
 			itn.setErrorLog("ESP App not Clicked");
+			try {
+				espApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< ESP App !Clicked >>>");
+			}
 		}
+
 	}
 
 	public void selectSVT(Itinerary itn) {
@@ -119,6 +139,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on SVT");
 			itn.setErrorLog("SVT App not Clicked");
+			try {
+				svtApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< SVT App !Clicked >>>");
+			}
 		}
 	}
 
@@ -129,6 +154,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on CAT");
 			itn.setErrorLog("CAR App not Clicked ");
+			try {
+				fmApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< CAR App !Clicked >>>");
+			}
 		}
 	}
 
@@ -139,6 +169,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on FM");
 			itn.setErrorLog(" FM App not Clicked ");
+			try {
+				fmApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< FM App !Clicked >>>");
+			}
 		}
 	}
 
@@ -149,6 +184,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on RQ");
 			itn.setErrorLog("RQ App not Clicked");
+			try {
+				rqApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< RQ App !Clicked >>>");
+			}
 		}
 	}
 
@@ -159,6 +199,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on HOT");
 			itn.setErrorLog("HOT App not Clicked");
+			try {
+				hotApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< RQ App !Clicked >>>");
+			}
 		}
 
 	}
@@ -170,6 +215,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on ATL");
 			itn.setErrorLog("ATL App not Clicked");
+			try {
+				atlApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< ATL App !Clicked >>>");
+			}
 		}
 	}
 
@@ -180,6 +230,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on CL");
 			itn.setErrorLog("CL App not Clicked");
+			try {
+				clApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< CL App !Clicked >>>");
+			}
 		}
 	}
 
@@ -190,6 +245,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on OFO");
 			itn.setErrorLog("OFO App not Clicked");
+			try {
+				ofoApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< OFO App !Clicked >>>");
+			}
 		}
 	}
 
@@ -200,6 +260,11 @@ public class G4MenuPage extends BasePage {
 		} catch (Exception e) {
 			logger.info("Error while clicking on STNS");
 			itn.setErrorLog("STNS App not Clicked");
+			try {
+				stnsApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< STNS App !Clicked >>>");
+			}
 		}
 	}
 
