@@ -383,12 +383,34 @@ public class MOD extends BasePage {
 				driver.findElement(By.id("progress-modal"));
 				Thread.sleep(1000);
 			} catch (Exception e) {
+<<<<<<< HEAD
 				break;
 			}
 		}
 		if (!System.getProperty("env").contains("prod")) {
 			new Select(prioritySelect).selectByIndex(0);
 			for (int loop = 0; loop < 20; loop++) {
+=======
+				Itn.setErrorLog("Issues searching itinerary");
+
+			}
+			try {
+				jse.executeScript("arguments[0].click();", changeSeatButton);
+				jse.executeScript("arguments[0].click();", selectSeat.get(selectSeat.size() - 1));
+				jse.executeScript("arguments[0].click();", doneButton);
+				logger.info("Seat Added");
+			}catch ( WebDriverException e){
+				Itn.setErrorLog("Issues selecting seats");
+			}
+
+			try {
+				jse.executeScript("arguments[0].click();", changeBagButton);
+				Thread.sleep(3500);
+				new Select(carryonBagSelect).selectByIndex(1);
+			}catch( InterruptedException w){}
+
+			for (int loop = 0; loop < 5; loop++) {
+>>>>>>> add timer between jse and selenium.select
 				try {
 					driver.findElement(By.id("progress-modal"));
 					Thread.sleep(1000);
