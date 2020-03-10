@@ -127,7 +127,12 @@ public class GeneralUtils {
         SQLExecutor sql_executor = null;
 
         try {
-            sql_executor = new SQLExecutor(System.getProperty("env"), logger);
+            if( System.getProperty("env").contains("prod")){
+                logger.info("In prod, using stg db");
+                sql_executor = new SQLExecutor("stg", logger);
+            }else{
+                sql_executor = new SQLExecutor(System.getProperty("env"), logger);
+            }
             ResultSet resultSet = sql_executor.getRow(sqlString, new Random().nextInt(8) + 1);
 
             res[0] = resultSet.getString("S_ORG");
