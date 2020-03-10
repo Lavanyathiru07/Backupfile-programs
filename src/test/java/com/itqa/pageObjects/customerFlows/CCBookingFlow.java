@@ -87,7 +87,7 @@ public class CCBookingFlow extends BasePage {
 			confirmationPage.verifyConf(itn);
 		} catch (Exception e) {
 			try {
-				
+
 				logger.info("Started Re-executing test case");
 				itn.setDepartureCity("BLI");
 				itn.setDestinationCity("LAS");
@@ -118,6 +118,7 @@ public class CCBookingFlow extends BasePage {
 				paymentPage.fillPaymentPage(itn, false, true);
 				confirmationPage.verifyConf(itn);
 			} catch (Exception e1) {
+				logger.info("Error while CC Booking");
 				itn.setErrorLog("Error while CC Booking" );
 				return manifestId;
 			}

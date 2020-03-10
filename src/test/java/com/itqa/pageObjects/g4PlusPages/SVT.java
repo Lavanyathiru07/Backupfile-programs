@@ -23,32 +23,32 @@ import java.util.Date;
 
 public class SVT extends BasePage{
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(css = "select[ng-model='field.alias']")
-    private WebElement searchBySelect;
+	@FindBy(css = "select[ng-model='field.alias']")
+	private WebElement searchBySelect;
 
-    @FindBy(css = "select[ng-model='field.operation']")
-    private WebElement operationSelect;
+	@FindBy(css = "select[ng-model='field.operation']")
+	private WebElement operationSelect;
 
-    @FindBy(css = "input[ng-model='field.value']")
-    private WebElement valueField;
+	@FindBy(css = "input[ng-model='field.value']")
+	private WebElement valueField;
 
-    @FindBy(xpath = "//button[contains(text(),'Search')]")
-    private WebElement searchButton;
+	@FindBy(xpath = "//button[contains(text(),'Search')]")
+	private WebElement searchButton;
 
-    @FindBy(xpath = "//tr[contains(@class,'ng-scope')]")
-    private WebElement resultRow;
+	@FindBy(xpath = "//tr[contains(@class,'ng-scope')]")
+	private WebElement resultRow;
 
-    public SVT(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public SVT(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
 	public void accessSVT(Itinerary itn) {
 		try {
@@ -58,13 +58,18 @@ public class SVT extends BasePage{
 			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 
 			new Select(searchBySelect).selectByValue("authDateTime");
+			logger.info("select date time");
 			new Select(operationSelect).selectByValue("equals");
+			logger.info("select equals");
 			valueField.sendKeys(format.format(date));
 			searchButton.click();
+			logger.info("search button clicked");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
 			resultRow.click();
+			logger.info("result row clicked");
 			logger.info("SVT Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Error while verifying SVT");
 			itn.setErrorLog("Error while verifying SVT Scenario");
 			throw new Error("SVT Scenario -> Fail");
 		}

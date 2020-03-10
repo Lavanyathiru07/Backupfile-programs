@@ -111,12 +111,13 @@ public class AisMenuPage extends BasePage {
 
 	public void selectKayakConsole(Itinerary itn) {
 		try {
-			logger.info("Kayak Console Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(ADTab));
 			ADTab.click();
+			logger.info("Admin tab clicked");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakConsoleTab));
 			kayakConsoleTab.click();			
 		} catch (Exception e) {
+			logger.info("Error while verifying Kayak");
 			itn.setErrorLog("Kayak Scenario -> Fail");
 		}
 	}
@@ -156,8 +157,6 @@ public class AisMenuPage extends BasePage {
 			logger.info("Accept Security Alert");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while selecting Inventory maintenance " );
-			logger.info("Security Alert not display");
-			logger.error("Inventory Maintenance Scenario -> Fail");
 		}
 	}
 
@@ -178,6 +177,7 @@ public class AisMenuPage extends BasePage {
 			logger.info("MXandEngr Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(METab));
 			METab.click();		
+			logger.info("MXandEngr tab clicked");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while verifying MXandEngr Scenario");
 		}
@@ -187,8 +187,10 @@ public class AisMenuPage extends BasePage {
 		try {
 			logger.info("LineMX Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(lineMXTab));
-			lineMXTab.click();			
+			lineMXTab.click();	
+			logger.info("Line MX tab clicked");
 		} catch (Exception e) {
+			logger.info("Error while verifying LineMX");
 			itn.setErrorLog("Error while verifying LineMX Scenario");
 		}
 	}
@@ -197,7 +199,8 @@ public class AisMenuPage extends BasePage {
 		try {
 			logger.info("MXControl Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxControlTab));
-			mxControlTab.click();			
+			mxControlTab.click();	
+			logger.info("MX control tab clicked");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while verifying MXControl Scenario");
 		}
@@ -207,7 +210,8 @@ public class AisMenuPage extends BasePage {
 		try {
 			logger.info("Reliability Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reliabilityTab));
-			reliabilityTab.click();			
+			reliabilityTab.click();	
+			logger.info("reliability tab clicked");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while verifying  Reliability Scenario");
 		}
@@ -217,7 +221,8 @@ public class AisMenuPage extends BasePage {
 		try {
 			logger.info("MXRecords opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mxRecordsTab));
-			mxRecordsTab.click();			
+			mxRecordsTab.click();	
+			logger.info("Mx record tab clicked");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while verifying MXRecords Scenario");
 		}
@@ -228,8 +233,10 @@ public class AisMenuPage extends BasePage {
 			logger.info("FlightScheduleMX Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(OPTab));
 			OPTab.click();
+			logger.info("open tab clicked");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightScheduleMXTab));
 			flightScheduleMXTab.click();
+			logger.info("flightScheduleMX tab clicked");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while verifying FlightScheduleMX Scenario");
 		}
@@ -240,8 +247,10 @@ public class AisMenuPage extends BasePage {
 			logger.info("Aironly Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(rsTab));
 			rsTab.click();
+			logger.info("Reservation tab clicked");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(airOnlyTab));
 			airOnlyTab.click();
+			logger.info("Air only tab clicked");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while verifying Aironly Scenario");
 		}
@@ -252,8 +261,10 @@ public class AisMenuPage extends BasePage {
 			logger.info("PrintManifest Opened");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(rsTab));
 			rsTab.click();
+			logger.info("Reservation tab clicked");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(printManifestTab));
 			printManifestTab.click();
+			logger.info("Printmanifest tab clicked");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while verifying PrintManifest Scenario");
 		}
@@ -263,8 +274,11 @@ public class AisMenuPage extends BasePage {
 		try {
 			logger.info("ITN-MX Opened");
 			rsTab.click();
+			logger.info("Reservation tab clicked");
 			itnMXTab.click();
+			logger.info("ITN Mx tab clicked");
 		} catch (Exception e) {
+			logger.info("Error while verifying ITNMX ");
 			itn.setErrorLog("Error while verifying ITNMX Scenario");
 		}
 	}

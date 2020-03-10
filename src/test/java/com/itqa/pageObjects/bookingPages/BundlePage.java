@@ -72,12 +72,13 @@ public class BundlePage extends BasePage {
 					}
 					selectAllegiantTotal.click();
 				}
+
 				jse.executeScript("arguments[0].click();", continueButton);
 				logger.info("Continue is clicked");
 			}
 		} catch (NoSuchElementException e) {
-			itn.setErrorLog("Bundles page is skipping " );
 			logger.info("Bundles page is skipping");
+			itn.setErrorLog("Bundles page is skipping " );
 		}
 	}
 }

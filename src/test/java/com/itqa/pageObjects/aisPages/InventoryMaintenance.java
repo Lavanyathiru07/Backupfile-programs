@@ -20,33 +20,35 @@ import framework.DriverBase;
 
 public class InventoryMaintenance extends BasePage{
 
-    private Logger logger = null;
-    private JavascriptExecutor jse = null;
-    private WebDriver driver = null;
+	private Logger logger = null;
+	private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
 
-    @FindBy(xpath = "//a[contains(@href,'forms')]")
-    private WebElement selectedPart;
+	@FindBy(xpath = "//a[contains(@href,'forms')]")
+	private WebElement selectedPart;
 
-    @FindBy(id = "inPart")
-    private WebElement partNoField;
+	@FindBy(id = "inPart")
+	private WebElement partNoField;
 
-    @FindBy(id = "TransactionsTab")
-    private WebElement transactionTab;
+	@FindBy(id = "TransactionsTab")
+	private WebElement transactionTab;
 
-    public InventoryMaintenance(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public InventoryMaintenance(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
 	public void verifyInventoryMX(Itinerary itn) {
 		try {
 			logger.info("InventoryMX Verify -> Started");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectedPart));
 			selectedPart.click();
+			logger.info("select part clicked");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(transactionTab));
 			transactionTab.click();
+			logger.info("transaction tab clicked");
 
 			Boolean found = false;
 			for (int loop = 0; loop < 30; loop++) {
@@ -72,8 +74,9 @@ public class InventoryMaintenance extends BasePage{
 			}
 			logger.info("Inventory Maintenance Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Error while verifying Inventory Maintenance");
 			itn.setErrorLog("Error while verifying Inventory Maintenance Scenario");
-			throw new Error(">>>Inventory Maintenance Fail<<< ");
+			throw new Error("Inventory Maintenance Fail");
 
 		}
 	}

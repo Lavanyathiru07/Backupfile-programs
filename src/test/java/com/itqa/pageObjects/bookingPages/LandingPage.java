@@ -104,7 +104,6 @@ public class LandingPage extends BasePage {
 	public void selectDepCity(String from, Itinerary itn) {
 		for (int loop = 0; loop < 5; loop++) {
 			Boolean flag = false;
-			logger.info("city name is " + from);
 			try {
 				driver.findElement(By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(ABQ)')]"));
 				flag = true;
@@ -115,8 +114,6 @@ public class LandingPage extends BasePage {
 					jse.executeScript(JSFIRSTARG, depCityDropDown);
 				}
 				Thread.sleep(1000);
-			
-				logger.info("city name is " + from);
 				jse.executeScript(JSFIRSTARG, driver.findElement(
 						By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(" + from + ")')]")));
 
@@ -125,6 +122,7 @@ public class LandingPage extends BasePage {
 				}
 			} catch (Exception e) {
 				if (loop == 4) {
+					logger.info("Error while selecting depature city");
 					itn.setErrorLog("Error while seleting depature city " );
 					throw new Error(e);
 				}
@@ -154,6 +152,7 @@ public class LandingPage extends BasePage {
 				}
 			} catch (Exception e) {
 				if (loop == 4) {
+					logger.info("Error while selecting destination city");
 					itn.setErrorLog("Error while selecting destination city " );
 					throw new Error(e);
 				}
@@ -227,6 +226,7 @@ public class LandingPage extends BasePage {
 							break;
 						} else {
 							if (loop == 9) {
+								logger.info("Error while selecting trip type");
 								itn.setErrorLog("Error occured " );
 								throw new Error(e);
 							}
@@ -305,7 +305,7 @@ public class LandingPage extends BasePage {
 		logger.info("Login button is clicked");
 		editNameField.sendKeys(accountEmail);
 		editPassField.sendKeys(PASSWORD);
-		
+
 		Common.clickWithTimeOut(driver, signinButton);
 	}
 

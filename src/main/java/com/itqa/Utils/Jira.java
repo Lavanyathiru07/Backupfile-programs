@@ -36,7 +36,7 @@ public class Jira extends TestResultContext {
 
 		catch (Exception e) {
 			logger.info(" the exception is " + e);
-			
+
 		}
 
 		try {

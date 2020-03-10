@@ -18,6 +18,7 @@ import java.text.DecimalFormat;
 
 public class ManageTravelPaymentPage {
 
+
     private Logger logger = null;
 
     private WebDriver driver = null;
@@ -78,127 +79,118 @@ public class ManageTravelPaymentPage {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }
 
-    public void fillCardInfo(Itinerary itn) {
-        String expiredMonth;
-        String expiredYear;
-        String cardNumber;
-        String cvv;
-        String cardName;
+	public void fillCardInfo(Itinerary itn) {
+		String expiredMonth;
+		String expiredYear;
+		String cardNumber;
+		String cvv;
+		String cardName;
 
-        if(System.getProperty("env").contains("prod")) {
-            expiredMonth = System.getProperty("expiration").split("-")[0].replace("0", "");
-            expiredYear = System.getProperty("expiration").split("-")[1];
-            cardNumber = System.getProperty("cardno");
-            cardName = System.getProperty("cardname");
-            cvv = System.getProperty("cvv");
-        }
-        else {
-            expiredMonth = "3";
-            expiredYear = "2020";
-            cardNumber = itn.getCardNo();
-            cardName = "A";
-            cvv = "123";
-        }
+		if(System.getProperty("env").contains("prod")) {
+			expiredMonth = System.getProperty("expiration").split("-")[0].replace("0", "");
+			expiredYear = System.getProperty("expiration").split("-")[1];
+			cardNumber = System.getProperty("cardno");
+			cardName = System.getProperty("cardname");
+			cvv = System.getProperty("cvv");
+		}
+		else {
+			expiredMonth = "3";
+			expiredYear = "2020";
+			cardNumber = itn.getCardNo();
+			cardName = "A";
+			cvv = "123";
+		}
 
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(cardNoField));
+		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(cardNoField));
 
-        for (int loop=0; loop<10; loop++) {
-            try {
-                new Select(expireMonthField).selectByValue(expiredMonth);
-                break;
-            } catch (Exception e) {
-            }
-        }
+		for (int loop=0; loop<10; loop++) {
+			try {
+				new Select(expireMonthField).selectByValue(expiredMonth);
+				break;
+			} catch (Exception e) {
+			}
+		}
 
-        for (int loop=0; loop<10; loop++) {
-            try {
-                new Select(expireYearField).selectByValue(expiredYear);
-                break;
-            } catch (Exception e) {
-            }
-        }
+		for (int loop=0; loop<10; loop++) {
+			try {
+				new Select(expireYearField).selectByValue(expiredYear);
+				break;
+			} catch (Exception e) {
+			}
+		}
 
-        for (int loop=0; loop<10; loop++) {
-            try {
-                cardNoField.clear();
-                cardNoField.sendKeys(cardNumber);
-                break;
-            }
-            catch (Exception e) {
-                if (loop == 9) {
-                	itn.setErrorLog("Error" );
-                    throw new Error(e);
-                }
-                else {
-                    try {Thread.sleep(1000);} catch (Exception e1) {}
-                }
-            }
-        }
-        ccvField.sendKeys(cvv);
-        nameOnCardField.sendKeys(cardName);
+		for (int loop=0; loop<10; loop++) {
+			try {
+				cardNoField.clear();
+				cardNoField.sendKeys(cardNumber);
+				break;
+			}
+			catch (Exception e) {
+				if (loop == 9) {
+					logger.info("Error while fillCardInfo");
+					itn.setErrorLog("Error" );
+					throw new Error(e);
+				}
+				else {
+					try {Thread.sleep(1000);} catch (Exception e1) {}
+				}
+			}
+		}
+		ccvField.sendKeys(cvv);
+		nameOnCardField.sendKeys(cardName);
 
-        firstNameField.clear();
-        firstNameField.sendKeys("A");
-        lastNameField.clear();
-        lastNameField.sendKeys("A");
-        addrField.sendKeys("A");
-        cityField.sendKeys("A");
+		firstNameField.clear();
+		firstNameField.sendKeys("A");
+		lastNameField.clear();
+		lastNameField.sendKeys("A");
+		addrField.sendKeys("A");
+		cityField.sendKeys("A");
 
-        for (int loop=0; loop<5; loop++) {
-            try {
-                new Select(stateField).selectByValue("AL");
-                break;
-            }
-            catch (Exception e) {
-                if (loop == 4) {
-                	itn.setErrorLog("Error" );
-                    throw new Error(e.getMessage());
-                }
-                else {
-                    try {Thread.sleep(500);} catch (Exception e1) {}
-                }
-            }
-        }
+		for (int loop=0; loop<5; loop++) {
+			try {
+				new Select(stateField).selectByValue("AL");
+				break;
+			}
+			catch (Exception e) {
+				if (loop == 4) {
+					logger.info("Error while fillCardInfo");
+					itn.setErrorLog("Error" );
+					throw new Error(e.getMessage());
+				}
+				else {
+					try {Thread.sleep(500);} catch (Exception e1) {}
+				}
+			}
+		}
 
-        for (int loop=0; loop<10; loop++) {
-            try {
-                postalField.click();
-                break;
-            } catch (Exception e) {
-            }
-        }
-        postalField.sendKeys("12345");
-        phoneField.clear();
-        phoneField.sendKeys("7025555555");
+		for (int loop=0; loop<10; loop++) {
+			try {
+				postalField.click();
+				break;
+			} catch (Exception e) {
+			}
+		}
+		postalField.sendKeys("12345");
+		phoneField.clear();
+		phoneField.sendKeys("7025555555");
 
-        if (driver.getCurrentUrl().contains("ta.") || driver.getCurrentUrl().contains("ta-")) {
-            emailField.sendKeys(itn.getEmail());
-        }
+		if (driver.getCurrentUrl().contains("ta.") || driver.getCurrentUrl().contains("ta-")) {
+			emailField.sendKeys(itn.getEmail());
+		}
 
-        logger.info("Filled card information");
-    }
+		logger.info("Filled card information");
+	}
 
-    public void clickPurchase() {
-        jse.executeScript("arguments[0].click();", purchaseButton);
-        logger.info("Click purchse");
-    }
+	public void clickPurchase() {
+		jse.executeScript("arguments[0].click();", purchaseButton);
+		logger.info("Click purchse");
+	}
 
-    public void fillPaymentPage(Itinerary itn) {
-        try {
+	public void fillPaymentPage(Itinerary itn) {
 
-            String upSellTemp = upsellBalance.getText().replace("$","");
-            Float tempTotal = itn.getTotal() + Float.valueOf(upSellTemp);
-            DecimalFormat df = new DecimalFormat("#.##");
-            String decimal = df.format(tempTotal);
-            itn.setTotal(  Float.valueOf(decimal) );
-            logger.info("Upsell occurred of : " + upSellTemp  );
-            logger.info("New Total : " + itn.getTotal()  );
-        } catch (Exception e) {
-        	itn.setErrorLog("Issue getting upsell balance in modification payment page " );
-            logger.info("Issue getting upsell balance");
-        }
-        fillCardInfo(itn);
-        termAcceptField.click();
-        clickPurchase();
-    }
+		fillCardInfo(itn);
+		termAcceptField.click();
+		clickPurchase();
+	}
+
 }

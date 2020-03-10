@@ -18,30 +18,32 @@ import framework.DriverBase;
 
 public class ESP extends BasePage{
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(xpath = "//td[contains(text(),'31B')]")
-    private WebElement mapRow;
+	@FindBy(xpath = "//td[contains(text(),'31B')]")
+	private WebElement mapRow;
 
-    public ESP(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public ESP(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
-    public void accessESP(Itinerary itn) {
-    	try{
-    		logger.info("ESP Verify -> Started");
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mapRow));
-        mapRow.click();
-        logger.info("ESP Menu Open");
-    	}catch(Exception e){
-    		itn.setErrorLog("Error while access ESP " );
-    		throw new Error("Error while access ESP");
-    	}
-    	}
+	public void accessESP(Itinerary itn) {
+		try {
+			logger.info("ESP Verify -> Started");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(mapRow));
+			mapRow.click();
+			logger.info("Map row clicked");
+			logger.info("ESP Verify -> PASS");
+		}catch(Exception e){
+			logger.info("Error while verifying access ESP");
+			itn.setErrorLog("Error while access ESP " );
+			throw new Error("Error while access ESP");
+		}
+	}
 }

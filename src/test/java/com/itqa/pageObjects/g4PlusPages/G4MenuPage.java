@@ -59,7 +59,7 @@ public class G4MenuPage extends BasePage {
 
 	@FindBy(xpath = "//span[contains(text(),'STNS')]")
 	private WebElement stnsApp;
-	
+
 	@FindBy(xpath = "//h1[contains(text(),'Welcome')]")
 	private WebElement gfourHome;
 
@@ -75,81 +75,90 @@ public class G4MenuPage extends BasePage {
 	public void selectMOD(Itinerary itn) {
 		try {
 			modApp.click();
-			logger.info("<<< MOD App Clicked >>>");
+			logger.info("MOD App Clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< MOD App !Clicked >>>");
+			logger.info("Error while clicking on MOD");
+			itn.setErrorLog("MOD App not Clicked ");
 		}
 	}
 
 	public void selectAIS(Itinerary itn) {
 		try {
 			aisApp.click();
-			logger.info("<<< AIS App Clicked >>>");
+			logger.info(" AIS App Clicked ");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< AIS App !Clicked >>>");
+			logger.info("Error while clicking on AIS");
+			itn.setErrorLog("AIS App not Clicked");
 		}
 	}
 
 	public void selectSTS(Itinerary itn) {
 		try {
 			stsApp.click();
-			logger.info("<<< STS App Clicked >>>");
+			logger.info(" STS App Clicked ");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< STS App !Clicked >>>");
+			logger.info("Error while clicking on STS");
+			itn.setErrorLog("STS App not Clicked");
 		}
 	}
 
 	public void selectESP(Itinerary itn) {
 		try {
 			espApp.click();
-			logger.info("<<< ESP App Clicked >>>");
+			logger.info("ESP App Clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< ESP App !Clicked >>>");
+			logger.info("Error while clicking on ESP");
+			itn.setErrorLog("ESP App not Clicked");
 		}
 	}
 
 	public void selectSVT(Itinerary itn) {
 		try {
 			svtApp.click();
-			logger.info("<<< SVT App Clicked >>>");
+			logger.info(" SVT App Clicked ");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< SVT App !Clicked >>>");
+			logger.info("Error while clicking on SVT");
+			itn.setErrorLog("SVT App not Clicked");
 		}
 	}
 
 	public void selectCAR(Itinerary itn) {
 		try {
 			carApp.click();
-			logger.info("<<< CAR App Clicked >>>");
+			logger.info(" CAR App Clicked ");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< CAR App !Clicked >>>");
+			logger.info("Error while clicking on CAT");
+			itn.setErrorLog("CAR App not Clicked ");
 		}
 	}
 
 	public void selectFM(Itinerary itn) {
 		try {
 			fmApp.click();
-			logger.info("<<< FM App Clicked >>>");
+			logger.info("FM App Clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< FM App !Clicked >>>");
+			logger.info("Error while clicking on FM");
+			itn.setErrorLog(" FM App not Clicked ");
 		}
 	}
 
 	public void selectRQ(Itinerary itn) {
 		try {
 			rqApp.click();
-			logger.info("<<< RQ App Clicked >>>");
+			logger.info("RQ App Clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< RQ App !Clicked >>>");
+			logger.info("Error while clicking on RQ");
+			itn.setErrorLog("RQ App not Clicked");
 		}
 	}
 
 	public void selectHOT(Itinerary itn) {
 		try {
 			hotApp.click();
-			logger.info("<<< RQ App Clicked >>>");
+			logger.info("HOT App Clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< RQ App !Clicked >>>");
+			logger.info("Error while clicking on HOT");
+			itn.setErrorLog("HOT App not Clicked");
 		}
 
 	}
@@ -157,42 +166,46 @@ public class G4MenuPage extends BasePage {
 	public void selectATL(Itinerary itn) {
 		try {
 			atlApp.click();
-			logger.info("<<< ATL App Clicked >>>");
+			logger.info(" ATL App Clicked ");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< ATL App !Clicked >>>");
+			logger.info("Error while clicking on ATL");
+			itn.setErrorLog("ATL App not Clicked");
 		}
 	}
 
 	public void selectCL(Itinerary itn) {
 		try {
 			clApp.click();
-			logger.info("<<< CL App Clicked >>>");
+			logger.info(" CL App Clicked ");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< CL App !Clicked >>>");
+			logger.info("Error while clicking on CL");
+			itn.setErrorLog("CL App not Clicked");
 		}
 	}
 
 	public void selectOFO(Itinerary itn) {
 		try {
 			ofoApp.click();
-			logger.info("<<< OFO App Clicked >>>");
+			logger.info("OFO App Clicked ");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< OFO App !Clicked >>>");
+			logger.info("Error while clicking on OFO");
+			itn.setErrorLog("OFO App not Clicked");
 		}
 	}
 
 	public void selectSTNS(Itinerary itn) {
 		try {
 			stnsApp.click();
-			logger.info("<<< STNS App Clicked >>>");
+			logger.info("STNS App Clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< STNS App !Clicked >>>");
+			logger.info("Error while clicking on STNS");
+			itn.setErrorLog("STNS App not Clicked");
 		}
 	}
-	
+
 	public void verifyAIS() {
 		if(gfourHome.isDisplayed()) {
-			logger.info(">>>>> Token passed properly <<<<<");
+			logger.info(" Token passed properly ");
 		}
 	}
 

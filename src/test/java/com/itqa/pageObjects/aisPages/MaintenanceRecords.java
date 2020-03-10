@@ -23,65 +23,68 @@ import java.util.List;
 
 public class MaintenanceRecords extends BasePage {
 
-    private Logger logger = null;
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private Logger logger = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(id = "Mx_Records_request")
-    private WebElement actionsTab;
+	@FindBy(id = "Mx_Records_request")
+	private WebElement actionsTab;
 
-    @FindBy(id = "Mx_Records_request_Request_Legacy")
-    private WebElement actionRequestsTab;
+	@FindBy(id = "Mx_Records_request_Request_Legacy")
+	private WebElement actionRequestsTab;
 
-    @FindBy(id = "Request_Legacy_view_refresh")
-    private WebElement actionRequestsLookupButton;
+	@FindBy(id = "Request_Legacy_view_refresh")
+	private WebElement actionRequestsLookupButton;
 
-    @FindBy(className = "result_row")
-    private List<WebElement> actionRequestsResultRow;
+	@FindBy(className = "result_row")
+	private List<WebElement> actionRequestsResultRow;
 
-    @FindBy(xpath = "//div[contains(text(),'Control#')]/following-sibling::div/input")
-    private WebElement entryControlNumberField;
+	@FindBy(xpath = "//div[contains(text(),'Control#')]/following-sibling::div/input")
+	private WebElement entryControlNumberField;
 
-    /*-----------------------------*/
+	/*-----------------------------*/
 
-    @FindBy(id = "Mx_Records_report")
-    private WebElement reportsTab;
+	@FindBy(id = "Mx_Records_report")
+	private WebElement reportsTab;
 
-    @FindBy(id = "Mx_Records_report_Mx_Reports_Log")
-    private WebElement flightLogTab;
+	@FindBy(id = "Mx_Records_report_Mx_Reports_Log")
+	private WebElement flightLogTab;
 
-    @FindBy(id = "Mx_Reports_Log_lookup_tail")
-    private WebElement tailField;
+	@FindBy(id = "Mx_Reports_Log_lookup_tail")
+	private WebElement tailField;
 
-    @FindBy(id = "Mx_Reports_Log_lookup_startDate")
-    private WebElement startingDateField;
+	@FindBy(id = "Mx_Reports_Log_lookup_startDate")
+	private WebElement startingDateField;
 
-    @FindBy(id = "Mx_Reports_Log_run_report")
-    private WebElement runReportButton;
+	@FindBy(id = "Mx_Reports_Log_run_report")
+	private WebElement runReportButton;
 
-    @FindBy(id = "result_row")
-    private WebElement resultRow;
-    
-    @FindBy(xpath = ("//div[contains(text(),'AIS Error')]"))
-    private WebElement flag;
+	@FindBy(id = "result_row")
+	private WebElement resultRow;
 
-    public MaintenanceRecords(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-        jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	@FindBy(xpath = ("//div[contains(text(),'AIS Error')]"))
+	private WebElement flag;
 
-    public void lookupActionRequest(Itinerary itn) {
+	public MaintenanceRecords(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
+
+	public void lookupActionRequest(Itinerary itn) {
 		try {
 			logger.info("lookupActionRequest Verify -> Started");
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionsTab));
 			actionsTab.click();
+			logger.info("Action tab clicked");
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionRequestsTab));
 			actionRequestsTab.click();
+			logger.info("Action request tab clicked");
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(actionRequestsLookupButton));
 			if (actionRequestsLookupButton.isDisplayed()) {
 				actionRequestsLookupButton.click();
+				logger.info("Action request lookup button clicked");
 			}
 
 			if (actionRequestsResultRow.size() > 0) {
@@ -90,8 +93,9 @@ public class MaintenanceRecords extends BasePage {
 			}
 			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("lookupActionRequest Scenario -> Fail");
 			itn.setErrorLog("Error while verifiying lookupActionRequest Scenario");
-			throw new Error(">>>Action Requests returns no result<<<");
+			throw new Error("Action Requests returns no result");
 		}
 	}
 
@@ -100,8 +104,10 @@ public class MaintenanceRecords extends BasePage {
 			logger.info("lookupActionRequest Report Verify -> Started");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(reportsTab));
 			reportsTab.click();
+			logger.info("Reports tab clicked");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightLogTab));
 			flightLogTab.click();
+			logger.info("Flight log tab clicked");
 			try {
 				verifyReport("217NV");
 			} catch (Exception d) {
@@ -112,28 +118,32 @@ public class MaintenanceRecords extends BasePage {
 						verifyReport("301NV");
 					} catch (Exception g) {
 						g.printStackTrace();
-						throw new Error(">>>Records returns no result<<<");
+						throw new Error("Records returns no result");
 					}
 				}
 			}
 			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Could not find Reports");
 			itn.setErrorLog("Error while verifying lookupActionRequest Scenario");
-			throw new Error(">>>Reports cant find<<<");
+			throw new Error("Could not find Reports");
 		}
 	}
-    public void verifyReport(String tail) {
-    	tailField.sendKeys(tail);
-    	Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -90);
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        String selectDate = format.format(calendar.getTime());
-        jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
-        jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
-        jse.executeScript("arguments[0].click();", runReportButton);
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
-        jse.executeScript("arguments[0].click();", resultRow);
-        logger.info("MX Records Report displayed");
-    }
+	public void verifyReport(String tail) {
+		tailField.sendKeys(tail);
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -90);
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		String selectDate = format.format(calendar.getTime());
+		jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
+		logger.info("Start date feild entered");
+		jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
+		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(runReportButton));
+		jse.executeScript("arguments[0].click();", runReportButton);
+		logger.info("Run report button clicked");
+		new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(resultRow));
+		jse.executeScript("arguments[0].click();", resultRow);
+		logger.info("Result row clicked");
+		logger.info("MX Records Report displayed");
+	}
 }

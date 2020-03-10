@@ -92,7 +92,7 @@ public class TABookingFlow extends BasePage {
 				paymentPage.fillPaymentPage(itn, false, true);
 				confirmationPage.verifyConf(itn);
 			}
-			
+
 		} catch (Exception e) {
 			try {
 				logger.info("Started Re-executing test case");
@@ -108,6 +108,7 @@ public class TABookingFlow extends BasePage {
 				flightPage.selectFlightPage(itn);
 				manifestId = ManifestId.getManifestId(driver);
 				itn.setManifestId(manifestId);
+				logger.info("Error while TA Booking");
 				itn.setErrorLog("Error while TA Booking " );
 				logger.info("Initiated flight, manifest id is " + manifestId);
 				hotelPage.selectHotel(itn);
@@ -120,7 +121,7 @@ public class TABookingFlow extends BasePage {
 					confirmationPage.verifyConf(itn);
 				}
 			} catch (Exception e1) {
-				logger.info("%%%%%% caught error " );
+				logger.info("Error while creating booking " );
 				return manifestId;
 			}
 		}

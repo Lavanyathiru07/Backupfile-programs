@@ -129,7 +129,7 @@ public class Itinerary {
 	public String getLastName() {
 		return this.lastName;
 	}
-	
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -172,7 +172,7 @@ public class Itinerary {
 	public Boolean getHotel() {
 		return hotel;
 	}
-	
+
 	public Boolean getVehicle() {
 		return vehicle;
 	}
@@ -327,7 +327,7 @@ public class Itinerary {
 	public String getErrorLog() {
 		return this.errorLog;
 	}
-	
+
 	public void setHotel(boolean hotel) {
 		this.hotel = hotel;
 	}

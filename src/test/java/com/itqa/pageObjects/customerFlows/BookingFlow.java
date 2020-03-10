@@ -59,7 +59,7 @@ public class BookingFlow extends BasePage {
 	private ManageTravelVehiclePage ManageTravelVehiclePage;
 	private ManageTravelPaymentPage ManageTravelPaymentPage;
 	private G4PlusLoginPage g4LoginPage;
-	
+
 	public BookingFlow(Logger log) {
 		this.logger = log;
 		landingPage = new LandingPage(log);
@@ -112,9 +112,10 @@ public class BookingFlow extends BasePage {
 			seatPage.selectSeatPage(itn);
 			bagPage.selectBagPage(itn);
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
-			itn.setErrorLog("Error while Create Booking  ");
+			logger.info("Error while Create Booking");
+			itn.setErrorLog("Error while Create Booking ");
 			return manifestId;
 		}
 		return manifestId;
@@ -141,17 +142,17 @@ public class BookingFlow extends BasePage {
 				itn.setDestinationCity("LAS");
 				driver = DriverBase.getDriver();
 				if (Environment.getEnv().contains("aws")) {
-				     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
+					driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
 				}else {
 					driver.get(URLS.WWW.getUrl(Environment.getEnv(), silo));
 				}
 				manifestId = createWebBooking(itn, context);
-				
+
 				paymentPage.fillPaymentPage(itn, createAccount, true);
 				confirmationPage.verifyConf(itn);
 			} catch (Exception e1) {
 				itn.setErrorLog("Error while creating web booking " );
-				logger.info("%%%%%% caught error ");
+				logger.info("Error while creating web booking ");
 				return manifestId;
 			}
 
@@ -176,7 +177,7 @@ public class BookingFlow extends BasePage {
 		}catch(Exception e) {
 			return false;
 		}
-		
+
 	}
 
 	public Boolean processOnlineCheckinAndGetBoardingPass(Itinerary itn) {
@@ -195,7 +196,7 @@ public class BookingFlow extends BasePage {
 
 		driver = DriverBase.getDriver();
 		if (Environment.getEnv().contains("aws")) {
-		     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), itn.getSiloIndex()));
+			driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), itn.getSiloIndex()));
 		}else {
 			driver.get(URLS.WWW.getUrl(Environment.getEnv(), itn.getSiloIndex()));
 		}
@@ -290,21 +291,22 @@ public class BookingFlow extends BasePage {
 	public void manageTravelModificationUpsellBagSeat(Itinerary itn, Integer silo) {
 		driver = DriverBase.getDriver();
 		try {
-		if (Environment.getEnv().contains("aws")) {
-		     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
-		}else {
-			driver.get(URLS.WWW.getUrl(Environment.getEnv(), silo));
+			if (Environment.getEnv().contains("aws")) {
+				driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
+			}else {
+				driver.get(URLS.WWW.getUrl(Environment.getEnv(), silo));
+			}
+
+			ManageTravelLoginPage.doManageTravel(itn);
+			ManageTravelBagPage.selectBagPage(itn);
+			ManageTravelSeatPage.selectUpgradeSeat(itn);
+			ManageTravelHotelPage.selectHotel();
+			ManageTravelVehiclePage.selectVehicle();
+			ManageTravelPaymentPage.fillPaymentPage(itn);
+
+		}catch (Exception e) {
+			logger.info("Error in manage travel while modifiying the bags and seats");
+			itn.setErrorLog("Error in manage travel while modifiying the bags and seats " );
+			throw new Error("manageTravel Modification Upsell Bag Seat FAI");
 		}
-
-		ManageTravelLoginPage.doManageTravel(itn);
-		ManageTravelBagPage.selectBagPage(itn);
-		ManageTravelSeatPage.selectUpgradeSeat(itn);
-		ManageTravelHotelPage.selectHotel();
-		ManageTravelVehiclePage.selectVehicle();
-		ManageTravelPaymentPage.fillPaymentPage(itn);
-
-	}catch (Exception e) {
-		itn.setErrorLog("Error in manage travel while modifiying the bags and seats " );
-		throw new Error(">>>manageTravelModificationUpsellBagSeat FAIL<<<");
-	}
-}}
+	}}

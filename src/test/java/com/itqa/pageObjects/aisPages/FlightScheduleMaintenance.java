@@ -16,34 +16,36 @@ import framework.DriverBase;
 
 public class FlightScheduleMaintenance extends BasePage{
 
-    private Logger logger = null;
-    private JavascriptExecutor jse = null;
-    private WebDriver driver = null;
+	private Logger logger = null;
+	private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
 
-    @FindBy(name = "rsflt")
-    private WebElement flightNumField;
+	@FindBy(name = "rsflt")
+	private WebElement flightNumField;
 
-    @FindBy(xpath = "//td[contains(text(),'Origin')]/following-sibling::td[contains(text(),'-')]")
-    private WebElement originText;
+	@FindBy(xpath = "//td[contains(text(),'Origin')]/following-sibling::td[contains(text(),'-')]")
+	private WebElement originText;
 
-    public FlightScheduleMaintenance(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public FlightScheduleMaintenance(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
 	public void verifyFlightScheduleMX(Itinerary itn) {
 		try {
 			logger.info("FlightScheduleMX Verify -> Started");
 			flightNumField.sendKeys("529" + Keys.ENTER);
+			logger.info("529 entered in flight number feild");
 			originText.click();
+			logger.info("origin clicked");
 			logger.info("Flight Schedule Maintenance Displayed");
 			logger.info("FlightScheduleMX Scenario -> Pass");
 		} catch (Exception e) {
-			itn.setErrorLog("FlightScheduleMX Scenario -> Fail");
-			itn.setErrorLog("Error while verifying the flight schedule MX " );
-			throw new Error(">>>Flight Schedule MX Fail<<<");
+			logger.info("Error while verifying the flight schedule MX");
+			itn.setErrorLog("Error while verifying the flight schedule MX ");
+			throw new Error("Flight Schedule MX Fail");
 		}
 	}
 }

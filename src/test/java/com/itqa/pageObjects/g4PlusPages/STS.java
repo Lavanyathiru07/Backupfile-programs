@@ -18,39 +18,43 @@ import framework.DriverBase;
 
 public class STS extends BasePage {
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(xpath = "//h2[contains(text(),'Seat Maps')]")
-    private WebElement seatMapTitle;
+	@FindBy(xpath = "//h2[contains(text(),'Seat Maps')]")
+	private WebElement seatMapTitle;
 
-    @FindBy(xpath = "//h2[contains(text(),'Seat Masking')]")
-    private WebElement seatMaskingTitle;
+	@FindBy(xpath = "//h2[contains(text(),'Seat Masking')]")
+	private WebElement seatMaskingTitle;
 
-    @FindBy(xpath = "//h2[contains(text(),'Seat Pricing')]")
-    private WebElement seatPricingTitle;
+	@FindBy(xpath = "//h2[contains(text(),'Seat Pricing')]")
+	private WebElement seatPricingTitle;
 
-    public STS(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public STS(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
 	public void accessSTS(Itinerary itn) {
 		try {
 			logger.info("STS Verify -> Started");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatMapTitle));
 			seatMapTitle.click();
+			logger.info("seatMap Title clicked");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatMaskingTitle));
 			seatMaskingTitle.click();
+			logger.info("seatMasking Title clicked");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(seatPricingTitle));
 			seatPricingTitle.click();
+			logger.info("seat price Title clicked");
 			logger.info("STS Scenario -> Pass");
 
 		} catch (Exception e) {
+			logger.info("Error while verifying STS");
 			itn.setErrorLog("Error while verifying STS Scenario");
 			throw new Error("STS Scenario -> Fail");
 		}

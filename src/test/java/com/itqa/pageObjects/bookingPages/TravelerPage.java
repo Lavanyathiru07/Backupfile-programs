@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TravelerPage extends BasePage {
+
     private static final String MONTHDROPDOWNXPATH = "//select[contains(@name,'dmy[m]')]";
 
     private Logger logger = null;
@@ -144,4 +145,5 @@ public class TravelerPage extends BasePage {
         }
         clickContinue();
     }
+
 }

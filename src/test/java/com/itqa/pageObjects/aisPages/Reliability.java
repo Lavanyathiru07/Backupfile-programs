@@ -19,59 +19,60 @@ import java.util.Calendar;
 
 public class Reliability extends BasePage{
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(id = "Mx_Reliability_report")
-    private WebElement reportsTab;
+	@FindBy(id = "Mx_Reliability_report")
+	private WebElement reportsTab;
 
-    @FindBy(id = "Mx_Reliability_report_Mx_Reports_Log")
-    private WebElement flightLogTab;
+	@FindBy(id = "Mx_Reliability_report_Mx_Reports_Log")
+	private WebElement flightLogTab;
 
-    @FindBy(id = "Mx_Reports_Log_lookup_tail")
-    private WebElement tailField;
+	@FindBy(id = "Mx_Reports_Log_lookup_tail")
+	private WebElement tailField;
 
-    @FindBy(id = "Mx_Reports_Log_lookup_startDate")
-    private WebElement startingDateField;
+	@FindBy(id = "Mx_Reports_Log_lookup_startDate")
+	private WebElement startingDateField;
 
-    @FindBy(id = "Mx_Reports_Log_run_report")
-    private WebElement runReportButton;
+	@FindBy(id = "Mx_Reports_Log_run_report")
+	private WebElement runReportButton;
 
-    @FindBy(id = "result_row")
-    private WebElement resultRow;
+	@FindBy(id = "result_row")
+	private WebElement resultRow;
 
-    public Reliability(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public Reliability(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
-    public void openReport(Itinerary itn) {
-    	try{
-        reportsTab.click();
-        flightLogTab.click();
+	public void openReport(Itinerary itn) {
+		try{
+			reportsTab.click();
+			flightLogTab.click();
 
-        jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
+			jse.executeScript("arguments[0].setAttribute('value', '307NV');", tailField);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -90);
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        String selectDate = format.format(calendar.getTime());
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.DATE, -90);
+			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+			String selectDate = format.format(calendar.getTime());
 
-        jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
-        jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
-        jse.executeScript("arguments[0].click();", runReportButton);
+			jse.executeScript("arguments[0].value='" + selectDate + "';", startingDateField);
+			jse.executeScript("arguments[0].removeAttribute('disabled');", runReportButton);
+			jse.executeScript("arguments[0].click();", runReportButton);
 
-        jse.executeScript("arguments[0].click();", resultRow);
-        logger.info("Reliability Report displayed");
-    	}catch(Exception e){
-    		skip = true;
-    		itn.setErrorLog("Reliability Report Scenario -> Fail");
-    		DriverBase.getDriver().quit();
-    		throw new SkipException("Scenario fails so execution stoped");
+			jse.executeScript("arguments[0].click();", resultRow);
+			logger.info("Reliability Report displayed");
+		}catch(Exception e){
+			skip = true;
+			logger.info("Error while Reliability Report check");
+			itn.setErrorLog("Reliability Report Scenario -> Fail");
+			DriverBase.getDriver().quit();
+			throw new SkipException("Scenario fails so execution stoped");
 		}
 	}
 }

@@ -17,79 +17,82 @@ import java.util.List;
 
 public class FlightFollowing extends BasePage{
 
-    private Logger logger = null;
-    private JavascriptExecutor jse = null;
-    private WebDriver driver = null;
+	private Logger logger = null;
+	private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
 
-    @FindBy(id = "fllist")
-    private WebElement fllistFrame;
+	@FindBy(id = "fllist")
+	private WebElement fllistFrame;
 
-    @FindBy(name = "flfollow")
-    private WebElement flfollowFrame;
+	@FindBy(name = "flfollow")
+	private WebElement flfollowFrame;
 
-    @FindBy(xpath = "//a[contains(@href,'flfollow.php?flifo_key=')]")
-    private List<WebElement> flightList;
+	@FindBy(xpath = "//a[contains(@href,'flfollow.php?flifo_key=')]")
+	private List<WebElement> flightList;
 
-    @FindBy(xpath = "//div[contains(@title,'Program/version=FLFOLLOW/')]")
-    private WebElement flightHeader;
+	@FindBy(xpath = "//div[contains(@title,'Program/version=FLFOLLOW/')]")
+	private WebElement flightHeader;
 
-    public FlightFollowing(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
-
-    public void verifyFlightInformation(Itinerary itn) {
-    	try{
-    	DriverBase.getDriver().switchTo().frame(fllistFrame);
-    	logger.info("FlightInformation Verify -> Started");
-        for (int loop=0; loop<10; loop++) {
-            if (DriverBase.getDriver().findElements(By.xpath("//td[contains(@class,'norm')]")).size() == 0) {
-            	DriverBase.getDriver().switchTo().defaultContent();
-            	DriverBase.getDriver().switchTo().frame(fllistFrame);
-                try {Thread.sleep(500);} catch (Exception e) {}
-            }
-            else {
-                break;
-            }
-        }
-        String flightNum = flightList.get(0).getText();
-        logger.info("Clicking Flight: " + flightNum);
-        flightList.get(0).click();
-
-        DriverBase.getDriver().switchTo().defaultContent();
-        DriverBase.getDriver().switchTo().frame(flfollowFrame);
-
-        for (int loop=0; loop<5; loop++) {
-
-            try {
-                if (flightHeader.getText().contains(flightNum)) {
-                    logger.info("Flight Information displayed properly");
-                    break;
-                } else {
-                    if (loop < 4) {
-                        try {
-                            Thread.sleep(1000);
-                        } catch (Exception e) {
-                        }
-                    } else {
-                    	itn.setErrorLog("FLight Information not displayed properly :");
-                        throw new Error("FAIL - Flight Information not displayed properly");
-                    }
-                }
-            }
-            catch (Exception e) {
-                if (loop == 4) {
-                	itn.setErrorLog("Error while finding element Flight following " );
-                    throw new Error("FAIL - Flight Following - Cannot get element");
-                }
-            }
-        }
-        logger.info("FlightInformation Scenario -> Pass");
-    }catch(Exception e){
-    	itn.setErrorLog("Error while verifying FlightInformation Scenario");
-		throw new Error("FAIL - Flight Following - Cannot get element");
+	public FlightFollowing(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
-    }
+
+	public void verifyFlightInformation(Itinerary itn) {
+		try{
+			DriverBase.getDriver().switchTo().frame(fllistFrame);
+			logger.info("FlightInformation Verify -> Started");
+			for (int loop=0; loop<10; loop++) {
+				if (DriverBase.getDriver().findElements(By.xpath("//td[contains(@class,'norm')]")).size() == 0) {
+					DriverBase.getDriver().switchTo().defaultContent();
+					DriverBase.getDriver().switchTo().frame(fllistFrame);
+					try {Thread.sleep(500);} catch (Exception e) {}
+				}
+				else {
+					break;
+				}
+			}
+			String flightNum = flightList.get(0).getText();
+			logger.info("Clicking Flight: " + flightNum);
+			flightList.get(0).click();
+			logger.info("first flight clicked from list");
+
+			DriverBase.getDriver().switchTo().defaultContent();
+			DriverBase.getDriver().switchTo().frame(flfollowFrame);
+
+			for (int loop=0; loop<5; loop++) {
+
+				try {
+					if (flightHeader.getText().contains(flightNum)) {
+						logger.info("Flight Information displayed properly");
+						break;
+					} else {
+						if (loop < 4) {
+							try {
+								Thread.sleep(1000);
+							} catch (Exception e) {
+							}
+						} else {
+							itn.setErrorLog("FLight Information not displayed properly :");
+							throw new Error("FAIL - Flight Information not displayed properly");
+						}
+					}
+				}
+				catch (Exception e) {
+					if (loop == 4) {
+						logger.info("Error while finding element Flight following");
+						itn.setErrorLog("Error while finding element Flight following " );
+						throw new Error("FAIL - Flight Following - Cannot get element");
+					}
+				}
+			}
+			logger.info("FlightInformation Scenario -> Pass");
+		}catch(Exception e){
+			logger.info("Error while verifying FlightInformation");
+			itn.setErrorLog("Error while verifying FlightInformation Scenario");
+			throw new Error("FAIL - Flight Following - Cannot get element");
+		}
+	}
 }

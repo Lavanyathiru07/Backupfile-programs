@@ -17,37 +17,41 @@ import framework.DriverBase;
 
 public class FlightFlow extends BasePage{
 
-    private Logger logger = null;
-    private JavascriptExecutor jse = null;
-    private WebDriver driver = null;
+	private Logger logger = null;
+	private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
 
-    @FindBy(id = "acGroup")
-    private WebElement acGroupSelect;
+	@FindBy(id = "acGroup")
+	private WebElement acGroupSelect;
 
-    @FindBy(xpath = "//img[contains(@title,'Submit')]")
-    private WebElement submitButton;
+	@FindBy(xpath = "//img[contains(@title,'Submit')]")
+	private WebElement submitButton;
 
-    @FindBy(xpath = "//table[contains(@class,'main')]")
-    private WebElement mainTable;
+	@FindBy(xpath = "//table[contains(@class,'main')]")
+	private WebElement mainTable;
 
-    public FlightFlow(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public FlightFlow(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
-    public void openFlightFlow(Itinerary itn) {
-    	try{
-        new Select(acGroupSelect).selectByVisibleText("ALL");
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(submitButton));
-        submitButton.click();
-        mainTable.isDisplayed();
-        logger.info("Flight Flow Table Displayed");
-        logger.info("FlightFlow Scenario -> Pass");
-    	}catch(Exception e){
-    		itn.setErrorLog("Error while opening flight flow " );
-    		throw new Error(">>>Fligh Flow FAIL<<<");
-    	}
-    }
+	public void openFlightFlow(Itinerary itn) {
+		try{
+			new Select(acGroupSelect).selectByVisibleText("ALL");
+			logger.info("select All from list");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(submitButton));
+			submitButton.click();
+			logger.info("submit button cicked");
+			mainTable.isDisplayed();
+			logger.info("verify main table is displayed");
+			logger.info("Flight Flow Table Displayed");
+			logger.info("FlightFlow Scenario -> Pass");
+		}catch(Exception e){
+			logger.info("Error while opening flight flow");
+			itn.setErrorLog("Error while opening flight flow " );
+			throw new Error("Fligh Flow FAIL");
+		}
+	}
 }

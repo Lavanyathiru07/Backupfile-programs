@@ -12,65 +12,65 @@ import static framework.DriverType.*;
 
 public class DriverFactory {
 
-    private RemoteWebDriver webDriver;
-    private DriverType selectedDriverType;
+	private RemoteWebDriver webDriver;
+	private DriverType selectedDriverType;
 
-    private final String operatingSystem = System.getProperty("os.name").toUpperCase();
-    private final String systemArchitecture = System.getProperty("os.arch");
-    private String currentTestName;
+	private final String operatingSystem = System.getProperty("os.name").toUpperCase();
+	private final String systemArchitecture = System.getProperty("os.arch");
+	private String currentTestName;
 
-    private static Logger log = Logger.getLogger(DriverFactory.class.getName());
+	private static Logger log = Logger.getLogger(DriverFactory.class.getName());
 
-    @Factory
-    public DriverFactory() {
-        DriverType driverType = CHROME;
-        String browser = System.getProperty("browser", driverType.toString()).toUpperCase();
-        try {
-        
-            driverType = valueOf(browser);
-        } catch (IllegalArgumentException ignored) {
+	@Factory
+	public DriverFactory() {
+		DriverType driverType = CHROME;
+		String browser = System.getProperty("browser", driverType.toString()).toUpperCase();
+		try {
 
-            log.error("Unknown driver specified, defaulting to '" + driverType + "'...");
-        } catch (NullPointerException ignored) {
-            log.error("No driver specified, defaulting to '" + driverType + "'...");
-        }
-        selectedDriverType = driverType;
-       // getDriver().manage().window().maximize();
-    }
+			driverType = valueOf(browser);
+		} catch (IllegalArgumentException ignored) {
 
-    public RemoteWebDriver getDriver() {
-        if (null == webDriver) {
-            instantiateWebDriver(selectedDriverType);
-        }
+			log.error("Unknown driver specified, defaulting to '" + driverType + "'...");
+		} catch (NullPointerException ignored) {
+			log.error("No driver specified, defaulting to '" + driverType + "'...");
+		}
+		selectedDriverType = driverType;
+		// getDriver().manage().window().maximize();
+	}
 
-        return webDriver;
-    }
+	public RemoteWebDriver getDriver() {
+		if (null == webDriver) {
+			instantiateWebDriver(selectedDriverType);
+		}
 
-    public void quitDriver() {
-        if (null != webDriver) {
-            webDriver.quit();
-            webDriver = null;
-        }
-    }
+		return webDriver;
+	}
 
-    private void instantiateWebDriver(DriverType driverType) {
-        log.info(" ");
-        log.info("Local Operating System: " + operatingSystem);
-        log.info("Local Architecture: " + systemArchitecture);
-        log.info("Selected Browser: " + selectedDriverType);
-        log.info(" ");
-        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-        webDriver = driverType.getWebDriverObject(desiredCapabilities);
-    }
+	public void quitDriver() {
+		if (null != webDriver) {
+			webDriver.quit();
+			webDriver = null;
+		}
+	}
 
-    public void run(IHookCallBack iHookCallBack, ITestResult iTestResult) {
-        iHookCallBack.runTestMethod(iTestResult);
-        if (iTestResult.getThrowable() != null) {
-            Screenshot.saveScreenshot(iTestResult.getName(), webDriver);
-        }
-    }
+	private void instantiateWebDriver(DriverType driverType) {
+		log.info(" ");
+		log.info("Local Operating System: " + operatingSystem);
+		log.info("Local Architecture: " + systemArchitecture);
+		log.info("Selected Browser: " + selectedDriverType);
+		log.info(" ");
+		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+		webDriver = driverType.getWebDriverObject(desiredCapabilities);
+	}
 
-    public void setTestName(String testname) {
-        currentTestName = testname;
-    }
+	public void run(IHookCallBack iHookCallBack, ITestResult iTestResult) {
+		iHookCallBack.runTestMethod(iTestResult);
+		if (iTestResult.getThrowable() != null) {
+			Screenshot.saveScreenshot(iTestResult.getName(), webDriver);
+		}
+	}
+
+	public void setTestName(String testname) {
+		currentTestName = testname;
+	}
 }
