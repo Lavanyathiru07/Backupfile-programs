@@ -2,6 +2,7 @@ package com.itqa.pageObjects.g4PlusPages;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -77,7 +78,11 @@ public class G4MenuPage extends BasePage {
 			modApp.click();
 			logger.info("<<< MOD App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< MOD App !Clicked >>>");
+		    try{
+		        modApp.sendKeys(Keys.RETURN);
+            }catch( Exception q) {
+				itn.setErrorLog("<<< MOD App !Clicked >>>");
+			}
 		}
 	}
 
@@ -86,7 +91,11 @@ public class G4MenuPage extends BasePage {
 			aisApp.click();
 			logger.info("<<< AIS App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< AIS App !Clicked >>>");
+			try {
+				aisApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< AIS App !Clicked >>>");
+			}
 		}
 	}
 
@@ -95,7 +104,11 @@ public class G4MenuPage extends BasePage {
 			stsApp.click();
 			logger.info("<<< STS App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< STS App !Clicked >>>");
+			try {
+				stsApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< STS App !Clicked >>>");
+			}
 		}
 	}
 
@@ -104,8 +117,13 @@ public class G4MenuPage extends BasePage {
 			espApp.click();
 			logger.info("<<< ESP App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< ESP App !Clicked >>>");
+			try {
+				espApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< ESP App !Clicked >>>");
+			}
 		}
+
 	}
 
 	public void selectSVT(Itinerary itn) {
@@ -113,7 +131,11 @@ public class G4MenuPage extends BasePage {
 			svtApp.click();
 			logger.info("<<< SVT App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< SVT App !Clicked >>>");
+			try {
+				svtApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< SVT App !Clicked >>>");
+			}
 		}
 	}
 
@@ -122,7 +144,11 @@ public class G4MenuPage extends BasePage {
 			carApp.click();
 			logger.info("<<< CAR App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< CAR App !Clicked >>>");
+			try {
+				fmApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< CAR App !Clicked >>>");
+			}
 		}
 	}
 
@@ -131,7 +157,11 @@ public class G4MenuPage extends BasePage {
 			fmApp.click();
 			logger.info("<<< FM App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< FM App !Clicked >>>");
+			try {
+				fmApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< FM App !Clicked >>>");
+			}
 		}
 	}
 
@@ -140,7 +170,11 @@ public class G4MenuPage extends BasePage {
 			rqApp.click();
 			logger.info("<<< RQ App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< RQ App !Clicked >>>");
+			try {
+				rqApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< RQ App !Clicked >>>");
+			}
 		}
 	}
 
@@ -149,7 +183,11 @@ public class G4MenuPage extends BasePage {
 			hotApp.click();
 			logger.info("<<< RQ App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< RQ App !Clicked >>>");
+			try {
+				hotApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< RQ App !Clicked >>>");
+			}
 		}
 
 	}
@@ -159,7 +197,11 @@ public class G4MenuPage extends BasePage {
 			atlApp.click();
 			logger.info("<<< ATL App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< ATL App !Clicked >>>");
+			try {
+				atlApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< ATL App !Clicked >>>");
+			}
 		}
 	}
 
@@ -168,7 +210,11 @@ public class G4MenuPage extends BasePage {
 			clApp.click();
 			logger.info("<<< CL App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< CL App !Clicked >>>");
+			try {
+				clApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< CL App !Clicked >>>");
+			}
 		}
 	}
 
@@ -177,7 +223,11 @@ public class G4MenuPage extends BasePage {
 			ofoApp.click();
 			logger.info("<<< OFO App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< OFO App !Clicked >>>");
+			try {
+				ofoApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< OFO App !Clicked >>>");
+			}
 		}
 	}
 
@@ -186,7 +236,11 @@ public class G4MenuPage extends BasePage {
 			stnsApp.click();
 			logger.info("<<< STNS App Clicked >>>");
 		} catch (Exception e) {
-			itn.setErrorLog("<<< STNS App !Clicked >>>");
+			try {
+				stnsApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< STNS App !Clicked >>>");
+			}
 		}
 	}
 	
