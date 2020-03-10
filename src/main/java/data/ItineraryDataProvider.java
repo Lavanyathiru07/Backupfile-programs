@@ -53,8 +53,8 @@ public class ItineraryDataProvider {
             for (Integer silo : silos) {
                 Itinerary itnOneWay = new ItineraryBuilder()
                         .withScenario(method.getName())
-                        .withDepartureCity("LAS")
-                        .withDestinationCity("FAT")
+                        .withDepartureCity("CVG")
+                        .withDestinationCity("PIE")
                         .withPriority("true")
                         .build();
                 data.add(new Object[]{silo, itnOneWay});
