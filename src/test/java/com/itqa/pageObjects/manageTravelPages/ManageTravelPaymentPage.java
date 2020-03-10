@@ -106,7 +106,7 @@ public class ManageTravelPaymentPage {
             new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(cardNoField));
         }catch (WebDriverException e ){
             try {
-                Thread.sleep(2000);
+                Thread.sleep(2500);
             } catch (InterruptedException ex) {
 
             }
