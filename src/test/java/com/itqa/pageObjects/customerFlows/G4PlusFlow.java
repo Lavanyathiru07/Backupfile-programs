@@ -147,7 +147,8 @@ public class G4PlusFlow extends BasePage {
 			else  {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				G4PlusLoginPage.g4plusLogin(false);
-			}
+				Thread.sleep(3500);
+			}  
 
 
 		} catch (Exception e) {
