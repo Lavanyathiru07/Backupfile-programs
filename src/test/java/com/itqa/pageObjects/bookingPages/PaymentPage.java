@@ -445,20 +445,18 @@ public class PaymentPage extends BasePage {
 			Thread.sleep(2500);
 			  try {
 					   if (driver.findElement(By.xpath("//h2[contains(text(), 'sorry')]")).isDisplayed()) {
-							   System.out.println("----------------------------------------");
 							   driver.findElement(By.xpath("//span[contains(text(),'Continue')]/parent::button")).sendKeys(Keys.RETURN);
 							   fillCardInfo(itn.getCardNo(), itn);
 							   driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
-							   Thread.sleep(1500);
+							   Thread.sleep(3500);
 							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN); }
 			   }catch (Exception e ){}
 			  try {
 					  if (driver.findElement(By.xpath("//div[contains(@class , 'message-inner')]")).isDisplayed()) {
-							  System.out.println("2----------------------------------------");
 							   driver.findElement(By.xpath("//button[contains(text(), 'Return')]")).sendKeys(Keys.RETURN);
 							   fillCardInfo(itn.getCardNo(), itn);
 							  driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
-							  Thread.sleep(1500);
+							  Thread.sleep(3500);
 							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN);
 					  }
 			  }catch (Exception e ){}
