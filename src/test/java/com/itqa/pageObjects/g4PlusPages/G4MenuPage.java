@@ -96,6 +96,7 @@ public class G4MenuPage extends BasePage {
 			logger.info(" AIS App Clicked ");
 		} catch (Exception e) {
 			try {
+				new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(aisApp));
 				aisApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
 				itn.setErrorLog("<<< AIS App !Clicked >>>");
