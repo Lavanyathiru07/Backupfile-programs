@@ -237,11 +237,13 @@ public class G4MenuPage extends BasePage {
 
 	public void selectSTNS(Itinerary itn) {
 		try {
-			stnsApp.click();
+			new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(stnsApp));
+			stnsApp.sendKeys(Keys.RETURN);
 			logger.info("<<< STNS App Clicked >>>");
 		} catch (Exception e) {
 			try {
-				stnsApp.sendKeys(Keys.RETURN);
+				new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(stnsApp));
+				stnsApp.click();
 			} catch (Exception w) {
 				itn.setErrorLog("<<< STNS App !Clicked >>>");
 			}
