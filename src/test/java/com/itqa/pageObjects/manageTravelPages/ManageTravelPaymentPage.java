@@ -5,10 +5,13 @@ import framework.DriverBase;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
+<<<<<<< HEAD
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+=======
+>>>>>>> issue in prod clicking, chaning to javascript executor
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;

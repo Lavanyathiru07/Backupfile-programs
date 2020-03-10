@@ -82,7 +82,8 @@ public class G4MenuPage extends BasePage {
 			logger.info("<<< MOD App Clicked >>>");
 		} catch (Exception e) {
 		    try{
-		        modApp.sendKeys(Keys.RETURN);
+				new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(modApp));
+		        modApp.click();
             }catch( Exception q) {
 				itn.setErrorLog("<<< MOD App !Clicked >>>");
 			}
