@@ -367,15 +367,24 @@ public class MOD extends BasePage {
 						.elementToBeClickable(By.cssSelector("a[href='/app/bookings/" + Itn.getItn() + "']")));
 				driver.findElement(By.cssSelector("a[href='/app/bookings/" + Itn.getItn() + "']")).click();
 			} catch (Exception e) {
+				Itn.setErrorLog("Issues searching itinerary");
+
+			}
+			try {
+				jse.executeScript("arguments[0].click();", changeSeatButton);
+				jse.executeScript("arguments[0].click();", selectSeat.get(selectSeat.size() - 1));
+				jse.executeScript("arguments[0].click();", doneButton);
+				logger.info("Seat Added");
+			}catch ( WebDriverException e){
+				Itn.setErrorLog("Issues selecting seats");
 			}
 
-			jse.executeScript("arguments[0].click();", changeSeatButton);
-			jse.executeScript("arguments[0].click();", selectSeat.get(selectSeat.size() - 1));
-			jse.executeScript("arguments[0].click();", doneButton);
-			logger.info("Seat Added");
+			try {
+				jse.executeScript("arguments[0].click();", changeBagButton);
+				Thread.sleep(3500);
+				new Select(carryonBagSelect).selectByIndex(1);
+			}catch( InterruptedException w){}
 
-			jse.executeScript("arguments[0].click();", changeBagButton);
-			new Select(carryonBagSelect).selectByIndex(1);
 			for (int loop = 0; loop < 5; loop++) {
 				try {
 					driver.findElement(By.id("progress-modal"));
