@@ -147,10 +147,9 @@ public class G4PlusFlow extends BasePage {
 			else  {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				G4PlusLoginPage.g4plusLogin(false);
-				Thread.sleep(3500);
-			}  
+			}
 
-
+			Thread.sleep(4000);
 		} catch (Exception e) {
 			skip = true;
 			throw new SkipException("Skipping Test Case as runmode set to NO");
