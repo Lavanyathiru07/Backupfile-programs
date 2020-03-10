@@ -6,6 +6,7 @@ import framework.DriverBase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -100,7 +101,15 @@ public class ManageTravelPaymentPage {
             cvv = "123";
         }
 
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(cardNoField));
+        try {
+            new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(cardNoField));
+        }catch (WebDriverException e ){
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+
+            }
+        }
 
         for (int loop=0; loop<10; loop++) {
             try {
