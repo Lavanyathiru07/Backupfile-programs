@@ -4,10 +4,7 @@ import data.Itinerary;
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -188,4 +185,33 @@ public class ManageTravelPaymentPage {
         logger.info("Filled card information");
     }
 
+    public void clickPurchase() {
+        jse.executeScript("arguments[0].click();", purchaseButton);
+        logger.info("Click purchse");
+    }
+
+    public void fillPaymentPage(Itinerary itn) {
+        try {
+
+            String upSellTemp = upsellBalance.getText().replace("$","");
+            Float tempTotal = itn.getTotal() + Float.valueOf(upSellTemp);
+            DecimalFormat df = new DecimalFormat("#.##");
+            String decimal = df.format(tempTotal);
+            itn.setTotal(  Float.valueOf(decimal) );
+            logger.info("Upsell occurred of : " + upSellTemp  );
+            logger.info("New Total : " + itn.getTotal()  );
+        } catch (Exception e) {
+        	itn.setErrorLog("Issue getting upsell balance in modification payment page " );
+            logger.info("Issue getting upsell balance");
+        }
+        fillCardInfo(itn);
+        try{
+            jse.executeScript("arguments[0].click();", termAcceptField);
+            Thread.sleep(2500);
+        }catch(Exception e){
+            termAcceptField.click();
+        }
+
+        clickPurchase();
+    }
 }

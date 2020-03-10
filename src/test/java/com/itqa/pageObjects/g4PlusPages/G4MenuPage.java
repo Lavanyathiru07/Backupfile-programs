@@ -77,11 +77,18 @@ public class G4MenuPage extends BasePage {
 
 	public void selectMOD(Itinerary itn) {
 		try {
+<<<<<<< HEAD
 			modApp.click();
 			logger.info("MOD App Clicked");
+=======
+			new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(modApp));
+			jse.executeScript("arguments[0].click();", modApp);
+			logger.info("<<< MOD App Clicked >>>");
+>>>>>>> issue in prod clicking, chaning to javascript executor
 		} catch (Exception e) {
 		    try{
-		        modApp.sendKeys(Keys.RETURN);
+				new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(modApp));
+		        modApp.click();
             }catch( Exception q) {
 				itn.setErrorLog("<<< MOD App !Clicked >>>");
 			}
