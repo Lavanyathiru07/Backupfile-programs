@@ -182,7 +182,7 @@ public class WebBookingTestIT extends DriverBase {
 					//itn.setDestinationCity("LAS");
 				} catch (Exception e) {
 					logger.get().info("Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
-					itn.setDepartureCity("FAT");
+					itn.setDepartureCity("SCK");
 					itn.setDestinationCity("LAS");
 				}
 
