@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
@@ -88,12 +90,14 @@ public class G4MenuPage extends BasePage {
 
 	public void selectAIS(Itinerary itn) {
 		try {
+			new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(aisApp));
 			aisApp.click();
 			logger.info(" AIS App Clicked ");
 		} catch (Exception e) {
 			logger.info("Error while clicking on AIS");
 			itn.setErrorLog("AIS App not Clicked");
 			try {
+				new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(aisApp));
 				aisApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
 				itn.setErrorLog("<<< AIS App !Clicked >>>");
