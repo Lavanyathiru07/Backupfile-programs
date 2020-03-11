@@ -75,7 +75,7 @@ public class G4PlusLoginPage extends BasePage {
 				passwordField.sendKeys(new String(Base64.getDecoder().decode(password)));
 			}
 			loginButton.click();
-			Thread.sleep(3500);
+			Thread.sleep(2500);
 			logger.info("Signin to G4Plus-Portal");
 		} catch (Exception e) {
 			skip=true;
