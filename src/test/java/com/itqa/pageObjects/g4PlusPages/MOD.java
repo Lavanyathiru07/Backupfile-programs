@@ -785,6 +785,9 @@ public class MOD extends BasePage {
 		g4MenuPage.selectSTNS(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 		logger.info("Refreshing Page");
+		try{
+			Thread.sleep(3500);
+		}catch (InterruptedException e){}
 		driver = DriverBase.getDriver();
 		driver.navigate().refresh();
 		unCheckPax(pnr, itn);
