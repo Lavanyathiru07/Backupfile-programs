@@ -377,7 +377,7 @@ public class PaymentPage extends BasePage {
 		if( amount.contains(",") ){
 			amount = amount.replace(",","");
 		}
-		itn.setTotal(Float.valueOf(amount.replace("$","")));
+
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
 		int arr[] = { 201, 204, 249, 253, 257, 258, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521,
@@ -460,7 +460,7 @@ public class PaymentPage extends BasePage {
 							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN);
 					  }
 			  }catch (Exception e ){}
-
+			itn.setTotal(Float.valueOf(amount.replace("$","")));
 		}
 	}
 

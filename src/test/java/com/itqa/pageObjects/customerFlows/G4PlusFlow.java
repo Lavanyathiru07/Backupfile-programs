@@ -39,6 +39,7 @@ import java.util.Base64;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.boon.di.In;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -148,7 +149,7 @@ public class G4PlusFlow extends BasePage {
 				G4PlusLoginPage.g4plusLogin(false);
 			}
 
-			Thread.sleep(4000);
+
 		} catch (Exception e) {
 			skip = true;
 			throw new SkipException("Skipping Test Case as runmode set to NO");
@@ -160,6 +161,11 @@ public class G4PlusFlow extends BasePage {
 
 		g4PlusSignin();
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
+		try{
+			Thread.sleep(2500);
+		}catch (InterruptedException e){}
+		driver= DriverBase.getDriver();
+		driver.navigate().refresh();
 		g4MenuPage.selectAIS(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
 	}

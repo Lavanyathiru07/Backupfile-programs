@@ -137,8 +137,8 @@ public class BookingFlow extends BasePage {
 			try {
 				logger.info("Started Re-executing test case");
 				itn.setErrorLog("Error while Create Booking ");
-				itn.setDepartureCity("BLI");
-				itn.setDestinationCity("LAS");
+				itn.setDepartureCity("PIE");
+				itn.setDestinationCity("CVG");
 				driver = DriverBase.getDriver();
 				if (Environment.getEnv().contains("aws")) {
 				     driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
