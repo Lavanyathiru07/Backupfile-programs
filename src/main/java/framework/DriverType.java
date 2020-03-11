@@ -23,7 +23,6 @@ import java.util.HashMap;
 public enum DriverType implements DriverSetup {
 
 
-
 	FIREFOX {
 		public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
 			// todo: remove this path
