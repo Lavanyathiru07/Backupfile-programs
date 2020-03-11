@@ -770,6 +770,9 @@ public class MOD extends BasePage {
 			}
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
+		Thread.sleep(25000);
+		driver = DriverBase.getDriver();
+		driver.navigate().refresh();
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 
