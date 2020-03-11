@@ -777,8 +777,11 @@ public class MOD extends BasePage {
 
 	public void stationUncheckPax(String pnr, Itinerary itn) {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		logger.info("Connecting to:  "+ URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		g4LoginPage.g4plusLogin(true);
 		Set<String> curTab = driver.getWindowHandles();
+		driver = DriverBase.getDriver();
+		driver.navigate().refresh();
 		g4MenuPage.selectSTNS(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 		unCheckPax(pnr, itn);
