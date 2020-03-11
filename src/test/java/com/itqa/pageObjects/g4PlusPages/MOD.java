@@ -782,7 +782,7 @@ public class MOD extends BasePage {
 			Thread.sleep(3500);
 		}catch (InterruptedException e){}
 		driver = DriverBase.getDriver();
-		driver.navigate().refresh();
+		driver.navigate().to("https://g4plus-ops.allegiantair.com/app/checkin/dashboard/summary");
 		unCheckPax(pnr, itn);
 	}
 
