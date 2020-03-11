@@ -586,8 +586,9 @@ public class MOD extends BasePage {
 
 	public void unCheckPax(String pnr, Itinerary itn) {
 		try {
+			Thread.sleep(2500);
 			searchBtn.click();
-		}catch (WebDriverException e){
+		}catch (Exception e){
 			jse.executeScript("arguments[0].click();", searchBtn);
 		}
 		logger.info("Search button is clicked");
