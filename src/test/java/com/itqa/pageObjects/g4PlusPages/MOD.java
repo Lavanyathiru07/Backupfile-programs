@@ -569,12 +569,7 @@ public class MOD extends BasePage {
 	}
 
 	public void unCheckPax(String pnr, Itinerary itn) {
-		try {
-			Thread.sleep(2500);
-			searchBtn.click();
-		}catch (Exception e){
-			jse.executeScript("arguments[0].click();", searchBtn);
-		}
+		searchBtn.click();
 		logger.info("Search button is clicked");
 		itnField.sendKeys(pnr);
 		logger.info("Itn is entered." + itn + Keys.TAB);
@@ -762,27 +757,18 @@ public class MOD extends BasePage {
 	}
 
 	public void stationUncheckPax(String pnr, Itinerary itn) {
-		try {
-			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			logger.info("Connecting to:  " + URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			g4LoginPage.g4plusLogin(true);
-		}catch (Exception e){
-			System.out.println("Error "+e);
-		}
+		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		g4LoginPage.g4plusLogin(true);
 		Set<String> curTab = driver.getWindowHandles();
 		try{
-			Thread.sleep(3000);
-		}catch (InterruptedException e){}
+			Thread.sleep(2500);
+		}catch (InterruptedException e){
+
+		}
 		driver = DriverBase.getDriver();
 		driver.navigate().refresh();
 		g4MenuPage.selectSTNS(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
-		logger.info("Refreshing Page");
-		try{
-			Thread.sleep(3500);
-		}catch (InterruptedException e){}
-		driver = DriverBase.getDriver();
-		driver.navigate().to("https://g4plus-ops.allegiantair.com/app/checkin/dashboard/summary");
 		unCheckPax(pnr, itn);
 	}
 

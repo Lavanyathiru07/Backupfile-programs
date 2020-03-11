@@ -231,36 +231,35 @@ public class BookingFlow extends BasePage {
 
 		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd") ) {
 			mod.stationUncheckPax(itn.getItn(), itn);
-			//Thread.sleep(100000);
-			//mod.refundWholeAmountInMod(itin, itn);
-			//mod.cancelWholeItn(itn.getItn(), itn);
-//			try{
-//				driver = DriverBase.getDriver();
-//				String refundedTotal = driver.findElement(
-//						By.xpath("//td/abbr[text()='Refunded']/following::td[@class='amount'][1]")).getText().toString();
-//				String tempTotal = driver.findElement(
-//						By.xpath("//td[text()='Amount Paid']/following::td[@class='amount'][1]")).getText().toString();
-//
-//				tempTotal = tempTotal.replace("$","");
-//				refundedTotal = refundedTotal.replace("$","");
-//
-//				if( tempTotal.contains(",")){
-//					tempTotal=tempTotal.replace(",", "");
-//				}
-//				if( refundedTotal.contains(",")){
-//					refundedTotal= refundedTotal.replace(",", "");
-//				}
-//				float total = Float.valueOf(tempTotal);
-//				float tempRefund = Float.valueOf(refundedTotal );
-//
-//				itn.setTotal(total);
-//				itn.setRefundAmount(tempRefund);
-//
-//			}catch( WebDriverException e){
-//				logger.info("Total Amount was not able to be retrieve: " + e);
-//			}catch( NumberFormatException e){
-//				logger.info("Could not convert number: " + e);
-//			}
+			mod.refundWholeAmountInMod(itin, itn);
+			mod.cancelWholeItn(itn.getItn(), itn);
+			try{
+				driver = DriverBase.getDriver();
+				String refundedTotal = driver.findElement(
+						By.xpath("//td/abbr[text()='Refunded']/following::td[@class='amount'][1]")).getText().toString();
+				String tempTotal = driver.findElement(
+						By.xpath("//td[text()='Amount Paid']/following::td[@class='amount'][1]")).getText().toString();
+
+				tempTotal = tempTotal.replace("$","");
+				refundedTotal = refundedTotal.replace("$","");
+
+				if( tempTotal.contains(",")){
+					tempTotal=tempTotal.replace(",", "");
+				}
+				if( refundedTotal.contains(",")){
+					refundedTotal= refundedTotal.replace(",", "");
+				}
+				float total = Float.valueOf(tempTotal);
+				float tempRefund = Float.valueOf(refundedTotal );
+
+				itn.setTotal(total);
+				itn.setRefundAmount(tempRefund);
+
+			}catch( WebDriverException e){
+				logger.info("Total Amount was not able to be retrieve: " + e);
+			}catch( NumberFormatException e){
+				logger.info("Could not convert number: " + e);
+			}
 		}
 	}
 
