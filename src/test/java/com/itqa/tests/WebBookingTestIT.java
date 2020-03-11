@@ -63,74 +63,74 @@ public class WebBookingTestIT extends DriverBase {
 		trc = new TestResultContext();
 	}
 
-//	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
-//			"bat","www","booking"})
-//
-//	@Story("WWW One way Booking Creation & Verify email confirmation")
-//	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
-//		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
-//
-//		/*synchronized (this) {
-//			testId.set(testnum);
-//			testnum++;
-//		}*/
-//		if ((env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprd") && (silo == 0))) {
-//			if (env.contains("prod")) {
-//				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
-//						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
-//			} else {
-//				if (silo != 0) {
-//					setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context,
-//							itn);
-//				} else {
-//					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
-//				}
-//			}
-//			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
-//			Properties props = new Properties();
-//			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
-//			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
-//			props.setProperty("log4j.appender.file.maxBackupIndex", "0");
-//			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/"
-//					+ itn.getDescription() + Thread.currentThread().getId() + ".log");
-//			props.setProperty("log4j.appender.file.threshold", "DEBUG");
-//			props.setProperty("log4j.appender.file.Append", "false");
-//			props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
-//			props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
-//			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
-//
-//			PropertyConfigurator.configure(props);*/
-//			desc.set(itn.getDescription());
-//
-//			if( env.contains("prod") || env.contains("vipprd") ){
-//				itn.setRefundApplicable(true);
-//			}
-//			if (flightAvailService == 0 && paymentService == 0) {
-//				BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
-//				itinerary.set(itn.getItn());
-//
-//				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
-//				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
-//				if ((env.contains("prod") && ((silo == 1) || (silo == 2)))) {
-//					booking.manageTravelModificationUpsellBagSeat(itn, silo);
-//					// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
-//					// recevied");
-//				}
-//				booking.WWWRefundAndCancelItn(itn.getItn(), itn);
-//				updateTextContext(itn, context);
-//			} else {
-//				if (flightAvailService != 0) {
-//					itn.setItn(flightAvailErrorMsg);
-//				} else if (paymentService != 0) {
-//					itn.setItn(paymentErrorMsg);
-//				}
-//				throw new SkipException("Skipping Test Case as runmode set to NO");
-//			}
-//		} else {
-//			DriverBase.getDriver().close();
-//			throw new SkipException("Skipping Test Case as runmode set to NO");
-//		}
-//	}
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
+			"bat","www","booking"})
+
+	@Story("WWW One way Booking Creation & Verify email confirmation")
+	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+
+		/*synchronized (this) {
+			testId.set(testnum);
+			testnum++;
+		}*/
+		if ((env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprd") && (silo == 0))) {
+			if (env.contains("prod")) {
+				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
+						+ " Modification - Upsell Bag & seat - Modification Emails received", context, itn);
+			} else {
+				if (silo != 0) {
+					setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context,
+							itn);
+				} else {
+					setUpTestContext(silo, method.getAnnotation(Story.class).value(), context, itn);
+				}
+			}
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			Properties props = new Properties();
+			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
+			props.setProperty("log4j.appender.file.maxBackupIndex", "0");
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/"
+					+ itn.getDescription() + Thread.currentThread().getId() + ".log");
+			props.setProperty("log4j.appender.file.threshold", "DEBUG");
+			props.setProperty("log4j.appender.file.Append", "false");
+			props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
+			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
+
+			PropertyConfigurator.configure(props);*/
+			desc.set(itn.getDescription());
+
+			if( env.contains("prod") || env.contains("vipprd") ){
+				itn.setRefundApplicable(true);
+			}
+			if (flightAvailService == 0 && paymentService == 0) {
+				BookingFlow booking = generateBooking(itn, silo, context, WITHOUTACCOUNT);
+				itinerary.set(itn.getItn());
+
+				Assert.assertNotEquals(itn.getItn(), "", "ITN could not be created");
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
+				if ((env.contains("prod") && ((silo == 1) || (silo == 2)))) {
+					booking.manageTravelModificationUpsellBagSeat(itn, silo);
+					// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
+					// recevied");
+				}
+				booking.WWWRefundAndCancelItn(itn.getItn(), itn);
+				updateTextContext(itn, context);
+			} else {
+				if (flightAvailService != 0) {
+					itn.setItn(flightAvailErrorMsg);
+				} else if (paymentService != 0) {
+					itn.setItn(paymentErrorMsg);
+				}
+				throw new SkipException("Skipping Test Case as runmode set to NO");
+			}
+		} else {
+			DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case as runmode set to NO");
+		}
+	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW One Way Booking with OLCI, UPSELL Bags,Priority", groups = {
 			"bat","www","booking","olci" })
@@ -217,75 +217,75 @@ public class WebBookingTestIT extends DriverBase {
 		}
 	}
 
-//	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Create Account during booking andLogin", groups = {
-//			"bat","www","booking","account","voucher" })
-//
-//	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
-//	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
-//														  Method method) throws InterruptedException {
-//
-//		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
-//
-//		/*synchronized (this) {
-//			testId.set(testnum);
-//			testnum++;
-//		}*/
-//		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
-//				|| (env.contains("prod") && (silo == 3))) {
-//			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
-//			logger.get().info("Accout creation booking started");
-//
-//			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
-//			Properties props = new Properties();
-//			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
-//			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
-//			props.setProperty("log4j.appender.file.maxBackupIndex", "0");
-//			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + itn.getDescription()
-//			+ Thread.currentThread().getId() + ".log");
-//			props.setProperty("log4j.appender.file.threshold", "DEBUG");
-//			props.setProperty("log4j.appender.file.Append", "false");
-//			props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
-//			props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
-//			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
-//
-//			PropertyConfigurator.configure(props);*/
-//			desc.set(itn.getDescription());
-//			if( env.contains("prod") ){
-//				itn.setRefundApplicable(true);
-//			}
-//			if (flightAvailService == 0 && paymentService == 0) {
-//				log.info("Accoutn creation booking started");
-//				//BookingFlow booking = new BookingFlow(logger.get());
-//
-//				BookingFlow booking = generateBooking(itn, silo, context, true);
-//
-//				Assert.assertNotNull(itn.getItn(), "ITN could not be created");
-//				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
-//				// recevied");
-//				logger.get().info("Account creation started");
-//				Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
-//				step("Logged in and verified account");
-//
-//				if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
-//						|| (env.contains("prod") && (silo == 3))) {
-//					Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
-//				}
-//				updateTextContext(itn, context);
-//				booking.WWWRefundAndCancelItn(itn.getItn(), itn);
-//				itinerary.set(itn.getItn());
-//			} else {
-//				if (flightAvailService != 0) {
-//					itn.setItn(flightAvailErrorMsg);
-//				} else if (paymentService != 0) {
-//					itn.setItn(paymentErrorMsg);
-//				}
-//				throw new SkipException("Skipping Test Case as runmode set to NO");
-//			}
-//		} else {
-//			DriverBase.getDriver().close();
-//			throw new SkipException("Skipping Test Case as runmode set to NO");
-//		}
-//	}
+	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Create Account during booking andLogin", groups = {
+			"bat","www","booking","account","voucher" })
+
+	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
+	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
+														  Method method) throws InterruptedException {
+
+		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
+
+		/*synchronized (this) {
+			testId.set(testnum);
+			testnum++;
+		}*/
+		if (((env.contains("qa1") || env.contains("qa2") || env.contains("stg") || env.contains("aws")) && (silo == 1))
+				|| (env.contains("prod") && (silo == 3))) {
+			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
+			logger.get().info("Accout creation booking started");
+
+			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			Properties props = new Properties();
+			props.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.file.maxFileSize", "100MB");
+			props.setProperty("log4j.appender.file.maxBackupIndex", "0");
+			props.setProperty("log4j.appender.file.File", System.getProperty("user.dir") + "/target/" + itn.getDescription()
+			+ Thread.currentThread().getId() + ".log");
+			props.setProperty("log4j.appender.file.threshold", "DEBUG");
+			props.setProperty("log4j.appender.file.Append", "false");
+			props.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.file.layout.ConversionPattern", "%m%n");
+			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(), "DEBUG, file");
+
+			PropertyConfigurator.configure(props);*/
+			desc.set(itn.getDescription());
+			if( env.contains("prod") ){
+				itn.setRefundApplicable(true);
+			}
+			if (flightAvailService == 0 && paymentService == 0) {
+				log.info("Accoutn creation booking started");
+				//BookingFlow booking = new BookingFlow(logger.get());
+
+				BookingFlow booking = generateBooking(itn, silo, context, true);
+
+				Assert.assertNotNull(itn.getItn(), "ITN could not be created");
+				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not
+				// recevied");
+				logger.get().info("Account creation started");
+				Assert.assertTrue(booking.signInAndVerifyAccount(itn), "Could not verify account");
+				step("Logged in and verified account");
+
+				if (((env.contains("stg") || env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
+						|| (env.contains("prod") && (silo == 3))) {
+					Assert.assertTrue(booking.createVoucher(itn), "Unable to create voucher in CC MOD");
+				}
+				updateTextContext(itn, context);
+				booking.WWWRefundAndCancelItn(itn.getItn(), itn);
+				itinerary.set(itn.getItn());
+			} else {
+				if (flightAvailService != 0) {
+					itn.setItn(flightAvailErrorMsg);
+				} else if (paymentService != 0) {
+					itn.setItn(paymentErrorMsg);
+				}
+				throw new SkipException("Skipping Test Case as runmode set to NO");
+			}
+		} else {
+			DriverBase.getDriver().close();
+			throw new SkipException("Skipping Test Case as runmode set to NO");
+		}
+	}
 
 	//@AfterMethod
 	public void writeResult(ITestResult result) {
