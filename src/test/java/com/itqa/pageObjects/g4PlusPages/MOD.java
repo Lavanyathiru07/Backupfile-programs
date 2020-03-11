@@ -760,14 +760,10 @@ public class MOD extends BasePage {
 	}
 
 	public void stationUncheckPax(String pnr, Itinerary itn) {
-		try {
-			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			logger.info("Connecting to:  " + URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			g4LoginPage.g4plusLogin(true);
-		}catch (Exception e){
-			System.out.println("Error "+e);
-		}
+		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
+		g4LoginPage.g4plusLogin(true);
 		Set<String> curTab = driver.getWindowHandles();
+<<<<<<< HEAD
 		try {
 			Thread.sleep(5500);
 			driver = DriverBase.getDriver();
@@ -782,14 +778,17 @@ public class MOD extends BasePage {
 			}
 
 		}catch (Exception e ){}
+=======
+		try{
+			Thread.sleep(2500);
+		}catch (InterruptedException e){
+
+		}
+		driver = DriverBase.getDriver();
+		driver.navigate().refresh();
+>>>>>>> reverting back
 		g4MenuPage.selectSTNS(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
-		logger.info("Refreshing Page");
-		try{
-			Thread.sleep(3500);
-		}catch (InterruptedException e){}
-		driver = DriverBase.getDriver();
-		driver.navigate().to("https://g4plus-ops.allegiantair.com/app/checkin/dashboard/summary");
 		unCheckPax(pnr, itn);
 	}
 
