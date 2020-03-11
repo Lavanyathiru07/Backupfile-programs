@@ -21,102 +21,102 @@ import java.util.List;
 public class BagPage extends BasePage {
 
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(name = "flight_extras[bin_bags]")
-    private List<WebElement> binBagList;
-    
-    @FindBy(name = "flight_extras[bin_bags]")
-    private WebElement carryOnBag;
+	@FindBy(name = "flight_extras[bin_bags]")
+	private List<WebElement> binBagList;
 
-    @FindBy(name = "flight_extras[checked_bags]")
-    private List<WebElement> checkedBagList;
+	@FindBy(name = "flight_extras[bin_bags]")
+	private WebElement carryOnBag;
 
-    @FindBy(name = "flight_extras[priority_boarding_selected]")
-    private List<WebElement> prioList;
+	@FindBy(name = "flight_extras[checked_bags]")
+	private List<WebElement> checkedBagList;
 
-    @FindBy(xpath = "//li[contains(@class,'boarding-option')]")
-    private List<WebElement> boardOptionList;
+	@FindBy(name = "flight_extras[priority_boarding_selected]")
+	private List<WebElement> prioList;
 
-    @FindBy(xpath = "//button[contains(@class,'continue')]")
-    private WebElement continueButton;
+	@FindBy(xpath = "//li[contains(@class,'boarding-option')]")
+	private List<WebElement> boardOptionList;
 
-    @FindBy(css = "li[role='presentation']")
-    private List<WebElement> taCCboardingOption;
+	@FindBy(xpath = "//button[contains(@class,'continue')]")
+	private WebElement continueButton;
 
-    @FindBy(id = "bagchooser-wrapper")
-    private WebElement bagTitle;
-    
-    @FindBy(xpath = "//label[@id='boarding-pass-option-0']")
-    private WebElement boardOption;
-    
-    @FindBy(xpath = "//h4[contains(text(),'boarding options')]")
+	@FindBy(css = "li[role='presentation']")
+	private List<WebElement> taCCboardingOption;
+
+	@FindBy(id = "bagchooser-wrapper")
+	private WebElement bagTitle;
+
+	@FindBy(xpath = "//label[@id='boarding-pass-option-0']")
+	private WebElement boardOption;
+
+	@FindBy(xpath = "//h4[contains(text(),'boarding options')]")
 	private  boolean boardingBar;
 
-    public BagPage(Logger log) {
-        this.driver = DriverBase.getDriver();
-        this.logger=log;
-        jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public BagPage(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
-    public void chooseBag(int num, int carryOnBag, int checkedBag, String prio, Itinerary itn) {
-        for (int i=0; i<num; i++) {
-            new Select(binBagList.get(i)).selectByValue(String.valueOf(carryOnBag));
-            new Select(checkedBagList.get(i)).selectByValue(String.valueOf(checkedBag));
-            new Select(prioList.get(i)).selectByValue(prio);
-        }
-        logger.info("Select " + carryOnBag + " carry-on, " + checkedBag + " checked, and " + prio + " priority boarding");
-        if(!taCCboardingOption.isEmpty()) {
-        	chooseBoardingOption(0, itn);
-        	clickContinue();
-        }else {
-        clickContinue();
-        }
-    }
+	public void chooseBag(int num, int carryOnBag, int checkedBag, String prio, Itinerary itn) {
+		for (int i=0; i<num; i++) {
+			new Select(binBagList.get(i)).selectByValue(String.valueOf(carryOnBag));
+			new Select(checkedBagList.get(i)).selectByValue(String.valueOf(checkedBag));
+			new Select(prioList.get(i)).selectByValue(prio);
+		}
+		logger.info("Select " + carryOnBag + " carry-on, " + checkedBag + " checked, and " + prio + " priority boarding");
+		if(!taCCboardingOption.isEmpty()) {
+			chooseBoardingOption(0, itn);
+			clickContinue();
+		}else {
+			clickContinue();
+		}
+	}
 
-    public void chooseBoardingOption(int ind, Itinerary itn) {
-        if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("cc.") || driver.getCurrentUrl().contains("ta.")) {
-        	taCCboardingOption.get(ind).click();
-            logger.info("Select boarding option: " + taCCboardingOption.get(ind).getText().replaceAll("\n", " "));
-        }
-        else {
-        	try {
-                if(boardOption.isDisplayed()) {
-                    boardOptionList.get(ind).click();
-                    logger.info("Select boarding option: " + boardOptionList.get(ind).getText().replaceAll("\n", " "));
-                }else{
-                    logger.info("Select boarding option: NOT Displayed ");
-                }}catch(Exception e) {
-                	itn.setErrorLog("Error while choosing the boarding option" );
-                logger.info("Exception while Selecting boarding option");
-            }
-        }
-    }
+	public void chooseBoardingOption(int ind, Itinerary itn) {
+		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("cc.") || driver.getCurrentUrl().contains("ta.")) {
+			taCCboardingOption.get(ind).click();
+			logger.info("Select boarding option: " + taCCboardingOption.get(ind).getText().replaceAll("\n", " "));
+		}
+		else {
+			try {
+				if(boardOption.isDisplayed()) {
+					boardOptionList.get(ind).click();
+					logger.info("Select boarding option: " + boardOptionList.get(ind).getText().replaceAll("\n", " "));
+				}else{
+					logger.info("Select boarding option: NOT Displayed ");
+				}}catch(Exception e) {
+					itn.setErrorLog("Error while choosing the boarding option" );
+					logger.info("Exception while Selecting boarding option");
+				}
+		}
+	}
 
-    public void clickContinue() {
-        for(int i = 0; i < 5; i++) {
-            try {
-                jse.executeScript("arguments[0].click();", continueButton);
-                break;
-            }
-            catch (Exception e) {
-                try{Thread.sleep(1000);} catch (Exception e1) {}
-            }
-        }
-        logger.info("Click continue");
-    }
+	public void clickContinue() {
+		for(int i = 0; i < 5; i++) {
+			try {
+				jse.executeScript("arguments[0].click();", continueButton);
+				break;
+			}
+			catch (Exception e) {
+				try{Thread.sleep(1000);} catch (Exception e1) {}
+			}
+		}
+		logger.info("Click continue");
+	}
 
-    public void selectBagPage(Itinerary itn) throws Exception {
-            chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority(), itn);
-                if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.") 
-        		||driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
-            chooseBoardingOption(0, itn);
-        }
-        clickContinue();
-    }
+	public void selectBagPage(Itinerary itn) throws Exception {
+		chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority(), itn);
+		if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.") 
+				||driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
+			chooseBoardingOption(0, itn);
+		}
+		clickContinue();
+	}
 
 }

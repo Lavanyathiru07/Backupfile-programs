@@ -16,29 +16,31 @@ import framework.DriverBase;
 
 public class KayakConsole extends BasePage{
 
-    private Logger logger = null;
-    private JavascriptExecutor jse = null;
-    private WebDriver driver = null;
+	private Logger logger = null;
+	private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
 
-    @FindBy(xpath = "//table[contains(@class,'tablesorter')]")
-    private WebElement kayakTable;
+	@FindBy(xpath = "//table[contains(@class,'tablesorter')]")
+	private WebElement kayakTable;
 
-    public KayakConsole(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public KayakConsole(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
-    public void editKayakConsole(Itinerary itn) {
+	public void editKayakConsole(Itinerary itn) {
 		try {
 			logger.info("Kayak Console Open");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakTable));
 			kayakTable.click();
+			logger.info("Kayak tab is clicked");
 			logger.info("Kayak Scenario -> Pass");
 		}catch(Exception e){
+			logger.info("Error while verifying Kayak");
 			itn.setErrorLog("Error while verifying Kayak Scenario");
-    		throw new Error(">>>Kayak Access FAIL<<<");
-    	}
-    }
+			throw new Error("Kayak Access FAIL");
+		}
+	}
 }

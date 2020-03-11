@@ -68,14 +68,15 @@ public class MaintenanceControl extends BasePage {
 						verifyReport("301NV");
 					} catch (Exception g) {
 						g.printStackTrace();
-						throw new Error(">>>Records returns no result<<<");
+						throw new Error("Records returns no result");
 					}
 				}
 			}
 			logger.info("MaintenanceControl Report Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Records returns no result");
 			itn.setErrorLog("MaintenanceControl Report Scenario -> Fail");
-			throw new Error(">>>Records returns no result<<<");
+			throw new Error("Records returns no result");
 		}
 	}
 	public void verifyReport(String tail) {

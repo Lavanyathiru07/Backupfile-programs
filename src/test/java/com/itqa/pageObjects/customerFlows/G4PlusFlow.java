@@ -114,14 +114,14 @@ public class G4PlusFlow extends BasePage {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		g4MenuPage.verifyAIS();
-		logger.info("<<< Login Successfull >>>");
+		logger.info(" Login Successfull ");
 	}
 
 	public void awsurl() throws InterruptedException {
 		DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
 		g4MenuPage.verifyAIS();   
-		logger.info("<<< AWS Login Successfull >>>");
+		logger.info(" AWS Login Successfull ");
 	}
 
 	public void g4PlusSignin() {
@@ -156,8 +156,6 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessAIS(Itinerary itn) {
-		logger.info(env);
-
 		g4PlusSignin();
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectAIS(itn);
@@ -273,7 +271,8 @@ public class G4PlusFlow extends BasePage {
 
 		} catch (Exception e) {
 			itn.setErrorLog("Error while getting SPOE report " );
-			throw new Error(">>>Reports cant find<<<");
+			logger.info("Error while getting SPOE report");
+			throw new Error("Reports cant find");
 		}
 	}
 	public void verifyFlightFollowing(Itinerary itn) {
@@ -486,6 +485,7 @@ public class G4PlusFlow extends BasePage {
 			capabilities.setCapability("tz", "America/Los_Angeles");
 
 		} catch (Exception e) {
+			logger.info("Error while accessing swap");
 			itn.setErrorLog("Error while accessing swap " );
 			throw new Error(e);
 		}
@@ -499,6 +499,7 @@ public class G4PlusFlow extends BasePage {
 			loginPage.openSwap(itn);
 			logger.info("Swap Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Error in Swap page");
 			itn.setErrorLog("Swap Scenario -> Fail");
 			throw new Error();
 		}

@@ -10,10 +10,12 @@ import io.qameta.allure.Story;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -23,6 +25,8 @@ import listeners.RealTimeTestReport;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.util.Properties;
+
 import static io.qameta.allure.Allure.step;
 
 @Listeners({ TestReport.class, RealTimeTestReport.class })
@@ -40,7 +44,7 @@ public class CCBookingTestIT extends DriverBase {
 	private ThreadLocal<Itinerary> TB = new ThreadLocal<Itinerary>();
 	private ThreadLocal<String> desc = new ThreadLocal<String>();
 	private ThreadLocal<String> itinerary = new ThreadLocal<String>();
-	
+
 	static boolean isTestPass = true;
 
 	private String debug(String methodName) {
@@ -58,18 +62,18 @@ public class CCBookingTestIT extends DriverBase {
 
 	@Test(dataProvider = "CC Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "Call Center (CC) Can Book a One Way Trip ", groups = {
 			"bat", "cc", "booking" })
-	 
+
 	@Story(" CC Booking - Book with Hotel, Car with ssr (Oxygen concentrator) . Email Verification")
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
 			throws InterruptedException {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		/*synchronized (this) {
+		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
 		}
-*/
+
 		if ((env.contains("stg") && ((silo == 2) || (silo == 3)))
 				|| ((env.contains("qa1") || env.contains("qa2")|| env.contains("aws")) && (silo == 1))
 				|| ((env.contains("in1") || env.contains("in2") || env.contains("sb1")) && (silo == 1))
@@ -86,7 +90,7 @@ public class CCBookingTestIT extends DriverBase {
 				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			}
 
-			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -99,7 +103,7 @@ public class CCBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);*/
+			PropertyConfigurator.configure(props);
 			desc.set(itn.getDescription());
 			if( env.contains("prod") ) {
 				itn.setRefundApplicable(true);
@@ -112,7 +116,7 @@ public class CCBookingTestIT extends DriverBase {
 				// recevied");
 				if ((env.contains("trn")
 						|| (env.contains("prod") || env.contains("aws")|| env.contains("sb1") || env.contains("qa1") || env.contains("qa2"))
-								&& (silo == 1))) {
+						&& (silo == 1))) {
 					booking.processCCModification(itn);
 					//Assert.assertTrue(booking.processCCModification(itn), "Unable to modify seats & bags in CC MOD");
 					// Assert.assertTrue(booking.emailVerification(itn, "Modification"), "Email not
@@ -146,10 +150,10 @@ public class CCBookingTestIT extends DriverBase {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
-		/*synchronized (this) {
+		synchronized (this) {
 			testId.set(testnum);
 			testnum++;
-		}*/
+		}
 
 		if ((env.contains("stg") && (silo == 1))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
@@ -166,7 +170,7 @@ public class CCBookingTestIT extends DriverBase {
 				setUpTestContext(silo, "silo"+ silo +" "+method.getAnnotation(Story.class).value(), context, itn);
 			}
 
-			/*cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
+			cat.createTest(itn.getDescription(), "BAT 2.0", testId.get());
 			Properties props = new Properties();
 			props.setProperty("log4j.appender.file","org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.file.maxFileSize","100MB");
@@ -179,7 +183,7 @@ public class CCBookingTestIT extends DriverBase {
 			props.setProperty("log4j.appender.file.layout.ConversionPattern","%m%n");
 			props.setProperty("log4j.logger." + "Thread" + Thread.currentThread().getId(),"DEBUG, file");
 
-			PropertyConfigurator.configure(props);*/
+			PropertyConfigurator.configure(props);
 			desc.set(itn.getDescription());
 
 			if( env.contains("prod") ){
@@ -214,19 +218,17 @@ public class CCBookingTestIT extends DriverBase {
 		}
 	}
 
-	//@AfterMethod
+	@AfterMethod
 	public void writeResult(ITestResult result) {
 		synchronized (this) {
-		if (result.getStatus() == ITestResult.SKIP) {
-			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
-		} else if (result.getStatus() == ITestResult.FAILURE) {
-			String error = result.getThrowable().getMessage();
-			cat.completeTest("FAIL", "BAT 2.0", itinerary.get() , error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
-			System.out.println(itinerary+" : "+testId.get());
-		}	else if (result.getStatus() == ITestResult.SUCCESS) {
-			cat.completeTest("PASS", "BAT 2.0", itinerary.get() , "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
-			System.out.println(itinerary+" : "+testId.get());
-		}
+			if (result.getStatus() == ITestResult.SKIP) {
+				cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			} else if (result.getStatus() == ITestResult.FAILURE) {
+				String error = result.getThrowable().getMessage();
+				cat.completeTest("FAIL", "BAT 2.0", itinerary.get() , error, testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
+			}	else if (result.getStatus() == ITestResult.SUCCESS) {
+				cat.completeTest("PASS", "BAT 2.0", itinerary.get() , "", testId.get(), desc.get() + Thread.currentThread().getId() + ".log");
+			}
 		}
 	}
 

@@ -15,29 +15,29 @@ import framework.DriverBase;
 
 public class ManageTravelSummaryPage {
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(xpath = "//strong[contains(text(),'Thank')]")
-    private WebElement thankyou;
+	@FindBy(xpath = "//strong[contains(text(),'Thank')]")
+	private WebElement thankyou;
 
-    @FindBy(css = "div.confirmation-title.green-message")
-    private WebElement confirmationMessage;
+	@FindBy(css = "div.confirmation-title.green-message")
+	private WebElement confirmationMessage;
 
-    public ManageTravelSummaryPage(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-        jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 60), this);
-    }
+	public ManageTravelSummaryPage(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 60), this);
+	}
 
-    public void checkConfirmation(Itinerary itn) {
-        thankyou.click();
-        if (Environment.getEnv().contains("prod")) {
-            itn.setTotal(itn.getTotal() + Float.parseFloat(confirmationMessage.getText().split("\\$")[1].split(". ")[0]));
-        }
-        logger.info("Upsell Success");
-    }
+	public void checkConfirmation(Itinerary itn) {
+		thankyou.click();
+		if (Environment.getEnv().contains("prod")) {
+			itn.setTotal(itn.getTotal() + Float.parseFloat(confirmationMessage.getText().split("\\$")[1].split(". ")[0]));
+		}
+		logger.info("Upsell Success");
+	}
 }

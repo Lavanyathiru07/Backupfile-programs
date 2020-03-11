@@ -20,48 +20,51 @@ import java.util.concurrent.TimeUnit;
 public class AircraftRecords extends BasePage {
 	private JavascriptExecutor jse = null;
 
-    private Logger logger = null;
-    private WebDriver driver = null;
+	private Logger logger = null;
+	private WebDriver driver = null;
 
-    @FindBy(id = "run_report")
-    private WebElement lookupButton;
+	@FindBy(id = "run_report")
+	private WebElement lookupButton;
 
-    @FindBy(xpath = "//tr[contains(@id,'load_')]")
-    private List<WebElement> aircraftRecordsResultRow;
+	@FindBy(xpath = "//tr[contains(@id,'load_')]")
+	private List<WebElement> aircraftRecordsResultRow;
 
-    @FindBy(xpath = "//div[contains(text(),'Tail')]/following-sibling::div/input")
-    private WebElement entryAirCraftRecordTailNumber;
-    
-    @FindBy(xpath = ("//div[contains(text(),'AIS Error')]"))
-    private WebElement flag;
+	@FindBy(xpath = "//div[contains(text(),'Tail')]/following-sibling::div/input")
+	private WebElement entryAirCraftRecordTailNumber;
 
-    public AircraftRecords(Logger log) {        
-        this.driver = DriverBase.getDriver();
-        this.logger=log;
-        jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-        
-    }
+	@FindBy(xpath = ("//div[contains(text(),'AIS Error')]"))
+	private WebElement flag;
 
-    public void lookupAircraftPart(Itinerary itn) {
-    	try{
-    		logger.info("lookupAircraftPart Verify -> Started");
-    		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(lookupButton));
-    		if(lookupButton.isDisplayed()) {
-    		lookupButton.click();
-    		}
-    		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-    		if (aircraftRecordsResultRow.size() > 0) {
-    			logger.info("Aircraft Records Lookup: " + aircraftRecordsResultRow.size() + " rows");
-    			logger.info("The first row is: " + aircraftRecordsResultRow.get(0).getText().replaceAll("\n", " "));
-    		}
-    		logger.info("lookupAircraftPart Scenario -> Pass");
+	public AircraftRecords(Logger log) {        
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+
+	}
+
+	public void lookupAircraftPart(Itinerary itn) {
+		try {
+			logger.info("lookupAircraftPart Verify -> Started");
+			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(lookupButton));
+			if (lookupButton.isDisplayed()) {
+				logger.info("verify lookup button is enabled");
+				lookupButton.click();
+				logger.info("lookup button clicked");
+			}
+			driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+			if (aircraftRecordsResultRow.size() > 0) {
+				logger.info("Aircraft Records Lookup: " + aircraftRecordsResultRow.size() + " rows");
+				logger.info("The first row is: " + aircraftRecordsResultRow.get(0).getText().replaceAll("\n", " "));
+			}
+			logger.info("lookupAircraftPart Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Error while verifying lookupAircraftPart");
 			itn.setErrorLog("Error while verifying lookupAircraftPart Scenario");
-			throw new Error(">>>Aircraft Records returns no result<<<");
+			throw new Error("Aircraft Records returns no result");
 
 		}
-    }
+	}
 
-	
+
 }

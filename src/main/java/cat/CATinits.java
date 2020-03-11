@@ -43,12 +43,16 @@ public final class CATinits {
         JsonSerializer factory = (new JsonSerializerFactory()).includeNulls().create();
         Map jobCreationJson = new HashMap();
         Map insideBody = new HashMap();
-        insideBody.put("jobName", System.getenv("jobName"));
+        insideBody.put("jobName", System.getenv("JOB_NAME"));
         insideBody.put("environment", System.getProperty("env"));
-        insideBody.put("buildReference", System.getenv("buildNo"));
+        insideBody.put("buildReference", System.getenv("BUILD_NUMBER"));
         insideBody.put("startDateTime", timestamp);
         insideBody.put("parentJobDetails", (Object)null);
         jobCreationJson.put("jobCreationJson", insideBody);
+        System.out.println("job name   : "+System.getenv("jobName"));
+        System.out.println("build no : "+System.getenv("buildNo"));
+        System.out.println(insideBody);
+        
         String response = "";
 
         try {
@@ -59,6 +63,7 @@ public final class CATinits {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(factory.serialize(jobCreationJson).toString());
             writer.flush();
+            System.out.println("job id is :" + jobid);
             if (connection.getResponseCode() != 201) {
                 throw new Exception("jobCreationJson doesn't return HTTP 201");
             } else {
@@ -93,7 +98,7 @@ public final class CATinits {
         insideBody.put("endDateTime", timestamp);
         insideBody.put("jobStatus", status);
         jobClosingJson.put("jobClosingJson", insideBody);
-        Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(jobClosingJson).toString());
+        Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(jobClosingJson).toString());
         System.out.println("job id is :" + jobid);
     }
 
@@ -108,11 +113,11 @@ public final class CATinits {
         Map insideBody = new HashMap();
         insideBody.put("JobID", this.jobid);
         insideBody.put("startDateTime", timestamp);
-        insideBody.put("jobName", System.getenv("jobName"));
-        insideBody.put("buildReference", System.getenv("buildReference"));
+        insideBody.put("jobName", System.getenv("JOB_NAME"));
+        insideBody.put("buildReference", System.getenv("BUILD_NUMBER"));
         insideBody.put("testCollectionName", suiteName);
         testCollectionCreation.put("testcollectionCreation", insideBody);
-        Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testCollectionCreation).toString());
+        Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testCollectionCreation).toString());
     }
 
     public void completeSuite(String suiteName) {
@@ -125,11 +130,11 @@ public final class CATinits {
         Map insideBody = new HashMap();
         insideBody.put("JobID", this.jobid);
         insideBody.put("endDateTime", timestamp);
-        insideBody.put("jobName", System.getenv("jobName"));
-        insideBody.put("buildReference", System.getenv("buildReference"));
+        insideBody.put("jobName", System.getenv("JOB_NAME"));
+        insideBody.put("buildReference", System.getenv("BUILD_NUMBER"));
         insideBody.put("testCollectionName", suiteName);
         testCollectionClosing.put("testcollectionClosing", insideBody);
-        Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testCollectionClosing).toString());
+        Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testCollectionClosing).toString());
     }
 
     public void createTest(String caseName, String suiteName, int testId) {
@@ -144,8 +149,8 @@ public final class CATinits {
         List<Map> paramList = new ArrayList();
         insideBody.put("JobID", this.jobid);
         insideBody.put("startDateTime", timestamp);
-        insideBody.put("jobName", System.getenv("jobName"));
-        insideBody.put("buildReference", System.getenv("buildReference"));
+        insideBody.put("jobName", System.getenv("JOB_NAME"));
+        insideBody.put("buildReference", System.getenv("BUILD_NUMBER"));
         insideBody.put("testCollectionName", suiteName);
         insideBody.put("testId", testId);
         insideDescBody.put("scenarioLabel", caseName);
@@ -153,11 +158,11 @@ public final class CATinits {
         insideBody.put("testDescription", insideDescBody);
         insideBody.put("testParameters", paramList);
         testcaseCreation.put("testcaseCreation", insideBody);
-        Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testcaseCreation).toString());
+        Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(testcaseCreation).toString());
     }
 
     public void completeTest(String status, String suiteName, String itn, String comment, int testId, String loc) {
-        Date date = new Date();
+    	Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         String timestamp = dateFormat.format(date);
@@ -169,8 +174,8 @@ public final class CATinits {
         List<String> logEntry = new ArrayList();
         insideBody.put("JobID", this.jobid);
         insideBody.put("endDateTime", timestamp);
-        insideBody.put("jobName", System.getenv("jobName"));
-        insideBody.put("buildReference", System.getenv("buildReference"));
+        insideBody.put("jobName", System.getenv("JOB_NAME"));
+        insideBody.put("buildReference", System.getenv("BUILD_NUMBER"));
         insideBody.put("testCollectionName", suiteName);
         insideBody.put("confirmationNumber", itn);
         insideBody.put("comments", comment);
@@ -287,6 +292,6 @@ public final class CATinits {
         logList.add(logMap);
         insideBody.put("resultLogs", logList);
         closeTestCaseJson.put("closeTestCaseJson", insideBody);
-        Response response = HTTP.jsonRestCallViaPOST("https://cat1.sb1.allegiantair.com/api/buildresults/jobs/push", factory.serialize(closeTestCaseJson).toString());
+        Response response = HTTP.jsonRestCallViaPOST("https://cat.allegiantair.com/api/buildresults/jobs/push", factory.serialize(closeTestCaseJson).toString());
     }
 }

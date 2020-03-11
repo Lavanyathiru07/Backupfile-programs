@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ManageTravelLoginPage {
 
+
     private Logger logger = null;
 
     private WebDriver driver = null;
@@ -68,4 +69,5 @@ public class ManageTravelLoginPage {
         jse.executeScript("arguments[0].click();", bagTab);
         
     }
+
 }

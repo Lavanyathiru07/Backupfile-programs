@@ -19,26 +19,26 @@ import java.util.List;
 
 public class RQ extends BasePage{
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(id = "reaccomTypeCode")
-    private WebElement queueTypeSelect;
+	@FindBy(id = "reaccomTypeCode")
+	private WebElement queueTypeSelect;
 
-    @FindBy(xpath = "//button[contains(text(),'Submit')]")
-    private WebElement submitButton;
+	@FindBy(xpath = "//button[contains(text(),'Submit')]")
+	private WebElement submitButton;
 
-    @FindBy(xpath = "//tr[contains(@class,'ng-scope')]")
-    private WebElement resultRow;
+	@FindBy(xpath = "//tr[contains(@class,'ng-scope')]")
+	private WebElement resultRow;
 
-    public RQ(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-        jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public RQ(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
 	public void accessRQ(Itinerary itn) {
 		try {
@@ -55,9 +55,12 @@ public class RQ extends BasePage{
 				}
 			}
 			new Select(queueTypeSelect).selectByVisibleText("Cancel");
+			logger.info("select cancel in dropdown");
 			jse.executeScript("arguments[0].click();", submitButton);
+			logger.info("submit button clicked");
 			logger.info("RQ Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Error while verifying RQ");
 			itn.setErrorLog("Error while verifying RQ Scenario");
 			throw new Error("RQ Scenario -> Fail");
 		}

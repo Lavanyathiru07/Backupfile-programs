@@ -42,7 +42,7 @@ public class G4PlusLoginPage extends BasePage {
 
 	@FindBy(id = "submitaction")
 	private WebElement acceptButton;
-	
+
 	@FindBy(xpath = "//li[contains(text(),'Signed in as')]/following-sibling::li/a")
 	private WebElement userDropDown;
 
@@ -66,7 +66,7 @@ public class G4PlusLoginPage extends BasePage {
 					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				}
-				} else {
+			} else {
 				userNameField.sendKeys(new String(Base64.getDecoder().decode(stationUsername)));
 				passwordField.sendKeys(new String(Base64.getDecoder().decode(password)));
 			}
@@ -75,7 +75,7 @@ public class G4PlusLoginPage extends BasePage {
 		} catch (Exception e) {
 			skip=true;
 		}
-		
+
 	}
 
 	public void selectCompany(Itinerary itn) {

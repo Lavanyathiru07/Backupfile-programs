@@ -8,9 +8,9 @@ import io.qameta.allure.Attachment;
 
 
 public class Screenshot {
-    @Attachment(value = "Screenshot of {0}", type = "image/png")
-    public static byte[] saveScreenshot(String name, WebDriver driver) {
+	@Attachment(value = "Screenshot of {0}", type = "image/png")
+	public static byte[] saveScreenshot(String name, WebDriver driver) {
 
-        return (byte[]) ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-    }
+		return (byte[]) ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+	}
 }

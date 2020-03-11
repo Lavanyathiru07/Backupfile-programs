@@ -63,7 +63,7 @@ public class LoginPage {
 		lastNameField.sendKeys(lname);
 		itnField.sendKeys(itn);
 		continueButton.click();
-		logger.info("Fill " + fname + " " + lname + itn + " and click continue");
+		logger.info("Fill " + fname + " " + lname + " " + itn + " and click continue");
 	}
 
 	public void clickCheckin() {
@@ -122,6 +122,7 @@ public class LoginPage {
 	public void openSwap(Itinerary itn) {
 		try {
 			usernameField.click();
+			logger.info("user name clicked");
 			logger.info("Swap Page Open");
 		} catch (Exception e) {
 			itn.setErrorLog("Error while opening the swap page " );

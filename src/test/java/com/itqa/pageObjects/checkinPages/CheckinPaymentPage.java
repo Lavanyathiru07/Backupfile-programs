@@ -14,7 +14,8 @@ import org.openqa.selenium.support.ui.Select;
 
 public class CheckinPaymentPage {
 
-    private Logger logger = null;
+	private Logger logger = null;
+
 
     private WebDriver driver = null;
     private JavascriptExecutor jse = null;
@@ -143,4 +144,7 @@ public class CheckinPaymentPage {
             checkConfirmationAndLogBalance(itn);
         }
     }
+
+	
+
 }

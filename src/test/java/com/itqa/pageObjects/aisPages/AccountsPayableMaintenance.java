@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.itqa.Utils.Environment;
@@ -38,7 +39,7 @@ public class AccountsPayableMaintenance extends BasePage{
 	@FindBy(id = "analysisTab")
 	private WebElement analysisTab;
 
-	@FindBy(xpath = "//a[contains(@href,'lookup.do?dispatch')]")
+	@FindBy(xpath = "(//a[contains(@href,'lookup.do?dispatch')])[3]")
 	private WebElement selectedTransaction;
 
 	@FindBy(id = "invoiceId")
@@ -61,16 +62,20 @@ public class AccountsPayableMaintenance extends BasePage{
 
 		try {
 			logger.info("lookupTransaction Verify -> Started");
-			// new Select(vendorStatField).selectByValue("A");
+			new Select(vendorStatField).selectByValue("A");
+			logger.info("Active select from vendor tab");
 			locationField.sendKeys("HQ" + Keys.ENTER);
+			logger.info("HQis enterd in location feild");
 			if (System.getProperty("env").contains("in")) {
 				for (int loop = 0; loop < 10; loop++) {
 					try {
 						new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(selectVendorIN));
 						selectVendorIN.click();
+						logger.info("select vendor from list");
 						break;
 					} catch (Exception e) {
 						if (loop == 9) {
+							logger.info("Error in lookupTransaction Verification");
 							throw new Error("Vendor 000005 not found");
 						}
 					}
@@ -84,6 +89,7 @@ public class AccountsPayableMaintenance extends BasePage{
 						break;
 					} catch (Exception e) {
 						if (loop == 5) {
+							logger.info("Error in lookupTransaction Verification");
 							throw new Error("Vendor 000005 not found");
 						}
 					}
@@ -92,33 +98,38 @@ public class AccountsPayableMaintenance extends BasePage{
 			logger.info("Vendor id: 000005 found");
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(analysisTab));
 			analysisTab.click();
-
+			logger.info("analysis tab clicked");
 			String num = selectedTransaction.getText();
 			String type = selectedTransaction.getAttribute("href");
 			selectedTransaction.click();
+			logger.info("transcation tab clicked");
 			if (type.contains("lookupInvoice")) {
 				if (invoiceIdField.getAttribute("value").equals(num)) {
 					logger.info("Invoice Found");
 				} else {
+					logger.info("Invoice not found");
 					throw new Error("Invoice not found");
 				}
 			} else if (type.contains("lookupOrder")) {
 				if (orderIdField.getAttribute("value").equals(num)) {
 					logger.info("Order Found");
 				} else {
+					logger.info("order not found");
 					throw new Error("Order not found");
 				}
 			} else if (type.contains("lookupPayment")) {
 				if (paymentIdField.getAttribute("value").equals(num)) {
 					logger.info("Payment Found");
 				} else {
+					logger.info("Payment not found");
 					throw new Error("Payment not found");
 				}
 			}
 			logger.info("lookupTransaction Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Error in Account Payable MX");
 			itn.setErrorLog("Error while verifying lookupTransaction Scenario");
-			throw new Error(">>>Account Payable MX FAIL<<<");
+			throw new Error("Account Payable MX FAIL");
 		}
 	}
 }

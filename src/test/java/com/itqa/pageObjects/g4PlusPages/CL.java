@@ -18,36 +18,39 @@ import framework.DriverBase;
 
 public class CL extends BasePage{
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(id = "fname")
-    private WebElement fnameField;
+	@FindBy(id = "fname")
+	private WebElement fnameField;
 
-    @FindBy(id = "email")
-    private WebElement emailField;
+	@FindBy(id = "email")
+	private WebElement emailField;
 
-    public CL(Logger log) { 
-        this.driver = DriverBase.getDriver();
-        this.logger=log;
-        jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-        
-    }
+	public CL(Logger log) { 
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 
-    public void accessCL(Itinerary itn) {
-    	try{
-    		logger.info("CL Verify -> Started");
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(fnameField));
-        fnameField.click();
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(emailField));
-        emailField.click();
-        logger.info("CL Menu Open");
+	}
 
-    	}catch(Exception e){  
-    		itn.setErrorLog("Error while verifying Customer Lookup Scenario");
-    	}
-    }
+	public void accessCL(Itinerary itn) {
+		try {
+			logger.info("CL Verify -> Started");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(fnameField));
+			fnameField.click();
+			logger.info("firstname feild click");
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(emailField));
+			emailField.click();
+			logger.info("email feild click");
+			logger.info("CL Verification completed-> Pass");
+
+		}catch(Exception e){  
+			logger.info("CL Verification not completed-> Fail");
+			itn.setErrorLog("Error while verifying Customer Lookup Scenario");
+		}
+	}
 }

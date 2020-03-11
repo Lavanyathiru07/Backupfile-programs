@@ -19,6 +19,7 @@ import java.util.Random;
 
 public class ManageTravelSeatPage {
 
+
     private Logger logger = null;
 
     private WebDriver driver = null;
@@ -43,16 +44,7 @@ public class ManageTravelSeatPage {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }
 
-    public void chooseSeat(Itinerary itn) {
-
-       // if (System.getProperty("env").contains("in2") && (itn.getSiloIndex()==1)) {
-            int num = new Random().nextInt(availSeatList.size());
-            logger.info("Upgrading seat: " + availSeatList.get(num).getAttribute("aria-label") + " for pax 1");
-            jse.executeScript("arguments[0].click();", availSeatList.get(num));
-            yesUpgradeButton.click();
-        //}
-
-    }
+   
 
     public void selectUpgradeSeat(Itinerary itn) {
         //if (System.getProperty("env").contains("prod") && params.getScenario().contains("WWW") && params.getScenario().contains("silo2")) {
@@ -68,4 +60,18 @@ public class ManageTravelSeatPage {
         itn.setErrorLog("Error in manage travel while upgrade the seats " );
         logger.info("Click Continue");
     }
+
+
+	public void chooseSeat(Itinerary itn) {
+
+		// if (System.getProperty("env").contains("in2") && (itn.getSiloIndex()==1)) {
+		int num = new Random().nextInt(availSeatList.size());
+		logger.info("Upgrading seat: " + availSeatList.get(num).getAttribute("aria-label") + " for pax 1");
+		jse.executeScript("arguments[0].click();", availSeatList.get(num));
+		yesUpgradeButton.click();
+		//}
+
+	}
+
+
 }

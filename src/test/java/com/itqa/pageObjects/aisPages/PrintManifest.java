@@ -19,67 +19,73 @@ import java.util.Set;
 
 public class PrintManifest extends BasePage {
 
-    private Logger logger = null;
-    private JavascriptExecutor jse = null;
-    private WebDriver driver = null;
+	private Logger logger = null;
+	private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
 
-    @FindBy(id = "start-date")
-    private WebElement startDateField;
+	@FindBy(id = "start-date")
+	private WebElement startDateField;
 
-    @FindBy(id = "end-date")
-    private WebElement endDateField;
+	@FindBy(id = "end-date")
+	private WebElement endDateField;
 
-    @FindBy(xpath = "//div[contains(@id,'airport_location_chosen')]/div/div/input")
-    private WebElement locationField;
+	@FindBy(xpath = "//div[contains(@id,'airport_location_chosen')]/div/div/input")
+	private WebElement locationField;
 
-    @FindBy(xpath = "//div[contains(@id,'airport_location_chosen')]/a/span")
-    private WebElement locationSelect;
+	@FindBy(xpath = "//div[contains(@id,'airport_location_chosen')]/a/span")
+	private WebElement locationSelect;
 
-    @FindBy(xpath = "//li[contains(@class,'active-result')]")
-    private WebElement selectCity;
+	@FindBy(xpath = "//li[contains(@class,'active-result')]")
+	private WebElement selectCity;
 
-    @FindBy(id = "filter-submit")
-    private WebElement submitButton;
+	@FindBy(id = "filter-submit")
+	private WebElement submitButton;
 
-    @FindBy(xpath = "//tr[contains(@class,'-flight')]//preceding-sibling::a[@class='data-link']")
-    private WebElement selectFlight;
+	@FindBy(xpath = "//tr[contains(@class,'-flight')]//preceding-sibling::a[@class='data-link']")
+	private WebElement selectFlight;
 
-    @FindBy(xpath = "//img[contains(@title,'ALL PASSENGERS')]")
-    private WebElement allPaxButton;
+	@FindBy(xpath = "//img[contains(@title,'ALL PASSENGERS')]")
+	private WebElement allPaxButton;
 
-    @FindBy(id = "flight-manifest")
-    private WebElement paxTable;
+	@FindBy(id = "flight-manifest")
+	private WebElement paxTable;
 
-    public PrintManifest(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public PrintManifest(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
-    public void verifyPrintManifest(Itinerary itn) {
-    	try{
-    	new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(locationSelect));
-        locationSelect.click();
-        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(locationField));
-        locationField.sendKeys("LAS");
-        logger.info("Select Location: LAS");
-        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(selectCity));
-        selectCity.click();
-        submitButton.click();
-
-        Set<String> curTab = DriverBase.getDriver().getWindowHandles();
-        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(selectFlight));
-        selectFlight.click();
-        GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
-        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(allPaxButton));
-        allPaxButton.click();
-        new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(paxTable));
-        paxTable.click();
-        logger.info("PrintManifest Scenario -> Pass");
-    	}catch(Exception e){
-    		itn.setErrorLog("Error while verifying the print manifest " );
-    		throw new Error(">>>verify PrintManifest FAIL<<<");
-    	}
-    }
+	public void verifyPrintManifest(Itinerary itn) {
+		try{
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(locationSelect));
+			locationSelect.click();
+			logger.info("select airport location");
+			new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(locationField));
+			locationField.sendKeys("LAS");
+			logger.info("Select Location: LAS");
+			new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(selectCity));
+			selectCity.click();
+			logger.info("select city button clicked");
+			submitButton.click();
+			logger.info("submit button clicked");
+			Set<String> curTab = DriverBase.getDriver().getWindowHandles();
+			new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(selectFlight));
+			selectFlight.click();
+			logger.info("select flight button clicked");
+			GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
+			new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(allPaxButton));
+			allPaxButton.click();
+			logger.info("all pax button clicked");
+			new WebDriverWait(DriverBase.getDriver(), 30).until(ExpectedConditions.visibilityOf(paxTable));
+			paxTable.click();
+			logger.info("verify pax table display properly");
+			logger.info("PrintManifest Scenario -> Pass");
+		}catch(Exception e){
+			logger.info("verify PrintManifest FAIL");
+			itn.setErrorLog("Error while verifying the print manifest " );
+			throw new Error("verify PrintManifest FAIL");
+		}
+	}
 }

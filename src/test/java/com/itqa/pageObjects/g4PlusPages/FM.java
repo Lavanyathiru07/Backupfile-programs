@@ -19,29 +19,29 @@ import framework.DriverBase;
 
 public class FM extends BasePage{
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(css = "a[ui-sref='app.BagfeePricingRules.rules']")
-    private WebElement bagTab;
+	@FindBy(css = "a[ui-sref='app.BagfeePricingRules.rules']")
+	private WebElement bagTab;
 
-    @FindBy(css = "a[ui-sref='app.PriorityboardingPricingRules.rules']")
-    private WebElement pbTab;
+	@FindBy(css = "a[ui-sref='app.PriorityboardingPricingRules.rules']")
+	private WebElement pbTab;
 
-    @FindBy(css = "a[ui-sref='app.TripflexPricingRules.rules']")
-    private WebElement tfTab;
+	@FindBy(css = "a[ui-sref='app.TripflexPricingRules.rules']")
+	private WebElement tfTab;
 
-    @FindBy(css = "tr[class='ng-scope']")
-    private WebElement resultRow;
+	@FindBy(css = "tr[class='ng-scope']")
+	private WebElement resultRow;
 
-    public FM(Logger log) {
-        this.driver = DriverBase.getDriver();
-        this.logger=log;
-        jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public FM(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
 	public void accessBag(Itinerary itn) {
 		try {
@@ -62,38 +62,44 @@ public class FM extends BasePage{
 				}
 			}
 			resultRow.click();
+			logger.info("result row  clicked");
 			logger.info("BAG Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Error while verifying access bags");
 			itn.setErrorLog("Error while verifying BAG Scenario");
 			throw new Error("BAG Scenario -> Fail");
 		}
 	}
 
-    public void accessPB2(Itinerary itn) {
-    	try{
-    		logger.info("PB2 Verify -> Started");
-        for (int loop=0; loop<10; loop++) {
-            try {
-                pbTab.click();
-                break;
-            }
-            catch (Exception e) {
-                if (loop == 9) {
-                	itn.setErrorLog("Error while access PB2 " );
-                    throw new Error(e);
-                }
-                else {
-                    try {Thread.sleep(1000);} catch (Exception e1) {}
-                }
-            }
-        }
-        resultRow.click();
-        logger.info("PB2 Scenario -> Pass");
-    }catch(Exception e){
-    	itn.setErrorLog("Error while verifying PB2 Scenario");
-    	throw new Error("PB2 Scenario -> Fail");
+	public void accessPB2(Itinerary itn) {
+		try{
+			logger.info("PB2 Verify -> Started");
+			for (int loop=0; loop<10; loop++) {
+				try {
+					pbTab.click();
+					logger.info("priority boarding tab  clicked");
+					break;
+				}
+				catch (Exception e) {
+					if (loop == 9) {
+						logger.info("Error while access pb2");
+						itn.setErrorLog("Error while access PB2 " );
+						throw new Error(e);
+					}
+					else {
+						try {Thread.sleep(1000);} catch (Exception e1) {}
+					}
+				}
+			}
+			resultRow.click();
+			logger.info("result row  clicked");
+			logger.info("PB2 Scenario -> Pass");
+		}catch(Exception e){
+			logger.info("Error while verifying pb2");
+			itn.setErrorLog("Error while verifying pb2 Scenario");
+			throw new Error("PB2 Scenario -> Fail");
+		}
 	}
-    }
 
 	public void accessTF2(Itinerary itn) {
 		try {
@@ -102,6 +108,7 @@ public class FM extends BasePage{
 				try {
 					new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(tfTab));
 					tfTab.click();
+					logger.info("Trip flex tab clicked");
 					break;
 				} catch (Exception e) {
 					if (loop == 9) {
@@ -115,8 +122,10 @@ public class FM extends BasePage{
 				}
 			}
 			resultRow.click();
+			logger.info("result row clicked");
 			logger.info("TF2 Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Error while verifying access TF2");
 			itn.setErrorLog("Error while verifying TF2 Scenario");
 			throw new Error("TF2 Scenario -> Fail");
 		}

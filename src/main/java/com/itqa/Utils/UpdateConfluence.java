@@ -35,25 +35,25 @@ public class UpdateConfluence {
 	private static final String ENCODING = "utf-8";
 	private Logger logger = null;
 
-		public UpdateConfluence(ITestContext result) {
-			try {
+	public UpdateConfluence(ITestContext result) {
+		try {
 			updateConfluencePage(result);
-				} 
-			catch (Exception e){
-				logger.error("Error while updating the Confluence page result ");
-				}
+		} 
+		catch (Exception e){
+			logger.error("Error while updating the Confluence page result ");
 		}
-		
-		private static String getContentRestUrl(final Long contentId, final String[] expansions)
+	}
+
+	private static String getContentRestUrl(final Long contentId, final String[] expansions)
 			throws UnsupportedEncodingException{
 
-			final String expand = URLEncoder.encode(StringUtils.join(expansions, ","), ENCODING);
-			return String.format("%s/rest/api/content/%s?expand=%s&os_authType=basic&os_username=%s&os_password=%s",
+		final String expand = URLEncoder.encode(StringUtils.join(expansions, ","), ENCODING);
+		return String.format("%s/rest/api/content/%s?expand=%s&os_authType=basic&os_username=%s&os_password=%s",
 				BASE_URL, contentId, expand, URLEncoder.encode(new String(Base64.decodeBase64(USERNAME)), ENCODING),
 				URLEncoder.encode(new String(Base64.decodeBase64(PASSWORD)), ENCODING));
-		}
-		
-		public void updateConfluencePage(ITestContext endResults) throws Exception {
+	}
+
+	public void updateConfluencePage(ITestContext endResults) throws Exception {
 		Jira jira=new Jira();
 		final long pageId = 168789848;
 		String ENV = System.getProperty("env").toUpperCase();
@@ -61,7 +61,7 @@ public class UpdateConfluence {
 		String RELEASE = "Release";//System.getProperty("RELEASE").toUpperCase();
 		String JIRATASK = System.getProperty("JIRA");
 		String DEFECT ="";
-				//jira.createJira(null);		
+		//jira.createJira(null);		
 		String executionStatus = null; 
 		String bgcolor = null;
 		if (endResults.getPassedTests().size() > 0) 
@@ -76,13 +76,13 @@ public class UpdateConfluence {
 		}
 		String newRow = "</th></tr><tr><td>" + ENV + "</td><td><span class=\"aui-lozenge aui-dropdown2-trigger aui-dropdown2-trigger-arrowless handy-status-view handy-status-editable history  ready\" style=\"color: white;background-color: "+bgcolor+";border-color: #14892c;\" resolved=\"\" aria-haspopup=\"true\" aria-expanded=\"false\" aria-busy=\"false\">" +executionStatus+"</span></td><td>" + Date + "</td><td>"
 				+ RELEASE + "</td><td>" + JIRATASK + "</td><td>" + DEFECT + "</td></tr>";
-		
+
 		HttpClient client = new DefaultHttpClient(); 
 		String pageObj = null;
 		HttpEntity pageEntity = null; 
 		try { 
 			HttpGet getPageRequest = new
-			HttpGet(getContentRestUrl(pageId, new String[] {"body.storage", "version"}));
+					HttpGet(getContentRestUrl(pageId, new String[] {"body.storage", "version"}));
 			HttpResponse getPageResponse = client.execute(getPageRequest); pageEntity =
 					getPageResponse.getEntity();
 
@@ -110,11 +110,11 @@ public class UpdateConfluence {
 			HttpPut putPageRequest = new HttpPut(getContentRestUrl(pageId, new String[]{}));
 			StringEntity entity = new StringEntity(Page.toString(),
 					ContentType.APPLICATION_JSON); putPageRequest.setEntity(entity);
-			HttpResponse putPageResponse = client.execute(putPageRequest); putPageEntity
+					HttpResponse putPageResponse = client.execute(putPageRequest); putPageEntity
 					= putPageResponse.getEntity();
-			logger.info("Put Page Request returned " +putPageResponse.getStatusLine().toString()); 
-			logger.info("");
-			logger.info(IOUtils.toString(putPageEntity.getContent())); 
+					logger.info("Put Page Request returned " +putPageResponse.getStatusLine().toString()); 
+					logger.info("");
+					logger.info(IOUtils.toString(putPageEntity.getContent())); 
 		} 
 		finally {
 			EntityUtils.consume(putPageEntity); 

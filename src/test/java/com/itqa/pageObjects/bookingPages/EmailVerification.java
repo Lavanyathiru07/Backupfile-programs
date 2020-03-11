@@ -54,13 +54,13 @@ public class EmailVerification extends BasePage {
 	@FindBy(xpath = "	//*[contains(text(),'View entire message')]")
 	private WebElement ViewEntierMessage;
 
-	
+
 	public EmailVerification(Logger log) {
 		this.driver = DriverBase.getDriver();
 		this.logger=log;
-        jse = (JavascriptExecutor) driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
-        
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+
 
 	}
 
@@ -77,7 +77,7 @@ public class EmailVerification extends BasePage {
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(PasswordNext));
 		PasswordNext.click();
 		logger.info("Gmail HTML Version Opened Successfully	");
-		
+
 		// Searching For the Subject booking
 		if (mailToValidation.contains("Booking")) {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(SearchTextBox));
@@ -91,7 +91,7 @@ public class EmailVerification extends BasePage {
 			SearchTextBox.sendKeys("Your booking has been updated #" + itn.getItn());
 			SearchButton.click();
 		}
-		
+
 
 		// script to wait till then
 		Long startTime = System.currentTimeMillis();
@@ -114,10 +114,11 @@ public class EmailVerification extends BasePage {
 		if (itn.getItn().equalsIgnoreCase(ExpectedConfNumber)) {
 			logger.info("The Confirmation Number is matched with Email: " + ExpectedConfNumber);
 		} else {
-			itn.setErrorLog("The Confirmation Number is not matched with Emial :");
+			logger.info("The Confirmation Number is not matched with Email");
+			itn.setErrorLog("The Confirmation Number is not matched with Email ");
 		}
-		
+
 	}
 
-	
+
 }

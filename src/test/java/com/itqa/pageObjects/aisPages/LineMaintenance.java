@@ -22,35 +22,35 @@ import java.util.Calendar;
 
 public class LineMaintenance extends BasePage{
 
-    private Logger logger = null;
+	private Logger logger = null;
 
-    private WebDriver driver = null;
-    private JavascriptExecutor jse = null;
+	private WebDriver driver = null;
+	private JavascriptExecutor jse = null;
 
-    @FindBy(id = "Mx_Line_report")
-    private WebElement reportsTab;
+	@FindBy(id = "Mx_Line_report")
+	private WebElement reportsTab;
 
-    @FindBy(id = "Mx_Line_report_Mx_Reports_Log")
-    private WebElement flightLogTab;
+	@FindBy(id = "Mx_Line_report_Mx_Reports_Log")
+	private WebElement flightLogTab;
 
-    @FindBy(id = "Mx_Reports_Log_lookup_tail")
-    private WebElement tailField;
+	@FindBy(id = "Mx_Reports_Log_lookup_tail")
+	private WebElement tailField;
 
-    @FindBy(id = "Mx_Reports_Log_lookup_startDate")
-    private WebElement startingDateField;
+	@FindBy(id = "Mx_Reports_Log_lookup_startDate")
+	private WebElement startingDateField;
 
-    @FindBy(id = "Mx_Reports_Log_run_report")
-    private WebElement runReportButton;
+	@FindBy(id = "Mx_Reports_Log_run_report")
+	private WebElement runReportButton;
 
-    @FindBy(id = "result_row")
-    private WebElement resultRow;
+	@FindBy(id = "result_row")
+	private WebElement resultRow;
 
-    public LineMaintenance(Logger log) {
-    	this.driver = DriverBase.getDriver();
-    	this.logger=log;
-    	jse = (JavascriptExecutor) driver;
-    	PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
-    }
+	public LineMaintenance(Logger log) {
+		this.driver = DriverBase.getDriver();
+		this.logger=log;
+		jse = (JavascriptExecutor) driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
+	}
 
 	public void openReport(Itinerary itn) {
 		try {
@@ -70,20 +70,21 @@ public class LineMaintenance extends BasePage{
 						verifyReport("301NV");
 					} catch (Exception g) {
 						g.printStackTrace();
-						throw new Error(">>>Records returns no result<<<");
+						throw new Error("Records returns no result");
 					}
 				}
 			}
 			logger.info("LineMaintenance Report Scenario -> Pass");
 		} catch (Exception e) {
+			logger.info("Records returns no result");
 			logger.error("LineMaintenance Report Scenario -> Fail");
-			throw new Error(">>>Records returns no result<<<");
+			throw new Error("Records returns no result");
 		}
 
 	}
-    public void verifyReport(String tail) {
-    	tailField.sendKeys(tail);
-   		Calendar calendar = Calendar.getInstance();
+	public void verifyReport(String tail) {
+		tailField.sendKeys(tail);
+		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, -90);
 		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 		String selectDate = format.format(calendar.getTime());

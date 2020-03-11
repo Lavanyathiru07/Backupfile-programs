@@ -30,10 +30,10 @@ public class Environment {
 		}
 		return envUnderTest;
 	}
-	
+
 	public List<Integer> getSilos() {
 		List<Integer> siloList =new ArrayList<Integer>();
-		
+
 		if(System.getProperty("Scenario").equals("silo")) {
 			if(getEnv().contains("in")) {
 				siloList.add(1);
@@ -53,26 +53,26 @@ public class Environment {
 			}else {
 				siloList.add(0);
 			}
-			
+
 		}else if(System.getProperty("Scenario").contains("0")) {
 			siloList.add(0);
-			
+
 		}else if(System.getProperty("Scenario").contains("1")) {
 			siloList.add(1);
-			
+
 		}else if(System.getProperty("Scenario").contains("2")) {
 			siloList.add(2);
-			
+
 		}
 		else if(System.getProperty("Scenario").contains("3")) {
 			siloList.add(3);
-			
+
 		}else if(System.getProperty("Scenario").equalsIgnoreCase("ais")) {
 			siloList.add(4);
-			
+
 		}else if(System.getProperty("Scenario").equalsIgnoreCase("g4plus")) {
 			siloList.add(5);
-			
+
 		}else {
 			if(getEnv().contains("trn")) {
 				siloList.add(0);
@@ -98,10 +98,10 @@ public class Environment {
 			}else {
 				siloList.add(0);
 			}
-			
+
 		}
 		return siloList;
-		
+
 	}
 
 	public List<Integer> getRandomSilo() {
@@ -121,7 +121,7 @@ public class Environment {
 	public List<Integer> getSiloList() {
 		switch (getEnv()) {
 		case "stg":
-			
+
 			return stream(stg).boxed().collect(Collectors.toList());
 		case "qa1":
 			return stream(qa1).boxed().collect(Collectors.toList());
