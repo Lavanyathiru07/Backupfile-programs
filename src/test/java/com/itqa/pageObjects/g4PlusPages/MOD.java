@@ -784,6 +784,9 @@ public class MOD extends BasePage {
 			System.out.println("Error "+e);
 		}
 		Set<String> curTab = driver.getWindowHandles();
+		try{
+			Thread.sleep(3000);
+		}catch (InterruptedException e){}
 		driver = DriverBase.getDriver();
 		driver.navigate().refresh();
 		g4MenuPage.selectSTNS(itn);
