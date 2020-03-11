@@ -147,7 +147,7 @@ public class WebBookingTestIT extends DriverBase {
 				|| ((env.contains("qa1") || env.contains("qa2") || env.contains("aws")) && ((silo == 1) || (silo == 2)))
 				|| (env.contains("stg") && ((silo == 1)|| (silo == 2) || (silo == 3) ))
 				|| (env.contains("nddprd") && ((silo == 1) || (silo == 2) || (silo == 3)))
-				|| (env.contains("trn") && (silo == 0)) || (env.contains("prod") && (silo == 3))) {
+				|| (env.contains("trn") && (silo == 0))){// || (env.contains("prod") && (silo == 3))) {
 			if (silo != 0) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context, itn);
 			} else {
