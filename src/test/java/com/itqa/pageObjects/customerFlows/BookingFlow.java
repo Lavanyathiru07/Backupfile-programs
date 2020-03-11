@@ -232,8 +232,9 @@ public class BookingFlow extends BasePage {
 
 		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd") ) {
 			mod.stationUncheckPax(itn.getItn(), itn);
-			mod.refundWholeAmountInMod(itin, itn);
-			mod.cancelWholeItn(itn.getItn(), itn);
+			Thread.sleep(100000);
+			//mod.refundWholeAmountInMod(itin, itn);
+			//mod.cancelWholeItn(itn.getItn(), itn);
 			try{
 				driver = DriverBase.getDriver();
 				String refundedTotal = driver.findElement(
