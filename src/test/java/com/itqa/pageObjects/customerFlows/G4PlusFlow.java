@@ -149,7 +149,7 @@ public class G4PlusFlow extends BasePage {
 				G4PlusLoginPage.g4plusLogin(false);
 			}
 
-			Thread.sleep(4000);
+
 		} catch (Exception e) {
 			skip = true;
 			throw new SkipException("Skipping Test Case as runmode set to NO");
