@@ -744,12 +744,15 @@ public class MOD extends BasePage {
 			.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id = 'waiveCancelFeeReason']")));
 			new Select(waiveCancelFeeReason).selectByValue(WaiveReason);
 			logger.info("Waive cancel reason is clicked");
+		} catch (Exception e) {
+		}
+
+		try{
 			new WebDriverWait(driver, 15).until(
 					ExpectedConditions.elementToBeClickable(By.xpath("//select[contains(@class, 'override-reason')]")));
 			new Select(overRideReasons).selectByValue(OverRideReason);
 			logger.info("Override reason is clicked");
-		} catch (Exception e) {
-		}
+		}catch ( WebDriverException e){}
 
 		new WebDriverWait(driver, 15)
 		.until(ExpectedConditions.elementToBeClickable(By.xpath("//Select[@id = 'cancelReason']")));
