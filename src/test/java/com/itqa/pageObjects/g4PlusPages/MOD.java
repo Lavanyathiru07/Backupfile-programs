@@ -620,7 +620,7 @@ public class MOD extends BasePage {
 				}
 			}
 		}
-
+		Thread.sleep(2500);
 		if (itn.getDescription().toLowerCase().contains("voucher")) {
 			reversevoucher(itn);
 		}
