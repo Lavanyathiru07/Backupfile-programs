@@ -51,13 +51,23 @@ public class ItineraryDataProvider {
         } else {
             // standard itinerary for all cases not specified above
             for (Integer silo : silos) {
-                Itinerary itnOneWay = new ItineraryBuilder()
-                        .withScenario(method.getName())
-                        .withDepartureCity("CVG")
-                        .withDestinationCity("PIE")
-                        .withPriority("true")
-                        .build();
-                data.add(new Object[]{silo, itnOneWay});
+                if( silo ==2 ){
+                    Itinerary itnOneWay = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("BLV")
+                            .withDestinationCity("VPS")
+                            .withPriority("true")
+                            .build();
+                    data.add(new Object[]{silo, itnOneWay});
+                }else {
+                    Itinerary itnOneWay = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("CVG")
+                            .withDestinationCity("PIE")
+                            .withPriority("true")
+                            .build();
+                    data.add(new Object[]{silo, itnOneWay});
+                }
             }
         }
         return data.iterator();
