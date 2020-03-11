@@ -789,7 +789,7 @@ public class MOD extends BasePage {
 			}
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
-		Thread.sleep(25000);
+		Thread.sleep(2500);
 		driver = DriverBase.getDriver();
 		driver.navigate().refresh();
 		g4MenuPage.selectMOD(itn);
@@ -807,6 +807,13 @@ public class MOD extends BasePage {
 		}catch(Exception e) {}
 
 		Set<String> curTab = driver.getWindowHandles();
+		try {
+			Thread.sleep(2500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		driver = DriverBase.getDriver();
+		driver.navigate().refresh();
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 
