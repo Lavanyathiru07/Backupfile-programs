@@ -339,14 +339,14 @@ public class MOD extends BasePage {
 
 	public void upsell(Itinerary Itn) {
 
-		
-		
+
+
 		String expiredMonth;
 		String expiredYear;
 		String cardNumber;
 		String cvv;
 		String cardName;
-		
+
 		if (System.getProperty("env").contains("prod")||System.getProperty("env").contains("vipprd")) {
 			expiredMonth = System.getProperty("expiration").split("-")[0];
 			expiredYear = System.getProperty("expiration").split("-")[1];
@@ -354,10 +354,10 @@ public class MOD extends BasePage {
 			cardName = System.getProperty("cardname");
 			cvv = System.getProperty("cvv");
 		}else {
-				expiredMonth = "03";
-				expiredYear = "2020";
-				cardNumber = "5454545454545454";
-				cvv = "123";
+			expiredMonth = "03";
+			expiredYear = "2020";
+			cardNumber = "5454545454545454";
+			cvv = "123";
 		}
 
 		confirmationNumField.sendKeys(Itn.getItn());
@@ -385,7 +385,7 @@ public class MOD extends BasePage {
 				Thread.sleep(1000);
 			} catch (Exception e) {
 <<<<<<< HEAD
-<<<<<<< HEAD
+						<<<<<<< HEAD
 				break;
 			}
 		}
@@ -455,8 +455,8 @@ public class MOD extends BasePage {
 				break;
 			} catch (Exception e) {
 				try {
-						Thread.sleep(1000);
-					} catch (Exception e1) {}
+					Thread.sleep(1000);
+				} catch (Exception e1) {}
 			}
 		}
 
@@ -534,7 +534,7 @@ public class MOD extends BasePage {
 				}
 			}
 			new WebDriverWait(driver, 10)
-			.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='comment']")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='comment']")));
 			comment.sendKeys("Test");
 			logger.info("Entered Test in the comment box");
 			Refund.click();
@@ -549,7 +549,7 @@ public class MOD extends BasePage {
 			logger.info("Amount refunded successfully, The refund amount is : " + refundAmount.getText().trim());
 		} else {
 			logger.info("Amount is not mached with refund amount ,Actual amount" + refundAmount.getText()
-			+ "Expected amount is :" + amountPaid.getText().trim());
+					+ "Expected amount is :" + amountPaid.getText().trim());
 		}
 	}
 
@@ -576,7 +576,7 @@ public class MOD extends BasePage {
 				}
 			}
 			new WebDriverWait(driver, 10)
-			.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='comment']")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='comment']")));
 			comment.sendKeys("Test");
 			logger.info("Comment TEST is entered");
 			Reverse.click();
@@ -702,7 +702,7 @@ public class MOD extends BasePage {
 
 		logger.info("Refund all amounts");
 		new WebDriverWait(driver, 30)
-		.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[href='#booking-transactions']")));
+				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[href='#booking-transactions']")));
 	}
 
 	public void cancelItn(String pnr, Itinerary itn) {
@@ -743,16 +743,16 @@ public class MOD extends BasePage {
 
 		try {
 			new WebDriverWait(driver, 15)
-			.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Continue')]")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Continue')]")));
 			continueButton.click();
 			logger.info("Continue is clicked for Policy Override");
 			withPolicyOverridebtn.click();
 			new WebDriverWait(driver, 15)
-			.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class = 'btn-waive-cancel-fee']")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class = 'btn-waive-cancel-fee']")));
 			waiveCancelFee.click();
 			logger.info("waive cancel fees button is clicked");
 			new WebDriverWait(driver, 15)
-			.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id = 'waiveCancelFeeReason']")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id = 'waiveCancelFeeReason']")));
 			new Select(waiveCancelFeeReason).selectByValue(WaiveReason);
 			logger.info("Waive cancel reason is clicked");
 		} catch (Exception e) {
@@ -766,7 +766,7 @@ public class MOD extends BasePage {
 		}catch ( WebDriverException e){}
 
 		new WebDriverWait(driver, 15)
-		.until(ExpectedConditions.elementToBeClickable(By.xpath("//Select[@id = 'cancelReason']")));
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//Select[@id = 'cancelReason']")));
 		new Select(cancelReason).selectByValue(CancelReason);
 		logger.info("Cancel reason is selected");
 		receivedFrom.sendKeys("AU TESTING");
