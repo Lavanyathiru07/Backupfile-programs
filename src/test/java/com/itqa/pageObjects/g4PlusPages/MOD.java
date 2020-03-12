@@ -771,7 +771,7 @@ public class MOD extends BasePage {
 		try {
 			driver = DriverBase.getDriver();
 			for( int index =0; index<5; index++) {
-				Thread.sleep(3500);
+				Thread.sleep(5500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 					driver.navigate().refresh();
 				} else {
@@ -796,7 +796,7 @@ public class MOD extends BasePage {
 		try {
 			driver = DriverBase.getDriver();
 			for( int index =0; index<5; index++) {
-				Thread.sleep(3500);
+				Thread.sleep(5500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 					driver.navigate().refresh();
 				} else {
@@ -821,12 +821,17 @@ public class MOD extends BasePage {
 		
 		Set<String> curTab = driver.getWindowHandles();
 		try {
-			Thread.sleep(2500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver = DriverBase.getDriver();
-		driver.navigate().refresh();
+			driver = DriverBase.getDriver();
+			for( int index =0; index<5; index++) {
+				Thread.sleep(5500);
+				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
+					driver.navigate().refresh();
+				} else {
+					break;
+				}
+			}
+
+		}catch (Exception e ){}
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 
