@@ -442,13 +442,13 @@ public class PaymentPage extends BasePage {
 			jse.executeScript("arguments[0].click();", termAcceptField);
 			clickPurchase();
 
-			Thread.sleep(2500);
+			Thread.sleep(4500);
 			  try {
 					   if (driver.findElement(By.xpath("//h2[contains(text(), 'sorry')]")).isDisplayed()) {
 							   driver.findElement(By.xpath("//span[contains(text(),'Continue')]/parent::button")).sendKeys(Keys.RETURN);
 							   fillCardInfo(itn.getCardNo(), itn);
 							   driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
-							   Thread.sleep(3500);
+							   Thread.sleep(4500);
 							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN); }
 			   }catch (Exception e ){}
 			  try {
@@ -456,7 +456,7 @@ public class PaymentPage extends BasePage {
 							   driver.findElement(By.xpath("//button[contains(text(), 'Return')]")).sendKeys(Keys.RETURN);
 							   fillCardInfo(itn.getCardNo(), itn);
 							  driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
-							  Thread.sleep(3500);
+							  Thread.sleep(4500);
 							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN);
 					  }
 			  }catch (Exception e ){}
