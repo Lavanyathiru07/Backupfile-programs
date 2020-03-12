@@ -4,6 +4,7 @@ import data.Itinerary;
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
+import org.boon.di.In;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -799,9 +800,11 @@ public class MOD extends BasePage {
 			}
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
-		Thread.sleep(2500);
-		driver = DriverBase.getDriver();
-		driver.navigate().refresh();
+		try {
+			Thread.sleep(5000);
+			driver = DriverBase.getDriver();
+			driver.navigate().refresh();
+		}catch (Exception e ){}
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 
