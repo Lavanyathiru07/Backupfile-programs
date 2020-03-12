@@ -160,7 +160,7 @@ public class G4PlusFlow extends BasePage {
 		g4PlusSignin();
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		try{
-			Thread.sleep(2500);
+			Thread.sleep(4500);
 		}catch (InterruptedException e){}
 		driver= DriverBase.getDriver();
 		driver.navigate().refresh();
