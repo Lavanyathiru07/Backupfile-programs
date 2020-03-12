@@ -573,8 +573,8 @@ public class MOD extends BasePage {
 		try{
 			driver = DriverBase.getDriver();
 			if( driver.findElement(By.xpath("//*[contains(text(),'refused to connect')]")).isDisplayed()){
-				itn.setErrorLog("Page is not reachable. Known Firewall issue");
-				throw new Error("Page is not reachable. Known Firewall issue");
+				itn.setErrorLog("Page is not reachable. Network Issue.");
+				throw new Error("Page is not reachable. Network Issue");
 			}
 		}catch(Exception e){}
 		searchBtn.click();
