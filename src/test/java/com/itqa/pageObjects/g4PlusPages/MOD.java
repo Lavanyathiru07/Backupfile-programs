@@ -788,14 +788,16 @@ public class MOD extends BasePage {
 		g4LoginPage.g4plusLogin(true);
 		Set<String> curTab = driver.getWindowHandles();
 		try {
+			Thread.sleep(5500);
 			driver = DriverBase.getDriver();
+			driver.navigate().refresh();
 			for( int index =0; index<5; index++) {
-				Thread.sleep(5500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 					driver.navigate().refresh();
 				} else {
 					break;
 				}
+				Thread.sleep(5500);
 			}
 
 		}catch (Exception e ){}
@@ -813,14 +815,16 @@ public class MOD extends BasePage {
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
 		try {
+			Thread.sleep(5500);
 			driver = DriverBase.getDriver();
+			driver.navigate().refresh();
 			for( int index =0; index<5; index++) {
-				Thread.sleep(5500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 					driver.navigate().refresh();
 				} else {
 					break;
 				}
+				Thread.sleep(5500);
 			}
 
 		}catch (Exception e ){}
@@ -840,14 +844,16 @@ public class MOD extends BasePage {
 
 		Set<String> curTab = driver.getWindowHandles();
 		try {
+			Thread.sleep(5500);
 			driver = DriverBase.getDriver();
+			driver.navigate().refresh();
 			for( int index =0; index<5; index++) {
-				Thread.sleep(5500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 					driver.navigate().refresh();
 				} else {
 					break;
 				}
+				Thread.sleep(4000);
 			}
 
 		}catch (Exception e ){}

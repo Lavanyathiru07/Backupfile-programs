@@ -160,15 +160,16 @@ public class G4PlusFlow extends BasePage {
 		g4PlusSignin();
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		try {
+			Thread.sleep(5500);
 			driver = DriverBase.getDriver();
+			driver.navigate().refresh();
 			for( int index =0; index<5; index++) {
-				Thread.sleep(5500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
-					System.out.println( "++++++ Menu Error");
 					driver.navigate().refresh();
 				} else {
 					break;
 				}
+				Thread.sleep(5000);
 			}
 
 		}catch (Exception e ){}
@@ -234,14 +235,16 @@ public class G4PlusFlow extends BasePage {
 				}
 				G4PlusLoginPage.g4plusLogin(false);
 				try {
+					Thread.sleep(5500);
 					driver = DriverBase.getDriver();
+					driver.navigate().refresh();
 					for( int index =0; index<5; index++) {
-						Thread.sleep(5500);
 						if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 							driver.navigate().refresh();
 						} else {
 							break;
 						}
+						Thread.sleep(5500);
 					}
 
 				}catch (Exception e ){}
