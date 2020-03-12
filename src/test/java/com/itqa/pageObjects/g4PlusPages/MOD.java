@@ -369,32 +369,6 @@ public class MOD extends BasePage {
 					.elementToBeClickable(By.cssSelector("a[href='/app/bookings/" + Itn.getItn() + "']")));
 			driver.findElement(By.cssSelector("a[href='/app/bookings/" + Itn.getItn() + "']")).click();
 		} catch (Exception e) {
-		}
-
-
-		jse.executeScript("arguments[0].click();", changeSeatButton);
-		jse.executeScript("arguments[0].click();", selectSeat.get(selectSeat.size() - 1));
-		jse.executeScript("arguments[0].click();", doneButton);
-		logger.info("Seat Added");
-
-		jse.executeScript("arguments[0].click();", changeBagButton);
-		new Select(carryonBagSelect).selectByIndex(1);
-		for (int loop = 0; loop < 5; loop++) {
-			try {
-				driver.findElement(By.id("progress-modal"));
-				Thread.sleep(1000);
-			} catch (Exception e) {
-<<<<<<< HEAD
-						<<<<<<< HEAD
-				break;
-			}
-		}
-		if (!System.getProperty("env").contains("prod")) {
-			new Select(prioritySelect).selectByIndex(0);
-			for (int loop = 0; loop < 20; loop++) {
-=======
-=======
->>>>>>> d8b1505e3260f839a2932cbb6b56adb9d093486e
 				Itn.setErrorLog("Issues searching itinerary");
 
 			}
@@ -414,7 +388,6 @@ public class MOD extends BasePage {
 			}catch( InterruptedException w){}
 
 			for (int loop = 0; loop < 5; loop++) {
->>>>>>> add timer between jse and selenium.select
 				try {
 					driver.findElement(By.id("progress-modal"));
 					Thread.sleep(1000);
