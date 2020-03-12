@@ -768,6 +768,7 @@ public class MOD extends BasePage {
 			driver = DriverBase.getDriver();
 			driver.navigate().refresh();
 			for( int index =0; index<5; index++) {
+				Thread.sleep(3500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 					driver.navigate().refresh();
 				} else {
@@ -795,6 +796,7 @@ public class MOD extends BasePage {
 			driver = DriverBase.getDriver();
 			driver.navigate().refresh();
 			for( int index =0; index<5; index++) {
+				Thread.sleep(3500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 					driver.navigate().refresh();
 				} else {
