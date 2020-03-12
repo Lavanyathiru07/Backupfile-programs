@@ -141,6 +141,18 @@ public class ItineraryDataProvider {
         } 
         else if (method.getName().contains("OneWay")) {
         	for (Integer silo: silos) {
+        	    if( silo ==3){
+                    Itinerary itnRoundTrip = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("SFB")
+                            .withDestinationCity("CVG")
+                            .withHotel(true)
+                            .withVehicle(true)
+                            .withSsr("PPOC")
+                            .withEmail("tsqa.automation@tridentsqa.com")
+                            .build();
+                    data.add(new Object[]{silo, itnRoundTrip});
+                }
                 Itinerary itnRoundTrip = new ItineraryBuilder()
                         .withScenario(method.getName())
                         .withDepartureCity("CVG")
