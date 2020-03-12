@@ -385,6 +385,7 @@ public class MOD extends BasePage {
 				Thread.sleep(1000);
 			} catch (Exception e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				break;
 			}
 		}
@@ -392,6 +393,8 @@ public class MOD extends BasePage {
 			new Select(prioritySelect).selectByIndex(0);
 			for (int loop = 0; loop < 20; loop++) {
 =======
+=======
+>>>>>>> d8b1505e3260f839a2932cbb6b56adb9d093486e
 				Itn.setErrorLog("Issues searching itinerary");
 
 			}
