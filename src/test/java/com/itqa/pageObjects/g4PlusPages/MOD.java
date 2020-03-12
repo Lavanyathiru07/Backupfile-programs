@@ -787,13 +787,18 @@ public class MOD extends BasePage {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		g4LoginPage.g4plusLogin(true);
 		Set<String> curTab = driver.getWindowHandles();
-		try{
+		try {
 			Thread.sleep(2500);
-		}catch (InterruptedException e){
+			driver = DriverBase.getDriver();
+			for( int index =0; index<5; index++) {
+				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
+					driver.navigate().refresh();
+				} else {
+					break;
+				}
+			}
 
-		}
-		driver = DriverBase.getDriver();
-		driver.navigate().refresh();
+		}catch (Exception e ){}
 		g4MenuPage.selectSTNS(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 		unCheckPax(pnr, itn);
