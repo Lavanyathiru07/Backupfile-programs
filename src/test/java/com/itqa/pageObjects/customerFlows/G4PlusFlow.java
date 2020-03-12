@@ -159,11 +159,18 @@ public class G4PlusFlow extends BasePage {
 	public void accessAIS(Itinerary itn) {
 		g4PlusSignin();
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
-		try{
-			Thread.sleep(4500);
-		}catch (InterruptedException e){}
-		driver= DriverBase.getDriver();
-		driver.navigate().refresh();
+		try {
+			Thread.sleep(2500);
+			driver = DriverBase.getDriver();
+			for( int index =0; index<5; index++) {
+				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
+					driver.navigate().refresh();
+				} else {
+					break;
+				}
+			}
+
+		}catch (Exception e ){}
 		g4MenuPage.selectAIS(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
 	}

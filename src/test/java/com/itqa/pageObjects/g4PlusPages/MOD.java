@@ -586,6 +586,13 @@ public class MOD extends BasePage {
 	}
 
 	public void unCheckPax(String pnr, Itinerary itn) {
+		try{
+			driver = DriverBase.getDriver();
+			if( driver.findElement(By.xpath("//*[contains(text(),'refused to connect')]")).isDisplayed()){
+				itn.setErrorLog("Page is not reachable. Known Firewall issue");
+				throw new Error("Page is not reachable. Known Firewall issue");
+			}
+		}catch(Exception e){}
 		searchBtn.click();
 		logger.info("Search button is clicked");
 		itnField.sendKeys(pnr);
@@ -801,9 +808,16 @@ public class MOD extends BasePage {
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2500);
 			driver = DriverBase.getDriver();
-			driver.navigate().refresh();
+			for( int index =0; index<5; index++) {
+				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
+					driver.navigate().refresh();
+				} else {
+					break;
+				}
+			}
+
 		}catch (Exception e ){}
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
