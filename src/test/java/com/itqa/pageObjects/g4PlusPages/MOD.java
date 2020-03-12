@@ -763,7 +763,6 @@ public class MOD extends BasePage {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		g4LoginPage.g4plusLogin(true);
 		Set<String> curTab = driver.getWindowHandles();
-<<<<<<< HEAD
 		try {
 			Thread.sleep(5500);
 			driver = DriverBase.getDriver();
@@ -778,15 +777,6 @@ public class MOD extends BasePage {
 			}
 
 		}catch (Exception e ){}
-=======
-		try{
-			Thread.sleep(2500);
-		}catch (InterruptedException e){
-
-		}
-		driver = DriverBase.getDriver();
-		driver.navigate().refresh();
->>>>>>> reverting back
 		g4MenuPage.selectSTNS(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 		unCheckPax(pnr, itn);
@@ -801,7 +791,6 @@ public class MOD extends BasePage {
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
 		try {
-<<<<<<< HEAD
 			Thread.sleep(5500);
 			driver = DriverBase.getDriver();
 			driver.navigate().refresh();
@@ -813,12 +802,6 @@ public class MOD extends BasePage {
 				}
 				Thread.sleep(5500);
 			}
-
-=======
-			Thread.sleep(5000);
-			driver = DriverBase.getDriver();
-			driver.navigate().refresh();
->>>>>>> increase timer in g4
 		}catch (Exception e ){}
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
