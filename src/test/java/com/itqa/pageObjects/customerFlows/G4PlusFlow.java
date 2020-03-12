@@ -162,7 +162,7 @@ public class G4PlusFlow extends BasePage {
 		try {
 			driver = DriverBase.getDriver();
 			for( int index =0; index<5; index++) {
-				Thread.sleep(3500);
+				Thread.sleep(5500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 					System.out.println( "++++++ Menu Error");
 					driver.navigate().refresh();
@@ -236,7 +236,7 @@ public class G4PlusFlow extends BasePage {
 				try {
 					driver = DriverBase.getDriver();
 					for( int index =0; index<5; index++) {
-						Thread.sleep(4500);
+						Thread.sleep(5500);
 						if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 							driver.navigate().refresh();
 						} else {
