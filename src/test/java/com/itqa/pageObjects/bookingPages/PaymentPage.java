@@ -442,7 +442,7 @@ public class PaymentPage extends BasePage {
 			}
 			jse.executeScript("arguments[0].click();", termAcceptField);
 			clickPurchase();
-			
+
 			Thread.sleep(4500);
 			  try {
 					   if (driver.findElement(By.xpath("//h2[contains(text(), 'sorry')]")).isDisplayed()) {
