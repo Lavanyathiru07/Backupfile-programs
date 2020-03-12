@@ -788,9 +788,9 @@ public class MOD extends BasePage {
 		g4LoginPage.g4plusLogin(true);
 		Set<String> curTab = driver.getWindowHandles();
 		try {
-			Thread.sleep(2500);
 			driver = DriverBase.getDriver();
 			for( int index =0; index<5; index++) {
+				Thread.sleep(3500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 					driver.navigate().refresh();
 				} else {
@@ -813,9 +813,9 @@ public class MOD extends BasePage {
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
 		try {
-			Thread.sleep(2500);
 			driver = DriverBase.getDriver();
 			for( int index =0; index<5; index++) {
+				Thread.sleep(3500);
 				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
 					driver.navigate().refresh();
 				} else {
