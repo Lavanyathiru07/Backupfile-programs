@@ -801,6 +801,7 @@ public class MOD extends BasePage {
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
 		try {
+<<<<<<< HEAD
 			Thread.sleep(5500);
 			driver = DriverBase.getDriver();
 			driver.navigate().refresh();
@@ -813,6 +814,11 @@ public class MOD extends BasePage {
 				Thread.sleep(5500);
 			}
 
+=======
+			Thread.sleep(5000);
+			driver = DriverBase.getDriver();
+			driver.navigate().refresh();
+>>>>>>> increase timer in g4
 		}catch (Exception e ){}
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
