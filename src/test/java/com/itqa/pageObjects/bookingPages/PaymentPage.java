@@ -449,7 +449,7 @@ public class PaymentPage extends BasePage {
 							   driver.findElement(By.xpath("//span[contains(text(),'Continue')]/parent::button")).sendKeys(Keys.RETURN);
 							   fillCardInfo(itn.getCardNo(), itn);
 							   driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
-							   Thread.sleep(4500);
+							   Thread.sleep(5500);
 							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN); }
 			   }catch (Exception e ){}
 			  try {
@@ -457,7 +457,7 @@ public class PaymentPage extends BasePage {
 							   driver.findElement(By.xpath("//button[contains(text(), 'Return')]")).sendKeys(Keys.RETURN);
 							   fillCardInfo(itn.getCardNo(), itn);
 							  driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
-							  Thread.sleep(4500);
+							  Thread.sleep(5500);
 							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN);
 					  }
 			  }catch (Exception e ){}
