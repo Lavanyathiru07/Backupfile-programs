@@ -8,7 +8,7 @@ public enum URLS {
 	TA("https://ta-xxx.allegiantair.com/"), 
 	G4PLUS("https://g4plus-portal.xxx.allegiantair.com/"),
 	G4PLUSTOKEN(
-			"https://g4plus-res.xxx.allegiantair.com/test/token?aisId=10339&roles=ops_fee_management,ops_flight_operations,"
+			"https://g4plus-res.xxx.allegiantair.com/test/token?aisId=09742&roles=ops_fee_management,ops_flight_operations,"
 					+ "ops_flight_operations_manager,res_customer,res_booking,res_booking_agent,res_booking_waiver,res_booking_override,"
 					+ "res_booking_manager,call_center_agent,ops_airline_bags,ops_airline_pb,ops_airline_seats,ops_eswap,res_airline_reaccom,"
 					+ "ota_vehicle,ota_trip_flex,ota_payments,ota_surcharge,ota_surcharge_accounting,ota_surcharge_revenue,ota_hotel,"
