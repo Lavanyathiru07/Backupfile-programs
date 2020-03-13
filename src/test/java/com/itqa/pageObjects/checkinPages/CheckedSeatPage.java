@@ -90,6 +90,7 @@ public class CheckedSeatPage extends BasePage {
                 chooseSeat();
                 jse.executeScript("arguments[0].click();", continueButton);
                 jse.executeScript("arguments[0].click();", yesContinueButton);
+
             }
         }catch (Exception e ){}
     }
