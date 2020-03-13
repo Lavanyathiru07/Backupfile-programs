@@ -2,10 +2,7 @@ package com.itqa.pageObjects.checkinPages;
 
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -46,30 +43,47 @@ public class CheckedSeatPage extends BasePage {
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
 	}
 
-	public void chooseSeat() {
-		for (int i = 0; i < paxNum.size(); i++) {
-			int num = new Random().nextInt(availSeatList.size());
-			logger.info("Upgrading seat: " + availSeatList.get(num).getAttribute("aria-label") + " for pax " + (i + 1));
-			jse.executeScript(JSFIRSTARG, availSeatList.get(num));
-			yesUpgradeButton.click();
-		}
-	}
+    public void chooseSeat() {
+        for (int i = 0; i < paxNum.size(); i++) {
+            int num = new Random().nextInt(availSeatList.size());
+            logger.info("Upgrading seat: " + availSeatList.get(num).getAttribute("aria-label") + " for pax " + (i + 1));
+            jse.executeScript(JSFIRSTARG, availSeatList.get(num));
+            try {
+                yesUpgradeButton.click();
+            }catch(WebDriverException e){
+                new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'OK')]")));
+                driver.findElement(By.xpath("//button[contains(text(),'OK')]")).sendKeys(Keys.RETURN);
+            }
+        }
+    }
 
-	public void selectUpgradeSeat() {
-		if (System.getProperty("env").contains("prod")) {
-			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'seatchooser-wrapper') and contains(@aria-hidden,'false')]")));
-		}
-		else{
-			chooseSeat();
-		}
-		//jse.executeScript(JSFIRSTARG, continueButton);
-		try {
-			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'seatchooser-wrapper') and contains(@aria-hidden,'false')]")));
-			jse.executeScript("arguments[0].click();", continueButton);
-			jse.executeScript("arguments[0].click();", yesContinueButton);
-		}catch(Exception e) {}
-		logger.info("Click Continue");
-	}
+    public void selectUpgradeSeat() {
+       try{
+           new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'seatchooser-wrapper') and contains(@aria-hidden,'false')]")));
+       }catch (WebDriverException e){}
+
+        if (!System.getProperty("env").contains("prod")) {
+            chooseSeat();
+        }
+        //jse.executeScript(JSFIRSTARG, continueButton);
+        if( System.getProperty("env").contains("prod") && driver.getCurrentUrl().contains("checkin")){
+            try{
+                continueButton.sendKeys(Keys.RETURN);
+            }catch( WebDriverException e){
+                jse.executeScript("arguments[0].click();", continueButton);
+            }
+        }
+        else {
+            try {
+
+                jse.executeScript("arguments[0].click();", continueButton);
+                jse.executeScript("arguments[0].click();", yesContinueButton);
+            } catch (Exception e) {
+            }
+            logger.info("Click Continue");
+        }
+    }
+
 
 	public void acceptDefaultSeat() {
 		jse.executeScript(JSFIRSTARG, continueButton);

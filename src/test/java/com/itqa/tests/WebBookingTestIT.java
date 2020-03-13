@@ -74,6 +74,7 @@ public class WebBookingTestIT extends DriverBase {
 			testId.set(testnum);
 			testnum++;
 		}
+
 		if ((env.contains("prod") && ((silo == 1) || (silo == 2))) || (env.contains("vipprd") && (silo == 0))) {
 			if (env.contains("prod")) {
 				setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value()
@@ -182,7 +183,7 @@ public class WebBookingTestIT extends DriverBase {
 					//itn.setDestinationCity("LAS");
 				} catch (Exception e) {
 					logger.get().info("Error while getting the early flight. So, It's executing with default city pair(FAT-LAS)");
-					itn.setDepartureCity("FAT");
+					itn.setDepartureCity("SCK");
 					itn.setDestinationCity("LAS");
 				}
 

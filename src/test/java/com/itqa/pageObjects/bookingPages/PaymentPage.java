@@ -3,11 +3,7 @@ package com.itqa.pageObjects.bookingPages;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -382,7 +378,7 @@ public class PaymentPage extends BasePage {
 		if( amount.contains(",") ){
 			amount = amount.replace(",","");
 		}
-		itn.setTotal(Float.valueOf(amount.replace("$","")));
+
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
 		int arr[] = { 201, 204, 249, 253, 257, 258, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521,
@@ -446,6 +442,26 @@ public class PaymentPage extends BasePage {
 			}
 			jse.executeScript("arguments[0].click();", termAcceptField);
 			clickPurchase();
+
+			Thread.sleep(4500);
+			  try {
+					   if (driver.findElement(By.xpath("//h2[contains(text(), 'sorry')]")).isDisplayed()) {
+							   driver.findElement(By.xpath("//span[contains(text(),'Continue')]/parent::button")).sendKeys(Keys.RETURN);
+							   fillCardInfo(itn.getCardNo(), itn);
+							   driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
+							   Thread.sleep(5500);
+							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN); }
+			   }catch (Exception e ){}
+			  try {
+					  if (driver.findElement(By.xpath("//div[contains(@class , 'message-inner')]")).isDisplayed()) {
+							   driver.findElement(By.xpath("//button[contains(text(), 'Return')]")).sendKeys(Keys.RETURN);
+							   fillCardInfo(itn.getCardNo(), itn);
+							  driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
+							  Thread.sleep(5500);
+							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN);
+					  }
+			  }catch (Exception e ){}
+			itn.setTotal(Float.valueOf(amount.replace("$","")));
 		}
 	}
 

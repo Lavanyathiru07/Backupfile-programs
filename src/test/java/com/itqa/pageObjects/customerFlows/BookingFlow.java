@@ -138,8 +138,8 @@ public class BookingFlow extends BasePage {
 			try {
 				logger.info("Started Re-executing test case");
 				itn.setErrorLog("Error while Create Booking ");
-				itn.setDepartureCity("BLI");
-				itn.setDestinationCity("LAS");
+				itn.setDepartureCity("PIE");
+				itn.setDestinationCity("CVG");
 				driver = DriverBase.getDriver();
 				if (Environment.getEnv().contains("aws")) {
 					driver.get(URLS.WWW.getUrl(System.getProperty("awsenv"), silo));
@@ -238,12 +238,22 @@ public class BookingFlow extends BasePage {
 				driver = DriverBase.getDriver();
 				String refundedTotal = driver.findElement(
 						By.xpath("//td/abbr[text()='Refunded']/following::td[@class='amount'][1]")).getText().toString();
+				String tempTotal = driver.findElement(
+						By.xpath("//td[text()='Amount Paid']/following::td[@class='amount'][1]")).getText().toString();
 
+				tempTotal = tempTotal.replace("$","");
 				refundedTotal = refundedTotal.replace("$","");
-				if( refundedTotal.contains(",")){
-					refundedTotal=refundedTotal.replace(",", "");
+
+				if( tempTotal.contains(",")){
+					tempTotal=tempTotal.replace(",", "");
 				}
+				if( refundedTotal.contains(",")){
+					refundedTotal= refundedTotal.replace(",", "");
+				}
+				float total = Float.valueOf(tempTotal);
 				float tempRefund = Float.valueOf(refundedTotal );
+
+				itn.setTotal(total);
 				itn.setRefundAmount(tempRefund);
 
 			}catch( WebDriverException e){
@@ -262,12 +272,22 @@ public class BookingFlow extends BasePage {
 				driver = DriverBase.getDriver();
 				String refundedTotal = driver.findElement(
 						By.xpath("//td/abbr[text()='Refunded']/following::td[@class='amount'][1]")).getText().toString();
+				String tempTotal = driver.findElement(
+						By.xpath("//td[text()='Amount Paid']/following::td[@class='amount'][1]")).getText().toString();
 
+				tempTotal = tempTotal.replace("$","");
 				refundedTotal = refundedTotal.replace("$","");
-				if( refundedTotal.contains(",")){
-					refundedTotal=refundedTotal.replace(",", "");
+
+				if( tempTotal.contains(",")){
+					tempTotal=tempTotal.replace(",", "");
 				}
+				if( refundedTotal.contains(",")){
+					refundedTotal= refundedTotal.replace(",", "");
+				}
+				float total = Float.valueOf(tempTotal);
 				float tempRefund = Float.valueOf(refundedTotal );
+
+				itn.setTotal(total);
 				itn.setRefundAmount(tempRefund);
 
 			}catch( WebDriverException e){

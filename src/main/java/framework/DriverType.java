@@ -22,8 +22,6 @@ import java.util.HashMap;
 
 public enum DriverType implements DriverSetup {
 
-
-
 	FIREFOX {
 		public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
 			// todo: remove this path
@@ -100,4 +98,5 @@ public enum DriverType implements DriverSetup {
 	};
 
 	public final static boolean HEADLESS = Boolean.getBoolean("headless");
+
 }

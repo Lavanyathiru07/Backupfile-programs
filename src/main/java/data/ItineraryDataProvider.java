@@ -51,13 +51,23 @@ public class ItineraryDataProvider {
         } else {
             // standard itinerary for all cases not specified above
             for (Integer silo : silos) {
-                Itinerary itnOneWay = new ItineraryBuilder()
-                        .withScenario(method.getName())
-                        .withDepartureCity("LAS")
-                        .withDestinationCity("FAT")
-                        .withPriority("true")
-                        .build();
-                data.add(new Object[]{silo, itnOneWay});
+                if( silo ==2 ){
+                    Itinerary itnOneWay = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("BLV")
+                            .withDestinationCity("VPS")
+                            .withPriority("true")
+                            .build();
+                    data.add(new Object[]{silo, itnOneWay});
+                }else {
+                    Itinerary itnOneWay = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("CVG")
+                            .withDestinationCity("PIE")
+                            .withPriority("true")
+                            .build();
+                    data.add(new Object[]{silo, itnOneWay});
+                }
             }
         }
         return data.iterator();
@@ -131,6 +141,18 @@ public class ItineraryDataProvider {
         } 
         else if (method.getName().contains("OneWay")) {
         	for (Integer silo: silos) {
+        	    if( silo ==3){
+                    Itinerary itnRoundTrip = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("FAT")
+                            .withDestinationCity("LAS")
+                            .withHotel(true)
+                            .withVehicle(true)
+                            .withSsr("PPOC")
+                            .withEmail("tsqa.automation@tridentsqa.com")
+                            .build();
+                    data.add(new Object[]{silo, itnRoundTrip});
+                }
                 Itinerary itnRoundTrip = new ItineraryBuilder()
                         .withScenario(method.getName())
                         .withDepartureCity("CVG")

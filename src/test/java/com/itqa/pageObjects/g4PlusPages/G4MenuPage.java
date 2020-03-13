@@ -2,11 +2,14 @@ package com.itqa.pageObjects.g4PlusPages;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
@@ -74,21 +77,31 @@ public class G4MenuPage extends BasePage {
 
 	public void selectMOD(Itinerary itn) {
 		try {
-			modApp.click();
-			logger.info("MOD App Clicked");
+			new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(modApp));
+			jse.executeScript("arguments[0].click();", modApp);
+			logger.info("<<< MOD App Clicked >>>");
 		} catch (Exception e) {
-			logger.info("Error while clicking on MOD");
-			itn.setErrorLog("MOD App not Clicked ");
+			try{
+				new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(modApp));
+				modApp.click();
+			}catch( Exception q) {
+				itn.setErrorLog("<<< MOD App !Clicked >>>");
+			}
 		}
 	}
 
 	public void selectAIS(Itinerary itn) {
 		try {
+			new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(aisApp));
 			aisApp.click();
 			logger.info(" AIS App Clicked ");
 		} catch (Exception e) {
-			logger.info("Error while clicking on AIS");
-			itn.setErrorLog("AIS App not Clicked");
+			try {
+				new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(aisApp));
+				aisApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< AIS App !Clicked >>>");
+			}
 		}
 	}
 
@@ -97,8 +110,11 @@ public class G4MenuPage extends BasePage {
 			stsApp.click();
 			logger.info(" STS App Clicked ");
 		} catch (Exception e) {
-			logger.info("Error while clicking on STS");
-			itn.setErrorLog("STS App not Clicked");
+			try {
+				stsApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< STS App !Clicked >>>");
+			}
 		}
 	}
 
@@ -107,9 +123,13 @@ public class G4MenuPage extends BasePage {
 			espApp.click();
 			logger.info("ESP App Clicked");
 		} catch (Exception e) {
-			logger.info("Error while clicking on ESP");
-			itn.setErrorLog("ESP App not Clicked");
+			try {
+				espApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< ESP App !Clicked >>>");
+			}
 		}
+
 	}
 
 	public void selectSVT(Itinerary itn) {
@@ -117,8 +137,11 @@ public class G4MenuPage extends BasePage {
 			svtApp.click();
 			logger.info(" SVT App Clicked ");
 		} catch (Exception e) {
-			logger.info("Error while clicking on SVT");
-			itn.setErrorLog("SVT App not Clicked");
+			try {
+				svtApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< SVT App !Clicked >>>");
+			}
 		}
 	}
 
@@ -127,8 +150,11 @@ public class G4MenuPage extends BasePage {
 			carApp.click();
 			logger.info(" CAR App Clicked ");
 		} catch (Exception e) {
-			logger.info("Error while clicking on CAT");
-			itn.setErrorLog("CAR App not Clicked ");
+			try {
+				fmApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< CAR App !Clicked >>>");
+			}
 		}
 	}
 
@@ -137,8 +163,11 @@ public class G4MenuPage extends BasePage {
 			fmApp.click();
 			logger.info("FM App Clicked");
 		} catch (Exception e) {
-			logger.info("Error while clicking on FM");
-			itn.setErrorLog(" FM App not Clicked ");
+			try {
+				fmApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< FM App !Clicked >>>");
+			}
 		}
 	}
 
@@ -147,8 +176,11 @@ public class G4MenuPage extends BasePage {
 			rqApp.click();
 			logger.info("RQ App Clicked");
 		} catch (Exception e) {
-			logger.info("Error while clicking on RQ");
-			itn.setErrorLog("RQ App not Clicked");
+			try {
+				rqApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< RQ App !Clicked >>>");
+			}
 		}
 	}
 
@@ -157,8 +189,11 @@ public class G4MenuPage extends BasePage {
 			hotApp.click();
 			logger.info("HOT App Clicked");
 		} catch (Exception e) {
-			logger.info("Error while clicking on HOT");
-			itn.setErrorLog("HOT App not Clicked");
+			try {
+				hotApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< RQ App !Clicked >>>");
+			}
 		}
 
 	}
@@ -168,8 +203,11 @@ public class G4MenuPage extends BasePage {
 			atlApp.click();
 			logger.info(" ATL App Clicked ");
 		} catch (Exception e) {
-			logger.info("Error while clicking on ATL");
-			itn.setErrorLog("ATL App not Clicked");
+			try {
+				atlApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< ATL App !Clicked >>>");
+			}
 		}
 	}
 
@@ -178,8 +216,11 @@ public class G4MenuPage extends BasePage {
 			clApp.click();
 			logger.info(" CL App Clicked ");
 		} catch (Exception e) {
-			logger.info("Error while clicking on CL");
-			itn.setErrorLog("CL App not Clicked");
+			try {
+				clApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< CL App !Clicked >>>");
+			}
 		}
 	}
 
@@ -188,18 +229,27 @@ public class G4MenuPage extends BasePage {
 			ofoApp.click();
 			logger.info("OFO App Clicked ");
 		} catch (Exception e) {
-			logger.info("Error while clicking on OFO");
-			itn.setErrorLog("OFO App not Clicked");
+			try {
+				ofoApp.sendKeys(Keys.RETURN);
+			} catch (Exception w) {
+				itn.setErrorLog("<<< OFO App !Clicked >>>");
+			}
 		}
 	}
 
 	public void selectSTNS(Itinerary itn) {
 		try {
-			stnsApp.click();
-			logger.info("STNS App Clicked");
+			logger.info("In STNS");
+			new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(stnsApp));
+			jse.executeScript("arguments[0].click();", stnsApp);
+			logger.info("<<< STNS App Clicked >>>");
 		} catch (Exception e) {
-			logger.info("Error while clicking on STNS");
-			itn.setErrorLog("STNS App not Clicked");
+			try {
+				new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(stnsApp));
+				stnsApp.click();
+			} catch (Exception w) {
+				itn.setErrorLog("<<< STNS App !Clicked >>>");
+			}
 		}
 	}
 

@@ -39,6 +39,7 @@ import java.util.Base64;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.boon.di.In;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -146,7 +147,7 @@ public class G4PlusFlow extends BasePage {
 			else  {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				G4PlusLoginPage.g4plusLogin(false);
-			}  
+			}
 
 
 		} catch (Exception e) {
@@ -158,6 +159,20 @@ public class G4PlusFlow extends BasePage {
 	public void accessAIS(Itinerary itn) {
 		g4PlusSignin();
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
+		try {
+			Thread.sleep(5500);
+			driver = DriverBase.getDriver();
+			driver.navigate().refresh();
+			for( int index =0; index<5; index++) {
+				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
+					driver.navigate().refresh();
+				} else {
+					break;
+				}
+				Thread.sleep(5000);
+			}
+
+		}catch (Exception e ){}
 		g4MenuPage.selectAIS(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), tabs);
 	}
@@ -219,6 +234,20 @@ public class G4PlusFlow extends BasePage {
 
 				}
 				G4PlusLoginPage.g4plusLogin(false);
+				try {
+					Thread.sleep(5500);
+					driver = DriverBase.getDriver();
+					driver.navigate().refresh();
+					for( int index =0; index<5; index++) {
+						if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
+							driver.navigate().refresh();
+						} else {
+							break;
+						}
+						Thread.sleep(5500);
+					}
+
+				}catch (Exception e ){}
 				g4MenuPage.selectAIS(itn);
 				DriverBase.getDriver().close();
 				Set<String> tabs = DriverBase.getDriver().getWindowHandles();

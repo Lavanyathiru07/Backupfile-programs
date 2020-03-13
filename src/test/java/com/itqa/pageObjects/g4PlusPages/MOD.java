@@ -4,6 +4,7 @@ import data.Itinerary;
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
+import org.boon.di.In;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -338,14 +339,14 @@ public class MOD extends BasePage {
 
 	public void upsell(Itinerary Itn) {
 
-		
-		
+
+
 		String expiredMonth;
 		String expiredYear;
 		String cardNumber;
 		String cvv;
 		String cardName;
-		
+
 		if (System.getProperty("env").contains("prod")||System.getProperty("env").contains("vipprd")) {
 			expiredMonth = System.getProperty("expiration").split("-")[0];
 			expiredYear = System.getProperty("expiration").split("-")[1];
@@ -353,10 +354,10 @@ public class MOD extends BasePage {
 			cardName = System.getProperty("cardname");
 			cvv = System.getProperty("cvv");
 		}else {
-				expiredMonth = "03";
-				expiredYear = "2020";
-				cardNumber = "5454545454545454";
-				cvv = "123";
+			expiredMonth = "03";
+			expiredYear = "2020";
+			cardNumber = "5454545454545454";
+			cvv = "123";
 		}
 
 		confirmationNumField.sendKeys(Itn.getItn());
@@ -368,27 +369,25 @@ public class MOD extends BasePage {
 					.elementToBeClickable(By.cssSelector("a[href='/app/bookings/" + Itn.getItn() + "']")));
 			driver.findElement(By.cssSelector("a[href='/app/bookings/" + Itn.getItn() + "']")).click();
 		} catch (Exception e) {
-		}
+				Itn.setErrorLog("Issues searching itinerary");
 
-
-		jse.executeScript("arguments[0].click();", changeSeatButton);
-		jse.executeScript("arguments[0].click();", selectSeat.get(selectSeat.size() - 1));
-		jse.executeScript("arguments[0].click();", doneButton);
-		logger.info("Seat Added");
-
-		jse.executeScript("arguments[0].click();", changeBagButton);
-		new Select(carryonBagSelect).selectByIndex(1);
-		for (int loop = 0; loop < 5; loop++) {
-			try {
-				driver.findElement(By.id("progress-modal"));
-				Thread.sleep(1000);
-			} catch (Exception e) {
-				break;
 			}
-		}
-		if (!System.getProperty("env").contains("prod")) {
-			new Select(prioritySelect).selectByIndex(0);
-			for (int loop = 0; loop < 20; loop++) {
+			try {
+				jse.executeScript("arguments[0].click();", changeSeatButton);
+				jse.executeScript("arguments[0].click();", selectSeat.get(selectSeat.size() - 1));
+				jse.executeScript("arguments[0].click();", doneButton);
+				logger.info("Seat Added");
+			}catch ( WebDriverException e){
+				Itn.setErrorLog("Issues selecting seats");
+			}
+
+			try {
+				jse.executeScript("arguments[0].click();", changeBagButton);
+				Thread.sleep(3500);
+				new Select(carryonBagSelect).selectByIndex(1);
+			}catch( InterruptedException w){}
+
+			for (int loop = 0; loop < 5; loop++) {
 				try {
 					driver.findElement(By.id("progress-modal"));
 					Thread.sleep(1000);
@@ -405,7 +404,7 @@ public class MOD extends BasePage {
 					break;
 				}
 			}
-		}
+
 		jse.executeScript("arguments[0].click();", doneButton);
 		logger.info("Bags & Priority Boarding Added");
 
@@ -429,8 +428,8 @@ public class MOD extends BasePage {
 				break;
 			} catch (Exception e) {
 				try {
-						Thread.sleep(1000);
-					} catch (Exception e1) {}
+					Thread.sleep(1000);
+				} catch (Exception e1) {}
 			}
 		}
 
@@ -508,7 +507,7 @@ public class MOD extends BasePage {
 				}
 			}
 			new WebDriverWait(driver, 10)
-			.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='comment']")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='comment']")));
 			comment.sendKeys("Test");
 			logger.info("Entered Test in the comment box");
 			Refund.click();
@@ -523,7 +522,7 @@ public class MOD extends BasePage {
 			logger.info("Amount refunded successfully, The refund amount is : " + refundAmount.getText().trim());
 		} else {
 			logger.info("Amount is not mached with refund amount ,Actual amount" + refundAmount.getText()
-			+ "Expected amount is :" + amountPaid.getText().trim());
+					+ "Expected amount is :" + amountPaid.getText().trim());
 		}
 	}
 
@@ -550,7 +549,7 @@ public class MOD extends BasePage {
 				}
 			}
 			new WebDriverWait(driver, 10)
-			.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='comment']")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='comment']")));
 			comment.sendKeys("Test");
 			logger.info("Comment TEST is entered");
 			Reverse.click();
@@ -563,6 +562,13 @@ public class MOD extends BasePage {
 	}
 
 	public void unCheckPax(String pnr, Itinerary itn) {
+		try{
+			driver = DriverBase.getDriver();
+			if( driver.findElement(By.xpath("//*[contains(text(),'refused to connect')]")).isDisplayed()){
+				itn.setErrorLog("Page is not reachable. Network Issue.");
+				throw new Error("Page is not reachable. Network Issue");
+			}
+		}catch(Exception e){}
 		searchBtn.click();
 		logger.info("Search button is clicked");
 		itnField.sendKeys(pnr);
@@ -616,7 +622,7 @@ public class MOD extends BasePage {
 				}
 			}
 		}
-
+		Thread.sleep(2500);
 		if (itn.getDescription().toLowerCase().contains("voucher")) {
 			reversevoucher(itn);
 		}
@@ -669,7 +675,7 @@ public class MOD extends BasePage {
 
 		logger.info("Refund all amounts");
 		new WebDriverWait(driver, 30)
-		.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[href='#booking-transactions']")));
+				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[href='#booking-transactions']")));
 	}
 
 	public void cancelItn(String pnr, Itinerary itn) {
@@ -710,27 +716,30 @@ public class MOD extends BasePage {
 
 		try {
 			new WebDriverWait(driver, 15)
-			.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Continue')]")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Continue')]")));
 			continueButton.click();
 			logger.info("Continue is clicked for Policy Override");
 			withPolicyOverridebtn.click();
 			new WebDriverWait(driver, 15)
-			.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class = 'btn-waive-cancel-fee']")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class = 'btn-waive-cancel-fee']")));
 			waiveCancelFee.click();
 			logger.info("waive cancel fees button is clicked");
 			new WebDriverWait(driver, 15)
-			.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id = 'waiveCancelFeeReason']")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id = 'waiveCancelFeeReason']")));
 			new Select(waiveCancelFeeReason).selectByValue(WaiveReason);
 			logger.info("Waive cancel reason is clicked");
+		} catch (Exception e) {
+		}
+
+		try{
 			new WebDriverWait(driver, 15).until(
 					ExpectedConditions.elementToBeClickable(By.xpath("//select[contains(@class, 'override-reason')]")));
 			new Select(overRideReasons).selectByValue(OverRideReason);
 			logger.info("Override reason is clicked");
-		} catch (Exception e) {
-		}
+		}catch ( WebDriverException e){}
 
 		new WebDriverWait(driver, 15)
-		.until(ExpectedConditions.elementToBeClickable(By.xpath("//Select[@id = 'cancelReason']")));
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//Select[@id = 'cancelReason']")));
 		new Select(cancelReason).selectByValue(CancelReason);
 		logger.info("Cancel reason is selected");
 		receivedFrom.sendKeys("AU TESTING");
@@ -754,6 +763,20 @@ public class MOD extends BasePage {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		g4LoginPage.g4plusLogin(true);
 		Set<String> curTab = driver.getWindowHandles();
+		try {
+			Thread.sleep(5500);
+			driver = DriverBase.getDriver();
+			driver.navigate().refresh();
+			for( int index =0; index<5; index++) {
+				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
+					driver.navigate().refresh();
+				} else {
+					break;
+				}
+				Thread.sleep(5500);
+			}
+
+		}catch (Exception e ){}
 		g4MenuPage.selectSTNS(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 		unCheckPax(pnr, itn);
@@ -767,6 +790,19 @@ public class MOD extends BasePage {
 			}
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
+		try {
+			Thread.sleep(5500);
+			driver = DriverBase.getDriver();
+			driver.navigate().refresh();
+			for( int index =0; index<5; index++) {
+				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
+					driver.navigate().refresh();
+				} else {
+					break;
+				}
+				Thread.sleep(5500);
+			}
+		}catch (Exception e ){}
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 
@@ -782,6 +818,20 @@ public class MOD extends BasePage {
 		}catch(Exception e) {}
 
 		Set<String> curTab = driver.getWindowHandles();
+		try {
+			Thread.sleep(5500);
+			driver = DriverBase.getDriver();
+			driver.navigate().refresh();
+			for( int index =0; index<5; index++) {
+				if (driver.findElement(By.xpath("//*[contains(text(),'Menu Error')]")).isDisplayed()) {
+					driver.navigate().refresh();
+				} else {
+					break;
+				}
+				Thread.sleep(4000);
+			}
+
+		}catch (Exception e ){}
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 

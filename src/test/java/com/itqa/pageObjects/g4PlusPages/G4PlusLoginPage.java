@@ -66,11 +66,16 @@ public class G4PlusLoginPage extends BasePage {
 					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 				}
-			} else {
+				}else if( Environment.getEnv().contains("prod")|| Environment.getEnv().contains("nddprd")){
+					userNameField.sendKeys(System.getProperty("username"));
+					passwordField.sendKeys(System.getProperty("password"));
+
+				} else {
 				userNameField.sendKeys(new String(Base64.getDecoder().decode(stationUsername)));
 				passwordField.sendKeys(new String(Base64.getDecoder().decode(password)));
 			}
 			loginButton.click();
+			Thread.sleep(2500);
 			logger.info("Signin to G4Plus-Portal");
 		} catch (Exception e) {
 			skip=true;
