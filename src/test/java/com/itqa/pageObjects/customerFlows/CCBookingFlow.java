@@ -57,7 +57,7 @@ public class CCBookingFlow extends BasePage {
 		G4PlusLoginPage=new G4PlusLoginPage(log);
 	}
 
-	public String CCBooking(Integer silo,Itinerary itn, ITestContext context) {
+	public String CCBooking(Integer silo,Itinerary itn, ITestContext context) throws WebDriverException {
 		String manifestId = "";
 		String errorLog ="";
 		try {
@@ -118,16 +118,16 @@ public class CCBookingFlow extends BasePage {
 				paymentPage.fillPaymentPage(itn, false, true);
 				confirmationPage.verifyConf(itn);
 			} catch (Exception e1) {
-				logger.info("Error while CC Booking");
+				logger.info("Error while CC Booking : " +e1 );
 				itn.setErrorLog("Error while CC Booking" );
-				return manifestId;
+				throw new WebDriverException("Error while cc Booking");
 			}
 
 		}
 		return manifestId;
 	}
 
-	public Boolean processCCModification(Itinerary itn) {
+	public Boolean processCCModification(Itinerary itn) throws WebDriverException{
 		if (Environment.getEnv().contains("aws")) {
 			DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(System.getProperty("awsenv"), 0));
@@ -142,7 +142,7 @@ public class CCBookingFlow extends BasePage {
 		return mod.modUpsell(itn);
 	}  
 
-	public void CCRefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
+	public void CCRefundAndCancellation(String itin, Itinerary itn) throws Exception {
 		if (Environment.getEnv().contains("prod") ){
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn() , itn);

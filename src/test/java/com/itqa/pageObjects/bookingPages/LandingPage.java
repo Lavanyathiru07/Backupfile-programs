@@ -316,7 +316,7 @@ public class LandingPage extends BasePage {
 		logger.info("Profile clicked");
 	}
 
-	public void selectFlightsOnLandingPage(Itinerary itn) {
+	public void selectFlightsOnLandingPage(Itinerary itn) throws WebDriverException{
 		try {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(popUpCloseButton));
 			jse.executeScript("arguments[0].click()", popUpCloseButton);

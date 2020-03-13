@@ -4,11 +4,7 @@ import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -49,7 +45,7 @@ public class BundlePage extends BasePage {
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
 
-	public void selectBundle(Itinerary itn) throws Exception {
+	public void selectBundle(Itinerary itn) throws WebDriverException {
 		try {
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			if (driver.findElement(By.className("bundles")).isDisplayed()) {
@@ -79,6 +75,7 @@ public class BundlePage extends BasePage {
 		} catch (NoSuchElementException e) {
 			logger.info("Bundles page is skipping");
 			itn.setErrorLog("Bundles page is skipping " );
+			throw new WebDriverException("BUndles Page is skipped. ");
 		}
 	}
 }

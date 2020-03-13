@@ -6,6 +6,7 @@ import framework.DriverBase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -134,14 +135,20 @@ public class CheckinPaymentPage {
         itn.setTotal(itn.getTotal() + tempBalance);
     }
 
-    public void fillCheckinPaymentPage(Itinerary itn) {
-        fillCardInfo();
-        tempBalance = Float.valueOf(upsellBalance.getText().toString().replace("$",""));
-        Screenshot.saveScreenshot("Upsell payment form", driver);
-        clickPurchase();
-        Screenshot.saveScreenshot("Upsell payment confirmation", driver);
-        if (System.getProperty("env").contains("prod") || System.getProperty("env").contains("vipprd")) {
-            checkConfirmationAndLogBalance(itn);
+    public void fillCheckinPaymentPage(Itinerary itn) throws WebDriverException
+    {
+        try {
+            fillCardInfo();
+            tempBalance = Float.valueOf(upsellBalance.getText().toString().replace("$", ""));
+            Screenshot.saveScreenshot("Upsell payment form", driver);
+            clickPurchase();
+            Screenshot.saveScreenshot("Upsell payment confirmation", driver);
+            if (System.getProperty("env").contains("prod") || System.getProperty("env").contains("vipprd")) {
+                checkConfirmationAndLogBalance(itn);
+            }
+        }catch (WebDriverException e){
+            logger.info("Issue filling out payment information");
+            throw new WebDriverException("Issue filling out payment information ");
         }
     }
 

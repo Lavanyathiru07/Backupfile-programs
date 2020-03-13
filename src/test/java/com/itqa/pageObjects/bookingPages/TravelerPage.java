@@ -135,15 +135,20 @@ public class TravelerPage extends BasePage {
     }
 
     public void fillTravelerPage(Itinerary itn) {
-        fillPaxInfo(itn.getPaxNum(), itn.getFirstName(), itn.getLastName(), itn.getGender(), itn.getDobMonth(),
-                itn.getDobDate(), itn.getDobYear(), itn.getEmail());
+        try {
+            fillPaxInfo(itn.getPaxNum(), itn.getFirstName(), itn.getLastName(), itn.getGender(), itn.getDobMonth(),
+                    itn.getDobDate(), itn.getDobYear(), itn.getEmail());
 
-        if (!driver.getCurrentUrl().contains("cc-") && !driver.getCurrentUrl().contains("cc.")) {
-            if (!itn.getSsr().isEmpty()) {
-                selectSSR(itn.getPaxNum(), itn.getSsr());
+            if (!driver.getCurrentUrl().contains("cc-") && !driver.getCurrentUrl().contains("cc.")) {
+                if (!itn.getSsr().isEmpty()) {
+                    selectSSR(itn.getPaxNum(), itn.getSsr());
+                }
             }
+            clickContinue();
+        }catch (WebDriverException e){
+            logger.info("Issue filling traveler info");
+            throw new WebDriverException("Issue filling traveler info");
         }
-        clickContinue();
     }
 
 }

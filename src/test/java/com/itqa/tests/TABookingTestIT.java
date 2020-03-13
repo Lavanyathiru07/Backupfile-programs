@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.ITestContext;
@@ -152,7 +153,7 @@ public class TABookingTestIT extends DriverBase {
 
 	@Story(" TA  Book a flight only round-trip itinerary with bags and pb. Itinerary Confirmation and Emails received.")
 	public void testTABookRoundTripWith2bags(Integer silo, Itinerary itn, ITestContext context, Method method)
-			throws InterruptedException {
+			throws Exception {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
 		synchronized (this) {
@@ -245,7 +246,7 @@ public class TABookingTestIT extends DriverBase {
 		step("TA Booking created with itn " + itn.getItn());
 	}
 
-	private TABookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context) {
+	private TABookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context) throws WebDriverException {
 		String manifestId = "";
 		TABookingFlow booking = new TABookingFlow(logger.get());
 

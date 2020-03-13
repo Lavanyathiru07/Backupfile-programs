@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.ITestContext;
@@ -138,7 +139,7 @@ public class WebBookingTestIT extends DriverBase {
 
 	@Story("WWW Booking - Modification for Upsell Bags, seats, & verify email confirmation, print board pass for OLCI")
 	public void testWebBookWithOLCIUpsell(Integer silo, Itinerary itn, ITestContext context, Method method)
-			throws InterruptedException, Exception {
+			throws Exception {
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 		synchronized (this) {
 			testId.set(testnum);
@@ -226,7 +227,7 @@ public class WebBookingTestIT extends DriverBase {
 
 	@Story("My account creation via booking path with create voucher & Verify Voucher in CL ")
 	public void testCreateAccountDuringWebBookingAndLogin(Integer silo, Itinerary itn, ITestContext context,
-			Method method) throws InterruptedException {
+			Method method) throws Exception {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));		
 		synchronized (this) {
@@ -346,7 +347,7 @@ public class WebBookingTestIT extends DriverBase {
 		step("Booking created with itn " + itn.getItn());
 	}
 
-	private BookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context, Boolean withAccount) {
+	private BookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context, Boolean withAccount) throws WebDriverException {
 		String manifestId = "";
 		itn.setSilo(silo.toString());
 		BookingFlow booking = new BookingFlow(logger.get());

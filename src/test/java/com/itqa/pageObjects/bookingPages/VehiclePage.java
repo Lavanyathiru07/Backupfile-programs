@@ -4,10 +4,7 @@ import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -64,7 +61,7 @@ public class VehiclePage extends BasePage {
 		}
 	}
 
-	public void selectVehicle(Itinerary itn) {
+	public void selectVehicle(Itinerary itn) throws WebDriverException {
 		Boolean vehiclePage = true;
 		for (int i=0; i<20; i++) {
 			try {
@@ -72,7 +69,8 @@ public class VehiclePage extends BasePage {
 				vehiclePage = false;
 				break;
 			}
-			catch (Exception e) {}
+			catch (WebDriverException e) {
+			}
 
 			try {
 				if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {

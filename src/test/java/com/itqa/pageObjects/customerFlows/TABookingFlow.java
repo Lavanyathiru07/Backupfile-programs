@@ -68,7 +68,7 @@ public class TABookingFlow extends BasePage {
 
 	}
 
-	public String TABooking(Integer silo,Itinerary itn, ITestContext context) {
+	public String TABooking(Integer silo,Itinerary itn, ITestContext context) throws WebDriverException {
 		String manifestId = "";
 		String errorLog ="";
 
@@ -122,13 +122,13 @@ public class TABookingFlow extends BasePage {
 				}
 			} catch (Exception e1) {
 				logger.info("Error while creating booking " );
-				return manifestId;
+				throw new WebDriverException("Error while creating booking");
 			}
 		}
 		return manifestId;
 	}
 
-	public void TARefundAndCancellation(String itin, Itinerary itn) throws InterruptedException {
+	public void TARefundAndCancellation(String itin, Itinerary itn) throws Exception {
 		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd") ) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn(), itn);

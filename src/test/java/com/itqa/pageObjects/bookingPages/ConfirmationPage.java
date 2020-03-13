@@ -6,6 +6,7 @@ import framework.DriverBase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -47,7 +48,7 @@ public class ConfirmationPage extends BasePage {
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
 
-	public void verifyConf(Itinerary itn) {
+	public void verifyConf(Itinerary itn) throws WebDriverException {
 
 		try {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(confNumber));

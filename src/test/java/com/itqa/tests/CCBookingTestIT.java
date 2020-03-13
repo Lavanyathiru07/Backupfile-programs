@@ -7,6 +7,7 @@ import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.customerFlows.CCBookingFlow;
 import data.*;
 import io.qameta.allure.Story;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import org.apache.log4j.Logger;
@@ -65,7 +66,7 @@ public class CCBookingTestIT extends DriverBase {
 
 	@Story(" CC Booking - Book with Hotel, Car with ssr (Oxygen concentrator) . Email Verification")
 	public void testCCBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method)
-			throws InterruptedException {
+			throws Exception {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
@@ -146,7 +147,7 @@ public class CCBookingTestIT extends DriverBase {
 
 	@Story(" CC Booking -Book flight only round-trip with pb and ssr (Oxygen concentrator).Email Verification Retrieve ITN in G4+ MOD & upsell bags & seats")
 	public void testCCBookRoundTripWithModification(Integer silo, Itinerary itn, ITestContext context, Method method)
-			throws InterruptedException {
+			throws Exception {
 
 		logger.set(Logger.getLogger("Thread" + Thread.currentThread().getId()));
 
@@ -262,7 +263,7 @@ public class CCBookingTestIT extends DriverBase {
 		step("CC Booking created with itn " + itn.getItn());
 	}
 
-	private CCBookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context) {
+	private CCBookingFlow generateBooking(Itinerary itn, Integer silo, ITestContext context) throws WebDriverException {
 		String manifestId = "";
 		itn.setSilo(silo.toString());
 		CCBookingFlow booking = new CCBookingFlow(logger.get());
