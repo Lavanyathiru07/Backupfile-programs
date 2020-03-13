@@ -326,15 +326,20 @@ public class LandingPage extends BasePage {
 		}
 		logger.info(driver.getCurrentUrl());
 		logger.info("Login succesful");
-		selectDepCity(itn.getDepartureCity(), itn);
-		selectDesCity(itn.getDestinationCity(), itn);
-		selectTripType(itn.getRoundTrip(), itn);
-		selectDepDate(itn.getDepartureDateIndex());
-		if (itn.getRoundTrip()) {
-			selectRetDate(itn.getReturningDateIndex());
+		try {
+			selectDepCity(itn.getDepartureCity(), itn);
+			selectDesCity(itn.getDestinationCity(), itn);
+			selectTripType(itn.getRoundTrip(), itn);
+			selectDepDate(itn.getDepartureDateIndex());
+			if (itn.getRoundTrip()) {
+				selectRetDate(itn.getReturningDateIndex());
+			}
+			selectPaxNum(itn.getAdult(), itn.getChild());
+			clickSearch();
+		}catch (WebDriverException e){
+			itn.setErrorLog("Issue selecting flights in flight page ");
+			throw new WebDriverException("Issue selecting flights in flight page");
 		}
-		selectPaxNum(itn.getAdult(), itn.getChild());
-		clickSearch();
 	}
 
 }
