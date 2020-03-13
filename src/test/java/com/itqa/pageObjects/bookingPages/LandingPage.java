@@ -337,8 +337,8 @@ public class LandingPage extends BasePage {
 			selectPaxNum(itn.getAdult(), itn.getChild());
 			clickSearch();
 		}catch (WebDriverException e){
-			itn.setErrorLog("Issue selecting flights in flight page ");
-			throw new WebDriverException("Issue selecting flights in flight page");
+			itn.setErrorLog("Issue selecting flights on Landing page ");
+			throw new WebDriverException("Issue selecting flights on Landing page");
 		}
 	}
 

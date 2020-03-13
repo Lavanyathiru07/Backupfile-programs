@@ -120,6 +120,7 @@ public class FlightPage extends BasePage {
 			clickContinue();
 		}catch (WebDriverException e){
 			logger.info("Issue selecting flight ");
+			itn.setErrorLog("issue selecting flight on flight page. ");
 			throw new WebDriverException("Issue Selecting flight");
 		}
 
