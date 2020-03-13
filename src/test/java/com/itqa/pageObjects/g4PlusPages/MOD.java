@@ -404,7 +404,7 @@ public class MOD extends BasePage {
 					break;
 				}
 			}
-		}
+
 		jse.executeScript("arguments[0].click();", doneButton);
 		logger.info("Bags & Priority Boarding Added");
 

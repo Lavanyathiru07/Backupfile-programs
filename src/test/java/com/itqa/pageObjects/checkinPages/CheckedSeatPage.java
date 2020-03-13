@@ -84,9 +84,6 @@ public class CheckedSeatPage extends BasePage {
         }
     }
 
-            
-
-    }
 
 	public void acceptDefaultSeat() {
 		jse.executeScript(JSFIRSTARG, continueButton);
