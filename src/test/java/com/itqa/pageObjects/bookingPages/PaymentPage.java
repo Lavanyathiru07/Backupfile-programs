@@ -248,7 +248,6 @@ public class PaymentPage extends BasePage {
 					cardNoField.sendKeys(cardNumber);
 					break;
 				}else{
-					driver = DriverBase.getDriver();
 					driver.findElement(By.xpath("//*[contains(text(),'Card Number')]/following::input[1]")).clear();
 					driver.findElement(By.xpath("//*[contains(text(),'Card Number')]/following::input[1]")).sendKeys(cardNumber);
 					break;
