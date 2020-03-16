@@ -337,7 +337,7 @@ public class MOD extends BasePage {
 
 	}
 
-	public void upsell(Itinerary Itn) {
+	public void upsell(Itinerary Itn) throws WebDriverException{
 
 
 
