@@ -251,12 +251,11 @@ public class PaymentPage extends BasePage {
 					driver = DriverBase.getDriver();
 					driver.findElement(By.xpath("//*[contains(text(),'Card Number')]/following::input[1]")).clear();
 					driver.findElement(By.xpath("//*[contains(text(),'Card Number')]/following::input[1]")).sendKeys(cardNumber);
+					break;
 				}
 
-
-
 			} catch (Exception e) {
-				if (loop == 11) {
+				if (loop > 11) {
 					throw new Error(e);
 				} else {
 					try {
