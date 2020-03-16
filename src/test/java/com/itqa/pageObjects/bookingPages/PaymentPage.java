@@ -456,11 +456,11 @@ public class PaymentPage extends BasePage {
 			  try {
 					  if (driver.findElement(By.xpath("//div[contains(@class , 'message-inner')]")).isDisplayed()) {
 							   driver.findElement(By.xpath("//button[contains(text(), 'Return')]")).sendKeys(Keys.RETURN);
-						       Thread.sleep(5500);
+						  Thread.sleep(5500);
 							   fillCardInfo(itn.getCardNo(), itn);
-							   driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
-							   Thread.sleep(5500);
-							   driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN);
+							  driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
+							  Thread.sleep(5500);
+							  driver.findElement(By.xpath("//button[contains(@class,'purchase')]")).sendKeys(Keys.RETURN);
 					  }
 			  }catch (Exception e ){}
 			itn.setTotal(Float.valueOf(amount.replace("$","")));
