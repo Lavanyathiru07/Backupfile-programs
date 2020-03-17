@@ -4,10 +4,7 @@ import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -151,7 +148,7 @@ public class SeatPage extends BasePage {
 		ssrPopupOkButton.click();
 	}
 
-	public void selectSeatPage(Itinerary itn) throws Exception {
+	public void selectSeatPage(Itinerary itn) throws WebDriverException {
 
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(ssrPopupOkButton));

@@ -7,11 +7,8 @@ import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -111,15 +108,21 @@ public class FlightPage extends BasePage {
 		
 	}
 
-	public void selectFlightPage(Itinerary itn) throws Exception {
-		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(depFlightTable));
+	public void selectFlightPage(Itinerary itn) throws WebDriverException {
+		try {
+			new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(depFlightTable));
 
-		selectDepFlight(0, itn);
-		if (itn.getRoundTrip()) {
-			selectRetFlight(0);
+			selectDepFlight(0, itn);
+			if (itn.getRoundTrip()) {
+				selectRetFlight(0);
+			}
+
+			clickContinue();
+		}catch (WebDriverException e){
+			logger.info("Issue selecting flight ");
+			itn.setErrorLog("issue selecting flight on flight page. ");
+			throw new WebDriverException("Issue Selecting flight");
 		}
-
-		clickContinue();
 
 	}
 }

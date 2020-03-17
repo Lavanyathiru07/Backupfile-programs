@@ -46,7 +46,7 @@ public class RealTimeTestReport extends DriverBase implements ITestListener {
 						+ "</td><td align=\"center\"><font color='green'>PASSED</font></td><td>" + testResultContext.itn
 						+ (testResultContext.refundApplicable ? ("<br><br> Amount Refunded: "
 						+ testResultContext.refundAmount + "<br> Amount Paid: " + testResultContext.amountPaid): "")
-						+ "</td><td></td></tr>");
+						+ "</td><td></td><td></tr>");
 
 		GeneralUtils.writeToFile("passedTests.html",
 				"<tr><td align=\"left\">" + testResultContext.description

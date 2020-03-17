@@ -241,17 +241,24 @@ public class PaymentPage extends BasePage {
 		} catch (Exception e) {
 		}
 
-		for (int loop = 0; loop < 10; loop++) {
+		for (int loop = 0; loop < 12; loop++) {
 			try {
-				cardNoField.clear();
-				cardNoField.sendKeys(cardNumber);
-				break;
+				if (loop < 6) {
+					cardNoField.clear();
+					cardNoField.sendKeys(cardNumber);
+					break;
+				}else{
+					driver.findElement(By.xpath("//*[contains(text(),'Card Number')]/following::input[1]")).clear();
+					driver.findElement(By.xpath("//*[contains(text(),'Card Number')]/following::input[1]")).sendKeys(cardNumber);
+					break;
+				}
+
 			} catch (Exception e) {
-				if (loop == 9) {
+				if (loop > 11) {
 					throw new Error(e);
 				} else {
 					try {
-						Thread.sleep(1000);
+						Thread.sleep(4500);
 					} catch (Exception e1) {
 					}
 				}
@@ -447,6 +454,7 @@ public class PaymentPage extends BasePage {
 			  try {
 					   if (driver.findElement(By.xpath("//h2[contains(text(), 'sorry')]")).isDisplayed()) {
 							   driver.findElement(By.xpath("//span[contains(text(),'Continue')]/parent::button")).sendKeys(Keys.RETURN);
+						       Thread.sleep(5500);
 							   fillCardInfo(itn.getCardNo(), itn);
 							   driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
 							   Thread.sleep(5500);
@@ -455,6 +463,7 @@ public class PaymentPage extends BasePage {
 			  try {
 					  if (driver.findElement(By.xpath("//div[contains(@class , 'message-inner')]")).isDisplayed()) {
 							   driver.findElement(By.xpath("//button[contains(text(), 'Return')]")).sendKeys(Keys.RETURN);
+						  Thread.sleep(5500);
 							   fillCardInfo(itn.getCardNo(), itn);
 							  driver.findElement(By.xpath("//*[@id='block-system-main']")).click();
 							  Thread.sleep(5500);

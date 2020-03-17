@@ -121,12 +121,12 @@ public class BookingFlow extends BasePage {
 		return manifestId;
 	}
 
-	public String createWebBookingWithOutAccount(Integer silo, Itinerary itn, ITestContext context) {
+	public String createWebBookingWithOutAccount(Integer silo, Itinerary itn, ITestContext context) throws WebDriverException{
 		return createWebBookingWithAccount(silo, itn, context, false);
 	}
 
 	public String createWebBookingWithAccount(Integer silo, Itinerary itn, ITestContext context,
-			Boolean createAccount) {
+			Boolean createAccount) throws WebDriverException{
 		String manifestId = "";
 		String errorLog ="";
 
@@ -153,14 +153,15 @@ public class BookingFlow extends BasePage {
 			} catch (Exception e1) {
 				itn.setErrorLog("Error while creating web booking " );
 				logger.info("Error while creating web booking ");
-				return manifestId;
+				throw new WebDriverException("Error while creating web booking");
+
 			}
 
 		}
 		return manifestId;
 	}
 
-	public Boolean signInAndVerifyAccount(Itinerary itn) throws InterruptedException {
+	public Boolean signInAndVerifyAccount(Itinerary itn) throws WebDriverException {
 		try {
 			String logoutUrl;
 			if (System.getProperty("env").contains("aws")) {
@@ -175,7 +176,8 @@ public class BookingFlow extends BasePage {
 			landingPage.signIn(itn.getEmail(), itn);
 			return tripsPage.checkMyTrips(itn.getItn());
 		}catch(Exception e) {
-			return false;
+			itn.setErrorLog("Issue Signing into Account");
+			throw new WebDriverException( e );
 		}
 
 	}
@@ -192,7 +194,7 @@ public class BookingFlow extends BasePage {
 		return getBoardingPassPage.boardingPassPrinted(itn);
 	}
 
-	public Boolean processOnlineCheckinWithUpsellAndGetBoardingPass(Itinerary itn) {
+	public Boolean processOnlineCheckinWithUpsellAndGetBoardingPass(Itinerary itn) throws WebDriverException {
 
 		driver = DriverBase.getDriver();
 		if (Environment.getEnv().contains("aws")) {
@@ -228,7 +230,7 @@ public class BookingFlow extends BasePage {
 
 	}
 
-	public void WWWUncheckRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
+	public void WWWUncheckRefundAndCancelItn(String itin, Itinerary itn) throws Exception {
 
 		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd") ) {
 			mod.stationUncheckPax(itn.getItn(), itn);
@@ -264,7 +266,7 @@ public class BookingFlow extends BasePage {
 		}
 	}
 
-	public void WWWRefundAndCancelItn(String itin, Itinerary itn) throws InterruptedException {
+	public void WWWRefundAndCancelItn(String itin, Itinerary itn) throws Exception {
 		if (Environment.getEnv().contains("prod") || Environment.getEnv().contains("vipprd")) {
 			mod.refundWholeAmountInMod(itin, itn);
 			mod.cancelWholeItn(itn.getItn(), itn);

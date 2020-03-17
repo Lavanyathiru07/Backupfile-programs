@@ -82,6 +82,17 @@ public class CheckedSeatPage extends BasePage {
             }
             logger.info("Click Continue");
         }
+
+        try {
+            if (driver.findElement(By.xpath("//h2[contains(text(), 'sorry')]")).isDisplayed()) {
+                Thread.sleep(2500);
+                driver.findElement(By.xpath("//span[contains(text(),'Continue')]/parent::button")).sendKeys(Keys.RETURN);
+                chooseSeat();
+                jse.executeScript("arguments[0].click();", continueButton);
+                jse.executeScript("arguments[0].click();", yesContinueButton);
+
+            }
+        }catch (Exception e ){}
     }
 
 

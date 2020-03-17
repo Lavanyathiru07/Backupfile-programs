@@ -316,7 +316,7 @@ public class LandingPage extends BasePage {
 		logger.info("Profile clicked");
 	}
 
-	public void selectFlightsOnLandingPage(Itinerary itn) {
+	public void selectFlightsOnLandingPage(Itinerary itn) throws WebDriverException{
 		try {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(popUpCloseButton));
 			jse.executeScript("arguments[0].click()", popUpCloseButton);
@@ -326,15 +326,20 @@ public class LandingPage extends BasePage {
 		}
 		logger.info(driver.getCurrentUrl());
 		logger.info("Login succesful");
-		selectDepCity(itn.getDepartureCity(), itn);
-		selectDesCity(itn.getDestinationCity(), itn);
-		selectTripType(itn.getRoundTrip(), itn);
-		selectDepDate(itn.getDepartureDateIndex());
-		if (itn.getRoundTrip()) {
-			selectRetDate(itn.getReturningDateIndex());
+		try {
+			selectDepCity(itn.getDepartureCity(), itn);
+			selectDesCity(itn.getDestinationCity(), itn);
+			selectTripType(itn.getRoundTrip(), itn);
+			selectDepDate(itn.getDepartureDateIndex());
+			if (itn.getRoundTrip()) {
+				selectRetDate(itn.getReturningDateIndex());
+			}
+			selectPaxNum(itn.getAdult(), itn.getChild());
+			clickSearch();
+		}catch (WebDriverException e){
+			itn.setErrorLog("Issue selecting flights on Landing page ");
+			throw new WebDriverException("Issue selecting flights on Landing page");
 		}
-		selectPaxNum(itn.getAdult(), itn.getChild());
-		clickSearch();
 	}
 
 }

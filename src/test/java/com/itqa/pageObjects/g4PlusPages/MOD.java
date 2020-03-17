@@ -337,7 +337,7 @@ public class MOD extends BasePage {
 
 	}
 
-	public void upsell(Itinerary Itn) {
+	public void upsell(Itinerary Itn) throws WebDriverException{
 
 
 
@@ -465,21 +465,20 @@ public class MOD extends BasePage {
 
 	}
 
-	public boolean modUpsell(Itinerary Itn) {
-
+	public boolean modUpsell(Itinerary Itn) throws WebDriverException{
+		try {
 		Set<String> curTab = driver.getWindowHandles();
 		g4MenuPage.selectMOD(Itn);
 		GeneralUtils.switchNextTab(driver, curTab);
 
 		upsell(Itn);
 
-		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions
 					.elementToBeClickable(By.xpath("//div[contains(@class,'flight-panel-target')]")));
 			return true;
-		} catch (Exception e) {
+		} catch (WebDriverException e) {
 			Itn.setErrorLog("Error getting upsell bags and seats " );
-			return false;
+			throw new WebDriverException(" Error getting upsell bags and seats");
 		}
 
 	}

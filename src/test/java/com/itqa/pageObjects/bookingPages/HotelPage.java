@@ -3,10 +3,7 @@ package com.itqa.pageObjects.bookingPages;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -73,7 +70,7 @@ public class HotelPage extends BasePage {
 		logger.info("Click continue");
 	}
 
-	public void selectHotel(Itinerary itn) {
+	public void selectHotel(Itinerary itn) throws WebDriverException {
 		Boolean hotelPage = true;
 		for (int loop=0; loop<5; loop++) {
 			try {

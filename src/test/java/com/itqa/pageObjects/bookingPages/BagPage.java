@@ -6,6 +6,7 @@ import framework.DriverBase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -110,13 +111,18 @@ public class BagPage extends BasePage {
 		logger.info("Click continue");
 	}
 
-	public void selectBagPage(Itinerary itn) throws Exception {
-		chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority(), itn);
-		if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.") 
-				||driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
-			chooseBoardingOption(0, itn);
+	public void selectBagPage(Itinerary itn) throws WebDriverException {
+		try {
+			chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority(), itn);
+			if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
+					|| driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("ta."))) {
+				chooseBoardingOption(0, itn);
+			}
+			clickContinue();
+		}catch ( WebDriverException e){
+			logger.info("Issue selecting Bag");
+			throw new WebDriverException("Issue selecting Bag");
 		}
-		clickContinue();
 	}
 
 }
