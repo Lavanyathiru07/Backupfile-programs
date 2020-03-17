@@ -102,7 +102,7 @@ public class LandingPage extends BasePage {
 	}
 
 	public void selectDepCity(String from, Itinerary itn) {
-		for (int loop = 0; loop < 5; loop++) {
+		for (int loop = 0; loop < 8; loop++) {
 			Boolean flag = false;
 			try {
 				driver.findElement(By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(ABQ)')]"));
@@ -121,7 +121,7 @@ public class LandingPage extends BasePage {
 					break;
 				}
 			} catch (Exception e) {
-				if (loop == 4) {
+				if (loop == 7) {
 					logger.info("Error while selecting depature city");
 					itn.setErrorLog("Error while seleting depature city " );
 					throw new Error(e);
