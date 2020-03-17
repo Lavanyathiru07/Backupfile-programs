@@ -4,6 +4,7 @@ import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -18,6 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.pageObjects.BasePage;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BagPage extends BasePage {
 
@@ -112,6 +114,7 @@ public class BagPage extends BasePage {
 	}
 
 	public void selectBagPage(Itinerary itn) throws WebDriverException {
+		siteIssues(itn);
 		try {
 			chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority(), itn);
 			if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
@@ -123,6 +126,27 @@ public class BagPage extends BasePage {
 			logger.info("Issue selecting Bag");
 			throw new WebDriverException("Issue selecting Bag");
 		}
+	}
+	
+	public void siteIssues(Itinerary itn) {
+    	driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> siteCantBeReached = driver.findElements(By.xpath("//div[@id='main-message']"));
+		List<WebElement> somethingOdd = driver
+				.findElements(By.xpath("//h2[contains(text(),'Something really odd just happened')]"));
+		List<WebElement> goodDeals = driver
+				.findElements(By.xpath("//h1[contains(text(),'Good deals come to those who wait')]"));
+
+		if (siteCantBeReached.size() != 0) {
+			itn.setErrorLog("We are facing site can't be reached issue please check after some time.");
+			throw new Error("We are facing site can't be reached issue please check after some time.");
+		} else if (somethingOdd.size() != 0) {
+			itn.setErrorLog("We got Something Odd happened error, Please try after sometimes.");
+			throw new Error("We got Something Odd happened error, Please try after sometimes.");
+		} else if (goodDeals.size() != 0) {
+			itn.setErrorLog("URL navigated to maintenace page, Please try after sometimes.");
+			throw new Error("URL navigated to maintenace page, Please try after sometimes.");
+		}
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 	}
 
 }

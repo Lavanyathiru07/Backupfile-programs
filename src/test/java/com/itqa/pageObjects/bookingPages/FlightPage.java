@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class FlightPage extends BasePage {
@@ -109,6 +110,7 @@ public class FlightPage extends BasePage {
 	}
 
 	public void selectFlightPage(Itinerary itn) throws WebDriverException {
+		siteIssues(itn);
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(depFlightTable));
 
@@ -124,5 +126,26 @@ public class FlightPage extends BasePage {
 			throw new WebDriverException("Issue Selecting flight");
 		}
 
+	}
+	
+	public void siteIssues(Itinerary itn) {
+    	driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> siteCantBeReached = driver.findElements(By.xpath("//div[@id='main-message']"));
+		List<WebElement> somethingOdd = driver
+				.findElements(By.xpath("//h2[contains(text(),'Something really odd just happened')]"));
+		List<WebElement> goodDeals = driver
+				.findElements(By.xpath("//h1[contains(text(),'Good deals come to those who wait')]"));
+
+		if (siteCantBeReached.size() != 0) {
+			itn.setErrorLog("We are facing site can't be reached issue please check after some time.");
+			throw new Error("We are facing site can't be reached issue please check after some time.");
+		} else if (somethingOdd.size() != 0) {
+			itn.setErrorLog("We got Something Odd happened error, Please try after sometimes.");
+			throw new Error("We got Something Odd happened error, Please try after sometimes.");
+		} else if (goodDeals.size() != 0) {
+			itn.setErrorLog("URL navigated to maintenace page, Please try after sometimes.");
+			throw new Error("URL navigated to maintenace page, Please try after sometimes.");
+		}
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 	}
 }
