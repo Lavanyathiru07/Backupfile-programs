@@ -114,8 +114,14 @@ public class LandingPage extends BasePage {
 					jse.executeScript(JSFIRSTARG, depCityDropDown);
 				}
 				Thread.sleep(1000);
-				jse.executeScript(JSFIRSTARG, driver.findElement(
-						By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(" + from + ")')]")));
+				try {
+					jse.executeScript(JSFIRSTARG, driver.findElement(
+							By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(" + from + ")')]")));
+				}catch (Exception e ){
+					driver.findElement(
+							By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(" + from + ")')]")).sendKeys(Keys.RETURN);
+
+				}
 
 				if (depCityDropDown.getAttribute("value").contains("(" + from + ")")) {
 					break;
