@@ -62,15 +62,13 @@ public class FlightPage extends BasePage {
 
 		if (itn.getScenario().contains("check-in")) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-			Date depDate;
+			Date depDate = null;
 			try {
 				depDate = sdf.parse(
 						depFlightList.get(0).findElement(By.xpath("//span[contains(@class,'flight-departs')]//time"))
 						.getAttribute("dateTime"));
 			} catch (Exception e) {
-				logger.info("Error while selecting the depature flight");
-				itn.setErrorLog("Error while selecting the depature flight " );
-				throw new Error();
+				logError(itn,"Error while selecting the depature flight");
 			}
 
 			Calendar depTime = Calendar.getInstance();
@@ -84,27 +82,29 @@ public class FlightPage extends BasePage {
 		}
 		try {
 			Common.click(driver, depFlightList.get(num));
-		} catch (IndexOutOfBoundsException e) {
-			logger.info("Could not select a departing flight");
-			itn.setErrorLog("Could not select a departing flight " );
-			Screenshot.saveScreenshot("Could not select departing flight", driver);
+		} catch (Exception e) {
+			logError(itn,"Could not select a departing flight");
 		}
 
 		logger.info("Departure Flight: " + depFlightList.get(num).getText().split("\n")[1]);
 	}
 
-	public void selectRetFlight(int num) {
+	public void selectRetFlight(int num, Itinerary itn) {
+		try {
 		retFlightList.get(num).click();
 		logger.info("Returning Flight: " + retFlightList.get(num).getText().split("\n")[1]);
+		}catch(Exception e) {
+			logError(itn,"Could not select a return flight");
+		}
 	}
 
-	public void clickContinue() {
+	public void clickContinue(Itinerary itn) {
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(continueButton));
 			jse.executeScript("arguments[0].click();", continueButton);
 			logger.info("Click Continue");
 		}catch(Exception e) {
-			e.printStackTrace();
+			logError(itn,"Unable to click continue button in flight selection page.");
 		}
 		
 	}
@@ -116,14 +116,12 @@ public class FlightPage extends BasePage {
 
 			selectDepFlight(0, itn);
 			if (itn.getRoundTrip()) {
-				selectRetFlight(0);
+				selectRetFlight(0,itn);
 			}
 
-			clickContinue();
-		}catch (WebDriverException e){
-			logger.info("Issue selecting flight ");
-			itn.setErrorLog("issue selecting flight on flight page. ");
-			throw new WebDriverException("Issue Selecting flight");
+			clickContinue(itn);
+		}catch (Exception e){
+			logError(itn,"Issue selecting flight");
 		}
 
 	}
@@ -137,15 +135,18 @@ public class FlightPage extends BasePage {
 				.findElements(By.xpath("//h1[contains(text(),'Good deals come to those who wait')]"));
 
 		if (siteCantBeReached.size() != 0) {
-			itn.setErrorLog("We are facing site can't be reached issue please check after some time.");
-			throw new Error("We are facing site can't be reached issue please check after some time.");
+			logError(itn,"We are facing site can't be reached issue please check after some time.");
 		} else if (somethingOdd.size() != 0) {
-			itn.setErrorLog("We got Something Odd happened error, Please try after sometimes.");
-			throw new Error("We got Something Odd happened error, Please try after sometimes.");
+			logError(itn,"We got Something Odd happened error, Please try after sometimes.");
 		} else if (goodDeals.size() != 0) {
-			itn.setErrorLog("URL navigated to maintenace page, Please try after sometimes.");
-			throw new Error("URL navigated to maintenace page, Please try after sometimes.");
+			logError(itn,"URL navigated to maintenace page, Please try after sometimes.");
 		}
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+	}
+	
+	public void logError(Itinerary itn, String msg) {
+		logger.error(msg);
+		itn.setErrorLog(msg);
+		throw new Error(msg);
 	}
 }
