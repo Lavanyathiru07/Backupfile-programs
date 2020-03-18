@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -135,7 +137,7 @@ public class TravelerPage extends BasePage {
     }
 
     public void fillTravelerPage(Itinerary itn) {
-    	siteIssues(itn);
+    	Common.siteIssues(driver,itn);
         try {
             fillPaxInfo(itn.getPaxNum(), itn.getFirstName(), itn.getLastName(), itn.getGender(), itn.getDobMonth(),
                     itn.getDobDate(), itn.getDobYear(), itn.getEmail());
@@ -147,30 +149,8 @@ public class TravelerPage extends BasePage {
             }
             clickContinue();
         }catch (WebDriverException e){
-            logger.info("Issue filling traveler info");
-            throw new WebDriverException("Issue filling traveler info");
+        	Common.logError(itn,"Issue filling traveler info");
         }
     }
-    
-    public void siteIssues(Itinerary itn) {
-    	driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-		List<WebElement> siteCantBeReached = driver.findElements(By.xpath("//div[@id='main-message']"));
-		List<WebElement> somethingOdd = driver
-				.findElements(By.xpath("//h2[contains(text(),'Something really odd just happened')]"));
-		List<WebElement> goodDeals = driver
-				.findElements(By.xpath("//h1[contains(text(),'Good deals come to those who wait')]"));
-
-		if (siteCantBeReached.size() != 0) {
-			itn.setErrorLog("We are facing site can't be reached issue please check after some time.");
-			throw new Error("We are facing site can't be reached issue please check after some time.");
-		} else if (somethingOdd.size() != 0) {
-			itn.setErrorLog("We got Something Odd happened error, Please try after sometimes.");
-			throw new Error("We got Something Odd happened error, Please try after sometimes.");
-		} else if (goodDeals.size() != 0) {
-			itn.setErrorLog("URL navigated to maintenace page, Please try after sometimes.");
-			throw new Error("URL navigated to maintenace page, Please try after sometimes.");
-		}
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-	}
 
 }

@@ -122,7 +122,7 @@ public class LandingPage extends BasePage {
 				}
 			} catch (Exception e) {
 				if (loop == 4) {
-					logError(itn,"Error while selecting depature city");
+					Common.logError(itn,"Error while selecting depature city");
 				}
 			}
 		}
@@ -150,7 +150,7 @@ public class LandingPage extends BasePage {
 				}
 			} catch (Exception e) {
 				if (loop == 4) {
-					logError(itn,"Error while selecting destination city");
+					Common.logError(itn,"Error while selecting destination city");
 				}
 			}
 		}
@@ -222,7 +222,7 @@ public class LandingPage extends BasePage {
 							break;
 						} else {
 							if (loop == 9) {
-								logError(itn,"Error while selecting trip type");
+								Common.logError(itn,"Error while selecting trip type");
 							}
 						}
 					}
@@ -252,7 +252,7 @@ public class LandingPage extends BasePage {
 		}
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		}catch(Exception e) {
-			logError(itn,"Unable to select departure date may be due to application slowness, Please check manualy");
+			Common.logError(itn,"Unable to select departure date may be due to application slowness, Please check manualy");
 		}
 	}
 
@@ -276,7 +276,7 @@ public class LandingPage extends BasePage {
 		}
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		}catch(Exception e) {
-			logError(itn,"Unable to select return date may be due to application slowness, Please check manualy");
+			Common.logError(itn,"Unable to select return date may be due to application slowness, Please check manualy");
 		}
 	}
 
@@ -289,7 +289,7 @@ public class LandingPage extends BasePage {
 			new Select(childNum).selectByValue(children);
 		}
 		}catch(Exception e) {
-			logError(itn,"Error while selecting pax");
+			Common.logError(itn,"Error while selecting pax");
 		}
 	}
 
@@ -298,7 +298,7 @@ public class LandingPage extends BasePage {
 		jse.executeScript(JSFIRSTARG, seachButton);
 		logger.info("Click Search");
 		}catch(Exception e) {
-			logError(itn,"Unable to click search trip button.");
+			Common.logError(itn,"Unable to click search trip button.");
 		}
 	}
 
@@ -327,7 +327,7 @@ public class LandingPage extends BasePage {
 	}
 
 	public void selectFlightsOnLandingPage(Itinerary itn) throws WebDriverException{
-		siteIssues(itn);
+		Common.siteIssues(driver,itn);
 		try {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(popUpCloseButton));
 			jse.executeScript("arguments[0].click()", popUpCloseButton);
@@ -348,32 +348,8 @@ public class LandingPage extends BasePage {
 			selectPaxNum(itn.getAdult(), itn.getChild(),itn);
 			clickSearch(itn);
 		}catch (Exception e){
-			logError(itn,"Issue selecting flights on Landing page ");
+			Common.logError(itn,"Issue selecting flights on Landing page ");
 		}
 	}
 	
-	public void siteIssues(Itinerary itn) {
-    	driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-		List<WebElement> siteCantBeReached = driver.findElements(By.xpath("//div[@id='main-message']"));
-		List<WebElement> somethingOdd = driver
-				.findElements(By.xpath("//h2[contains(text(),'Something really odd just happened')]"));
-		List<WebElement> goodDeals = driver
-				.findElements(By.xpath("//h1[contains(text(),'Good deals come to those who wait')]"));
-
-		if (siteCantBeReached.size() != 0) {
-			logError(itn,"We are facing site can't be reached issue please check after some time.");
-		} else if (somethingOdd.size() != 0) {
-			logError(itn,"We got Something Odd happened error, Please try after sometimes.");
-		} else if (goodDeals.size() != 0) {
-			logError(itn,"URL navigated to maintenace page, Please try after sometimes.");
-		}
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-	}
-	
-	public void logError(Itinerary itn, String msg) {
-		logger.error(msg);
-		itn.setErrorLog(msg);
-		throw new Error(msg);
-	}
-
 }

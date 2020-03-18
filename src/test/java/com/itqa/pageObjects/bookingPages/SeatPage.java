@@ -149,7 +149,7 @@ public class SeatPage extends BasePage {
 	}
 
 	public void selectSeatPage(Itinerary itn) throws WebDriverException {
-		siteIssues(itn);
+		Common.siteIssues(driver,itn);
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(ssrPopupOkButton));
 			if (!itn.getSsr().isEmpty()) {
@@ -172,24 +172,4 @@ public class SeatPage extends BasePage {
 		}
 	}
 	
-	public void siteIssues(Itinerary itn) {
-    	driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-		List<WebElement> siteCantBeReached = driver.findElements(By.xpath("//div[@id='main-message']"));
-		List<WebElement> somethingOdd = driver
-				.findElements(By.xpath("//h2[contains(text(),'Something really odd just happened')]"));
-		List<WebElement> goodDeals = driver
-				.findElements(By.xpath("//h1[contains(text(),'Good deals come to those who wait')]"));
-
-		if (siteCantBeReached.size() != 0) {
-			itn.setErrorLog("We are facing site can't be reached issue please check after some time.");
-			throw new Error("We are facing site can't be reached issue please check after some time.");
-		} else if (somethingOdd.size() != 0) {
-			itn.setErrorLog("We got Something Odd happened error, Please try after sometimes.");
-			throw new Error("We got Something Odd happened error, Please try after sometimes.");
-		} else if (goodDeals.size() != 0) {
-			itn.setErrorLog("URL navigated to maintenace page, Please try after sometimes.");
-			throw new Error("URL navigated to maintenace page, Please try after sometimes.");
-		}
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-	}
 }

@@ -68,7 +68,7 @@ public class FlightPage extends BasePage {
 						depFlightList.get(0).findElement(By.xpath("//span[contains(@class,'flight-departs')]//time"))
 						.getAttribute("dateTime"));
 			} catch (Exception e) {
-				logError(itn,"Error while selecting the depature flight");
+				Common.logError(itn,"Error while selecting the depature flight");
 			}
 
 			Calendar depTime = Calendar.getInstance();
@@ -83,7 +83,7 @@ public class FlightPage extends BasePage {
 		try {
 			Common.click(driver, depFlightList.get(num));
 		} catch (Exception e) {
-			logError(itn,"Could not select a departing flight");
+			Common.logError(itn,"Could not select a departing flight");
 		}
 
 		logger.info("Departure Flight: " + depFlightList.get(num).getText().split("\n")[1]);
@@ -94,7 +94,7 @@ public class FlightPage extends BasePage {
 		retFlightList.get(num).click();
 		logger.info("Returning Flight: " + retFlightList.get(num).getText().split("\n")[1]);
 		}catch(Exception e) {
-			logError(itn,"Could not select a return flight");
+			Common.logError(itn,"Could not select a return flight");
 		}
 	}
 
@@ -104,13 +104,13 @@ public class FlightPage extends BasePage {
 			jse.executeScript("arguments[0].click();", continueButton);
 			logger.info("Click Continue");
 		}catch(Exception e) {
-			logError(itn,"Unable to click continue button in flight selection page.");
+			Common.logError(itn,"Unable to click continue button in flight selection page.");
 		}
 		
 	}
 
 	public void selectFlightPage(Itinerary itn) throws WebDriverException {
-		siteIssues(itn);
+		Common.siteIssues(driver,itn);
 		try {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(depFlightTable));
 
@@ -121,32 +121,8 @@ public class FlightPage extends BasePage {
 
 			clickContinue(itn);
 		}catch (Exception e){
-			logError(itn,"Issue selecting flight");
+			Common.logError(itn,"Issue selecting flight");
 		}
 
-	}
-	
-	public void siteIssues(Itinerary itn) {
-    	driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-		List<WebElement> siteCantBeReached = driver.findElements(By.xpath("//div[@id='main-message']"));
-		List<WebElement> somethingOdd = driver
-				.findElements(By.xpath("//h2[contains(text(),'Something really odd just happened')]"));
-		List<WebElement> goodDeals = driver
-				.findElements(By.xpath("//h1[contains(text(),'Good deals come to those who wait')]"));
-
-		if (siteCantBeReached.size() != 0) {
-			logError(itn,"We are facing site can't be reached issue please check after some time.");
-		} else if (somethingOdd.size() != 0) {
-			logError(itn,"We got Something Odd happened error, Please try after sometimes.");
-		} else if (goodDeals.size() != 0) {
-			logError(itn,"URL navigated to maintenace page, Please try after sometimes.");
-		}
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-	}
-	
-	public void logError(Itinerary itn, String msg) {
-		logger.error(msg);
-		itn.setErrorLog(msg);
-		throw new Error(msg);
 	}
 }
