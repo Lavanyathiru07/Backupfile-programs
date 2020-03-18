@@ -189,17 +189,18 @@ public class ItineraryDataProvider {
                             .withEmail("tsqa.automation@tridentsqa.com")
                             .build();
                     data.add(new Object[]{silo, itnRoundTrip});
+                }else {
+                    Itinerary itnRoundTrip = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("MEM")
+                            .withDestinationCity("LAS")
+                            .withHotel(true)
+                            .withVehicle(true)
+                            .withSsr("PPOC")
+                            .withEmail("tsqa.automation@tridentsqa.com")
+                            .build();
+                    data.add(new Object[]{silo, itnRoundTrip});
                 }
-                Itinerary itnRoundTrip = new ItineraryBuilder()
-                        .withScenario(method.getName())
-                        .withDepartureCity("MEM")
-                        .withDestinationCity("LAS")
-                        .withHotel(true)
-                        .withVehicle(true)
-                        .withSsr("PPOC")
-                        .withEmail("tsqa.automation@tridentsqa.com")
-                        .build();
-                data.add(new Object[]{silo, itnRoundTrip});
             }
         } 
         return data.iterator();
