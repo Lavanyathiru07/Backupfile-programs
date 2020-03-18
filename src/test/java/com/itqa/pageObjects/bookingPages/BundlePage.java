@@ -74,9 +74,7 @@ public class BundlePage extends BasePage {
 				logger.info("Continue is clicked");
 			}
 		} catch (NoSuchElementException e) {
-			logger.info("Bundles page is skipping");
-			itn.setErrorLog("Bundles page is skipping " );
-			throw new WebDriverException("BUndles Page is skipped. ");
+			logError(itn, "Bundles page is skipping");
 		}
 	}
 	
@@ -99,5 +97,11 @@ public class BundlePage extends BasePage {
 			throw new Error("URL navigated to maintenace page, Please try after sometimes.");
 		}
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+	}
+	
+	public void logError(Itinerary itn, String msg) {
+		logger.error(msg);
+		itn.setErrorLog(msg);
+		throw new Error(msg);
 	}
 }
