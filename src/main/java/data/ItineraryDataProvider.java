@@ -192,8 +192,8 @@ public class ItineraryDataProvider {
                 }
                 Itinerary itnRoundTrip = new ItineraryBuilder()
                         .withScenario(method.getName())
-                        .withDepartureCity("CVG")
-                        .withDestinationCity("SFB")
+                        .withDepartureCity("MEM")
+                        .withDestinationCity("LAS")
                         .withHotel(true)
                         .withVehicle(true)
                         .withSsr("PPOC")
@@ -222,5 +222,5 @@ public class ItineraryDataProvider {
     }
     
 
-    
+
 }
