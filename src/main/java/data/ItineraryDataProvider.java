@@ -92,7 +92,19 @@ public class ItineraryDataProvider {
                             .withPriority("true")
                             .build();
                     data.add(new Object[]{silo, itnRoundTrip});
-                }else{
+                } else if ( silo ==2 ){
+                    Itinerary itnRoundTrip = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("PIE")
+                            .withDestinationCity("CVG")
+                            .withRoundTrip(true)
+                            .withCarryOnBag(1)
+                            .withCheckedBag(2)
+                            .withPriority("true")
+                            .build();
+                    data.add(new Object[]{silo, itnRoundTrip});
+                }
+                else{
                     Itinerary itnRoundTrip = new ItineraryBuilder()
                             .withScenario(method.getName())
                             .withDepartureCity("RNO")
@@ -127,16 +139,41 @@ public class ItineraryDataProvider {
         
         if (method.getName().contains("RoundTrip")) {
             for (Integer silo: silos) {
-                Itinerary itnRoundTrip = new ItineraryBuilder()
-                        .withScenario(method.getName())
-                        .withDepartureCity("VPS")
-                        .withDestinationCity("CVG")
-                        .withRoundTrip(true)
-                        .withSsr("PPOC")
-                        .withPriority("true")
-                        .withEmail("tsqa.automation@tridentsqa.com")
-                        .build();
-                data.add(new Object[]{silo, itnRoundTrip});
+                if( silo ==3){
+                    Itinerary itnRoundTrip = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("CVG")
+                            .withDestinationCity("VPS")
+                            .withRoundTrip(true)
+                            .withSsr("PPOC")
+                            .withPriority("true")
+                            .withEmail("tsqa.automation@tridentsqa.com")
+                            .build();
+                    data.add(new Object[]{silo, itnRoundTrip});
+                }else if( silo == 2){
+                    Itinerary itnRoundTrip = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("LAS")
+                            .withDestinationCity("RNO")
+                            .withRoundTrip(true)
+                            .withSsr("PPOC")
+                            .withPriority("true")
+                            .withEmail("tsqa.automation@tridentsqa.com")
+                            .build();
+                    data.add(new Object[]{silo, itnRoundTrip});
+                }
+                else {
+                    Itinerary itnRoundTrip = new ItineraryBuilder()
+                            .withScenario(method.getName())
+                            .withDepartureCity("VPS")
+                            .withDestinationCity("CVG")
+                            .withRoundTrip(true)
+                            .withSsr("PPOC")
+                            .withPriority("true")
+                            .withEmail("tsqa.automation@tridentsqa.com")
+                            .build();
+                    data.add(new Object[]{silo, itnRoundTrip});
+                }
             }
         } 
         else if (method.getName().contains("OneWay")) {
