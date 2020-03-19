@@ -385,7 +385,13 @@ public class PaymentPage extends BasePage {
 		if( amount.contains(",") ){
 			amount = amount.replace(",","");
 		}
-
+		
+		try {
+			driver.findElement(By.xpath("//button[text()='Return to payment form']")).click();
+		}catch(Exception e) {
+			logger.info("Could not close the pop up, it probably was not displayed");
+		}
+		
 		logger.info("\nBooking Path Actual price is : " + totalBookingFare);
 
 		int arr[] = { 201, 204, 249, 253, 257, 258, 301, 302, 303, 304, 401, 402, 501, 502, 503, 508, 509, 510, 521,
@@ -430,7 +436,12 @@ public class PaymentPage extends BasePage {
 
 		} else {
 			try {
-				selectTripFlex(itn.getTripFlex(), itn.getScenario(), itn);
+				if (itn.getBundle().equalsIgnoreCase("")) {
+					selectTripFlex(itn.getTripFlex(), itn.getScenario(), itn);
+				}else {
+					logger.info("Not required to select the tripflex when selected AllegiantBonus/AllegiantTotal bundle Ancillary ");
+				}
+				
 			}catch(Exception e) {
 				logger.info("Not required to select the tripflex ");
 			}
