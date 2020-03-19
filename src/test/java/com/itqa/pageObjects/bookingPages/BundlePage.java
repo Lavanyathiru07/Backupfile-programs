@@ -74,8 +74,7 @@ public class BundlePage extends BasePage {
 			}
 		} catch (NoSuchElementException e) {
 			logger.info("Bundles page is skipping");
-			itn.setErrorLog("Bundles page is skipping " );
-			throw new WebDriverException("BUndles Page is skipped. ");
+
 		}
 	}
 }
