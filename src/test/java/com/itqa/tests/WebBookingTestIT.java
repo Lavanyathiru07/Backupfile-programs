@@ -65,7 +65,7 @@ public class WebBookingTestIT extends DriverBase {
 	}
 
 	@Test(dataProvider = "Web Use Cases", dataProviderClass = ItineraryDataProvider.class, description = "WWW Book One Way Trip", groups = {
-			"bat","www","booking"})
+		"bat","www","booking"})
 
 	@Story("WWW One way Booking Creation & Verify email confirmation")
 	public void testWebBookOneWay(Integer silo, Itinerary itn, ITestContext context, Method method) throws Exception {

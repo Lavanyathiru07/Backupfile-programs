@@ -67,36 +67,50 @@ public class BagPage extends BasePage {
 	}
 
 	public void chooseBag(int num, int carryOnBag, int checkedBag, String prio, Itinerary itn) {
-		for (int i=0; i<num; i++) {
+		for (int i = 0; i < num; i++) {
 			new Select(binBagList.get(i)).selectByValue(String.valueOf(carryOnBag));
 			new Select(checkedBagList.get(i)).selectByValue(String.valueOf(checkedBag));
 			new Select(prioList.get(i)).selectByValue(prio);
 		}
-		logger.info("Select " + carryOnBag + " carry-on, " + checkedBag + " checked, and " + prio + " priority boarding");
-		if(!taCCboardingOption.isEmpty()) {
-			chooseBoardingOption(0, itn);
-			clickContinue();
-		}else {
-			clickContinue();
+		logger.info(
+				"Select " + carryOnBag + " carry-on, " + checkedBag + " checked, and " + prio + " priority boarding");
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> checkta = driver.findElements(By.cssSelector("li[role='presentation']"));
+		if ((checkta.size() != 0)) {
+			if (!taCCboardingOption.isEmpty()) {
+				chooseBoardingOption(0, itn);
+				clickContinue();
+			} else {
+				clickContinue();
+			}
 		}
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	}
 
 	public void chooseBoardingOption(int ind, Itinerary itn) {
-		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("ta-") || driver.getCurrentUrl().contains("cc.") || driver.getCurrentUrl().contains("ta.")) {
-			taCCboardingOption.get(ind).click();
-			logger.info("Select boarding option: " + taCCboardingOption.get(ind).getText().replaceAll("\n", " "));
-		}
-		else {
-			try {
-				if(boardOption.isDisplayed()) {
-					boardOptionList.get(ind).click();
-					logger.info("Select boarding option: " + boardOptionList.get(ind).getText().replaceAll("\n", " "));
-				}else{
-					logger.info("Select boarding option: NOT Displayed ");
-				}}catch(Exception e) {
-					Common.logError(itn,"Error while choosing the boarding option" );
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> checkta = driver.findElements(By.cssSelector("li[role='presentation']"));
+		List<WebElement> checkot = driver.findElements(By.xpath("//li[contains(@class,'boarding-option')]"));
+		if ((checkta.size() != 0) || (checkot.size() != 0)) {
+			if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("ta-")
+					|| driver.getCurrentUrl().contains("cc.") || driver.getCurrentUrl().contains("ta.")) {
+				taCCboardingOption.get(ind).click();
+				logger.info("Select boarding option: " + taCCboardingOption.get(ind).getText().replaceAll("\n", " "));
+			} else {
+				try {
+					if (boardOption.isDisplayed()) {
+						boardOptionList.get(ind).click();
+						logger.info(
+								"Select boarding option: " + boardOptionList.get(ind).getText().replaceAll("\n", " "));
+					} else {
+						logger.info("Select boarding option: NOT Displayed ");
+					}
+				} catch (Exception e) {
+					Common.logError(itn, "Error while choosing the boarding option");
 				}
+			}
 		}
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 	}
 
 	public void clickContinue() {

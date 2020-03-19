@@ -340,12 +340,18 @@ public class LandingPage extends BasePage {
 		try {
 			selectDepCity(itn.getDepartureCity(), itn);
 			selectDesCity(itn.getDestinationCity(), itn);
-			selectTripType(itn.getRoundTrip(), itn);
-			selectDepDate(itn.getDepartureDateIndex(),itn);
-			if (itn.getRoundTrip()) {
-				selectRetDate(itn.getReturningDateIndex(),itn);
+			driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+			List<WebElement> flightRoutes = driver.findElements(By.xpath("//li[@data-tracked-by='market-retry']"));
+			if (flightRoutes.size() != 0) {
+				Common.logError(itn, "Flight routes are currently being updated, Please try after some time");
 			}
-			selectPaxNum(itn.getAdult(), itn.getChild(),itn);
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+			selectTripType(itn.getRoundTrip(), itn);
+			selectDepDate(itn.getDepartureDateIndex(), itn);
+			if (itn.getRoundTrip()) {
+				selectRetDate(itn.getReturningDateIndex(), itn);
+			}
+			selectPaxNum(itn.getAdult(), itn.getChild(), itn);
 			clickSearch(itn);
 		}catch (Exception e){
 			Common.logError(itn,"Issue selecting flights on Landing page ");
