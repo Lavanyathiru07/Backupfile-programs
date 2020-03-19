@@ -175,8 +175,7 @@ public class PaymentPage extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (loop == 4) {
-					itn.setErrorLog("Error while selecting trip flex " );
-					throw new Error(e);
+					Common.logError(itn,"Error while selecting trip flex");
 				} else {
 					try {
 						Thread.sleep(1000);
@@ -379,8 +378,7 @@ public class PaymentPage extends BasePage {
 			Thread.sleep(5000);
 			amount = totalAmount.getText().trim();
 		} catch (StaleElementReferenceException e) {
-			itn.setErrorLog("Error while getting the text of amount " );
-			logger.info(e);
+			Common.logError(itn,"Error while getting the text of amount ");
 		}
 		totalBookingFare = ConvertPrice(amount);
 		if( amount.contains(",") ){
@@ -425,7 +423,7 @@ public class PaymentPage extends BasePage {
 				}
 				paymentPage.fillPaymentPage(itn, createAccount, false);
 			} catch (Exception e) {
-				itn.setErrorLog("Error in payment page " );
+				Common.logError(itn,"Error in payment page");
 			}
 			// wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
 

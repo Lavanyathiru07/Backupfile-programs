@@ -94,8 +94,7 @@ public class BagPage extends BasePage {
 				}else{
 					logger.info("Select boarding option: NOT Displayed ");
 				}}catch(Exception e) {
-					itn.setErrorLog("Error while choosing the boarding option" );
-					logger.info("Exception while Selecting boarding option");
+					Common.logError(itn,"Error while choosing the boarding option" );
 				}
 		}
 	}
@@ -123,8 +122,7 @@ public class BagPage extends BasePage {
 			}
 			clickContinue();
 		}catch ( WebDriverException e){
-			logger.info("Issue selecting Bag");
-			throw new WebDriverException("Issue selecting Bag");
+			Common.logError(itn,"Issue with selecting Bag");
 		}
 	}
 
