@@ -74,7 +74,7 @@ public class BundlePage extends BasePage {
 			}
 		} catch (NoSuchElementException e) {
 			logger.info("Bundles page is skipping");
-			
+
 		}
 	}
 }

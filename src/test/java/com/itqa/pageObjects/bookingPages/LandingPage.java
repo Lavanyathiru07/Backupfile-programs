@@ -102,7 +102,7 @@ public class LandingPage extends BasePage {
 	}
 
 	public void selectDepCity(String from, Itinerary itn) {
-		for (int loop = 0; loop < 5; loop++) {
+		for (int loop = 0; loop < 8; loop++) {
 			Boolean flag = false;
 			try {
 				driver.findElement(By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(ABQ)')]"));
@@ -114,14 +114,20 @@ public class LandingPage extends BasePage {
 					jse.executeScript(JSFIRSTARG, depCityDropDown);
 				}
 				Thread.sleep(1000);
-				jse.executeScript(JSFIRSTARG, driver.findElement(
-						By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(" + from + ")')]")));
+				try {
+					jse.executeScript(JSFIRSTARG, driver.findElement(
+							By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(" + from + ")')]")));
+				}catch (Exception e ){
+					driver.findElement(
+							By.xpath("//div[contains(@id,'sfrom-list')]//li[contains(text(),'(" + from + ")')]")).sendKeys(Keys.RETURN);
+
+				}
 
 				if (depCityDropDown.getAttribute("value").contains("(" + from + ")")) {
 					break;
 				}
 			} catch (Exception e) {
-				if (loop == 4) {
+				if (loop == 7) {
 					logger.info("Error while selecting depature city");
 					itn.setErrorLog("Error while seleting depature city " );
 					throw new Error(e);

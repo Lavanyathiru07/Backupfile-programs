@@ -423,9 +423,16 @@ public class MOD extends BasePage {
 
 		for (int i = 0; i < 10; i++) {
 			try {
-				cardNoField.clear();
-				cardNoField.sendKeys(Itn.getCardNo());
-				break;
+				if (i < 6) {
+					cardNoField.clear();
+					cardNoField.sendKeys(cardNumber);
+					break;
+				}else{
+					driver.findElement(By.xpath("//*[contains(text(),'Card Number')]/following::input[1]")).clear();
+					driver.findElement(By.xpath("//*[contains(text(),'Card Number')]/following::input[1]")).sendKeys(cardNumber);
+					break;
+				}
+
 			} catch (Exception e) {
 				try {
 					Thread.sleep(1000);
