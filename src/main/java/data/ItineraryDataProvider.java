@@ -51,6 +51,8 @@ public class ItineraryDataProvider {
         } else if (method.getName().contains("AllegiantBonus")) {
             for (Integer silo: silos) {
                 Itinerary itnWithBags = new ItineraryBuilder()
+                		.withDepartureCity("FAT")
+                        .withDestinationCity("LAS")
                         .withBundle("AllegiantBonus")
                         .build();
                 data.add(new Object[]{silo, itnWithBags});
