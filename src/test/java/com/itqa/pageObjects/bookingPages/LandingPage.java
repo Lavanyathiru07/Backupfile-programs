@@ -342,6 +342,7 @@ public class LandingPage extends BasePage {
 		}
 		logger.info(driver.getCurrentUrl());
 		logger.info("Login succesful");
+		Common.flightRouteIssue(driver,itn);
 		try {
 			selectDepCity(itn.getDepartureCity(), itn);
 			selectDesCity(itn.getDestinationCity(), itn);
