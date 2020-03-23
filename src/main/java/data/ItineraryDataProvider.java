@@ -162,8 +162,8 @@ public class ItineraryDataProvider {
         	    if( silo ==3){
                     Itinerary itnRoundTrip = new ItineraryBuilder()
                             .withScenario(method.getName())
-                            .withDepartureCity("FAT")
-                            .withDestinationCity("LAS")
+                            .withDepartureCity("CVG")
+                            .withDestinationCity("SFB")
                             .withHotel(true)
                             .withVehicle(true)
                             .withSsr("PPOC")
