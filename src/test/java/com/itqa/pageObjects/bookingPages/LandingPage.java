@@ -122,6 +122,7 @@ public class LandingPage extends BasePage {
 				}
 			} catch (Exception e) {
 				if (loop == 4) {
+					Common.flightRouteIssue(driver,itn);
 					Common.logError(itn,"Error while selecting depature city");
 				}
 			}
@@ -150,6 +151,7 @@ public class LandingPage extends BasePage {
 				}
 			} catch (Exception e) {
 				if (loop == 4) {
+					Common.flightRouteIssue(driver,itn);
 					Common.logError(itn,"Error while selecting destination city");
 				}
 			}
@@ -222,6 +224,7 @@ public class LandingPage extends BasePage {
 							break;
 						} else {
 							if (loop == 9) {
+								Common.flightRouteIssue(driver,itn);
 								Common.logError(itn,"Error while selecting trip type");
 							}
 						}
@@ -252,6 +255,7 @@ public class LandingPage extends BasePage {
 		}
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		}catch(Exception e) {
+			Common.flightRouteIssue(driver,itn);
 			Common.logError(itn,"Unable to select departure date may be due to application slowness, Please check manualy");
 		}
 	}
@@ -276,6 +280,7 @@ public class LandingPage extends BasePage {
 		}
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		}catch(Exception e) {
+			Common.flightRouteIssue(driver,itn);
 			Common.logError(itn,"Unable to select return date may be due to application slowness, Please check manualy");
 		}
 	}
@@ -340,12 +345,7 @@ public class LandingPage extends BasePage {
 		try {
 			selectDepCity(itn.getDepartureCity(), itn);
 			selectDesCity(itn.getDestinationCity(), itn);
-			driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-			List<WebElement> flightRoutes = driver.findElements(By.xpath("//li[@data-tracked-by='market-retry']"));
-			if (flightRoutes.size() != 0) {
-				Common.logError(itn, "Flight routes are currently being updated, Please try after some time");
-			}
-			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+			Common.flightRouteIssue(driver,itn);
 			selectTripType(itn.getRoundTrip(), itn);
 			selectDepDate(itn.getDepartureDateIndex(), itn);
 			if (itn.getRoundTrip()) {

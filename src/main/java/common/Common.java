@@ -198,5 +198,14 @@ public class Common {
 		itn.setErrorLog(msg);
 		throw new Error(msg);
 	}
+	
+	public static void flightRouteIssue(WebDriver driver, Itinerary itn) {
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> flightRoutes = driver.findElements(By.xpath("//li[@data-tracked-by='market-retry']"));
+		if (flightRoutes.size() != 0) {
+			logError(itn, "Flight routes are currently being updated, Please try after some time");
+		}
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+	}
 
 }
