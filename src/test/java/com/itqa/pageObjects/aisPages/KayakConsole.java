@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -38,9 +39,7 @@ public class KayakConsole extends BasePage{
 			logger.info("Kayak tab is clicked");
 			logger.info("Kayak Scenario -> Pass");
 		}catch(Exception e){
-			logger.info("Error while verifying Kayak");
-			itn.setErrorLog("Error while verifying Kayak Scenario");
-			throw new Error("Kayak Access FAIL");
+			Common.logError(itn, "Error while verifying Kayak table.");
 		}
 	}
 }

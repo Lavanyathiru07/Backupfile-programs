@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -75,24 +76,19 @@ public class FlightFollowing extends BasePage{
 							} catch (Exception e) {
 							}
 						} else {
-							itn.setErrorLog("FLight Information not displayed properly :");
-							throw new Error("FAIL - Flight Information not displayed properly");
+							Common.logError(itn, "FAIL - Flight Information not displayed properly");
 						}
 					}
 				}
 				catch (Exception e) {
 					if (loop == 4) {
-						logger.info("Error while finding element Flight following");
-						itn.setErrorLog("Error while finding element Flight following " );
-						throw new Error("FAIL - Flight Following - Cannot get element");
+						Common.logError(itn, "FAIL - Flight Following - Cannot get element");
 					}
 				}
 			}
 			logger.info("FlightInformation Scenario -> Pass");
 		}catch(Exception e){
-			logger.info("Error while verifying FlightInformation");
-			itn.setErrorLog("Error while verifying FlightInformation Scenario");
-			throw new Error("FAIL - Flight Following - Cannot get element");
+			Common.logError(itn, "FAIL - Unable to verify flight information in Flight Following.");
 		}
 	}
 }

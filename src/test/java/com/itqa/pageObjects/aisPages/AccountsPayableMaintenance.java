@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -75,8 +76,7 @@ public class AccountsPayableMaintenance extends BasePage{
 						break;
 					} catch (Exception e) {
 						if (loop == 9) {
-							logger.info("Error in lookupTransaction Verification");
-							throw new Error("Vendor 000005 not found");
+							Common.logError(itn, "Vendor 000005 not found");
 						}
 					}
 				}
@@ -89,8 +89,7 @@ public class AccountsPayableMaintenance extends BasePage{
 						break;
 					} catch (Exception e) {
 						if (loop == 5) {
-							logger.info("Error in lookupTransaction Verification");
-							throw new Error("Vendor 000005 not found");
+							Common.logError(itn, "Vendor 000005 not found");
 						}
 					}
 				}
@@ -107,29 +106,24 @@ public class AccountsPayableMaintenance extends BasePage{
 				if (invoiceIdField.getAttribute("value").equals(num)) {
 					logger.info("Invoice Found");
 				} else {
-					logger.info("Invoice not found");
-					throw new Error("Invoice not found");
+					Common.logError(itn, "Invoice not found");
 				}
 			} else if (type.contains("lookupOrder")) {
 				if (orderIdField.getAttribute("value").equals(num)) {
 					logger.info("Order Found");
 				} else {
-					logger.info("order not found");
-					throw new Error("Order not found");
+					Common.logError(itn, "order not found");
 				}
 			} else if (type.contains("lookupPayment")) {
 				if (paymentIdField.getAttribute("value").equals(num)) {
 					logger.info("Payment Found");
 				} else {
-					logger.info("Payment not found");
-					throw new Error("Payment not found");
+					Common.logError(itn, "Payment not found");
 				}
 			}
 			logger.info("lookupTransaction Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error in Account Payable MX");
-			itn.setErrorLog("Error while verifying lookupTransaction Scenario");
-			throw new Error("Account Payable MX FAIL");
+			Common.logError(itn, "Error while verifying lookupTransaction");
 		}
 	}
 }

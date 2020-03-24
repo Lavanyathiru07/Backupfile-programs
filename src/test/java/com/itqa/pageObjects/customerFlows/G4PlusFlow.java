@@ -147,7 +147,7 @@ public class G4PlusFlow extends BasePage {
 			}
 			else  {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-				Common.siteIssues(driver, itn);
+				Common.siteIssues(DriverBase.getDriver(), itn);
 				G4PlusLoginPage.g4plusLogin(false);
 			}
 
@@ -226,6 +226,7 @@ public class G4PlusFlow extends BasePage {
 					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 					DriverBase.getDriver().get(URLS.AIS.getUrl(Environment.getEnv(), 0));
 				}
+				Common.siteIssues(DriverBase.getDriver(), itn);
 			} else {
 
 				if (System.getProperty("env").contains("nddprd")) {
@@ -235,6 +236,7 @@ public class G4PlusFlow extends BasePage {
 					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 
 				}
+				Common.siteIssues(DriverBase.getDriver(), itn);
 				G4PlusLoginPage.g4plusLogin(false);
 				try {
 					Thread.sleep(5500);
@@ -301,9 +303,7 @@ public class G4PlusFlow extends BasePage {
 			MaintenanceRecords.openReport(itn);
 
 		} catch (Exception e) {
-			itn.setErrorLog("Error while getting SPOE report " );
-			logger.info("Error while getting SPOE report");
-			throw new Error("Reports cant find");
+			Common.logError(itn, "Error while getting SPOE report");
 		}
 	}
 	public void verifyFlightFollowing(Itinerary itn) {

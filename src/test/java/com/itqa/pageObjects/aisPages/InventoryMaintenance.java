@@ -15,6 +15,7 @@ import org.testng.SkipException;
 import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -68,16 +69,13 @@ public class InventoryMaintenance extends BasePage{
 			}
 
 			if (!found) {
-				throw new Error("Inventory Maintenance Transaction not displayed");
+				Common.logError(itn, "Inventory Maintenance Transaction not displayed");
 			} else {
 				logger.info("Inventory Maintenance Transaction displayed");
 			}
 			logger.info("Inventory Maintenance Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error while verifying Inventory Maintenance");
-			itn.setErrorLog("Error while verifying Inventory Maintenance Scenario");
-			throw new Error("Inventory Maintenance Fail");
-
+			Common.logError(itn, "Error while verifying Inventory Maintenance");
 		}
 	}
 }
