@@ -197,9 +197,6 @@ public class WebBookingTestIT extends DriverBase {
 			}catch(Exception e) {
 				log.info("error getting while clear the DHS");
 			}*/
-
-
-
 				// Assert.assertTrue(booking.emailVerification(itn, "Booking"), "Email not recevied");
 				updateTextContext(itn, context);
 
