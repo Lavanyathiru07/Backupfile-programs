@@ -14,6 +14,7 @@ import org.testng.SkipException;
 import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -93,9 +94,7 @@ public class MaintenanceRecords extends BasePage {
 			}
 			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("lookupActionRequest Scenario -> Fail");
-			itn.setErrorLog("Error while verifiying lookupActionRequest Scenario");
-			throw new Error("Action Requests returns no result");
+			Common.logError(itn, "Error while verifiying lookupActionRequest Scenario");
 		}
 	}
 

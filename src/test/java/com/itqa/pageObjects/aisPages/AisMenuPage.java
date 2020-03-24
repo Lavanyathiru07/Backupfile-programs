@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -179,7 +180,7 @@ public class AisMenuPage extends BasePage {
 			METab.click();		
 			logger.info("MXandEngr tab clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while verifying MXandEngr Scenario");
+			Common.logError(itn, "Error while clicking MX and Engineering button.");
 		}
 	}
 
@@ -224,7 +225,7 @@ public class AisMenuPage extends BasePage {
 			mxRecordsTab.click();	
 			logger.info("Mx record tab clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while verifying MXRecords Scenario");
+			Common.logError(itn, "Error while clicking MX and Record button.");
 		}
 	}
 
