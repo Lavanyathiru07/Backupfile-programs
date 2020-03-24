@@ -3,7 +3,11 @@ package com.itqa.pageObjects.bookingPages;
 import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
+
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -54,6 +58,21 @@ public class ConfirmationPage extends BasePage {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(confNumber));
 			confNumber.isDisplayed();
 			logger.info("Confirmation Number Found: " + confNumber.getText());
+			
+			if (itn.getBundle().equalsIgnoreCase("AllegiantBonus")) {
+				List<WebElement> bundleDetails = driver.findElements(By.xpath("//th[contains(text(),'Allegiant Bonus Bundle')]"));
+				if(bundleDetails.size()!= 0) {
+					logger.info("Confirmation number booked with Allegiant Bouns Bundle");
+				}
+				
+			}else if (itn.getBundle().equalsIgnoreCase("AllegiantTotal")) {
+				List<WebElement> bundleDetails = driver.findElements(By.xpath("//th[contains(text(),'Allegiant Total Bundle')]"));
+				if(bundleDetails.size()!= 0) {
+					logger.info("Confirmation number booked with Allegiant Total Bundle");
+				}
+			}
+			
+			
 			itn.setItn(confNumber.getText());
 			if (System.getProperty("env").contains("prod")) {
 				if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {
