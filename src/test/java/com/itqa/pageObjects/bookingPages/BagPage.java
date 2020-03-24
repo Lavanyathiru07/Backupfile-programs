@@ -72,6 +72,7 @@ public class BagPage extends BasePage {
 			new Select(checkedBagList.get(i)).selectByValue(String.valueOf(checkedBag));
 			new Select(prioList.get(i)).selectByValue(prio);
 		}
+
 		logger.info(
 				"Select " + carryOnBag + " carry-on, " + checkedBag + " checked, and " + prio + " priority boarding");
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
@@ -88,6 +89,7 @@ public class BagPage extends BasePage {
 	}
 
 	public void chooseBoardingOption(int ind, Itinerary itn) {
+
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		List<WebElement> checkta = driver.findElements(By.cssSelector("li[role='presentation']"));
 		List<WebElement> checkot = driver.findElements(By.xpath("//li[contains(@class,'boarding-option')]"));

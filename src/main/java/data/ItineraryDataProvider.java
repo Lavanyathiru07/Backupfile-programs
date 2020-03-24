@@ -48,7 +48,25 @@ public class ItineraryDataProvider {
                         .build();
                 data.add(new Object[]{silo, itnWithBags});
             }
-        } else {
+        } else if (method.getName().contains("AllegiantBonus")) {
+            for (Integer silo: silos) {
+                Itinerary itnWithBags = new ItineraryBuilder()
+                		.withDepartureCity("FAT")
+                        .withDestinationCity("LAS")
+                        .withBundle("AllegiantBonus")
+                        .build();
+                data.add(new Object[]{silo, itnWithBags});
+            }
+        } else if (method.getName().contains("AllegiantTotal")) {
+            for (Integer silo: silos) {
+                Itinerary itnWithBags = new ItineraryBuilder()
+                		.withBundle("AllegiantTotal")
+                        .build();
+                data.add(new Object[]{silo, itnWithBags});
+            }
+        } 
+        
+        else {
             // standard itinerary for all cases not specified above
             for (Integer silo : silos) {
                 if( silo ==2 ){
@@ -181,8 +199,8 @@ public class ItineraryDataProvider {
         	    if( silo ==3){
                     Itinerary itnRoundTrip = new ItineraryBuilder()
                             .withScenario(method.getName())
-                            .withDepartureCity("FAT")
-                            .withDestinationCity("LAS")
+                            .withDepartureCity("CVG")
+                            .withDestinationCity("SFB")
                             .withHotel(true)
                             .withVehicle(true)
                             .withSsr("PPOC")
