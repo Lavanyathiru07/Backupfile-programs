@@ -14,6 +14,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -52,7 +53,8 @@ public class FM extends BasePage{
 					bagTab.click();
 				} catch (Exception e) {
 					if (loop == 9) {
-						throw new Error(e);
+						//throw new Error(e);
+						Common.logError(itn, "Unable to click Bags tab.");
 					} else {
 						try {
 							Thread.sleep(1000);
@@ -65,9 +67,7 @@ public class FM extends BasePage{
 			logger.info("result row  clicked");
 			logger.info("BAG Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error while verifying access bags");
-			itn.setErrorLog("Error while verifying BAG Scenario");
-			throw new Error("BAG Scenario -> Fail");
+			Common.logError(itn, "Error while verifying access bags.");
 		}
 	}
 
@@ -82,9 +82,7 @@ public class FM extends BasePage{
 				}
 				catch (Exception e) {
 					if (loop == 9) {
-						logger.info("Error while access pb2");
-						itn.setErrorLog("Error while access PB2 " );
-						throw new Error(e);
+						Common.logError(itn, "Unable to click PB2");
 					}
 					else {
 						try {Thread.sleep(1000);} catch (Exception e1) {}
@@ -95,9 +93,7 @@ public class FM extends BasePage{
 			logger.info("result row  clicked");
 			logger.info("PB2 Scenario -> Pass");
 		}catch(Exception e){
-			logger.info("Error while verifying pb2");
-			itn.setErrorLog("Error while verifying pb2 Scenario");
-			throw new Error("PB2 Scenario -> Fail");
+			Common.logError(itn,"Error while verifying pb2");
 		}
 	}
 
@@ -112,7 +108,8 @@ public class FM extends BasePage{
 					break;
 				} catch (Exception e) {
 					if (loop == 9) {
-						throw new Error(e);
+						//throw new Error(e);
+						Common.logError(itn, "Unable to click tripflex tab.");
 					} else {
 						try {
 							Thread.sleep(1000);
@@ -125,9 +122,7 @@ public class FM extends BasePage{
 			logger.info("result row clicked");
 			logger.info("TF2 Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error while verifying access TF2");
-			itn.setErrorLog("Error while verifying TF2 Scenario");
-			throw new Error("TF2 Scenario -> Fail");
+			Common.logError(itn,"Error while verifying the fields of TF2");
 		}
 	}
 }

@@ -12,6 +12,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -60,9 +61,7 @@ public class RQ extends BasePage{
 			logger.info("submit button clicked");
 			logger.info("RQ Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error while verifying RQ");
-			itn.setErrorLog("Error while verifying RQ Scenario");
-			throw new Error("RQ Scenario -> Fail");
+			Common.logError(itn, "Unable to verify fields in RQ tab.");
 		}
 	}
 }

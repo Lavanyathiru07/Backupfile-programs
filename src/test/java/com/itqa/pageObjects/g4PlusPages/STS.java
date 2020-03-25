@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -54,9 +55,8 @@ public class STS extends BasePage {
 			logger.info("STS Scenario -> Pass");
 
 		} catch (Exception e) {
-			logger.info("Error while verifying STS");
-			itn.setErrorLog("Error while verifying STS Scenario");
-			throw new Error("STS Scenario -> Fail");
+			Common.logError(itn, "Unable to verify the fields of STS.");
+			
 		}
 	}
 }

@@ -516,9 +516,7 @@ public class G4PlusFlow extends BasePage {
 			capabilities.setCapability("tz", "America/Los_Angeles");
 
 		} catch (Exception e) {
-			logger.info("Error while accessing swap");
-			itn.setErrorLog("Error while accessing swap " );
-			throw new Error(e);
+			Common.logError(itn, "Error while accessing swap");
 		}
 
 		DriverBase.getDriver().get("https://swap.allegiantair.com");
@@ -530,9 +528,7 @@ public class G4PlusFlow extends BasePage {
 			loginPage.openSwap(itn);
 			logger.info("Swap Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error in Swap page");
-			itn.setErrorLog("Swap Scenario -> Fail");
-			throw new Error();
+			Common.logError(itn, "Error in Swap page");
 		}
 
 	}

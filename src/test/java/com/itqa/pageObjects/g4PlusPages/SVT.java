@@ -14,6 +14,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -69,9 +70,7 @@ public class SVT extends BasePage{
 			logger.info("result row clicked");
 			logger.info("SVT Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error while verifying SVT");
-			itn.setErrorLog("Error while verifying SVT Scenario");
-			throw new Error("SVT Scenario -> Fail");
+			Common.logError(itn, "Error while validating the fields of SVT portal.");
 		}
 	}
 }

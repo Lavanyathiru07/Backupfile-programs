@@ -20,6 +20,8 @@ import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
+
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
@@ -266,9 +268,7 @@ public class MOD extends BasePage {
 			logger.info("Verify ITN feild is displayed");
 			logger.info("MOD Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error while verifying MOD");
-			itn.setErrorLog("Error while verifying MOD Scenario");
-			throw new Error("MOD Scenario -> Fail");
+			Common.logError(itn, "Error while verifying MOD");
 		}
 	}
 

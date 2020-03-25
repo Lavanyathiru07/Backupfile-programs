@@ -11,6 +11,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -52,9 +53,7 @@ public class OFO extends BasePage {
 			logger.info("verify search disposition");
 			logger.info("OFO Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error while access OFO ");
-			itn.setErrorLog("Error while verifying OFO Scenario");
-			throw new Error("OFO Scenario -> Fail");
+			Common.logError(itn, "Error while verifying the fields of OFO");
 		}
 	}
 }

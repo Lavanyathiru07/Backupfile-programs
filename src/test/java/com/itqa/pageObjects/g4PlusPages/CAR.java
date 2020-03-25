@@ -15,6 +15,7 @@ import org.testng.SkipException;
 import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -82,9 +83,7 @@ public class CAR extends BasePage{
 			logger.info("result row clicked");
 			logger.info("CAR Scenario -> PASS");
 		}catch(Exception e){
-			logger.info("Error while verifying CAR Menu");
-			itn.setErrorLog("Error while verifying CAR Scenario");
-			throw new Error("CAR Scenario -> Fail");
+			Common.logError(itn,"Error while verifying CAR Menu");		
 		}
 	}
 }
