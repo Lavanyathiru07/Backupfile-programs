@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -48,9 +49,8 @@ public class CL extends BasePage{
 			logger.info("email feild click");
 			logger.info("CL Verification completed-> Pass");
 
-		}catch(Exception e){  
-			logger.info("CL Verification not completed-> Fail");
-			itn.setErrorLog("Error while verifying Customer Lookup Scenario");
+		}catch(Exception e){ 
+			Common.logError(itn, "Unable to validate the fields in CL");
 		}
 	}
 }
