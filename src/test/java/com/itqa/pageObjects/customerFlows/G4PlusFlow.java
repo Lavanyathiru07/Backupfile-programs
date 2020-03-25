@@ -237,7 +237,7 @@ public class G4PlusFlow extends BasePage {
 
 				}
 				Common.siteIssues(DriverBase.getDriver(), itn);
-				G4PlusLoginPage.g4plusLogin(false);
+				G4PlusLoginPage.g4plusLogin(false,itn);
 				try {
 					Thread.sleep(5500);
 					driver = DriverBase.getDriver();

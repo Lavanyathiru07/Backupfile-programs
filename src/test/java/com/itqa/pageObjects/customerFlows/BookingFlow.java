@@ -214,7 +214,7 @@ public class BookingFlow extends BasePage {
 
 		if (Environment.getEnv().contains("prod")) {
 			DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-			g4LoginPage.g4plusLogin(false);
+			g4LoginPage.g4plusLogin(false,itn);
 		} else {
 			if (System.getProperty("env").contains("aws")) {
 				DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(System.getProperty("awsenv"), 0));
