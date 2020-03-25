@@ -103,10 +103,9 @@ public class AisMenuPage extends BasePage {
 			APTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(accountsPayableMXTab));
 			accountsPayableMXTab.click();
-			driver.switchTo().alert().accept();
-			logger.info("Accept Security Alert");
+			//driver.switchTo().alert().accept();
+			//logger.info("Accept Security Alert");
 		} catch (Exception e) {
-			e.printStackTrace();
 			Common.logError(itn, "Unable to click Account payable maintenance button.");
 		}
 	}
@@ -154,10 +153,9 @@ public class AisMenuPage extends BasePage {
 			INTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(inventoryMXTab));
 			inventoryMXTab.click();
-			DriverBase.getDriver().switchTo().alert().accept();
-			logger.info("Accept Security Alert");
+			//DriverBase.getDriver().switchTo().alert().accept();
+			//logger.info("Accept Security Alert");
 		} catch (Exception e) {
-			System.out.println("Vinoth"+e.getMessage());
 			Common.logError(itn, "Error while selecting Inventory maintenance.");
 		}
 	}
