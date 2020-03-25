@@ -106,6 +106,7 @@ public class AisMenuPage extends BasePage {
 			driver.switchTo().alert().accept();
 			logger.info("Accept Security Alert");
 		} catch (Exception e) {
+			e.printStackTrace();
 			Common.logError(itn, "Unable to click Account payable maintenance button.");
 		}
 	}
@@ -156,6 +157,7 @@ public class AisMenuPage extends BasePage {
 			DriverBase.getDriver().switchTo().alert().accept();
 			logger.info("Accept Security Alert");
 		} catch (Exception e) {
+			e.printStackTrace();
 			Common.logError(itn, "Error while selecting Inventory maintenance.");
 		}
 	}
