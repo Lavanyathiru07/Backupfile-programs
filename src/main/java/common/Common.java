@@ -207,5 +207,16 @@ public class Common {
 		}
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 	}
+	
+	public static void invalidCredentials(WebDriver driver, Itinerary itn) {
+		
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> credentialIssue = driver.findElements(By.xpath("//div[@class='alert alert-danger']"));
+		if (credentialIssue.size() != 0) {
+			logError(itn, "Unable to authenticate credentials");
+		}
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		
+	}
 
 }
