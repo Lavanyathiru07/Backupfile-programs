@@ -5,6 +5,20 @@
 	   thread-count="25" preserve-order="false" data-provider-thread-count="30">
 
 	<test name="Non Booking and PreBAT">
+	
+	
+	
+			<groups>
+				<run>
+					<include name="PreBAT" />
+					<include name="NonBooking" />
+				</run>
+			</groups>
+	
+	
+	
+	
+	
 		<classes>
 			<class name="com.itqa.tests.PreBAT" />
 			<class name="com.itqa.tests.NonBookingTestIT" /> 
@@ -12,6 +26,25 @@
 	</test>
 
 	<test name="Booking">
+	
+			<groups>
+				<run>
+					<include name="WebBooking" />
+					<include name="TABooking" />
+					<include name="CCBooking" />
+					<include name="ocli" />
+					<include name="bat" />
+					<include name="booking" />
+					<include name="olci" />
+					<include name="voucher" />
+					<include name="www" />
+					<include name="account" />
+				</run>
+			</groups>
+	
+	
+	
+	
 		<classes>
 
 			<class name="com.itqa.tests.WebBookingTestIT" />
