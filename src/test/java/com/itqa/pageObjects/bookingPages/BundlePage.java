@@ -58,7 +58,7 @@ public class BundlePage extends BasePage {
 						itn.setSeatRT(true);
 					}
 					jse.executeScript("arguments[0].click();", selectAllegiantBonus);
-					//selectAllegiantBonus.click();
+					
 				} else if (itn.getBundle().equalsIgnoreCase("AllegiantTotal")) {
 					itn.setSeat(true);
 					itn.setCarryOnBag(1);
@@ -69,7 +69,7 @@ public class BundlePage extends BasePage {
 						itn.setSeatRT(true);
 					}
 					jse.executeScript("arguments[0].click();", selectAllegiantTotal);
-					//selectAllegiantTotal.click();
+					
 				}
 
 				jse.executeScript("arguments[0].click();", continueButton);
