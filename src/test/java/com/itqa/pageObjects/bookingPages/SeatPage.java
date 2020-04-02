@@ -98,7 +98,7 @@ public class SeatPage extends BasePage {
                 int seatInd = new Random().nextInt(availSeatList.size());
                 logger.info("Select returning seat: " + availSeatList.get(seatInd).getAttribute("aria-label") + " for pax " + (i+1));
                 jse.executeScript(JSFIRSTARG, availSeatList.get(seatInd));
-                okButton.click();
+                jse.executeScript(JSFIRSTARG, okButton);
             }
         }
     }
