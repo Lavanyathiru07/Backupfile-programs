@@ -93,8 +93,9 @@ public class CheckinPaymentPage {
             cvv = System.getProperty("cvv");
         }
         else {
-            expiredMonth = "5";
-            expiredYear = "2022";
+
+            expiredMonth = "3";
+            expiredYear = "2023";
             cardNumber = "5454545454545454";
             cardName = "A";
             cvv = "123";

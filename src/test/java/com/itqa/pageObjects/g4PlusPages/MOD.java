@@ -355,7 +355,7 @@ public class MOD extends BasePage {
 			cvv = System.getProperty("cvv");
 		}else {
 			expiredMonth = "03";
-			expiredYear = "2020";
+			expiredYear = "2023";
 			cardNumber = "5454545454545454";
 			cvv = "123";
 		}
