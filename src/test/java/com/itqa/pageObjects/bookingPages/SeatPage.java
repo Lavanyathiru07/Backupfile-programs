@@ -149,7 +149,7 @@ public class SeatPage extends BasePage {
 	}
 
 	public void selectSeatPage(Itinerary itn) throws WebDriverException {
-
+		Common.siteIssues(driver,itn);
 		if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")) {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(ssrPopupOkButton));
 			if (!itn.getSsr().isEmpty()) {
@@ -171,4 +171,5 @@ public class SeatPage extends BasePage {
 			clickContinue(itn.getRoundTrip(), itn.getSeat(), itn.getSeatRT(), itn.getScenario());
 		}
 	}
+	
 }

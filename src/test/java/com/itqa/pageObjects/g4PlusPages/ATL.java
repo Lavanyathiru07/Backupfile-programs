@@ -3,6 +3,7 @@ package com.itqa.pageObjects.g4PlusPages;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -85,9 +86,7 @@ public class ATL extends BasePage{
 			logger.info("Posting row clicked");
 			logger.info("ATL Scenario -> Pass");
 		}catch(Exception e){
-			logger.info("Error while verifying ATL ");
-			itn.setErrorLog("Error while verifying ATL Scenario");
-			throw new Error("ATL Scenario -> Fail");
+			Common.logError(itn, "Error while verifying the fields of ATL.");
 		}
 	}
 

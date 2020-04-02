@@ -2,6 +2,10 @@ package com.itqa.pageObjects.bookingPages;
 
 import data.Itinerary;
 import framework.DriverBase;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -11,6 +15,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.itqa.pageObjects.BasePage;
+
+import common.Common;
 
 public class HotelPage extends BasePage {
 
@@ -71,6 +77,7 @@ public class HotelPage extends BasePage {
 	}
 
 	public void selectHotel(Itinerary itn) throws WebDriverException {
+		Common.siteIssues(driver,itn);
 		Boolean hotelPage = true;
 		for (int loop=0; loop<5; loop++) {
 			try {
@@ -99,8 +106,7 @@ public class HotelPage extends BasePage {
 				break;
 			}
 			catch (Exception e) {
-				logger.info("Error while getting Hotel name");
-				itn.setErrorLog("Error while getting Hotel name " );
+				Common.logError(itn,"Error while getting Hotel name");
 			}
 			try {Thread.sleep(1000);} catch (Exception e) {}
 		}
@@ -116,8 +122,7 @@ public class HotelPage extends BasePage {
 		}
 		else {
 			if (itn.getHotel()) {
-				itn.setErrorLog("Error while getting hotel name and the page skipped :");
-				throw new Error("Hotel Required..but the page was skipped");
+				Common.logError(itn,"Error while selecting hotel or the page may get skipped");
 			}
 		}
 	}

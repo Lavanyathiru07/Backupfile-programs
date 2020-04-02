@@ -67,16 +67,17 @@ public class BagPage extends BasePage {
 	}
 
 	public void chooseBag(int num, int carryOnBag, int checkedBag, String prio, Itinerary itn) {
-		for (int i=0; i<num; i++) {
+		for (int i = 0; i < num; i++) {
 			new Select(binBagList.get(i)).selectByValue(String.valueOf(carryOnBag));
 			new Select(checkedBagList.get(i)).selectByValue(String.valueOf(checkedBag));
 			new Select(prioList.get(i)).selectByValue(prio);
 		}
-		logger.info("Select " + carryOnBag + " carry-on, " + checkedBag + " checked, and " + prio + " priority boarding");
+
+		logger.info(
+				"Select " + carryOnBag + " carry-on, " + checkedBag + " checked, and " + prio + " priority boarding");
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		List<WebElement> checkta = driver.findElements(By.cssSelector("li[role='presentation']"));
 		if ((checkta.size() != 0)) {
-
 			if (!taCCboardingOption.isEmpty()) {
 				chooseBoardingOption(0, itn);
 				clickContinue();
@@ -88,12 +89,11 @@ public class BagPage extends BasePage {
 	}
 
 	public void chooseBoardingOption(int ind, Itinerary itn) {
-		
+
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		List<WebElement> checkta = driver.findElements(By.cssSelector("li[role='presentation']"));
 		List<WebElement> checkot = driver.findElements(By.xpath("//li[contains(@class,'boarding-option')]"));
 		if ((checkta.size() != 0) || (checkot.size() != 0)) {
-
 			if (driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("ta-")
 					|| driver.getCurrentUrl().contains("cc.") || driver.getCurrentUrl().contains("ta.")) {
 				taCCboardingOption.get(ind).click();
@@ -102,13 +102,13 @@ public class BagPage extends BasePage {
 				try {
 					if (boardOption.isDisplayed()) {
 						boardOptionList.get(ind).click();
-						logger.info("Select boarding option: " + boardOptionList.get(ind).getText().replaceAll("\n", " "));
+						logger.info(
+								"Select boarding option: " + boardOptionList.get(ind).getText().replaceAll("\n", " "));
 					} else {
 						logger.info("Select boarding option: NOT Displayed ");
 					}
 				} catch (Exception e) {
-					itn.setErrorLog("Error while choosing the boarding option");
-					logger.info("Exception while Selecting boarding option");
+					Common.logError(itn, "Error while choosing the boarding option");
 				}
 			}
 		}
@@ -129,6 +129,7 @@ public class BagPage extends BasePage {
 	}
 
 	public void selectBagPage(Itinerary itn) throws WebDriverException {
+		Common.siteIssues(driver,itn);
 		try {
 			chooseBag(itn.getPaxNum(), itn.getCarryOnBag(), itn.getCheckedBag(), itn.getPriority(), itn);
 			if (!(driver.getCurrentUrl().contains("cc-") || driver.getCurrentUrl().contains("cc.")
@@ -137,8 +138,7 @@ public class BagPage extends BasePage {
 			}
 			clickContinue();
 		}catch ( WebDriverException e){
-			logger.info("Issue selecting Bag");
-			throw new WebDriverException("Issue selecting Bag");
+			Common.logError(itn,"Issue with selecting Bag");
 		}
 	}
 

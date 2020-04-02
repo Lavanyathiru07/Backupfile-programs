@@ -11,6 +11,7 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -43,9 +44,7 @@ public class FlightScheduleMaintenance extends BasePage{
 			logger.info("Flight Schedule Maintenance Displayed");
 			logger.info("FlightScheduleMX Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error while verifying the flight schedule MX");
-			itn.setErrorLog("Error while verifying the flight schedule MX ");
-			throw new Error("Flight Schedule MX Fail");
+			Common.logError(itn, "Error while verifying the flight schedule MX");
 		}
 	}
 }

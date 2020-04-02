@@ -3,6 +3,10 @@ package com.itqa.pageObjects.bookingPages;
 import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -62,6 +66,7 @@ public class VehiclePage extends BasePage {
 	}
 
 	public void selectVehicle(Itinerary itn) throws WebDriverException {
+		Common.siteIssues(driver,itn);
 		Boolean vehiclePage = true;
 		for (int i=0; i<20; i++) {
 			try {
@@ -103,8 +108,9 @@ public class VehiclePage extends BasePage {
 		}
 		else {
 			if (itn.getVehicle()) {
-				throw new Error("Vehicle Required..but the page was skipped");
+				Common.logError(itn,"Vehicle Required..but the page was skipped");
 			}
 		}
 	}
+	
 }

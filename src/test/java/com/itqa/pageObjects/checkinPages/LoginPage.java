@@ -2,6 +2,8 @@ package com.itqa.pageObjects.checkinPages;
 
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.Screenshot;
+
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -76,7 +78,7 @@ public class LoginPage {
 
 	public void doCheckin(Itinerary itn) {
 		Boolean flag = true;
-
+        Common.siteIssues(driver, itn);
 		for (int i = 0; i < 2; i++) {
 			if (itn.getScenario().contains("WWW")) {
 				try {
@@ -87,7 +89,7 @@ public class LoginPage {
 				}
 			}
 			fillPaxInfo(itn.getFirstName(), itn.getLastName(), itn.getItn());
-
+			Common.siteIssues(driver, itn);
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 			try {

@@ -20,6 +20,8 @@ import com.itqa.Utils.GeneralUtils;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
+
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
@@ -266,9 +268,7 @@ public class MOD extends BasePage {
 			logger.info("Verify ITN feild is displayed");
 			logger.info("MOD Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error while verifying MOD");
-			itn.setErrorLog("Error while verifying MOD Scenario");
-			throw new Error("MOD Scenario -> Fail");
+			Common.logError(itn, "Error while verifying MOD");
 		}
 	}
 
@@ -767,7 +767,7 @@ public class MOD extends BasePage {
 
 	public void stationUncheckPax(String pnr, Itinerary itn) {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-		g4LoginPage.g4plusLogin(true);
+		g4LoginPage.g4plusLogin(true,itn);
 		Set<String> curTab = driver.getWindowHandles();
 		try {
 			Thread.sleep(5500);
@@ -792,7 +792,7 @@ public class MOD extends BasePage {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		try {
 			if(userNameField.isDisplayed()) {
-				g4LoginPage.g4plusLogin(false);
+				g4LoginPage.g4plusLogin(false,itn);
 			}
 		}catch(Exception e) {}
 		Set<String> curTab = driver.getWindowHandles();
@@ -819,7 +819,7 @@ public class MOD extends BasePage {
 		DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 		try {
 			if(userNameField.isDisplayed()) {
-				g4LoginPage.g4plusLogin(false);
+				g4LoginPage.g4plusLogin(false,itn);
 			}
 		}catch(Exception e) {}
 

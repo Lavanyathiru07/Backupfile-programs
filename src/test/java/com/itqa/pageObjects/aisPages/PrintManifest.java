@@ -3,10 +3,12 @@ package com.itqa.pageObjects.aisPages;
 import com.itqa.Utils.GeneralUtils;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
 import org.apache.log4j.Logger;
+import org.assertj.core.internal.CommonErrors;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -83,9 +85,7 @@ public class PrintManifest extends BasePage {
 			logger.info("verify pax table display properly");
 			logger.info("PrintManifest Scenario -> Pass");
 		}catch(Exception e){
-			logger.info("verify PrintManifest FAIL");
-			itn.setErrorLog("Error while verifying the print manifest " );
-			throw new Error("verify PrintManifest FAIL");
+			Common.logError(itn, "Issue with verifying the items in printmanifest.");
 		}
 	}
 }

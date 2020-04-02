@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -135,6 +137,7 @@ public class TravelerPage extends BasePage {
     }
 
     public void fillTravelerPage(Itinerary itn) {
+    	Common.siteIssues(driver,itn);
         try {
             fillPaxInfo(itn.getPaxNum(), itn.getFirstName(), itn.getLastName(), itn.getGender(), itn.getDobMonth(),
                     itn.getDobDate(), itn.getDobYear(), itn.getEmail());
@@ -146,8 +149,7 @@ public class TravelerPage extends BasePage {
             }
             clickContinue();
         }catch (WebDriverException e){
-            logger.info("Issue filling traveler info");
-            throw new WebDriverException("Issue filling traveler info");
+        	Common.logError(itn,"Issue filling traveler info");
         }
     }
 

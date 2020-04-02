@@ -14,6 +14,7 @@ import org.testng.SkipException;
 import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -93,9 +94,7 @@ public class MaintenanceRecords extends BasePage {
 			}
 			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("lookupActionRequest Scenario -> Fail");
-			itn.setErrorLog("Error while verifiying lookupActionRequest Scenario");
-			throw new Error("Action Requests returns no result");
+			Common.logError(itn, "Error while verifiying lookupActionRequest Scenario");
 		}
 	}
 
@@ -117,16 +116,14 @@ public class MaintenanceRecords extends BasePage {
 					try {
 						verifyReport("301NV");
 					} catch (Exception g) {
-						g.printStackTrace();
-						throw new Error("Records returns no result");
+						//g.printStackTrace();
+						Common.logError(itn, "Records are not found for the tail number 217NV, 215NV and 301NV.");
 					}
 				}
 			}
 			logger.info("lookupActionRequest Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Could not find Reports");
-			itn.setErrorLog("Error while verifying lookupActionRequest Scenario");
-			throw new Error("Could not find Reports");
+			Common.logError(itn, "Could not find Reports in Lookup Transaction.");
 		}
 	}
 	public void verifyReport(String tail) {

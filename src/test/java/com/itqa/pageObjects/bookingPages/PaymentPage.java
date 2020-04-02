@@ -1,5 +1,6 @@
 package com.itqa.pageObjects.bookingPages;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
@@ -174,8 +175,7 @@ public class PaymentPage extends BasePage {
 				break;
 			} catch (Exception e) {
 				if (loop == 4) {
-					itn.setErrorLog("Error while selecting trip flex " );
-					throw new Error(e);
+					Common.logError(itn,"Error while selecting trip flex");
 				} else {
 					try {
 						Thread.sleep(1000);
@@ -210,6 +210,7 @@ public class PaymentPage extends BasePage {
 			cardName = System.getProperty("cardname");
 			cvv = System.getProperty("cvv");
 		} else {
+
 			expiredMonth = "3";
 			expiredYear = "2023";
 			cardNumber = cardNo;
@@ -344,7 +345,7 @@ public class PaymentPage extends BasePage {
 
 	public void fillPaymentPage(Itinerary itn, Boolean createAccount, boolean Popupflag) throws Exception {
 		// driver = DriverBase.getDriver();
-
+		Common.siteIssues(driver,itn);
 		String amount = "";
 		double totalBookingFare = 0.00;
 		bagPage = new BagPage(logger);
@@ -378,8 +379,7 @@ public class PaymentPage extends BasePage {
 			Thread.sleep(5000);
 			amount = totalAmount.getText().trim();
 		} catch (StaleElementReferenceException e) {
-			itn.setErrorLog("Error while getting the text of amount " );
-			logger.info(e);
+			Common.logError(itn,"Error while getting the text of amount ");
 		}
 		totalBookingFare = ConvertPrice(amount);
 		if( amount.contains(",") ){
@@ -430,7 +430,7 @@ public class PaymentPage extends BasePage {
 				}
 				paymentPage.fillPaymentPage(itn, createAccount, false);
 			} catch (Exception e) {
-				itn.setErrorLog("Error in payment page " );
+				Common.logError(itn,"Error in payment page");
 			}
 			// wait.until(ExpectedConditions.elementToBeClickable(bagsTab));
 
@@ -495,4 +495,5 @@ public class PaymentPage extends BasePage {
 		//logger.info("Actual amount (" + toCheckValue + ") is matching with decline amount: FALSE");
 		return false;
 	}
+	
 }

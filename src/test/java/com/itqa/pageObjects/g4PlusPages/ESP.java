@@ -13,6 +13,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -41,6 +42,7 @@ public class ESP extends BasePage{
 			logger.info("Map row clicked");
 			logger.info("ESP Verify -> PASS");
 		}catch(Exception e){
+			Common.logError(itn, "Unable to verify the fields in ESP");
 			logger.info("Error while verifying access ESP");
 			itn.setErrorLog("Error while access ESP " );
 			throw new Error("Error while access ESP");

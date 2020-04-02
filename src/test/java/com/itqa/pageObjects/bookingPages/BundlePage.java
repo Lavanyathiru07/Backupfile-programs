@@ -46,6 +46,7 @@ public class BundlePage extends BasePage {
 	}
 
 	public void selectBundle(Itinerary itn) throws WebDriverException {
+		Common.siteIssues(driver,itn);
 		try {
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			if (driver.findElement(By.className("bundles")).isDisplayed()) {
@@ -74,7 +75,7 @@ public class BundlePage extends BasePage {
 			}
 		} catch (NoSuchElementException e) {
 			logger.info("Bundles page is skipping");
-
 		}
 	}
+	
 }

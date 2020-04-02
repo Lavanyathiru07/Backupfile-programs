@@ -32,6 +32,7 @@ import com.itqa.pageObjects.g4PlusPages.RQ;
 import com.itqa.pageObjects.g4PlusPages.STS;
 import com.itqa.pageObjects.g4PlusPages.SVT;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -125,7 +126,7 @@ public class G4PlusFlow extends BasePage {
 		logger.info(" AWS Login Successfull ");
 	}
 
-	public void g4PlusSignin() {
+	public void g4PlusSignin(Itinerary itn) {
 		try {
 			if (!System.getProperty("env").contains("nddprd") && !System.getProperty("env").contains("prod")) {
 				if (System.getProperty("env").contains("aws")) {
@@ -146,7 +147,8 @@ public class G4PlusFlow extends BasePage {
 			}
 			else  {
 				DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
-				G4PlusLoginPage.g4plusLogin(false);
+				Common.siteIssues(DriverBase.getDriver(), itn);
+				G4PlusLoginPage.g4plusLogin(false,itn);
 			}
 
 
@@ -157,7 +159,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessAIS(Itinerary itn) {
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> tabs = DriverBase.getDriver().getWindowHandles();
 		try {
 			Thread.sleep(5500);
@@ -178,7 +180,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessCL(Itinerary itn) {
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectCL(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -224,6 +226,7 @@ public class G4PlusFlow extends BasePage {
 					DriverBase.getDriver().get(URLS.G4PLUSTOKEN.getUrl(Environment.getEnv(), 0));
 					DriverBase.getDriver().get(URLS.AIS.getUrl(Environment.getEnv(), 0));
 				}
+				Common.siteIssues(DriverBase.getDriver(), itn);
 			} else {
 
 				if (System.getProperty("env").contains("nddprd")) {
@@ -233,7 +236,8 @@ public class G4PlusFlow extends BasePage {
 					DriverBase.getDriver().get(URLS.G4PLUS.getUrl(Environment.getEnv(), 0));
 
 				}
-				G4PlusLoginPage.g4plusLogin(false);
+				Common.siteIssues(DriverBase.getDriver(), itn);
+				G4PlusLoginPage.g4plusLogin(false,itn);
 				try {
 					Thread.sleep(5500);
 					driver = DriverBase.getDriver();
@@ -299,9 +303,7 @@ public class G4PlusFlow extends BasePage {
 			MaintenanceRecords.openReport(itn);
 
 		} catch (Exception e) {
-			itn.setErrorLog("Error while getting SPOE report " );
-			logger.info("Error while getting SPOE report");
-			throw new Error("Reports cant find");
+			Common.logError(itn, "Error while getting SPOE report");
 		}
 	}
 	public void verifyFlightFollowing(Itinerary itn) {
@@ -397,7 +399,7 @@ public class G4PlusFlow extends BasePage {
 
 	public void accessSTS(Itinerary itn) {
 
-		g4PlusSignin();
+		g4PlusSignin(itn);
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectSTS(itn);
@@ -408,7 +410,7 @@ public class G4PlusFlow extends BasePage {
 
 	public void accessESP(Itinerary itn) {
 
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectESP(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -417,7 +419,7 @@ public class G4PlusFlow extends BasePage {
 
 	public void accessSVT(Itinerary itn) {
 
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectSVT(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -426,7 +428,7 @@ public class G4PlusFlow extends BasePage {
 
 	public void accessCAR(Itinerary itn) {
 
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectCAR(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -434,7 +436,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessTF2(Itinerary itn) {
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectFM(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -443,7 +445,7 @@ public class G4PlusFlow extends BasePage {
 
 	public void accessRQ(Itinerary itn) {
 
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectRQ(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -452,7 +454,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessBAG(Itinerary itn) {
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectFM(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -461,7 +463,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessPB2(Itinerary itn) {
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectFM(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -470,7 +472,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessHOT(Itinerary itn) {
-		g4PlusSignin();
+		g4PlusSignin(itn);
 
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectHOT(itn);
@@ -480,7 +482,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessATL(Itinerary itn) {
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectATL(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -489,7 +491,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessOFO(Itinerary itn) {
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectOFO(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -497,7 +499,7 @@ public class G4PlusFlow extends BasePage {
 	}
 
 	public void accessMOD(Itinerary itn) {
-		g4PlusSignin();
+		g4PlusSignin(itn);
 		Set<String> curTab = DriverBase.getDriver().getWindowHandles();
 		g4MenuPage.selectMOD(itn);
 		GeneralUtils.switchNextTab(DriverBase.getDriver(), curTab);
@@ -514,9 +516,7 @@ public class G4PlusFlow extends BasePage {
 			capabilities.setCapability("tz", "America/Los_Angeles");
 
 		} catch (Exception e) {
-			logger.info("Error while accessing swap");
-			itn.setErrorLog("Error while accessing swap " );
-			throw new Error(e);
+			Common.logError(itn, "Error while accessing swap");
 		}
 
 		DriverBase.getDriver().get("https://swap.allegiantair.com");
@@ -528,9 +528,7 @@ public class G4PlusFlow extends BasePage {
 			loginPage.openSwap(itn);
 			logger.info("Swap Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error in Swap page");
-			itn.setErrorLog("Swap Scenario -> Fail");
-			throw new Error();
+			Common.logError(itn, "Error in Swap page");
 		}
 
 	}

@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -49,9 +50,7 @@ public class FlightFlow extends BasePage{
 			logger.info("Flight Flow Table Displayed");
 			logger.info("FlightFlow Scenario -> Pass");
 		}catch(Exception e){
-			logger.info("Error while opening flight flow");
-			itn.setErrorLog("Error while opening flight flow " );
-			throw new Error("Fligh Flow FAIL");
+			Common.logError(itn, "Error while opening flight flow");
 		}
 	}
 }

@@ -4,6 +4,7 @@ package com.itqa.pageObjects.checkinPages;
 
 import com.graphbuilder.struc.Bag;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 import org.apache.log4j.Logger;
@@ -89,6 +90,7 @@ public class BagAndBoardingPage {
     }
 
     public void doBagandBoarding(Itinerary itn) {
+    	Common.siteIssues(driver, itn);
         addBagsAndPriority();
         clickContinue();
         clickContinueHazard(itn);

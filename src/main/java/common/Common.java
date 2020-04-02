@@ -1,6 +1,9 @@
 package common;
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+
+import data.Itinerary;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -11,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 // wrapper methods to encapsulate Selenium common functions
@@ -171,6 +175,48 @@ public class Common {
 		dropDownLocator.selectByVisibleText(text);
 	}
 
+	public static void siteIssues(WebDriver driver, Itinerary itn) {
+    	driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> siteCantBeReached = driver.findElements(By.xpath("//div[@id='main-message']"));
+		List<WebElement> somethingOdd = driver
+				.findElements(By.xpath("//h2[contains(text(),'Something really odd just happened')]"));
+		List<WebElement> goodDeals = driver
+				.findElements(By.xpath("//h1[contains(text(),'Good deals come to those who wait')]"));
 
+		if (siteCantBeReached.size() != 0) {
+			logError(itn,"We are facing site can't be reached issue please check after some time.");
+		} else if (somethingOdd.size() != 0) {
+			logError(itn,"We got Something Odd happened error, Please try after sometimes.");
+		} else if (goodDeals.size() != 0) {
+			logError(itn,"URL navigated to maintenace page, Please try after sometimes.");
+		}
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+	}
+	
+	public static void logError(Itinerary itn, String msg) {
+		logger.error(msg);
+		itn.setErrorLog(msg);
+		throw new Error(msg);
+	}
+	
+	public static void flightRouteIssue(WebDriver driver, Itinerary itn) {
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> flightRoutes = driver.findElements(By.xpath("//li[@data-tracked-by='market-retry']"));
+		if (flightRoutes.size() != 0) {
+			logError(itn, "Flight routes are currently being updated, Please try after some time");
+		}
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+	}
+	
+	public static void invalidCredentials(WebDriver driver, Itinerary itn) {
+		
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> credentialIssue = driver.findElements(By.xpath("//div[@class='alert alert-danger']"));
+		if (credentialIssue.size() != 0) {
+			logError(itn, "Unable to authenticate credentials");
+		}
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		
+	}
 
 }

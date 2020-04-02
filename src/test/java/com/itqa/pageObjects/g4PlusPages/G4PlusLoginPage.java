@@ -13,6 +13,7 @@ import com.itqa.Utils.Environment;
 import com.itqa.Utils.URLS;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -56,7 +57,7 @@ public class G4PlusLoginPage extends BasePage {
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
 	}
 
-	public void g4plusLogin(Boolean station) {
+	public void g4plusLogin(Boolean station, Itinerary itn) {
 		try {
 			if (!station) {
 				if (Environment.getEnv().contains("prod")||Environment.getEnv().contains("nddprd")) {
@@ -75,6 +76,7 @@ public class G4PlusLoginPage extends BasePage {
 				passwordField.sendKeys(new String(Base64.getDecoder().decode(password)));
 			}
 			loginButton.click();
+			Common.invalidCredentials(driver,itn);
 			Thread.sleep(2500);
 			logger.info("Signin to G4Plus-Portal");
 		} catch (Exception e) {

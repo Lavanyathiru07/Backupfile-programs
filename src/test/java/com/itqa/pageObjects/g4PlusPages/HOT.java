@@ -2,6 +2,7 @@ package com.itqa.pageObjects.g4PlusPages;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -75,8 +76,7 @@ public class HOT extends BasePage{
 			logger.info("HOT Scenario -> Pass");
 
 		} catch (Exception e) {
-			itn.setErrorLog("Error while verifying HOT Scenario");
-			throw new Error("HOT Scenario -> Fail");
+			Common.logError(itn, "Error while verifying the fields of HOT");
 		}		
 		
 	}

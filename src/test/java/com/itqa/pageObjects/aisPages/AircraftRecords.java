@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
+
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -59,10 +61,7 @@ public class AircraftRecords extends BasePage {
 			}
 			logger.info("lookupAircraftPart Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Error while verifying lookupAircraftPart");
-			itn.setErrorLog("Error while verifying lookupAircraftPart Scenario");
-			throw new Error("Aircraft Records returns no result");
-
+			Common.logError(itn, "Error while verifying lookupAircraftPart");
 		}
 	}
 

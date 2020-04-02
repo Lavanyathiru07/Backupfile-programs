@@ -14,6 +14,7 @@ import org.testng.SkipException;
 import com.itqa.Utils.Environment;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -69,16 +70,14 @@ public class LineMaintenance extends BasePage{
 					try {
 						verifyReport("301NV");
 					} catch (Exception g) {
-						g.printStackTrace();
-						throw new Error("Records returns no result");
+						//g.printStackTrace();
+						Common.logError(itn, "No records are found for the these tail numbers - 217NV, 215NV and 301NV");
 					}
 				}
 			}
 			logger.info("LineMaintenance Report Scenario -> Pass");
 		} catch (Exception e) {
-			logger.info("Records returns no result");
-			logger.error("LineMaintenance Report Scenario -> Fail");
-			throw new Error("Records returns no result");
+			Common.logError(itn, "No Recordes available in the flight maintenance.");
 		}
 
 	}

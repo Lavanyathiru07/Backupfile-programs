@@ -14,6 +14,7 @@ import org.testng.SkipException;
 
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -85,7 +86,7 @@ public class G4MenuPage extends BasePage {
 				new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(modApp));
 				modApp.click();
 			}catch( Exception q) {
-				itn.setErrorLog("<<< MOD App !Clicked >>>");
+				Common.logError(itn, "MOD App is not Clicked.");
 			}
 		}
 	}
@@ -100,7 +101,7 @@ public class G4MenuPage extends BasePage {
 				new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(aisApp));
 				aisApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< AIS App !Clicked >>>");
+				Common.logError(itn, "Ais App is not clicked.");
 			}
 		}
 	}
@@ -113,7 +114,7 @@ public class G4MenuPage extends BasePage {
 			try {
 				stsApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< STS App !Clicked >>>");
+				Common.logError(itn, "STS App is not clicked.");
 			}
 		}
 	}
@@ -126,7 +127,7 @@ public class G4MenuPage extends BasePage {
 			try {
 				espApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< ESP App !Clicked >>>");
+				Common.logError(itn,"ESP App is not Clicked.");
 			}
 		}
 
@@ -140,7 +141,7 @@ public class G4MenuPage extends BasePage {
 			try {
 				svtApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< SVT App !Clicked >>>");
+				Common.logError(itn ,"SVT App is not Clicked");
 			}
 		}
 	}
@@ -153,7 +154,7 @@ public class G4MenuPage extends BasePage {
 			try {
 				fmApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< CAR App !Clicked >>>");
+				Common.logError(itn,"CAR App is not Clicked.");
 			}
 		}
 	}
@@ -166,7 +167,7 @@ public class G4MenuPage extends BasePage {
 			try {
 				fmApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< FM App !Clicked >>>");
+				Common.logError(itn,"FM App is not Clicked.");
 			}
 		}
 	}
@@ -179,7 +180,7 @@ public class G4MenuPage extends BasePage {
 			try {
 				rqApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< RQ App !Clicked >>>");
+				Common.logError(itn,"RQ App is not Clicked.");
 			}
 		}
 	}
@@ -192,7 +193,7 @@ public class G4MenuPage extends BasePage {
 			try {
 				hotApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< RQ App !Clicked >>>");
+				Common.logError(itn,"RQ App is not Clicked.");
 			}
 		}
 
@@ -206,7 +207,7 @@ public class G4MenuPage extends BasePage {
 			try {
 				atlApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< ATL App !Clicked >>>");
+				Common.logError(itn,"ATL App is not Clicked.");
 			}
 		}
 	}
@@ -219,7 +220,7 @@ public class G4MenuPage extends BasePage {
 			try {
 				clApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< CL App !Clicked >>>");
+				Common.logError(itn,"CL App is not Clicked.");
 			}
 		}
 	}
@@ -232,7 +233,7 @@ public class G4MenuPage extends BasePage {
 			try {
 				ofoApp.sendKeys(Keys.RETURN);
 			} catch (Exception w) {
-				itn.setErrorLog("<<< OFO App !Clicked >>>");
+				Common.logError(itn,"OFO App is not Clicked.");
 			}
 		}
 	}
@@ -248,7 +249,7 @@ public class G4MenuPage extends BasePage {
 				new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(stnsApp));
 				stnsApp.click();
 			} catch (Exception w) {
-				itn.setErrorLog("<<< STNS App !Clicked >>>");
+				Common.logError(itn, "STNS App is not Clicked.");
 			}
 		}
 	}

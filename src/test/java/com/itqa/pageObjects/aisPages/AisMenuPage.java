@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.itqa.pageObjects.BasePage;
 
+import common.Common;
 import data.Itinerary;
 import framework.DriverBase;
 
@@ -102,10 +103,10 @@ public class AisMenuPage extends BasePage {
 			APTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(accountsPayableMXTab));
 			accountsPayableMXTab.click();
-			driver.switchTo().alert().accept();
-			logger.info("Accept Security Alert");
+			//driver.switchTo().alert().accept();
+			//logger.info("Accept Security Alert");
 		} catch (Exception e) {
-			itn.setErrorLog("AccountsPayableMaintenance Scenario -> Fail");
+			Common.logError(itn, "Unable to click Account payable maintenance button.");
 		}
 	}
 
@@ -117,8 +118,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(kayakConsoleTab));
 			kayakConsoleTab.click();			
 		} catch (Exception e) {
-			logger.info("Error while verifying Kayak");
-			itn.setErrorLog("Kayak Scenario -> Fail");
+			Common.logError(itn, "Unable to click Kayak tab.");
 		}
 	}
 
@@ -130,7 +130,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightFollowingTab));
 			flightFollowingTab.click();
 		} catch (Exception e) {
-			itn.setErrorLog("Flight Following Scenario -> Fail");
+			Common.logError(itn, "Unable to navigate into flight following.");
 		}
 	}
 
@@ -142,7 +142,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(flightFlowTab));
 			flightFlowTab.click();
 		} catch (Exception e) {
-			itn.setErrorLog("Flight Follow Scenario -> Fail");
+			Common.logError(itn, "Unable to select flight following.");
 		}
 	}
 
@@ -153,10 +153,10 @@ public class AisMenuPage extends BasePage {
 			INTab.click();
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(inventoryMXTab));
 			inventoryMXTab.click();
-			DriverBase.getDriver().switchTo().alert().accept();
-			logger.info("Accept Security Alert");
+			//DriverBase.getDriver().switchTo().alert().accept();
+			//logger.info("Accept Security Alert");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while selecting Inventory maintenance " );
+			Common.logError(itn, "Error while selecting Inventory maintenance.");
 		}
 	}
 
@@ -168,7 +168,7 @@ public class AisMenuPage extends BasePage {
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(aircraftRecordsTab));
 			aircraftRecordsTab.click();			
 		} catch (Exception e) {
-			itn.setErrorLog("Aircraft Records Scenario -> Fail");
+			Common.logError(itn, "Unable to open Aircraft record.");
 		}
 	}
 
@@ -179,7 +179,7 @@ public class AisMenuPage extends BasePage {
 			METab.click();		
 			logger.info("MXandEngr tab clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while verifying MXandEngr Scenario");
+			Common.logError(itn, "Error while clicking MX and Engineering button.");
 		}
 	}
 
@@ -190,8 +190,7 @@ public class AisMenuPage extends BasePage {
 			lineMXTab.click();	
 			logger.info("Line MX tab clicked");
 		} catch (Exception e) {
-			logger.info("Error while verifying LineMX");
-			itn.setErrorLog("Error while verifying LineMX Scenario");
+			Common.logError(itn, "Unable to click Line MX tab.");
 		}
 	}
 
@@ -224,7 +223,7 @@ public class AisMenuPage extends BasePage {
 			mxRecordsTab.click();	
 			logger.info("Mx record tab clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while verifying MXRecords Scenario");
+			Common.logError(itn, "Error while clicking MX and Record button.");
 		}
 	}
 
@@ -238,7 +237,7 @@ public class AisMenuPage extends BasePage {
 			flightScheduleMXTab.click();
 			logger.info("flightScheduleMX tab clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while verifying FlightScheduleMX Scenario");
+			Common.logError(itn, "Error while verifying FlightScheduleMX Scenario");
 		}
 	}
 
@@ -266,7 +265,7 @@ public class AisMenuPage extends BasePage {
 			printManifestTab.click();
 			logger.info("Printmanifest tab clicked");
 		} catch (Exception e) {
-			itn.setErrorLog("Error while verifying PrintManifest Scenario");
+			Common.logError(itn, "Unable to click Reservation and print maintest button.");
 		}
 	}
 
