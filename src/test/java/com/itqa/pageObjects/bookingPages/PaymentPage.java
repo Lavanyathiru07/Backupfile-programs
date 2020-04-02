@@ -210,8 +210,8 @@ public class PaymentPage extends BasePage {
 			cardName = System.getProperty("cardname");
 			cvv = System.getProperty("cvv");
 		} else {
-			expiredMonth = "3";
-			expiredYear = "2020";
+			expiredMonth = "5";
+			expiredYear = "2022";
 			cardNumber = cardNo;
 			cardName = "A";
 			cvv = "123";
