@@ -94,7 +94,7 @@ public class CheckinPaymentPage {
         }
         else {
             expiredMonth = "3";
-            expiredYear = "2020";
+            expiredYear = "2023";
             cardNumber = "5454545454545454";
             cardName = "A";
             cvv = "123";
