@@ -306,7 +306,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 
 		if ((env.contains("in1") ||env.contains("in2")||env.contains("qa1")||env.contains("qa2")||env.contains("stg")
-				||env.contains("trn")||env.contains("nddprd")||env.contains("aws")||env.contains("sb1"))&& (silo == 1)) {
+				||env.contains("trn")||env.contains("nddprd")||env.contains("aws")||env.contains("sb1")||env.contains("prod"))&& (silo == 1)) {
 			
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context,
 					itn);
@@ -369,7 +369,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 
 		if ((env.contains("in1") ||env.contains("in2")||env.contains("qa1")||env.contains("qa2")||env.contains("stg")
-				||env.contains("trn")||env.contains("nddprd")||env.contains("aws")||env.contains("sb1"))&& (silo == 1)) {
+				||env.contains("trn")||env.contains("nddprd")||env.contains("aws")||env.contains("sb1")||env.contains("prod"))&& (silo == 1)) {
 			
 			setUpTestContext(silo, "silo" + silo + " " + method.getAnnotation(Story.class).value(), context,
 					itn);
