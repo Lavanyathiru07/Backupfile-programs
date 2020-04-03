@@ -918,7 +918,7 @@ public class NonBookingTestIT extends DriverBase {
 		//itineraryItn = itn.getItn();
 	}
 
-	@AfterMethod
+	@AfterMethod(groups = {"bat", "g4plus","bat", "ais"})
 	public void writeResult(ITestResult result) {
 		if (result.getStatus() == ITestResult.SKIP) {
 			cat.completeTest("SKIPPED", "BAT 2.0", "", "", testId.get(),desc.get() + Thread.currentThread().getId() + ".log");
