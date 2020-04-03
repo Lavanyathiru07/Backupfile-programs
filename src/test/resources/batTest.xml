@@ -25,10 +25,9 @@
 					<exclude name="WebBooking" />
 					<exclude name="TABooking" />
 					<exclude name="CCBooking" />
-					<include name="ocli" />
 					<exclude name="bat" />
 					<exclude name="booking" />
-					<exclude name="olci" />
+					<include name="olci" />
 					<exclude name="voucher" />
 					<exclude name="www" />
 					<exclude name="account" />
