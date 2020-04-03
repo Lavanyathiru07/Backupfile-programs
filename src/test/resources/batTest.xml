@@ -6,11 +6,11 @@
 	data-provider-thread-count="30">
 
 	<test name="Non Booking and PreBAT">
-		<groups>
+		<!-- <groups>
 			<run>
 				<include name=System.getProperty( " groups ") />
 			</run>
-		</groups>
+		</groups> -->
 		<classes>
 			<class name="com.itqa.tests.PreBAT" />
 			<class name="com.itqa.tests.NonBookingTestIT" />
@@ -19,11 +19,11 @@
 
 	<test name="Booking">
 
-		<groups>
+		<!-- <groups>
 			<run>
 				<include name=System.getProperty( " groups ") />
 			</run>
-		</groups>
+		</groups> -->
 		<classes>
 
 			<class name="com.itqa.tests.WebBookingTestIT" />
