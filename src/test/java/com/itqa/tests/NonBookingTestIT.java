@@ -30,7 +30,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Properties;
-
+@Test(groups = {"NonBooking"})
 @Listeners({ TestReport.class, RealTimeTestReport.class })
 public class NonBookingTestIT extends DriverBase {
 

@@ -30,7 +30,7 @@ import io.qameta.allure.Story;
 import listeners.RealTimeTestReport;
 import listeners.TestReport;
 import listeners.TestResultContext;
-
+@Test(groups = {"TABooking"})
 @Listeners({ TestReport.class, RealTimeTestReport.class })
 public class TABookingTestIT extends DriverBase {
 

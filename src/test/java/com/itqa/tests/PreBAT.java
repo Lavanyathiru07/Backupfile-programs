@@ -16,7 +16,7 @@ import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-
+@Test(groups = {"PreBAT"})
 public class PreBAT {
 	Response flightResponse = null;
 	Response getKey = null;
