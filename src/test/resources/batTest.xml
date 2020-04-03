@@ -16,15 +16,15 @@
 
 		<groups>
 			<run>
-				<exclude name="WebBooking" />
+				<!-- <exclude name="WebBooking" />
 				<exclude name="TABooking" />
 				<exclude name="CCBooking" />
 				<exclude name="bat" />
 				<exclude name="booking" />
-				<exclude name="olci" />
+				<exclude name="olci" /> -->
 				<include name="voucher" />
-				<exclude name="www" />
-				<exclude name="account" />
+				<!-- <exclude name="www" />
+				<exclude name="account" /> -->
 			</run>
 		</groups>
 		<classes>
