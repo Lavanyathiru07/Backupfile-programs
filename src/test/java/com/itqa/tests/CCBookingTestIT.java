@@ -29,7 +29,7 @@ import java.net.MalformedURLException;
 import java.util.Properties;
 
 import static io.qameta.allure.Allure.step;
-@Test(groups = {"CCBooking"})
+@Test
 @Listeners({ TestReport.class, RealTimeTestReport.class })
 public class CCBookingTestIT extends DriverBase {
 
