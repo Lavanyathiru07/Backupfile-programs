@@ -16,7 +16,8 @@ import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-@Test(groups = {"PreBAT"})
+@Test(groups = {"PreBAT","WebBooking","TABooking","CCBooking","NonBooking","bat","www","ta","cc","booking",
+		"account","voucher","olci", "g4plus", "ais"})
 public class PreBAT {
 	Response flightResponse = null;
 	Response getKey = null;
