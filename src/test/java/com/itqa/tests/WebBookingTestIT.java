@@ -32,7 +32,7 @@ import io.qameta.allure.Story;
 import listeners.RealTimeTestReport;
 import listeners.TestReport;
 import listeners.TestResultContext;
-@Test
+
 @Listeners({ TestReport.class, RealTimeTestReport.class })
 public class WebBookingTestIT extends DriverBase {
 	private final Boolean WITHACCOUNT = true;
