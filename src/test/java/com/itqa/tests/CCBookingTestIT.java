@@ -219,7 +219,7 @@ public class CCBookingTestIT extends DriverBase {
 		}
 	}
 
-	@AfterMethod
+	@AfterMethod(groups = {"bat","cc","booking"})
 	public void writeResult(ITestResult result) {
 		synchronized (this) {
 			if (result.getStatus() == ITestResult.SKIP) {

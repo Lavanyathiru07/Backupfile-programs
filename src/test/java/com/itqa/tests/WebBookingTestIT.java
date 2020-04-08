@@ -417,7 +417,7 @@ public class WebBookingTestIT extends DriverBase {
 		}
 	}
 
-	@AfterMethod
+	@AfterMethod(groups = {"bat","www","booking"})
 	public void writeResult(ITestResult result) {
 		synchronized (this) {
 			if (result.getStatus() == ITestResult.SKIP) {
