@@ -96,8 +96,8 @@ public class ManageTravelPaymentPage {
             cvv = System.getProperty("cvv");
         }
         else {
-            expiredMonth = "3";
-            expiredYear = "2023";
+            expiredMonth = "12";
+            expiredYear = "2030";
             cardNumber = itn.getCardNo();
             cardName = "A";
             cvv = "123";

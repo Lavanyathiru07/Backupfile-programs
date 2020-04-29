@@ -211,11 +211,11 @@ public class PaymentPage extends BasePage {
 			cvv = System.getProperty("cvv");
 		} else {
 
-			expiredMonth = "3";
-			expiredYear = "2023";
+			expiredMonth = "12";
+			expiredYear = "2030";
 			cardNumber = cardNo;
 			cardName = "A";
-			cvv = "123";
+			cvv = "737";
 		}
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		for (int loop = 0; loop < 10; loop++) {
