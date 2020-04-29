@@ -98,7 +98,7 @@ public class CheckinPaymentPage {
             expiredYear = "2030";
             cardNumber = "5454545454545454";
             cardName = "A";
-            cvv = "123";
+            cvv = "737";
         }
 
         //Some strange AJAX call is made around here and mess with entering CC

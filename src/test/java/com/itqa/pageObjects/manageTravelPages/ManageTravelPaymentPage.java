@@ -100,7 +100,7 @@ public class ManageTravelPaymentPage {
             expiredYear = "2030";
             cardNumber = itn.getCardNo();
             cardName = "A";
-            cvv = "123";
+            cvv = "737";
         }
 
         try {
