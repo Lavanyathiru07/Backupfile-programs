@@ -354,10 +354,10 @@ public class MOD extends BasePage {
 			cardName = System.getProperty("cardname");
 			cvv = System.getProperty("cvv");
 		}else {
-			expiredMonth = "03";
-			expiredYear = "2023";
+			expiredMonth = "12";
+			expiredYear = "2030";
 			cardNumber = "5454545454545454";
-			cvv = "123";
+			cvv = "737";
 		}
 
 		confirmationNumField.sendKeys(Itn.getItn());
