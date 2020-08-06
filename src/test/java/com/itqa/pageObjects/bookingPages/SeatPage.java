@@ -26,6 +26,9 @@ public class SeatPage extends BasePage {
 
     @FindBy(xpath = "//a[contains(@class,'allegiant_models_seat')]")
     private List<WebElement> availSeatList;
+    
+    @FindBy(xpath = "//a[contains(@class,'seat_bundled_tier')]")
+    private List<WebElement> availBundleSeatList;
 
     @FindBy(css = "a[href='#departing']")
     private WebElement departingTab;
@@ -70,9 +73,16 @@ public class SeatPage extends BasePage {
     public void chooseSeat(int num, Boolean firstLeg, Boolean secondLeg,Itinerary itn) {
         if (firstLeg) {
             for (int i = 0; i < num; i++) {
-                int seatInd = new Random().nextInt(availSeatList.size());
-                logger.info("Select departing seat: " + availSeatList.get(seatInd).getAttribute("aria-label") + " for pax " + (i + 1));
-                jse.executeScript(JSFIRSTARG, availSeatList.get(seatInd));
+            	if(itn.getDescription().contains("AllegiantBonus")) {
+            		int seatInd = new Random().nextInt(availBundleSeatList.size());
+                    logger.info("Select departing seat: " + availBundleSeatList.get(seatInd).getAttribute("aria-label") + " for pax " + (i + 1));
+                    jse.executeScript(JSFIRSTARG, availBundleSeatList.get(seatInd));
+            	}else {
+            		int seatInd = new Random().nextInt(availSeatList.size());
+                    logger.info("Select departing seat: " + availSeatList.get(seatInd).getAttribute("aria-label") + " for pax " + (i + 1));
+                    jse.executeScript(JSFIRSTARG, availSeatList.get(seatInd));
+            	}
+                
                 jse.executeScript(JSFIRSTARG, okButton);
             }
         }
