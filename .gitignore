@@ -1,10 +1,26 @@
-/target/
-
-.DS_Store
-.idea/
-EmailResult.html
-Result.html
-SDLC_BAT.iml
+# Don't check auto-generated stuff into git
+coverage/
+node_modules/
 allure-results/
-chromedriver.exe
-src/test/resources/nonBookingScreenshot/
+reports/
+stats.json
+bundle-analysis.json
+features-build/
+temp/
+debug.log
+.project
+cucumberJs-results
+
+# Cruft
+.DS_Store
+npm-debug.log
+.idea/
+
+# VSCode
+.vscode/launch.json
+node_modules/
+results/
+reports/
+cucumberJs-report/
+rerun.sh
+package-lock.json
