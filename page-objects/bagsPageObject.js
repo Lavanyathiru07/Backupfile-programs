@@ -419,7 +419,7 @@ class BagsPage {
 		await actions.waitForClickable(clickContinueButton, 'Continue button in BAGS PAGE')
 		await actions.scroll(clickContinueButton)
 		await actions.clickElement('click', clickContinueButton, 'Continue button in BAGS PAGE')
-		await actions.pause(5000)
+		await actions.pause(10000)
 		let popupContinueBtnVisibility = await actions.isDisplayed(popupContinueButton, "continue button to close the popup")
 		console.log("popupContinueBtnVisibility: ", popupContinueBtnVisibility)
 		if (popupContinueBtnVisibility) {
