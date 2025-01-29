@@ -64,8 +64,9 @@ When(/^I am on MT landing page I choose the departure date "(.+)" days from curr
     if (process.env.ENV.includes("prod") || process.env.tag.includes("prod")) {
         departureDate = await homePage.chooseDepartingDate(18);
     } else {
-        await browser.setWindowSize(2700, 2700)
+        // await browser.setWindowSize(2800, 2800)
         departureDate = await homePage.chooseDepartingDate(number);
+        
     }
 });
 
