@@ -404,10 +404,10 @@ class SeatPage {
 	}
 
 	async skipSeatsPage() {
-		await actions.pause(7000)
+		await browser.pause(10000)
 		await browser.execute("window.scrollTo(0, document.body.scrollHeight);");
-		await actions.waitForDisplayed(seatsPageSkip, 'seatsPageSkip', 20000)
-		// await actions.scroll(seatsPageSkip)
+		await actions.waitForDisplayed(seatsPageSkip, 'seatsPageSkip', 5000)
+		await actions.scroll(seatsPageSkip)
 		await actions.pause(3000)
 		await actions.waitForEnabled(seatsPageSkip, 'seatsPageSkip')
 		await actions.clickElement('click', seatsPageSkip, "seatsPageSkip")
