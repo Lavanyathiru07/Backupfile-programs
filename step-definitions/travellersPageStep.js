@@ -12,7 +12,7 @@ When(/^I am on Travelers page I fill in data for "(.+)" travelers$/, async funct
 
 Then(/^I am on Travelers page I click continue button$/, async () => {
     await TravellersPage.continuebuttontravellers()
-    await browser.pause(3000)
+    await browser.pause(8000)
 })
 
 When(/^I select (.+) for Multiple Travelers$/, async (ssrtype) => {
