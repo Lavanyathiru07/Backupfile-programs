@@ -412,6 +412,7 @@ class SeatPage {
 		await actions.waitForEnabled(seatsPageSkip, 'seatsPageSkip')
 		await actions.clickElement('click', seatsPageSkip, "seatsPageSkip")
 		await actions.pause(8000)
+		
 	}
 	/*
 	*  seatType: any/exitRow/legroom/bundleSeat/economyBundleSeat/exitRowBundleSeat/economyNonBundleSeat/economy

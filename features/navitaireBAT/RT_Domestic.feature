@@ -1,6 +1,6 @@
 @navitairebat
 Feature: This feature file is to run Naviataire BAT scenarios
- 
+     @set2 
      Scenario Outline:RT, Domestic flight with Infant in lap and Child with 1 CO and 1 CK bag, Seat &Modify WWW booking via MT
           Given I complete the Booking using gql for RT Domestic
                | tripType    | roundTrip                |
@@ -84,3 +84,4 @@ Feature: This feature file is to run Naviataire BAT scenarios
             Examples:
             | tripType | date |adult  | child | InfantInSeat |InfantInLap | Addproduct    | paxNum | productTotal  | changeDate |    CarryOn       |        Check             | Seats                    |
             | roundTrip|   7  |   2   |  1    |        0     |      1     | 1 checked bag | 1      | 1 checked bag | 9          | pax-all Seg-both | pax-all Seg-both count-1 | pax-all Seg-all type-any |
+

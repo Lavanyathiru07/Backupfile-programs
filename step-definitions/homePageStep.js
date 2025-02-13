@@ -66,6 +66,7 @@ When(/^I am on MT landing page I choose the departure date "(.+)" days from curr
     } else {
          await browser.setWindowSize(2700, 2700);
         departureDate = await homePage.chooseDepartingDate(number);
+        
     }
 });
 
