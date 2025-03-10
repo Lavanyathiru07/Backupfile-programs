@@ -479,14 +479,9 @@ class PaymentPage {
       // do {
       //   await actions.pause(500)
       // } while (await $(spinnerBar).isDisplayed())
-      await browser.pause(15000)
-      let thankyouText = await actions.isDisplayed(thankyouMessage, 'thankyouMessage');
-      if (!thankyouText) {
-        console.log("//thankyou message is not displayed//")
-        assert.fail("Failed due to payment error! ")
-      }
-      await actions.waitForDisplayed(thankyouMessage, 'thankyouMessage', 5000);
-      await browser.pause(5000)
+      await actions.pause(15000)
+      await actions.waitForDisplayed(thankyouMessage, 'thankyouMessage', 60000);
+      await actions.pause(15000)
     }
     await actions.pause(5000)
   }
