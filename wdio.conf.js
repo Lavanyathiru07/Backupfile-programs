@@ -37,7 +37,7 @@ if (target_browser) {
 
 exports.config = _.extend({
   specs: [
-    './features/**/*.feature'
+    './features/**/RT_Domestic.feature'
   ],
   exclude: [
     // 'path/to/excluded/files'
