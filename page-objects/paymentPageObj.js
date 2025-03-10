@@ -479,7 +479,7 @@ class PaymentPage {
       do {
         await actions.pause(500)
       } while (await $(spinnerBar).isDisplayed())
-      await actions.pause(5000)
+      await actions.pause(20000)
       await actions.waitForDisplayed(thankyouMessage, 'thankyouMessage', 60000);
       await actions.pause(15000)
     }
