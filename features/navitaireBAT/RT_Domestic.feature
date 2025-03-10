@@ -36,7 +36,7 @@ Feature: This feature file is to run Naviataire BAT scenarios
                | Addproduct    | paxNum | productTotal  | changeDate |
                | 1 checked bag | 1      | 1 checked bag | 9          |
 
-     @set2 @test
+     @set2 
      Scenario Outline:RT, Domestic flight with Infant in lap and Child with 1 CO and 1 CK bag, Seat &Modify WWW booking via MT
           Given  I navigate to www application
           Given  I am on landing page I select "<tripType>"
