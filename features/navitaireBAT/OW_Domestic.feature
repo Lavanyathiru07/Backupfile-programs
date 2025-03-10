@@ -1,7 +1,7 @@
 @navitairebat
 Feature: This feature file is to run Navitaire BAT scenarios
     #PASS
-    @set2 
+    @set2 @test
     Scenario Outline: OW Domestic-,F+H+C+SSR,2 Adults,CO,CK,Seats,PA & Cancel via MT
         Given I navigate to www application
         Given I am on landing page I select "<tripType>"
