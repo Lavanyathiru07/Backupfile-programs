@@ -61,9 +61,10 @@ class ConfirmationPage {
 			// await actions.switchToFrame(iframe2, "second iframe")
 			await actions.waitForDisplayed(buttonselector, 'buttonselector', 10000)
 			await actions.waitForClickable(buttonselector, 'buttonselector')
-			await actions.clickElement('click', buttonselector, "button to close the Rocketer pop-up")
+			await actions.pause(5000)
+			await actions.click(buttonselector, "button to close the ROKT pop-up")
+			await actions.pause(5000)
 			await actions.switchToParentFrame()
-			// await actions.switchToParentFrame()
 		}
 		else {
 			console.log("COOL!, No such Rocketer popup got displayed")
