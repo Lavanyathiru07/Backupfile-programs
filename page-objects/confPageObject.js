@@ -11,9 +11,9 @@ import graphqlQueryConfirmationPage from '../utility/graphqlQueryConfirmationPag
 import manageTravel from './manageTravel.js';
 import jsonPath from 'jsonpath'
 
-const iframe1 = "[title='Rokt placement']"
+const iframe1 = "//iframe[contains(@title,'Rokt placement')]"
 const iframe2 = "[title='Rokt offer']"
-const buttonselector = "[data-e2e='lightboxClose']"
+const buttonselector = "//button[@title='Close']"
 const scrollitn = "[data-hook='confirmation-page-section_customer-info_title']"
 const itnNumber = "[data-hook='confirmation-number_text']"
 const scrollmanage = "[data-hook='confirmation-page-section_customer-info_title']"
@@ -58,11 +58,12 @@ class ConfirmationPage {
 		let iframeVisibility = await actions.isDisplayed(iframe1, "first iframe")
 		if (iframeVisibility) {
 			await actions.switchToFrame(iframe1, "first iframe")
-			await actions.switchToFrame(iframe2, "second iframe")
+			// await actions.switchToFrame(iframe2, "second iframe")
 			await actions.waitForDisplayed(buttonselector, 'buttonselector', 10000)
 			await actions.waitForClickable(buttonselector, 'buttonselector')
-			await actions.clickElement('click', buttonselector, "button to close the Rocketer pop-up")
-			await actions.switchToParentFrame()
+			await actions.pause(5000)
+			await actions.click(buttonselector, "button to close the ROKT pop-up")
+			await actions.pause(5000)
 			await actions.switchToParentFrame()
 		}
 		else {

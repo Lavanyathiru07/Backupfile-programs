@@ -99,11 +99,16 @@ class TravelersPage {
 			let dateOfYearFieldsVisibility = await actions.isClickable(dateOfYearFields[i], 'travelerDOBYear input field')
 			if (dateOfYearFieldsVisibility) {
 				await actions.clickElement('click', dateOfYearFields[i], 'travelerDOBYear input field')
-                const value = String(year)
-                await actions.setInputField('setValue', value, dateOfYearFields[i], 'TravelerDOBYear')
-			}
+				const value = String(year)
+				// await actions.addValue(value, dateOfYearFields[i], "TravelerDOBYear")
+				//await actions.setInputField('setValue', value, dateOfYearFields[i], 'TravelerDOBYear')
+				for (let char of value) {
+					await browser.keys(char); // Type each character
+					await new Promise(resolve => setTimeout(resolve, 1000)); // Delay of 1 second }
+			   }
 		}
 	}
+}
 
 	async enterTravelerEmailId(email) {
 		var emailAddress = email.split('|')
