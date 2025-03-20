@@ -82,7 +82,7 @@ export default class ATLPage {
     async getHost() {
         let hostName
         if (process.env.ENV.includes("nexus") || process.env.ENV.includes("custjny") || process.env.ENV.includes("posttrvl")) {
-            hostName = 'mardb.qat.nexus.loy.usw2.aws.allegiantair.com'
+            hostName = 'mardb-qatnexusloy.cluster-cnjwnsxm1pzt.us-west-2.rds.amazonaws.com'
         }
         if (process.env.ENV.includes("stg01")) {
             hostName = 'mardb.stg01.aws.allegiant.com'
