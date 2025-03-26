@@ -168,11 +168,13 @@ class HotelPage {
 
     async hotelContinueBtn() {
         await actions.pause(30000)
-        await actions.waitForDisplayed(cbutton, 'cbutton button', 30000)
-        await actions.scroll(cbutton);
-        await actions.waitForClickable(cbutton, 'cbutton button')
-        await actions.clickElement('click', cbutton, "Hotel's Page Continue Button");
-        await actions.waitForDisplayed(carsPageHeader, 'carsPageHeader', 30000)
+        if ((await browser.getUrl()).includes('hotels')) {
+            await actions.waitForDisplayed(cbutton, 'cbutton button', 30000)
+            await actions.scroll(cbutton);
+            await actions.waitForClickable(cbutton, 'cbutton button')
+            await actions.clickElement('click', cbutton, "Hotel's Page Continue Button");
+            await actions.waitForDisplayed(carsPageHeader, 'carsPageHeader', 30000)
+        }
     }
 
 }
