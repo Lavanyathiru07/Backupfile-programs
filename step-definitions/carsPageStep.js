@@ -2,8 +2,8 @@ import { Then } from '@cucumber/cucumber'
 import CarPage from '../page-objects/carsPageObject'
 
 Then(/^I am on cars page I add a car to cart$/, async () => {
-    await CarPage.addToCart()
     await CarPage.collectCarsPageDetailsCP()
+    await CarPage.addToCart()
 })
 
 Then(/^I am on Cars page I click No thanks button$/, async () => {
