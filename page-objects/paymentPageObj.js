@@ -451,6 +451,23 @@ class PaymentPage {
     }
     
     await actions.scroll(termsscroll,'termsscroll')
+
+    let claimPointCheckBox = `//span[text() = 'Yes! Claim my points and become an Allways member!']/ancestor::label/div[2]`
+    if(await actions.isDisplayed(claimPointCheckBox , 'Points Claim Check box'))
+    {
+      console.log("Unchecking the Points Claim Checkbox")
+      await actions.click(claimPointCheckBox,'Points Claim Check box');
+      await actions.pause(3000)
+    }
+    await actions.pause(3000)
+    if(await actions.isExisting(`//path[@fill='#fff']`),'Points Claim Check Box Status')
+    {
+      console.log("The Points Claim checkbox is still checked")
+    }
+    else{
+      console.log("The Points Claim checkbox is unchecked")
+    }
+
     await actions.waitForDisplayed(termsbox, 'terms and conditions checkbox')
     await actions.waitForClickable(termsbox, 'terms and conditions checkbox');
     await actions.clickElement('click', termsbox, "condition checkbox")
