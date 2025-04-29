@@ -451,6 +451,24 @@ class PaymentPage {
     }
     
     await actions.scroll(termsscroll,'termsscroll')
+
+    let claimPointCheckBox = `//label[contains(@data-hook,'claim-my-points')]/div[2]`
+    if(await actions.isDisplayed(claimPointCheckBox , 'Points Claim Check box'))
+    {
+      console.log("Unchecking the Points Claim Checkbox")
+      await actions.click(claimPointCheckBox,'Points Claim Check box');
+      await actions.pause(3000)
+    }
+    await actions.pause(3000)
+    let checkBoxEnabled = claimPointCheckBox + `/*[local-name() = 'svg']/*[local-name() = 'g']/*[local-name() = 'path']`
+    if(await actions.isExisting(checkBoxEnabled,'check Box Enabled'))
+    {
+      console.log("The Points Claim Checkbox is still checked")
+    }
+    else{
+      console.log("The Points Claim Checkbox is unchecked")
+    }
+
     await actions.waitForDisplayed(termsbox, 'terms and conditions checkbox')
     await actions.waitForClickable(termsbox, 'terms and conditions checkbox');
     await actions.clickElement('click', termsbox, "condition checkbox")
