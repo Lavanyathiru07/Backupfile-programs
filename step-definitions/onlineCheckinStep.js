@@ -10,3 +10,7 @@ When(/^I am on Online checkin Passengers selection page I click checkin button$/
 When(/^I am on Online checkin Print passes page$/, async () => {
 	await CheckInPage.PrintBoardingPasses()
 });
+
+When(/^I am on online checkin validate seat is auto-assiganed after completing the checkin$/, async () => {
+	await Managetravel.seatautoassigned()
+});

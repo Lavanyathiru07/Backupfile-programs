@@ -59,6 +59,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
         And I am on Manage Travel onlinechekin page, "Bags" page I click on continue button
         And I am on Manage Travel onlinechekin page "Seats" page I click on continue button
         Then I am on Online checkin Print passes page
+        And I am on online checkin validate seat is auto-assiganed after completing the checkin
 
 # @set1 @qa
 # Scenario:FMM UI validation

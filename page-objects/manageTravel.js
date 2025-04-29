@@ -126,6 +126,8 @@ const lastName = "//*[@data-hook='lookup-page-input-last-name_lastName']"
 const confirmationNumber = "//*[@data-hook='lookup-page-input-confirmation-number_orderNumber']"
 const clickFindMyTrip = "//*[@data-hook='lookup-page-lookup-button']"
 const itineraryDetails = "//*[@data-hook='trip-summary-page_title']"
+const seatscroll = "//div[text()='Seat']"
+const seatautoassigned ="(//div[@class='ant-col ant-col-3 PassengerList__StyledCol-sc-1rkj5fy-4 hTXNTo'][3])"
 
 class Managetravel {
 
@@ -607,7 +609,24 @@ class Managetravel {
         await actions.clickElement('click', changeFlight, 'changeFlight')
         await actions.waitForDisplayed(flightH1, 'flightH1', 30000)
     }
-
+    async seatautoassigned(){
+       
+        await actions.pause(7000)
+        let seatassigned = await actions.isDisplayed(seatautoassigned, 'seatautoassigned')
+        if (seatassigned) {
+            await actions.scroll(seatscroll,'scroll to the seat heading',1000),
+            await actions.waitForDisplayed(seatautoassigned, 'seatautoassigned')
+            const seatElement = await $(seatautoassigned);   // using WebdriverIO style
+            let seatText = await seatElement.getText();
+            console.log("Seat number: " + seatText);
+            if(seatText=='-'){
+                console.log("seat is not-assigned")
+            }
+            else{
+                console.log("seat is assigned")
+            }
+            }
+        } 
     async cancelMyTrip() {
         await actions.waitForDisplayed(cancelButton, 'cancel button', 10000)
         await actions.waitForClickable(cancelButton, 'cancel button')
