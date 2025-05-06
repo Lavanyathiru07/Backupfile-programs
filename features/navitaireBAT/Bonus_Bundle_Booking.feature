@@ -3,6 +3,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
     @navitairebat @set1 
     Scenario Outline:Domestic-Bonus Bundle Booking, RT booking, 2 Adults
         Given I navigate to www application
+        Then I create my allegaint account
         Given I am on landing page I select "<tripType>"
         When I am on landing page I select "ABE" for the departure airport
         And I am on landing page I select "SFB" for the destination airport
