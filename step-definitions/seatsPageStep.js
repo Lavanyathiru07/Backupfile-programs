@@ -15,6 +15,7 @@ When(/^I am on Seat page I click continue button$/, async function () {
 });
 
 When(/^I am on Seat page I click No thanks, skip seat selection$/, async function () {
+	await browser.pause(8000);
 	await SeatPage.skipSeatsPage();
 });
 
