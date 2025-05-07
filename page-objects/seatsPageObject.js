@@ -405,16 +405,13 @@ class SeatPage {
 
 	async skipSeatsPage() {
 		let previousHeight = await browser.execute(() => document.body.scrollHeight);
-
-       while (true) {
+         while (true) {
     await browser.execute("window.scrollTo(0, document.body.scrollHeight);");
-    await browser.pause(1000); // wait for content to load
+    await browser.pause(1000); 
     const newHeight = await browser.execute(() => document.body.scrollHeight);
     if (newHeight === previousHeight) break;
     previousHeight = newHeight;
-}
-
-// Now ensure the element is present and interactable
+   }
 await actions.waitForDisplayed(seatsPageSkip, 'seatsPageSkip', 5000);
 await actions.scroll(seatsPageSkip);
 await actions.pause(3000);
