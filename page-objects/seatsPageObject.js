@@ -404,6 +404,9 @@ class SeatPage {
 	}
 
 	async skipSeatsPage() {
+		do {
+			await actions.pause(5000)
+		} while (await actions.isDisplayed(spinnerBar, 'spinnerBar'));
 		let previousHeight = await browser.execute(() => document.body.scrollHeight);
          while (true) {
     await browser.execute("window.scrollTo(0, document.body.scrollHeight);");
