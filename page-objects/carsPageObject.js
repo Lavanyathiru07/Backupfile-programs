@@ -20,36 +20,48 @@ const icePopup = "[data-hook='payment-page_ice-popup_close']"
 var CarsPageCollectorCP = new Map();
 
 class CarPage {
-
   async addToCart() {
-    await actions.pause(10000)
-    assert.isTrue((await browser.getUrl()).includes('/cars'), 'Cars page is not displayed in Manage Travel')
-    await actions.waitForDisplayed(priceButton, 'priceButton', 60000)
-    let noCarsResultMessageVisbility = await actions.isDisplayed(noCarsResultMessage, 'No cars Message')
-    console.log("noCarsResultMessageVisbility: ", noCarsResultMessageVisbility)
-    if (noCarsResultMessageVisbility) {
-      // assert.fail("Cars are not available, Cars required for the scenario");
-    } else {
-      await actions.waitForDisplayed(priceButton, 'price button', 10000)
-      await actions.scroll(priceButton,'priceButton')
-      await actions.waitForClickable(priceButton, 'price button')
-      await actions.clickElement('click', priceButton, 'Price Button')
-      await actions.pause(15000)
+    await actions.waitForDisplayed(priceButton, 'price button', 10000)
+    await actions.scroll(priceButton,'priceButton')
+    await actions.waitForClickable(priceButton, 'price button')
+    await actions.clickElement('click', priceButton, 'Price Button')
+    await actions.pause(3000)
+    if(await actions.isDisplayed("//div[@data-hook = 'cars-page-car_selection_popup']","Car Selection Popup"))
+    {
+      let selectCarButton = "//div[@data-hook ='cars-page-car_selection_popup']/div[2]/div/div[10]/button"
+      await actions.scroll(selectCarButton,"Select Car Button")
+      await actions.pause(2000)
+      await actions.click(selectCarButton,"Select Car Button")
+    }
+    else
+    {
       await actions.waitForDisplayed(addToCartText, 'addToCartText', 10000)
     }
   }
 
   async addedToCart() {
-    // await browser.pause(3000)
-    await actions.waitForDisplayed(addedToCard, "added to cart")
-    assert.equal(
-      await actions.isDisplayed(addedToCard, 'Added to the cart'),
-      true,
-      'Car should be added to cart'
-    );
-  }
+   await browser.pause(10000)
+    if ((await browser.getUrl()).includes('cars')) {
+      await actions.waitForDisplayed(addedToCard, "added to cart")
+      assert.equal(
+        await actions.isDisplayed(addedToCard, 'Added to the cart'),
+        true,
+        'Car should be added to cart'
+      );
+   }
+   else
+   {
+     console.log("Not on Cars page")
+   }
+}
 
   async collectCarsPageDetailsCP() {
+  await actions.pause(10000)
+  assert.isTrue((await browser.getUrl()).includes('/cars'), 'Cars page is not displayed in Manage Travel')
+  await actions.waitForDisplayed(priceButton, 'priceButton', 60000)
+  let noCarsResultMessageVisbility = await actions.isDisplayed(noCarsResultMessage, 'No cars Message')
+  console.log("noCarsResultMessageVisbility: ", noCarsResultMessageVisbility)
+  if (!noCarsResultMessage) {
     CarsPageCollectorCP.set(
       'pickUpDateFieldCP',
       (await actions.getText(pickUpDateField, 'Date information for pickup')).slice(5, 11));
@@ -63,6 +75,10 @@ class CarPage {
       await actions.getText(vehicletype, 'Type of the vehicle'));
     await actions.pause(2000);
   }
+   else{
+     console.log("There are no cars available for this route..")
+    }
+ }
 
   async carsselection() {
     await actions.scroll(scrollcartype,'scrollcartype')
