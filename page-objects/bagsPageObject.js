@@ -49,7 +49,7 @@ const tripFlexAdded = "[data-hook='trip-flex-card_cart-added']";
 const priorityBoardingAddToCart = "[data-hook='priority-boarding-card_add-to-cart']";
 const slider1 = "[data-hook='extras-carousel-marker_slide-1']"
 const priorityBoardingModal = "[data-hook='priority-boarding-modal']";
-const flightLegCheckboxLabel = "(//span[@data-hook='extras-popup-flight-leg_checkbox-label'])";
+const flightLegCheckboxLabel = "(//label[@data-hook='extras-popup-flight-leg_checkbox_label'])";
 const priorityBoardingModalAddToCart = "//button[@data-hook='priority-boarding-modal_add-to-cart']"
 const priorityBoardingAdded = "[data-hook='priority-boarding-card_cart-added']";
 const petInCabinAddToCart = "[data-hook='pet-in-cabin-card_add-to-cart']";
