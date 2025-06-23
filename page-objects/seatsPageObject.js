@@ -1252,6 +1252,8 @@ await actions.pause(8000);
 			if (seatsPageReturningTabsIsDisplayed) {
 				await this.clickSelectSeatPopupContinueButton('returning')
 			}
+        await actions.waitForExist(bagsPageHeading, 'bagsPageHeading', 30000)
+
 		}
 	}
 
