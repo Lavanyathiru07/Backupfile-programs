@@ -1,14 +1,13 @@
 {
-  "name": "prova-ui",
-  "version": "0.0.1",
+  "name": "bat",
+  "version": "1.0.0",
   "description": "BAT-SUITE-EXECUTION",
   "scripts": {
     "test": "wdio run wdio.conf.js"
   },
-  "author": "Karthik Patnuri",
-  "license": "ISC",
+
   "dependencies": {
-    "@g4/cat-integration-util": "^0.3.3",
+    "@g4/cat-integration-util": "^0.7.0",
     "@g4/gql-booking-util": "1.14.6",
     "@g4/js-db-util": "0.1.4",
     "@g4/prova-ui": "^0.6.4",
