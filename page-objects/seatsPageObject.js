@@ -1252,6 +1252,8 @@ class SeatPage {
 			if (seatsPageReturningTabsIsDisplayed) {
 				await this.clickSelectSeatPopupContinueButton('returning')
 			}
+        await actions.waitForExist(bagsPageHeading, 'bagsPageHeading', 30000)
+
 		}
 	}
 
