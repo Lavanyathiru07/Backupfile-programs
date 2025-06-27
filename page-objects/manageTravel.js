@@ -612,8 +612,7 @@ class Managetravel {
     async seatautoassigned(){
        
         await actions.pause(7000)
-        let seatassigned = await actions.isDisplayed(seatautoassigned, 'seatautoassigned')
-        if (seatassigned) {
+        
             await actions.scroll(seatscroll,'scroll to the seat heading',1000),
             await actions.waitForDisplayed(seatautoassigned, 'seatautoassigned')
             const seatElement = await $(seatautoassigned);   // using WebdriverIO style
@@ -625,7 +624,7 @@ class Managetravel {
             else{
                 console.log("seat is assigned")
             }
-            }
+            
         } 
     async cancelMyTrip() {
         await actions.waitForDisplayed(cancelButton, 'cancel button', 10000)
