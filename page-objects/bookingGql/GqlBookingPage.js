@@ -13,7 +13,9 @@ const firstName = "[data-hook='lookup-page-input-first-name_firstName']"
 const lastName = "[data-hook='lookup-page-input-last-name_lastName']"
 const confirmNumber = "[data-hook='lookup-page-input-confirmation-number_orderNumber']"
 const findTrip = "[data-hook='lookup-page-lookup-button']"
-
+const Managetrip = "(//*[contains(text(),'Manage Trip')])[2]"
+const cc_confirmation = "[data-hook='lookup-page-input-confirmation-number']"
+const cc_search ="(//span[@class='Button__ButtonText-sc-1ececxa-0 fFLZUm'])[2]"
 class GqlBookingPage {
 
 	// async getEnvironment() {
@@ -98,6 +100,31 @@ class GqlBookingPage {
 			await actions.click(findTrip, 'find trip')
 		}
 	}
+
+	async enterCCOLCIdetails() {
+		process.env.confNumber ="P8QN9D"
+		await actions.pause(2000)
+        let ManageTripisdispalyed = await actions.isDisplayed(Managetrip, 'Managetrip')
+		if (ManageTripisdispalyed) {
+			console.log("ManageTip heading is displayed")
+            console.log("ITN:", process.env.confNumber)
+			await actions.waitForClickable(cc_confirmation, 'cc_confirmation')
+			await actions.click(cc_confirmation, 'cc_confirmation')
+			await actions.setValue(process.env.confNumber, cc_confirmation, 'confirm Number')
+
+			await actions.waitForClickable(cc_search, 'cc_search')
+			await actions.click(cc_search, 'cc_search')
+			await actions.pause(10000)
+			const handles = await browser.getWindowHandles();
+		    console.log("Windows count ", handles.length);
+		    await browser.switchToWindow(handles[handles.length-1]);
+			console.log("browserurl:", await browser.getUrl())
+			// await browser.switchWindow('/manage-travel');
+			await actions.pause(5000)
+		}else
+		{
+			console.log("Manage trip is not dispalyed")
+		}}
 
 	async enterOWDomesticdetails() {
 		await actions.pause(2000)

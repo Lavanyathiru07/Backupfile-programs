@@ -59,11 +59,17 @@ const tofromGate = "//label[@data-hook='travelers-form_adults.X.LEG_WCHR']/div[2
 const tofromGateChild = "//label[@data-hook='travelers-form_children.X.LEG_WCHR']/div[2]"
 const manualWheelChairScooter = "//label[@data-hook='travelers-form_adults.X.LEG_WCMP']/div[2]"
 const manualWheelChairScooterChild = "//label[@data-hook='travelers-form_children.X.LEG_WCMP']/div[2]"
-const infantInLapFirstName = "//input[@data-hook='travelers-form_infantsInLap_0_first-name']"
-const infantInLapLastName = "//input[@data-hook='travelers-form_infantsInLap_0_last-name']"
+const infantInLapFirstName = "//input[@data-hook='travelers-form_adults_0_infant-in-lap-first-name']"
+const infantInLapLastName = "//input[@data-hook='travelers-form_adults_0_infant-in-lap-last-name']"
+const infantInLapMaleGender = "[data-hook='travelers-form_adults_0_infant-in-lap-gender_MALE']"
+const infantInLapFemaleGender = "[data-hook='travelers-form_adults_0_infant-in-lap-gender_FEMALE']"
 const infantInLapGender = "//label[@data-hook='travelers-form_infantsInLap_0_gender_FEMALE']"
 const departingText = "(//*[@class='Text-sc-1o5ubbx-0 bUDeQp'])[1]"
-
+const InfantinLapCheckBox ="//div[@class='Checkbox__CheckboxWrapper-rs63ys-0 ekGfWh']"
+const TravelerspageHeader="//span[text()='Who Will Be Traveling?']"
+const infantdobMonthDropdown = "//div[@data-hook='travelers-form_adults_0_infant-in-lap-dob-month']"
+const infantdobDayDropdown = "//div[@data-hook='travelers-form_adults_0_infant-in-lap-dob-day']"
+const infantyearfield = "//input[@data-hook='travelers-form_adults_0_infant-in-lap-dob-year']"
 class TravellersPage {
     async fillAlltravelerDetails(travelerCount) {
         var LapInfantCheck = travelerCount
@@ -177,21 +183,102 @@ class TravellersPage {
         return newDOB
     }
 
-    async travellerinfo() {
-        await actions.scroll(namescroll)
-        await actions.clearInputField(nameValidation, "first name Input-Field")
-        await actions.setInputField('setValue', 'QA', nameValidation, "first name field")
-        await actions.clearInputField(lname, "last name Input-field")
-        await actions.setInputField('setValue', 'TEST', lname, "last name field")
-        await actions.clickElement('click', selectinggender, "Male Gender Radio Button")
-        await actions.clickElement('click', month, "month drop down of DOB")
-        await actions.setInputField('setValue', 'SEP', settingmonth, "passing the month to field of DOB")
-        await actions.pressButton("Enter")
-        await actions.clickElement('click', day, "date field of DOB")
-        await actions.setInputField('setValue', '19', selectingdate, "passing the date of DOB")
-        await actions.pressButton("Enter")
-        await actions.setInputField('setValue', '1999', year, "Passing the year of DOB")
+    async travellerinfo(departDateOffset) {
+            function getRandomArrayElement(array) {
+            const randomIndex = Math.floor(Math.random() * array.length);
+            return array[randomIndex];
+        }
+
+        const firstNames = ["Ava", "Liam", "Sophia", "Ethan", "Isla", "Noah", "Emma"];
+        const lastNames = ["Smith", "Johnson", "Brown", "Miller", "Anderson", "Davis"];
+       
+        function getRandomGender() {
+            const genders = ['Male', 'Female'];
+            const randomIndex = Math.floor(Math.random() * genders.length);
+            return genders[randomIndex];
+        }
+        await actions.pause(30000)
+        await actions.isDisplayed(TravelerspageHeader, 'TravelerspageHeader')
+        let Travelerspageheadervisibility = await actions.isDisplayed(TravelerspageHeader)
+        console.log("Travelers page heading is displayed:", Travelerspageheadervisibility)
+        if (Travelerspageheadervisibility) {
+            await actions.pause(5000)
+            await actions.scroll(InfantinLapCheckBox, 'InfantinLapCheckBox');
+            await actions.waitForDisplayed(InfantinLapCheckBox, 'InfantinLapCheckBox')
+            await actions.waitForClickable(InfantinLapCheckBox, 'InfantinLapCheckBox');
+            await actions.clickElement('click', InfantinLapCheckBox, "Clicked InfantinLapCheckBox")
+
+            await browser.pause(5000)
+            console.log("InfantinLap checkbox is clicked")
+            await actions.pause(5000)
+        }
+        //  Random names
+       const randomFirstName = getRandomArrayElement(firstNames);
+       const randomLastName = getRandomArrayElement(lastNames);
+
+        await actions.clearInputField(infantInLapFirstName, "first name Input-Field");
+        await actions.setInputField('setValue', randomFirstName, infantInLapFirstName, "first name field");
+
+        await actions.clearInputField(infantInLapLastName, "last name Input-field");
+        await actions.setInputField('setValue', randomLastName, infantInLapLastName, "last name field");
+        //Random gender selection
+
+        const randomGender = getRandomGender();
+        console.log("Random gender selected:", randomGender);
+        if (randomGender === 'Female') {
+            await actions.clickElement('click', infantInLapFemaleGender, "Female Gender Radio Button");
+        } else {
+            await actions.clickElement('click', infantInLapMaleGender, "Male Gender Radio Button");
+        }
+        let departDate = new Date();
+        departDate.setDate(departDate.getDate() + parseInt(departDateOffset));
+        console.log("Departdate".departDate);
+        await this.setInfantDOB(departDate);
     }
+
+    async setInfantDOB(departDate) {
+
+        let infantDOB = new Date(departDate);
+        console.log("departdate:", departDate)
+        infantDOB.setDate(infantDOB.getDate() - 299);
+
+        let month = infantDOB.toLocaleString('default', { month: 'long' });
+        let date = infantDOB.getDate().toString();
+        let year = infantDOB.getFullYear().toString();
+        console.log("Month:", month)
+        console.log("Date:", date)
+        console.log("Year:", year)
+        await actions.scroll(infantdobMonthDropdown)
+        let dateOfMonthFieldsVisibility = await actions.isClickable(infantdobMonthDropdown, 'travelerDOBMonth dropdown')
+        if (dateOfMonthFieldsVisibility) {
+            await actions.clickElement('click', infantdobMonthDropdown, 'travelerDOBMonth DropDown')
+            await browser.keys(String(month));
+            await actions.pressButton('Enter')
+        }
+
+
+        let dateOfdayFieldsVisibility = await actions.isClickable(infantdobDayDropdown, 'travelerDOBDate dropdown')
+        if (dateOfdayFieldsVisibility) {
+            await actions.clickElement('click', infantdobDayDropdown, 'travelerDOBDate DropDown')
+            await browser.keys(String(date));
+            await actions.pressButton('Enter')
+        }
+
+
+        let dateOfYearFieldsVisibility = await actions.isClickable(infantyearfield, 'travelerDOBYear input field')
+        if (dateOfYearFieldsVisibility) {
+            await actions.clickElement('click', infantyearfield, 'travelerDOBYear input field')
+            const value = String(year)
+            // await actions.addValue(value, dateOfYearFields[i], "TravelerDOBYear")
+            //await actions.setInputField('setValue', value, dateOfYearFields[i], 'TravelerDOBYear')
+            for (let char of value) {
+                await browser.keys(char); // Type each character
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Delay of 1 second }
+            }
+        }
+
+    }
+
 
     async selectSSR(ssrType) {
         let ssr = ssrType

@@ -3,7 +3,7 @@ import actions from '@g4/prova-ui/src/support/actions'
 import { assert } from 'chai';
 const heading = "//span[@data-hook='hotels-page_page-heading']";
 const hotelText = "//span[contains(text(),'Bundle Air + Hotel and Save!')]"
-const hotelTitle = "[data-hook='hotels-page_page-heading']"
+const hotelTitle = "//h1//span[contains(text(), '+ Hotel')] | //*[data-hook='hotels-page_page-heading']"
 const hotelPageTitle = '//title';
 const hotelsPageHeadingTitle = "[data-hook='hotels-page_page-heading']";
 const checkInDate = "[data-hook='hotels-page-search-criteria-check-in-date']";

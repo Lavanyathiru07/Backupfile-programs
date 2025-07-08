@@ -29,3 +29,7 @@ When(/^I get seat detils from GQL$/, async function () {
 When(/^I select seat from GQL (.+)$/, { timeout: 180 * 10000 }, async function (params) {
 	await SeatPage.selectSeatsByParamsByGQl(params);
 });
+When(/^I am on seat page, I deselect seat (.+) for the pax (.+) seatpage$/, {timeout: 180 * 1000 }, async function (segment, paxNum)  {
+	await SeatPage.deselectSelectedSeat(segment, paxNum);
+} )
+  

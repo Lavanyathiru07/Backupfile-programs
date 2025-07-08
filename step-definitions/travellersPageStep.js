@@ -10,6 +10,11 @@ When(/^I am on Travelers page I fill in data for "(.+)" travelers$/, async funct
     await TravellersPage.fillAlltravelerDetails(travelerCount)
 });
 
+When(/^I am on Travelers page I fill data for "(.+)" InfantinLap$/, async function (departDateOffset) {
+    await TravellersPage.travellerinfo(departDateOffset)
+    // await TravellersPage.setInfantDetails()
+});
+
 Then(/^I am on Travelers page I click continue button$/, async () => {
     await TravellersPage.continuebuttontravellers()
     await browser.pause(8000)

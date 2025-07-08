@@ -47,6 +47,8 @@ const carConfirmationNumber = "[data-hook='confirmation-page-rented-car_confirma
 const carPickupDate = "[data-hook='confirmation-page-rented-car_pick_up_date']"
 const carDropOffDate = "[data-hook='confirmation-page-rented-car_drop_off_date']"
 const travelerinfo = "[data-hook='confirmation-page-section_flight-traveler-info_title']"
+const manageTripLink = "[data-hook='header-top-bar-menu-item_manage-trip']"
+
 let itinerary
 
 var travellerName = "QA TEST"
@@ -442,6 +444,21 @@ class ConfirmationPage {
 			}
 		}
 	}
+
+	async newtab() {
+		let url = process.env.appEnv
+		await actions.openWebsite(url)
+		await actions.pause(20000)
+		await actions.waitForDisplayed(manageTripLink, 'manageTripLink')
+
+		if (await actions.isDisplayed(manageTripLink, 'manageTripLink')) {
+			await actions.waitForClickable(manageTripLink, 'manageTripLink')
+			await actions.click(manageTripLink, 'manageTripLink')
+			console.log("Successfully clicked manageTrip link")
+			await actions.pause(10000)
+		}
+	}
+
 
 	async managetrip() {
 		console.log(`Entered Manage Travel`)
