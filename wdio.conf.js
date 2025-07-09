@@ -42,6 +42,10 @@ exports.config = _.extend({
   exclude: [
     // 'path/to/excluded/files'
   ],
+  hostname: 'selenium.apps.devops-qaa.aws.allegiantair.com',
+  port: 443,
+  path: '/wd/hub',
+  protocol: 'https',
   maxInstances: 3,
   capabilities: browserConfig,
   // capabilities: [{
@@ -83,7 +87,7 @@ exports.config = _.extend({
   connectionRetryTimeout: 120000,
   // Default request retries count
   connectionRetryCount: 3,
-  services: ['selenium-standalone'],
+  services: [],
   //  services: ['chromedriver'],
   // services: ['devtools'],
   framework: 'cucumber', 
