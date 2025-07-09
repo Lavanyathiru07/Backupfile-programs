@@ -78,7 +78,7 @@ exports.config = _.extend({
   // excludeDriverLogs: ['bugreport', 'server'],
   // }],
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: 'silent',  
+  logLevel: 'debug',  
   bail: 0,
   baseUrl: process.env.appEnv,
   // Default timeout for all waitFor* commands.
