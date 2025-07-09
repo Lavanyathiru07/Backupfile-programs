@@ -46,7 +46,7 @@ exports.config = _.extend({
   port: 443,
   path: '/wd/hub',
   protocol: 'https',
-  maxInstances: 3,
+  maxInstances: 4,
   capabilities: browserConfig,
   // capabilities: [{
   //   browserName: 'chrome',
