@@ -102,7 +102,7 @@ class GqlBookingPage {
 	}
 
 	async enterCCOLCIdetails() {
-		process.env.confNumber ="P8QN9D"
+		
 		await actions.pause(2000)
         let ManageTripisdispalyed = await actions.isDisplayed(Managetrip, 'Managetrip')
 		if (ManageTripisdispalyed) {
