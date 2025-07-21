@@ -59,6 +59,10 @@ Given(/^I am on manage trip page I enter OLCI details$/, async function () {
   await GqlBookingPage.enterOLCIdetails();
 });
 
+Given(/^I am on manage trip page I enter CCOLCI details$/,async function () {
+    await GqlBookingPage.enterCCOLCIdetails();
+});
+
 Given(/^I complete the Booking using gql for OW Domestic$/, async (dataTable) => {
   let data = dataTable.rowsHash()
   let origin = data.origin

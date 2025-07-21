@@ -18,7 +18,7 @@ const selectTraveler = "//label[contains(@for,'traveler-input-X')]"
 const seatMap = "(//div[contains(@class,'SeatMap')])[1]"
 const seatId = "(//span[@data-hook='seat-id'])[X]"
 const seatPrice = "(//span[@data-hook='seat-price'])[X]"
-const takenSeats = "(//button//span[contains(@data-hook,'taken')])[X]"
+const takenSeats = "(//div[contains(@data-hook,'taken')])"
 const takenSeatsList = "//span[contains(@data-hook,'taken')]"
 const spinnerBar = "//span[contains(@data-hook,'spinner')]"
 const exitRowPopup = "[data-hook='seats-popover_seat_update_button_XX']"
@@ -32,7 +32,7 @@ const selectReturningButton = "//*[text()='Select Returning']"
 const travelerGridSeat = "//span[contains(text(),'Seat')]//span[@aria-label]"
 const returningSeatsSelectButton = "[data-hook='seats-select-returning']"
 const deselectSeatButton = "//button[contains(@data-hook,'seat_deselect_button')]"
-const travelerGridPaxNum = "(//div[contains(@data-hook,'traveler-list-item')])[X]"
+const travelerGridPaxNum = "(//div[contains(@data-hook,'traveler-list-item')])"
 const unAssignedSeat = "(//span[@aria-label='unassigned'])[X]"
 const updateSelectedSeat = "//div[contains(@data-hook,'_active')]//span[contains(text(),'Update to this seat')]"
 const seatsPageDepartingTabs = "[data-hook='seats-page-tabs_departing']"
@@ -1306,6 +1306,27 @@ class SeatPage {
 		deselectedSeatDetails = await $(selectedSeatTypeDeselectPopup).getText() + '-' + $(selectedSeatIdDeselectPopup).getText() + '-' + $(selectedSeatPriceDeselectPopup).getText()
 		await $(deselectSeatButton).click()
 
+	}
+	async deselectSelectedSeat(segment, paxNum) {
+		console.log(segment,paxNum)
+		await actions.pause(30000)
+		if (segment == "departing") {
+			await $(departingSeg).click()
+			
+			await $(travelerGridPaxNum.replace("X", paxNum)).click()
+			await actions.scroll(takenSeats.replace("X", paxNum))
+			await $(takenSeats.replace("X", paxNum)).click()
+		}
+		else {
+			await $(travelerGridPaxNum.replace("X", paxNum)).click()
+			await $(takenSeats.replace("X", paxNum)).click()
+		}
+		
+		await browser.execute("window.scrollBy(0,200)");
+		// deselectedSeatDetails = await $(selectedSeatTypeDeselectPopup).getText() + '-' + $(selectedSeatIdDeselectPopup).getText() + '-' + $(selectedSeatPriceDeselectPopup).getText()
+		await $(deselectSeatButton).click()
+		await actions.pause(5000)
+	
 	}
 	async validateSelectedFlightTypeInSeatsPage(flightType) {
 

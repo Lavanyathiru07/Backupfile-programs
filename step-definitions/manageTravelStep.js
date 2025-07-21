@@ -69,6 +69,14 @@ When(/^I click on the continue button for transportation$/, async function () {
 	await Managetravel.carsContinue();
 });
 
+Then(/^I am on Manage Travel page, I click InfantinLap traveler$/, async function () {
+await Managetravel.clickAddInfantinLap()
+})
+When (/^I am on Manage Travel page, I click updateseats link$/,async function () {
+await Managetravel.clickUpdateseats()
+})
+
+
 When(/^I am on Manage Travel page, Payment page I complete payment$/, { timeout: 180 * 10000 }, async function () {
 	await PaymentPage.popupClosing()
 	let negPayment = await Managetravel.negativePayment()
@@ -78,6 +86,9 @@ When(/^I am on Manage Travel page, Payment page I complete payment$/, { timeout:
 		await Managetravel.purchasemytrip();
 	}
 });
+When(/^I am on Manage Travel page, validate seat selection$/, async function() {
+  await Managetravel.seatassigned()
+})
 
 When(/^I am on Manage Trip and I click change flight$/, async function () {
 	await Managetravel.clickChangeDate();

@@ -6,6 +6,10 @@ Then(/^I am on confirmation page I click manage trip button$/, async () => {
     await ConfirmationPage.managetrip()
 })
 
+Then(/^I open new tab from the confirmation page$/,async() =>{
+    await ConfirmationPage.newtab()
+})
+
 Then(/^I am on the confirmation page I expect confirmation number to be displayed$/, async () => {
     try {
         await ConfirmationPage.confirmationNumber()
