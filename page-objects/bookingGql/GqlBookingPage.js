@@ -102,15 +102,23 @@ class GqlBookingPage {
 	}
 
 	async enterCCOLCIdetails() {
-		
-		await actions.pause(2000)
+		let itn_number;
+		if(process.env.confNumber ==undefined||process.env.confNumber ==''||process.env.confNumber==null)
+		{
+			itn_number = process.env.confirmationNumber
+		}
+		else
+		{
+			itn_number = process.env.confNumber
+		}
+		await actions.pause(10000)
         let ManageTripisdispalyed = await actions.isDisplayed(Managetrip, 'Managetrip')
 		if (ManageTripisdispalyed) {
 			console.log("ManageTip heading is displayed")
-            console.log("ITN:", process.env.confNumber)
+            console.log("ITN:", itn_number)
 			await actions.waitForClickable(cc_confirmation, 'cc_confirmation')
 			await actions.click(cc_confirmation, 'cc_confirmation')
-			await actions.setValue(process.env.confNumber, cc_confirmation, 'confirm Number')
+			await actions.setValue(itn_number, cc_confirmation, 'confirm Number')
 
 			await actions.waitForClickable(cc_search, 'cc_search')
 			await actions.click(cc_search, 'cc_search')
@@ -120,12 +128,11 @@ class GqlBookingPage {
 		    await browser.switchToWindow(handles[handles.length-1]);
 			console.log("browserurl:", await browser.getUrl())
 			// await browser.switchWindow('/manage-travel');
-			await actions.pause(5000)
+			await actions.pause(10000)
 		}else
 		{
 			console.log("Manage trip is not dispalyed")
 		}}
-
 	async enterOWDomesticdetails() {
 		await actions.pause(2000)
 		await actions.waitForDisplayed(myTripText, 'myTrip text')
