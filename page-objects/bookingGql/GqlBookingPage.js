@@ -105,13 +105,24 @@ class GqlBookingPage {
 		let itn_number;
 		if(process.env.confNumber ==undefined||process.env.confNumber ==''||process.env.confNumber==null)
 		{
-			itn_number = process.env.confirmationNumber
+			// Parse confirmationNumber if it's a JSON string to extract the actual confirmation number
+			try {
+				if (process.env.confirmationNumber && process.env.confirmationNumber.startsWith('{')) {
+					let bookingData = JSON.parse(process.env.confirmationNumber);
+					itn_number = bookingData.confirmationNumber;
+				} else {
+					itn_number = process.env.confirmationNumber;
+				}
+			} catch (error) {
+				console.log("Error parsing confirmation number:", error);
+				itn_number = process.env.confirmationNumber;
+			}
 		}
 		else
 		{
 			itn_number = process.env.confNumber
 		}
-		await actions.pause(10000)
+		await actions.pause(20000)
         let ManageTripisdispalyed = await actions.isDisplayed(Managetrip, 'Managetrip')
 		if (ManageTripisdispalyed) {
 			console.log("ManageTip heading is displayed")
