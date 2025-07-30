@@ -1,5 +1,5 @@
 Feature: This feature file is to run Navitaire BAT scenarios
-@navitairebat @set2 
+
     Scenario Outline: CC_agent for adding infant in Lap
         Given I navigate to G4 link
         Then I open cl page in a new tab
