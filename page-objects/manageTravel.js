@@ -710,9 +710,9 @@ class Managetravel {
     }
 
     async clickCancelFlight() {
-        await actions.waitForDisplayed(cancelFlight, 'cancelFlight', 30000)
-        await actions.waitForClickable(cancelFlight, 'cancelFlight')
-        await actions.click(cancelFlight, 'cancelFlight Button')
+        await actions.waitForDisplayed(cancelButton, 'cancelFlight', 30000)
+        await actions.waitForClickable(cancelButton, 'cancelFlight')
+        await actions.click(cancelButton, 'cancelFlight Button')
     }
 
     async clickCancelReason() {
