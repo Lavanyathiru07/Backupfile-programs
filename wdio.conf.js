@@ -15,7 +15,7 @@ if (process.env.flag === undefined) {
 const _ = require('lodash');
 import browsers from './browsers-config'
 
-import CatPortalWdioConf from '@g4/cat-integration-util/src/ui-hooks/cat-ui-hooks';
+import CatPortalWdioConf from './cat/ui-hooks/cat-ui-hooks';
 let target_browser = process.env.browser;
 
 let browserConfig = null;
@@ -37,7 +37,7 @@ if (target_browser) {
 
 exports.config = _.extend({
   specs: [
-    './features/**/*.feature'
+    './tmp/features/**/*.feature'
   ],
   exclude: [
     // 'path/to/excluded/files'

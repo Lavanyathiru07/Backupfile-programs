@@ -27,5 +27,8 @@
   },
   "overrides": {
     "electron-to-chromium": "1.5.168"
+  },
+  "devDependencies": {
+    "wdio-cucumber-parallel-execution": "^3.6.15"
   }
 }
