@@ -124,8 +124,8 @@ When(/^I am on Manage Travel onlinechekin page (.+) page I click on continue but
 	await Managetravel.onlinecheckinseatspage();
 });
 
-When(/^I am on Manage Trip and I click cancel flight$/, async function () {
-	if (process.env.ENV.includes("prod") || process.env.tag.includes("prod")) {
+When(/^I am on Manage Trip and I click cancel flight$/, async function () {	
+    if (process.env.ENV.includes("prod") || process.env.tag.includes("prod")) {
 		await Managetravel.clickCancelFlight();
 		await Managetravel.clickCancelReason();
 		await Managetravel.clickCancelProceed();

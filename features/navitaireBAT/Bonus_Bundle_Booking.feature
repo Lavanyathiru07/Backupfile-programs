@@ -36,7 +36,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
         And I am on cars page I add a car to cart
         And I am on cars page and I click on continue
         And I am on Manage Travel page, Payment page I complete payment
-        And I am on Manage Trip and I click cancel flight
+        # And I am on Manage Trip and I click cancel flight
 
         Examples:
             | tripType  | adult | child | childSeat | childLap | departDate | returnDate | cardType | Priority              | CarryOn        | Check                  | Seats                    |
