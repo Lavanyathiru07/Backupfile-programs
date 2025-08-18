@@ -11,11 +11,9 @@ When(/^I am on Seat page I select seats of type "(.+)" on "(.+)" segment for "(.
 
 When(/^I am on Seat page I click continue button$/, async function () {
 	await SeatPage.clickContinueButton();
-	await browser.pause(4000)
 });
 
 When(/^I am on Seat page I click No thanks, skip seat selection$/, async function () {
-	await browser.pause(8000);
 	await SeatPage.skipSeatsPage();
 });
 

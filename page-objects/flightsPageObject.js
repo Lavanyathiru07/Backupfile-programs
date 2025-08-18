@@ -214,13 +214,11 @@ class FlightsPage {
     await actions.waitForDisplayed(submitflightpage, "submit button in flights page", 60000)
     await actions.scroll(submitflightpage)
     await actions.waitForClickable(submitflightpage, "submit button in flights page", 20000)
-    await actions.pause(4000)
     await actions.clickElement('click', submitflightpage, "submit button in flights page")
-    await actions.pause(9000)
   }
 
   async validateFlightPage() {
-    await actions.pause(8000);
+    await actions.pause(3000);
     if ((await browser.getUrl()).includes('manage-travel/')) {
       await actions.pause(25000);
       if (await browser.getTitle() === 'Travelers') {

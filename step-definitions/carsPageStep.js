@@ -19,6 +19,5 @@ Then(/^I am on cars page Added to cart message is shown$/, async () => {
 })
 
 Then(/^I am on cars page and I click on continue$/, async () => {
-    await browser.pause(5000)
     await CarPage.carspageContinueBtn()
 })
