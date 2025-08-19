@@ -220,7 +220,6 @@ class PaymentPage {
     // console.log("creditCardNum: ", creditCardNum)
     // console.log("creditCardCvv: ", creditCardCvv)
     //const cardNumArray = ["4444444444444448","4000020000000000","4400000000000008","4147895259293966","4181557652420268","4735242519645511"];
-    await actions.pause(5000)
     if (process.env.ENV.includes("prod")) {
       await actions.setInputField('setValue', process.env.cardname, cardName, "card name input field")
       //$(cardHolderName).setValue(process.env.cardname);
@@ -232,7 +231,7 @@ class PaymentPage {
       }
       await actions.waitForClickable(expirymonth, 'expiry month dropdown');
       await actions.clickElement('click', expirymonth, "expiry month dropdown")
-      await actions.pause(5000)
+      await actions.pause(1000)
       await actions.clickElement('click', ExpirationMonth.replace("X", process.env.expiredMonth), "Expiration Month")
       await actions.pause(1000)
       await browser.keys(['Tab']);

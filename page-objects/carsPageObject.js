@@ -107,7 +107,6 @@ class CarPage {
   }
 
   async carspageContinueBtn() {
-    await actions.pause(5000)
     await actions.waitForDisplayed(carPageHeader, 'carPageHeader', 30000)
     let carsHeaderVisibilty = await actions.isDisplayed(carPageHeader, 'carPageHeader')
     if (carsHeaderVisibilty) {

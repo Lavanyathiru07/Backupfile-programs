@@ -167,7 +167,7 @@ class HotelPage {
     }
 
     async hotelContinueBtn() {
-        await actions.pause(30000)
+        await actions.waitForDisplayed(hotelTitle,'hotelTitle',30000)
         if ((await browser.getUrl()).includes('hotels')) {
             await actions.waitForDisplayed(cbutton, 'cbutton button', 30000)
             await actions.scroll(cbutton);

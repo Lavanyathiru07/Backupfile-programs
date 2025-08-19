@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "BAT-SUITE-EXECUTION",
   "scripts": {
-    "test": "wdio run wdio.conf.js"
+    "pretest": "node splitFeatures.js",
+    "test": "wdio run wdio.conf.js",
+    "test:full": "npm run pretest && npm run test --parallel=true"
   },
 
   "dependencies": {
@@ -27,5 +29,8 @@
   },
   "overrides": {
     "electron-to-chromium": "1.5.168"
+  },
+  "devDependencies": {
+    "wdio-cucumber-parallel-execution": "^3.6.15"
   }
 }

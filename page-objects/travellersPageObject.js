@@ -197,8 +197,7 @@ class TravellersPage {
             const randomIndex = Math.floor(Math.random() * genders.length);
             return genders[randomIndex];
         }
-        await actions.pause(30000)
-        await actions.isDisplayed(TravelerspageHeader, 'TravelerspageHeader')
+        await actions.isDisplayed(TravelerspageHeader, 'TravelerspageHeader',30000)
         let Travelerspageheadervisibility = await actions.isDisplayed(TravelerspageHeader)
         console.log("Travelers page heading is displayed:", Travelerspageheadervisibility)
         if (Travelerspageheadervisibility) {
@@ -411,10 +410,10 @@ class TravellersPage {
 
     async continuebuttontravellers() {
         console.log("process.env.timeline : ", process.env.timeline)
-        await actions.pause(3000)
-        await actions.scroll(continuetrav)
+        await actions.waitForDisplayed(continuetrav, "travellers page continue button")
+        await actions.scroll(continuetrav, "travellers page continue button")
         await actions.waitForClickable(continuetrav, "travellers page continue button")
-        await actions.pause(3000)
+        await actions.pause(1000)
         await actions.clickElement('click', continuetrav, "travellers page continue button")
         await actions.pause(10000)
     }

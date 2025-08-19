@@ -83,7 +83,7 @@ class BundlesPage {
     }
 
     async getTimeline() {
-		await actions.pause(5000);
+		await actions.pause(2000);
 		const timelineURL = await browser.getUrl()
 		console.log("timelineURL: ", timelineURL)
 		const timelineId = timelineURL.split('/')
@@ -164,9 +164,7 @@ class BundlesPage {
         await this.bundleScroll();
         await actions.waitForDisplayed(bundleSubmit, 'bundleSubmit', 15000)
         await actions.waitForClickable(bundleSubmit, 'bundleSubmit', 5000)
-        await actions.pause(6000)
         await actions.clickElement('click', bundleSubmit, "submit button in bundles page")
-        await actions.pause(5000)
         await actions.waitForDisplayed(TravelersPageHeading, 'Travelers Page Heading', 60000)
     }
     

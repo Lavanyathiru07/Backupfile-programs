@@ -642,8 +642,7 @@ class Managetravel {
     }
 
     async clickChangeDate() {
-        await actions.pause(15000)
-        await actions.waitForDisplayed(changeFlight, 'changeFlight', 30000)
+        await actions.waitForDisplayed(changeFlight, 'changeFlight', 35000)
         await actions.waitForClickable(changeFlight, 'changeFlight')
         await actions.clickElement('click', changeFlight, 'changeFlight')
         await actions.waitForDisplayed(flightH1, 'flightH1', 30000)

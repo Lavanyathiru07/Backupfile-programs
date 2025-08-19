@@ -51,7 +51,6 @@ class HomePage {
 	async openURL(page) {
 		await actions.openWebsite(page)
 		await this.popUps()
-		await actions.pause(6000)
 	}
 
 	async getURL() {
@@ -71,6 +70,7 @@ class HomePage {
 			}
 		} catch (error) {
 			console.log("Overlay Merchandise Popup not Displayed")
+			await browser.keys(['Escape']);
 		}
 		await actions.pause(2000)
 		let cookieepopupVisibile = await actions.isDisplayed(cookieepopup, "Accept All Cookies Popup button")
@@ -166,11 +166,11 @@ class HomePage {
 	}
 
 	async selectingdestination(value) {
-		await actions.scroll(oneWay)
+		await actions.scroll(oneWay,'oneWay')
 		await actions.clickElement('click', destinationField, "destination input field")
 		await actions.setInputField('setValue', value, destinationloc, "destination-input-field")
 		await actions.pressButton("Enter")
-		await actions.pause(3000)
+		await actions.pause(1000)
 		await actions.pressButton("Enter")
 		process.env.arrival = value
 		console.log(process.env.arrival)
@@ -180,7 +180,6 @@ class HomePage {
 		await actions.waitForDisplayed(dateExpand, 'Date Expand Button', 50000)
 		await actions.waitForEnabled(dateExpand, 'Date Expand Button')
 		await actions.waitForClickable(dateExpand, 'dateExpand button')
-		await actions.pause(3000)
 		// await actions.clickElement('click', dateExpand, "date expand button")
 		await actions.click(dateExpand, "date expand button")
 		await actions.pause(3000)
@@ -315,9 +314,9 @@ class HomePage {
 		let day = await stringDate.slice(4, -5).trim();
 		let dayInt = parseInt(day);
 		let year = await stringDate.slice(7).trim();
-		await actions.pause(3000)
+		await actions.pause(2000)
 		let calLeftData = await actions.getText(calendarMonthAndYearTextLeft, 'calendarMonthAndYearTextLeft')
-		await actions.pause(5000)
+		await actions.pause(2000)
 		let calendarYearLeft = await calLeftData
 			.toString()
 			.split(' ')[1]
