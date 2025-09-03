@@ -5,6 +5,7 @@ module.exports = {
 		acceptInsecureCerts: true,
 		'goog:chromeOptions': {
 			args: ['--ignore-certificate-errors','--enable-automation','--disable-gpu'],
+			"excludeSwitches": ["enable-automation"],
 			prefs: {
 				'profile.managed_default_content_settings.popups' : 2,
 				'profile.managed_default_content_settings.notifications' : 2,
