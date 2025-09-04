@@ -71,13 +71,33 @@ When(/^I am on MT landing page I choose the departure date "(.+)" days from curr
 });
 
 When(/^I am on landing page I choose the departure date "([^"]*)" days from current day$/, async (number) => {
-    await homePage.openDepartureDateCalendar()
+    await homePage.openDepartureDateCalendar();
     if (process.env.ENV.includes("prod") || process.env.tag.includes("prod")) {
         departureDate = await homePage.chooseDepartingDate(95);
     } else {
-        departureDate = await homePage.chooseDepartingDate(number);
-    }
-    await browser.pause(3000)
+         const cityPairs = [
+            { origin: "AVL", destination: "SFB" },
+            { origin: "FAT", destination: "LAS" },
+
+        ];
+        for (let i = -1; i < cityPairs.length; i++) {
+            try {
+                if (i >= 0) {
+                    await homePage.selectDeparture(cityPairs[i].origin);
+                    await homePage.selectDestination(cityPairs[i].destination);
+                    await browser.pause(1500);
+                    await homePage.openDepartureDateCalendar(); 
+
+                }
+                departureDate = await homePage.chooseDepartingDate(number);
+                break;
+                }
+                catch (error) {
+                    console.error("Error selecting departure date:", error);
+                }
+            }
+        }
+    await browser.pause(3000);
 });
 
 When(/^I am on landing page I choose the returning date "(.+)" days from departure$/, async (number) => {
