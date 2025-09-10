@@ -215,6 +215,7 @@ class FlightsPage {
     await actions.scroll(submitflightpage)
     await actions.waitForClickable(submitflightpage, "submit button in flights page", 20000)
     await actions.clickElement('click', submitflightpage, "submit button in flights page")
+    await actions.waitForDisplayed(bundleHeader,"bundles page header",10000)
   }
 
   async validateFlightPage() {
