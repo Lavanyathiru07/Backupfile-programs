@@ -76,7 +76,7 @@ When(/^I am on landing page I choose the departure date "([^"]*)" days from curr
         departureDate = await homePage.chooseDepartingDate(95);
     } else {
          const cityPairs = [
-            { origin: "BIS", destination: "LAS" },
+            { origin: "AVL", destination: "SFB" },
             { origin: "FAT", destination: "LAS" },
 
         ];
