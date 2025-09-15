@@ -6,8 +6,11 @@ Given(/^I am on flights page I click continue button$/, async () => {
         await FlightsPage.flightsubmit()
         await FlightsPage.validateFlightPage()
     } catch (error) {
-        await FlightsPage.flightsubmit()
-        await FlightsPage.validateFlightPage()
+        if((await browser.getUrl()).includes('flights'))
+        {
+            await FlightsPage.flightsubmit()
+            await FlightsPage.validateFlightPage()
+        }
     }
 })
 
