@@ -43,7 +43,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
 
         Examples:
             | tripType | adult | child | childSeat | childLap | departDate | tripflex | Seats                    | CarryOn          | Check                    | Priority              | ssr        |
-            | oneway   | 2     | 0     | 0         | 0        | 13         | false    | pax-all Seg-all type-any | pax-all Seg-both | pax-all Seg-both count-1 | pax-all Seg-departing | Wheelchair |
+            | oneway   | 2     | 0     | 0         | 0        | 26         | false    | pax-all Seg-all type-any | pax-all Seg-both | pax-all Seg-both count-1 | pax-all Seg-departing | Wheelchair |
 
     #PASS
     @set2 @blue @green
