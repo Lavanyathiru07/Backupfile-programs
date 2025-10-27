@@ -558,6 +558,41 @@ class ConfirmationPage {
 			'Validation Failed: emailAddress is not displayed correctly'
 		);
 	}
+		async validateConfirmationPageOpened() {
+		try {
+			// Check if the URL contains confirmation
+			const currentUrl = await browser.getUrl();
+			assert.isTrue(currentUrl.includes('/confirmation'), 
+				`Expected to be on confirmation page but current URL is: ${currentUrl}`);
+			
+			// Wait for confirmation page elements to be displayed
+			await actions.waitForDisplayed(scrollitn, 'confirmation page section', 30000);
+			
+			// Verify that the confirmation number section is present
+			const confirmationSectionDisplayed = await actions.isDisplayed(scrollitn, 'confirmation section');
+			assert.isTrue(confirmationSectionDisplayed, 
+				'Confirmation page section is not displayed');
+			
+			// Verify that the confirmation number is present
+			await actions.waitForDisplayed(itnNumber, 'confirmation number', 15000);
+			const confirmationNumberDisplayed = await actions.isDisplayed(itnNumber, 'confirmation number');
+			assert.isTrue(confirmationNumberDisplayed, 
+				'Confirmation number is not displayed on the page');
+			
+			// Verify that manage trip button is present
+			await actions.waitForDisplayed(managetravell, 'manage trip button', 15000);
+			const manageButtonDisplayed = await actions.isDisplayed(managetravell, 'manage trip button');
+			assert.isTrue(manageButtonDisplayed, 
+				'Manage trip button is not displayed on the confirmation page');
+			
+			console.log("Confirmation page validation passed - all required elements are present");
+			return true;
+			
+		} catch (error) {
+			console.error("Confirmation page validation failed:", error.message);
+			throw new Error(`Confirmation page did not open properly: ${error.message}`);
+		}
+	}
 
 	async confirmationNumber() {
 		await this.manageframes()
