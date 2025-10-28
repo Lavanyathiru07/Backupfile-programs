@@ -463,6 +463,12 @@ class ConfirmationPage {
 	async managetrip() {
 		console.log(`Entered Manage Travel`)
 		console.log(`process.env.SunSeekerPopUp => ${process.env.SunSeekerPopUp}`)
+
+		// Validate payment completion before proceeding
+		if (process.env.paymentCompleted !== "true") {
+			throw new Error("Cannot access Manage Travel before payment is completed.")
+		}
+
 		if (process.env.SunSeekerPopUp) {
 			try {
 				let mturl = `${process.env.appEnv}manage-travel`
