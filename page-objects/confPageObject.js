@@ -469,6 +469,23 @@ class ConfirmationPage {
 			throw new Error("Cannot access Manage Travel before payment is completed.")
 		}
 
+		// Set a timeout for the payment page "Continue" button loading
+		const timeout = 300000; // 5 minutes in milliseconds
+		const startTime = Date.now();
+
+		while (true) {
+			const isButtonLoaded = await actions.isDisplayed(managetravell, "manage travel button");
+			if (isButtonLoaded) {
+				break;
+			}
+
+			if (Date.now() - startTime > timeout) {
+				throw new Error("Payment page 'Continue' button did not load within the expected time.");
+			}
+
+			await actions.pause(1000); // Wait for 1 second before checking again
+		}
+
 		if (process.env.SunSeekerPopUp) {
 			try {
 				let mturl = `${process.env.appEnv}manage-travel`
