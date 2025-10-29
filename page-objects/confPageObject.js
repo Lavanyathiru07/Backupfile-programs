@@ -463,6 +463,29 @@ class ConfirmationPage {
 	async managetrip() {
 		console.log(`Entered Manage Travel`)
 		console.log(`process.env.SunSeekerPopUp => ${process.env.SunSeekerPopUp}`)
+
+		// Validate payment completion before proceeding
+		if (process.env.paymentCompleted !== "true") {
+			throw new Error("Cannot access Manage Travel before payment is completed.")
+		}
+
+		// Set a timeout for the payment page "Continue" button loading
+		const timeout = 300000; // 5 minutes in milliseconds
+		const startTime = Date.now();
+
+		while (true) {
+			const isButtonLoaded = await actions.isDisplayed(managetravell, "manage travel button");
+			if (isButtonLoaded) {
+				break;
+			}
+
+			if (Date.now() - startTime > timeout) {
+				throw new Error("Payment page 'Continue' button did not load within the expected time.");
+			}
+
+			await actions.pause(1000); // Wait for 1 second before checking again
+		}
+
 		if (process.env.SunSeekerPopUp) {
 			try {
 				let mturl = `${process.env.appEnv}manage-travel`
@@ -557,6 +580,41 @@ class ConfirmationPage {
 			paymentPageCollector.get('emailAddress'),
 			'Validation Failed: emailAddress is not displayed correctly'
 		);
+	}
+		async validateConfirmationPageOpened() {
+		try {
+			// Check if the URL contains confirmation
+			const currentUrl = await browser.getUrl();
+			assert.isTrue(currentUrl.includes('/confirmation'), 
+				`Expected to be on confirmation page but current URL is: ${currentUrl}`);
+			
+			// Wait for confirmation page elements to be displayed
+			await actions.waitForDisplayed(scrollitn, 'confirmation page section', 30000);
+			
+			// Verify that the confirmation number section is present
+			const confirmationSectionDisplayed = await actions.isDisplayed(scrollitn, 'confirmation section');
+			assert.isTrue(confirmationSectionDisplayed, 
+				'Confirmation page section is not displayed');
+			
+			// Verify that the confirmation number is present
+			await actions.waitForDisplayed(itnNumber, 'confirmation number', 15000);
+			const confirmationNumberDisplayed = await actions.isDisplayed(itnNumber, 'confirmation number');
+			assert.isTrue(confirmationNumberDisplayed, 
+				'Confirmation number is not displayed on the page');
+			
+			// Verify that manage trip button is present
+			await actions.waitForDisplayed(managetravell, 'manage trip button', 15000);
+			const manageButtonDisplayed = await actions.isDisplayed(managetravell, 'manage trip button');
+			assert.isTrue(manageButtonDisplayed, 
+				'Manage trip button is not displayed on the confirmation page');
+			
+			console.log("Confirmation page validation passed - all required elements are present");
+			return true;
+			
+		} catch (error) {
+			console.error("Confirmation page validation failed:", error.message);
+			throw new Error(`Confirmation page did not open properly: ${error.message}`);
+		}
 	}
 
 	async confirmationNumber() {

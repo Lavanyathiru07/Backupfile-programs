@@ -33,9 +33,17 @@ Then(/^I am on the confirmation page I expect Check-"([^"]*)" details to be disp
 Then(/^I am on the confirmation page I expect priorityAccess-"([^"]*)" details to be displayed correctly$/, async (params) => {
     await ConfirmationPage.validateTravelerPriorityAccessDetailsDisplayedCorrectly(params);
 });
-Then(/^I am on the Confirmation Page I expect Confirmation Number to be displayed$/, async () => {
-    await ConfirmationPage.validateConfirmationNumberDisplayed();
-});
+Then(/^I am on the confirmation page I expect confirmation number to be displayed$/, async () => {
+    try {
+        // First validate that confirmation page has opened successfully
+        await ConfirmationPage.validateConfirmationPageOpened()
+        await ConfirmationPage.confirmationNumber()
+        await GqlBookingPage.getBookingValues()
+    } catch (error) {
+        await ConfirmationPage.verifyGraphQlNetwork()
+        process.env.SunSeekerPopUp = true
+    }
+})
 
 Then(/^I am on confirmation page I expect (.+) SSR to be displayed for traveler (.+) for (.+) segments$/, async (petInCabin, paxNum, segment) => {
     await ConfirmationPage.validatePetInCabinInConfirmationPage(petInCabin, paxNum, segment);

@@ -42,6 +42,7 @@ await PaymentPage.addBillingAddress(addressLine1,addressLine1)
  })
 Given(/^I am on Payment page I select Purchase my trip button$/, async () => {
     await PaymentPage.purchasemytrip()
+    await PaymentPage.validatePaymentCompletion()
 })
 
 Given(/^I am on Payments page and I click on the Trip Summary Expando$/, async () => {

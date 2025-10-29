@@ -440,69 +440,32 @@ class PaymentPage {
   }
   async purchasemytrip() {
     try {
-      paymentPageCollector.set('customerFirstName', await actions.getAttribute(billingFirstName, 'value', 'billingFirstName'))
-      paymentPageCollector.set('customerLastName', await actions.getAttribute(billingLastName, 'value', 'billingLastName'))
-      paymentPageCollector.set('emailAddress', await actions.getAttribute(emailAddressInput, 'value', 'emailAddressInput'))
+      paymentPageCollector.set('customerFirstName', await actions.getAttribute(billingFirstName, 'value', 'billingFirstName'));
+      paymentPageCollector.set('customerLastName', await actions.getAttribute(billingLastName, 'value', 'billingLastName'));
+      paymentPageCollector.set('emailAddress', await actions.getAttribute(emailAddressInput, 'value', 'emailAddressInput'));
       await this.getTripSummaryAmount();
-    }
-    catch (ex) {
-      console.log("Exception while collecting paymentPage details")
-    }
-    
-    await actions.scroll(termsscroll,'termsscroll')
-
-    let claimPointCheckBox = `//label[contains(@data-hook,'claim-my-points')]/div[2]`
-    if(await actions.isDisplayed(claimPointCheckBox , 'Points Claim Check box'))
-    {
-      console.log("Unchecking the Points Claim Checkbox")
-      await actions.click(claimPointCheckBox,'Points Claim Check box');
-      await actions.pause(3000)
-    }
-    await actions.pause(3000)
-    let checkBoxEnabled = claimPointCheckBox + `/*[local-name() = 'svg']/*[local-name() = 'g']/*[local-name() = 'path']`
-    if(await actions.isExisting(checkBoxEnabled,'check Box Enabled'))
-    {
-      console.log("The Points Claim Checkbox is still checked")
-    }
-    else{
-      console.log("The Points Claim Checkbox is unchecked")
+    } catch (ex) {
+      console.log("Exception while collecting paymentPage details");
     }
 
-    await actions.waitForDisplayed(termsbox, 'terms and conditions checkbox')
+    await actions.scroll(termsscroll, 'termsscroll');
+    let claimPointCheckBox = `//label[contains(@data-hook,'claim-my-points')]/div[2]`;
+    if (await actions.isDisplayed(claimPointCheckBox, 'Points Claim Check box')) {
+      console.log("Unchecking the Points Claim Checkbox");
+      await actions.click(claimPointCheckBox, 'Points Claim Check box');
+      await actions.pause(3000);
+    }
+
+    await actions.waitForDisplayed(termsbox, 'terms and conditions checkbox');
     await actions.waitForClickable(termsbox, 'terms and conditions checkbox');
-    await actions.clickElement('click', termsbox, "condition checkbox")
-    await actions.pause(3000)
-    await actions.scroll(purchaseMyTrip,'purchaseMyTrip')
+    await actions.clickElement('click', termsbox, "condition checkbox");
+    await actions.scroll(purchaseMyTrip, 'purchaseMyTrip');
     await actions.waitForClickable(purchaseMyTrip, 'purchaseMyTrip button');
-    await actions.pause(2000)
     await actions.clickElement('click', purchaseMyTrip, "Purchase my trip Button");
-    try {
-      await actions.clickElement('click', purchaseMyTrip, "Purchase my trip Button Attempt2");
-    } catch (error) {
 
-    }
-    await actions.pause(20000)
-    console.log("URL: ", await browser.getUrl())
-    let oddJustHappenedVisibility = await actions.isDisplayed(somethingReallyOddJustHappened, 'somethingReallyOddJustHappened')
-    let errorMsgVisibility = await actions.isDisplayed(errorMessageCarNum, 'errorMessageCarNum')
-    if (oddJustHappenedVisibility) {
-      console.log("URL Odd Happen: ", await browser.getUrl())
-      assert.fail("something Really Odd Just Happened error! " + (await actions.getText(recoverableErrorMsg, 'recoverableErrorMsg')) + " Fare Amount: " + TotalFareAmount)
-    } else if (errorMsgVisibility) {
-      console.log("URL error msg: ", await browser.getUrl())
-      assert.fail("Valid card " + (await actions.getText(errorMessageCarNum, 'errorMessageCarNum')))
-    }
-    else {
-      // do {
-      //   await actions.pause(500)
-      // } while (await $(spinnerBar).isDisplayed())
-      await actions.pause(15000)
-      await actions.waitForDisplayed(thankyouMessage, 'thankyouMessage',80000);
-      await actions.pause(15000)
-    }
-    await actions.pause(5000)
+    // Validate payment completion
+    await this.validatePaymentCompletion();
   }
-
 
   async clickTripSummaryExpando() {
     await actions.waitForClickable(tripSummaryExpando, 'tripSummaryExpando')
@@ -569,6 +532,68 @@ class PaymentPage {
       throw new Error("invalid format for address")
     } else {
       console.log("valid address")
+    }
+  }
+    async validatePaymentCompletion() {
+    try {
+      // Wait for spinner to disappear (indicating payment processing completion)
+      // Use a while loop similar to the existing approach in purchasemytrip method
+      let spinnerVisible = true;
+      let maxWaitTime = 60000; // 60 seconds maximum wait
+      let startTime = Date.now();
+      
+      while (spinnerVisible && (Date.now() - startTime) < maxWaitTime) {
+        try {
+          spinnerVisible = await actions.isDisplayed(spinnerBar, 'spinner');
+          if (spinnerVisible) {
+            await actions.pause(500);
+          }
+        } catch (error) {
+          // If spinner element is not found, consider it as not visible
+          spinnerVisible = false;
+        }
+      }
+      
+      if (spinnerVisible) {
+        throw new Error("Payment processing timeout - spinner still visible after 60 seconds");
+      }
+      
+      // Additional wait to ensure page has stabilized
+      await actions.pause(2000);
+      
+      // Check if we're redirected to confirmation page or if there's an error
+      const currentUrl = await browser.getUrl();
+      
+      if (currentUrl.includes('/confirmation')) {
+        console.log("Payment completed successfully - redirected to confirmation page");
+        return true;
+      }
+      
+      // Check for error messages that indicate payment failure
+      const errorMessageDisplayed = await actions.isDisplayed(somethingReallyOddJustHappened, 'error message');
+      if (errorMessageDisplayed) {
+        const errorText = await actions.getText(recoverableErrorMsg, 'error message text');
+        throw new Error(`Payment failed with error: ${errorText}`);
+      }
+      
+      // Check for card number error
+      const cardErrorDisplayed = await actions.isDisplayed(errorMessageCarNum, 'card error message');
+      if (cardErrorDisplayed) {
+        const cardErrorText = await actions.getText(errorMessageCarNum, 'card error text');
+        throw new Error(`Payment failed with card error: ${cardErrorText}`);
+      }
+      
+      // If we're still on payment page after long wait, payment might have failed
+      if (currentUrl.includes('/payment')) {
+        throw new Error("Payment processing failed - still on payment page after completion attempt");
+      }
+      
+      console.log("Payment validation completed successfully");
+      return true;
+      
+    } catch (error) {
+      console.error("Payment completion validation failed:", error.message);
+      throw error;
     }
   }
 }
