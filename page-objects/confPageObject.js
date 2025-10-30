@@ -465,12 +465,17 @@ class ConfirmationPage {
 		console.log(`process.env.SunSeekerPopUp => ${process.env.SunSeekerPopUp}`)
 
 		// Validate payment completion before proceeding
-		const paymentStatusElement = "[data-hook='payment-status']"; // Replace with actual selector
-		const paymentCompleted = await actions.isDisplayed(paymentStatusElement, 'Payment Status Element') &&
-			(await actions.getText(paymentStatusElement, 'Payment Status Text')).toLowerCase() === 'completed';
+		const confirmationTitleSelector = [
+			"[data-hook='confirmation-page_title']",
+			"//span[text()='Your booking is confirmed!']"
+		];
+
+		const paymentCompleted = await confirmationTitleSelector.some(async (selector) => {
+			return await actions.isDisplayed(selector, `Confirmation Title Selector: ${selector}`);
+		});
 
 		if (!paymentCompleted) {
-			throw new Error("Cannot access Manage Travel before payment is completed.");
+			throw new Error('Payment not completed. Cannot proceed to Manage Travel.');
 		}
 
 		// Set a timeout for the payment page "Continue" button loading
