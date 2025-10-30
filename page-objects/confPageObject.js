@@ -465,8 +465,12 @@ class ConfirmationPage {
 		console.log(`process.env.SunSeekerPopUp => ${process.env.SunSeekerPopUp}`)
 
 		// Validate payment completion before proceeding
-		if (process.env.paymentCompleted !== "true") {
-			throw new Error("Cannot access Manage Travel before payment is completed.")
+		const paymentStatusElement = "[data-hook='payment-status']"; // Replace with actual selector
+		const paymentCompleted = await actions.isDisplayed(paymentStatusElement, 'Payment Status Element') &&
+			(await actions.getText(paymentStatusElement, 'Payment Status Text')).toLowerCase() === 'completed';
+
+		if (!paymentCompleted) {
+			throw new Error("Cannot access Manage Travel before payment is completed.");
 		}
 
 		// Set a timeout for the payment page "Continue" button loading
