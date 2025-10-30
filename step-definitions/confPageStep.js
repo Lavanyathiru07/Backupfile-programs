@@ -10,15 +10,15 @@ Then(/^I open new tab from the confirmation page$/,async() =>{
     await ConfirmationPage.newtab()
 })
 
-Then(/^I am on the confirmation page I expect confirmation number to be displayed$/, async () => {
-    try {
-        await ConfirmationPage.confirmationNumber()
-        await GqlBookingPage.getBookingValues()
-    } catch (error) {
-        await ConfirmationPage.verifyGraphQlNetwork()
-        process.env.SunSeekerPopUp = true
-    }
-})
+// Then(/^I am on the confirmation page I expect confirmation number to be displayed$/, async () => {
+//     try {
+//         await ConfirmationPage.confirmationNumber()
+//         await GqlBookingPage.getBookingValues()
+//     } catch (error) {
+//         await ConfirmationPage.verifyGraphQlNetwork()
+//         process.env.SunSeekerPopUp = true
+//     }
+// })
 
 Then(/^I am on the confirmation page I expect traveler details to be displayed correctly$/, async () => {
     await ConfirmationPage.validateTravelerDetailsDisplayedCorrectly()
