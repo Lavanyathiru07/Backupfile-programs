@@ -9,7 +9,7 @@
   },
 
   "dependencies": {
-    
+    "@g4/cat-integration-util": "0.8.0",
     "@g4/gql-booking-util": "1.14.6",
     "@g4/js-db-util": "0.1.4",
     "@g4/prova-ui": "^0.6.4",
