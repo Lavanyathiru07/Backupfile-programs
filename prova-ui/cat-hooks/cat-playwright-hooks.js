@@ -1,5 +1,5 @@
-import { BeforeAll, Before, BeforeStep, AfterStep, After, AfterAll, setDefaultTimeout } from "@cucumber/cucumber";
-import { Browser, chromium, firefox } from 'playwright';
+const { BeforeAll, Before, BeforeStep, AfterStep, After, AfterAll, setDefaultTimeout } = require("@cucumber/cucumber");
+const { Browser, chromium, firefox } = require('playwright');
 
 /* eslint-disable require-jsdoc */
 /* eslint-disable new-cap */

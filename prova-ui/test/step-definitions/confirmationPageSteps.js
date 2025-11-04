@@ -1,4 +1,4 @@
-import { Then } from '@cucumber/cucumber'
+const { Then } = require('@cucumber/cucumber')
 
 Then(/^I am on the confirmation page I expect confirmation number to be displayed$/, async function ()  {
     await this.ConfirmationPage.confirmationNumber()

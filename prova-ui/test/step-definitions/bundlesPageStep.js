@@ -1,4 +1,4 @@
-import {When, Then, Given} from '@cucumber/cucumber'
+const {When, Then, Given} = require('@cucumber/cucumber')
 
 Then(/^I am on Bundles Page I expect flight details added to the trip summary$/, async function ()  {
     await this.BundlesPage.validateFlightDetailsFromTripSummary()

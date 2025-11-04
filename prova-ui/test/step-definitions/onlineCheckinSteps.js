@@ -1,4 +1,4 @@
-import { Then, When } from '@cucumber/cucumber'
+const { Then, When } = require('@cucumber/cucumber')
 
 import HomePageObject from '../page-objects/homePageObject'
 import BagsPageObject from '../page-objects/bagsPageObject'

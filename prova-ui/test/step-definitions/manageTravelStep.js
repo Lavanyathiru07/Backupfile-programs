@@ -1,4 +1,4 @@
-import { Given, When, Then } from '@cucumber/cucumber';
+const { Given, When, Then } = require('@cucumber/cucumber');
 import Actions from '../../src/support/actions';
 
 import HomePageObject from '../page-objects/homePageObject'

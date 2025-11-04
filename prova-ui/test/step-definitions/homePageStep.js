@@ -1,4 +1,4 @@
-import { Given, When, Then, Before } from '@cucumber/cucumber';
+const { Given, When, Then, Before } = require('@cucumber/cucumber');
 import HomePageObject from '../page-objects/homePageObject'
 import BagsPageObject from '../page-objects/bagsPageObject'
 import BundlesPageObject from '../page-objects/bundlesPageObject'

@@ -1,4 +1,4 @@
-import { Given, When, Then } from '@cucumber/cucumber';
+const { Given, When, Then } = require('@cucumber/cucumber');
 
 Given(/^I am on Payment page I select Purchase my trip button$/, async function ()  {
     await this.PaymentPage.purchasemytrip()

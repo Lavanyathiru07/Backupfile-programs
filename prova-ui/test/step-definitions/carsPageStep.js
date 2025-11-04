@@ -1,4 +1,4 @@
-import { Then } from '@cucumber/cucumber'
+const { Then } = require('@cucumber/cucumber')
 
 
 Then(/^I am on cars page I add a car to cart$/, async function ()  {

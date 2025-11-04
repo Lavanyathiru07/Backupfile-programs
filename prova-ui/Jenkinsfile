@@ -83,7 +83,6 @@ timestamps {
                             export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
                             export DISPLAY=:99
                             export PLAYWRIGHT_BROWSERS_PATH="/home/jenkins/.cache/playwright"
-                            export NODE_OPTIONS="--require @babel/register"
                             
                             # Install dependencies - allow scripts but skip husky
                             if [ -f "package-lock.json" ]; then
@@ -147,12 +146,7 @@ timestamps {
                             cd prova-ui
                             export TEST_ENVIRONMENT="${params.ENV}"
                             export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
-                            export DISPLAY=:99
-                            export NODE_OPTIONS="--require @babel/register"
-                            
-                            # Test Babel transpilation
-                            echo "Testing Babel transpilation..."
-                            node -r @babel/register -e "console.log('Babel working')"
+                            cd prova-ui
                             
                             if [ -n "${params.CUSTOM_TAGS}" ] && [ "${params.CUSTOM_TAGS}" != "" ]; then
                                 npm run test:cat-parallel -- --tags '${params.CUSTOM_TAGS}'
