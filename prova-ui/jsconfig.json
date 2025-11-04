@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["ES2020", "DOM"],
+    "strict": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "checkJs": false,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@test/*": ["test/*"],
+      "@utils/*": ["utility/*"],
+      "@cat-hooks/*": ["cat-hooks/*"]
+    },
+    "types": [
+      "node",
+      "@cucumber/cucumber",
+      "@playwright/test"
+    ]
+  },
+  "include": [
+    "src/**/*",
+    "test/**/*",
+    "cat-hooks/**/*",
+    "utility/**/*",
+    "*.js",
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "archived-legacy",
+    "reports",
+    "allure-results"
+  ]
+}

@@ -1,0 +1,287 @@
+properties([
+    parameters([
+        choice(choices: ['stg01.aws'], description: 'Please select the environment from the list', name: 'ENV'),
+        string(name: 'Tags', defaultValue: '', description: 'Cucumber tags (e.g., @demo, @smoke)')
+    ])
+])
+
+String jnlp = 'jnlp'
+String jnlpDockerImage = 'docker-registry.default.svc:5000/pipe/gizmo-build-agent:rocky-v3.11'
+String cpuResources = '4'
+String memoryResources = '8Gi'
+String pullNexusAwsRegistry = 'https://nexus.aws.allegiantair.com/repository/npm-group/'
+
+String branchName = env.BRANCH_NAME ?: 'feature/optimzed-repo-using-github-copilot'
+String gitRepoUrl = "https://github.com/js3v_algt/playwright_prova-ui_poc.git"
+String credentialGitHub = 'jenkins-gizmo-github-app-access-token'
+// node lts versions are pre-installed on these agents, reference them by lts name:
+// erbium (12), fermium (14), gallium (16), hydrogen (18), iron (20)
+String nodeVersion = 'lts/hydrogen'
+
+// Build information
+String buildTimestamp = new Date().format("yyyyMMdd_HHmmss")
+
+addShortText(text: "Playwright E2E Tests", color: 'white', background: 'green', borderColor: 'white')
+timestamps {
+    ansiColor('xterm') {
+        def label = "playwright-e2e-tests-${UUID.randomUUID().toString()}"
+
+        podTemplate(
+            cloud: 'openshift',
+            label: label,
+            name: "${jnlp}-playwright-e2e",
+            serviceAccount: 'gizmo-slave',
+            namespace: 'allegiant-ci',
+            containers: generateContainer(jnlp, jnlpDockerImage, cpuResources, memoryResources),
+            volumes: [
+                emptyDirVolume(name: 'dshm', mountPath: '/dev/shm', memory: true),
+                emptyDirVolume(mountPath: '/tmp', memory: false),
+                emptyDirVolume(mountPath: '/home/jenkins/.cache', memory: false)
+            ],
+            envVars: [
+                envVar(key: 'CAT_JOB_NAME', value: "${JOB_NAME}"),
+                envVar(key: 'CAT_BUILD_NO', value: "${BUILD_NUMBER}"),
+                envVar(key: 'DEFAULT_CAT_UI', value: "true"),
+                envVar(key: 'CAT_ENV', value: "playwright-e2e-${params.ENV}"),
+                envVar(key: 'CAT_URL', value: "https://cat.stg.allegiantair.com"),
+                envVar(key: 'CAT_API_PATH', value: "/api/ui/results"),
+                envVar(key: 'JOB_START_TIME', value: "${buildTimestamp}"),
+                envVar(key: 'CI', value: "true"),
+                envVar(key: 'PLAYWRIGHT_BROWSERS_PATH', value: "/home/jenkins/.cache/playwright"),
+                envVar(key: 'TEST_ENVIRONMENT', value: "${params.ENV}"),
+                envVar(key: 'PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD', value: "0")
+            ]
+        ) {
+            node(label) {
+
+                stage('Build Info') {
+                    container(jnlp) {
+                        echo """
+                        ===============================================================
+                        PLAYWRIGHT E2E TEST AUTOMATION - JENKINS PIPELINE
+                        ===============================================================
+                        Build: ${BUILD_NUMBER}
+                        Timestamp: ${buildTimestamp}
+                        Branch: ${branchName}
+                        
+                        TEST CONFIGURATION:
+                        Environment: ${params.ENV}
+                        Test Command: npm run test:cat-parallel
+                        CAT Integration: Enabled
+                        Custom Tags: ${params.CUSTOM_TAGS ?: '@demo'}
+                        
+                        ENVIRONMENT:
+                        Node Version: ${nodeVersion}
+                        Container: ${jnlpDockerImage}
+                        CPU Resources: ${cpuResources}
+                        Memory Resources: ${memoryResources}
+                        ===============================================================
+                        """
+                    }
+                }
+
+                stage('Git Checkout') {
+                    container(jnlp) {
+                        withCredentials([
+                            usernamePassword(credentialsId: credentialGitHub, usernameVariable: 'GITHUB_APP', passwordVariable: 'GH_TOKEN')
+                        ]) {
+                            sh """
+                            gh auth setup-git
+                            gh repo clone ${gitRepoUrl} ./
+                            git checkout ${branchName}
+                            echo "Current directory contents:"
+                            ls -la
+                            """
+                        }
+                    }
+                }
+
+                stage('Install Dependencies & Setup') {
+                    container(jnlp) {
+                        try {
+                            sh """
+                            #!/bin/bash +x
+                            echo "Setting up Node.js environment..."
+                            source "\$NVM_DIR/nvm.sh" &>/dev/null
+                            nvm use ${nodeVersion} &>/dev/null
+                            node --version
+                            npm --version
+                            
+                            echo "Configuring npm registry..."
+                            npm config set registry "${pullNexusAwsRegistry}" -g
+                            npm set strict-ssl false
+                            
+                            echo "Installing project dependencies..."
+                            cd prova-ui
+                            npm ci
+                            
+                            echo "Installing Playwright browsers..."
+                            npx playwright install
+                            npx playwright install-deps
+                            
+                            echo "Verifying installation..."
+                            npx playwright --version
+                            """
+                            
+                        } catch (e) {
+                            currentBuild.result = 'FAILURE'
+                            echo "Exception during installation/setup: ${e}"
+                            throw e
+                        }
+                    }
+                }
+
+                stage('Code Quality Checks') {
+                    container(jnlp) {
+                        try {
+                            sh """
+                            #!/bin/bash +x
+                            source "\$NVM_DIR/nvm.sh" &>/dev/null
+                            nvm use ${nodeVersion} &>/dev/null
+                            
+                            cd prova-ui
+                            echo "Running ESLint..."
+                            npm run lint
+                            
+                            echo "Running Gherkin lint..."
+                            npm run gherkin-lint
+                            """
+                        } catch (e) {
+                            echo "Code quality checks failed: ${e}"
+                            currentBuild.result = 'UNSTABLE'
+                        }
+                    }
+                }
+
+                stage('Execute Playwright Tests') {
+                    container(jnlp) {
+                        try {
+                            sh """
+                            #!/bin/bash +x
+                            source "\$NVM_DIR/nvm.sh" &>/dev/null
+                            nvm use ${nodeVersion} &>/dev/null
+                            
+                            cd prova-ui
+                            
+                            echo "Starting Playwright test execution with CAT integration..."
+                            echo "Environment: ${params.ENV}"
+                            echo "Custom Tags: ${params.CUSTOM_TAGS}"
+                            
+                            # Set environment variables for tests
+                            export TEST_ENV="${params.ENV}"
+                            
+                            # Execute the test command with custom tags if provided
+                            if [ -n "${params.CUSTOM_TAGS}" ]; then
+                                echo "Running tests with tags: ${params.CUSTOM_TAGS}"
+                                npm run test:cat-parallel -- --tags '${params.CUSTOM_TAGS}'
+                            else
+                                echo "Running all tests with parallel execution"
+                                npm run test:cat-parallel
+                            fi
+                            
+                            echo "Test execution completed successfully!"
+                            """
+                        } catch (e) {
+                            currentBuild.result = 'UNSTABLE'
+                            echo "Test execution had failures: ${e}"
+                            echo "Continuing to generate reports..."
+                        }
+                    }
+                }
+
+                stage('Generate Reports') {
+                    container(jnlp) {
+                        try {
+                            sh """
+                            #!/bin/bash +x
+                            source "\$NVM_DIR/nvm.sh" &>/dev/null
+                            nvm use ${nodeVersion} &>/dev/null
+                            
+                            cd prova-ui
+                            
+                            echo "Archiving test artifacts..."
+                            
+                            echo "Available reports:"
+                            ls -la *.html *.json allure-report/ 2>/dev/null || echo "No reports found"
+                            """
+                            
+                            // Archive artifacts
+                            archiveArtifacts artifacts: 'prova-ui/cucumber-report.html', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'prova-ui/report.json', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'prova-ui/allure-report/**/*', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'prova-ui/test-results/**/*', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'prova-ui/playwright-report/**/*', allowEmptyArchive: true
+                            
+                            // Publish HTML reports
+                            publishHTML([
+                                allowMissing: false,
+                                alwaysLinkToLastBuild: true,
+                                keepAll: true,
+                                reportDir: 'prova-ui',
+                                reportFiles: 'cucumber-report.html',
+                                reportName: "Test Report - ${params.ENV}"
+                            ])
+                            
+                        } catch (e) {
+                            echo "Report generation had issues: ${e}"
+                        }
+                    }
+                }
+
+                stage('Pipeline Summary') {
+                    container(jnlp) {
+                        script {
+                            def testResult = currentBuild.result ?: 'SUCCESS'
+                            def endTimestamp = new Date().format("yyyyMMdd_HHmmss")
+                            
+                            echo """
+                            ===============================================================
+                            PLAYWRIGHT E2E TEST EXECUTION SUMMARY
+                            ===============================================================
+                            Final Status: ${testResult}
+                            Start Time: ${buildTimestamp}
+                            End Time: ${endTimestamp}
+                            Duration: ${currentBuild.durationString}
+                            
+                            TEST CONFIGURATION SUMMARY:
+                            Environment: ${params.ENV}
+                            Test Command: npm run test:cat-parallel
+                            Custom Tags: ${params.CUSTOM_TAGS ?: '@demo'}
+                            
+                            REPORTS GENERATED:
+                            - Cucumber HTML Report: Available in Jenkins
+                            - JSON Test Results: Archived
+                            - CAT Integration: Enabled
+                            - Test Screenshots/Videos: Archived (if any failures)
+                            ===============================================================
+                            """
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Wait for Cleanup') {
+            sleep(time: 15, unit: "SECONDS")
+        }
+    }
+}
+
+def generateContainer(String jnlp, String jnlpDockerImage, String cpuResources, String memoryResources) {
+    def nlist = []
+
+    nlist.add(containerTemplate(
+        name: jnlp,
+        image: jnlpDockerImage,
+        workingDir: '/tmp',
+        alwaysPullImage: true,
+        args: '${computer.jnlpmac} ${computer.name}',
+        runAsUser: '1001',
+        resourceRequestCpu: cpuResources,
+        resourceRequestMemory: memoryResources,
+        resourceLimitCpu: cpuResources,
+        resourceLimitMemory: memoryResources
+    ))
+
+    return nlist
+}

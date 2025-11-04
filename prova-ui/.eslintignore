@@ -1,0 +1,6 @@
+demo-app/**/*.js
+test/*.js
+test/**/*.js
+.gitignore
+reports/
+allure-report/
