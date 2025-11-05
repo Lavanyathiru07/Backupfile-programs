@@ -1,6 +1,6 @@
-import Actions from "../../src/support/actions"
+const Actions = require("../../src/support/actions")
 
-import { flightPageCollector } from './flightsPageObject'
+const { flightPageCollector } = require('./flightsPageObject')
 const pfc = "//span[@data-hook='price-breakdown_pfc_value']"
 const basicBundlescroll = "[data-hook='text-below-strikethrough-price_allegiant_basic_bundle']"
 const bundleSubmit = "[data-hook='bundles-page_continue']"
@@ -121,5 +121,7 @@ class BundlesPage {
     }
 }
 
-export { bundleItems, bundlePrice, bundlePageCollector }
-export default BundlesPage
+module.exports = BundlesPage
+module.exports.bundleItems = bundleItems
+module.exports.bundlePrice = bundlePrice
+module.exports.bundlePageCollector = bundlePageCollector

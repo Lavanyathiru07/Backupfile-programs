@@ -1,7 +1,7 @@
 
-import Actions from "../../src/support/actions"
-import Checks from "../../src/support/validations"
-import { assert } from 'chai'
+const Actions = require("../../src/support/actions")
+const Checks = require("../../src/support/validations")
+const { assert } = require('chai')
 
 const paypopup = "[data-hook='payment-page_ice-popup_close']"
 const sscrolldetails = "//span[text()='Payment Information']"
@@ -366,5 +366,5 @@ class PaymentPage {
 
     }
 }
-export default PaymentPage
-export { paymentPageCollector }
+module.exports = PaymentPage
+module.exports.paymentPageCollector = paymentPageCollector
