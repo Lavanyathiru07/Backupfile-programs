@@ -1,5 +1,4 @@
-import Actions from "../../src/support/actions"
-import getSeatArray from './graphqlCalls'
+const Actions = require("../../src/support/actions")
 
 const seatsPageSkip = "[data-hook='seats-page_skip']";
 const seatPageHeading = "[data-hook='seats-page_page-heading']";
@@ -1570,5 +1569,12 @@ class SeatPage {
 	}
 
 }
-export { seatIdDepart, seatPriceDepart, seatIdReturn, seatPriceReturn, deselectedSeatDetails, updatedSeatDetails, selectedSeatDetails }
-export default SeatPage
+
+module.exports = SeatPage
+module.exports.seatIdDepart = seatIdDepart
+module.exports.seatPriceDepart = seatPriceDepart
+module.exports.seatIdReturn = seatIdReturn
+module.exports.seatPriceReturn = seatPriceReturn
+module.exports.deselectedSeatDetails = deselectedSeatDetails
+module.exports.updatedSeatDetails = updatedSeatDetails
+module.exports.selectedSeatDetails = selectedSeatDetails

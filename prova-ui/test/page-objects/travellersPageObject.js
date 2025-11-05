@@ -1,7 +1,7 @@
-import Actions from "../../src/support/actions"
-import Checks from "../../src/support/validations"
-import { departDate, returnDate } from './flightsPageObject'
-import { faker } from '@faker-js/faker'
+const Actions = require("../../src/support/actions")
+const Checks = require("../../src/support/validations")
+const { departDate, returnDate } = require('./flightsPageObject')
+const { faker } = require('@faker-js/faker')
 
 const nameValidation = "[data-hook='travelers-form_adults_0_first-name']"
 const lname = "[data-hook='travelers-form_adults_0_last-name']"
@@ -457,5 +457,6 @@ class TravellersPage {
     }
 }
 
-export { firstName, lastName }
-export default TravellersPage
+module.exports = TravellersPage
+module.exports.firstName = firstName
+module.exports.lastName = lastName
