@@ -1,5 +1,5 @@
-const Actions = require("../../src/support/actions")
-const Check = require("../../src/support/validations")
+import Actions from "../../src/support/actions"
+import Check from "../../src/support/validations"
 
 const onelineCheckin = "//span[@class='Button__ButtonText-sc-1ececxa-0 fFLZUm']"
 const checkinbutton = "//button[@class='Button__StyledButton-sc-1ececxa-1 jGMNve PageFooter__ContinueButton-sc-1me5dil-0 bmowAx']"
@@ -81,4 +81,4 @@ class CheckInPage {
     }
 
 }
-module.exports = CheckInPage
+export default CheckInPage

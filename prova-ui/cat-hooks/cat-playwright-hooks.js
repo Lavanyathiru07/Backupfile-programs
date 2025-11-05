@@ -1,5 +1,5 @@
-const { BeforeAll, Before, BeforeStep, AfterStep, After, AfterAll, setDefaultTimeout } = require("@cucumber/cucumber");
-const { Browser, chromium, firefox } = require('playwright');
+import { BeforeAll, Before, BeforeStep, AfterStep, After, AfterAll, setDefaultTimeout } from "@cucumber/cucumber";
+import { Browser, chromium, firefox } from 'playwright';
 
 /* eslint-disable require-jsdoc */
 /* eslint-disable new-cap */
@@ -41,64 +41,16 @@ BeforeAll(async function () {
 
 Before(async function (scenario) {
     try {
-        // Initialize browser with proper configuration for Jenkins
-        const headlessMode = process.env.HEADLESS !== 'false';
-        const isCI = process.env.CI === 'true';
-        
-        console.log(`Launching browser - Headless: ${headlessMode}, CI: ${isCI}`);
-        
-        const launchOptions = {
+        // Initialize browser with proper configuration
+        const headlessMode = process.env.HEADLESS === 'true' || false;
+        this.browser = await chromium.launch({
             headless: headlessMode,
-            timeout: 60000,
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-accelerated-2d-canvas',
-                '--no-first-run',
-                '--no-zygote',
-                '--disable-gpu',
-                '--disable-background-timer-throttling',
-                '--disable-backgrounding-occluded-windows',
-                '--disable-renderer-backgrounding',
-                '--disable-features=TranslateUI',
-                '--disable-ipc-flooding-protection'
-            ]
-        };
-        
-        // Add single-process mode for CI environments
-        if (isCI) {
-            launchOptions.args.push(
-                '--single-process',
-                '--disable-extensions',
-                '--disable-plugins',
-                '--disable-translate',
-                '--disable-default-apps'
-            );
-            launchOptions.slowMo = 200; // Increased delay for stability
-            launchOptions.timeout = 120000; // Increased timeout for CI
-        }
-        
-        this.browser = await chromium.launch(launchOptions);
-        
-        // Verify browser is connected
-        if (!this.browser.isConnected()) {
-            throw new Error('Browser launched but is not connected');
-        }
-        
-        // Add small delay to ensure browser is fully ready
-        await new Promise(resolve => setTimeout(resolve, isCI ? 1000 : 500));
-        
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
         this.context = await this.browser.newContext({
             viewport: { width: 1280, height: 720 },
-            ignoreHTTPSErrors: true,
-            actionTimeout: 30000,
-            navigationTimeout: 60000
+            ignoreHTTPSErrors: true
         });
-        
-        // Add another small delay before creating page
-        await new Promise(resolve => setTimeout(resolve, isCI ? 500 : 200));
-        
         this.page = await this.context.newPage();
 
         // Store page reference for CAT hooks
@@ -108,47 +60,7 @@ Before(async function (scenario) {
 
     } catch (error) {
         console.error('Browser initialization failed:', error);
-        
-        // Retry browser launch once with minimal configuration
-        try {
-            console.log('Retrying browser launch with minimal configuration...');
-            
-            // Wait a bit before retry
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            this.browser = await chromium.launch({
-                headless: true,
-                args: [
-                    '--no-sandbox', 
-                    '--disable-setuid-sandbox', 
-                    '--disable-dev-shm-usage',
-                    '--disable-gpu',
-                    '--single-process'
-                ],
-                timeout: 90000
-            });
-            
-            // Wait for browser to be ready
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            this.context = await this.browser.newContext({
-                viewport: { width: 1280, height: 720 }
-            });
-            
-            // Wait before creating page
-            await new Promise(resolve => setTimeout(resolve, 500));
-            
-            this.page = await this.context.newPage();
-            
-            page = this.page;
-            browser = this.browser;
-            context = this.context;
-            
-            console.log('Browser retry successful');
-        } catch (retryError) {
-            console.error('Browser retry also failed:', retryError);
-            throw new Error(`Browser setup failed after retry: ${retryError.message}`);
-        }
+        throw new Error(`Browser setup failed: ${error.message}`);
     }
 
     // Handle feature-level CAT integration
@@ -277,4 +189,4 @@ AfterAll(async function () {
     }
 });
 
-module.exports = { page, browser, context };
+export { page, browser, context };

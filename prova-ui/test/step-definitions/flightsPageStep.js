@@ -1,4 +1,4 @@
-const { Given , When , Then} = require('@cucumber/cucumber');
+import { Given , When , Then} from '@cucumber/cucumber';
 
 When(/^I am on flights page I collect flight page details$/, async function ()  {
     await this.FlightsPage.collectFlightPageDetails();

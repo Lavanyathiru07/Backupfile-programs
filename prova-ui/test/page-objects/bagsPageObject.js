@@ -1,4 +1,4 @@
-const Actions = require("../../src/support/actions")
+import Actions from "../../src/support/actions"
 
 const extrascroll = "[data-hook='extras-title']"
 const boarding = "[data-hook='priority-boarding-card_add-to-cart']"
@@ -397,4 +397,4 @@ class BagsPage {
     }
 
 }
-module.exports = BagsPage
+export default BagsPage

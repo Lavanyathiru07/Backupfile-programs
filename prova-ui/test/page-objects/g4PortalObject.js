@@ -1,5 +1,5 @@
-const Actions = require("../../src/support/actions")
-const { assert } = require('chai');
+import Actions from "../../src/support/actions"
+import { assert } from 'chai';
 
 const fmmFlight = "//div[@id='Test-TopRow']"
 const MOD = "//a//span[contains(text(),'MOD')]"
@@ -287,4 +287,4 @@ class g4PortalPage {
     }
 }
 
-module.exports = g4PortalPage
+export default g4PortalPage

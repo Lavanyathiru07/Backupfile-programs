@@ -1,5 +1,5 @@
-const Actions = require("../../src/support/actions")
-const { assert } = require('chai')
+import Actions from "../../src/support/actions"
+import { assert } from 'chai'
 
 const advert = "[class='DestinationAdvert__Wrapper-xfecml-0 gAGMid']"
 const submitflightpage = "[data-hook='flights-page_continue']"
@@ -237,7 +237,5 @@ class FlightsPage {
     }
 }
 
-module.exports = FlightsPage
-module.exports.departDate = departDate
-module.exports.returnDate = returnDate  
-module.exports.flightPageCollector = flightPageCollector
+export { departDate, returnDate, flightPageCollector };
+export default FlightsPage

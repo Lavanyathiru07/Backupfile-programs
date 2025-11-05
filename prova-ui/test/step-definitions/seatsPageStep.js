@@ -1,4 +1,4 @@
-const { When } = require('@cucumber/cucumber');
+import { When } from '@cucumber/cucumber';
 
 When(/^I am on WWW Seat page I select seats for "([^"]*)"$/, async function (params) {
 	await this.SeatPage.selectSeatsByParams(params);

@@ -1,4 +1,4 @@
-const {When, Then, Given} = require('@cucumber/cucumber')
+import {When, Then, Given} from '@cucumber/cucumber'
 
 
 Then(/^I am on hotels page I select a hotel$/, async function ()  {

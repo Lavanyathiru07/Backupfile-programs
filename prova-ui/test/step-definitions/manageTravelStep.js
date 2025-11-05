@@ -1,20 +1,20 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
-const Actions = require('../../src/support/actions');
+import { Given, When, Then } from '@cucumber/cucumber';
+import Actions from '../../src/support/actions';
 
-const HomePageObject = require('../page-objects/homePageObject')
-const BagsPageObject = require('../page-objects/bagsPageObject')
-const BundlesPageObject = require('../page-objects/bundlesPageObject')
-const { CarPage } = require('../page-objects/carsPageObject')
-const FlightsPageObject = require('../page-objects/flightsPageObject')
-const HotelPageObject = require('../page-objects/hotelPageObject')
-const LoginPageObject = require('../page-objects/loginPageObject')
-const ManagetravelObject = require('../page-objects/manageTravelObject')
-const PaymentPageObject = require('../page-objects/paymentPageObj');
-const CheckinPageObject = require('../page-objects/checkinObject');
-const TravellersPageObject = require('../page-objects/travellersPageObject')
-const SeatPageObject = require("../page-objects/seatsPageObject");
-const ConfirmationPageObject = require('../page-objects/confPageObject')
-const G4portalObject = require('../page-objects/g4PortalObject')
+import HomePageObject from '../page-objects/homePageObject'
+import BagsPageObject from '../page-objects/bagsPageObject'
+import BundlesPageObject from '../page-objects/bundlesPageObject'
+import CarPageObject from '../page-objects/carsPageObject'
+import FlightsPageObject from '../page-objects/flightsPageObject'
+import HotelPageObject from '../page-objects/hotelPageObject'
+import LoginPageObject from '../page-objects/loginPageObject'
+import ManagetravelObject from '../page-objects/manageTravelObject'
+import PaymentPageObject from '../page-objects/paymentPageObj';
+import CheckinPageObject from '../page-objects/checkinObject';
+import TravellersPageObject from '../page-objects/travellersPageObject'
+import SeatPageObject from "../page-objects/seatsPageObject";
+import ConfirmationPageObject from '../page-objects/confPageObject'
+import G4portalObject from '../page-objects/g4PortalObject'
 
 let departureDate
 
@@ -27,7 +27,7 @@ Then(/^I am on Manage Travel page I cancel my Trip$/, { timeout: 180 * 10000 }, 
     this.TravellersPage = new TravellersPageObject(this.page, this.context)
     this.SeatPage = new SeatPageObject(this.page, this.context)
     this.HotelPage = new HotelPageObject(this.page, this.context)
-    this.CarsPage = new CarPage(this.page, this.context)
+    this.CarsPage = new CarPageObject(this.page, this.context)
     this.PaymentPage = new PaymentPageObject(this.page, this.context)
     this.ConfirmationPage = new ConfirmationPageObject(this.page, this.context)
     this.CheckinPage = new CheckinPageObject(this.page, this.context)
@@ -45,7 +45,7 @@ When(/^I am on Manage Travel page, I add a car$/, async function () {
     this.TravellersPage = new TravellersPageObject(this.page, this.context)
     this.SeatPage = new SeatPageObject(this.page, this.context)
     this.HotelPage = new HotelPageObject(this.page, this.context)
-    this.CarsPage = new CarPage(this.page, this.context)
+    this.CarsPage = new CarPageObject(this.page, this.context)
     this.PaymentPage = new PaymentPageObject(this.page, this.context)
     this.ConfirmationPage = new ConfirmationPageObject(this.page, this.context)
     this.CheckinPage = new CheckinPageObject(this.page, this.context)
@@ -74,7 +74,7 @@ When(/^I am on Manage Trip and I click cancel flight$/, async function () {
     this.TravellersPage = new TravellersPageObject(this.page, this.context)
     this.SeatPage = new SeatPageObject(this.page, this.context)
     this.HotelPage = new HotelPageObject(this.page, this.context)
-    this.CarsPage = new CarPage(this.page, this.context)
+    this.CarsPage = new CarPageObject(this.page, this.context)
     this.PaymentPage = new PaymentPageObject(this.page, this.context)
     this.ConfirmationPage = new ConfirmationPageObject(this.page, this.context)
     this.CheckinPage = new CheckinPageObject(this.page, this.context)
@@ -92,7 +92,7 @@ When(/^I am on Manage Travel page I add "([^"]*)" for traveler "([^"]*)"$/, asyn
     this.TravellersPage = new TravellersPageObject(this.page, this.context)
     this.SeatPage = new SeatPageObject(this.page, this.context)
     this.HotelPage = new HotelPageObject(this.page, this.context)
-    this.CarsPage = new CarPage(this.page, this.context)
+    this.CarsPage = new CarPageObject(this.page, this.context)
     this.PaymentPage = new PaymentPageObject(this.page, this.context)
     this.ConfirmationPage = new ConfirmationPageObject(this.page, this.context)
     this.CheckinPage = new CheckinPageObject(this.page, this.context)
@@ -115,7 +115,7 @@ When(/^I am on Manage Trip and I click change flight$/, async function () {
     this.TravellersPage = new TravellersPageObject(this.page, this.context)
     this.SeatPage = new SeatPageObject(this.page, this.context)
     this.HotelPage = new HotelPageObject(this.page, this.context)
-    this.CarsPage = new CarPage(this.page, this.context)
+    this.CarsPage = new CarPageObject(this.page, this.context)
     this.PaymentPage = new PaymentPageObject(this.page, this.context)
     this.ConfirmationPage = new ConfirmationPageObject(this.page, this.context)
     this.CheckinPage = new CheckinPageObject(this.page, this.context)

@@ -1,5 +1,5 @@
-const Actions = require("../../src/support/actions")
-const market = require('../../utility/market-OneDayflight')
+import Actions from "../../src/support/actions"
+import market from '../../utility/market-OneDayflight'
 
 const buttontoclosepopup = "//button[@class='Popup__CloseIcon-sc-1kasz48-2 eKPgGA']/img"
 const cookieepopup = "//button[contains(@class,'close-button')]"
@@ -597,6 +597,5 @@ class HomePage {
 	}
 
 }
-module.exports = HomePage
-module.exports.BookingDisabledFromMonth = BookingDisabledFromMonth
-module.exports.billboardNameList = billboardNameList
+export default HomePage
+export { BookingDisabledFromMonth, billboardNameList }

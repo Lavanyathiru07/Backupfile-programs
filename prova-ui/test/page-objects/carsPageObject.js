@@ -1,5 +1,5 @@
-const Actions = require("../../src/support/actions")
-const { assert } = require('chai');
+import Actions from "../../src/support/actions"
+import { assert } from 'chai';
 
 const carpagescroll = "[data-hook='cars-page_continue']"
 const carskip = "[data-hook='cars-page_skip']"
@@ -106,5 +106,5 @@ class CarPage {
         }
     }
 }
-module.exports = { CarsPageCollectorCP, CarPage }
-module.exports.default = CarPage
+export { CarsPageCollectorCP }
+export default CarPage

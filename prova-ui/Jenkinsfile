@@ -1,7 +1,7 @@
 properties([
     parameters([
         choice(choices: ['stg01.aws'], description: 'Please select the environment from the list', name: 'ENV'),
-        string(name: 'CUSTOM_TAGS', defaultValue: '', description: 'Cucumber tags (e.g., @demo, @smoke). Leave empty to run all tests.')
+        string(name: 'Tags', defaultValue: '', description: 'Cucumber tags (e.g., @demo, @smoke)')
     ])
 ])
 
@@ -11,10 +11,14 @@ String cpuResources = '4'
 String memoryResources = '8Gi'
 String pullNexusAwsRegistry = 'https://nexus.aws.allegiantair.com/repository/npm-group/'
 
-String branchName = env.BRANCH_NAME ?: 'feature/TCOE-1758-Playwright-Jenkins-Job'
-String gitRepoUrl = "https://github.com/AllegiantTravelCo/gqa-bat.git"
+String branchName = env.BRANCH_NAME ?: 'feature/optimzed-repo-using-github-copilot'
+String gitRepoUrl = "https://github.com/js3v_algt/playwright_prova-ui_poc.git"
 String credentialGitHub = 'jenkins-gizmo-github-app-access-token'
+// node lts versions are pre-installed on these agents, reference them by lts name:
+// erbium (12), fermium (14), gallium (16), hydrogen (18), iron (20)
 String nodeVersion = 'lts/hydrogen'
+
+// Build information
 String buildTimestamp = new Date().format("yyyyMMdd_HHmmss")
 
 addShortText(text: "Playwright E2E Tests", color: 'white', background: 'green', borderColor: 'white')
@@ -45,30 +49,48 @@ timestamps {
                 envVar(key: 'CI', value: "true"),
                 envVar(key: 'PLAYWRIGHT_BROWSERS_PATH', value: "/home/jenkins/.cache/playwright"),
                 envVar(key: 'TEST_ENVIRONMENT', value: "${params.ENV}"),
-                envVar(key: 'PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD', value: "0"),
-                envVar(key: 'DISPLAY', value: ":99"),
-                envVar(key: 'HEADLESS', value: "true"),
-                envVar(key: 'DEBIAN_FRONTEND', value: 'noninteractive'),
-                envVar(key: 'PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS', value: "true")
+                envVar(key: 'PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD', value: "0")
             ]
         ) {
             node(label) {
+
+                stage('Build Info') {
+                    container(jnlp) {
+                        echo """
+                        ===============================================================
+                        PLAYWRIGHT E2E TEST AUTOMATION - JENKINS PIPELINE
+                        ===============================================================
+                        Build: ${BUILD_NUMBER}
+                        Timestamp: ${buildTimestamp}
+                        Branch: ${branchName}
+                        
+                        TEST CONFIGURATION:
+                        Environment: ${params.ENV}
+                        Test Command: npm run test:cat-parallel
+                        CAT Integration: Enabled
+                        Custom Tags: ${params.CUSTOM_TAGS ?: '@demo'}
+                        
+                        ENVIRONMENT:
+                        Node Version: ${nodeVersion}
+                        Container: ${jnlpDockerImage}
+                        CPU Resources: ${cpuResources}
+                        Memory Resources: ${memoryResources}
+                        ===============================================================
+                        """
+                    }
+                }
+
                 stage('Git Checkout') {
                     container(jnlp) {
                         withCredentials([
                             usernamePassword(credentialsId: credentialGitHub, usernameVariable: 'GITHUB_APP', passwordVariable: 'GH_TOKEN')
                         ]) {
                             sh """
-                            # Fallback git checkout method
-                            if command -v gh &> /dev/null; then
-                                echo "Using GitHub CLI for checkout"
-                                gh auth setup-git
-                                gh repo clone ${gitRepoUrl} ./
-                            else
-                                echo "GitHub CLI not available, using standard git clone"
-                                git clone https://\$GITHUB_APP:\$GH_TOKEN@github.com/AllegiantTravelCo/gqa-bat.git ./
-                            fi
-                            git checkout ${branchName} || git checkout -b ${branchName} || echo "Branch already exists"
+                            gh auth setup-git
+                            gh repo clone ${gitRepoUrl} ./
+                            git checkout ${branchName}
+                            echo "Current directory contents:"
+                            ls -la
                             """
                         }
                     }
@@ -78,77 +100,27 @@ timestamps {
                     container(jnlp) {
                         try {
                             sh """
-                            #!/bin/bash -ex
-                            
-                            # Verify NVM and Node setup
-                            if [ ! -f "\$NVM_DIR/nvm.sh" ]; then
-                                echo "ERROR: NVM not found at \$NVM_DIR/nvm.sh"
-                                exit 1
-                            fi
-                            
+                            #!/bin/bash +x
+                            echo "Setting up Node.js environment..."
                             source "\$NVM_DIR/nvm.sh" &>/dev/null
-                            nvm use ${nodeVersion} &>/dev/null || {
-                                echo "Node version ${nodeVersion} not available, installing..."
-                                nvm install ${nodeVersion}
-                                nvm use ${nodeVersion}
-                            }
+                            nvm use ${nodeVersion} &>/dev/null
+                            node --version
+                            npm --version
                             
-                            echo "Using Node version: \$(node --version)"
-                            echo "Using NPM version: \$(npm --version)"
-                            
+                            echo "Configuring npm registry..."
                             npm config set registry "${pullNexusAwsRegistry}" -g
                             npm set strict-ssl false
                             
+                            echo "Installing project dependencies..."
                             cd prova-ui
+                            npm ci
                             
-                            # Skip husky and other problematic scripts
-                            export HUSKY=0
-                            export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
-                            export DISPLAY=:99
-                            export PLAYWRIGHT_BROWSERS_PATH="/home/jenkins/.cache/playwright"
-                            
-                            # Install dependencies - allow scripts but skip husky
-                            if [ -f "package-lock.json" ]; then
-                                echo "Installing with npm ci"
-                                npm ci --no-audit --no-fund
-                            else
-                                echo "Installing with npm install"
-                                npm install --no-audit --no-fund
-                            fi
-                            
-                            # Try to install browsers with multiple fallback strategies
                             echo "Installing Playwright browsers..."
+                            npx playwright install
+                            npx playwright install-deps
                             
-                            # Ensure browser cache directory exists
-                            mkdir -p "/home/jenkins/.cache/playwright"
-                            export PLAYWRIGHT_BROWSERS_PATH="/home/jenkins/.cache/playwright"
-                            
-                            # Install system dependencies for browsers (if needed)
-                            echo "Installing system dependencies..."
-                            
-                            # Try multiple installation strategies
-                            if ! npx playwright install chromium --with-deps 2>/dev/null; then
-                                echo "Standard chromium install failed, trying alternative methods..."
-                                if ! npx playwright install chromium 2>/dev/null; then
-                                    echo "Basic chromium install failed, trying with force..."
-                                    npx playwright install --force chromium || echo "Chromium install failed but continuing..."
-                                fi
-                            fi
-                            
-                            # Install only chromium for Jenkins to reduce resource usage
-                            echo "Verifying chromium installation..."
-                            npx playwright install-deps chromium || echo "Dependencies install failed but continuing..."
-                            
-                            # Verify browser setup
-                            echo "Running browser verification..."
-                            npm run verify-browsers || echo "Browser verification failed but continuing..."
-                            
-                            # Verify key dependencies
                             echo "Verifying installation..."
-                            ls -la node_modules/@babel/register || echo "@babel/register not found"
-                            ls -la node_modules/@cucumber/cucumber || echo "@cucumber/cucumber not found"
-                            
-                            echo "Setup completed successfully"
+                            npx playwright --version
                             """
                             
                         } catch (e) {
@@ -159,53 +131,60 @@ timestamps {
                     }
                 }
 
-                // Code Quality Checks stage removed to focus on test execution
-                // Linting can be added back later with proper ESLint configuration
+                stage('Code Quality Checks') {
+                    container(jnlp) {
+                        try {
+                            sh """
+                            #!/bin/bash +x
+                            source "\$NVM_DIR/nvm.sh" &>/dev/null
+                            nvm use ${nodeVersion} &>/dev/null
+                            
+                            cd prova-ui
+                            echo "Running ESLint..."
+                            npm run lint
+                            
+                            echo "Running Gherkin lint..."
+                            npm run gherkin-lint
+                            """
+                        } catch (e) {
+                            echo "Code quality checks failed: ${e}"
+                            currentBuild.result = 'UNSTABLE'
+                        }
+                    }
+                }
 
                 stage('Execute Playwright Tests') {
                     container(jnlp) {
                         try {
                             sh """
-                            #!/bin/bash -e
+                            #!/bin/bash +x
                             source "\$NVM_DIR/nvm.sh" &>/dev/null
                             nvm use ${nodeVersion} &>/dev/null
                             
                             cd prova-ui
-                            export TEST_ENVIRONMENT="${params.ENV}"
-                            export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
-                            export HEADLESS=true
-                            export CI=true
-                            export PLAYWRIGHT_BROWSERS_PATH="/home/jenkins/.cache/playwright"
                             
-                            # Use only chromium in Jenkins for stability
-                            export PLAYWRIGHT_PROJECT="chromium"
+                            echo "Starting Playwright test execution with CAT integration..."
+                            echo "Environment: ${params.ENV}"
+                            echo "Custom Tags: ${params.CUSTOM_TAGS}"
                             
-                            echo "Environment setup:"
-                            echo "HEADLESS=\$HEADLESS"
-                            echo "CI=\$CI"
-                            echo "PLAYWRIGHT_BROWSERS_PATH=\$PLAYWRIGHT_BROWSERS_PATH"
-                            echo "NODE_VERSION=\$(node --version)"
+                            # Set environment variables for tests
+                            export TEST_ENV="${params.ENV}"
                             
-                            # Verify test command exists by checking package.json
-                            if ! grep -q '"test:cat-parallel"' package.json; then
-                                echo "test:cat-parallel script not found, falling back to test:cat"
-                                if [ -n "${params.CUSTOM_TAGS}" ] && [ "${params.CUSTOM_TAGS}" != "" ]; then
-                                    npm run test:cat -- --tags '${params.CUSTOM_TAGS}'
-                                else
-                                    npm run test:cat
-                                fi
+                            # Execute the test command with custom tags if provided
+                            if [ -n "${params.CUSTOM_TAGS}" ]; then
+                                echo "Running tests with tags: ${params.CUSTOM_TAGS}"
+                                npm run test:cat-parallel -- --tags '${params.CUSTOM_TAGS}'
                             else
-                                # Run with parallel if available
-                                if [ -n "${params.CUSTOM_TAGS}" ] && [ "${params.CUSTOM_TAGS}" != "" ]; then
-                                    npm run test:cat-parallel -- --tags '${params.CUSTOM_TAGS}'
-                                else
-                                    npm run test:cat-parallel
-                                fi
+                                echo "Running all tests with parallel execution"
+                                npm run test:cat-parallel
                             fi
+                            
+                            echo "Test execution completed successfully!"
                             """
                         } catch (e) {
                             currentBuild.result = 'UNSTABLE'
                             echo "Test execution had failures: ${e}"
+                            echo "Continuing to generate reports..."
                         }
                     }
                 }
@@ -220,15 +199,15 @@ timestamps {
                             
                             cd prova-ui
                             
-                            if [ -d "allure-results" ] && [ "\$(ls -A allure-results)" ]; then
-                                npm run allure:generate
-                            fi
+                            echo "Archiving test artifacts..."
+                            
+                            echo "Available reports:"
+                            ls -la *.html *.json allure-report/ 2>/dev/null || echo "No reports found"
                             """
                             
                             // Archive artifacts
                             archiveArtifacts artifacts: 'prova-ui/cucumber-report.html', allowEmptyArchive: true
                             archiveArtifacts artifacts: 'prova-ui/report.json', allowEmptyArchive: true
-                            archiveArtifacts artifacts: 'prova-ui/allure-results/**/*', allowEmptyArchive: true
                             archiveArtifacts artifacts: 'prova-ui/allure-report/**/*', allowEmptyArchive: true
                             archiveArtifacts artifacts: 'prova-ui/test-results/**/*', allowEmptyArchive: true
                             archiveArtifacts artifacts: 'prova-ui/playwright-report/**/*', allowEmptyArchive: true
@@ -240,27 +219,50 @@ timestamps {
                                 keepAll: true,
                                 reportDir: 'prova-ui',
                                 reportFiles: 'cucumber-report.html',
-                                reportName: "Cucumber Test Report - ${params.ENV}"
+                                reportName: "Test Report - ${params.ENV}"
                             ])
-                            
-                            // Publish Allure report if available
-                            if (fileExists('prova-ui/allure-report/index.html')) {
-                                publishHTML([
-                                    allowMissing: true,
-                                    alwaysLinkToLastBuild: true,
-                                    keepAll: true,
-                                    reportDir: 'prova-ui/allure-report',
-                                    reportFiles: 'index.html',
-                                    reportName: "Allure Test Report - ${params.ENV}"
-                                ])
-                            }
                             
                         } catch (e) {
                             echo "Report generation had issues: ${e}"
                         }
                     }
                 }
+
+                stage('Pipeline Summary') {
+                    container(jnlp) {
+                        script {
+                            def testResult = currentBuild.result ?: 'SUCCESS'
+                            def endTimestamp = new Date().format("yyyyMMdd_HHmmss")
+                            
+                            echo """
+                            ===============================================================
+                            PLAYWRIGHT E2E TEST EXECUTION SUMMARY
+                            ===============================================================
+                            Final Status: ${testResult}
+                            Start Time: ${buildTimestamp}
+                            End Time: ${endTimestamp}
+                            Duration: ${currentBuild.durationString}
+                            
+                            TEST CONFIGURATION SUMMARY:
+                            Environment: ${params.ENV}
+                            Test Command: npm run test:cat-parallel
+                            Custom Tags: ${params.CUSTOM_TAGS ?: '@demo'}
+                            
+                            REPORTS GENERATED:
+                            - Cucumber HTML Report: Available in Jenkins
+                            - JSON Test Results: Archived
+                            - CAT Integration: Enabled
+                            - Test Screenshots/Videos: Archived (if any failures)
+                            ===============================================================
+                            """
+                        }
+                    }
+                }
             }
+        }
+        
+        stage('Wait for Cleanup') {
+            sleep(time: 15, unit: "SECONDS")
         }
     }
 }

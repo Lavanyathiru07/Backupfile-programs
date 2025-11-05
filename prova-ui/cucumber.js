@@ -1,8 +1,8 @@
 let common = [
     'test/features/navitaire/*.feature', // All feature files
     '--require-module @babel/register',
-    '--require cat-hooks/cat-playwright-hooks.js', // CAT integration hooks
-    '--require test/step-definitions', // Playwright step definitions
+    '-r cat-hooks', // CAT integration hooks
+    '-r test/step-definitions', // Playwright step definitions
     '--format html:./cucumber-report.html',
     '--format json:report.json',
     // TODO: Add allure reporter when allure-cucumberjs is properly configured

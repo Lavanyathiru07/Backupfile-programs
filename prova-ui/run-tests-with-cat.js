@@ -5,8 +5,8 @@
  */
 
 const { spawn } = require('child_process');
-const SessionUtils = require('./cat-hooks/helpers/session-utils.js');
-const CatPortalHooks = require('./cat-hooks/helpers/cat-portal-hooks.js');
+const SessionUtils = require('./cat-hooks/helpers/session-utils');
+const CatPortalHooks = require('./cat-hooks/helpers/cat-portal-hooks');
 
 // Set CAT environment variables
 process.env.CAT_JOB_NAME = process.env.CAT_JOB_NAME || "Aswathi_Playwright_Parallel_Tests";

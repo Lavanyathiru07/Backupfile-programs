@@ -1,4 +1,4 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
+import { Given, When, Then } from '@cucumber/cucumber';
 
 Then(/^I log in using username "([^"]*)" and password "([^"]*)"$/, async function(username, password)  {
     await this.LoginPage.clickLoginButton();

@@ -1,5 +1,5 @@
-const Logger = require('../common/loggers.js');
-const Check = require('./validations');
+import Logger from '../common/loggers.js';
+import Check from './validations';
 /**
  * This is Actions Class which contains all the action methods
  */
@@ -1442,4 +1442,4 @@ class Actions {
     }
 };
 
-module.exports = Actions;
+export default Actions;

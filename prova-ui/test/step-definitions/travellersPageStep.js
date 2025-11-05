@@ -1,4 +1,4 @@
-const { Given , When , Then} = require('@cucumber/cucumber');
+import { Given , When , Then} from '@cucumber/cucumber';
 
 
 When(/^I am on Travelers page I fill in data for "(.+)" travelers$/, async function (travelerCount) {

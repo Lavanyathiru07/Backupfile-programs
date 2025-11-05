@@ -1,4 +1,4 @@
-const { Then } = require('@cucumber/cucumber')
+import { Then } from '@cucumber/cucumber'
 
 
 Then(/^I am on Bags page I select CarryOn "([^"]*)"$/, async function (params) {

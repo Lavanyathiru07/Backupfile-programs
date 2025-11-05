@@ -7,7 +7,6 @@ module.exports = {
                 targets: {
                     node: '18',
                 },
-                modules: 'commonjs', // Use CommonJS modules
             },
         ],
     ],

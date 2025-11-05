@@ -1,5 +1,5 @@
-const assert = require('../common/assert');
-const { page, context } = require('../../cat-hooks/cat-playwright-hooks.js');
+import assert from '../common/assert';
+import { page, context } from '../../cat-hooks/cat-playwright-hooks.js';
 
 /**
  * This is Actions Class which contains all the validation methods
@@ -408,4 +408,4 @@ class Check {
     }
 };
 
-module.exports = Check;
+export default Check;

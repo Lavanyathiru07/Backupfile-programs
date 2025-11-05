@@ -1,6 +1,6 @@
-const Actions = require("../../src/support/actions")
-const Checks = require("../../src/support/validations")
-const { assert } = require('chai')
+import Actions from "../../src/support/actions"
+import Checks from "../../src/support/validations"
+import { assert } from 'chai'
 
 const cancelButton = "[data-hook='order-highlights-banner_cancel-button']"
 const cancelTripPopup = "[data-hook='undefined_title']"
@@ -360,4 +360,4 @@ class Managetravel {
         }
     }
 }
-module.exports = Managetravel
+export default Managetravel

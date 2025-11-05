@@ -32,7 +32,6 @@
         "test:regression": "cucumber-js -p default --tags '@regression'",
         "test:regression-cat": "node run-tests-with-cat.js --tags '@regression'",
         "test:regression-cat-parallel": "node run-tests-with-cat.js --parallel 4 --tags '@regression'",
-        "verify-browsers": "node scripts/verify-browser-setup.js",
         "allure:generate": "allure generate allure-results --clean -o allure-report",
         "allure:serve": "allure serve allure-results"
     },
@@ -50,7 +49,7 @@
         "@playwright/test": "^1.37.1",
         "allure-commandline": "^2.24.1",
         "allure-cucumberjs": "^2.15.1",
-        "chai": "^4.4.1",
+        "chai": "^6.2.0",
         "http-server": "^14.1.1",
         "lodash": "^4.17.21",
         "mkdirp": "^3.0.1",

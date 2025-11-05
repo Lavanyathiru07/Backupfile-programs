@@ -1,4 +1,4 @@
-const Actions = require("../../src/support/actions")
+import Actions from "../../src/support/actions"
 
 const menuButton = "//*[@data-hook='header-burger-menu-button']|//div[@aria-controls='menu-top']"
 const loginButton = "[data-hook='header-user-menu-item_log-in']"
@@ -43,4 +43,4 @@ class LoginPage {
     }
 }
 
-module.exports = LoginPage
+export default LoginPage
