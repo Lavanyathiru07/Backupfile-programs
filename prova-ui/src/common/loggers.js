@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const { assert } = require("chai");
 
 let Logger = {    
     log(input){        
@@ -19,4 +19,4 @@ let Logger = {
     },
 }
 
-export default Logger
+module.exports = Logger

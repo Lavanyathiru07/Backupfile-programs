@@ -189,4 +189,4 @@ AfterAll(async function () {
     }
 });
 
-export { page, browser, context };
+module.exports = { page, browser, context };

@@ -1,7 +1,7 @@
-import Logger from './loggers'
-import {assert} from 'chai'
+const Logger = require('./loggers')
+const {assert} = require('chai')
 
-export default (actual, expected, message) => {
+module.exports = (actual, expected, message) => {
     Logger.info(message)    
     assert.equal(actual, expected, message);
 }
