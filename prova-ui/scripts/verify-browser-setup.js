@@ -35,11 +35,26 @@ async function verifyBrowser(browserType, browserName) {
         
         // Add single-process mode for CI environments (same as Cucumber hooks)
         if (isCI) {
-            launchOptions.args.push('--single-process');
-            launchOptions.slowMo = 100;
+            launchOptions.args.push(
+                '--single-process',
+                '--disable-extensions',
+                '--disable-plugins',
+                '--disable-translate',
+                '--disable-default-apps'
+            );
+            launchOptions.slowMo = 200;
+            launchOptions.timeout = 120000;
         }
         
         const browser = await browserType.launch(launchOptions);
+        
+        // Verify browser is connected
+        if (!browser.isConnected()) {
+            throw new Error(`${browserName} launched but is not connected`);
+        }
+        
+        // Add delay for CI stability
+        await new Promise(resolve => setTimeout(resolve, isCI ? 1000 : 500));
         
         const context = await browser.newContext({
             viewport: { width: 1280, height: 720 },
@@ -47,6 +62,10 @@ async function verifyBrowser(browserType, browserName) {
             actionTimeout: 30000,
             navigationTimeout: 60000
         });
+        
+        // Add delay before creating page
+        await new Promise(resolve => setTimeout(resolve, isCI ? 500 : 200));
+        
         const page = await context.newPage();
         
         await page.goto('data:text/html,<html><body><h1>Browser Test</h1></body></html>');

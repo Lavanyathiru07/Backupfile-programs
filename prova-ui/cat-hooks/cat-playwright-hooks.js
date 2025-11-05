@@ -68,17 +68,37 @@ Before(async function (scenario) {
         
         // Add single-process mode for CI environments
         if (isCI) {
-            launchOptions.args.push('--single-process');
-            launchOptions.slowMo = 100; // Add slight delay for stability
+            launchOptions.args.push(
+                '--single-process',
+                '--disable-extensions',
+                '--disable-plugins',
+                '--disable-translate',
+                '--disable-default-apps'
+            );
+            launchOptions.slowMo = 200; // Increased delay for stability
+            launchOptions.timeout = 120000; // Increased timeout for CI
         }
         
         this.browser = await chromium.launch(launchOptions);
+        
+        // Verify browser is connected
+        if (!this.browser.isConnected()) {
+            throw new Error('Browser launched but is not connected');
+        }
+        
+        // Add small delay to ensure browser is fully ready
+        await new Promise(resolve => setTimeout(resolve, isCI ? 1000 : 500));
+        
         this.context = await this.browser.newContext({
             viewport: { width: 1280, height: 720 },
             ignoreHTTPSErrors: true,
             actionTimeout: 30000,
             navigationTimeout: 60000
         });
+        
+        // Add another small delay before creating page
+        await new Promise(resolve => setTimeout(resolve, isCI ? 500 : 200));
+        
         this.page = await this.context.newPage();
 
         // Store page reference for CAT hooks
@@ -92,14 +112,32 @@ Before(async function (scenario) {
         // Retry browser launch once with minimal configuration
         try {
             console.log('Retrying browser launch with minimal configuration...');
+            
+            // Wait a bit before retry
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
             this.browser = await chromium.launch({
                 headless: true,
-                args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+                args: [
+                    '--no-sandbox', 
+                    '--disable-setuid-sandbox', 
+                    '--disable-dev-shm-usage',
+                    '--disable-gpu',
+                    '--single-process'
+                ],
                 timeout: 90000
             });
+            
+            // Wait for browser to be ready
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
             this.context = await this.browser.newContext({
                 viewport: { width: 1280, height: 720 }
             });
+            
+            // Wait before creating page
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
             this.page = await this.context.newPage();
             
             page = this.page;
