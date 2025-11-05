@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+const fetch = require('node-fetch')
 // const fetch = require('node-fetch')
 // process.env.timeline = "timeline64fb12cb30a9d"
 // process.env.appEnv = 'https://www-qatnexusg4.okd.allegiantair.com/'

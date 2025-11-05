@@ -1,4 +1,4 @@
-import Actions from "../../src/support/actions"
+const Actions = require("../../src/support/actions")
 
 const scrollitn = "[data-hook='confirmation-page-section_customer-info_title']"
 const itnNumber = "[data-hook='confirmation-number_text']"
@@ -57,5 +57,5 @@ class ConfirmationPage {
         return this.page
     }
 }
-export { itinerary }
-export default ConfirmationPage
+module.exports = { itinerary, ConfirmationPage }
+module.exports.default = ConfirmationPage

@@ -1,4 +1,4 @@
-import Actions from "../../src/support/actions"
+const Actions = require("../../src/support/actions")
 
 const scrollskip = "[data-hook='hotels-page_continue']"
 const skipHotel = "[data-hook='hotels-page_skip']"
@@ -106,4 +106,4 @@ class HotelPage {
     }
 
 }
-export default HotelPage
+module.exports = HotelPage
