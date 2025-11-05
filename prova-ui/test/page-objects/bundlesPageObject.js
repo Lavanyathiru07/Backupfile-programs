@@ -1,6 +1,6 @@
-import Actions from "../../src/support/actions"
+import Actions from '../../src/support/actions.js'
 
-import { flightPageCollector } from './flightsPageObject'
+import { flightPageCollector } from './flightsPageObject.js'
 const pfc = "//span[@data-hook='price-breakdown_pfc_value']"
 const basicBundlescroll = "[data-hook='text-below-strikethrough-price_allegiant_basic_bundle']"
 const bundleSubmit = "[data-hook='bundles-page_continue']"

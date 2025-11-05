@@ -1,5 +1,5 @@
-import Actions from "../../src/support/actions"
-import getSeatArray from './graphqlCalls'
+import Actions from '../../src/support/actions.js'
+import returnDetails from './graphqlCalls.js'
 
 const seatsPageSkip = "[data-hook='seats-page_skip']";
 const seatPageHeading = "[data-hook='seats-page_page-heading']";
@@ -1418,7 +1418,7 @@ class SeatPage {
 	async getSeatDetails() {
 		// await this.actions.waitForDisplayed(seatsPageHeading, 'seatsPageHeading')
 		// await browser.pause(5000)
-		var { depeartSeatDetails, returnSeatDetails } = await getSeatArray();
+		var { depeartSeatDetails, returnSeatDetails } = await returnDetails();
 		newDepSeats = depeartSeatDetails;
 		newRetSeats = returnSeatDetails;
 	}
@@ -1501,7 +1501,7 @@ class SeatPage {
 	}
 
 	async selectReturningSegAdjacentSeatsbyGQL(tripType, seatType, travelerNum) {
-		var { depeartSeatDetails, returnSeatDetails } = getSeatArray()
+		var { depeartSeatDetails, returnSeatDetails } = await returnDetails()
 		// await browser.execute("window.scrollBy(0,-1000)");
 		let returningSeatsSelectButtonVisibilty = await this.actions.isDisplayed(returningSeatsSelectButton, 'returningSeatsSelectButton')
 		if (returningSeatsSelectButtonVisibilty) {

@@ -1,6 +1,6 @@
-const GqlCall = require('./graph-ql-call');
-const CityPair = require('./dynamicCityPair');
-const Flights = require('./flights');
+import GqlCall from './graph-ql-call.js';
+import CityPair from './dynamicCityPair.js';
+import Flights from './flights.js';
 
 /**
  * This method is used to return flight details departing today
@@ -8,7 +8,7 @@ const Flights = require('./flights');
  * @returns {*} flight details eligible for checkin
  */
 
-module.exports = async function getTodayFlightDetails(env) {
+export default async function getTodayFlightDetails(env) {
 
     let gqlCall = new GqlCall(env)
     let flights = new Flights(gqlCall)

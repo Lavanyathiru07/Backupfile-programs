@@ -1,4 +1,4 @@
-import Actions from "../../src/support/actions"
+import Actions from '../../src/support/actions.js'
 import { assert } from 'chai';
 
 const fmmFlight = "//div[@id='Test-TopRow']"

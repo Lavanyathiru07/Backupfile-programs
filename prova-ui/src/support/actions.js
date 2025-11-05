@@ -1,5 +1,5 @@
 import Logger from '../common/loggers.js';
-import Check from './validations';
+import Check from './validations.js';
 /**
  * This is Actions Class which contains all the action methods
  */

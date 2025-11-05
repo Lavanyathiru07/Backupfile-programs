@@ -1,5 +1,5 @@
-import Actions from "../../src/support/actions"
-import market from '../../utility/market-OneDayflight'
+import Actions from '../../src/support/actions.js'
+import market from '../../utility/market-OneDayflight.js'
 
 const buttontoclosepopup = "//button[@class='Popup__CloseIcon-sc-1kasz48-2 eKPgGA']/img"
 const cookieepopup = "//button[contains(@class,'close-button')]"

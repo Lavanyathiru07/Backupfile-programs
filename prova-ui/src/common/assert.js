@@ -1,4 +1,4 @@
-import Logger from './loggers'
+import Logger from './loggers.js'
 import {assert} from 'chai'
 
 export default (actual, expected, message) => {

@@ -1,5 +1,5 @@
-import Actions from "../../src/support/actions"
-import Checks from "../../src/support/validations"
+import Actions from '../../src/support/actions.js'
+import Checks from '../../src/support/validations.js'
 import { assert } from 'chai'
 
 const cancelButton = "[data-hook='order-highlights-banner_cancel-button']"

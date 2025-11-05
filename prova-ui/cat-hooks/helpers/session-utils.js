@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Session utilities for managing shared test run IDs across parallel processes
@@ -102,4 +102,4 @@ class SessionUtils {
     }
 }
 
-module.exports = SessionUtils;
+export default SessionUtils;

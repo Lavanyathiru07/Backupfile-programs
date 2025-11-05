@@ -1,4 +1,4 @@
-module.exports = class dynamicCity {
+export default class dynamicCity {
 
     /**
    * This is constructer for GraphQlCall

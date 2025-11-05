@@ -1,4 +1,4 @@
-import Actions from "../../src/support/actions"
+import Actions from '../../src/support/actions.js'
 
 const extrascroll = "[data-hook='extras-title']"
 const boarding = "[data-hook='priority-boarding-card_add-to-cart']"

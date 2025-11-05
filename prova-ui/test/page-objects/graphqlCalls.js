@@ -989,7 +989,7 @@ function getSeatDetails(travelerid, seatsArray, childrenCount, adultsCount, isBu
   return seatsSelectionArray
 }
 
-module.exports = async function returnDetails() {
+export default async function returnDetails() {
   let { origin, destination, travelerArray, depDate, retDate, tripType, adult, child, isBundle } = await GetFlightAndTravellerDetails()
 
   let { departFlightArray, returnFlightArray } = await SeatMap(origin, destination, depDate, retDate)

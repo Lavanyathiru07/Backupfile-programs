@@ -1,6 +1,6 @@
 let common = [
     'test/features/navitaire/*.feature', // All feature files
-    '--require-module @babel/register',
+    // '--require-module @babel/register', // Remove this line for ES modules
     '-r cat-hooks', // CAT integration hooks
     '-r test/step-definitions', // Playwright step definitions
     '--format html:./cucumber-report.html',
@@ -10,6 +10,6 @@ let common = [
     '--publish-quiet',
 ].join(' ');
 
-module.exports = {
+export default {
     default: common,
 };

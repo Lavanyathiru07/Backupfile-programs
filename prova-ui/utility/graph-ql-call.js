@@ -1,6 +1,6 @@
-const fetch = require('node-fetch')
+import fetch from 'node-fetch';
 
-module.exports = class GraphQlCall {
+export default class GraphQlCall {
     
     /**
      * This is constructer for GraphQlCall

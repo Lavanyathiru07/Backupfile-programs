@@ -1,7 +1,7 @@
-const CatHelper = require('./cat-helper');
-const _ = require('lodash');
-const CatProxy = CatHelper.CatServer;
-const mkdirp = require('mkdirp');
+import { CatServer } from './cat-helper.js';
+import _ from 'lodash';
+const CatProxy = CatServer;
+import { mkdirp } from 'mkdirp';
 
 /**
      * CatPortalHooks class taken no arguments
@@ -542,4 +542,4 @@ class CatPortalHooks {
     }
 }
 
-module.exports = new CatPortalHooks()
+export default new CatPortalHooks();

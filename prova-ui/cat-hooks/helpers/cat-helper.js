@@ -1,6 +1,6 @@
-const _ = require('lodash');
-const http = require('http');
-const https = require('https');
+import _ from 'lodash';
+import http from 'http';
+import https from 'https';
 
 const DEFAULT_PROD_CAT_URL = 'https://cat.stg.allegiantair.com';
 const DEFAULT_UI_API_PATH = '/api/ui/results';
@@ -707,7 +707,4 @@ class CatServer {
     }
 }
 
-exports.CatServer = CatServer;
-exports.DEFAULT_PROD_CAT_URL = DEFAULT_PROD_CAT_URL;
-exports.DEFAULT_UI_API_PATH = DEFAULT_UI_API_PATH;
-exports.DEFAULT_CAT_WS_PATH = DEFAULT_CAT_WS_PATH;
+export { CatServer, DEFAULT_PROD_CAT_URL, DEFAULT_UI_API_PATH, DEFAULT_CAT_WS_PATH };

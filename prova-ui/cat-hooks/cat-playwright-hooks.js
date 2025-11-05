@@ -1,11 +1,11 @@
 import { BeforeAll, Before, BeforeStep, AfterStep, After, AfterAll, setDefaultTimeout } from "@cucumber/cucumber";
-import { Browser, chromium, firefox } from 'playwright';
+import { chromium, firefox } from 'playwright';
 
 /* eslint-disable require-jsdoc */
 /* eslint-disable new-cap */
 
-const CatPortalHooks = require('./helpers/cat-portal-hooks');
-const SessionUtils = require('./helpers/session-utils');
+import CatPortalHooks from './helpers/cat-portal-hooks.js';
+import SessionUtils from './helpers/session-utils.js';
 
 let scenarioStatus = 'PASSED';
 let uriDetails = "";

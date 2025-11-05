@@ -1,6 +1,6 @@
-import Actions from "../../src/support/actions"
-import Checks from "../../src/support/validations"
-import { departDate, returnDate } from './flightsPageObject'
+import Actions from '../../src/support/actions.js'
+import Checks from '../../src/support/validations.js'
+import { departDate, returnDate } from './flightsPageObject.js'
 import { faker } from '@faker-js/faker'
 
 const nameValidation = "[data-hook='travelers-form_adults_0_first-name']"

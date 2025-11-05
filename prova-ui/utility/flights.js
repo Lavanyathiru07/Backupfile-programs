@@ -1,4 +1,4 @@
-module.exports = class Flights {
+export default class Flights {
     /**
    * This constructor is used for GqlCall
    * @param {*} GqlCall contains gql call

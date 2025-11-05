@@ -1,6 +1,7 @@
 {
     "name": "@g4/prova-ui",
     "version": "0.6.2",
+    "type": "module",
     "description": "Web Applications Automation Framework",
     "homepage": "https://git.allegiantair.com:8443/projects/GQA/repos/prova-ui",
     "publishConfig": {

@@ -1,4 +1,4 @@
-import Actions from "../../src/support/actions"
+import Actions from '../../src/support/actions.js'
 
 const scrollitn = "[data-hook='confirmation-page-section_customer-info_title']"
 const itnNumber = "[data-hook='confirmation-number_text']"

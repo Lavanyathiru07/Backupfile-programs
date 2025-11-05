@@ -1,4 +1,4 @@
-import Actions from "../../src/support/actions"
+import Actions from '../../src/support/actions.js'
 
 const scrollskip = "[data-hook='hotels-page_continue']"
 const skipHotel = "[data-hook='hotels-page_skip']"

@@ -1,6 +1,6 @@
 
-import Actions from "../../src/support/actions"
-import Checks from "../../src/support/validations"
+import Actions from '../../src/support/actions.js'
+import Checks from '../../src/support/validations.js'
 import { assert } from 'chai'
 
 const paypopup = "[data-hook='payment-page_ice-popup_close']"

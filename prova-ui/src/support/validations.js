@@ -1,4 +1,4 @@
-import assert from '../common/assert';
+import assert from '../common/assert.js';
 import { page, context } from '../../cat-hooks/cat-playwright-hooks.js';
 
 /**

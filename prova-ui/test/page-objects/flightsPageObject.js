@@ -1,4 +1,4 @@
-import Actions from "../../src/support/actions"
+import Actions from '../../src/support/actions.js'
 import { assert } from 'chai'
 
 const advert = "[class='DestinationAdvert__Wrapper-xfecml-0 gAGMid']"

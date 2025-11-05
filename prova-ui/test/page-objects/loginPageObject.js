@@ -1,4 +1,4 @@
-import Actions from "../../src/support/actions"
+import Actions from '../../src/support/actions.js'
 
 const menuButton = "//*[@data-hook='header-burger-menu-button']|//div[@aria-controls='menu-top']"
 const loginButton = "[data-hook='header-user-menu-item_log-in']"
