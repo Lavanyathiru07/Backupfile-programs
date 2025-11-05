@@ -41,15 +41,43 @@ BeforeAll(async function () {
 
 Before(async function (scenario) {
     try {
-        // Initialize browser with proper configuration
-        const headlessMode = process.env.HEADLESS === 'true' || false;
-        this.browser = await chromium.launch({
+        // Initialize browser with proper configuration for Jenkins
+        const headlessMode = process.env.HEADLESS !== 'false';
+        const isCI = process.env.CI === 'true';
+        
+        console.log(`Launching browser - Headless: ${headlessMode}, CI: ${isCI}`);
+        
+        const launchOptions = {
             headless: headlessMode,
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
+            timeout: 60000,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--no-zygote',
+                '--disable-gpu',
+                '--disable-background-timer-throttling',
+                '--disable-backgrounding-occluded-windows',
+                '--disable-renderer-backgrounding',
+                '--disable-features=TranslateUI',
+                '--disable-ipc-flooding-protection'
+            ]
+        };
+        
+        // Add single-process mode for CI environments
+        if (isCI) {
+            launchOptions.args.push('--single-process');
+            launchOptions.slowMo = 100; // Add slight delay for stability
+        }
+        
+        this.browser = await chromium.launch(launchOptions);
         this.context = await this.browser.newContext({
             viewport: { width: 1280, height: 720 },
-            ignoreHTTPSErrors: true
+            ignoreHTTPSErrors: true,
+            actionTimeout: 30000,
+            navigationTimeout: 60000
         });
         this.page = await this.context.newPage();
 
@@ -60,7 +88,29 @@ Before(async function (scenario) {
 
     } catch (error) {
         console.error('Browser initialization failed:', error);
-        throw new Error(`Browser setup failed: ${error.message}`);
+        
+        // Retry browser launch once with minimal configuration
+        try {
+            console.log('Retrying browser launch with minimal configuration...');
+            this.browser = await chromium.launch({
+                headless: true,
+                args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+                timeout: 90000
+            });
+            this.context = await this.browser.newContext({
+                viewport: { width: 1280, height: 720 }
+            });
+            this.page = await this.context.newPage();
+            
+            page = this.page;
+            browser = this.browser;
+            context = this.context;
+            
+            console.log('Browser retry successful');
+        } catch (retryError) {
+            console.error('Browser retry also failed:', retryError);
+            throw new Error(`Browser setup failed after retry: ${retryError.message}`);
+        }
     }
 
     // Handle feature-level CAT integration
