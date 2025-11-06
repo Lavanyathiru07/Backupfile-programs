@@ -147,9 +147,11 @@ timestamps {
                             echo "Running tests with Node version: \$(node --version)"
                             
                             # Run tests with custom tags if provided
-                            if [ -n "${params.CUSTOM_TAGS}" ] && [ "${params.CUSTOM_TAGS}" != "" ]; then
-                                npm run test:cat-parallel -- --tags '${params.CUSTOM_TAGS}'
+                            if [ -n "${params.Tags}" ] && [ "${params.Tags}" != "" ]; then
+                                echo "Running tests with tags: ${params.Tags}"
+                                npm run test:cat-parallel -- --tags '${params.Tags}'
                             else
+                                echo "Running all tests (no tags specified)"
                                 npm run test:cat-parallel
                             fi
                             """
