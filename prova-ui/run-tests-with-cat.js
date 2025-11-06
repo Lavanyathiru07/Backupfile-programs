@@ -4,9 +4,9 @@
  * Test Runner with CAT Integration - Parallel Session Manager
  */
 
-const { spawn } = require('child_process');
-const SessionUtils = require('./cat-hooks/helpers/session-utils');
-const CatPortalHooks = require('./cat-hooks/helpers/cat-portal-hooks');
+import { spawn } from 'child_process';
+import SessionUtils from './cat-hooks/helpers/session-utils.js';
+import CatPortalHooks from './cat-hooks/helpers/cat-portal-hooks.js';
 
 // Set CAT environment variables
 process.env.CAT_JOB_NAME = process.env.CAT_JOB_NAME || "Aswathi_Playwright_Parallel_Tests";
