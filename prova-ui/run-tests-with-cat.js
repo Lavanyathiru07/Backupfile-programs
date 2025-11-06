@@ -24,7 +24,7 @@ console.log('Starting tests with consolidated CAT integration...');
 // Configure test execution
 const isParallel = process.argv.includes('--parallel');
 const parallelWorkers = process.argv.find(arg => arg.match(/^\d+$/)) || '2';
-const cucumberArgs = ['cucumber-js', '-p', 'default'];
+const cucumberArgs = ['cucumber-js', '--config', 'cucumber.cjs', '-p', 'default'];
 
 // Handle parallel execution
 if (isParallel) {
