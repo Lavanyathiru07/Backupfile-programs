@@ -1,4 +1,5 @@
 import Actions from '../../src/support/actions.js'
+import homePage from '../page-objects/homePageObject.js'
 import { assert } from 'chai';
 
 const fmmFlight = "//div[@id='Test-TopRow']"
@@ -28,8 +29,8 @@ class g4PortalPage {
 
     actions;
 
-    constructor(page,context){
-        this.actions=new Actions(page,context)
+    constructor(page, context) {
+        this.actions = new Actions(page, context)
     }
 
     async navigateToG4portal() {
@@ -80,7 +81,7 @@ class g4PortalPage {
     async selectAppFromG4Portal(app) {
         if (app === 'MOD') {
             await this.actions.clickElement('click', MOD, 'MOD Button')
-            await this.actions.pause(5000)
+            await this.actions.waitForDisplayed('.mod-app, .modal, .app-container', 'MOD app interface', 5000)
         }
         if (app === 'STNS') {
             await this.actions.clickElement('click', STNS, 'STNS Button')
@@ -89,16 +90,16 @@ class g4PortalPage {
             await this.actions.clickElement('click', SVT, 'SVT Button')
         }
         if (app === 'FMM') {
-            await this.actions.pause(5000)
+            await this.actions.waitForClickable(FMM, 'FMM Button', 5000)
             await this.actions.clickElement('click', FMM, 'FMM Button')
-            await this.actions.pause(5000)
+            await this.actions.waitUntilPageLoad() // Wait for page transition
             console.log("Before Swtich : " + await this.actions.getUrl())
             let fmmPageObject = await this.actions.switchWindow('app/fmm/')
             this.page = fmmPageObject
-            this.actions = new Actions(this.page , this.context)
+            this.actions = new Actions(this.page, this.context)
             console.log("switched to fmm page")
             console.log("After Swtich : " + await this.actions.getUrl())
-            await this.actions.pause(5000)
+            await this.actions.waitForDisplayed('.fmm-container, body', 'FMM page content', 5000)
             return this.page
         }
         if (app === 'ATL') {
@@ -111,7 +112,7 @@ class g4PortalPage {
             await this.actions.clickElement('click', SAT, 'SAT Button')
         }
         if (app === 'STS') {
-            await this.actions.pause(5000)
+            await this.actions.waitForClickable(STS, 'STS Button', 5000)
             await this.actions.clickElement('click', STS, 'STS Button')
         }
         if (app === 'HSM') {
@@ -150,14 +151,14 @@ class g4PortalPage {
     }
 
     async flightValidation() {
-        await this.actions.pause(5000);
-        await this.actions.waitForDisplayed(dateTimeFMM , 'dateTimeFMM')
+        await this.actions.smartWait(10000);
+        await this.actions.waitForDisplayed(dateTimeFMM, 'dateTimeFMM')
         console.log("dateTimeFMM: " + await this.actions.isDisplayed(dateTimeFMM, "dateTimeFMM"));
         await this.actions.waitForDisplayed(fmmFlight, 'fmmFlight', 10000)
         console.log("fmmFlight: " + await this.actions.isDisplayed(fmmFlight, "fmmFlight"));
         let Flightno = await this.actions.getElements(fmmFlight)
         console.log("Availableflights: " + await Flightno.length);
-        await this.actions.pause(10000);
+        await this.actions.smartWait(15000);
         assert.isTrue(
             await this.actions.isDisplayed(fmmFlight, "fmm Flights checking"),
             'Validation Failed : flights are not available');
@@ -169,14 +170,14 @@ class g4PortalPage {
         if (process.env.ENV.includes("prod")) {
             console.log("CAME HERE>>>>>>>>>>>>>>>>>>PROD")
             await this.actions.openWebsite("https://g4plus-portal.allegiantair.com");
-            await this.actions.pause(1000)
+            await this.actions.smartWait(3000)
             await this.actions.setInputField('setValue', process.env.username, g4UserName, 'g4UserName')
             await this.actions.setInputField('setValue', process.env.password, g4Password, 'g4Password')
             await this.actions.clickElement('click', g4Submit, 'g4Submit')
         } else {
             await this.actions.openWebsite((await this.urlBuilderFmm())[0]);
             await this.actions.setWindowSize(1440, 700)
-            await this.actions.pause(1000)
+            await this.actions.smartWait(3000)
             await this.actions.openWebsite((await this.urlBuilderFmm())[1])
             await this.actions.setWindowSize(1440, 700)
         }
@@ -205,9 +206,9 @@ class g4PortalPage {
     }
 
     async ATLTranscation() {
-        await this.actions.pause(15000)
+        await this.actions.smartWait(15000)
         await this.actions.switchWindow('Accounting');
-        await this.actions.pause(15000)
+        await this.actions.smartWait(15000)
         const atlText = "//a[text()='ATL']";
         const transactionslabel = "//a[contains(@href,'transactions')]";
         const orderField = "//input[@ng-model='form.orderNbr']"
@@ -231,36 +232,47 @@ class g4PortalPage {
     }
 
     async Openclpageinnewtab() {
+        await homePage.getEnvironmentValue()
         var getEnv = process.env.ENV
         if (getEnv.includes('okd')) {
             var envURL = getEnv.split('-')[1].split('.')[0]
             var env = envURL.slice(0, 3) + '.' + envURL.slice(3, 8) + '.' + envURL.slice(8, 13)
             let pageurl = 'https://g4plus-res-' + envURL + '.okd.allegiantair.com/app/customers/list'
-            await this.actions.openWebsite(pageurl)
+            await browser.newWindow(pageurl)
+        }
+        else if (getEnv.includes('prd01')) {
+            var envURL = getEnv.split('-')[1].split('.')[0]
+            var env = envURL.slice(0, 3) + '.' + envURL.slice(3, 8) + '.' + envURL.slice(8, 13)
+            let pageurl = 'https://g4plus-res-' + envURL + '.allegiantair.com/app/customers/list'
+            await browser.newWindow(pageurl)
+        } else if (getEnv.includes('dev01')) {
+            var envURL = getEnv.split('-')[1].split('.')[0]
+            var env = envURL.slice(0, 3) + '.' + envURL.slice(3, 8) + '.' + envURL.slice(8, 13)
+            let pageurl = 'https://g4plus-res-' + envURL + '.okd.allegiantair.com/app/customers/list'
+            await browser.newWindow(pageurl)
         } else {
-            var envURL = getEnv.split('.')[1]
-            let pageurl = 'https://g4plus-res.' + envURL + '.allegiantair.com/app/customers/list'
-            await this.actions.openWebsite(pageurl)
+            let pageurl = 'https://g4plus-res' + getEnv + '.allegiantair.com/app/customers/list'
+            await browser.newWindow(pageurl)
         }
     }
 
     async guestLogin() {
-        await this.actions.pause(8000)
+        // await this.actions.pause(8000)
         console.log("new tab : " + await this.actions.getUrl())
         await this.actions.isDisplayed(guestLogin, 'guestLogin')
         await this.actions.click(guestLogin, 'guestLogin')
-        await this.actions.pause(5000)
+        // await this.actions.pause(5000)
         console.log("Before Swtich : " + await this.actions.getUrl())
         let newPageObject = this.actions.switchWindow(process.env.ENV)
         this.page = await newPageObject
         this.actions = new Actions(this.page, this.context)
         console.log("After Swtich : " + await this.actions.getUrl())
-        await this.actions.pause(5000)
+        // await this.actions.pause(5000)
         return this.page
     }
 
     async cartoverrideContinueBtn() {
-        await this.actions.pause(5000);
+        // await this.actions.pause(5000);
         let cartoverrideContinueBtnVisbilty = await this.actions.isDisplayed(cartoverrideContinueBtn, 'cartoverrideContinueBtn')
         if (cartoverrideContinueBtnVisbilty) {
             await this.actions.clickElement('click', cartoverrideContinueBtn, 'Cartoverride ContinueBtn')
@@ -268,11 +280,11 @@ class g4PortalPage {
         } else {
             console.error("Cart Overide Continue Button is not Displayed");
         }
-        await this.actions.pause(5000);
+        // await this.actions.pause(5000);
     }
 
     async validateCartOverridePage() {
-        await this.actions.pause(5000);
+        // await this.actions.pause(5000);
         if (await this.actions.getTitle() === 'Payment') {
             console.log('Successfully completed on CART-OVERRIDE Page');
         } else {
@@ -283,7 +295,7 @@ class g4PortalPage {
     async clickContinueButton() {
         await this.actions.waitForDisplayed(clickContinueButton, 'clickContinueButton')
         await this.actions.clickElement('click', clickContinueButton, 'Continue Button')
-        await this.actions.pause(5000)
+        // await this.actions.pause(5000)
     }
 }
 

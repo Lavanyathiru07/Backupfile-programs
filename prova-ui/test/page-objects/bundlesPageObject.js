@@ -36,9 +36,9 @@ class BundlesPage {
     async validateFlightDetailsFromTripSummary() {
         await this.actions.waitUntilPageLoad()
         // await this.actions.waitFor(bundleHeader, 20000, '', true, 'bundle header')
-        await this.actions.waitForDisplayed(bundleHeader, 'bundleHeader')
-        await this.actions.waitForDisplayed(headerCartButton, 'headerCartButton')
-        await this.actions.waitForClickable(headerCartButton, 'headerCartButton')
+        await this.actions.waitForDisplayed(bundleHeader, 'bundleHeader', 30000)
+        await this.actions.waitForDisplayed(headerCartButton, 'headerCartButton', 20000)
+        await this.actions.waitForClickable(headerCartButton, 'headerCartButton', 20000)
         await this.actions.clickElement('click', headerCartButton, 'Header Cart Button')
         var departFlightFare = parseFloat(flightPageCollector.get('departFlightFare'))
         var returnFlightFare = parseFloat(flightPageCollector.get('returnFlightFare'))
@@ -95,11 +95,26 @@ class BundlesPage {
     }
 
     async continueBundle() {
-        // await this.actions.waitFor(basicBundlescroll, 5000)
-        await this.actions.waitForDisplayed(basicBundlescroll, 'basic bundle scroll')
-        await this.actions.clickElement('click', bundleSubmit, "submit button in bundles page")
-        // await this.actions.pause(3000)
-        await this.actions.waitForDisplayed(TravelersPageHeading, 10000)
+        try {
+            try {
+                await this.actions.waitForDisplayed(basicBundlescroll, 'basic bundle scroll', 5000)
+            } catch (scrollError) {
+                console.log(`Basic bundle scroll element not visible`)
+            }
+            await this.actions.waitForDisplayed(bundleSubmit, "submit button in bundles page", 15000)
+            await this.actions.waitForClickable(bundleSubmit, "submit button in bundles page", 10000)
+            await this.actions.clickElement('click', bundleSubmit, "submit button in bundles page")
+            console.log("Bundle submit button clicked successfully")
+
+            // Wait for travelers page to load
+            console.log("Waiting for travelers page to load...")
+            await this.actions.waitForDisplayed(TravelersPageHeading, 'TravelersPageHeading', 20000)
+            console.log("Bundle continue process completed successfully")
+
+        } catch (error) {
+            console.log(`Error in continueBundle: ${error.message}`)
+            throw error
+        }
     }
 
     async selectBundles(bundleType) {
@@ -112,11 +127,31 @@ class BundlesPage {
             await this.actions.clickElement('click', selectTotalBundle, "selectTotalBundle")
         }
         if (bundleType === "Allegiant Bonus Bundle") {
-            // await browser.pause(2000)
-            await this.actions.waitForDisplayed(bonusBundle, 'bonusBundle', 20000)
-            await this.actions.scroll(basicBundlescroll)
-            await this.actions.waitForClickable(bonusBundle, 'selectBonusBundle')
-            await this.actions.clickElement('click', bonusBundle, "Bonus-Bundle-Button")
+
+            try {
+                await this.actions.waitForDisplayed(bonusBundle, 'bonusBundle', 20000)
+                console.log('Bonus bundle element found');
+                try {
+                    await this.actions.scroll(bonusBundle, 'bonusBundle')
+                } catch (scrollError) {
+                    console.log('Direct scroll to bonus bundle failed');
+                    try {
+                        await this.actions.waitForDisplayed(basicBundlescroll, 'basicBundlescroll', 5000)
+                        await this.actions.scroll(basicBundlescroll, 'basicBundlescroll')
+                    } catch (basicScrollError) {
+                        console.log('Basic bundle scroll also failed, continuing without scroll');
+                    }
+                }
+
+                // Wait for bonus bundle to be clickable and click it
+                await this.actions.waitForClickable(bonusBundle, 'selectBonusBundle', 10000)
+                await this.actions.clickElement('click', bonusBundle, "Bonus-Bundle-Button")
+                console.log('Successfully clicked bonus bundle');
+
+            } catch (error) {
+                console.log('Error in bonus bundle selection:', error.message);
+                throw error;
+            }
         }
     }
 }

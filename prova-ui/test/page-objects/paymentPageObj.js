@@ -60,15 +60,13 @@ class PaymentPage {
     actions;
     check;
 
-    constructor(page,context){
-        this.actions=new Actions(page,context)
-        this.check=new Checks(page,context)
+    constructor(page, context) {
+        this.actions = new Actions(page, context)
+        this.check = new Checks(page, context)
     }
 
     async popupClosing() {
-        await this.actions.pause(20000);
-
-        await this.actions.waitForDisplayed(paypopup, "Pay Pop up");
+        await this.actions.waitForDisplayed(paypopup, "Pay Pop up", 20000) // Wait for payment popup
 
         if (await this.actions.isDisplayed(paypopup, "pop-up button in payments page")) {
             await this.actions.clickElement('click', paypopup, "button to close the popup")
@@ -87,7 +85,7 @@ class PaymentPage {
         await this.actions.pressButton('Enter')
         await this.actions.waitForDisplayed(cardName, 'cardName text field', 10000);
         await this.actions.scroll(cardName)
-        await this.actions.pause(3000)
+        await this.actions.waitForClickable(cardName, 'cardName text field', 5000)
         await this.actions.waitForClickable(cardName, 'cardName text field')
         await this.actions.clearInputField(cardName, 'cardName')
         await this.actions.setInputField('setValue', "Auto Tester", cardName, "card name input field")
@@ -95,11 +93,10 @@ class PaymentPage {
 
         console.log("CardNumber: ", cardNumArray[random])
         await this.actions.waitForDisplayed(expirymonth, 'expirymonth', 10000)
-        await this.actions.pause(100)
         await this.actions.scroll(expirymonth)
         await this.actions.waitForClickable(expirymonth, 'expirymonth', 5000)
         await this.actions.clickElement('click', expirymonth, "expiry month dropdown")
-        await this.actions.pause(1000)
+        await this.actions.waitForClickable(monthselection, 'monthselection', 2000)
         await this.actions.scroll(monthscroll)
         await this.actions.waitForClickable(monthselection, 'monthselection', 5000)
         await this.actions.clickElement('click', currentExpirationMonth.replace("X", "11"), "selecting the expiry month of card")
@@ -109,11 +106,10 @@ class PaymentPage {
         await this.actions.waitForClickable(yearlocscroll, 'yearlocscroll', 5000)
         await this.actions.clickElement('click', expiryyear, "expiry year dropdown")
         await this.actions.scroll(yearscroll)
-        await this.actions.pause(200)
+        await this.actions.waitForClickable(currentExpirationYear.replace("X", "8"), 'year selection', 1000)
         await this.actions.clickElement('click', currentExpirationYear.replace("X", "8"), "selecting the expiry year of card")
-        await this.actions.pause(2000)
         await this.actions.scroll(yearlocscroll)
-        await this.actions.pause(3000)
+        await this.actions.waitUntilPageLoad() // Wait for page to stabilize after year selection
         if (value === '4444444444444448' || value === '4000020000000000' || value === '4400000000000008' || value === '6243030000000001') {
             let cvvValue = "999"
             await this.actions.setInputField('fill', cvvValue, cvv, "cvv field")
@@ -127,7 +123,7 @@ class PaymentPage {
     }
 
     async billingaddress() {
-        await this.actions.pause(5000)
+        await this.actions.waitForDisplayed(billingscroll, 'billingscroll', 10000) // Wait for billing section to load
         let address1 = ['Hillside Dr', 'Fireweed Ln', 'Chugach St', 'Pond Reef', 'Glacier View']
         let address2 = ['Cold Storage', 'Stellar', 'Evergreen', 'Goldendale', 'Park Ave']
         let city = ['Massachusetts', 'Alabama']
@@ -158,9 +154,9 @@ class PaymentPage {
         await this.actions.setInputField('setValue', add2Value, add2, "address field two")
         await this.actions.setInputField('setValue', cityValue, add3, "city address field three")
         await this.actions.clickElement('click', state, "state dropdown")
-        await this.actions.pressButton('ArrowDown','down')
-        await this.actions.pressButton('ArrowDown','down')
-        await this.actions.pressButton('Enter','press')
+        await this.actions.pressButton('ArrowDown', 'down')
+        await this.actions.pressButton('ArrowDown', 'down')
+        await this.actions.pressButton('Enter', 'press')
         await this.actions.waitForDisplayed(zipcode, 'zipcode', 5000)
         await this.actions.setInputField('setValue', '02170', zipcode, "zipcode input field")
         await this.actions.waitForDisplayed(mobilenum, 'mobilenum', 5000)
@@ -190,7 +186,7 @@ class PaymentPage {
         await this.actions.waitForClickable(purchaseMyTrip, 'purchaseMyTrip button');
 
         await this.actions.clickElement('click', purchaseMyTrip, "Purchase my trip Button");
-        await this.actions.pause(5000)
+        await this.actions.smartWait({ type: 'ready', timeout: 15000 })
 
         console.log("URL: ", await this.actions.getUrl())
         let oddJustHappenedVisibility = await this.actions.isDisplayed(somethingReallyOddJustHappened, 'somethingReallyOddJustHappened')
@@ -204,7 +200,7 @@ class PaymentPage {
         }
         else {
             do {
-                await this.actions.pause(10000)
+                await this.actions.smartWait({ type: 'dom', timeout: 3000 }) // Reduced from 10000 for faster checking
             } while (await this.actions.isDisplayed(spinnerBar, 'spinner bar'))
 
             await this.actions.waitForDisplayed(thankyouMessage, 'thankyouMessage', 60000);
@@ -219,7 +215,7 @@ class PaymentPage {
 
     async popupisClosing() {
         try {
-            await this.actions.pause(30000);
+            await this.actions.smartWait({ type: 'network', timeout: 45000 });
             await this.actions.waitForDisplayed(icePopup, 'icePopup')
             let icePopupVisibility = await this.actions.isDisplayed(icePopup, 'Payment page popup button')
             if (icePopupVisibility) {
@@ -315,7 +311,7 @@ class PaymentPage {
     }
 
     async loyaltySectionapply() {
-        await this.actions.pause(10000)
+        await this.actions.smartWait({ type: 'network', timeout: 20000 })
         await this.actions.scroll(loyaltypntapply)
         let loyaltypntapplyIsDisplayed = await this.actions.isDisplayed(loyaltypntapply, 'loyaltypntapply')
         if (loyaltypntapplyIsDisplayed) {
@@ -327,7 +323,6 @@ class PaymentPage {
             if (loyaltypntapplyIsClickable) {
                 await this.actions.waitForClickable(loyaltypntapply, 'loyaltypntapply')
                 await this.actions.clickElement('click', loyaltypntapply, 'loyaltypntapply')
-                await this.actions.pause(5000)
             } else {
                 console.log("points applied.")
             }
@@ -336,7 +331,6 @@ class PaymentPage {
             await this.actions.waitForClickable(loyaltypntapply, 'loyaltypntapply')
             await this.actions.isClickable(loyaltypntapply, 'loyaltypntapply')
             await this.actions.clickElement('click', loyaltypntapply, 'loyaltypntapply')
-            await this.actions.pause(5000)
             console.log('Loyalty not logged in');
         }
 

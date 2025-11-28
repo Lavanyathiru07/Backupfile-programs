@@ -26,14 +26,13 @@ class CarPage {
 
     async carspageskip() {
         await this.actions.waitUntilPageLoad()
-        await this.actions.pause(30000)
         await this.actions.waitForDisplayed(carPageHeader, 'carPageHeader', 30000)
         let carPageHeaderVisbilty = await this.actions.isDisplayed(carPageHeader, 'carPageHeader')
         console.log("carPageHeaderVisbilty: ", carPageHeaderVisbilty)
         if (carPageHeaderVisbilty) {
             console.log("Car's Text is Available")
             await this.actions.waitForDisplayed(carsPageContinueButton, 'carsPageContinueButton')
-            await this.actions.pause(3000)
+            await this.actions.waitForClickable(carskip, 'skip link in cars page', 5000)
             await this.actions.clickElement('click', carskip, "skip link in cars page")
         }
         else {
@@ -42,7 +41,6 @@ class CarPage {
     }
 
     async addToCart() {
-        await this.actions.pause(10000)
         await this.actions.waitForDisplayed(priceButton, 'priceButton', 60000)
         let noCarsResultMessageVisbility = await this.actions.isDisplayed(noCarsResultMessage, 'No cars Message')
         console.log("noCarsResultMessageVisbility: ", noCarsResultMessageVisbility)
@@ -83,8 +81,7 @@ class CarPage {
     }
 
     async addedToCart() {
-        await this.actions.pause(3000)
-        await this.actions.waitForDisplayed(addedToCard, "added to cart")
+        await this.actions.waitForDisplayed(addedToCard, "added to cart", 8000)
         assert.equal(
             await this.actions.isDisplayed(addedToCard, 'Added to the cart'),
             true,

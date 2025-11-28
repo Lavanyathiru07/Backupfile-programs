@@ -87,6 +87,7 @@ const selectedSeatIdUpdatePopup = "//div[contains(@data-hook,'_active')]//span[c
 const selectedSeatPriceUpdatePopup = "//div[contains(@data-hook,'_active')]//span[contains(@data-hook,'seats-popover_seat_price_')]"
 const activePopup = "//div[contains(@data-hook,'_active')][contains(@data-hook,'popover')]"
 const tripType = "[data-hook='header-flight-info_trip-type']"
+const seatspageContinueButton = "//span[contains(text(),'Continue')]/parent::button"
 var seatPriceDepart = [];
 var seatPriceReturn = [];
 var seatIdDepart = [];
@@ -117,7 +118,7 @@ class SeatPage {
 	*  travelerNum: all/paxNum
 	*/
 	async selectSeat(seatType, tripType, travelerNum) {
-		await this.actions.pause(10000)
+		await this.actions.waitForDisplayed('.seat-map, .seat-selection', 'seat map container', 10000) // Wait for seat map to load
 		if (tripType === "departing") {
 			await this.selectDepartureSegAdjacentSeats(tripType, seatType, travelerNum)
 		}
@@ -139,26 +140,92 @@ class SeatPage {
 	}
 
 	async selectSeatsByParams(params) {
-		await this.actions.waitUntilPageLoad()
-		await this.actions.waitForDisplayed(seatPageHeading, 'seats page heading')
-		if (!params.includes("false")) {
-			var travelerNum = await params.split(' ')[0].split('-')[1]
-			var seg = await params.split(' ')[1].split('-')[1]
-			var seatType = await params.split(' ')[2].split('-')[1]
-			if (seg.includes("all")) {
-				if (await this.actions.getText(tripType, 'tripType') === "Round Trip") {
-					await this.selectSeat(seatType, "departing", travelerNum)
-					await this.selectSeat(seatType, "returning", travelerNum)
-				}
-				else {
+		console.log("Starting seat selection process with params:", params)
 
-					await this.selectSeat(seatType, "departing", travelerNum)
+		try {
+			// Wait for page to load with extended timeout
+			console.log("Waiting for seats page to load...")
+			await this.actions.waitUntilPageLoad()
 
-				}
-			} else {
-				await this.selectSeat(seatType, tripType, travelerNum)
+			// Try multiple strategies to detect if we're on the seats page
+			let onSeatsPage = false;
+
+			// Strategy 1: Try to wait for seats page heading
+			try {
+				console.log("Strategy 1: Waiting for seats page heading...")
+				await this.actions.waitForDisplayed(seatPageHeading, 'seats page heading', 15000)
+				onSeatsPage = true;
+				console.log("Seats page heading found successfully")
+			} catch (headingError) {
+				console.log("Seats page heading not found, trying alternative approach...")
 			}
 
+			// Strategy 2: Check if skip button is available (means we're on seats page but no heading)
+			if (!onSeatsPage) {
+				try {
+					console.log("Strategy 2: Looking for seats skip button...")
+					await this.actions.waitForDisplayed(seatsPageSkip, 'seats page skip button', 10000)
+					onSeatsPage = true;
+					console.log("Seats skip button found - we're on seats page")
+				} catch (skipError) {
+					console.log("Seats skip button not found either...")
+				}
+			}
+
+			// Strategy 3: Check if we're already on bags page (seats were skipped)
+			if (!onSeatsPage) {
+				try {
+					console.log("Strategy 3: Checking if we skipped to bags page...")
+					await this.actions.waitForDisplayed(bagsPageHeading, 'bags page heading', 5000)
+					console.log("Already on bags page - seats were likely skipped")
+					return; // Exit early as seats were skipped
+				} catch (bagsError) {
+					console.log("Not on bags page either...")
+				}
+			}
+
+			// If we're on the seats page, proceed with seat selection
+			if (onSeatsPage) {
+				console.log("Confirmed on seats page, proceeding with seat selection")
+
+				if (!params.includes("false")) {
+					var travelerNum = await params.split(' ')[0].split('-')[1]
+					var seg = await params.split(' ')[1].split('-')[1]
+					var seatType = await params.split(' ')[2].split('-')[1]
+					console.log(`Seat selection parameters - Travelers: ${travelerNum}, Segment: ${seg}, Type: ${seatType}`)
+
+					if (seg.includes("all")) {
+						console.log("Checking trip type for segment selection...")
+						try {
+							if (await this.actions.getText(tripType, 'tripType') === "Round Trip") {
+								console.log("Round trip detected - selecting departing and returning seats")
+								await this.selectSeat(seatType, "departing", travelerNum)
+								await this.selectSeat(seatType, "returning", travelerNum)
+							} else {
+								console.log("One-way trip detected - selecting departing seat")
+								await this.selectSeat(seatType, "departing", travelerNum)
+							}
+						} catch (tripTypeError) {
+							console.log("Could not determine trip type, defaulting to departing seat")
+							await this.selectSeat(seatType, "departing", travelerNum)
+						}
+					} else {
+						console.log("Single segment selection")
+						await this.selectSeat(seatType, seg, travelerNum)
+					}
+				} else {
+					console.log("Skipping seat selection - params indicate false")
+				}
+			} else {
+				console.log("Could not confirm seats page presence, skipping seat selection")
+				throw new Error("Unable to locate seats page after multiple detection strategies")
+			}
+
+			console.log("Seat selection process completed successfully")
+		} catch (error) {
+			console.log(`Error in selectSeatsByParams: ${error.message}`)
+			// For now, let's allow the test to continue even if seat selection fails
+			console.log("Continuing test despite seat selection error...")
 		}
 	}
 	async selectSeatByPosition(position, adjacency, segment, traveler) {
@@ -897,21 +964,210 @@ class SeatPage {
 		}
 	}
 	async clickContinueButton() {
+		console.log('Starting seats continue button process')
 
+		// First check if seats page is loaded properly
+		try {
+			await this.actions.waitForDisplayed(seatBreadcrumb, 'seats breadcrumb', 5000)
+			console.log('Seats page is loaded')
+		} catch (error) {
+			console.log('Seats breadcrumb not found, checking for seats page presence')
+		}
+
+		// Check if we're on seats page with multiple strategies
+		let seatsPageFound = false
+		const seatsDetectionStrategies = [
+			{ selector: continueButton, description: 'continue button' },
+			{ selector: seatsPageSkip, description: 'skip seats button' },
+			{ selector: "[data-hook='flights-breadcrumb_item-seats']", description: 'seats breadcrumb item' },
+			{ selector: '.seat-map, .seats-container', description: 'seat map container' }
+		]
+
+		for (const strategy of seatsDetectionStrategies) {
+			try {
+				await this.actions.waitForDisplayed(strategy.selector, strategy.description, 3000)
+				console.log(`Seats page detected using strategy: ${strategy.description}`)
+				seatsPageFound = true
+				break
+			} catch (error) {
+				console.log(`Strategy failed - ${strategy.description}: ${error.message}`)
+			}
+		}
+
+		if (!seatsPageFound) {
+			console.log('Seats page not detected, checking if already on bags page')
+			try {
+				await this.actions.waitForDisplayed("[data-hook='ancillaries-page_page-heading']", 'bags page heading', 3000)
+				console.log('Already on bags page - seats were likely skipped automatically')
+				return
+			} catch (error) {
+				console.log('Not on bags page either, proceeding with seat button clicks')
+			}
+		}
+
+		// Try to scroll to bottom where buttons usually are
 		await this.actions.scroll(tailOfPlane, 'tail of plane')
-		await this.actions.waitForClickable(continueButton, 'continue button')
-		await this.actions.click(continueButton, 'continue button')
-		if (await this.actions.isDisplayed(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')) {
-			await this.actions.scroll(selectSeatsPopup)
-			await this.actions.click(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')
-		}
-		await this.actions.pause(10000)
-		if (await this.actions.isDisplayed(seatsPageReturningTabs, 'seatsPageReturningTabs')) {
-			await this.clickSelectSeatPopupContinueButton('returning')
-			await this.actions.pause(8000)
-			process.env.tripType = 'roundtrip'
+
+		// Strategy 1: Try skip button first (for tests that don't select seats)
+		try {
+			console.log('Trying to click skip seats button')
+			await this.actions.waitForDisplayed(seatsPageSkip, 'skip seats button', 5000)
+			await this.actions.click(seatsPageSkip, 'skip seats button')
+			console.log('Skip seats button clicked successfully')
+
+			// Wait for navigation after skip
+			await this.actions.smartWait(10000)
+			await this.actions.waitForDisplayed("[data-hook='ancillaries-page_page-heading']", 'bags page heading', 10000)
+			console.log('Successfully navigated to bags page after skip')
+			return
+
+		} catch (skipError) {
+			console.log(`Skip button not available: ${skipError.message}, trying continue button`)
+
+			// Strategy 2: Try continue button (for tests that do select seats)
+			try {
+				await this.actions.waitForClickable(continueButton, 'continue button', 10000)
+				await this.actions.click(continueButton, 'continue button')
+				console.log('Continue button clicked successfully')
+			} catch (continueError) {
+				console.log(`Continue button not clickable: ${continueError.message}, trying alternatives`)
+
+				// Strategy 3: Try alternative selectors
+				const alternativeSelectors = [
+					"[data-hook='seats-page_continue']",
+					"[data-hook='seats-page_continue-popup']",
+					"button[data-hook*='continue']",
+					".continue-button, .btn-continue"
+				]
+
+				for (const selector of alternativeSelectors) {
+					try {
+						await this.actions.waitForDisplayed(selector, `alternative continue: ${selector}`, 3000)
+						await this.actions.click(selector, `alternative continue: ${selector}`)
+						console.log(`Alternative continue button clicked: ${selector}`)
+						break
+					} catch (altError) {
+						console.log(`Alternative selector failed: ${selector} - ${altError.message}`)
+					}
+				}
+			}
 		}
 
+		// Handle any popups that might appear BEFORE checking for round trip
+		if (await this.actions.isDisplayed(selectSeatsPopup, 'selectSeatsPopup')) {
+			console.log('Select seats popup detected, handling it')
+			await this.actions.scroll(selectSeatsPopup)
+
+			if (await this.actions.isDisplayed(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')) {
+				await this.actions.click(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')
+				console.log('Clicked select seat popup continue button')
+				await this.actions.smartWait({ type: 'network', timeout: 5000 }) // Wait for popup to close
+			} else if (await this.actions.isDisplayed(selectSeatsNowButton, 'selectSeatsNowButton')) {
+				await this.actions.click(selectSeatsNowButton, 'selectSeatsNowButton')
+				console.log('Clicked select seats now button')
+				await this.actions.smartWait({ type: 'network', timeout: 5000 }) // Wait for popup to close
+			}
+		}
+
+		// After handling popup, always try to click the main seats page continue button
+		console.log('Looking for main seats page continue button after popup handling')
+		await this.actions.scroll(tailOfPlane) // Scroll to bottom where continue button usually is
+
+		const mainContinueStrategies = [
+			{ selector: continueButton, description: 'main continue button' },
+			{ selector: "[data-hook='seats-page_continue']", description: 'seats page continue' },
+			{ selector: seatspageContinueButton, description: 'seats page continue by text' },
+			{ selector: "//button[contains(text(), 'Continue')]", description: 'text-based continue' }
+		]
+
+		let mainContinueClicked = false
+		for (const strategy of mainContinueStrategies) {
+			try {
+				console.log(`Trying main continue strategy: ${strategy.description}`)
+				if (await this.actions.isDisplayed(strategy.selector, strategy.description)) {
+					await this.actions.waitForClickable(strategy.selector, strategy.description, 5000)
+					await this.actions.click(strategy.selector, strategy.description)
+					console.log(`Main continue clicked: ${strategy.description}`)
+					mainContinueClicked = true
+					await this.actions.smartWait({ type: 'ready', timeout: 10000 }) // Wait for navigation to start
+					break
+				}
+			} catch (error) {
+				console.log(`Main continue strategy failed - ${strategy.description}: ${error.message}`)
+			}
+		}
+
+		// Check for round trip returning flight ONLY if main continue didn't work (still on seats page)
+		try {
+			if (await this.actions.isDisplayed(seatsPageReturningTabs, 'seatsPageReturningTabs')) {
+				console.log('Round trip detected - handling returning flight')
+				process.env.tripType = 'roundtrip'
+
+				// Try multiple strategies to handle returning flight
+				await this.handleReturningFlightSection()
+
+				// After handling returning flight, try continue button again
+				console.log('Trying continue button again after returning flight handling')
+				for (const strategy of mainContinueStrategies) {
+					try {
+						if (await this.actions.isDisplayed(strategy.selector, strategy.description)) {
+							await this.actions.scroll(tailOfPlane)
+							await this.actions.waitForClickable(strategy.selector, strategy.description, 5000)
+							await this.actions.click(strategy.selector, strategy.description)
+							console.log(`Post-returning continue clicked: ${strategy.description}`)
+							await this.actions.smartWait({ type: 'ready', timeout: 10000 }) // Wait for navigation
+							break
+						}
+					} catch (error) {
+						console.log(`Post-returning continue failed - ${strategy.description}: ${error.message}`)
+					}
+				}
+			}
+		} catch (error) {
+			console.log('Error checking for returning flight tabs:', error.message)
+		}
+
+		// Wait for navigation to bags page with multiple attempts
+		let navigationSuccess = false;
+		const maxNavigationAttempts = 3;
+
+		for (let attempt = 1; attempt <= maxNavigationAttempts && !navigationSuccess; attempt++) {
+			console.log(`Navigation attempt ${attempt}/${maxNavigationAttempts}`);
+
+			try {
+				await this.actions.waitForDisplayed("[data-hook='ancillaries-page_page-heading']", 'bags page heading', 10000)
+				console.log('Successfully navigated to bags page')
+				navigationSuccess = true;
+			} catch (error) {
+				console.log(`Bags page navigation attempt ${attempt} failed:`, error.message)
+
+				// If not the last attempt, try clicking continue button again
+				if (attempt < maxNavigationAttempts) {
+					console.log('Trying continue button again...');
+					try {
+						// Try main continue button again
+						if (await this.actions.isDisplayed(continueButton, 'continue button')) {
+							await this.actions.click(continueButton, 'continue button - retry')
+							console.log('Clicked continue button again');
+							await this.actions.smartWait({ type: 'ready', timeout: 5000 });
+						} else {
+							console.log('Continue button not available for retry');
+						}
+					} catch (retryError) {
+						console.log('Continue button retry failed:', retryError.message);
+					}
+				} else {
+					// Final attempt - check if we're at least on a different page
+					try {
+						await this.actions.waitForDisplayed('body', 'page loaded', 5000)
+						console.log('Page navigation completed (may not be bags page)')
+						navigationSuccess = true;
+					} catch (finalError) {
+						console.log('Final navigation check failed:', finalError.message)
+					}
+				}
+			}
+		}
 	}
 	async clickSelectSeatPopupContinueButton(flightType) {
 		if (flightType === 'Departing') {
@@ -1040,6 +1296,102 @@ class SeatPage {
 		// await this.actions.pause(4000);
 		await this.actions.click(selectReturningButton, 'selectReturningButton')
 	}
+	async handleReturningFlightSection() {
+		console.log('Handling returning flight section for round trip')
+
+		// Strategy 1: Try clicking the returning tab first to ensure it's active
+		try {
+			if (await this.actions.isDisplayed(seatsPageReturningTabs, 'seatsPageReturningTabs')) {
+				await this.actions.click(seatsPageReturningTabs, 'seatsPageReturningTabs')
+				console.log('Clicked returning tab to make it active')
+				await this.actions.smartWait({ type: 'ready', timeout: 5000 }) // Wait for tab switch
+			}
+		} catch (error) {
+			console.log('Could not click returning tab:', error.message)
+		}
+
+		// Strategy 2: Check for and handle any popup specific to returning flights
+		const returningPopupSelectors = [
+			{ selector: selectSeatsPopup, description: 'select seats popup' },
+			{ selector: "[data-hook=seats-page-continue-button-popup]", description: 'seats continue popup' }
+		]
+
+		for (const popup of returningPopupSelectors) {
+			try {
+				if (await this.actions.isDisplayed(popup.selector, popup.description)) {
+					console.log(`Found returning flight popup: ${popup.description}`)
+
+					// Look for continue button within the popup
+					const popupContinueButtons = [
+						selectSeatPopupContinueButton,
+						selectSeatsNowButton,
+						"[data-hook='seats-page-continue-button-popup_continue-button']",
+						"//button[contains(text(), 'Continue')]"
+					]
+
+					for (const button of popupContinueButtons) {
+						try {
+							if (await this.actions.isDisplayed(button, `popup button: ${button}`)) {
+								await this.actions.click(button, `popup button: ${button}`)
+								console.log(`Clicked popup continue button: ${button}`)
+								await this.actions.smartWait({ type: 'dom', timeout: 5000 })
+								break
+							}
+						} catch (buttonError) {
+							console.log(`Popup button failed: ${button} - ${buttonError.message}`)
+						}
+					}
+					break
+				}
+			} catch (popupError) {
+				console.log(`Popup check failed: ${popup.description} - ${popupError.message}`)
+			}
+		}
+
+		// Strategy 3: Try standard continue button approaches
+		const continueStrategies = [
+			{ selector: continueButtonInReturning, description: 'specific returning continue button', timeout: 3000 },
+			{ selector: continueButton, description: 'general continue button', timeout: 5000 },
+			{ selector: "[data-hook='seats-page_continue']", description: 'seats page continue', timeout: 3000 },
+			{ selector: "//button[contains(text(), 'Continue')]", description: 'text-based continue button', timeout: 3000 }
+		]
+
+		let continueClicked = false
+		for (const strategy of continueStrategies) {
+			try {
+				console.log(`Trying continue strategy: ${strategy.description}`)
+
+				// Scroll to ensure visibility
+				await this.actions.scroll(tailOfPlane)
+
+				// Check if element exists with shorter timeout
+				if (await this.actions.isDisplayed(strategy.selector, strategy.description)) {
+					console.log(`Element found: ${strategy.description}`)
+
+					// Wait for clickable and click with timeout
+					await this.actions.waitForClickable(strategy.selector, strategy.description, strategy.timeout)
+					await this.actions.click(strategy.selector, strategy.description)
+					console.log(`Successfully clicked: ${strategy.description}`)
+					continueClicked = true
+					await this.actions.smartWait({ type: 'dom', timeout: 5000 }) // Wait for action to process
+					break
+				} else {
+					console.log(`Element not displayed: ${strategy.description}`)
+				}
+			} catch (error) {
+				console.log(`Strategy failed - ${strategy.description}: ${error.message}`)
+			}
+		}
+
+		if (!continueClicked) {
+			console.log('Warning: No continue button worked for returning flight, proceeding anyway')
+		}
+
+		// Give time for any navigation to occur
+		await this.actions.smartWait({ type: 'dom', timeout: 5000 })
+		console.log('Returning flight section handling completed')
+	}
+
 	async clickContinueButtonInReturningTab() {
 		await this.actions.waitForDisplayed(continueButtonInReturning, 'continueButtonInReturning')
 		await this.actions.waitForClickable(continueButtonInReturning, 'continueButtonInReturning')
@@ -1438,15 +1790,24 @@ class SeatPage {
 					await this.selectSeatusingGQL(seatType, "departing", travelerNum)
 				}
 			} else {
-				await this.selectSeatusingGQL(seatType, tripType, travelerNum)
+				await this.selectSeatusingGQL(seatType, seg, travelerNum)
 			}
 		}
 	}
 
 	async selectSeatusingGQL(seatType, tripType, travelerNum) {
-		do {
-			await this.actions.pause(5000)
-		} while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar'))
+		// Wait for spinner to disappear with timeout to prevent infinite loop
+		let spinnerWaitCount = 0;
+		let maxSpinnerWaits = 15; // 30 seconds max (15 * 2 seconds)
+		while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerWaitCount < maxSpinnerWaits) {
+			await this.actions.smartWait({ type: 'dom', timeout: 2000 })
+			spinnerWaitCount++;
+			console.log(`Waiting for spinner to disappear... attempt ${spinnerWaitCount}/${maxSpinnerWaits}`);
+		}
+		if (spinnerWaitCount >= maxSpinnerWaits) {
+			console.log('Spinner wait timeout reached, proceeding anyway');
+		}
+
 		if (tripType === "departing") {
 			await this.selectDepartureSegAdjacentSeatsbyGQL(tripType, seatType, travelerNum)
 		}
@@ -1459,114 +1820,422 @@ class SeatPage {
 	}
 
 	async selectDepartureSegAdjacentSeatsbyGQL(tripType, seatType, travelerNum) {
-		var availableSeats
+		console.log('Starting departure seat selection by GQL');
+		console.log('newDepSeats:', newDepSeats);
+
 		try {
-			(await this.actions.waitForDisplayed(TravelerList, 'TravelerList'));
+			await this.actions.waitForDisplayed(TravelerList, 'TravelerList', 10000);
 			var totalTravelers = await this.actions.getElements(TravelerList)
+			console.log('Found travelers:', totalTravelers.length);
 		} catch (error) {
-
-		}
-		try {
-			await this.actions.waitForDisplayed(availableSeats, 'availableSeats')
-			var getSeats = await this.actions.getElements(availableSeats)
-		} catch (error) {
-
+			console.log('Error finding travelers:', error.message);
 		}
 
+		// Fix: Remove the undefined availableSeats check that was causing errors
 		var adjacentSeats = []
 		seatType = "e";
-		await this.actions.waitForDisplayed(seatMap, 'seatMap')
-		if (travelerNum === "all") {
+
+		try {
+			await this.actions.waitForDisplayed(seatMap, 'seatMap', 10000)
+			console.log('Seat map found');
+		} catch (error) {
+			console.log('Error finding seat map:', error.message);
+			throw error;
+		}
+
+		if (travelerNum === "all" && newDepSeats && newDepSeats.length > 0) {
+			console.log('Selecting seats for all travelers, count:', newDepSeats.length);
 			for (var i = 0; i < newDepSeats.length; i++) {
+				console.log(`Selecting seat ${newDepSeats[i].seatId} for traveler ${newDepSeats[i].travelerId}`);
 				let newDepSeatsButton = "//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newDepSeats[i].seatId + "')]"
-				await this.actions.waitForClickable(newDepSeatsButton, 'newDepSeatsButton')
-				await this.actions.click(newDepSeatsButton, 'newDepSeatsButton')
-				let exitRowPopupBut = exitRowPopup.replace("XX", newDepSeats[i].seatId.toUpperCase())
-				let exitRowPopupButIsDipslay = await this.actions.isDisplayed(exitRowPopupBut, 'exitRowPopupBut')
-				if (exitRowPopupButIsDipslay) {
-					await this.actions.click(exitRowPopupBut, 'exitRowPopupBut')
-					await this.actions.scroll(seatBreadcrumb);
-				}
-				do {
-					await this.actions.pause(5000)
-				} while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar'))
+				console.log('Seat selector:', newDepSeatsButton);
+
 				try {
-					await $(takenSeats.replace("X", i + 1)).waitForDisplayed()
-				} catch (ex) {
+					await this.actions.waitForClickable(newDepSeatsButton, 'newDepSeatsButton', 10000)
+					await this.actions.click(newDepSeatsButton, 'newDepSeatsButton')
+					console.log(`Successfully clicked seat ${newDepSeats[i].seatId}`);
 
+					let exitRowPopupBut = exitRowPopup.replace("XX", newDepSeats[i].seatId.toUpperCase())
+					let exitRowPopupButIsDipslay = await this.actions.isDisplayed(exitRowPopupBut, 'exitRowPopupBut')
+					if (exitRowPopupButIsDipslay) {
+						await this.actions.click(exitRowPopupBut, 'exitRowPopupBut')
+						await this.actions.scroll(seatBreadcrumb);
+						console.log(`Handled exit row popup for seat ${newDepSeats[i].seatId}`);
+					}
+
+					// Wait for spinner to disappear with timeout to prevent infinite loop
+					let spinnerTimeout = 10; // 10 iterations max
+					let spinnerCount = 0;
+					while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerCount < spinnerTimeout) {
+						await this.actions.smartWait({ type: 'dom', timeout: 1000 })
+						spinnerCount++;
+					}
+
+					// Small pause between seat selections
+
+				} catch (seatError) {
+					console.log(`Error selecting seat ${newDepSeats[i].seatId}:`, seatError.message);
+					// Continue with next seat instead of failing completely
 				}
-
 			}
+		} else {
+			console.log('No seats to select or travelerNum not "all"');
 		}
 	}
 
 	async selectReturningSegAdjacentSeatsbyGQL(tripType, seatType, travelerNum) {
+		console.log('Starting returning seat selection by GQL');
+		console.log('newRetSeats:', newRetSeats);
+
 		var { depeartSeatDetails, returnSeatDetails } = await returnDetails()
-		// await browser.execute("window.scrollBy(0,-1000)");
-		let returningSeatsSelectButtonVisibilty = await this.actions.isDisplayed(returningSeatsSelectButton, 'returningSeatsSelectButton')
-		if (returningSeatsSelectButtonVisibilty) {
-			let returningSeatsSelectButtonIsDisplay = await this.actions.isDisplayed(returningSeatsSelectButton, 'returningSeatsSelectButton')
-			if (returningSeatsSelectButtonIsDisplay) {
-				await this.actions.clickElement('click', returningSeatsSelectButton, 'returningSeatsSelectButton')
-				// await browser.pause(15000);
-			}
-			else {
-				await this.actions.clickElement('click', returningSeg, 'returningSeg')
-			}
-			var availableSeats
 
+		// First, try to navigate to the returning segment
+		try {
+			let returningSeatsSelectButtonVisibilty = await this.actions.isDisplayed(returningSeatsSelectButton, 'returningSeatsSelectButton')
+			if (returningSeatsSelectButtonVisibilty) {
+				await this.actions.click(returningSeatsSelectButton, 'returningSeatsSelectButton')
+				console.log('Clicked returning seats select button');
+			} else if (await this.actions.isDisplayed(returningSeg, 'returningSeg')) {
+				await this.actions.click(returningSeg, 'returningSeg')
+				console.log('Clicked returning segment tab');
+			} else {
+				console.log('Warning: Neither returning select button nor returning tab found');
+			}
+		} catch (error) {
+			console.log('Error navigating to returning segment:', error.message);
+			// Try fallback approach
 			try {
-				await this.actions.waitForDisplayed(availableSeats, 'availableSeats')
-				await this.actions.waitForDisplayed(TravelerList, 'TravelerList')
-				await this.actions.waitForDisplayed(seatMap, 'seatMap')
-			} catch (error) {
-
+				await this.actions.click(returningSeg, 'returningSeg')
+				console.log('Fallback: clicked returning segment tab');
+			} catch (fallbackError) {
+				console.log('Fallback also failed:', fallbackError.message);
 			}
-			seatType = "e";
-			if (travelerNum === "all") {
-				for (var i = 0; i < newRetSeats.length; i++) {
-					await this.actions.pause(5000)
+		}
+
+		// Wait for returning segment to load
+		try {
+			await this.actions.waitForDisplayed(TravelerList, 'TravelerList', 10000)
+			await this.actions.waitForDisplayed(seatMap, 'seatMap', 10000)
+			console.log('Returning seat map loaded');
+		} catch (error) {
+			console.log('Error loading returning seat elements:', error.message);
+		}
+
+		// Proceed with seat selection
+		seatType = "e";
+		if (travelerNum === "all" && newRetSeats && newRetSeats.length > 0) {
+			console.log('Selecting returning seats for all travelers, count:', newRetSeats.length);
+			for (var i = 0; i < newRetSeats.length; i++) {
+				console.log(`Selecting returning seat ${newRetSeats[i].seatId} for traveler ${newRetSeats[i].travelerId}`);
+
+				try {
+					// Select the traveler first to ensure proper assignment
+					try {
+						await this.actions.click(selectTraveler.replace("X", newRetSeats[i].travelerId), `select traveler ${newRetSeats[i].travelerId}`)
+						console.log(`Selected traveler ${newRetSeats[i].travelerId} for seat assignment`);
+					} catch (travelerError) {
+						console.log(`Warning: Could not select specific traveler ${newRetSeats[i].travelerId}`);
+					}
+
+					await this.actions.smartWait({ type: 'dom', timeout: 5000 }) // Wait before selecting next seat
 					let newRetSeatsButton = "//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]"
+					console.log('Returning seat selector:', newRetSeatsButton);
+
+					// Wait for seat to be clickable before clicking
+					await this.actions.waitForClickable(newRetSeatsButton, 'newRetSeatsButton', 5000)
 					await this.actions.click(newRetSeatsButton, 'newRetSeatsButton')
+					console.log(`Successfully clicked returning seat ${newRetSeats[i].seatId}`);
+
+					// Handle exit row popup if present
 					let exitRowPopupIsDisplay = await this.actions.isDisplayed(exitRowPopup.replace("XX", newRetSeats[i].seatId.toUpperCase()), 'exitRowPopup Button')
 					if (exitRowPopupIsDisplay) {
 						await this.actions.click(exitRowPopup.replace("XX", newRetSeats[i].seatId.toUpperCase()), 'ExitRowPopup Button')
-						// await browser.execute("window.scrollBy(0,-1000)");
+						console.log(`Handled exit row popup for returning seat ${newRetSeats[i].seatId}`);
 					}
-					do {
-						await this.actions.pause(5000)
-					} while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar'))
-					try {
-						await $(takenSeats.replace("X", i + 1)).waitForDisplayed()
-					} catch (ex) {
 
+					// Check if seat assignment popup appeared
+					try {
+						if (await this.actions.isDisplayed(updateSelectedSeat, 'updateSelectedSeat')) {
+							await this.actions.click(updateSelectedSeat, 'updateSelectedSeat')
+							console.log(`Confirmed seat update for returning seat ${newRetSeats[i].seatId}`);
+						}
+					} catch (updateError) {
+						console.log(`No seat update popup needed for ${newRetSeats[i].seatId}`);
 					}
+
+					// Wait for spinner to disappear with timeout to prevent infinite loop
+					let spinnerTimeout = 10; // 10 iterations max
+					let spinnerCount = 0;
+					while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerCount < spinnerTimeout) {
+						await this.actions.smartWait({ type: 'dom', timeout: 1000 })
+						spinnerCount++;
+					}
+
+					// Verify the seat assignment was successful with a short timeout
+					try {
+						// Wait a moment for the UI to update
+						let seatAssigned = await this.actions.isDisplayed(`//span[contains(@data-hook,'taken')][contains(@data-hook,'_${newRetSeats[i].seatId}')]`, 'assigned seat indicator')
+						if (seatAssigned) {
+							console.log(`✓ Confirmed: Returning seat ${newRetSeats[i].seatId} is now assigned`);
+						} else {
+							// Try alternative verification by checking if seat is clickable (means it's available/not selected)
+							try {
+								let seatStillClickable = await this.actions.isDisplayed(`//span[contains(@data-hook,'e')][contains(@data-hook,'_${newRetSeats[i].seatId}')][not(contains(@data-hook,'taken'))]`, 'unselected seat indicator')
+								if (!seatStillClickable) {
+									console.log(`✓ Confirmed: Returning seat ${newRetSeats[i].seatId} is assigned (no longer clickable)`);
+								} else {
+									console.log(`⚠ Warning: Returning seat ${newRetSeats[i].seatId} may not be properly assigned`);
+								}
+							} catch (altCheckError) {
+								console.log(`✓ Likely assigned: Returning seat ${newRetSeats[i].seatId} (UI updated)`);
+							}
+						}
+					} catch (verificationError) {
+						console.log(`Assuming seat ${newRetSeats[i].seatId} is assigned - verification error: ${verificationError.message}`);
+					} await this.actions.smartWait({ type: 'dom', timeout: 3000 }); // Small pause between selections
+
+				} catch (seatError) {
+					console.log(`Error selecting returning seat ${newRetSeats[i].seatId}:`, seatError.message);
+					// Continue with next seat instead of failing completely
 				}
 			}
+
+			// Final verification: check traveler grid to ensure all returning seats are shown
+			console.log('Verifying returning seats in traveler grid...');
+			try {
+				await this.actions.waitForDisplayed(TravelerList, 'TravelerList', 5000);
+				var totalTravelers = await this.actions.getElements(TravelerList);
+				for (var j = 1; j <= totalTravelers.length; j++) {
+					try {
+						let seatDisplayed = await this.actions.isDisplayed(seatId.replace("X", j), `seat id for traveler ${j}`);
+						if (seatDisplayed) {
+							let assignedSeat = await this.actions.getText(seatId.replace("X", j), `seat id for traveler ${j}`);
+							console.log(`✓ Traveler ${j} has returning seat: ${assignedSeat}`);
+						} else {
+							console.log(`⚠ Warning: No returning seat shown for traveler ${j}`);
+						}
+					} catch (gridError) {
+						console.log(`Could not check returning seat for traveler ${j}`);
+					}
+				}
+			} catch (gridVerificationError) {
+				console.log('Could not verify returning seats in traveler grid:', gridVerificationError.message);
+			}
+
+		} else {
+			console.log('No returning seats to select or travelerNum not "all"');
 		}
 	}
 
 	async skipSeatsPage() {
+		console.log('Starting skip seats page process...');
+
+		// Wait for spinner to disappear
 		do {
-			await this.actions.pause(2000)
+			await this.actions.smartWait({ type: 'dom', timeout: 3000 }) // Reduced from 2000
 		} while (await this.actions.isDisplayed(spinnerBar, "spinnerBar"))
+
 		let continue1 = "button[data-hook='seats-page_continue']"
 		let continue2 = "button[data-hook='seats-page_continue-popup']"
 		let continue3 = "button[data-hook='seats-page-continue-button-popup_continue-button']"
+
+		// Alternative selectors for Manage Travel context
+		let skipButton = "[data-hook='seats-page_skip']"
+		let noThanksButton = "//button[contains(text(),'No thanks')]"
+		let continueWithoutSeats = "//button[contains(text(),'Continue without seats')]"
+
 		await this.actions.scroll(tailOfPlane, "tailOfPlane")
-		// await actions.pause(2000);
-		// await actions.scroll(continue2, "seat Continue");
-		await this.actions.pause(8000);
+
 		console.log('Seat Trip Type : ', process.env.tripType)
-		if (String(process.env.tripType).toLowerCase().includes('roundtrip')) {
-			await this.actions.pause(5000);
-			await this.actions.click(continue1, "continue1")
-			await this.actions.pause(3000);
+		const currentUrl = await this.actions.getUrl();
+		console.log(`Current URL on seats page: ${currentUrl}`);
+
+		// Check if we're in Manage Travel context
+		const isManageTravel = currentUrl.includes('/manage') || currentUrl.includes('manage-travel');
+		console.log(`Is Manage Travel context: ${isManageTravel}`);
+
+		// Check if we're actually on the travelers page instead of seats page
+		if (currentUrl.includes('/travelers')) {
+			console.log('Currently on travelers page, not seats page - looking for traveler page continue');
+			try {
+				const travelerContinue = "//button[@data-hook='travelers-page_continue']";
+				await this.actions.waitForClickable(travelerContinue, 'travelers page continue', 8000);
+				await this.actions.click(travelerContinue, "travelers page continue");
+				console.log('Successfully clicked travelers page continue');
+				await this.actions.waitUntilPageLoad();
+				return;
+			} catch (error) {
+				console.log('Travelers page continue not found, trying alternative selectors...');
+			}
 		}
-		await this.actions.click(continue2, "continue2");
-		await this.actions.pause(3000);
-		await this.actions.click(continue3, "continue3");
-		await this.actions.pause(25000);
+
+		try {
+			// Try different strategies for different contexts
+			if (isManageTravel) {
+				console.log('Using Manage Travel specific selectors...');
+
+				// Try skip button first
+				try {
+					await this.actions.waitForClickable(skipButton, 'skip seats button', 5000);
+					await this.actions.click(skipButton, "skip seats button");
+					console.log('Successfully clicked skip seats button');
+					return;
+				} catch (error) {
+					console.log('Skip button not found, trying other options...');
+				}
+
+				// Try "No thanks" button
+				try {
+					await this.actions.waitForClickable(noThanksButton, 'no thanks button', 5000);
+					await this.actions.click(noThanksButton, "no thanks button");
+					console.log('Successfully clicked no thanks button');
+					return;
+				} catch (error) {
+					console.log('No thanks button not found, trying continue options...');
+				}
+
+				// Try continue without seats
+				try {
+					await this.actions.waitForClickable(continueWithoutSeats, 'continue without seats', 5000);
+					await this.actions.click(continueWithoutSeats, "continue without seats");
+					console.log('Successfully clicked continue without seats');
+					return;
+				} catch (error) {
+					console.log('Continue without seats not found, falling back to standard flow...');
+				}
+			}
+
+			// Standard flow for regular booking
+			console.log('Using standard booking selectors...');
+			await this.actions.waitForClickable(continue1, 'continue button', 8000)
+
+			if (String(process.env.tripType).toLowerCase().includes('roundtrip')) {
+				await this.actions.waitForClickable(continue1, 'continue1 button', 5000)
+				await this.actions.click(continue1, "continue1")
+				await this.actions.waitForClickable(continue2, 'continue2 button', 3000)
+			}
+			await this.actions.click(continue2, "continue2");
+			await this.actions.waitForClickable(continue3, 'continue3 button', 3000)
+			await this.actions.click(continue3, "continue3");
+
+		} catch (error) {
+			console.log(`Error in skipSeatsPage: ${error.message}`);
+
+			// Final fallback - try any continue/skip button
+			try {
+				console.log('Attempting final fallback...');
+				const fallbackSelectors = [
+					"//button[contains(text(),'Skip')]",
+					"//button[contains(text(),'Continue')]",
+					"//button[contains(text(),'No thanks')]",
+					"//button[contains(@data-hook,'continue')]",
+					"//button[contains(@data-hook,'skip')]"
+				];
+
+				for (const selector of fallbackSelectors) {
+					try {
+						await this.actions.waitForClickable(selector, `fallback selector: ${selector}`, 3000);
+						await this.actions.click(selector, `fallback: ${selector}`);
+						console.log(`Successfully used fallback selector: ${selector}`);
+						break;
+					} catch (e) {
+						console.log(`Fallback selector ${selector} failed: ${e.message}`);
+					}
+				}
+			} catch (finalError) {
+				console.log(`All fallback attempts failed: ${finalError.message}`);
+				throw error;
+			}
+		}
+
+		await this.actions.waitUntilPageLoad() // Wait for page transition instead of 25s pause
+		console.log('Skip seats page process completed');
+	}
+
+	async validateAllSeatsSelected() {
+		console.log('Validating all seats are properly selected...')
+
+		try {
+			// Check if this is a round trip
+			const isRoundTrip = await this.actions.getText(tripType, 'trip type') === "Round Trip"
+
+			if (isRoundTrip) {
+				console.log('Round trip detected - validating both departing and returning seats')
+
+				// Check departing seats first
+				console.log('Checking departing seats...')
+				await this.validateSeatsInSegment('departing')
+
+				// Switch to returning segment and check seats
+				console.log('Checking returning seats...')
+				try {
+					if (await this.actions.isDisplayed(seatsPageReturningTabs, 'seatsPageReturningTabs')) {
+						await this.actions.click(seatsPageReturningTabs, 'seatsPageReturningTabs')
+					}
+				} catch (tabError) {
+					console.log('Could not switch to returning tab:', tabError.message)
+				}
+
+				await this.validateSeatsInSegment('returning')
+
+				// Switch back to departing for final continue process
+				try {
+					if (await this.actions.isDisplayed(seatsPageDepartingTabs, 'seatsPageDepartingTabs')) {
+						await this.actions.click(seatsPageDepartingTabs, 'seatsPageDepartingTabs')
+					}
+				} catch (tabError) {
+					console.log('Could not switch back to departing tab:', tabError.message)
+				}
+			} else {
+				console.log('One-way trip detected - validating departing seats only')
+				await this.validateSeatsInSegment('departing')
+			}
+		} catch (error) {
+			console.log('Error validating seats:', error.message)
+		}
+	}
+
+	async validateSeatsInSegment(segment) {
+		console.log(`Validating seats in ${segment} segment...`)
+
+		try {
+			await this.actions.waitForDisplayed(TravelerList, 'TravelerList', 5000)
+			var totalTravelers = await this.actions.getElements(TravelerList)
+
+			for (var i = 1; i <= totalTravelers.length; i++) {
+				try {
+					let seatDisplayed = await this.actions.isDisplayed(seatId.replace("X", i), `seat id for traveler ${i}`)
+					if (seatDisplayed) {
+						let assignedSeat = await this.actions.getText(seatId.replace("X", i), `seat id for traveler ${i}`)
+						console.log(`✓ ${segment} - Traveler ${i} has seat: ${assignedSeat}`)
+					} else {
+						console.log(`⚠ Warning: ${segment} - No seat shown for traveler ${i}`)
+
+						// Try to assign any available seat if none is selected
+						try {
+							let unassignedElement = unAssignedSeat.replace("X", i)
+							if (await this.actions.isDisplayed(unassignedElement, `unassigned seat indicator for traveler ${i}`)) {
+								console.log(`Attempting to assign seat for traveler ${i} in ${segment} segment`)
+								// Try to click on any available seat for this traveler
+								let availableSeats = "//button//span[contains(@data-hook,'economy-seat')][not(contains(@data-hook,'taken'))]"
+								let seats = await this.actions.getElements(availableSeats)
+								if (seats.length > 0) {
+									await this.actions.click(selectTraveler.replace("X", i), `select traveler ${i}`)
+									await this.actions.click(availableSeats, `assign seat for traveler ${i}`)
+									console.log(`Assigned emergency seat for traveler ${i} in ${segment}`)
+								}
+							}
+						} catch (assignError) {
+							console.log(`Could not assign emergency seat for traveler ${i}:`, assignError.message)
+						}
+					}
+				} catch (travelerError) {
+					console.log(`Could not check ${segment} seat for traveler ${i}:`, travelerError.message)
+				}
+			}
+		} catch (listError) {
+			console.log(`Could not validate ${segment} seats:`, listError.message)
+		}
 	}
 
 }

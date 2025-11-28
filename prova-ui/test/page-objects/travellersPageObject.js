@@ -84,7 +84,7 @@ class TravellersPage {
     async fillAlltravelerDetails(travelerCount) {
         await this.actions.waitUntilPageLoad()
         await this.actions.waitForDisplayed(TravelersPageHeading, 'Travellers Page Heading')
-        await this.actions.pause(15000)
+        await this.actions.waitForDisplayed(travelerType, 'traveler type', 15000) // Wait for traveler forms to load
         // await this.actions.waitUntil(travelerType, 'visible')
         // await this.actions.waitForDisplayed(travelerType, 'traveler type')
         let paxType = await this.actions.getElements(travelerType)

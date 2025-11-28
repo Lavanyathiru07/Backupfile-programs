@@ -49,14 +49,19 @@ class FlightsPage {
     }
 
     async flightsubmit() {
-        await this.actions.waitForDisplayed(advert, 'advert')
+        await this.actions.waitForDisplayed(advert, 'advert', 15000)
+        await this.actions.waitForDisplayed(submitflightpage, 'continue button', 30000)
+        await this.actions.waitForClickable(submitflightpage, 'continue button', 30000)
         await this.actions.clickElement('click', submitflightpage, "submit button in flights page")
-        await this.actions.pause(10000)
+
+        // Wait for page navigation after clicking continue
+        await this.actions.waitUntilPageLoad()
+        await this.actions.smartWait(15000)
     }
 
     async validateFlightPage() {
         await this.actions.waitUntilPageLoad()
-        await this.actions.pause(10000);
+        await this.actions.smartWait(15000)
         if ((await this.actions.getUrl()).includes('manage-travel/')) {
             if (await this.actions.getTitle() === 'Travelers') {
                 console.log('Successfully completed on Flight Page');
@@ -97,7 +102,7 @@ class FlightsPage {
     async collectFlightPageDetails() {
         await this.actions.waitForDisplayed(flightheading, 'flightheading')
         await this.actions.waitUntilPageLoad()
-        await this.actions.pause(8000)
+        // await this.actions.pause(8000)
         try {
             if (await this.actions.isDisplayed(clickContinueButton, 'clickContinueButton')) {
                 await this.getSelectedDepartureDate();

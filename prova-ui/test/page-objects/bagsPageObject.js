@@ -118,7 +118,7 @@ class BagsPage {
         let carryonCurrentVlaueret = await this.actions.getElement(carryonBagCurrentValueSeg2.replace(/X/g, paxNum - 1))
         if (segment === "both") {
             do {
-                await this.actions.pause(10000)
+                await this.actions.waitForClickable(carryonIncdepart, 'button to increment the carryOn bags', 10000)
                 await this.actions.clickElement('click', carryonIncdepart, 'button to increment the carryOn bags')
             } while (parseInt(await this.actions.getText(carryonCurrentVlaue, "increment button")) < 1)
         }

@@ -20,7 +20,6 @@ class CheckInPage {
     }
 
     async onlineCheckin() {
-        await this.actions.pause(5000)
         await this.actions.waitForDisplayed(onelineCheckin, 'check-in online link', 10000)
         // await this.actions.scroll(onelineCheckin)
         await this.actions.waitForClickable(onelineCheckin, 'check-in online link')
@@ -30,16 +29,16 @@ class CheckInPage {
 
     async checkin() {
         await this.actions.waitUntilPageLoad()
-        await this.actions.pause(10000)
+        await this.actions.waitForDisplayed(checkinbutton, 'checkinbutton', 10000)
         // await this.actions.scroll(checkinbutton)
         await this.actions.waitForDisplayed(checkinbutton, 'checkinbutton')
         await this.actions.clickElement('click', checkinbutton, "check-in button")
-        await this.actions.pause(10000)
+        await this.actions.waitForDisplayed('.checkin-result, .boarding-pass', 'checkin result', 10000)
         console.log(await this.actions.getUrl())
     }
 
     async PrintBoardingPasses() {
-        await this.actions.pause(5000);
+        await this.actions.waitForDisplayed(checkinstatus, 'checkin status', 5000);
         let checkinstatusIsDisplayed = await this.actions.isDisplayed(checkinstatus, 'checkinstatus')
         if (checkinstatusIsDisplayed) {
             console.log("Checkin Passed")
@@ -54,7 +53,7 @@ class CheckInPage {
 			if(covidPolicyPopUP) {
 				await this.actions.waitForDisplayed(iAgreeCovidPolicyCheckBox, 'iAgreeCovidPolicyCheckBox');
 				await this.actions.clickElement('click', iAgreeCovidPolicyCheckBox, 'iAgreeCovidPolicyCheckBox')
-				await this.actions.pause(3000)
+				await this.actions.waitForClickable('.continue-button', 'continue button', 3000)
 			} else {
 				console.log('Select Restricted Articles Policy and COVID-19 Confirmation policy not needed');
 			}
@@ -64,20 +63,20 @@ class CheckInPage {
 	}
 
     async onlinecheckinbagspage() {
-        await this.actions.pause(3000)
+        await this.actions.waitForClickable(checkinbagspagecontinue, 'checkin bags page continue button', 3000)
         await this.actions.click(checkinbagspagecontinue, 'checkin bags page continue button')
-        await this.actions.pause(3000)
+        await this.actions.waitForClickable(checkinbagspagecontinue2, 'Bags page continue popup', 3000)
         await this.actions.click(checkinbagspagecontinue2, 'Bags page continue popup')
-        await this.actions.pause(15000)
+        await this.actions.waitForDisplayed('.seats-page, .next-section', 'next section', 15000)
     }
 
     async onlinecheckinseatspage() {
-        await this.actions.pause(30000)
+        await this.actions.waitForClickable(checkinharadeouspagecheckbox, 'hazardous page checkbox', 30000)
         await this.actions.click(checkinharadeouspagecheckbox, 'checkinharadeouspagecheckbox')
         await this.actions.click(checkinharadeouspagecontinue, 'checkinharadeouspagecontinue')
-        await this.actions.pause(5000)
+        await this.actions.waitForClickable(checkinseatpagecontinue, 'seat page continue', 5000)
         await this.actions.click(checkinseatpagecontinue, 'checkinseatpagecontinue')
-        await this.actions.pause(20000)
+        await this.actions.waitUntilPageLoad() // Wait for page transition instead of 20s pause
     }
 
 }

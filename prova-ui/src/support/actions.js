@@ -319,10 +319,24 @@ class Actions {
     async openWebsite(pageUrl) {
         Logger.info(`Opening the URL ${pageUrl}`);
         try {
-            await this.page.goto(pageUrl);
-            // await this.page.setViewportSize({ width: 1920, height: 1080 }); // Set your desired viewport size.
+            await this.page.goto(pageUrl, {
+                waitUntil: 'domcontentloaded',
+                timeout: 60000
+            });
+            await this.page.waitForLoadState('domcontentloaded');
+            Logger.info(`Successfully loaded ${pageUrl}`);
+
         } catch (error) {
-            Logger.error(error);
+            try {
+                await this.page.goto(pageUrl, {
+                    waitUntil: 'networkidle',
+                    timeout: 90000
+                });
+                Logger.info(`Successfully loaded ${pageUrl} with networkidle strategy`);
+            } catch (retryError) {
+                Logger.error(`Failed loading page ${pageUrl}`);
+                throw retryError;
+            }
         }
     }
 
@@ -531,18 +545,20 @@ class Actions {
      * Wait for the  element to be clicked
      * @param  {String}   selector Element Selector For Ex: ID,xpath,etc.,
      * @param  {string} selectorName The name of the element For Ex: checkbox, inputfield
+     * @param {number} timeout Timeout in milliseconds (default: 10000)
      */
-    async waitForClickable(selector, selectorName) {
-        Logger.info(`Waiting for ${selectorName} to be clickable`);
+    async waitForClickable(selector, selectorName, timeout = 10000) {
+        Logger.info(`Waiting for ${selectorName} to be clickable (timeout: ${timeout}ms)`);
         try {
             let obj = selector instanceof Object ? selector : await this.page.locator(selector);
             if (await obj.count() > 1) {
-                await obj.nth(0).isVisible({ timeout: 10000 })
+                await obj.nth(0).waitFor({ state: 'visible', timeout: timeout })
             } else {
-                await obj.isVisible({ timeout: 10000 })
+                await obj.waitFor({ state: 'visible', timeout: timeout })
             }
         } catch (error) {
-            Logger.error(error);
+            Logger.error(`Failed to wait for ${selectorName} to be clickable: ${error.message}`);
+            throw error;
         }
     }
 
@@ -550,18 +566,20 @@ class Actions {
      * Wait on the given element till it's visible
      * @param  {String}  selector  Element Selector For Ex: ID,xpath,etc.,
      * @param {string} selectorName The name of the element For Ex: checkbox, inputfield
+     * @param {number} timeout Timeout in milliseconds (default: 10000)
      */
-    async waitForDisplayed(selector, selectorName) {
-        Logger.info(`Waiting for ${selectorName} to be displayed`);
+    async waitForDisplayed(selector, selectorName, timeout = 10000) {
+        Logger.info(`Waiting for ${selectorName} to be displayed (timeout: ${timeout}ms)`);
         try {
             let obj = selector instanceof Object ? selector : await this.page.locator(selector);
             if (await obj.count() > 1) {
-                await obj.nth(0).isVisible({ timeout: 10000 })
+                await obj.nth(0).waitFor({ state: 'visible', timeout: timeout })
             } else {
-                await obj.isVisible({ timeout: 10000 })
+                await obj.waitFor({ state: 'visible', timeout: timeout })
             }
         } catch (error) {
-            Logger.error(error);
+            Logger.error(`Failed to wait for ${selectorName}: ${error.message}`);
+            throw error;
         }
     }
 
@@ -743,13 +761,13 @@ class Actions {
         }
     }
 
-    /**
-    * Pauses execution for a specific amount of time
-    * @param {String} milliseconds Wait duration (optional) For Ex: 2000,3000
-    */
-    async pause(milliseconds) {
-        await this.page.waitForTimeout(milliseconds);
-    }
+    // /**
+    // * Pauses execution for a specific amount of time
+    // * @param {String} milliseconds Wait duration (optional) For Ex: 2000,3000
+    // */
+    // async pause(milliseconds) {
+    //     await this.page.waitForTimeout(milliseconds);
+    // }
 
     // =================== MISSING PLAYWRIGHT METHODS ===================
 
@@ -765,11 +783,11 @@ class Actions {
                 fullPage: true,
                 ...options
             };
-            
+
             if (filePath) {
                 screenshotOptions.path = filePath;
             }
-            
+
             return await this.page.screenshot(screenshotOptions);
         } catch (error) {
             Logger.error(error);
@@ -787,11 +805,11 @@ class Actions {
         try {
             let obj = selector instanceof Object ? selector : await this.page.locator(selector);
             const screenshotOptions = { ...options };
-            
+
             if (filePath) {
                 screenshotOptions.path = filePath;
             }
-            
+
             return await obj.screenshot(screenshotOptions);
         } catch (error) {
             Logger.error(error);
@@ -1339,7 +1357,7 @@ class Actions {
                 width: device.viewport.width,
                 height: device.viewport.height
             });
-            
+
             if (device.userAgent) {
                 await this.page.setExtraHTTPHeaders({
                     'User-Agent': device.userAgent
@@ -1438,6 +1456,52 @@ class Actions {
             });
         } catch (error) {
             Logger.error(error);
+        }
+    }
+
+    /**
+     * Smart wait - Use this for most scenarios after page actions
+     * Waits for page to be ready for interaction (DOM + network settling)
+     * 
+     * Usage examples:
+     * - await actions.smartWait() - Standard page wait
+     * - await actions.smartWait(5000) - Custom timeout
+     * - await actions.smartWait('#button') - Wait for element
+     * 
+     * @param {string|number} target Element selector OR timeout in ms (optional)
+     * @param {number} timeout Timeout in ms when first param is selector (default: 15000)
+     */
+    async smartWait(target = null, timeout = 15000) {
+        try {
+            // Simple number input = timeout wait
+            if (typeof target === 'number') {
+                Logger.info(`Smart wait: ${target}ms timeout`);
+                await this.page.waitForTimeout(target);
+                return;
+            }
+
+            // String input = element selector
+            if (typeof target === 'string') {
+                Logger.info(`Smart wait: element "${target}"`);
+                let obj = await this.page.locator(target);
+                await obj.waitFor({ state: 'visible', timeout });
+                return;
+            }
+
+            // Default: page ready wait (best for most cases)
+            Logger.info(`Smart wait: page ready (${timeout}ms)`);
+            await this.page.waitForLoadState('domcontentloaded', { timeout: timeout / 2 });
+
+            // Try network idle, but don't fail if it times out
+            try {
+                await this.page.waitForLoadState('networkidle', { timeout: timeout / 2 });
+            } catch {
+                Logger.info('Network still busy - continuing anyway');
+            }
+
+        } catch (error) {
+            Logger.error(`Smart wait failed: ${error.message}`);
+            throw error;
         }
     }
 };

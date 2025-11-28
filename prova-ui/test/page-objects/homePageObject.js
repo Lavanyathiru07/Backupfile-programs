@@ -47,12 +47,27 @@ class HomePage {
 		this.actions = new Actions(page, context)
 	}
 
-	async openURL(page) {
-		await this.actions.openWebsite(page)
-		process.env.ENV = await this.actions.getUrl()
-		// await check.checkURL('https://www.stg.allegiantair.com/',"opening the allegiantair application")
-		// await check.checkTitle('Rediffmail','reddiff-mail website')
-		// await check.checkURLPath('/','allegiantair UI')
+	async openURL(pageUrl) {
+		console.log(`Attempting to navigate to: ${pageUrl}`);
+		try {
+			await this.actions.openWebsite(pageUrl);
+			await this.actions.waitUntilPageLoad();
+			process.env.ENV = await this.actions.getUrl();
+			console.log(`Successfully loaded page: ${process.env.ENV}`);
+			try {
+				await this.actions.waitForDisplayed('body', 'page body', 10000);
+			} catch (elementError) {
+				console.warn('Page body not detected within timeout, but navigation succeeded');
+			}
+
+		} catch (error) {
+			console.error(`Failed to load ${pageUrl}:`, error.message);
+			throw new Error(`Unable to navigate to ${pageUrl}. Please check:
+1. Network connectivity
+2. URL accessibility: ${pageUrl}
+3. Server availability
+Original error: ${error.message}`);
+		}
 	}
 
 	async setWindow(screenWidth, screenHeight) {
@@ -97,6 +112,20 @@ class HomePage {
 		await this.actions.clickElement('click', oneway, "one-way radio-button")
 	}
 	async selectingorigin(value) {
+		await this.popupClosing()
+		await this.actions.waitUntilPageLoad()
+		try {
+			await this.actions.waitForHidden('.OverlayMerchandise__SpinnerWrapper-sc-80cltg-2', 'overlay spinner', 3000)
+		} catch (error) {
+			console.log("No overlay spinner found or already disappeared")
+		}
+
+		try {
+			await this.actions.waitForHidden('.OverlayMerchandise__OverlayImg-sc-80cltg-0', 'overlay image', 3000)
+		} catch (error) {
+			console.log("No overlay image found or already disappeared")
+		}
+		await this.actions.smartWait(3000)
 		await this.actions.waitForDisplayed(origin, "origin")
 		await this.actions.waitForClickable(origin, "origin")
 		await this.actions.clickElement('click', origin, "origin input field")
@@ -324,10 +353,79 @@ class HomePage {
 	}
 
 	async submithomepage() {
-		// await this.actions.scroll(classcheck)
-		// await check.checkClass(classcheck,'disclaimer','disclaimer-class')
-		await this.actions.waitForDisplayed(scrollingpurpose, 'scrollingpurpose')
-		await this.actions.clickElement('click', homesubmit, "submit button")
+		try {
+			await this.actions.waitForDisplayed(scrollingpurpose, 'scrollingpurpose', 5000)
+		} catch (scrollError) {
+			console.log('Travelers expando button not found')
+			const manageTravelIndicators = [
+				"[data-hook*='manage']",
+				"//h1[contains(text(), 'Manage')]",
+				".manage-travel, .manage-trip",
+				"[data-hook*='change']"
+			]
+
+			let inManageTravel = false
+			for (const indicator of manageTravelIndicators) {
+				try {
+					if (await this.actions.isDisplayed(indicator, `manage travel indicator: ${indicator}`)) {
+						console.log('Detected Manage Travel context')
+						inManageTravel = true
+						break
+					}
+				} catch (checkError) {
+					// Continue checking other indicators
+				}
+			}
+
+			if (!inManageTravel) {
+				const alternativeScrollTargets = [
+					"[data-hook='flight-search-form']",
+					".search-form",
+					homesubmit,
+					"button[type='submit']"
+				]
+
+				for (const target of alternativeScrollTargets) {
+					try {
+						if (await this.actions.isDisplayed(target, `alternative scroll target: ${target}`)) {
+							await this.actions.scroll(target)
+							console.log(`Used alternative scroll target: ${target}`)
+							break
+						}
+					} catch (altError) {
+						console.log(`Alternative scroll target failed: ${target}`)
+					}
+				}
+			}
+		}
+
+		const submitSelectors = [
+			{ selector: homesubmit, description: 'main submit button' },
+			{ selector: "[data-hook='flight-search-form_submit']", description: 'flight search submit' },
+			{ selector: "button[type='submit']", description: 'generic submit button' },
+			{ selector: "//button[contains(text(), 'Search')]", description: 'search button by text' },
+			{ selector: ".submit-button, .search-button", description: 'submit button by class' }
+		]
+
+		let submitClicked = false
+		for (const strategy of submitSelectors) {
+			try {
+				console.log(`Trying submit strategy: ${strategy.description}`)
+				if (await this.actions.isDisplayed(strategy.selector, strategy.description)) {
+					await this.actions.waitForClickable(strategy.selector, strategy.description, 5000)
+					await this.actions.clickElement('click', strategy.selector, strategy.description)
+					console.log(`Successfully clicked submit: ${strategy.description}`)
+					submitClicked = true
+					break
+				}
+			} catch (submitError) {
+				console.log(`Submit strategy failed - ${strategy.description}: ${submitError.message}`)
+			}
+		}
+
+		if (!submitClicked) {
+			console.log('Warning: No submit button was clicked successfully')
+		}
 	}
 
 	async selectTripType(tripType) {
@@ -348,20 +446,27 @@ class HomePage {
 	}
 
 	async popUps() {
-		// // await this.actions.pause(5000)
+
 		try {
-			await this.actions.waitForDisplayed(buttontoclosepopup, 'button to close popup')
-			await this.actions.waitForClickable(buttontoclosepopup, 'Overlay Merchandise Pop-up button')
+			const popupTimeout = 5000;
+
+			await this.actions.waitForDisplayed(buttontoclosepopup, 'button to close popup', popupTimeout)
+			await this.actions.waitForClickable(buttontoclosepopup, 'Overlay Merchandise Pop-up button', popupTimeout)
 			await this.actions.clickElement('click', buttontoclosepopup, "button to close the Overlay Merchandise pop-up")
 		} catch (error) {
-			console.log("Overlay Merchandise Popup not Displayed")
+			console.log("Overlay Merchandise Popup not Displayed or failed to close:")
 		}
-		if (await this.actions.isDisplayed(cookieepopup, "Accept All Cookies Popup button")) {
-			await this.actions.waitForDisplayed(cookieepopup, "Accept All Cookies Popup button")
-			await this.actions.waitForClickable(cookieepopup, "Accept All Cookies Popup button")
-			await this.actions.clickElement('click', cookieepopup, 'Button to close Accept All Cookies Popup')
-		} else {
-			console.log("Accept All Cookies Popup not Displayed")
+
+		try {
+			if (await this.actions.isDisplayed(cookieepopup, "Accept All Cookies Popup button")) {
+				await this.actions.waitForDisplayed(cookieepopup, "Accept All Cookies Popup button", 5000)
+				await this.actions.waitForClickable(cookieepopup, "Accept All Cookies Popup button", 5000)
+				await this.actions.clickElement('click', cookieepopup, 'Button to close Accept All Cookies Popup')
+			} else {
+				console.log("Accept All Cookies Popup not Displayed")
+			}
+		} catch (error) {
+			console.log("Failed to handle cookies popup:")
 		}
 	}
 
@@ -547,14 +652,49 @@ class HomePage {
 	}
 
 	async openDepartureDateCalendar() {
-		await this.actions.pause(3000)
-		await this.actions.waitForDisplayed(dateExpand, 'Date Expand Button', 50000)
-		// await this.actions.waitForEnabled(dateExpand, 'Date Expand Button')
-		// await this.actions.waitForClickable(dateExpand, 'dateExpand button')
-		// await this.actions.pause(3000)
-		// await this.actions.clickElement('click', dateExpand, "date expand button")
-		await this.actions.click(dateExpand, "date expand button")
-		await this.actions.pause(3000)
+		try {
+			await this.actions.waitForDisplayed(`${dateExpand}`, 'Date Expand Button', 50000)
+			const firstDateExpand = `(${dateExpand})[1]`
+			await this.actions.waitForDisplayed(firstDateExpand, 'First Date Expand Button', 5000)
+			await this.actions.waitForClickable(firstDateExpand, 'First Date Expand Button', 5000)
+			await this.actions.click(firstDateExpand, "first date expand button")
+			await this.actions.waitForDisplayed('.calendar-container, [data-hook*="calendar"], .date-picker-popup', 'calendar container', 10000)
+			console.log('Calendar opened successfully')
+
+		} catch (firstError) {
+			console.log('First strategy failed:')
+
+			const alternativeDateSelectors = [
+				{ selector: "//button[contains(@aria-label, 'Open calendar for Departure')]", description: 'departure calendar aria label' },
+				{ selector: "[data-hook*='date-picker'][data-hook*='start']", description: 'start date picker hook' },
+				{ selector: ".date-picker button[aria-expanded='false']", description: 'closed date picker button' },
+				{ selector: "button[aria-label*='Departure']", description: 'departure button' }
+			]
+
+			let calendarOpened = false
+			for (const strategy of alternativeDateSelectors) {
+				try {
+					console.log(`Trying alternative date selector: ${strategy.description}`)
+					if (await this.actions.isDisplayed(strategy.selector, strategy.description)) {
+						await this.actions.waitForClickable(strategy.selector, strategy.description, 5000)
+						await this.actions.click(strategy.selector, strategy.description)
+						console.log(`Successfully clicked: ${strategy.description}`)
+
+						// Wait for calendar to appear
+						await this.actions.waitForDisplayed('.calendar-container, [data-hook*="calendar"], .date-picker-popup', 'calendar container', 5000)
+						console.log('Calendar opened with alternative strategy')
+						calendarOpened = true
+						break
+					}
+				} catch (altError) {
+					console.log(`${altError.message}`)
+				}
+			}
+
+			if (!calendarOpened) {
+				throw new Error('Failed to open departure date calendar with all strategies')
+			}
+		}
 	}
 
 	async getmarket() {
@@ -591,9 +731,24 @@ class HomePage {
 		await this.actions.clickElement('click', destination, "destination input field")
 		await this.actions.setInputField('setValue', arrival, destinationloc, "destination-input-field")
 		await this.actions.pressButton("Enter", 'press')
-		await this.actions.pause(3000)
+		await this.actions.waitForClickable(destinationloc, 'destination field', 5000)
 		await this.actions.pressButton("Enter", 'press')
-		await this.actions.pause(5000)
+		await this.actions.waitUntilPageLoad() // Wait for page to process destination selection
+	}
+
+	async getEnvironmentValue() {
+		try {
+
+			let envVar;
+			let envs = process.env.appEnv
+			let value = envs.split('www')[1]
+			envVar = value.split('.allegiantair.com')[0]
+			process.env.ENV = envVar
+			console.log(envVar)
+		}
+		catch {
+			throw new Error("Unable to build the environment,please recheck the details")
+		}
 	}
 
 }

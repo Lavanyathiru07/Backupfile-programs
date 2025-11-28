@@ -125,8 +125,8 @@ When(/^I am on Manage Trip and I click change flight$/, async function () {
 });
 
 When(/^I am on MT landing page I choose the departure date "(.+)" days from current day$/, async function (number) {
+    await this.HomePage.setWindow(1920, 1080)
     await this.HomePage.openDepartureDateCalendar()
-    // await this.HomePage.setWindow(2700, 2700)
     departureDate = await this.HomePage.chooseDepartingDate(number);
 });
 
