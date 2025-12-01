@@ -28,8 +28,12 @@ const dateTimeFMM = "//div[@id='lastReloaded']"
 class g4PortalPage {
 
     actions;
+    page;
+    context;
 
     constructor(page, context) {
+        this.page = page;
+        this.context = context;
         this.actions = new Actions(page, context)
     }
 
@@ -93,12 +97,12 @@ class g4PortalPage {
             await this.actions.waitForClickable(FMM, 'FMM Button', 5000)
             await this.actions.clickElement('click', FMM, 'FMM Button')
             await this.actions.waitUntilPageLoad() // Wait for page transition
-            console.log("Before Swtich : " + await this.actions.getUrl())
+            console.log("Before Switch : " + await this.actions.getUrl())
             let fmmPageObject = await this.actions.switchWindow('app/fmm/')
             this.page = fmmPageObject
             this.actions = new Actions(this.page, this.context)
             console.log("switched to fmm page")
-            console.log("After Swtich : " + await this.actions.getUrl())
+            console.log("After Switch : " + await this.actions.getUrl())
             await this.actions.waitForDisplayed('.fmm-container, body', 'FMM page content', 5000)
             return this.page
         }
@@ -262,11 +266,12 @@ class g4PortalPage {
         await this.actions.isDisplayed(guestLogin, 'guestLogin')
         await this.actions.click(guestLogin, 'guestLogin')
         // await this.actions.pause(5000)
-        console.log("Before Swtich : " + await this.actions.getUrl())
-        let newPageObject = this.actions.switchWindow(process.env.ENV)
-        this.page = await newPageObject
+        console.log("Before Switch : " + await this.actions.getUrl())
+        let newPageObject = await this.actions.switchWindow(process.env.ENV)
+        this.page = newPageObject
         this.actions = new Actions(this.page, this.context)
-        console.log("After Swtich : " + await this.actions.getUrl())
+        console.log("switched to guest login page")
+        console.log("After Switch : " + await this.actions.getUrl())
         // await this.actions.pause(5000)
         return this.page
     }

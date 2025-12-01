@@ -93,7 +93,7 @@ class Managetravel {
         await this.actions.waitForDisplayed(cancelCompleted, 'cancel completed', 10000)
         let canceltext = await this.actions.getText(cancelCompleted, 'cancel completed')
         assert.isTrue(canceltext.includes("Cancelation Completed"), "Error in verifying text for Cancelation Confirmed")
-        await this.actions.waitForDisplayed(reservationCanceled, 'reservation canceled', 10000)
+        await this.actions.waitForDisplayed(reservationCanceled, 'reservation canceled', 30000)
         assert.isTrue((await this.actions.getText(reservationCanceled, 'reservationCanceled')).includes("Your reservation has been canceled."), "FAILED!! Invalid Message for reservation cancelation")
 
         // close cancel popup

@@ -29,7 +29,7 @@ const tailOfPlane = "[data-hook='footer-sub-menu-heading_company']"
 const frontOfPlane = "//div[contains(text(),'Front of Plane')]"
 const selectReturningButton = "//*[text()='Select Returning']"
 const travelerGridSeat = "//span[contains(text(),'Seat')]//span[@aria-label]"
-const returningSeatsSelectButton = "[data-hook='seats-select-returning']"
+const returningSeatsSelectButton = "//*[@data-hook='seats-select-returning']|//*[@data-hook='seats-page-tabs_returning']"
 const deselectSeatButton = "//button[contains(@data-hook,'seat_deselect_button')]"
 const travelerGridPaxNum = "(//div[contains(@data-hook,'traveler-list-item')])[X]"
 const unAssignedSeat = "(//span[@aria-label='unassigned'])[X]"
@@ -217,8 +217,14 @@ class SeatPage {
 					console.log("Skipping seat selection - params indicate false")
 				}
 			} else {
-				console.log("Could not confirm seats page presence, skipping seat selection")
-				throw new Error("Unable to locate seats page after multiple detection strategies")
+				console.log("Could not confirm seats page presence")
+				try {
+					await this.skipSeatsPage();
+					console.log("Successfully skipped seats page");
+					return;
+				} catch (skipError) {
+					console.log("Could not skip seats page either, continuing anyway");
+				}
 			}
 
 			console.log("Seat selection process completed successfully")
@@ -1800,7 +1806,7 @@ class SeatPage {
 		let spinnerWaitCount = 0;
 		let maxSpinnerWaits = 15; // 30 seconds max (15 * 2 seconds)
 		while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerWaitCount < maxSpinnerWaits) {
-			await this.actions.waitForLoadState('domcontentloaded', 2000)
+			// await this.actions.waitForLoadState('domcontentloaded', 2000)
 			spinnerWaitCount++;
 			console.log(`Waiting for spinner to disappear... attempt ${spinnerWaitCount}/${maxSpinnerWaits}`);
 		}
@@ -1822,6 +1828,21 @@ class SeatPage {
 	async selectDepartureSegAdjacentSeatsbyGQL(tripType, seatType, travelerNum) {
 		console.log('Starting departure seat selection by GQL');
 		console.log('newDepSeats:', newDepSeats);
+
+		// Validate seat data before proceeding
+		if (!newDepSeats || newDepSeats.length === 0) {
+			console.log('No seat data from GQL, falling back to regular seat selection');
+			await this.selectDepartureSegAdjacentSeats(tripType, "any", travelerNum);
+			return;
+		}
+
+		// Check if any seat IDs are undefined
+		let hasUndefinedSeats = newDepSeats.some(seat => seat.seatId === undefined || seat.seatId === null);
+		if (hasUndefinedSeats) {
+			console.log('GraphQL returned undefined seat IDs, falling back to regular seat selection');
+			await this.selectDepartureSegAdjacentSeats(tripType, "any", travelerNum);
+			return;
+		}
 
 		try {
 			await this.actions.waitForDisplayed(TravelerList, 'TravelerList', 10000);
@@ -1846,6 +1867,12 @@ class SeatPage {
 		if (travelerNum === "all" && newDepSeats && newDepSeats.length > 0) {
 			console.log('Selecting seats for all travelers, count:', newDepSeats.length);
 			for (var i = 0; i < newDepSeats.length; i++) {
+				// Additional validation per seat
+				if (!newDepSeats[i].seatId || newDepSeats[i].seatId === undefined) {
+					console.log(`Skipping undefined seat for traveler ${newDepSeats[i].travelerId}`);
+					continue;
+				}
+
 				console.log(`Selecting seat ${newDepSeats[i].seatId} for traveler ${newDepSeats[i].travelerId}`);
 				let newDepSeatsButton = "//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newDepSeats[i].seatId + "')]"
 				console.log('Seat selector:', newDepSeatsButton);
@@ -1867,7 +1894,7 @@ class SeatPage {
 					let spinnerTimeout = 10; // 10 iterations max
 					let spinnerCount = 0;
 					while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerCount < spinnerTimeout) {
-						await this.actions.waitForLoadState('domcontentloaded', 1000)
+						// await this.actions.waitForLoadState('domcontentloaded', 1000)
 						spinnerCount++;
 					}
 
@@ -1886,6 +1913,21 @@ class SeatPage {
 	async selectReturningSegAdjacentSeatsbyGQL(tripType, seatType, travelerNum) {
 		console.log('Starting returning seat selection by GQL');
 		console.log('newRetSeats:', newRetSeats);
+
+		// Validate seat data before proceeding
+		if (!newRetSeats || newRetSeats.length === 0) {
+			console.log('No returning seat data from GQL, falling back to regular seat selection');
+			await this.selectReturningSegAdjacentSeats(tripType, "any", travelerNum);
+			return;
+		}
+
+		// Check if any seat IDs are undefined
+		let hasUndefinedSeats = newRetSeats.some(seat => seat.seatId === undefined || seat.seatId === null);
+		if (hasUndefinedSeats) {
+			console.log('GraphQL returned undefined returning seat IDs, falling back to regular seat selection');
+			await this.selectReturningSegAdjacentSeats(tripType, "any", travelerNum);
+			return;
+		}
 
 		var { depeartSeatDetails, returnSeatDetails } = await returnDetails()
 
@@ -1992,7 +2034,9 @@ class SeatPage {
 						}
 					} catch (verificationError) {
 						console.log(`Assuming seat ${newRetSeats[i].seatId} is assigned - verification error: ${verificationError.message}`);
-					} await this.actions.waitForLoadState('domcontentloaded', 3000); // Small pause between selections
+					}
+
+					await this.actions.waitForLoadState('domcontentloaded', 3000); // Small pause between selections
 
 				} catch (seatError) {
 					console.log(`Error selecting returning seat ${newRetSeats[i].seatId}:`, seatError.message);

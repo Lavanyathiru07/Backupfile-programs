@@ -5,7 +5,6 @@ Feature: This feature file is to run Navitaire BAT scenarios
         And I have a screen that is 1440 by 700 pixels
 
     #QAA-26770
-    @demo
     Scenario Outline:RT, Domestic flight with Infant in lap and Child with 1 CO and 1 CK bag, Seat &Modify WWW booking via MT
         Given I am on landing page I select "<tripType>"
         When I am on landing page I select "LAS" for the departure airport
@@ -35,19 +34,19 @@ Feature: This feature file is to run Navitaire BAT scenarios
         And I am on Payment page I enter all required billing address details
         And I am on Payment page I select Purchase my trip button
         Then I am on the confirmation page I expect confirmation number to be displayed
-        # When I am on confirmation page I click manage trip button
-        # And I am on Manage Trip and I click change flight
-        # And I am on MT landing page I choose the departure date "<changeDate>" days from current day
-        # And I am on landing page I choose the returning date "<changeDate>" days from departure
-        # And I am on landing page I click on search button
-        # And I am on flights page I click continue button
-        # And I am on Travelers page I click continue button
-        # And I am on Seat page I click No thanks, skip seat selection
-        # When I am on Manage Travel page I add "<Addproduct>" for traveler "<paxNum>"
-        # And I am on Manage Travel page, Bags page I click on continue button
-        # And I am on Cars page I click No thanks button
-        # And I am on Manage Travel page, Payment page I complete payment
-        # Then I am on Manage Travel page, I expect "<productTotal>" is updated correctly for traveler "<paxNum>"
+        When I am on confirmation page I click manage trip button
+        And I am on Manage Trip and I click change flight
+        And I am on MT landing page I choose the departure date "<changeDate>" days from current day
+        And I am on landing page I choose the returning date "<changeDate>" days from departure
+        And I am on landing page I click on search button
+        And I am on flights page I click continue button
+        And I am on Travelers page I click continue button
+        And I am on Seat page I click No thanks, skip seat selection
+        When I am on Manage Travel page I add "<Addproduct>" for traveler "<paxNum>"
+        And I am on Manage Travel page, Bags page I click on continue button
+        And I am on Cars page I click No thanks button
+        And I am on Manage Travel page, Payment page I complete payment
+        Then I am on Manage Travel page, I expect "<productTotal>" is updated correctly for traveler "<paxNum>"
 
 
         Examples:

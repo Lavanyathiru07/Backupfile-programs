@@ -108,8 +108,9 @@ class HotelPage {
     }
 
     async collectHotelPageDetailsForConfirmationPage() {
-        await this.actions.waitUntilPageLoad()
-        await this.actions.waitForDisplayed(hotelsPageHeadingTitle, 'Hotel page heading', 5000);
+        await this.actions.waitForLoadState('domcontentloaded', 50000);
+        await this.actions.waitForURL('**/hotels', 10000);
+        await this.actions.waitForDisplayed(hotelsPageHeadingTitle, 'Hotel page heading', 25000);
         hotelsPageCollectorCP.set(
             'checkInDateCP',
             await this.actions.getText(checkInDate, 'checkInDate'));

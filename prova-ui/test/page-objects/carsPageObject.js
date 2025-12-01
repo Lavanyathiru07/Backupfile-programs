@@ -51,7 +51,7 @@ class CarPage {
                 await this.actions.waitForDisplayed(priceButton, 'price button', 45000) // Increased timeout
                 await this.actions.waitForClickable(priceButton, 'price button', 45000) // Increased timeout
                 await this.actions.clickElement('click', priceButton, 'Price Button')
-                // await this.actions.pause(5000)
+                await this.actions.waitForLoadState('domcontentloaded', 5000)
                 await this.actions.waitForDisplayed(addToCartText, 'addToCartText', 10000)
             } catch (error) {
                 console.log("Car price button not available, checking for no cars message...")

@@ -1,9 +1,14 @@
-import { Then } from '@cucumber/cucumber'
+import { Then, Before } from '@cucumber/cucumber'
+import ConfirmationPageObject from '../page-objects/confPageObject.js'
 
-Then(/^I am on the confirmation page I expect confirmation number to be displayed$/, async function ()  {
+Before(async function () {
+    this.ConfirmationPage = new ConfirmationPageObject(this.page, this.context)
+})
+
+Then(/^I am on the confirmation page I expect confirmation number to be displayed$/, async function () {
     await this.ConfirmationPage.confirmationNumber()
 })
 
-Then(/^I am on confirmation page I click manage trip button$/, async function ()  {
+Then(/^I am on confirmation page I click manage trip button$/, async function () {
     this.page = await this.ConfirmationPage.managetrip()
 })

@@ -13,8 +13,12 @@ let itinerary
 class ConfirmationPage {
 
     actions;
+    page;
+    context;
 
     constructor(page, context) {
+        this.page = page;
+        this.context = context;
         this.actions = new Actions(page, context)
     }
 
@@ -43,6 +47,13 @@ class ConfirmationPage {
         }
     }
     async managetrip() {
+        console.log('Starting managetrip method...')
+
+        // Ensure actions is properly initialized
+        if (!this.actions) {
+            throw new Error('Actions object not initialized in ConfirmationPage')
+        }
+
         await this.manageframes()
         await this.actions.waitUntilPageLoad()
         const confirmationIndicators = [
@@ -99,27 +110,80 @@ class ConfirmationPage {
         }
 
         try {
-            await this.actions.waitForLoadState('domcontentloaded', 5000)
-            let newPageObject = await this.actions.switchWindow('/manage-travel')
-            this.page = await newPageObject
-            this.actions = new Actions(this.page, this.context)
+            await this.actions.waitForLoadState('domcontentloaded', 50000)
+            console.log("Before Switch: " + await this.actions.getUrl())
 
-            console.log(await this.actions.getUrl())
-            await this.actions.waitForLoadState('domcontentloaded', 10000) // Wait for manage travel page to load
+            // Get initial page count
+            const initialPageCount = this.context.pages().length
+            console.log(`Initial page count: ${initialPageCount}`)
 
-            return this.page
+            // Wait for potential new page to open (up to 10 seconds)
+            let newPageObject = null
+            for (let i = 0; i < 20; i++) {
+                await new Promise(resolve => setTimeout(resolve, 500)) // Wait 500ms
+
+                // Check if new page opened
+                if (this.context.pages().length > initialPageCount) {
+                    console.log('New page detected, attempting to switch...')
+                    newPageObject = await this.actions.switchWindow('manage-travel')
+                    if (newPageObject) break
+                }
+
+                // Also check if current page URL changed
+                const currentUrl = await this.actions.getUrl()
+                if (currentUrl.includes('manage-travel')) {
+                    console.log('Current page navigated to manage-travel')
+                    return this.page
+                }
+            }
+
+            if (newPageObject) {
+                this.page = newPageObject
+                this.actions = new Actions(this.page, this.context)
+                console.log("Switched to manage-travel page")
+                console.log("After Switch: " + await this.actions.getUrl())
+                await this.actions.waitForLoadState('domcontentloaded', 50000)
+                return this.page
+            } else {
+                console.log('No new window found, checking current window for manage-travel URL')
+                throw new Error('No manage-travel window found')
+            }
         } catch (switchError) {
             console.log('Window switch failed:', switchError.message)
             console.log('Checking if navigation occurred in same window...')
 
+            // Ensure actions is still available
+            if (!this.actions) {
+                console.log('Actions object became undefined, reinitializing...')
+                this.actions = new Actions(this.page, this.context)
+            }
+
+            // Wait for potential navigation to complete
+            try {
+                await this.actions.waitForLoadState('networkidle', 30000)
+            } catch (networkError) {
+                console.log('Network idle wait failed, proceeding with URL check')
+            }
+
             // Check if we navigated in the same window
             const currentUrl = await this.actions.getUrl()
-            if (currentUrl.includes('manage') || currentUrl.includes('travel')) {
+            console.log('Current URL after navigation attempt:', currentUrl)
+
+            if (currentUrl.includes('manage-travel')) {
                 console.log('Navigation successful in same window')
-                await this.actions.waitForLoadState('load', 10000)
+                await this.actions.waitForLoadState('domcontentloaded', 50000)
                 return this.page
             } else {
-                throw new Error('Failed to navigate to manage travel page')
+                // Try waiting for URL to change to manage-travel
+                try {
+                    await this.actions.waitForURL('**/manage-travel**', 30000)
+                    console.log('URL changed to manage-travel')
+                    await this.actions.waitForLoadState('domcontentloaded', 50000)
+                    return this.page
+                } catch (urlError) {
+                    console.log('URL did not change to manage-travel within timeout')
+                    throw new Error('Failed to navigate to manage travel page')
+                }
             }
         }
     }

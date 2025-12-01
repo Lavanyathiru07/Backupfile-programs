@@ -126,17 +126,40 @@ class Actions {
     /**
      * Switch focus to a particular tab / window
      * @param {string} windowName Name of the Window(i.e., URL or Title) Ex: https://www.google.com/ or Google
+     * @returns {Promise<Page|null>} The switched page object or null if not found
      */
     async switchWindow(windowName) {
-        Logger.info(`Switching to a new window/tab ${windowName}`);
         try {
-            const target = this.context.pages().find(pages => pages.url().includes(windowName));
+            const pages = await this.context.pages();
+            // First try to find by URL
+            let target = pages.find(page => page.url().includes(windowName));
+            // If not found by URL, try to find by title
+            if (!target) {
+                for (const page of pages) {
+                    try {
+                        const title = await page.title();
+                        if (title.includes(windowName)) {
+                            target = page;
+                            break;
+                        }
+                    } catch (err) {
+                        // Skip pages that can't be accessed
+                        continue;
+                    }
+                }
+            }
             if (target) {
                 await target.bringToFront();
+                // Ensure page is fully loaded before switching context
+                await target.waitForLoadState('domcontentloaded', { timeout: 5000 }).catch(() => { });
+                // Update the current page reference to the newly activated window
+                this.page = target;
                 return target;
             }
+            return null;
         } catch (error) {
-            Logger.error(error);
+            Logger.error(`Error switching window: ${error.message}`);
+            return null;
         }
     }
 
@@ -724,13 +747,17 @@ class Actions {
     }
 
     /**
-     * Gets thr current url
+     * Gets the current url
      */
     async getUrl() {
         try {
+            if (!this.page) {
+                Logger.error('Page object is undefined');
+                return '';
+            }
             return await this.page.url();
         } catch (error) {
-            Logger.error(error);
+            Logger.error(`Error getting URL: ${error.message}`);
             return '';
         }
     }

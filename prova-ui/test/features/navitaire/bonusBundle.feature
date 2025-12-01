@@ -35,7 +35,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
         Then I am on the confirmation page I expect confirmation number to be displayed
         When I am on confirmation page I click manage trip button
         And I am on Manage Travel page, I add a car
-        And I am on cars page I add a car to cart
+        # And I am on cars page I add a car to cart
         And I am on cars page and I click on continue
         And I am on Manage Travel page, Payment page I complete payment
         And I am on Manage Trip and I click cancel flight

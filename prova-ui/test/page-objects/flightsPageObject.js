@@ -69,7 +69,7 @@ class FlightsPage {
                 assert.fail('Something not proceed with Flight page')
             }
         } else {
-            await this.actions.waitForURL('/bundles', 10000)
+            await this.actions.waitForURL('**/bundles', 10000)
             if (await this.actions.getTitle() === 'Bundles') {
                 console.log('Successfully completed on Flight Page');
             } else {
