@@ -151,14 +151,14 @@ class g4PortalPage {
     }
 
     async flightValidation() {
-        await this.actions.smartWait(10000);
+        await this.actions.waitForLoadState('domcontentloaded', 10000);
         await this.actions.waitForDisplayed(dateTimeFMM, 'dateTimeFMM')
         console.log("dateTimeFMM: " + await this.actions.isDisplayed(dateTimeFMM, "dateTimeFMM"));
         await this.actions.waitForDisplayed(fmmFlight, 'fmmFlight', 10000)
         console.log("fmmFlight: " + await this.actions.isDisplayed(fmmFlight, "fmmFlight"));
         let Flightno = await this.actions.getElements(fmmFlight)
         console.log("Availableflights: " + await Flightno.length);
-        await this.actions.smartWait(15000);
+        await this.actions.waitForLoadState('domcontentloaded', 15000);
         assert.isTrue(
             await this.actions.isDisplayed(fmmFlight, "fmm Flights checking"),
             'Validation Failed : flights are not available');
@@ -170,14 +170,14 @@ class g4PortalPage {
         if (process.env.ENV.includes("prod")) {
             console.log("CAME HERE>>>>>>>>>>>>>>>>>>PROD")
             await this.actions.openWebsite("https://g4plus-portal.allegiantair.com");
-            await this.actions.smartWait(3000)
+            await this.actions.waitForLoadState('domcontentloaded', 3000)
             await this.actions.setInputField('setValue', process.env.username, g4UserName, 'g4UserName')
             await this.actions.setInputField('setValue', process.env.password, g4Password, 'g4Password')
             await this.actions.clickElement('click', g4Submit, 'g4Submit')
         } else {
             await this.actions.openWebsite((await this.urlBuilderFmm())[0]);
             await this.actions.setWindowSize(1440, 700)
-            await this.actions.smartWait(3000)
+            await this.actions.waitForLoadState('domcontentloaded', 3000)
             await this.actions.openWebsite((await this.urlBuilderFmm())[1])
             await this.actions.setWindowSize(1440, 700)
         }
@@ -206,9 +206,9 @@ class g4PortalPage {
     }
 
     async ATLTranscation() {
-        await this.actions.smartWait(15000)
+        await this.actions.waitForLoadState('domcontentloaded', 15000)
         await this.actions.switchWindow('Accounting');
-        await this.actions.smartWait(15000)
+        await this.actions.waitForLoadState('domcontentloaded', 15000)
         const atlText = "//a[text()='ATL']";
         const transactionslabel = "//a[contains(@href,'transactions')]";
         const orderField = "//input[@ng-model='form.orderNbr']"

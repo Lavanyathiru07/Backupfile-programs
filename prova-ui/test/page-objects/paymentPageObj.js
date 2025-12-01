@@ -186,7 +186,7 @@ class PaymentPage {
         await this.actions.waitForClickable(purchaseMyTrip, 'purchaseMyTrip button');
 
         await this.actions.clickElement('click', purchaseMyTrip, "Purchase my trip Button");
-        await this.actions.smartWait({ type: 'ready', timeout: 15000 })
+        await this.actions.waitForLoadState('load', 15000)
 
         console.log("URL: ", await this.actions.getUrl())
         let oddJustHappenedVisibility = await this.actions.isDisplayed(somethingReallyOddJustHappened, 'somethingReallyOddJustHappened')
@@ -200,7 +200,7 @@ class PaymentPage {
         }
         else {
             do {
-                await this.actions.smartWait({ type: 'dom', timeout: 3000 }) // Reduced from 10000 for faster checking
+                await this.actions.waitForLoadState('domcontentloaded', 3000) // Reduced from 10000 for faster checking
             } while (await this.actions.isDisplayed(spinnerBar, 'spinner bar'))
 
             await this.actions.waitForDisplayed(thankyouMessage, 'thankyouMessage', 60000);
@@ -215,7 +215,7 @@ class PaymentPage {
 
     async popupisClosing() {
         try {
-            await this.actions.smartWait({ type: 'network', timeout: 45000 });
+            await this.actions.waitForLoadState('networkidle', 45000);
             await this.actions.waitForDisplayed(icePopup, 'icePopup')
             let icePopupVisibility = await this.actions.isDisplayed(icePopup, 'Payment page popup button')
             if (icePopupVisibility) {
@@ -311,7 +311,7 @@ class PaymentPage {
     }
 
     async loyaltySectionapply() {
-        await this.actions.smartWait({ type: 'network', timeout: 20000 })
+        await this.actions.waitForLoadState('networkidle', 20000)
         await this.actions.scroll(loyaltypntapply)
         let loyaltypntapplyIsDisplayed = await this.actions.isDisplayed(loyaltypntapply, 'loyaltypntapply')
         if (loyaltypntapplyIsDisplayed) {

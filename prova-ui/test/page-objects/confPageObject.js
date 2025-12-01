@@ -99,13 +99,13 @@ class ConfirmationPage {
         }
 
         try {
-            await this.actions.smartWait(5000)
+            await this.actions.waitForLoadState('domcontentloaded', 5000)
             let newPageObject = await this.actions.switchWindow('/manage-travel')
             this.page = await newPageObject
             this.actions = new Actions(this.page, this.context)
 
             console.log(await this.actions.getUrl())
-            await this.actions.smartWait(10000) // Wait for manage travel page to load
+            await this.actions.waitForLoadState('domcontentloaded', 10000) // Wait for manage travel page to load
 
             return this.page
         } catch (switchError) {
@@ -116,7 +116,7 @@ class ConfirmationPage {
             const currentUrl = await this.actions.getUrl()
             if (currentUrl.includes('manage') || currentUrl.includes('travel')) {
                 console.log('Navigation successful in same window')
-                await this.actions.smartWait({ type: 'ready', timeout: 10000 })
+                await this.actions.waitForLoadState('load', 10000)
                 return this.page
             } else {
                 throw new Error('Failed to navigate to manage travel page')

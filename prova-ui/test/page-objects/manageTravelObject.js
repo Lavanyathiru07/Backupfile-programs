@@ -185,7 +185,7 @@ class Managetravel {
                         await this.actions.clickElement('click', nav.selector, nav.description)
                         console.log(`Clicked: ${nav.description}`)
                         await this.actions.waitUntilPageLoad()
-                        await this.actions.smartWait({ type: 'dom', timeout: 5000 })
+                        await this.actions.waitForLoadState('domcontentloaded', 5000)
 
                         // Check if we're now on a products page
                         try {
@@ -420,7 +420,7 @@ class Managetravel {
 
     async validateProductDetails(product, paxNum) {
         try {
-            await this.actions.smartWait({ type: 'network', timeout: 30000 })
+            await this.actions.waitForLoadState('networkidle', 30000)
             await this.actions.waitUntilPageLoad()
             await this.actions.isDisplayed(itineraryDetailsPage, "itineraryDetailsPage")
         } catch (error) {
@@ -465,7 +465,7 @@ class Managetravel {
     async negativePayment() {
         console.log("Current Page Url is " + await this.actions.getUrl());
         do {
-            await this.actions.smartWait({ type: 'dom', timeout: 5000 });
+            await this.actions.waitForLoadState('domcontentloaded', 5000);
         } while ((!(await this.actions.isDisplayed(paymentPageTitle, 'paymentPageTitle')) || (await this.actions.isDisplayed(spinnerBar, 'spinnerBar'))) && !(await this.actions.getTitle()) === "Home");
         try {
             await this.actions.waitForClickable(icePopupClose, 'icePopupClose')

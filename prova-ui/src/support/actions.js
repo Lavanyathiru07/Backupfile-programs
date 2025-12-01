@@ -1460,47 +1460,54 @@ class Actions {
     }
 
     /**
-     * Smart wait - Use this for most scenarios after page actions
-     * Waits for page to be ready for interaction (DOM + network settling)
+     * Wait for page to reach a specific load state
+     * 
+     * Load states:
+     * - 'load' - Page load event fired
+     * - 'domcontentloaded' - DOMContentLoaded event fired
+     * - 'networkidle' - No network activity for at least 500ms
      * 
      * Usage examples:
-     * - await actions.smartWait() - Standard page wait
-     * - await actions.smartWait(5000) - Custom timeout
-     * - await actions.smartWait('#button') - Wait for element
+     * - await actions.waitForLoadState() - Wait for DOM content loaded (default)
+     * - await actions.waitForLoadState('load') - Wait for page load event
+     * - await actions.waitForLoadState('networkidle') - Wait for network to be idle
+     * - await actions.waitForLoadState('domcontentloaded', 10000) - Custom timeout
      * 
-     * @param {string|number} target Element selector OR timeout in ms (optional)
-     * @param {number} timeout Timeout in ms when first param is selector (default: 15000)
+     * @param {string} state Load state to wait for ('load', 'domcontentloaded', 'networkidle') - default: 'domcontentloaded'
+     * @param {number} timeout Timeout in ms (default: 30000)
      */
-    async smartWait(target = null, timeout = 15000) {
+    async waitForLoadState(state = 'domcontentloaded', timeout = 30000) {
+        Logger.info(`Waiting for load state: ${state} (timeout: ${timeout}ms)`);
         try {
-            // Simple number input = timeout wait
-            if (typeof target === 'number') {
-                Logger.info(`Smart wait: ${target}ms timeout`);
-                await this.page.waitForTimeout(target);
-                return;
-            }
-
-            // String input = element selector
-            if (typeof target === 'string') {
-                Logger.info(`Smart wait: element "${target}"`);
-                let obj = await this.page.locator(target);
-                await obj.waitFor({ state: 'visible', timeout });
-                return;
-            }
-
-            // Default: page ready wait (best for most cases)
-            Logger.info(`Smart wait: page ready (${timeout}ms)`);
-            await this.page.waitForLoadState('domcontentloaded', { timeout: timeout / 2 });
-
-            // Try network idle, but don't fail if it times out
-            try {
-                await this.page.waitForLoadState('networkidle', { timeout: timeout / 2 });
-            } catch {
-                Logger.info('Network still busy - continuing anyway');
-            }
-
+            await this.page.waitForLoadState(state, { timeout });
+            Logger.info(`Load state '${state}' reached successfully`);
         } catch (error) {
-            Logger.error(`Smart wait failed: ${error.message}`);
+            Logger.error(`Failed to reach load state '${state}': ${error.message}`);
+            throw error;
+        }
+    }
+
+    /**
+     * Wait for the page URL to match a specific pattern or exact URL
+     * 
+     * Usage examples:
+     * - await actions.waitForURL('https://example.com/login') - Exact URL match
+     * - await actions.waitForURL(/dashboard/) - Regex pattern  
+     * - await actions.waitForURL('checkout') - Glob pattern
+     * - await actions.waitForURL(url => url.includes('success')) - Function predicate
+     * 
+     * @param {string|RegExp|Function} url URL string, regex pattern, glob pattern, or predicate function
+     * @param {number} timeout Timeout in ms (default: 30000)
+     */
+    async waitForURL(url, timeout = 30000) {
+        Logger.info(`Waiting for URL: ${url} (timeout: ${timeout}ms)`);
+        try {
+            await this.page.waitForURL(url, { timeout });
+            const currentUrl = this.page.url();
+            Logger.info(`URL condition met. Current URL: ${currentUrl}`);
+        } catch (error) {
+            const currentUrl = this.page.url();
+            Logger.error(`Failed to reach expected URL. Current URL: ${currentUrl}, Expected: ${url}, Error: ${error.message}`);
             throw error;
         }
     }

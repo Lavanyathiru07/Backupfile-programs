@@ -1016,7 +1016,7 @@ class SeatPage {
 			console.log('Skip seats button clicked successfully')
 
 			// Wait for navigation after skip
-			await this.actions.smartWait(10000)
+			await this.actions.waitForLoadState('domcontentloaded', 10000)
 			await this.actions.waitForDisplayed("[data-hook='ancillaries-page_page-heading']", 'bags page heading', 10000)
 			console.log('Successfully navigated to bags page after skip')
 			return
@@ -1061,11 +1061,11 @@ class SeatPage {
 			if (await this.actions.isDisplayed(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')) {
 				await this.actions.click(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')
 				console.log('Clicked select seat popup continue button')
-				await this.actions.smartWait({ type: 'network', timeout: 5000 }) // Wait for popup to close
+				await this.actions.waitForLoadState('networkidle', 5000) // Wait for popup to close
 			} else if (await this.actions.isDisplayed(selectSeatsNowButton, 'selectSeatsNowButton')) {
 				await this.actions.click(selectSeatsNowButton, 'selectSeatsNowButton')
 				console.log('Clicked select seats now button')
-				await this.actions.smartWait({ type: 'network', timeout: 5000 }) // Wait for popup to close
+				await this.actions.waitForLoadState('networkidle', 5000) // Wait for popup to close
 			}
 		}
 
@@ -1089,7 +1089,7 @@ class SeatPage {
 					await this.actions.click(strategy.selector, strategy.description)
 					console.log(`Main continue clicked: ${strategy.description}`)
 					mainContinueClicked = true
-					await this.actions.smartWait({ type: 'ready', timeout: 10000 }) // Wait for navigation to start
+					await this.actions.waitForLoadState('load', 10000) // Wait for navigation to start
 					break
 				}
 			} catch (error) {
@@ -1115,7 +1115,7 @@ class SeatPage {
 							await this.actions.waitForClickable(strategy.selector, strategy.description, 5000)
 							await this.actions.click(strategy.selector, strategy.description)
 							console.log(`Post-returning continue clicked: ${strategy.description}`)
-							await this.actions.smartWait({ type: 'ready', timeout: 10000 }) // Wait for navigation
+							await this.actions.waitForLoadState('load', 10000) // Wait for navigation
 							break
 						}
 					} catch (error) {
@@ -1149,7 +1149,7 @@ class SeatPage {
 						if (await this.actions.isDisplayed(continueButton, 'continue button')) {
 							await this.actions.click(continueButton, 'continue button - retry')
 							console.log('Clicked continue button again');
-							await this.actions.smartWait({ type: 'ready', timeout: 5000 });
+							await this.actions.waitForLoadState('load', 5000);
 						} else {
 							console.log('Continue button not available for retry');
 						}
@@ -1304,7 +1304,7 @@ class SeatPage {
 			if (await this.actions.isDisplayed(seatsPageReturningTabs, 'seatsPageReturningTabs')) {
 				await this.actions.click(seatsPageReturningTabs, 'seatsPageReturningTabs')
 				console.log('Clicked returning tab to make it active')
-				await this.actions.smartWait({ type: 'ready', timeout: 5000 }) // Wait for tab switch
+				await this.actions.waitForLoadState('load', 5000) // Wait for tab switch
 			}
 		} catch (error) {
 			console.log('Could not click returning tab:', error.message)
@@ -1334,7 +1334,7 @@ class SeatPage {
 							if (await this.actions.isDisplayed(button, `popup button: ${button}`)) {
 								await this.actions.click(button, `popup button: ${button}`)
 								console.log(`Clicked popup continue button: ${button}`)
-								await this.actions.smartWait({ type: 'dom', timeout: 5000 })
+								await this.actions.waitForLoadState('domcontentloaded', 5000)
 								break
 							}
 						} catch (buttonError) {
@@ -1373,7 +1373,7 @@ class SeatPage {
 					await this.actions.click(strategy.selector, strategy.description)
 					console.log(`Successfully clicked: ${strategy.description}`)
 					continueClicked = true
-					await this.actions.smartWait({ type: 'dom', timeout: 5000 }) // Wait for action to process
+					await this.actions.waitForLoadState('domcontentloaded', 5000) // Wait for action to process
 					break
 				} else {
 					console.log(`Element not displayed: ${strategy.description}`)
@@ -1388,7 +1388,7 @@ class SeatPage {
 		}
 
 		// Give time for any navigation to occur
-		await this.actions.smartWait({ type: 'dom', timeout: 5000 })
+		await this.actions.waitForLoadState('domcontentloaded', 5000)
 		console.log('Returning flight section handling completed')
 	}
 
@@ -1800,7 +1800,7 @@ class SeatPage {
 		let spinnerWaitCount = 0;
 		let maxSpinnerWaits = 15; // 30 seconds max (15 * 2 seconds)
 		while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerWaitCount < maxSpinnerWaits) {
-			await this.actions.smartWait({ type: 'dom', timeout: 2000 })
+			await this.actions.waitForLoadState('domcontentloaded', 2000)
 			spinnerWaitCount++;
 			console.log(`Waiting for spinner to disappear... attempt ${spinnerWaitCount}/${maxSpinnerWaits}`);
 		}
@@ -1867,7 +1867,7 @@ class SeatPage {
 					let spinnerTimeout = 10; // 10 iterations max
 					let spinnerCount = 0;
 					while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerCount < spinnerTimeout) {
-						await this.actions.smartWait({ type: 'dom', timeout: 1000 })
+						await this.actions.waitForLoadState('domcontentloaded', 1000)
 						spinnerCount++;
 					}
 
@@ -1937,7 +1937,7 @@ class SeatPage {
 						console.log(`Warning: Could not select specific traveler ${newRetSeats[i].travelerId}`);
 					}
 
-					await this.actions.smartWait({ type: 'dom', timeout: 5000 }) // Wait before selecting next seat
+					await this.actions.waitForLoadState('domcontentloaded', 5000) // Wait before selecting next seat
 					let newRetSeatsButton = "//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]"
 					console.log('Returning seat selector:', newRetSeatsButton);
 
@@ -1967,7 +1967,7 @@ class SeatPage {
 					let spinnerTimeout = 10; // 10 iterations max
 					let spinnerCount = 0;
 					while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerCount < spinnerTimeout) {
-						await this.actions.smartWait({ type: 'dom', timeout: 1000 })
+						await this.actions.waitForLoadState('domcontentloaded', 1000)
 						spinnerCount++;
 					}
 
@@ -1992,7 +1992,7 @@ class SeatPage {
 						}
 					} catch (verificationError) {
 						console.log(`Assuming seat ${newRetSeats[i].seatId} is assigned - verification error: ${verificationError.message}`);
-					} await this.actions.smartWait({ type: 'dom', timeout: 3000 }); // Small pause between selections
+					} await this.actions.waitForLoadState('domcontentloaded', 3000); // Small pause between selections
 
 				} catch (seatError) {
 					console.log(`Error selecting returning seat ${newRetSeats[i].seatId}:`, seatError.message);
@@ -2032,7 +2032,7 @@ class SeatPage {
 
 		// Wait for spinner to disappear
 		do {
-			await this.actions.smartWait({ type: 'dom', timeout: 3000 }) // Reduced from 2000
+			await this.actions.waitForLoadState('domcontentloaded', 3000) // Reduced from 2000
 		} while (await this.actions.isDisplayed(spinnerBar, "spinnerBar"))
 
 		let continue1 = "button[data-hook='seats-page_continue']"

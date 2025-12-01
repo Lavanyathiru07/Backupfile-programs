@@ -103,7 +103,7 @@ class HotelPage {
         }
 
         // Wait a bit for navigation to occur
-        await this.actions.smartWait({ type: 'ready', timeout: 5000 })
+        await this.actions.waitForLoadState('load', 5000)
         console.log('Hotel skip process completed')
     }
 

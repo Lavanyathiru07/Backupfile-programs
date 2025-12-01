@@ -125,7 +125,7 @@ Original error: ${error.message}`);
 		} catch (error) {
 			console.log("No overlay image found or already disappeared")
 		}
-		await this.actions.smartWait(3000)
+		await this.actions.waitForLoadState('domcontentloaded', 3000)
 		await this.actions.waitForDisplayed(origin, "origin")
 		await this.actions.waitForClickable(origin, "origin")
 		await this.actions.clickElement('click', origin, "origin input field")

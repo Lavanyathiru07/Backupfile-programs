@@ -56,12 +56,12 @@ class FlightsPage {
 
         // Wait for page navigation after clicking continue
         await this.actions.waitUntilPageLoad()
-        await this.actions.smartWait(15000)
+        await this.actions.waitForLoadState('domcontentloaded', 15000)
     }
 
     async validateFlightPage() {
         await this.actions.waitUntilPageLoad()
-        await this.actions.smartWait(15000)
+        await this.actions.waitForLoadState('domcontentloaded', 15000)
         if ((await this.actions.getUrl()).includes('manage-travel/')) {
             if (await this.actions.getTitle() === 'Travelers') {
                 console.log('Successfully completed on Flight Page');
@@ -69,6 +69,7 @@ class FlightsPage {
                 assert.fail('Something not proceed with Flight page')
             }
         } else {
+            await this.actions.waitForURL('/bundles', 10000)
             if (await this.actions.getTitle() === 'Bundles') {
                 console.log('Successfully completed on Flight Page');
             } else {
