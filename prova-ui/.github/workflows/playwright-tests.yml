@@ -1,0 +1,70 @@
+name: Playwright + Cucumber Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+        
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+      
+    - name: Lint code
+      run: npm run lint
+      
+    - name: Run Cucumber tests
+      run: npm run test:headless
+      env:
+        CI: true
+        HEADLESS: true
+        
+    - name: Run CAT integration test
+      run: npm run test:cat-integration
+      continue-on-error: true
+      
+    - name: Generate Allure Report
+      if: always()
+      run: npm run allure:generate
+      continue-on-error: true
+      
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ matrix.node-version }}
+        path: |
+          cucumber-report.html
+          report.json
+          allure-results/
+          reports/
+          playwright-report/
+        retention-days: 30
+        
+    - name: Upload Allure Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: allure-report-${{ matrix.node-version }}
+        path: allure-report/
+        retention-days: 30

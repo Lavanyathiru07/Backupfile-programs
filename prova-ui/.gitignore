@@ -1,0 +1,48 @@
+# Test Results & Reports
+allure-results/
+allure-report/
+reports/
+coverage/
+cucumber-report.html
+report.json
+test-results/
+*.png
+*.jpg
+
+# CAT Session Files
+.cat-session.json
+*.jpeg
+
+# Build & Dependencies
+node_modules/
+build/
+dist/
+.venv/
+
+# Environment & Config
+.env
+.env.local
+.env.production
+.env.staging
+
+# IDE & Editor
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary Files
+*.tmp
+*.temp
+.cache/

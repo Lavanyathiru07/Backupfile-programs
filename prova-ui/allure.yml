@@ -1,0 +1,31 @@
+# Allure Report Configuration
+
+## Environment Properties
+environment.properties
+
+## Categories for test failures
+categories:
+  - name: "Ignored tests"
+    matchedStatuses:
+      - skipped
+  - name: "Infrastructure problems"
+    matchedStatuses:
+      - broken
+      - failed
+    messageRegex: ".*TIMEOUT.*"
+  - name: "Outdated tests"
+    matchedStatuses:
+      - broken
+    traceRegex: ".*FileNotFoundException.*"
+  - name: "Product defects"
+    matchedStatuses:
+      - failed
+
+## Executors info
+executor:
+  name: "Local Development"
+  type: "cucumber"
+  url: "http://localhost"
+  buildOrder: 1
+  buildName: "Local Test Execution"
+  reportName: "Prova UI Test Report"

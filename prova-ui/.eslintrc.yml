@@ -1,0 +1,83 @@
+env:
+    es6: true
+    node: true
+
+plugins:
+
+    - prettier
+
+globals:
+    browser: true
+    $: true
+    $$: true
+    assert: true
+    expect: true
+    _expect: true
+
+parser: '@babel/eslint-parser'
+parserOptions:
+    ecmaVersion: 6
+
+root: true
+
+rules:
+    comma-dangle:
+        - 'error'
+        - arrays: 'always-multiline'
+          objects: 'always-multiline'
+          imports: 'never'
+          exports: 'never'
+          functions: 'ignore'
+    global-require: 'off'
+    no-underscore-dangle: 'off'
+    class-methods-use-this: 'off'
+    no-useless-concat: 'off'
+    no-plusplus: 'off'
+    no-unused-vars: 'off'
+    no-console: 'off'
+    operator-linebreak: 'off'
+    no-param-reassign: 'off'
+    no-restricted-syntax: 'off'
+    no-prototype-builtins: 'off'
+    no-await-in-loop: 'off'
+
+    import/no-extraneous-dependencies: 0
+    indent:
+        - 'error'
+        - 4
+        - SwitchCase: 1
+    max-len:
+        - 'error'
+        - 250
+        - ignorePattern: '\s*\/\^(.*)\$\/,$'
+    new-cap:
+        - 'error'
+        - newIsCap: true
+          capIsNewExceptions:
+              - 'Given'
+              - 'When'
+              - 'Then'
+    require-jsdoc:
+        - 'error'
+        - require:
+              FunctionDeclaration: true
+              MethodDefinition: true
+              ClassDeclaration: true
+    strict: 'off'
+    valid-jsdoc:
+        - 'error'
+        - requireReturn: false
+          matchDescription: '.+'
+    jest/expect-expect:
+        - 'off'
+        - assertFunctionNames:
+              - '_expect'
+              - 'expect'
+
+overrides:
+    - files:
+          - 'test/**/*.js'
+      settings:
+          'import/resolver':
+              jest:
+                  jestConfigFile: './jest.json'

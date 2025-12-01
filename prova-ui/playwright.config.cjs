@@ -1,0 +1,92 @@
+// @ts-check
+import { defineConfig, devices } from '@playwright/test';
+
+/**
+ * @see https://playwright.dev/docs/test-configuration
+ */
+export default defineConfig({
+  testDir: './test',
+  /* Run tests in files in parallel */
+  fullyParallel: true,
+  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  forbidOnly: !!process.env.CI,
+  /* Retry on CI only */
+  retries: process.env.CI ? 2 : 0,
+  /* Opt out of parallel tests on CI. */
+  workers: process.env.CI ? 1 : undefined,
+  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  reporter: [
+    ['html', { outputFolder: 'playwright-report' }],
+    ['allure-playwright', { outputFolder: 'allure-results' }],
+    ['json', { outputFile: 'test-results.json' }]
+  ],
+  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  use: {
+    /* Base URL to use in actions like `await page.goto('/')`. */
+    baseURL: process.env.ENV || 'https://www.stg.allegiantair.com/',
+
+    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    trace: 'on-first-retry',
+    
+    /* Take screenshot on failure */
+    screenshot: 'only-on-failure',
+    
+    /* Record video on failure */
+    video: 'retain-on-failure',
+    
+    /* Global timeout for each test */
+    actionTimeout: 30000,
+    navigationTimeout: 60000,
+  },
+
+  /* Configure projects for major browsers */
+  projects: [
+    {
+      name: 'chromium',
+      use: { 
+        ...devices['Desktop Chrome'],
+        headless: process.env.HEADLESS === 'true',
+        viewport: { width: 1280, height: 720 },
+      },
+    },
+
+    {
+      name: 'firefox',
+      use: { 
+        ...devices['Desktop Firefox'],
+        headless: process.env.HEADLESS === 'true',
+      },
+    },
+
+    {
+      name: 'webkit',
+      use: { 
+        ...devices['Desktop Safari'],
+        headless: process.env.HEADLESS === 'true',
+      },
+    },
+
+    /* Test against mobile viewports. */
+    {
+      name: 'Mobile Chrome',
+      use: { 
+        ...devices['Pixel 5'],
+        headless: process.env.HEADLESS === 'true',
+      },
+    },
+    {
+      name: 'Mobile Safari',
+      use: { 
+        ...devices['iPhone 12'],
+        headless: process.env.HEADLESS === 'true',
+      },
+    },
+  ],
+
+  /* Run your local dev server before starting the tests */
+  webServer: process.env.START_SERVER === 'true' ? {
+    command: 'npm run demo-app',
+    port: 8080,
+    reuseExistingServer: !process.env.CI,
+  } : undefined,
+});
