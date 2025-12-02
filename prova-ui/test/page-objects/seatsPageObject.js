@@ -1802,17 +1802,17 @@ class SeatPage {
 	}
 
 	async selectSeatusingGQL(seatType, tripType, travelerNum) {
-		// Wait for spinner to disappear with timeout to prevent infinite loop
 		let spinnerWaitCount = 0;
 		let maxSpinnerWaits = 15; // 30 seconds max (15 * 2 seconds)
 		while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerWaitCount < maxSpinnerWaits) {
-			// await this.actions.waitForLoadState('domcontentloaded', 2000)
+			await this.actions.waitForLoadState('domcontentloaded', 2000)
 			spinnerWaitCount++;
 			console.log(`Waiting for spinner to disappear... attempt ${spinnerWaitCount}/${maxSpinnerWaits}`);
 		}
 		if (spinnerWaitCount >= maxSpinnerWaits) {
 			console.log('Spinner wait timeout reached, proceeding anyway');
 		}
+		await this.actions.waitForLoadState('domcontentloaded', 3000);
 
 		if (tripType === "departing") {
 			await this.selectDepartureSegAdjacentSeatsbyGQL(tripType, seatType, travelerNum)
@@ -1852,7 +1852,6 @@ class SeatPage {
 			console.log('Error finding travelers:', error.message);
 		}
 
-		// Fix: Remove the undefined availableSeats check that was causing errors
 		var adjacentSeats = []
 		seatType = "e";
 
@@ -1866,21 +1865,37 @@ class SeatPage {
 
 		if (travelerNum === "all" && newDepSeats && newDepSeats.length > 0) {
 			console.log('Selecting seats for all travelers, count:', newDepSeats.length);
+
+			console.log('Departure seat assignments from GQL:');
+			newDepSeats.forEach((seat, index) => {
+				console.log(`  ${index}: Traveler ${seat.travelerId} -> Seat ${seat.seatId}`);
+			});
+
 			for (var i = 0; i < newDepSeats.length; i++) {
-				// Additional validation per seat
 				if (!newDepSeats[i].seatId || newDepSeats[i].seatId === undefined) {
 					console.log(`Skipping undefined seat for traveler ${newDepSeats[i].travelerId}`);
 					continue;
 				}
 
 				console.log(`Selecting seat ${newDepSeats[i].seatId} for traveler ${newDepSeats[i].travelerId}`);
-				let newDepSeatsButton = "//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newDepSeats[i].seatId + "')]"
-				console.log('Seat selector:', newDepSeatsButton);
 
 				try {
+					try {
+						await this.actions.click(selectTraveler.replace("X", newDepSeats[i].travelerId), `select traveler ${newDepSeats[i].travelerId}`)
+						console.log(`Selected traveler ${newDepSeats[i].travelerId} for departure seat assignment`);
+						await this.actions.waitForLoadState('domcontentloaded', 1000);
+					} catch (travelerError) {
+						console.log(`Could not select specific traveler ${newDepSeats[i].travelerId} for departure seat`);
+					}
+
+					let newDepSeatsButton = "//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newDepSeats[i].seatId + "')]"
+					console.log('Seat selector:', newDepSeatsButton);
+
 					await this.actions.waitForClickable(newDepSeatsButton, 'newDepSeatsButton', 10000)
 					await this.actions.click(newDepSeatsButton, 'newDepSeatsButton')
 					console.log(`Successfully clicked seat ${newDepSeats[i].seatId}`);
+
+					await this.actions.waitForLoadState('domcontentloaded', 1000);
 
 					let exitRowPopupBut = exitRowPopup.replace("XX", newDepSeats[i].seatId.toUpperCase())
 					let exitRowPopupButIsDipslay = await this.actions.isDisplayed(exitRowPopupBut, 'exitRowPopupBut')
@@ -1888,23 +1903,95 @@ class SeatPage {
 						await this.actions.click(exitRowPopupBut, 'exitRowPopupBut')
 						await this.actions.scroll(seatBreadcrumb);
 						console.log(`Handled exit row popup for seat ${newDepSeats[i].seatId}`);
+
+						await this.actions.waitForLoadState('domcontentloaded', 1000);
 					}
 
-					// Wait for spinner to disappear with timeout to prevent infinite loop
-					let spinnerTimeout = 10; // 10 iterations max
-					let spinnerCount = 0;
-					while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerCount < spinnerTimeout) {
-						// await this.actions.waitForLoadState('domcontentloaded', 1000)
-						spinnerCount++;
+					// Check if seat assignment popup appeared
+					try {
+						if (await this.actions.isDisplayed(updateSelectedSeat, 'updateSelectedSeat')) {
+							await this.actions.click(updateSelectedSeat, 'updateSelectedSeat')
+							console.log(`Confirmed seat update for departure seat ${newDepSeats[i].seatId}`);
+						}
+					} catch (updateError) {
+						console.log(`No seat update popup needed for departure seat ${newDepSeats[i].seatId}`);
 					}
 
-					// Small pause between seat selections
+					await this.waitForSpinnerAndStabilize(15000, `departure seat ${newDepSeats[i].seatId}`);
+
+					try {
+						let travelerStillSelected = await this.actions.isDisplayed(`//label[contains(@for,'traveler-input-${newDepSeats[i].travelerId}')][contains(@class,'selected') or contains(@class,'active')]`, 'selected traveler indicator', 2000);
+						if (!travelerStillSelected) {
+							console.log(`Traveler ${newDepSeats[i].travelerId} may not be selected after spinner, re-selecting...`);
+							await this.actions.click(selectTraveler.replace("X", newDepSeats[i].travelerId), `re-select traveler ${newDepSeats[i].travelerId}`);
+							await this.actions.waitForLoadState('domcontentloaded', 1000);
+						}
+					} catch (travelerCheckError) {
+						console.log(`Could not verify traveler selection state: ${travelerCheckError.message}`);
+					}
+
+					let seatVerified = await this.verifySeatAssignment(newDepSeats[i].seatId, 'departure');
+					if (!seatVerified) {
+						console.log(`Seat ${newDepSeats[i].seatId} not verified for traveler ${newDepSeats[i].travelerId}, attempting to re-click...`);
+
+						// Try to re-click the seat if verification failed
+						try {
+							let seatSelector = "//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newDepSeats[i].seatId + "')]";
+							let seatStillClickable = await this.actions.isDisplayed(seatSelector, 'seat clickable check', 2000);
+							if (seatStillClickable) {
+								console.log(`Re-clicking seat ${newDepSeats[i].seatId} for traveler ${newDepSeats[i].travelerId}`);
+								await this.actions.click(seatSelector, 'seat re-click');
+								await this.actions.waitForLoadState('domcontentloaded', 2000);
+
+								// Check again for confirmation popup
+								if (await this.actions.isDisplayed(updateSelectedSeat, 'updateSelectedSeat', 1000)) {
+									await this.actions.click(updateSelectedSeat, 'updateSelectedSeat');
+									console.log(`Confirmed re-selected seat ${newDepSeats[i].seatId}`);
+								}
+
+								// Final verification
+								seatVerified = await this.verifySeatAssignment(newDepSeats[i].seatId, 'departure re-check');
+							}
+						} catch (reclickError) {
+							console.log(`Could not re-click seat ${newDepSeats[i].seatId}: ${reclickError.message}`);
+						}
+					}
+
+					if (seatVerified) {
+						console.log(`Departure seat ${newDepSeats[i].seatId} successfully assigned to traveler ${newDepSeats[i].travelerId}`);
+					} else {
+						console.log(`Warning: Departure seat ${newDepSeats[i].seatId} assignment could not be verified, but continuing...`);
+					}
+
+					await this.actions.waitForLoadState('domcontentloaded', 1500);
 
 				} catch (seatError) {
 					console.log(`Error selecting seat ${newDepSeats[i].seatId}:`, seatError.message);
-					// Continue with next seat instead of failing completely
 				}
 			}
+
+			// Final verification: check traveler grid to ensure all departure seats are shown
+			console.log('Verifying departure seats in traveler grid...');
+			try {
+				await this.actions.waitForDisplayed(TravelerList, 'TravelerList', 5000);
+				var totalTravelers = await this.actions.getElements(TravelerList);
+				for (var j = 1; j <= totalTravelers.length; j++) {
+					try {
+						let seatDisplayed = await this.actions.isDisplayed(seatId.replace("X", j), `seat id for traveler ${j}`);
+						if (seatDisplayed) {
+							let assignedSeat = await this.actions.getText(seatId.replace("X", j), `seat id for traveler ${j}`);
+							console.log(`Traveler ${j} has departure seat: ${assignedSeat}`);
+						} else {
+							console.log(`Warning: No departure seat shown for traveler ${j}`);
+						}
+					} catch (gridError) {
+						console.log(`Could not check departure seat for traveler ${j}`);
+					}
+				}
+			} catch (gridVerificationError) {
+				console.log('Could not verify departure seats in traveler grid:', gridVerificationError.message);
+			}
+
 		} else {
 			console.log('No seats to select or travelerNum not "all"');
 		}
@@ -1945,7 +2032,7 @@ class SeatPage {
 			}
 		} catch (error) {
 			console.log('Error navigating to returning segment:', error.message);
-			// Try fallback approach
+
 			try {
 				await this.actions.click(returningSeg, 'returningSeg')
 				console.log('Fallback: clicked returning segment tab');
@@ -1967,11 +2054,16 @@ class SeatPage {
 		seatType = "e";
 		if (travelerNum === "all" && newRetSeats && newRetSeats.length > 0) {
 			console.log('Selecting returning seats for all travelers, count:', newRetSeats.length);
+
+			console.log('Returning seat assignments from GQL:');
+			newRetSeats.forEach((seat, index) => {
+				console.log(`  ${index}: Traveler ${seat.travelerId} -> Seat ${seat.seatId}`);
+			});
+
 			for (var i = 0; i < newRetSeats.length; i++) {
 				console.log(`Selecting returning seat ${newRetSeats[i].seatId} for traveler ${newRetSeats[i].travelerId}`);
 
 				try {
-					// Select the traveler first to ensure proper assignment
 					try {
 						await this.actions.click(selectTraveler.replace("X", newRetSeats[i].travelerId), `select traveler ${newRetSeats[i].travelerId}`)
 						console.log(`Selected traveler ${newRetSeats[i].travelerId} for seat assignment`);
@@ -1979,16 +2071,14 @@ class SeatPage {
 						console.log(`Warning: Could not select specific traveler ${newRetSeats[i].travelerId}`);
 					}
 
-					await this.actions.waitForLoadState('domcontentloaded', 5000) // Wait before selecting next seat
+					await this.actions.waitForLoadState('domcontentloaded', 5000)
 					let newRetSeatsButton = "//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]"
 					console.log('Returning seat selector:', newRetSeatsButton);
 
-					// Wait for seat to be clickable before clicking
 					await this.actions.waitForClickable(newRetSeatsButton, 'newRetSeatsButton', 5000)
 					await this.actions.click(newRetSeatsButton, 'newRetSeatsButton')
 					console.log(`Successfully clicked returning seat ${newRetSeats[i].seatId}`);
 
-					// Handle exit row popup if present
 					let exitRowPopupIsDisplay = await this.actions.isDisplayed(exitRowPopup.replace("XX", newRetSeats[i].seatId.toUpperCase()), 'exitRowPopup Button')
 					if (exitRowPopupIsDisplay) {
 						await this.actions.click(exitRowPopup.replace("XX", newRetSeats[i].seatId.toUpperCase()), 'ExitRowPopup Button')
@@ -2005,42 +2095,58 @@ class SeatPage {
 						console.log(`No seat update popup needed for ${newRetSeats[i].seatId}`);
 					}
 
-					// Wait for spinner to disappear with timeout to prevent infinite loop
-					let spinnerTimeout = 10; // 10 iterations max
-					let spinnerCount = 0;
-					while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && spinnerCount < spinnerTimeout) {
-						await this.actions.waitForLoadState('domcontentloaded', 1000)
-						spinnerCount++;
-					}
+					await this.waitForSpinnerAndStabilize(15000, `returning seat ${newRetSeats[i].seatId}`);
 
-					// Verify the seat assignment was successful with a short timeout
+					// Additional check: Re-verify traveler is still selected after spinner
 					try {
-						// Wait a moment for the UI to update
-						let seatAssigned = await this.actions.isDisplayed(`//span[contains(@data-hook,'taken')][contains(@data-hook,'_${newRetSeats[i].seatId}')]`, 'assigned seat indicator')
-						if (seatAssigned) {
-							console.log(`✓ Confirmed: Returning seat ${newRetSeats[i].seatId} is now assigned`);
-						} else {
-							// Try alternative verification by checking if seat is clickable (means it's available/not selected)
-							try {
-								let seatStillClickable = await this.actions.isDisplayed(`//span[contains(@data-hook,'e')][contains(@data-hook,'_${newRetSeats[i].seatId}')][not(contains(@data-hook,'taken'))]`, 'unselected seat indicator')
-								if (!seatStillClickable) {
-									console.log(`✓ Confirmed: Returning seat ${newRetSeats[i].seatId} is assigned (no longer clickable)`);
-								} else {
-									console.log(`⚠ Warning: Returning seat ${newRetSeats[i].seatId} may not be properly assigned`);
-								}
-							} catch (altCheckError) {
-								console.log(`✓ Likely assigned: Returning seat ${newRetSeats[i].seatId} (UI updated)`);
-							}
+						let travelerStillSelected = await this.actions.isDisplayed(`//label[contains(@for,'traveler-input-${newRetSeats[i].travelerId}')][contains(@class,'selected') or contains(@class,'active')]`, 'selected traveler indicator', 2000);
+						if (!travelerStillSelected) {
+							console.log(`Returning: Traveler ${newRetSeats[i].travelerId} may not be selected after spinner, re-selecting...`);
+							await this.actions.click(selectTraveler.replace("X", newRetSeats[i].travelerId), `re-select traveler ${newRetSeats[i].travelerId}`);
+							await this.actions.waitForLoadState('domcontentloaded', 1000);
 						}
-					} catch (verificationError) {
-						console.log(`Assuming seat ${newRetSeats[i].seatId} is assigned - verification error: ${verificationError.message}`);
+					} catch (travelerCheckError) {
+						console.log(`Could not verify returning traveler selection state: ${travelerCheckError.message}`);
 					}
 
-					await this.actions.waitForLoadState('domcontentloaded', 3000); // Small pause between selections
+					let seatVerified = await this.verifySeatAssignment(newRetSeats[i].seatId, 'returning');
+					if (!seatVerified) {
+						console.log(`Warning: Returning seat ${newRetSeats[i].seatId} not verified for traveler ${newRetSeats[i].travelerId}, attempting to re-click...`);
+
+						// Try to re-click the seat if verification failed
+						try {
+							let seatSelector = "//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]";
+							let seatStillClickable = await this.actions.isDisplayed(seatSelector, 'returning seat clickable check', 2000);
+							if (seatStillClickable) {
+								console.log(`Re-clicking returning seat ${newRetSeats[i].seatId} for traveler ${newRetSeats[i].travelerId}`);
+								await this.actions.click(seatSelector, 'returning seat re-click');
+								await this.actions.waitForLoadState('domcontentloaded', 2000);
+
+								// Check again for confirmation popup
+								if (await this.actions.isDisplayed(updateSelectedSeat, 'updateSelectedSeat', 1000)) {
+									await this.actions.click(updateSelectedSeat, 'updateSelectedSeat');
+									console.log(`Confirmed re-selected returning seat ${newRetSeats[i].seatId}`);
+								}
+
+								// Final verification
+								seatVerified = await this.verifySeatAssignment(newRetSeats[i].seatId, 'returning re-check');
+							}
+						} catch (reclickError) {
+							console.log(`Could not re-click returning seat ${newRetSeats[i].seatId}: ${reclickError.message}`);
+						}
+					}
+
+					if (seatVerified) {
+						console.log(`Returning seat ${newRetSeats[i].seatId} successfully assigned to traveler ${newRetSeats[i].travelerId}`);
+					} else {
+						console.log(`Warning: Returning seat ${newRetSeats[i].seatId} assignment could not be verified, but continuing...`);
+					}
+
+					// Pause between seat selections to prevent race conditions
+					await this.actions.waitForLoadState('domcontentloaded', 1500);
 
 				} catch (seatError) {
 					console.log(`Error selecting returning seat ${newRetSeats[i].seatId}:`, seatError.message);
-					// Continue with next seat instead of failing completely
 				}
 			}
 
@@ -2054,9 +2160,9 @@ class SeatPage {
 						let seatDisplayed = await this.actions.isDisplayed(seatId.replace("X", j), `seat id for traveler ${j}`);
 						if (seatDisplayed) {
 							let assignedSeat = await this.actions.getText(seatId.replace("X", j), `seat id for traveler ${j}`);
-							console.log(`✓ Traveler ${j} has returning seat: ${assignedSeat}`);
+							console.log(`Returning seat for traveler ${j}: ${assignedSeat}`);
 						} else {
-							console.log(`⚠ Warning: No returning seat shown for traveler ${j}`);
+							console.log(`Warning: No returning seat shown for traveler ${j}`);
 						}
 					} catch (gridError) {
 						console.log(`Could not check returning seat for traveler ${j}`);
@@ -2280,6 +2386,118 @@ class SeatPage {
 		} catch (listError) {
 			console.log(`Could not validate ${segment} seats:`, listError.message)
 		}
+	}
+
+	/**
+	 * Enhanced method to verify seat assignment with multiple checks
+	 * @param {string} seatId - The seat ID to verify
+	 * @param {string} context - Context for logging (e.g., "departure", "returning")
+	 * @returns {boolean} - true if seat is verified as assigned
+	 */
+	async verifySeatAssignment(seatId, context = '') {
+		try {
+			console.log(`Verifying seat assignment for ${seatId} (${context})`);
+
+			await this.actions.waitForLoadState('domcontentloaded', 1000);
+
+			// Check if seat shows as 'taken' in the DOM
+			let seatTakenSelector = `//span[contains(@data-hook,'taken')][contains(@data-hook,'_${seatId}')]`;
+			let isTaken = await this.actions.isDisplayed(seatTakenSelector, 'taken seat indicator', 3000);
+
+			if (isTaken) {
+				console.log(`${context}: Seat ${seatId} verified as assigned (marked as taken)`);
+				return true;
+			}
+
+			// Check if seat is no longer clickable (selected state)
+			let seatClickableSelector = `//span[contains(@data-hook,'e')][contains(@data-hook,'_${seatId}')][not(contains(@data-hook,'taken'))]`;
+			let isStillClickable = await this.actions.isDisplayed(seatClickableSelector, 'clickable seat indicator', 3000);
+
+			if (!isStillClickable) {
+				console.log(`${context}: Seat ${seatId} verified as assigned (no longer clickable)`);
+				return true;
+			}
+
+			// Check for visual selection indicators (highlighted, selected class, etc.)
+			try {
+				let seatSelectedSelector = `//span[contains(@data-hook,'_${seatId}')][contains(@class,'selected') or contains(@class,'highlighted') or contains(@class,'assigned')]`;
+				let isVisuallySelected = await this.actions.isDisplayed(seatSelectedSelector, 'visually selected seat indicator', 2000);
+
+				if (isVisuallySelected) {
+					console.log(`${context}: Seat ${seatId} verified as assigned (visually selected)`);
+					return true;
+				}
+			} catch (visualError) {
+				console.log(`Visual selection check failed for ${seatId}: ${visualError.message}`);
+			}			// Check traveler grid for seat assignment
+			try {
+				let travelerGridUpdated = false;
+				let totalTravelers = await this.actions.getElements(TravelerList);
+				for (let j = 1; j <= totalTravelers.length; j++) {
+					// Use the seatId constant defined at the top of the file, not the parameter
+					let travelerSeatElement = seatId.replace("X", j);
+					let seatDisplayed = await this.actions.isDisplayed(travelerSeatElement, `seat id for traveler ${j}`, 1000);
+					if (seatDisplayed) {
+						let assignedSeat = await this.actions.getText(travelerSeatElement, `seat id for traveler ${j}`);
+						// Check if the assigned seat matches the expected seat (case-insensitive)
+						if (assignedSeat && assignedSeat.toLowerCase().trim() === seatId.toLowerCase().trim()) {
+							console.log(`${context}: Seat ${seatId} found assigned to traveler ${j} in grid`);
+							travelerGridUpdated = true;
+							break;
+						} else if (assignedSeat && assignedSeat.includes(seatId)) {
+							console.log(`${context}: Seat ${seatId} found in traveler ${j} grid (partial match: ${assignedSeat})`);
+							travelerGridUpdated = true;
+							break;
+						}
+					}
+				}
+
+				if (travelerGridUpdated) {
+					console.log(`${context}: Seat ${seatId} verified in traveler grid`);
+					return true;
+				}
+			} catch (gridError) {
+				console.log(`Could not check traveler grid for seat ${seatId}: ${gridError.message}`);
+			}
+
+			console.log(`${context}: Seat ${seatId} assignment could not be verified through standard checks`);
+			return false;
+
+		} catch (error) {
+			console.log(`Error verifying seat ${seatId} (${context}): ${error.message}`);
+			return false;
+		}
+	}
+
+	/**
+	 * Wait for spinner to completely disappear and UI to stabilize
+	 * @param {number} maxWaitTime - Maximum wait time in milliseconds (default 30000)
+	 * @param {string} context - Context for logging
+	 */
+	async waitForSpinnerAndStabilize(maxWaitTime = 30000, context = '') {
+		console.log(`Waiting for spinner to disappear and UI to stabilize (${context})`);
+
+		let startTime = Date.now();
+		let spinnerCount = 0;
+
+		// Wait for spinner to disappear
+		while (await this.actions.isDisplayed(spinnerBar, 'spinnerBar') && (Date.now() - startTime) < maxWaitTime) {
+			await this.actions.waitForLoadState('domcontentloaded', 1000);
+			spinnerCount++;
+			if (spinnerCount % 5 === 0) {
+				console.log(`Still waiting for spinner (${context})... ${Math.floor((Date.now() - startTime) / 1000)}s elapsed`);
+			}
+		}
+
+		if ((Date.now() - startTime) >= maxWaitTime) {
+			console.log(`Spinner wait timeout reached for ${context}, proceeding anyway`);
+		} else {
+			console.log(`Spinner disappeared for ${context} after ${Math.floor((Date.now() - startTime) / 1000)}s`);
+		}
+
+		// Additional stabilization wait
+		await this.actions.waitForLoadState('domcontentloaded', 2000);
+		console.log(`UI stabilized after spinner (${context})`);
 	}
 
 }

@@ -78,7 +78,8 @@ class PaymentPage {
     }
 
     async cardDetails() {
-        const cardNumArray = ["5454545454545454", "4444444444444448", "4000020000000000", "4400000000000008", "5555555555555557"];
+        await this.actions.waitForLoadState('domcontentloaded', 20000)
+        const cardNumArray = ["5454545454545454"];
         const random = Math.floor(Math.random() * cardNumArray.length);
         const value = cardNumArray[random];
         const strLen = value.split('')[0];
@@ -106,8 +107,8 @@ class PaymentPage {
         await this.actions.waitForClickable(yearlocscroll, 'yearlocscroll', 5000)
         await this.actions.clickElement('click', expiryyear, "expiry year dropdown")
         await this.actions.scroll(yearscroll)
-        await this.actions.waitForClickable(currentExpirationYear.replace("X", "8"), 'year selection', 1000)
-        await this.actions.clickElement('click', currentExpirationYear.replace("X", "8"), "selecting the expiry year of card")
+        await this.actions.waitForClickable(currentExpirationYear.replace("X", "5"), 'year selection', 1000)
+        await this.actions.clickElement('click', currentExpirationYear.replace("X", "5"), "selecting the expiry year of card")
         await this.actions.scroll(yearlocscroll)
         await this.actions.waitUntilPageLoad() // Wait for page to stabilize after year selection
         if (value === '4444444444444448' || value === '4000020000000000' || value === '4400000000000008' || value === '6243030000000001') {

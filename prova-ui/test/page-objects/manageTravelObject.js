@@ -110,17 +110,73 @@ class Managetravel {
     async clickAddaCar() {
         try {
             await this.actions.waitUntilPageLoad()
-            await this.actions.waitForDisplayed('.manage-booking, .itinerary-details', 'manage booking section', 30000)
-            console.log(await this.actions.getUrl())
-            await this.actions.waitForDisplayed(itineraryDetails, 'itinerary details')
-            // await this.actions.waitForDisplayed(addCar, 'addCar link', 30000)
-            await this.actions.scroll(addCar)
-            // await this.actions.waitForClickable(addCar, 'addCar Link')
-            await this.actions.clickElement('click', addCar, "Add Car link")
+            console.log('Current URL:', await this.actions.getUrl())
+
+            await this.actions.waitForDisplayed(itineraryDetails, 'itinerary details', 30000)
+            const addCarSelectors = [
+                "//button[@data-hook='vehicle-upsell-button']",
+                "//span[contains(text(),'Add a car')]"
+            ]
+
+            let addCarElement = null
+            let usedSelector = null
+
+            for (const selector of addCarSelectors) {
+                try {
+                    console.log(`Trying selector: ${selector}`)
+                    await this.actions.waitForDisplayed(selector, 'add car link', 5000)
+                    addCarElement = selector
+                    usedSelector = selector
+                    console.log(`Found Add Car element with selector: ${selector}`)
+                    break
+                } catch (error) {
+                    console.log(`Selector failed: ${selector}`)
+                }
+            }
+
+            if (!addCarElement) {
+                throw new Error('Add Car element not found with any selector')
+            }
+
+            await this.actions.scroll(addCarElement)
+            await this.actions.waitForDisplayed(addCarElement, 'addCar Link', 10000)
+            await this.actions.waitForClickable(addCarElement, 'addCar Link', 10000)
+
+            console.log(`Clicking Add Car element with selector: ${usedSelector}`)
+            await this.actions.clickElement('click', addCarElement, "Add Car link")
+
             await this.actions.waitUntilPageLoad()
-            await this.actions.waitForDisplayed(carsPageHeader, 'carsPageHeader', 30000)
+
+            try {
+                await this.actions.waitForDisplayed(carsPageHeader, 'carsPageHeader', 30000)
+                console.log('Successfully navigated to Cars page')
+            } catch (error) {
+                const carPageIndicators = [
+                    "//title[contains(text(),'Car')]"
+                ]
+
+                let carPageFound = false
+                for (const indicator of carPageIndicators) {
+                    try {
+                        await this.actions.waitForDisplayed(indicator, 'car page indicator', 5000)
+                        console.log(`Car page detected with: ${indicator}`)
+                        carPageFound = true
+                        break
+                    } catch (e) {
+                        // Continue trying
+                    }
+                }
+
+                if (!carPageFound) {
+                    console.warn('Could not verify navigation to cars page')
+                    console.log('Current URL after click:', await this.actions.getUrl())
+                }
+            }
+
         } catch (error) {
-            console.log(error)
+            console.error('Error in clickAddaCar:', error)
+            console.log('Current URL when error occurred:', await this.actions.getUrl())
+            throw error
         }
     }
 
