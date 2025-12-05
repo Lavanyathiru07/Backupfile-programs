@@ -31,54 +31,25 @@ class HotelPage {
     async hotelSkip() {
 
         await this.actions.waitUntilPageLoad()
+        await this.actions.waitForLoadState('domcontentloaded', 15000)
 
         try {
             await this.actions.waitForDisplayed(hotelTitle, 'hotelTitle', 15000)
             console.log("Hotels page loaded successfully")
         } catch (error) {
-            console.log('Hotels page heading not found, checking for alternative indicators:')
-
-            // Strategy 2: Check for alternative hotel page elements
-            const alternativeSelectors = [
-                continueButton,
-                skipHotel,
-                "[data-hook='hotels-page']",
-                "//h1[contains(text(), 'Hotel')]",
-                "//div[contains(@class, 'hotel')]"
-            ]
-
-            let pageFound = false
-            for (const selector of alternativeSelectors) {
-                try {
-                    if (await this.actions.isDisplayed(selector, `alternative hotel indicator: ${selector}`)) {
-                        console.log(`Found alternative hotel page indicator: ${selector}`)
-                        pageFound = true
-                        break
-                    }
-                } catch (altError) {
-                    console.log(`Alternative selector failed: ${selector}`)
-                }
-            }
-
-            if (!pageFound) {
-                console.log('Hotels page not detected, checking if we might be on cars page already')
-                try {
-                    await this.actions.waitForDisplayed(carsPageHeader, 'cars page header', 3000)
-                    console.log('Already on cars page - hotels may have been skipped automatically')
-                    return // Exit early if already on cars page
-                } catch (carsError) {
-                    console.log('Not on cars page either, will attempt hotel skip anyway')
-                }
+            console.log('Hotels page heading not found, checking if we might be on cars page already')
+            try {
+                await this.actions.waitForDisplayed(carsPageHeader, 'cars page header', 3000)
+                console.log('Already on cars page - hotels may have been skipped automatically')
+                return
+            } catch (carsError) {
+                console.log('Not on cars page either, will attempt hotel skip anyway')
             }
         }
 
-        // Strategy 3: Try to click skip hotel button
         const skipStrategies = [
             { selector: skipHotel, description: 'main skip hotel button' },
-            { selector: "[data-hook='hotels-page_skip']", description: 'hotels skip data hook' },
-            { selector: "//a[contains(text(), 'No thanks')]", description: 'no thanks text link' },
-            { selector: "//button[contains(text(), 'Skip')]", description: 'skip button' },
-            { selector: continueButton, description: 'continue button fallback' }
+            { selector: continueButton, description: 'continue button' }
         ]
 
         let skipClicked = false

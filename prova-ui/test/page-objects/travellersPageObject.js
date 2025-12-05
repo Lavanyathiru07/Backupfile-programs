@@ -77,7 +77,9 @@ class TravellersPage {
     }
 
     async continuebuttontravellers() {
-        await this.actions.waitForDisplayed(continuetrav, 'travellers page continue button')
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
+        await this.actions.waitForDisplayed(continuetrav, 'travellers page continue button', 30000)
+        await this.actions.waitForClickable(continuetrav, 'travellers page continue button', 30000)
         await this.actions.clickElement('click', continuetrav, "travellers page continue button")
     }
 

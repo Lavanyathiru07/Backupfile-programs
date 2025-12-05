@@ -109,6 +109,7 @@ Given(/^I am on landing page I select "([^"]*)"$/, async function (triptype) {
     this.Managetravel = new ManagetravelObject(this.page, this.context)
     this.G4portal = new G4portalObject(this.page, this.context)
     await this.HomePage.selectTripType(triptype)
+    process.env.tripType = triptype
 })
 
 Given(/^(I am (.*\s+)?Page, )?I have a screen that is ([\d]+) by ([\d]+) pixels$/, async function (page, screenWidth, screenHeight) {

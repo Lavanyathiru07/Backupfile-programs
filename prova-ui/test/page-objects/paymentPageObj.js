@@ -216,11 +216,11 @@ class PaymentPage {
 
     async popupisClosing() {
         try {
-            await this.actions.waitForLoadState('networkidle', 45000);
-            await this.actions.waitForDisplayed(icePopup, 'icePopup')
+            await this.actions.waitForLoadState('domcontentloaded', 25000);
+            await this.actions.waitForDisplayed(icePopup, 'icePopup', 20000)
             let icePopupVisibility = await this.actions.isDisplayed(icePopup, 'Payment page popup button')
             if (icePopupVisibility) {
-                await this.actions.waitForClickable(icePopup, 'paypopup button')
+                await this.actions.waitForClickable(icePopup, 'paypopup button', 20000)
                 await this.actions.clickElement('click', icePopup, "button to close the popup")
             }
             else {

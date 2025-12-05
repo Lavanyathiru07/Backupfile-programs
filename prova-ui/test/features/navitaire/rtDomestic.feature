@@ -7,8 +7,8 @@ Feature: This feature file is to run Navitaire BAT scenarios
 
   Scenario Outline: RT, Domestic flight with Infant in lap and Child with 1 CO and 1 CK bag, Seat &Modify WWW booking via MT
     Given I am on landing page I select "<tripType>"
-    When I am on landing page I select "LAS" for the departure airport
-    And I am on landing page I select "CVG" for the destination airport
+    When I am on landing page I select "CVG" for the departure airport
+    And I am on landing page I select "SFB" for the destination airport
     And I am on landing page I choose the departure date "<departDate>" days from current day
     And I am on landing page I choose the returning date "<returnDate>" days from departure
     And I am on landing page I select "<adult>" adult travelers
@@ -24,7 +24,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
     And I am on Travelers page I click continue button
     And I get seat detils from GQL
     And I select seat from GQL "<Seats>"
-    And I am on Seat page I click continue button
+    And I am on WWW Seat page I click continue button
     And I am on Bags page I select CarryOn "<CarryOn>"
     And I am on Bags page I select Checked Bag "<Check>"
     And I am on Bags page I click continue button without selecting bags
@@ -43,7 +43,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
     And I am on Travelers page I click continue button
     And I am on Seat page I click No thanks, skip seat selection
     When I am on Manage Travel page I add "<Addproduct>" for traveler "<paxNum>"
-    And I am on Manage Travel page, Bags page I click on continue button
+    And I am on Manage Travel page, Bags page I click on continue button only
     And I am on Cars page I click No thanks button
     And I am on Manage Travel page, Payment page I complete payment
     Then I am on Manage Travel page, I expect "<productTotal>" is updated correctly for traveler "<paxNum>"

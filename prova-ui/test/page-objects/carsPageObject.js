@@ -12,6 +12,7 @@ const vehicletype = '(//span[contains(@class,"Text-sc-1o5ubbx-0 bltVao")])[1] | 
 const addedToCard = '//span[text()="Added to cart"] | //span[text()="Added"]'
 const carPageHeader = "//*[text()='Car Selection']"
 const addToCartText = "//*[text()='Added to cart']"
+const icePopup = "[data-hook='payment-page_ice-popup_close']"
 
 var CarsPageCollectorCP = new Map();
 
@@ -25,18 +26,21 @@ class CarPage {
     }
 
     async carspageskip() {
-        await this.actions.waitUntilPageLoad()
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
+        await this.actions.waitForURL(/cars/, 30000)
         await this.actions.waitForDisplayed(carPageHeader, 'carPageHeader', 30000)
         let carPageHeaderVisbilty = await this.actions.isDisplayed(carPageHeader, 'carPageHeader')
         console.log("carPageHeaderVisbilty: ", carPageHeaderVisbilty)
         if (carPageHeaderVisbilty) {
             console.log("Car's Text is Available")
-            await this.actions.waitForDisplayed(carsPageContinueButton, 'carsPageContinueButton')
-            await this.actions.waitForClickable(carskip, 'skip link in cars page', 5000)
+            await this.actions.waitForDisplayed(carsPageContinueButton, 'carsPageContinueButton', 30000)
+            await this.actions.scroll(carpagescroll);
+            await this.actions.waitForClickable(carskip, 'skip link in cars page', 30000)
             await this.actions.clickElement('click', carskip, "skip link in cars page")
         }
         else {
             console.log('cars are not available for this city pair');
+            await this.actions.waitForDisplayed(icePopup, 'icePopup', 30000)
         }
     }
 

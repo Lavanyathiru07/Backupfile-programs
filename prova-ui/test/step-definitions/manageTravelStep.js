@@ -98,12 +98,12 @@ When(/^I am on Manage Travel page I add "([^"]*)" for traveler "([^"]*)"$/, asyn
     this.CheckinPage = new CheckinPageObject(this.page, this.context)
     this.Managetravel = new ManagetravelObject(this.page, this.context)
     this.G4portal = new G4portalObject(this.page, this.context)
-	await this.Managetravel.addProduct(product, paxNum)
+    await this.Managetravel.addProduct(product, paxNum)
 });
 
 When(/^I am on Manage Travel page, (.+) page I click on continue button$/, { timeout: 180 * 16000 }, async function (page) {
-	await this.Managetravel.selectCovidRestrictedArticalPolicy()
-	await this.Managetravel.ContinueButton(page)
+    await this.Managetravel.selectCovidRestrictedArticalPolicy()
+    await this.Managetravel.ContinueButton(page)
 });
 
 When(/^I am on Manage Trip and I click change flight$/, async function () {
@@ -121,20 +121,20 @@ When(/^I am on Manage Trip and I click change flight$/, async function () {
     this.CheckinPage = new CheckinPageObject(this.page, this.context)
     this.Managetravel = new ManagetravelObject(this.page, this.context)
     this.G4portal = new G4portalObject(this.page, this.context)
-	await this.Managetravel.clickChangeDate();
+    await this.Managetravel.clickChangeDate();
 });
 
 When(/^I am on MT landing page I choose the departure date "(.+)" days from current day$/, async function (number) {
-    await this.HomePage.setWindow(1920, 1080)
+    // await this.HomePage.setWindow(1920, 1080)
     await this.HomePage.openDepartureDateCalendar()
     departureDate = await this.HomePage.chooseDepartingDate(number);
 });
 
 Then(/^I am on Manage Travel page, I expect "([^"]*)" is updated correctly for traveler "([^"]*)"$/, async function (product, paxNum) {
-	await this.Managetravel.validateProductDetails(product, paxNum)
+    await this.Managetravel.validateProductDetails(product, paxNum)
 });
 
 When(/^I am on Manage Travel page, (.+) page I click on continue button only$/, { timeout: 180 * 16000 }, async function (page) {
-	await this.CheckinPage.selectCovidRestrictedArticalPolicy()
-	await this.Managetravel.ContinueButtonBags(page)
+    await this.CheckinPage.selectCovidRestrictedArticalPolicy()
+    await this.Managetravel.ContinueButtonBags(page)
 });

@@ -20,7 +20,7 @@ const termsscroll = "[data-hook='payment-page_terms-and-cond-section_legend']"
 const termsbox = "//label[@data-hook='payment_terms-and-conditions-checkbox_label']"
 const purchase = "[data-hook='payment-page_continue']"
 const itineraryDetails = "//*[@data-hook='trip-summary-page_title']"
-const addBagsLink = "//a[contains(text(),'Add/Change Bags')]|//span[contains(text(),'Traveler')]"
+const addBagsLink = "//span[contains(text(),'Update Bags')]"
 const checkedBags = "(//span[contains(text(),'Checked Bag')])[2]"
 const checkedBag = "//button[@data-hook='ancillaries-page-traveler_0_checked-in_increment']"
 const iAgreeCovidPolicyCheckBox = "//*[@class='touch-friendly-checkbox small']"
@@ -44,7 +44,7 @@ const flightH1 = "//span[text()='Select New Flights']"
 const itineraryDetailsPage = "[data-hook='trip-summary-page_title']"
 const printBoxThankyou = "//span[contains(text(),'Thank you')]"
 const flightinformation = "(//span[@class='Text-sc-1o5ubbx-0 PageSection__CapitalizedText-sc-1q7kcky-0 dKvhrs'])[1] | //span[normalize-space()='Flight information']"
-const manageTravelPageCheckedBagCount = "(//div[@class='TravelerInfo__TableBody-sc-1pz7o2a-2 XfERc'])[2]"
+const manageTravelPageCheckedBagCount = "[data-hook='order-item-flight-info_onward_traveler-0-check-in-bags-count']"
 const balanceCart = "//button[contains(@class,'PaymentCart__PaymentButton')]/span[2]"
 const negativeContinue = "//span[contains(text(),'Continue')]"
 const paymentPageTitle = "[data-hook='payment-page_page-heading']"
@@ -188,95 +188,24 @@ class Managetravel {
 
     async addProduct(product, paxNum) {
         console.log('Starting addProduct method in Manage Travel context')
+        await this.actions.waitUntilPageLoad()
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
+        await this.actions.waitForURL(/ancillaries/, 30000)
 
-        // Check current URL and page context
         const currentUrl = await this.actions.getUrl()
         console.log(`Current URL: ${currentUrl}`)
 
-        // Wait for page to be stable first
-        await this.actions.waitUntilPageLoad()
-
-        // Check if we're in the right context for adding products
-        const isManageTravel = currentUrl.includes('manage-travel')
-
-        if (isManageTravel) {
-            console.log('Detected Manage Travel context - using alternative flow')
-
-            // Try multiple strategies to find product addition area
-            const productPageIndicators = [
-                { selector: '.product-selection, .add-product-section', description: 'standard product section' },
-                { selector: "[data-hook*='product'], [data-hook*='bag']", description: 'product data hooks' },
-                { selector: '.manage-products, .add-products', description: 'manage travel products area' },
-                { selector: "[class*='product'], [class*='bag']", description: 'product class selectors' },
-                { selector: "h1, h2, h3", description: 'page headings for context' }
-            ]
-
-            let productAreaFound = false
-            for (const indicator of productPageIndicators) {
-                try {
-                    await this.actions.waitForDisplayed(indicator.selector, indicator.description, 10000)
-                    console.log(`Found product area via: ${indicator.description}`)
-                    productAreaFound = true
-                    break
-                } catch (error) {
-                    console.log(`Product indicator failed: ${indicator.description}`)
-                }
-            }
-
-            if (!productAreaFound) {
-                console.log('Product area not found, checking if we need to navigate to products page')
-
-                // Look for navigation links to products/bags page
-                const navigationOptions = [
-                    { selector: "//a[contains(text(), 'Add bags')]", description: 'add bags link' },
-                    { selector: "//button[contains(text(), 'Add products')]", description: 'add products button' },
-                    { selector: "[data-hook*='add-bag'], [data-hook*='add-product']", description: 'add product data hooks' },
-                    { selector: "//a[contains(text(), 'Bags')]", description: 'bags navigation link' }
-                ]
-
-                for (const nav of navigationOptions) {
-                    try {
-                        console.log(`Trying navigation option: ${nav.description}`)
-                        await this.actions.waitForDisplayed(nav.selector, nav.description, 5000)
-                        await this.actions.clickElement('click', nav.selector, nav.description)
-                        console.log(`Clicked: ${nav.description}`)
-                        await this.actions.waitUntilPageLoad()
-                        await this.actions.waitForLoadState('domcontentloaded', 5000)
-
-                        // Check if we're now on a products page
-                        try {
-                            await this.actions.waitForDisplayed('.product-selection, .add-product-section', 'product section after navigation', 5000)
-                            productAreaFound = true
-                            break
-                        } catch (e) {
-                            console.log('Still no product area after navigation')
-                        }
-                    } catch (error) {
-                        console.log(`Navigation option failed: ${nav.description}`)
-                    }
-                }
-            }
-
-            if (!productAreaFound) {
-                console.log('Unable to find product addition area in Manage Travel context')
-                console.log('This might be expected behavior - some manage travel flows may not have product addition')
-                return; // Exit gracefully instead of failing
-            }
-        } else {
-            // Regular flow
-            await this.actions.waitForDisplayed('.product-selection, .add-product-section', 'product section', 10000)
-        }
-
-        // Continue with product addition logic
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
         if (product.includes("checked")) {
             try {
-                await this.actions.waitForDisplayed(addBagsLink, 'addBagsLink', 10000)
+                await this.actions.waitForDisplayed(addBagsLink, 'addBagsLink', 30000)
+                await this.actions.waitForClickable(addBagsLink, 'addBagsLink', 30000)
                 await this.actions.clickElement('click', addBagsLink, 'addBagsLink')
-                await this.actions.waitForDisplayed(checkedBags, 'checkedBags', 5000)
+                await this.actions.waitForDisplayed(checkedBags, 'checkedBags', 30000)
             } catch (er) {
                 console.log("The add bags link is not enabled")
             }
-            await this.actions.waitForClickable(checkedBag.replace("X", paxNum), 'checked bag selector', 5000)
+            await this.actions.waitForClickable(checkedBag.replace("X", paxNum), 'checked bag selector', 30000)
             await this.actions.clickElement('click', checkedBag.replace("X", paxNum), 'checkedBag')
             for (var i = 0; i < parseInt(product.split(' ')[0]); i++) {
                 await this.actions.pressButton('ArrowDown', 'down');
@@ -476,43 +405,44 @@ class Managetravel {
 
     async validateProductDetails(product, paxNum) {
         try {
-            await this.actions.waitForLoadState('networkidle', 30000)
-            await this.actions.waitUntilPageLoad()
-            await this.actions.isDisplayed(itineraryDetailsPage, "itineraryDetailsPage")
+            await this.actions.waitForLoadState('domcontentloaded', 30000)
+            await this.actions.waitForDisplayed(itineraryDetailsPage, "itineraryDetailsPage", 30000)
         } catch (error) {
             // await this.actions.waitFor(printBoxThankyou, 20000)
-            await this.actions.waitForDisplayed(printBoxThankyou, 'printBoxThankyou')
+            await this.actions.waitForDisplayed(printBoxThankyou, 'printBoxThankyou', 30000)
         }
-        await this.actions.waitForDisplayed(flightinformation, 'flight information')
+        await this.actions.waitForDisplayed(flightinformation, 'flight information', 30000)
         if (product.includes("checked")) {
             assert.isTrue(
                 await this.actions.isDisplayed(manageTravelPageCheckedBagCount, 'manageTravelPageCheckedBagCount'),
                 'Validation failed: Mismatch in manageTravelPage CheckedBag Count');
+            await this.actions.waitForLoadState('domcontentloaded', 30000)
         }
     }
 
     async ContinueButtonBags(page) {
-        let somethingReallyOddErrorIsDisplayed = await this.actions.isDisplayed(somethingReallyOddError, 'somethingReallyOddError')
+        let somethingReallyOddErrorIsDisplayed = await this.actions.isDisplayed(somethingReallyOddError, 'somethingReallyOddError', 30000)
         if (somethingReallyOddErrorIsDisplayed) {
             assert.fail(await this.actions.getText(somethingReallyOddError, 'somethingReallyOddError'))
         }
         let continueButtonIsDisplayed = await this.actions.isDisplayed(continueButton, 'continueButton')
         if (continueButtonIsDisplayed) {
             await this.actions.scroll(continueButton)
-            await this.actions.waitForClickable(continueButton, 'continueButton')
+            await this.actions.waitForDisplayed(continueButton, 'continueButton', 30000)
+            await this.actions.waitForClickable(continueButton, 'continueButton', 30000)
             await this.actions.clickElement('click', continueButton, 'continueButton')
             let bagsPopUpVisiilty = await this.actions.isDisplayed(continueBagsPopUp, 'continueBagsPopUp')
             if (bagsPopUpVisiilty) {
-                await this.actions.waitForDisplayed(continueBagsPopUp, 'continueBagsPopUp')
+                await this.actions.waitForDisplayed(continueBagsPopUp, 'continueBagsPopUp', 30000)
+                await this.actions.waitForClickable(continueBagsPopUp, 'continueBagsPopUp', 30000)
                 await this.actions.clickElement('click', continueBagsPopUp, 'continueBagsPopUp')
             }
             let hazardMaterialIsDisplayed = await this.actions.isDisplayed(hazardMaterial, 'hazardMaterial')
             if (hazardMaterialIsDisplayed) {
                 await this.actions.scroll(hazardcheckbox)
-                await this.actions.waitForDisplayed(hazardcheckbox, 'hazardcheckbox', 10000)
+                await this.actions.waitForDisplayed(hazardcheckbox, 'hazardcheckbox', 30000)
                 await this.actions.clickElement('click', hazardcheckbox, 'hazardcheckbox')
-                await this.actions.waitForEnabled(hazardContinueButton, 'hazardContinueButton')
-                await this.actions.waitForClickable(hazardContinueButton, 'hazardContinueButton')
+                await this.actions.waitForClickable(hazardContinueButton, 'hazardContinueButton', 30000)
                 await this.actions.clickElement('click', hazardContinueButton, 'hazardContinueButton')
             }
         }
