@@ -1,5 +1,7 @@
 import Actions from '../../src/support/actions.js'
 import market from '../../utility/market-OneDayflight.js'
+import GqlCall from '../../utility/graph-ql-call.js'
+import Flight from '../../utility/getMarkets.js'
 
 const buttontoclosepopup = "//button[@class='Popup__CloseIcon-sc-1kasz48-2 eKPgGA']/img"
 const cookieepopup = "//button[contains(@class,'close-button')]"
@@ -52,8 +54,8 @@ class HomePage {
 		try {
 			await this.actions.openWebsite(pageUrl);
 			await this.actions.waitUntilPageLoad();
-			process.env.ENV = await this.actions.getUrl();
-			console.log(`Successfully loaded page: ${process.env.ENV}`);
+			process.env.appEnv = await this.actions.getUrl();
+			console.log(`Successfully loaded page: ${process.env.appEnv}`);
 			try {
 				await this.actions.waitForDisplayed('body', 'page body', 10000);
 			} catch (elementError) {
@@ -448,7 +450,7 @@ Original error: ${error.message}`);
 	async popUps() {
 
 		try {
-			const popupTimeout = 5000;
+			const popupTimeout = 10000;
 
 			await this.actions.waitForDisplayed(buttontoclosepopup, 'button to close popup', popupTimeout)
 			await this.actions.waitForClickable(buttontoclosepopup, 'Overlay Merchandise Pop-up button', popupTimeout)
@@ -703,21 +705,32 @@ Original error: ${error.message}`);
 		let getEnv = process.env.ENV
 		if (getEnv.includes('stg')) {
 			env = '.stg';
-		} else if (getEnv.includes('okd')) {
-			if (getEnv.includes('intnexusg4')) {
-				env = '-intnexusg4.okd';
-			} else if (getEnv.includes('qatnexusg4')) {
-				env = '-qatnexusg4.okd';
+		} else if (getEnv.includes('nexusg4')) {
+			if (getEnv.includes('int')) {
+				env = '-intnexusg4v4.apps.swe-qat.aws';
+			} else if (getEnv.includes('qat')) {
+				env = '-qatnexusg4v4.apps.swe-qat.aws';
 			}
 		} else {
 			console.log('Kindly enter valid env')
 		}
-		var citypair = await market(env)
-		console.log(citypair)
-		console.log(citypair.dataCollected[0].origin)
-		console.log(citypair.dataCollected[0].destination)
-		process.env.origin = citypair.dataCollected[0].origin
-		process.env.arrival = citypair.dataCollected[0].destination
+		let gqlCall = new GqlCall(env)
+		let flightDetails = new Flight(gqlCall)
+		try {
+			let cityPairsWithFlights = await flightDetails.getCityPairwithFlightsInNext24Hours();
+			if (!cityPairsWithFlights || cityPairsWithFlights.length === 0) {
+				throw new Error('No city pairs with flights available for today');
+			}
+			// Select a random city pair with flights for today
+			const randomIndex = Math.floor(Math.random() * cityPairsWithFlights.length);
+			const cityPairWithFlights = cityPairsWithFlights[randomIndex];
+
+			process.env.origin = cityPairWithFlights.source;
+			process.env.arrival = cityPairWithFlights.destination;
+		} catch (error) {
+			console.error('Error getting flights for today from API');
+			throw error;
+		}
 	}
 
 	async selectDeparture(departure) {

@@ -226,6 +226,7 @@ class FlightsPage {
                     await this.collectFlightPageDetails();
                 }
             } else if ((await this.actions.getText(tripType, 'tripType')) === 'One way') {
+                await this.actions.waitForNetworkIdle(15000);
                 if (!(await this.actions.isDisplayed(flightDepartingList, 'flightDepartingList'))) {
                     // await browser.execute('window.scrollBy(0,-1000)');
                     await this.actions.waitForDisplayed(listViewDepartNextArrow, 'listViewDepartNextArrow')

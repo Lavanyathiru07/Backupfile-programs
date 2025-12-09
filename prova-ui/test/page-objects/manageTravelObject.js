@@ -207,7 +207,7 @@ class Managetravel {
             }
             await this.actions.waitForClickable(checkedBag.replace("X", paxNum), 'checked bag selector', 30000)
             await this.actions.clickElement('click', checkedBag.replace("X", paxNum), 'checkedBag')
-            for (var i = 0; i < parseInt(product.split(' ')[0]); i++) {
+            for (var i = 1; i < parseInt(product.split(' ')[0]); i++) {
                 await this.actions.pressButton('ArrowDown', 'down');
             }
             await this.actions.pressButton('Enter', 'press');
@@ -240,6 +240,9 @@ class Managetravel {
             await this.actions.scroll(continueButton.replace("X", 1))
             await this.actions.waitForClickable(continueButton.replace("X", 1), 'continueButton')
             await this.actions.clickElement('click', continueButton.replace("X", 1), 'continueButton')
+            if (await this.actions.isDisplayed("//button[@data-hook='seats-page-continue-button-popup_continue-button']", 'continueButton')) {
+                await this.actions.clickElement('click', "//button[@data-hook='seats-page-continue-button-popup_continue-button']", 'continueButton')
+            }
             await this.actions.waitForDisplayed(continueBagsPopUp, 'continueBagsPopUp', 20000)
             let bagsPopUpVisiilty = await this.actions.isDisplayed(continueBagsPopUp, 'continueBagsPopUp')
             if (bagsPopUpVisiilty) {

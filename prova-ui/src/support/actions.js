@@ -636,6 +636,31 @@ class Actions {
         }
     }
 
+    /**
+     * Wait for the first element matching the selector to be visible (handles multiple elements with same selector)
+     * @param {string} selector Element Selector For Ex: ID,xpath,etc.,
+     * @param {string} selectorName Name of the element For Ex: flight element, table row, etc.
+     * @param {number} timeout Timeout in milliseconds (default: 30000)
+     * @returns {Promise} Promise that resolves when the first element is visible
+     */
+    async waitForFirstElementVisible(selector, selectorName, timeout = 30000) {
+        Logger.info(`Waiting for first ${selectorName} to be visible`);
+        try {
+            if (!this.page) {
+                Logger.error('Page object is undefined');
+                throw new Error('Page object is not properly initialized');
+            }
+
+            const locator = this.page.locator(selector).first();
+            await locator.waitFor({ state: 'visible', timeout: timeout });
+            Logger.info(`First ${selectorName} is now visible`);
+            return locator;
+        } catch (error) {
+            Logger.error(`Failed to wait for first ${selectorName}: ${error.message}`);
+            throw new Error(`Failed to wait for first ${selectorName} to be visible: ${error.message}`);
+        }
+    }
+
     // ##########################################################################################################################################
     /**Playwright does the below methods validations inherently hence we can avoid using these methods But
     We can still implment these

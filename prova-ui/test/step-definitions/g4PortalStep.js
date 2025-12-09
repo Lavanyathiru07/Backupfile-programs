@@ -21,6 +21,9 @@ When(/^I navigate to G4 portal for FMM$/, async function () {
 
 Given(/^I select the "(.+)" application$/, async function (app) {
     this.page = await this.G4portal.selectAppFromG4Portal(app);
+    if (this.page) {
+        this.G4portal = new G4portalObject(this.page, this.context);
+    }
 });
 
 Then(/^I validate the Fmm Flights availability$/, async function () {
@@ -41,12 +44,17 @@ Then(/^I validate the Fmm Flights availability$/, async function () {
     await this.G4portal.flightValidation();
 });
 
-When(/^I navigate to G4 portal$/, async function ()  {
+When(/^I navigate to G4 portal$/, async function () {
     await this.G4portal.navigateToG4portal()
 });
 
-When(/^I select "(.+)"$/, async function (app)  {
-    await this.G4portal.selectAppFromG4Portal(app);
+When(/^I select "(.+)"$/, async function (app) {
+    const newPage = await this.G4portal.selectAppFromG4Portal(app);
+    // Update page and G4portal context if page changed
+    if (newPage && newPage !== this.page) {
+        this.page = newPage;
+        this.G4portal = new G4portalObject(this.page, this.context);
+    }
 });
 
 When(/^I validate Transancation$/, async function () {
@@ -62,18 +70,24 @@ When(/^I validate Transancation$/, async function () {
 
 Then(/^I open cl page in a new tab$/, async function () {
     await this.G4portal.Openclpageinnewtab();
+    // Update the step context with the new page from G4portal
+    this.page = this.G4portal.page;
 });
 
 Then(/^I am on CL application I click guest Login button$/, async function () {
-    // await this.G4portal.guestLogin();
+    // Ensure we have a valid G4portal object with the correct page context
+    if (!this.G4portal.page || !this.G4portal.actions) {
+        console.log("Reinitializing G4portal object with current page context");
+        this.G4portal = new G4portalObject(this.page, this.context);
+    }
     this.page = await this.G4portal.guestLogin();
 });
 
-Then(/^I validate Cartoveride Page is Displayed or not$/, async function ()  {
-    await this.G4portal.cartoverrideContinueBtn();
+Then(/^I validate Cartoveride Page is Displayed or not$/, async function () {
     await this.G4portal.validateCartOverridePage();
+    await this.G4portal.cartoverrideContinueBtn();
 });
 
-When(/^I am on impersonation Bags page I click continue button$/, async function ()  {
-	await this.G4portal.clickContinueButton();
+When(/^I am on impersonation Bags page I click continue button$/, async function () {
+    await this.G4portal.clickContinueButton();
 });

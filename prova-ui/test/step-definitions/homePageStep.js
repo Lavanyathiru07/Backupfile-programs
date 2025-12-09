@@ -64,15 +64,15 @@ Given(/^I navigate to www application$/, async function () {
     this.CheckinPage = new CheckinPageObject(this.page, this.context)
     this.Managetravel = new ManagetravelObject(this.page, this.context)
     this.G4portal = new G4portalObject(this.page, this.context)
-    let env = process.env.ENV
-    let url
-    if (env.includes('-')) {
-        url = `https://www${env}.allegiantair.com`
-    }
-    else if (env.includes('.')) {
-        url = `https://www${env}.allegiantair.com`
-    }
-    await this.HomePage.openURL(url)
+    // let env = process.env.appEnv
+    // let url
+    // if (env.includes('-')) {
+    //     url = `https://www${env}.allegiantair.com`
+    // }
+    // else if (env.includes('.')) {
+    //     url = `https://www${env}.allegiantair.com`
+    // }
+    await this.HomePage.openURL(process.env.appEnv)
 })
 
 Given(/^I open the UI application url "([^"]*)"$/, async function (url) {

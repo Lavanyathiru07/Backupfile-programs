@@ -8,7 +8,7 @@ const exitRowSeats = "//button//span[contains(@data-hook,'exit-row')][not(contai
 const exitRowBundleSeat = "(//span[@data-hook='select-legroom-plus-seat_exit-row']//img)[X]"
 const economyBundleSeat = "//button//span[contains(@data-hook,'economy-seat')][not(contains(@data-hook,'taken'))]"
 const nonBundleSeat = "//button//span[contains(@data-hook,'unrestricted')][not(contains(@data-hook,'taken'))]"
-const economySeat = "//button//span[contains(@data-hook,'economy-seat')][not(contains(@data-hook,'taken'))]"
+const economySeat = "//button//span[contains(@data-hook,'economy-seat')][not(contains(@data-hook,'taken'))]|//button//div[contains(@data-hook,'economy-seat')][not(contains(@data-hook,'taken'))]"
 const legroom = "//button//span[contains(@data-hook,'legroom')][not(contains(@data-hook,'taken'))]"
 const departingSeg = "[data-hook='seats-page-tabs_departing']"
 const returningSeg = "[data-hook='seats-page-tabs_returning']"
@@ -21,7 +21,7 @@ const takenSeats = "(//button//span[contains(@data-hook,'taken')])[X]"
 const takenSeatsList = "//span[contains(@data-hook,'taken')]"
 const spinnerBar = "//span[contains(@data-hook,'spinner')]"
 const exitRowPopup = "[data-hook='seats-popover_seat_update_button_XX']"
-const seatBreadcrumb = "[data-hook='flights-breadcrumb_item-seats']"
+const seatBreadcrumb = "//*[@data-hook='flights-breadcrumb_item-seats']|//span[@data-hook='trip-summary-breadcurmb_item-2']"
 const breadcrumbToggle = "[data-hook='flights-breadcrumb_toggle']"
 const continueButton = "//button[@data-hook='seats-page_continue']|//button[@data-hook='seats-page_continue-popup']"
 const popupContinueButton = "[data-hook='seats-page_continue-popup']"
@@ -119,7 +119,8 @@ class SeatPage {
 	*  travelerNum: all/paxNum
 	*/
 	async selectSeat(seatType, tripType, travelerNum) {
-		await this.actions.waitForDisplayed('.seat-map, .seat-selection', 'seat map container', 10000) // Wait for seat map to load
+		await this.actions.waitForNetworkIdle()
+		await this.actions.waitForDisplayed('//span[contains(text(), "Choose Departing Seats")]', "seats page", 15000) // Wait for seat map to load
 		if (tripType === "departing") {
 			await this.selectDepartureSegAdjacentSeats(tripType, seatType, travelerNum)
 		}
@@ -444,8 +445,8 @@ class SeatPage {
 		await this.actions.waitForDisplayed(seatMap)
 		if (travelerNum === "all") {
 			for (var i = 0; i < adjacentSeats.length; i++) {
-				await this.actions.waitForClickable("//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + adjacentSeats[i] + "')]", 'seat type')
-				await this.actions.click("//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + adjacentSeats[i] + "')]", 'seat type')
+				await this.actions.waitForClickable(`//span[contains(@data-hook,'${seatType}')][contains(@data-hook,'_${adjacentSeats[i]}')] | //div[contains(@data-hook,'${seatType}')][contains(@data-hook,'_${adjacentSeats[i]}')]`, 'seat type')
+				await this.actions.click(`//span[contains(@data-hook,'${seatType}')][contains(@data-hook,'_${adjacentSeats[i]}')] | //div[contains(@data-hook,'${seatType}')][contains(@data-hook,'_${adjacentSeats[i]}')]`, 'seat type')
 				if (await this.actions.isDisplayed(exitRowPopup.replace("XX", adjacentSeats[i].toUpperCase()), 'exit row popup')) {
 					await this.actions.click(exitRowPopup.replace("XX", adjacentSeats[i].toUpperCase()), 'exit row popup')
 					await this.actions.scroll(seatBreadcrumb)
@@ -1068,11 +1069,11 @@ class SeatPage {
 			if (await this.actions.isDisplayed(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')) {
 				await this.actions.click(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')
 				console.log('Clicked select seat popup continue button')
-				await this.actions.waitForLoadState('networkidle', 5000) // Wait for popup to close
+				await this.actions.waitForLoadState('domcontentloaded', 30000)
 			} else if (await this.actions.isDisplayed(selectSeatsNowButton, 'selectSeatsNowButton')) {
 				await this.actions.click(selectSeatsNowButton, 'selectSeatsNowButton')
 				console.log('Clicked select seats now button')
-				await this.actions.waitForLoadState('networkidle', 5000) // Wait for popup to close
+				await this.actions.waitForLoadState('domcontentloaded', 30000)
 			}
 		}
 

@@ -20,7 +20,7 @@ async function graphQlCall(query, variables) {
       variables,
     }),
   };
-  let requestUri = process.env.ENV + "graphql"
+  let requestUri = process.env.appEnv + "graphql"
   let response = {};
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   try {

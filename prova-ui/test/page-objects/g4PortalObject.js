@@ -94,16 +94,33 @@ class g4PortalPage {
             await this.actions.clickElement('click', SVT, 'SVT Button')
         }
         if (app === 'FMM') {
-            await this.actions.waitForClickable(FMM, 'FMM Button', 5000)
-            await this.actions.clickElement('click', FMM, 'FMM Button')
-            await this.actions.waitUntilPageLoad() // Wait for page transition
-            console.log("Before Switch : " + await this.actions.getUrl())
-            let fmmPageObject = await this.actions.switchWindow('app/fmm/')
-            this.page = fmmPageObject
-            this.actions = new Actions(this.page, this.context)
-            console.log("switched to fmm page")
-            console.log("After Switch : " + await this.actions.getUrl())
-            await this.actions.waitForDisplayed('.fmm-container, body', 'FMM page content', 5000)
+            if (process.env.appEnv.includes('qat')) {
+                await this.actions.waitForLoadState('domcontentloaded', 5000);
+                let envString = 'https://www-qatnexusg4v4.apps.swe-qat.aws.allegiantair.com'
+                let env = envString.split("https://www")[1];
+                // https://g4plus-ops-qatnexusg4v4.apps.swe-qat.aws.allegiantair.com/app/fmm/
+                let fmmUrl = `https://g4plus-ops${env}/app/fmm/`;
+                console.log("Opening FMM URL: " + fmmUrl);
+                await this.actions.newWindow(fmmUrl);
+
+                // Wait for the new window to load and switch to it
+                await this.actions.waitForLoadState('domcontentloaded', 5000);
+                let fmmPage = await this.actions.switchWindow('app/fmm/');
+
+                if (!fmmPage) {
+                    // Fallback: find the page by URL pattern
+                    const pages = await this.context.pages();
+                    fmmPage = pages.find(page => page.url().includes('app/fmm/'));
+                }
+
+                if (fmmPage) {
+                    this.page = fmmPage;
+                    this.actions = new Actions(this.page, this.context);
+                    console.log("Successfully switched to FMM page: " + await this.actions.getUrl());
+                }
+            } else {
+                await this.openApp(FMM, "FMM app link");
+            }
             return this.page
         }
         if (app === 'ATL') {
@@ -154,19 +171,85 @@ class g4PortalPage {
         }
     }
 
+    async openApp(locator, locatorDescription) {
+        try {
+            await this.actions.scroll(locator);
+            await this.actions.waitForDisplayed(locator, locatorDescription, 30000);
+
+            // Get initial page count
+            const initialPages = await this.context.pages();
+            const initialPageCount = initialPages.length;
+            console.log(`Initial page count before clicking ${locatorDescription}: ${initialPageCount}`);
+
+            // Listen for new page creation
+            const newPagePromise = this.context.waitForEvent('page');
+
+            // Click the element
+            await this.actions.click(locator, locatorDescription);
+            console.log(`Clicked on ${locatorDescription}, waiting for new page...`);
+
+            // Wait for new page to be created
+            const newPage = await newPagePromise;
+            await newPage.waitForLoadState('domcontentloaded', { timeout: 30000 });
+
+            console.log(`New page opened with URL: ${newPage.url()}`);
+
+            // Update the page reference
+            this.page = newPage;
+            this.actions = new Actions(this.page, this.context);
+
+            // Verify the page count increased
+            const finalPages = await this.context.pages();
+            console.log(`Final page count after opening ${locatorDescription}: ${finalPages.length}`);
+
+            if (finalPages.length !== initialPageCount + 1) {
+                console.warn(`Expected ${initialPageCount + 1} pages, but got ${finalPages.length}`);
+            }
+
+            return this.page;
+
+        } catch (error) {
+            console.error(`Error opening ${locatorDescription}:`, error.message);
+            throw new Error(`Failed to open ${locatorDescription}: ${error.message}`);
+        }
+    }
+
     async flightValidation() {
-        await this.actions.waitForLoadState('domcontentloaded', 10000);
-        await this.actions.waitForDisplayed(dateTimeFMM, 'dateTimeFMM')
+        await this.actions.waitForLoadState('domcontentloaded', 30000);
+        await this.actions.waitForDisplayed(dateTimeFMM, 'dateTimeFMM', 30000);
         console.log("dateTimeFMM: " + await this.actions.isDisplayed(dateTimeFMM, "dateTimeFMM"));
-        await this.actions.waitForDisplayed(fmmFlight, 'fmmFlight', 10000)
-        console.log("fmmFlight: " + await this.actions.isDisplayed(fmmFlight, "fmmFlight"));
-        let Flightno = await this.actions.getElements(fmmFlight)
-        console.log("Availableflights: " + await Flightno.length);
+
+        console.log("Waiting for flight elements to be available...");
+        try {
+            await this.actions.waitForFirstElementVisible(fmmFlight, 'fmmFlight', 30000);
+            console.log("First flight element is now visible");
+        } catch (error) {
+            console.error("Failed to find flight elements: " + error.message);
+            throw new Error("Flight validation failed");
+        }
+
+        // Get all flight elements
+        let flightElements = await this.actions.getElements(fmmFlight);
+        console.log("Available flights: " + flightElements.length);
+
+        // Wait for page to stabilize
         await this.actions.waitForLoadState('domcontentloaded', 15000);
-        assert.isTrue(
-            await this.actions.isDisplayed(fmmFlight, "fmm Flights checking"),
-            'Validation Failed : flights are not available');
-        // await browser.pause(10000)
+
+        // Validate that flights are available
+        if (flightElements.length > 0) {
+            console.log("Flight validation successful - found " + flightElements.length + " flights");
+        } else {
+            assert.fail('Validation Failed: flights are not available');
+        }
+        try {
+            await this.actions.waitForFirstElementVisible(fmmFlight, 'first flight element', 5000);
+            console.log("First flight element visibility confirmed");
+        } catch (error) {
+            console.error("Failed to validate first flight visibility: " + error.message);
+            assert.fail('Validation Failed: first flight element is not visible');
+        }
+
+        console.log("Flight validation completed successfully");
     }
 
     async navigateToG4Fmm() {
@@ -236,38 +319,158 @@ class g4PortalPage {
     }
 
     async Openclpageinnewtab() {
-        await homePage.getEnvironmentValue()
+        const homePageInstance = new homePage(this.page, this.context);
+        await homePageInstance.getEnvironmentValue()
         var getEnv = process.env.ENV
         if (getEnv.includes('okd')) {
             var envURL = getEnv.split('-')[1].split('.')[0]
             var env = envURL.slice(0, 3) + '.' + envURL.slice(3, 8) + '.' + envURL.slice(8, 13)
-            let pageurl = 'https://g4plus-res-' + envURL + '.okd.allegiantair.com/app/customers/list'
-            await browser.newWindow(pageurl)
+            let pageurl = 'https://app-customers' + getEnv + '.allegiantair.com/list'
+            console.log("Opening new window with URL: " + pageurl)
+            await this.actions.newWindow(pageurl)
+            // Wait for page to load before switching
+            await this.actions.waitForLoadState('domcontentloaded', 5000)
+            let newPageObject = await this.actions.switchWindow(pageurl)
+            if (!newPageObject) {
+                console.error("Failed to switch window in Openclpageinnewtab (okd) - newPageObject is null");
+                // Try to find the page by a partial URL match
+                const pages = await this.context.pages();
+                console.log("Available pages: ", pages.map(p => p.url()));
+                newPageObject = pages.find(page => page.url().includes('app-customers') && page.url().includes('.allegiantair.com/list'));
+                if (!newPageObject) {
+                    throw new Error("Failed to switch to new window");
+                }
+            }
+            this.page = newPageObject
+            this.actions = new Actions(this.page, this.context)
+            console.log("Successfully switched to CL page (okd): " + await this.actions.getUrl())
         }
         else if (getEnv.includes('prd01')) {
             var envURL = getEnv.split('-')[1].split('.')[0]
             var env = envURL.slice(0, 3) + '.' + envURL.slice(3, 8) + '.' + envURL.slice(8, 13)
-            let pageurl = 'https://g4plus-res-' + envURL + '.allegiantair.com/app/customers/list'
-            await browser.newWindow(pageurl)
+            let pageurl = 'https://app-customers' + getEnv + '.allegiantair.com/list'
+            console.log("Opening new window with URL: " + pageurl)
+            await this.actions.newWindow(pageurl)
+            // Wait for page to load before switching
+            await this.actions.waitForLoadState('domcontentloaded', 5000)
+            let newPageObject = await this.actions.switchWindow(pageurl)
+            if (!newPageObject) {
+                console.error("Failed to switch window in Openclpageinnewtab (prd01) - newPageObject is null");
+                // Try to find the page by a partial URL match
+                const pages = await this.context.pages();
+                console.log("Available pages: ", pages.map(p => p.url()));
+                newPageObject = pages.find(page => page.url().includes('app-customers') && page.url().includes('.allegiantair.com/list'));
+                if (!newPageObject) {
+                    throw new Error("Failed to switch to new window");
+                }
+            }
+            this.page = newPageObject
+            this.actions = new Actions(this.page, this.context)
+            console.log("Successfully switched to CL page (prd01): " + await this.actions.getUrl())
         } else if (getEnv.includes('dev01')) {
             var envURL = getEnv.split('-')[1].split('.')[0]
             var env = envURL.slice(0, 3) + '.' + envURL.slice(3, 8) + '.' + envURL.slice(8, 13)
-            let pageurl = 'https://g4plus-res-' + envURL + '.okd.allegiantair.com/app/customers/list'
-            await browser.newWindow(pageurl)
+            let pageurl = 'https://app-customers' + getEnv + '.allegiantair.com/list'
+            console.log("Opening new window with URL: " + pageurl)
+            await this.actions.newWindow(pageurl)
+            // Wait for page to load before switching
+            await this.actions.waitForLoadState('domcontentloaded', 5000)
+            let newPageObject = await this.actions.switchWindow(pageurl)
+            if (!newPageObject) {
+                console.error("Failed to switch window in Openclpageinnewtab (dev01) - newPageObject is null");
+                // Try to find the page by a partial URL match
+                const pages = await this.context.pages();
+                console.log("Available pages: ", pages.map(p => p.url()));
+                newPageObject = pages.find(page => page.url().includes('app-customers') && page.url().includes('.allegiantair.com/list'));
+                if (!newPageObject) {
+                    throw new Error("Failed to switch to new window");
+                }
+            }
+            this.page = newPageObject
+            this.actions = new Actions(this.page, this.context)
+            console.log("Successfully switched to CL page (dev01): " + await this.actions.getUrl())
         } else {
-            let pageurl = 'https://g4plus-res' + getEnv + '.allegiantair.com/app/customers/list'
-            await browser.newWindow(pageurl)
+            console.log("getEnv: " + getEnv)
+            console.log("process.env.ENV: " + process.env.ENV)
+            let pageurl = 'https://app-customers' + getEnv + '.allegiantair.com/list'
+            // https://app-customers-qatnexusg4v4.apps.swe-qat.aws.allegiantair.com/list
+            console.log("Opening new window with URL: " + pageurl)
+            await this.actions.newWindow(pageurl)
+            // Wait for page to load before switching
+            await this.actions.waitForLoadState('domcontentloaded', 5000)
+            let newPageObject = await this.actions.switchWindow(pageurl)
+            if (!newPageObject) {
+                console.error("Failed to switch window in Openclpageinnewtab - newPageObject is null");
+                // Try to find the page by a partial URL match
+                const pages = await this.context.pages();
+                console.log("Available pages: ", pages.map(p => p.url()));
+                newPageObject = pages.find(page => page.url().includes('app-customers') && page.url().includes('.allegiantair.com/list'));
+                if (!newPageObject) {
+                    throw new Error("Failed to switch to new window");
+                }
+            }
+            this.page = newPageObject
+            this.actions = new Actions(this.page, this.context)
+            console.log("Successfully switched to CL page: " + await this.actions.getUrl())
         }
     }
 
     async guestLogin() {
         // await this.actions.pause(8000)
+        // Validate page object before using
+        if (!this.page) {
+            console.error("Page object is null in guestLogin method");
+            throw new Error("Page object is not properly initialized");
+        }
+
+        if (!this.actions || !this.actions.page) {
+            console.error("Actions object or its page is null in guestLogin method");
+            // Re-initialize actions if needed
+            this.actions = new Actions(this.page, this.context);
+        }
+
         console.log("new tab : " + await this.actions.getUrl())
         await this.actions.isDisplayed(guestLogin, 'guestLogin')
+
+        // Listen for new page creation before clicking
+        const newPagePromise = this.context.waitForEvent('page');
+
         await this.actions.click(guestLogin, 'guestLogin')
-        // await this.actions.pause(5000)
         console.log("Before Switch : " + await this.actions.getUrl())
-        let newPageObject = await this.actions.switchWindow(process.env.ENV)
+
+        let newPageObject = null;
+
+        try {
+            const newPage = await newPagePromise;
+            await newPage.waitForLoadState('domcontentloaded', { timeout: 10000 });
+            console.log("New page created with URL: " + newPage.url());
+
+            console.log("Trying to switch to window with: " + process.env.appEnv);
+            newPageObject = await this.actions.switchWindow(process.env.appEnv);
+
+            if (!newPageObject) {
+                console.log("Primary switch failed, trying fallback methods...");
+
+                const pages = await this.context.pages();
+                console.log("Available pages: ", pages.map(p => p.url()));
+
+                newPageObject = pages.find(page => page !== this.page && page.url().includes(process.env.appEnv.replace('https://', '').replace('http://', '')));
+
+                if (!newPageObject) {
+                    newPageObject = newPage;
+                }
+            }
+
+        } catch (pageError) {
+            console.error("Error waiting for new page or switching: ", pageError.message);
+            newPageObject = await this.actions.switchWindow(process.env.appEnv);
+        }
+
+        if (!newPageObject) {
+            console.error("Failed to switch window - newPageObject is null after all fallback attempts");
+            throw new Error("Failed to switch to new window");
+        }
+
         this.page = newPageObject
         this.actions = new Actions(this.page, this.context)
         console.log("switched to guest login page")
@@ -289,8 +492,9 @@ class g4PortalPage {
     }
 
     async validateCartOverridePage() {
-        // await this.actions.pause(5000);
-        if (await this.actions.getTitle() === 'Payment') {
+        await this.actions.waitForURL('**/cart-override', 10000);
+        await this.actions.waitForLoadState('domcontentloaded', 10000);
+        if (await this.actions.getTitle() === 'CART-OVERRIDE') {
             console.log('Successfully completed on CART-OVERRIDE Page');
         } else {
             assert.fail('Something not proceed with CART-OVERRIDE page')

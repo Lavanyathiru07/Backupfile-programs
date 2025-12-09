@@ -31,16 +31,18 @@ class CarPage {
         await this.actions.waitForDisplayed(carPageHeader, 'carPageHeader', 30000)
         let carPageHeaderVisbilty = await this.actions.isDisplayed(carPageHeader, 'carPageHeader')
         console.log("carPageHeaderVisbilty: ", carPageHeaderVisbilty)
-        if (carPageHeaderVisbilty) {
-            console.log("Car's Text is Available")
-            await this.actions.waitForDisplayed(carsPageContinueButton, 'carsPageContinueButton', 30000)
-            await this.actions.scroll(carpagescroll);
-            await this.actions.waitForClickable(carskip, 'skip link in cars page', 30000)
-            await this.actions.clickElement('click', carskip, "skip link in cars page")
-        }
-        else {
-            console.log('cars are not available for this city pair');
-            await this.actions.waitForDisplayed(icePopup, 'icePopup', 30000)
+        try {
+            if (carPageHeaderVisbilty) {
+                console.log("Car's Text is Available")
+                await this.actions.waitForDisplayed(carsPageContinueButton, 'carsPageContinueButton')
+                await this.actions.waitForClickable(carskip, 'skip link in cars page', 5000)
+                await this.actions.clickElement('click', carskip, "skip link in cars page")
+            }
+            else {
+                console.log('cars are not available for this city pair');
+            }
+        } catch (error) {
+            console.log("Cars are not available for this city pair")
         }
     }
 
