@@ -2,10 +2,13 @@ import Actions from '../../src/support/actions.js';
 import { assert } from 'chai';
 import myUtil from '../../utility/dbutil.js';
 import jsonPath from 'jsonpath';
-
-const actions = new Actions();
-
 export default class ATLPage {
+
+    actions;
+
+    constructor(page, context) {
+        this.actions = new Actions(page, context)
+    }
 
     async getDBResults(ITN) {
         let userName = "otaactng"; //Db username
@@ -183,7 +186,7 @@ export default class ATLPage {
                 pcAmount = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType=='FEES' && @.category=='PC')]"), '$..amount')
                 console.log(pcAmount)
             } else if (seg.includes('mod') || seg.includes('cancel')) {
-                await actions.pause(200)
+                await this.page.waitForTimeout(2500)
                 posNegEntries = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType==null && @.ota_order_event_type == 'MODIFIED')]"), '$..amount')
                 console.log(posNegEntries)
             } else {

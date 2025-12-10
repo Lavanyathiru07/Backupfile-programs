@@ -66,7 +66,7 @@ async function ATLBooking() {
             process.env.depFlight = response.departureFlightId
             process.env.retFlight = response.returningFlightId
             process.env.mflightID = response.departureFlightId
-            process.env.bookingAmout = response.TripSummaryDetails.Total
+            process.env.bookingAmout = response.tripSummaryDetails.Total
             if (response.confNumber === undefined) {
                 assert.fail('No confirmation number found')
             }

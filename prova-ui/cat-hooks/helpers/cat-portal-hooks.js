@@ -1,4 +1,4 @@
-import { CatServer } from './cat-helper.js';
+import { CatServer, DEFAULT_PROD_CAT_URL, DEFAULT_UI_API_PATH, DEFAULT_CAT_WS_PATH } from './cat-helper.js';
 import _ from 'lodash';
 const CatProxy = CatServer;
 import { mkdirp } from 'mkdirp';
@@ -52,7 +52,7 @@ class CatPortalHooks {
         if (process.env.CAT_URL && process.env.CAT_API_PATH) {
             catProxy = new CatProxy(process.env.CAT_URL, process.env.CAT_API_PATH);
         } else {
-            catProxy = new CatProxy(CatHelper.DEFAULT_PROD_CAT_URL, CatHelper.DEFAULT_CAT_WS_PATH);
+            catProxy = new CatProxy(DEFAULT_PROD_CAT_URL, DEFAULT_CAT_WS_PATH);
         }
 
         console.log(this.LOG_HEADER, LOG_METHOD, `CAT_JOB_ID enabled: ${process.env.CAT_JOB_ID}`);
@@ -112,9 +112,11 @@ class CatPortalHooks {
 
 
         if (process.env.CAT_JOB_ID) {
+            const catUrl = process.env.CAT_URL || DEFAULT_PROD_CAT_URL;
+            const catApiPath = process.env.CAT_API_PATH || DEFAULT_CAT_WS_PATH;
             catProxy = new CatProxy(
-                process.env.CAT_URL,
-                process.env.CAT_API_PATH,
+                catUrl,
+                catApiPath,
                 null,
                 process.env.CAT_JOB_ID,
             );
@@ -168,9 +170,11 @@ class CatPortalHooks {
         // Check above step if that works are not
         console.log("process.env.CAT_JOB_ID ::", process.env.CAT_JOB_ID)
         if (process.env.CAT_JOB_ID) {
+            const catUrl = process.env.CAT_URL || DEFAULT_PROD_CAT_URL;
+            const catApiPath = process.env.CAT_API_PATH || DEFAULT_CAT_WS_PATH;
             const catProxy = new CatProxy(
-                process.env.CAT_URL,
-                process.env.CAT_API_PATH,
+                catUrl,
+                catApiPath,
                 null,
                 process.env.CAT_JOB_ID,
             );
@@ -412,9 +416,11 @@ class CatPortalHooks {
                 }
             }
 
+            const catUrl = process.env.CAT_URL || DEFAULT_PROD_CAT_URL;
+            const catApiPath = process.env.CAT_API_PATH || DEFAULT_CAT_WS_PATH;
             const catProxy = new CatProxy(
-                process.env.CAT_URL,
-                process.env.CAT_API_PATH,
+                catUrl,
+                catApiPath,
                 null,
                 process.env.CAT_JOB_ID,
             );
@@ -478,9 +484,11 @@ class CatPortalHooks {
 
         if (process.env.CAT_JOB_ID) {
             const featureName = feature.name;
+            const catUrl = process.env.CAT_URL || DEFAULT_PROD_CAT_URL;
+            const catApiPath = process.env.CAT_API_PATH || DEFAULT_CAT_WS_PATH;
             const catProxy = new CatProxy(
-                process.env.CAT_URL,
-                process.env.CAT_API_PATH,
+                catUrl,
+                catApiPath,
                 null,
                 process.env.CAT_JOB_ID,
             );
@@ -515,9 +523,11 @@ class CatPortalHooks {
         const endDateTime = new Date().toISOString();
 
         if (process.env.CAT_JOB_ID && process.env.CAT_DISABLE_CLOSE_JOB !== 'true') {
+            const catUrl = process.env.CAT_URL || DEFAULT_PROD_CAT_URL;
+            const catApiPath = process.env.CAT_API_PATH || DEFAULT_CAT_WS_PATH;
             const catProxy = new CatProxy(
-                process.env.CAT_URL,
-                process.env.CAT_API_PATH,
+                catUrl,
+                catApiPath,
                 null,
                 process.env.CAT_JOB_ID,
             );

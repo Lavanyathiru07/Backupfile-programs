@@ -47,7 +47,7 @@
         "@cucumber/gherkin": "25.0.2",
         "@faker-js/faker": "^7.6.0",
         "@g4/cat-integration-util": "^0.8.0",
-        "@g4/gql-booking-util": "^1.14.6",
+        "@g4/gql-booking-util": "^1.23.10",
         "@playwright/test": "^1.37.1",
         "allure-commandline": "^2.24.1",
         "allure-cucumberjs": "^2.15.1",
