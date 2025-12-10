@@ -5,8 +5,12 @@ import jsonPath from 'jsonpath';
 export default class ATLPage {
 
     actions;
+    page;
+    context;
 
     constructor(page, context) {
+        this.page = page;
+        this.context = context;
         this.actions = new Actions(page, context)
     }
 
@@ -186,7 +190,7 @@ export default class ATLPage {
                 pcAmount = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType=='FEES' && @.category=='PC')]"), '$..amount')
                 console.log(pcAmount)
             } else if (seg.includes('mod') || seg.includes('cancel')) {
-                await this.page.waitForTimeout(2500)
+                await this.actions.waitForLoadState()
                 posNegEntries = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType==null && @.ota_order_event_type == 'MODIFIED')]"), '$..amount')
                 console.log(posNegEntries)
             } else {
