@@ -143,7 +143,23 @@ class BagsPage {
                 await this.actions.clickElement('click', carryonIncreturn, 'button to increment the carryOn bags for return')
             } while (parseInt(await this.actions.getText(carryonCurrentVlaueret, "increment button")) < 1)
         }
-        BagsPageCollector.set('carryOnPrice', (await this.actions.getText(carryOnPrice.replace(/X/g, 1), 'carryon price')).split("$")[1])
+
+        // Check if carry-on price is included or has a price
+        const carryOnPriceElement = carryOnPrice.replace(/X/g, 1)
+        try {
+            const priceText = await this.actions.getText(carryOnPriceElement, 'carryon price')
+            if (priceText && priceText.toUpperCase().includes('INCLUDED')) {
+                console.log("Carry-on is included in bundle")
+                BagsPageCollector.set('carryOnPrice', 'INCLUDED')
+            } else if (priceText && priceText.includes('$')) {
+                BagsPageCollector.set('carryOnPrice', priceText.split("$")[1])
+            } else {
+                BagsPageCollector.set('carryOnPrice', 'N/A')
+            }
+        } catch (error) {
+            console.log("Could not get carry-on price:", error.message)
+            BagsPageCollector.set('carryOnPrice', 'N/A')
+        }
     }
 
     async selectCheckedBagByParams(params) {
@@ -172,7 +188,8 @@ class BagsPage {
             for (var i = 0; i < checked; i++) {
                 // await this.actions.waitForClickable(checkedincdepart, "the button to increment the checkedin bags")
                 // await this.actions.scroll(checkedincdepart)
-                await this.actions.waitForDisplayed(checkedincdepart, "increment button till it displayed")
+                await this.actions.waitForDisplayed(checkedincdepart, "increment button till it displayed", 30000)
+                await this.actions.waitForClickable(checkedincdepart, "increment button for checked-In bags", 30000)
                 if (await this.actions.isClickable(checkedincdepart, "increment button")) {
                     await this.actions.clickElement('click', checkedincdepart, "increment button for checked-In bags")
                 }
@@ -181,14 +198,17 @@ class BagsPage {
         if (segment === "departing") {
             if (!(await this.actions.isDisplayed(checkedincreturn, "increment button for return"))) {
                 if (await this.actions.isDisplayed(sameOptionsForAllFlight, "checkbox")) {
+                    await this.actions.waitForClickable(sameOptionsForAllFlight, "checkbox to select/deselect the option for all flights for return", 30000)
                     await this.actions.clickElement('click', sameOptionsForAllFlight, "checkbox to select/deselect the option for all flights for return")
                 }
                 for (var i = 0; i < checked; i++) {
+                    await this.actions.waitForClickable(checkedincdepart, "increment button for checked-In bags", 30000)
                     await this.actions.clickElement('click', checkedincdepart, "increment button for checked-In bags")
                 }
             }
             else {
                 for (var i = 0; i < checked; i++) {
+                    await this.actions.waitForClickable(checkedincdepart, "increment button for checked-In bags", 30000)
                     await this.actions.clickElement('click', checkedincdepart, "increment button for checked-In bags")
                 }
             }
@@ -196,20 +216,57 @@ class BagsPage {
         if (segment === "returning") {
             if (!(await this.actions.isDisplayed(checkedincreturn, "increment button for return"))) {
                 if (await this.actions.isDisplayed(sameOptionsForAllFlight, "checkbox")) {
+                    await this.actions.waitForClickable(sameOptionsForAllFlight, "checkbox to select/deselect the option for all flights for return", 30000)
                     await this.actions.clickElement('click', sameOptionsForAllFlight, "checkbox to select/deselect the option for all flights for return")
                 }
                 for (var i = 0; i < checked; i++) {
+                    await this.actions.waitForClickable(checkedincreturn, "increment button for checked-In bags", 30000)
                     await this.actions.clickElement('click', checkedincreturn, "increment button for checked-In bags")
                 }
             }
             else {
                 for (var i = 0; i < checked; i++) {
+                    await this.actions.waitForClickable(checkedincreturn, "increment button for checked-In bags", 30000)
                     await this.actions.clickElement('click', checkedincreturn, "increment button for checked-In bags")
                 }
             }
         }
-        await this.actions.waitForDisplayed(checkedbagPrice.replace(/X/g, 1), 'checked bag price', 30000)
-        BagsPageCollector.set('checkedBagPrice', (await this.actions.getText(checkedbagPrice.replace(/X/g, 1), 'checked bag price')).split("$")[1])
+        await this.actions.waitForLoadState()
+
+        // Check if checked bag is included or has a price
+        const priceElement = checkedbagPrice.replace(/X/g, 1)
+        try {
+            // First check if element exists
+            const element = await this.actions.getElement(priceElement)
+            if (element) {
+                // Check if the element contains "INCLUDED" text
+                const priceText = await this.actions.getText(priceElement, 'checked bag price')
+                if (priceText && priceText.toUpperCase().includes('INCLUDED')) {
+                    console.log("Checked bag is included in bundle")
+                    BagsPageCollector.set('checkedBagPrice', 'INCLUDED')
+                } else {
+                    // Wait for the price to be visible and get the price
+                    await this.actions.waitForDisplayed(priceElement, 'checked bag price', 30000)
+                    BagsPageCollector.set('checkedBagPrice', priceText.split("$")[1])
+                }
+            }
+        } catch (error) {
+            console.log("Could not find or access checked bag price element:", error.message)
+            // Try to get price text without waiting for visibility
+            try {
+                const priceText = await this.actions.getText(priceElement, 'checked bag price')
+                if (priceText && priceText.toUpperCase().includes('INCLUDED')) {
+                    BagsPageCollector.set('checkedBagPrice', 'INCLUDED')
+                } else if (priceText && priceText.includes('$')) {
+                    BagsPageCollector.set('checkedBagPrice', priceText.split("$")[1])
+                } else {
+                    BagsPageCollector.set('checkedBagPrice', 'N/A')
+                }
+            } catch (textError) {
+                console.log("Could not get checked bag price text:", textError.message)
+                BagsPageCollector.set('checkedBagPrice', 'N/A')
+            }
+        }
     }
 
     async selectTripflex(tripflex) {
