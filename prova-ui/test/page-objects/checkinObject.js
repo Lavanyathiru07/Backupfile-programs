@@ -1,5 +1,6 @@
 import Actions from '../../src/support/actions.js'
 import Check from '../../src/support/validations.js'
+import SeatPage from './seatsPageObject.js'
 
 const onelineCheckin = "//button[@data-hook='order-item-flight-info_onward-check-in-button']"
 const checkinbutton = "//button[@class='Button__StyledButton-sc-1ececxa-1 jGMNve PageFooter__ContinueButton-sc-1me5dil-0 bmowAx']"
@@ -17,6 +18,7 @@ class CheckInPage {
     constructor(page, context) {
         this.actions = new Actions(page, context)
         this.check = new Check(page, context)
+        this.seatPage = new SeatPage(page, context)
     }
 
     async onlineCheckin() {
@@ -39,7 +41,19 @@ class CheckInPage {
     }
 
     async PrintBoardingPasses() {
-        await this.actions.waitForDisplayed(checkinstatus, 'checkin status', 5000);
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
+
+        let currentUrl = await this.actions.getUrl()
+        console.log('Current URL before waiting:', currentUrl)
+
+        if (currentUrl.includes('/payment')) {
+            await this.actions.waitForLoadState('domcontentloaded', 30000)
+        }
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
+        await this.actions.waitForDisplayed('//*[@data-hook="pass-page_title"]', 'boarding passes page', 30000)
+
+        await this.actions.scroll(checkinstatus)
+        await this.actions.waitForDisplayed(checkinstatus, 'checkin status', 30000);
         let checkinstatusIsDisplayed = await this.actions.isDisplayed(checkinstatus, 'checkinstatus')
         if (checkinstatusIsDisplayed) {
             console.log("Checkin Passed")
@@ -79,11 +93,12 @@ class CheckInPage {
         await this.actions.click(checkinharadeouspagecontinue, 'checkinharadeouspagecontinue')
 
         await this.actions.waitForLoadState('domcontentloaded', 30000)
-        await this.actions.scroll("//img[@alt='Apple App Store']")
-        await this.actions.waitForDisplayed(checkinseatpagecontinue, 'seat page continue', 30000)
-        await this.actions.waitForClickable(checkinseatpagecontinue, 'seat page continue', 30000)
-        await this.actions.click(checkinseatpagecontinue, 'checkinseatpagecontinue')
-        await this.actions.waitForLoadState('domcontentloaded', 30000)
+        await this.seatPage.skipSeatsPage()
+        // await this.actions.scroll("//img[@alt='Apple App Store']")
+        // await this.actions.waitForDisplayed(checkinseatpagecontinue, 'seat page continue', 30000)
+        // await this.actions.waitForClickable(checkinseatpagecontinue, 'seat page continue', 30000)
+        // await this.actions.click(checkinseatpagecontinue, 'checkinseatpagecontinue')
+        // await this.actions.waitForLoadState('domcontentloaded', 30000)
     }
 
 }

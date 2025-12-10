@@ -208,6 +208,7 @@ class BagsPage {
                 }
             }
         }
+        await this.actions.waitForDisplayed(checkedbagPrice.replace(/X/g, 1), 'checked bag price', 30000)
         BagsPageCollector.set('checkedBagPrice', (await this.actions.getText(checkedbagPrice.replace(/X/g, 1), 'checked bag price')).split("$")[1])
     }
 
