@@ -13,7 +13,8 @@ let featureCall = false;
 let page, browser, context;
 let isMainProcess = false; // Track if this is the main process
 
-setDefaultTimeout(60000);
+// Increase timeout for Jenkins CI environment
+setDefaultTimeout(120000);
 
 // Initialize CAT before all tests (runs in each worker)
 BeforeAll(async function () {

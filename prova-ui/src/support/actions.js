@@ -1526,9 +1526,9 @@ class Actions {
      * - await actions.waitForLoadState('domcontentloaded', 10000) - Custom timeout
      * 
      * @param {string} state Load state to wait for ('load', 'domcontentloaded', 'networkidle') - default: 'domcontentloaded'
-     * @param {number} timeout Timeout in ms (default: 30000)
+     * @param {number} timeout Timeout in ms (default: 60000)
      */
-    async waitForLoadState(state = 'domcontentloaded', timeout = 30000) {
+    async waitForLoadState(state = 'domcontentloaded', timeout = 60000) {
         Logger.info(`Waiting for load state: ${state} (timeout: ${timeout}ms)`);
         try {
             await this.page.waitForLoadState(state, { timeout });

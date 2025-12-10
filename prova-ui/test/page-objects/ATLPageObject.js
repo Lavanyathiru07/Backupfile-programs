@@ -201,7 +201,7 @@ export default class ATLPage {
                 pcAmount = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType=='FEES' && @.category=='PC')]"), '$..amount')
                 console.log(pcAmount)
             } else if (seg && (seg.includes('mod') || seg.includes('cancel'))) {
-                await this.actions.waitForLoadState()
+                await this.actions.waitForLoadState('domcontentloaded', 60000) // Increase timeout for Jenkins
                 posNegEntries = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType==null && @.ota_order_event_type == 'MODIFIED')]"), '$..amount')
                 console.log(posNegEntries)
             } else {

@@ -16,6 +16,9 @@ export default class MysqlUtil {
             user: userName,
             password: userPass,
             database: database,
+            connectTimeout: 60000, // 60 seconds connection timeout
+            acquireTimeout: 60000,  // 60 seconds acquire timeout
+            timeout: 60000          // 60 seconds query timeout
         });
         this.#connection.connect((err) => {
             if (err) {
@@ -25,43 +28,61 @@ export default class MysqlUtil {
     }
 
     /**
-      * This method is used to execute query
+      * This method is used to execute query with retry logic for Jenkins stability
       * @param {*} sqlQuery contains query
       */
     async executeQuery(sqlQuery) {
-        // console.log("Executing Query..>" + sqlQuery)
-        // await new Promise((resolve, reject) => {
-        //     this.#connection.query(sqlQuery, function (error, rows) {
-        //         if (error) {
-        //             reject(error);
-        //         }
-
-        //         resolve(rows);
-        //     });
-        // }).then((rows) => {
-        //     console.log(rows)
-        //     this.#resultsOutput = JSON.parse(JSON.stringify(rows));
-        // }).catch((error) => {
-        //     console.error(error);
-        // });
         console.time('process')
-        this.#resultsOutput = await new Promise((resolve, reject) => {
-            this.#connection.query(sqlQuery, (error, results) => {
-                if (error) reject(error);
 
-                if (!results[0]) {
-                    console.log("No results");
-                    resolve(); // give `undefined` to the `await...` and make it stop waiting
-                    return;
+        // Retry logic for Jenkins environment stability
+        const maxRetries = 3;
+        let lastError;
+
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                this.#resultsOutput = await new Promise((resolve, reject) => {
+                    // Add query timeout of 30 seconds
+                    const queryTimeout = setTimeout(() => {
+                        reject(new Error('Database query timed out after 30 seconds'));
+                    }, 30000);
+
+                    this.#connection.query(sqlQuery, (error, results) => {
+                        clearTimeout(queryTimeout);
+
+                        if (error) {
+                            reject(error);
+                            return;
+                        }
+
+                        if (!results[0]) {
+                            console.log("No results");
+                            resolve(); // give `undefined` to the `await...` and make it stop waiting
+                            return;
+                        } else {
+                            console.log(results);
+                            resolve(results);
+                        }
+                    });
+                });
+
+                console.timeEnd('process')
+                return; // Success, exit retry loop
+
+            } catch (error) {
+                lastError = error;
+                console.log(`Database query attempt ${attempt} failed:`, error.message);
+
+                if (attempt < maxRetries) {
+                    const delay = Math.pow(2, attempt) * 1000; // Exponential backoff
+                    console.log(`Retrying in ${delay}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
                 } else {
-                    console.log(results);
-                    resolve(results);
+                    console.log('All database query attempts failed');
+                    console.timeEnd('process')
+                    throw lastError;
                 }
-
-            })
-        });
-
-        console.timeEnd('process')
+            }
+        }
     }
     /**
      * This method is used to closeConnection

@@ -27,23 +27,23 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    
+
     /* Take screenshot on failure */
     screenshot: 'only-on-failure',
-    
+
     /* Record video on failure */
     video: 'retain-on-failure',
-    
+
     /* Global timeout for each test */
-    actionTimeout: 30000,
-    navigationTimeout: 60000,
+    actionTimeout: 60000,
+    navigationTimeout: 120000,
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
         headless: process.env.HEADLESS === 'true',
         viewport: { width: 1280, height: 720 },
@@ -52,7 +52,7 @@ export default defineConfig({
 
     {
       name: 'firefox',
-      use: { 
+      use: {
         ...devices['Desktop Firefox'],
         headless: process.env.HEADLESS === 'true',
       },
@@ -60,7 +60,7 @@ export default defineConfig({
 
     {
       name: 'webkit',
-      use: { 
+      use: {
         ...devices['Desktop Safari'],
         headless: process.env.HEADLESS === 'true',
       },
@@ -69,14 +69,14 @@ export default defineConfig({
     /* Test against mobile viewports. */
     {
       name: 'Mobile Chrome',
-      use: { 
+      use: {
         ...devices['Pixel 5'],
         headless: process.env.HEADLESS === 'true',
       },
     },
     {
       name: 'Mobile Safari',
-      use: { 
+      use: {
         ...devices['iPhone 12'],
         headless: process.env.HEADLESS === 'true',
       },
