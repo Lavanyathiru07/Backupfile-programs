@@ -166,30 +166,41 @@ export default class ATLPage {
     }
 
     async verifyPositiveAndNegativeEntries(resultsJson, seg, field, event) {
+        // Handle case where only resultsJson and event are passed (seg is actually event, field is undefined)
+        if (arguments.length === 2) {
+            event = seg; // seg is actually the event parameter
+            seg = null;
+            field = null;
+        }
+
         let FlightNum, date, posNegEntries, paAmount, pcAmount, count
-        switch (true) {
-            case seg.includes('dep'):
-                FlightNum = await this.setFlighNum(process.env.depFlight)
-                date = await this.convertDate(process.env.depDate)
-                break;
-            case seg.includes('ret'):
-                FlightNum = await this.setFlighNum(process.env.retFlight)
-                date = await this.convertDate(process.env.retDate)
-                break;
-            default:
-                break;
+
+        // Only try to access seg.includes if seg is not null
+        if (seg) {
+            switch (true) {
+                case seg.includes('dep'):
+                    FlightNum = await this.setFlighNum(process.env.depFlight)
+                    date = await this.convertDate(process.env.depDate)
+                    break;
+                case seg.includes('ret'):
+                    FlightNum = await this.setFlighNum(process.env.retFlight)
+                    date = await this.convertDate(process.env.retDate)
+                    break;
+                default:
+                    break;
+            }
         }
 
         if (field == null || field.includes('MC_CC_PAYMENT_FEES')) {
             field = 'PAYMENT_CC_MC'
-            if (seg.includes('PA & PC')) {
+            if (seg && seg.includes('PA & PC')) {
                 //paAmount
                 paAmount = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType=='FEES' && @.category=='PA')]"), '$..amount')
                 console.log(paAmount)
                 //pcAmount
                 pcAmount = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType=='FEES' && @.category=='PC')]"), '$..amount')
                 console.log(pcAmount)
-            } else if (seg.includes('mod') || seg.includes('cancel')) {
+            } else if (seg && (seg.includes('mod') || seg.includes('cancel'))) {
                 await this.actions.waitForLoadState()
                 posNegEntries = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType==null && @.ota_order_event_type == 'MODIFIED')]"), '$..amount')
                 console.log(posNegEntries)
