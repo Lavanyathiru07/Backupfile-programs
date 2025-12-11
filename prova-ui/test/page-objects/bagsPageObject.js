@@ -49,6 +49,7 @@ class BagsPage {
 
     constructor(page, context) {
         this.actions = new Actions(page, context)
+        this.page = page
     }
 
     async selectingextraaccess() {
@@ -71,11 +72,12 @@ class BagsPage {
         // await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 15000)
         // await this.actions.scroll(batteriesscroll)
         await this.actions.waitForLoadState('domcontentloaded', 30000)
+        await this.actions.scroll(continueb)
         await this.actions.waitForDisplayed(continueb, 'Continue button in BAGS PAGE', 30000)
         await this.actions.waitForClickable(continueb, 'Continue button in BAGS PAGE', 30000)
         // await this.actions.scroll(continueb)
         await this.actions.clickElement('click', continueb, 'Continue button in BAGS PAGE')
-        // await this.actions.pause(5000)
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
         let popupContinueBtnVisibility = await this.actions.isDisplayed(popupContinueButton, "continue button to close the popup")
         console.log("popupContinueBtnVisibility: ", popupContinueBtnVisibility)
         if (popupContinueBtnVisibility) {

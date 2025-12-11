@@ -166,6 +166,7 @@ export default class ATLPage {
     }
 
     async verifyPositiveAndNegativeEntries(resultsJson, seg, field, event) {
+        await this.actions.waitForLoadState()
         // Handle case where only resultsJson and event are passed (seg is actually event, field is undefined)
         if (arguments.length === 2) {
             event = seg; // seg is actually the event parameter
@@ -311,6 +312,7 @@ export default class ATLPage {
     }
 
     async verifyAcctNbrColumnTransaction(resultsJson, value, seg, posneg, field) {
+        await this.actions.waitForLoadState()
         let FlightNum, date, posNegEntry
         switch (true) {
             case seg.includes('dep'):
