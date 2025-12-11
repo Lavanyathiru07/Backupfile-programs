@@ -392,7 +392,7 @@ class g4PortalPage {
         } else {
             console.log("getEnv: " + getEnv)
             console.log("process.env.ENV: " + process.env.ENV)
-            let pageurl = 'https://app-customers' + getEnv + '.allegiantair.com/list'
+            let pageurl = `https://g4plus-res${getEnv}.allegiantair.com/app/customers/list`
             // https://app-customers-qatnexusg4v4.apps.swe-qat.aws.allegiantair.com/list
             console.log("Opening new window with URL: " + pageurl)
             await this.actions.newWindow(pageurl)

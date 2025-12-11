@@ -395,6 +395,7 @@ export default class ATLPage {
     }
 
     async validateTotalAmountPaid(resultsJson, event) {
+        await this.actions.waitForLoadState()
         let field = 'PAYMENT_CC_MC'
         switch (true) {
             case event.includes('booking'):
@@ -416,6 +417,7 @@ export default class ATLPage {
     }
 
     async verifyMCCCPaymentFeesPCPercentage(resultsJson) {
+        await this.actions.waitForLoadState()
         let field = 'PAYMENT_CC_MC'
         let amount = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "' && @.FeeType=='FEES' && @.category==='PC' && @.ota_order_event_type==='BOOKED')]"), '$..amount')
         console.log(amount)
