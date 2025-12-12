@@ -988,7 +988,6 @@ class SeatPage {
 			{ selector: continueButton, description: 'continue button' },
 			{ selector: seatsPageSkip, description: 'skip seats button' },
 			{ selector: "[data-hook='flights-breadcrumb_item-seats']", description: 'seats breadcrumb item' },
-			{ selector: '.seat-map, .seats-container', description: 'seat map container' }
 		]
 
 		for (const strategy of seatsDetectionStrategies) {
@@ -1167,7 +1166,7 @@ class SeatPage {
 				} else {
 					// Final attempt - check if we're at least on a different page
 					try {
-						await this.actions.waitForDisplayed('body', 'page loaded', 5000)
+						await this.actions.waitForLoadState('domcontentloaded', 30000);
 						console.log('Page navigation completed (may not be bags page)')
 						navigationSuccess = true;
 					} catch (finalError) {

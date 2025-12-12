@@ -44,5 +44,5 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Then I am on Manage Travel page, I expect "<productTotal>" is updated correctly for traveler "<paxNum>"
 
     Examples:
-      | tripType | departure | destination | adult | departDate | returnDate | CarryOn          | Check                    | username                   | password | petInCabin            | Addproduct    | productTotal  | paxNum | seatType |
-      | oneway   | LAS       | FAT         |     1 |          8 |         10 | pax-all Seg-both | pax-all Seg-both count-1 | vasanth+400@tridentsqa.com | Test@123 | pax-all Seg-departing | 1 checked bag | 2 checked bag |      1 | any      |
+      | tripType | departure | destination | adult | departDate | returnDate | CarryOn          | Check                    | username                     | password       | petInCabin            | Addproduct    | productTotal  | paxNum | seatType |
+      | oneway   | LAS       | FAT         |     1 |          8 |         10 | pax-all Seg-both | pax-all Seg-both count-1 | test.dknown@allegiantair.com | testDknown@123 | pax-all Seg-departing | 1 checked bag | 2 checked bag |      1 | any      |
