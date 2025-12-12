@@ -11,6 +11,10 @@ const checkinharadeouspagecheckbox = "//*[contains(text(),'I agree to the above 
 const checkinharadeouspagecontinue = "//span[@class='Button__ButtonText-sc-1ececxa-0 fFLZUm']"
 const checkinseatpagecontinue = "//*[contains(text(),'No thanks, skip seat selection.')]"
 const checkinstatus = "//*[text()='CHECKED-IN']"
+const seatscroll = "//div[text()='Seat']"
+const seatautoassigned = "(//div[@class='ant-col ant-col-3 PassengerList__StyledCol-sc-1rkj5fy-4 hTXNTo'][3])"
+const enterPhoneNumberCheckin = "//*[@data-hook='select-page-phone-number-input-field_phone']"
+const flightTermsAndConditions = "//label[@data-hook='_optInForAlerts_label']/div[2]"
 
 class CheckInPage {
     actions;
@@ -34,19 +38,20 @@ class CheckInPage {
     async checkin() {
         await this.actions.waitForLoadState('domcontentloaded', 30000)
         await this.actions.waitForDisplayed(checkinbutton, 'checkinbutton', 30000)
-        // await this.actions.scroll(checkinbutton)
-        await this.actions.waitForDisplayed(checkinbutton, 'checkinbutton', 30000)
+        await this.actions.waitForClickable(checkinbutton, 'checkinbutton', 30000)
+
+        console.log('Current URL before clicking checkin button:', await this.actions.getUrl())
         await this.actions.clickElement('click', checkinbutton, "check-in button")
-        console.log(await this.actions.getUrl())
+        await this.actions.waitForLoadState('networkidle', 45000)
+
+        console.log('Current URL after clicking checkin button:', await this.actions.getUrl())
     }
 
     async PrintBoardingPasses() {
-        await this.actions.waitForLoadState('domcontentloaded', 30000)
-
+        await this.actions.pause(20000)
         let currentUrl = await this.actions.getUrl()
-        console.log('Current URL before waiting:', currentUrl)
 
-        if (currentUrl.includes('/payment')) {
+        if (currentUrl.includes('/url')) {
             await this.actions.waitForLoadState('domcontentloaded', 30000)
         }
         await this.actions.waitForLoadState('domcontentloaded', 30000)
@@ -80,9 +85,20 @@ class CheckInPage {
     async onlinecheckinbagspage() {
         await this.actions.waitForDisplayed(checkinbagspagecontinue, 'checkin bags page continue button', 30000)
         await this.actions.click(checkinbagspagecontinue, 'checkin bags page continue button')
-        await this.actions.waitForDisplayed(checkinbagspagecontinue2, 'Bags page continue popup', 30000)
-        await this.actions.click(checkinbagspagecontinue2, 'Bags page continue popup')
-        // await this.actions.waitForDisplayed('.seats-page, .next-section', 'next section', 30000)
+        if (await this.actions.isDisplayed(checkinbagspagecontinue2, 'Bags page continue popup', 5000)) {
+            await this.actions.waitForDisplayed(checkinbagspagecontinue2, 'Bags page continue popup', 30000)
+            await this.actions.click(checkinbagspagecontinue2, 'Bags page continue popup')
+        }
+    }
+
+    async acceptCheckinTermsAndConditions() {
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
+        await this.actions.waitForDisplayed(enterPhoneNumberCheckin, "enterPhoneNumberCheckin", 30000)
+        await this.actions.click(enterPhoneNumberCheckin, "enterPhoneNumberCheckin")
+        await this.actions.clearInputField(enterPhoneNumberCheckin, "enterPhoneNumberCheckin")
+        await this.actions.setInputField('setValue', "702-555-1111", enterPhoneNumberCheckin, "enterPhoneNumberCheckin")
+        await this.actions.waitForDisplayed(flightTermsAndConditions, "flightTermsAndConditions", 30000)
+        await this.actions.click(flightTermsAndConditions, "flightTermsAndConditions")
     }
 
     async onlinecheckinseatspage() {
@@ -99,6 +115,28 @@ class CheckInPage {
         // await this.actions.waitForClickable(checkinseatpagecontinue, 'seat page continue', 30000)
         // await this.actions.click(checkinseatpagecontinue, 'checkinseatpagecontinue')
         // await this.actions.waitForLoadState('domcontentloaded', 30000)
+    }
+
+    async seatautoassigned() {
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
+        await this.actions.scroll(seatscroll)
+        await this.actions.waitForDisplayed(seatautoassigned, 'seatautoassigned', 30000)
+
+        try {
+            const seatText = await this.actions.getText(seatautoassigned)
+            console.log("Seat number: " + seatText)
+
+            if (seatText === '-' || seatText === null || seatText === undefined || seatText.trim() === '') {
+                console.log("seat is not-assigned")
+                return false
+            } else {
+                console.log("seat is assigned")
+                return true
+            }
+        } catch (error) {
+            console.log("Error getting seat assignment:", error.message)
+            return false
+        }
     }
 
 }

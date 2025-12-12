@@ -56,6 +56,7 @@ class HomePage {
 			await this.actions.waitUntilPageLoad();
 			process.env.appEnv = await this.actions.getUrl();
 			console.log(`Successfully loaded page: ${process.env.appEnv}`);
+			await this.popUps()
 			try {
 				await this.actions.waitForDisplayed('body', 'page body', 10000);
 			} catch (elementError) {
@@ -107,6 +108,9 @@ Original error: ${error.message}`);
 		}
 	}
 	async loginlink() {
+		await this.actions.waitForLoadState('domcontentloaded', 30000)
+		await this.actions.waitForDisplayed(loginpath, "log-in link", 30000)
+		await this.actions.waitForClickable(loginpath, "log-in link", 30000)
 		await this.actions.clickElement('click', loginpath, "log-in link")
 	}
 

@@ -1,4 +1,4 @@
-import { Then, When } from '@cucumber/cucumber'
+import { Then, When, Before } from '@cucumber/cucumber'
 
 import HomePageObject from '../page-objects/homePageObject.js'
 import BagsPageObject from '../page-objects/bagsPageObject.js'
@@ -15,8 +15,7 @@ import SeatPageObject from '../page-objects/seatsPageObject.js';
 import ConfirmationPageObject from '../page-objects/confPageObject.js'
 import G4portalObject from '../page-objects/g4PortalObject.js'
 
-
-When(/^I am on Online checkin Passengers selection page I click checkin button$/, { timeout: 180 * 10000 }, async function () {
+Before(async function () {
 	this.LoginPage = new LoginPageObject(this.page, this.context)
 	this.HomePage = new HomePageObject(this.page, this.context)
 	this.FlightsPage = new FlightsPageObject(this.page, this.context)
@@ -31,19 +30,28 @@ When(/^I am on Online checkin Passengers selection page I click checkin button$/
 	this.CheckinPage = new CheckinPageObject(this.page, this.context)
 	this.Managetravel = new ManagetravelObject(this.page, this.context)
 	this.G4portal = new G4portalObject(this.page, this.context)
+});
+
+
+When(/^I am on Online checkin Passengers selection page I click checkin button$/, { timeout: 180 * 10000 }, async function () {
 	await this.CheckinPage.onlineCheckin()
+	await this.CheckinPage.acceptCheckinTermsAndConditions()
 	await this.CheckinPage.checkin()
 });
 
-When(/^I am on Online checkin Print passes page$/, async function ()  {
+When(/^I am on Online checkin Print passes page$/, async function () {
 	await this.CheckinPage.PrintBoardingPasses()
 });
 
 When(/^I am on Manage Travel onlinechekin page, (.+) page I click on continue button$/, async function (page) {
-	await this.CheckinPage.selectCovidRestrictedArticalPolicy()
 	await this.CheckinPage.onlinecheckinbagspage();
+	await this.CheckinPage.selectCovidRestrictedArticalPolicy()
 });
 
 When(/^I am on Manage Travel onlinechekin page (.+) page I click on continue button$/, { timeout: 180 * 10000 }, async function (page) {
 	await this.CheckinPage.onlinecheckinseatspage();
+});
+
+When(/^I am on online checkin validate seat is auto-assiganed after completing the checkin$/, async function () {
+	await this.CheckinPage.seatautoassigned()
 });

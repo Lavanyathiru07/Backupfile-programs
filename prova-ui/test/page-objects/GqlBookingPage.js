@@ -3,6 +3,7 @@ import Check from '../../src/support/validations.js';
 import market from '../../utility/market-OneDayflight.js'
 import GqlCall from '../../utility/graph-ql-call.js'
 import GetOrder from '../../utility/getOrder.js';
+import Flight from '../../utility/getMarkets.js';
 import jsonPath from 'jsonpath'
 
 
@@ -17,6 +18,12 @@ const Managetrip = "(//*[contains(text(),'Manage Trip')])[2]"
 const cc_confirmation = "[data-hook='lookup-page-input-confirmation-number']"
 const cc_search = "(//span[@class='Button__ButtonText-sc-1ececxa-0 fFLZUm'])[2]"
 class GqlBookingPage {
+	constructor(page, context) {
+		this.page = page;
+		this.context = context;
+		this.actions = new Actions(page, context);
+		this.check = new Check(page, context);
+	}
 
 	// async getEnvironment() {
 	// 	let env = process.env.ENV
@@ -55,48 +62,76 @@ class GqlBookingPage {
 		}
 	}
 
-	async clickManageTrip() {
-		await actions.pause(5000)
-		await actions.waitForDisplayed(manageTripLink, 'manageTripLink')
+	async getAvailableFlightsWithin24hoursFromApi() {
+		let Env = await this.getEnvironment()
+		let gqlCall = new GqlCall(Env)
+		let flightDetails = new Flight(gqlCall)
+		try {
+			let cityPairsWithFlights = await flightDetails.getCityPairwithFlightsInNext24Hours();
+			if (!cityPairsWithFlights || cityPairsWithFlights.length === 0) {
+				throw new Error('No city pairs with flights available for today');
+			}
 
-		if (await actions.isDisplayed(manageTripLink, 'manageTripLink')) {
-			await actions.waitForClickable(manageTripLink, 'manageTripLink')
-			await actions.click(manageTripLink, 'manageTripLink')
+			// Select a random city pair with flights for today
+			const randomIndex = Math.floor(Math.random() * cityPairsWithFlights.length);
+			const cityPairWithFlights = cityPairsWithFlights[randomIndex];
+
+			// The underlying function now only returns flights for today's date
+			// So daysFromToday is always 0
+			return {
+				source: cityPairWithFlights.source,
+				destination: cityPairWithFlights.destination,
+				daysFromToday: 0,
+				departDates: cityPairWithFlights.departDates
+			};
+		} catch (error) {
+			console.error('Error getting flights for today from API');
+			throw error;
+		}
+	}
+
+	async clickManageTrip() {
+		await this.actions.pause(5000)
+		await this.actions.waitForDisplayed(manageTripLink, 'manageTripLink')
+
+		if (await this.actions.isDisplayed(manageTripLink, 'manageTripLink')) {
+			await this.actions.waitForClickable(manageTripLink, 'manageTripLink')
+			await this.actions.click(manageTripLink, 'manageTripLink')
 			console.log("Successfully clicked manageTrip link")
 		}
 	}
 
 	async clickCheckIn() {
-		await actions.pause(5000)
-		await actions.waitForDisplayed(checkInLink, 'checkInLink')
+		await this.actions.pause(5000)
+		await this.actions.waitForDisplayed(checkInLink, 'checkInLink')
 
-		if (await actions.isDisplayed(checkInLink, 'checkInLink')) {
-			await actions.waitForClickable(checkInLink, 'checkInLink')
-			await actions.click(checkInLink, 'checkInLink')
+		if (await this.actions.isDisplayed(checkInLink, 'checkInLink')) {
+			await this.actions.waitForClickable(checkInLink, 'checkInLink')
+			await this.actions.click(checkInLink, 'checkInLink')
 			console.log("Successfully clicked CheckIn link")
 		}
 	}
 
 	async enterOLCIdetails() {
-		await actions.pause(2000)
-		await actions.waitForDisplayed(myTripText, 'myTripText')
+		await this.actions.waitForLoadState('domcontentloaded', 30000)
+		await this.actions.waitForDisplayed(myTripText, 'myTripText', 30000)
 
-		if (await actions.isDisplayed(myTripText, 'myTripText')) {
+		if (await this.actions.isDisplayed(myTripText, 'myTripText')) {
 
-			await actions.waitForClickable(firstName, 'first name')
-			await actions.click(firstName, 'first name')
-			await actions.setValue(process.env.OLCIfirstName, firstName, 'first name')
+			await this.actions.waitForClickable(firstName, 'first name', 30000)
+			await this.actions.click(firstName, 'first name')
+			await this.actions.setInputField('setValue', process.env.OLCIfirstName, firstName, 'first name')
 
-			await actions.waitForClickable(lastName, 'last name')
-			await actions.click(lastName, 'last name')
-			await actions.setValue(process.env.OLCIlastName, lastName, 'last name')
+			await this.actions.waitForClickable(lastName, 'last name', 30000)
+			await this.actions.click(lastName, 'last name')
+			await this.actions.setInputField('setValue', process.env.OLCIlastName, lastName, 'last name')
 
-			await actions.waitForClickable(confirmNumber, 'confirm number')
-			await actions.click(confirmNumber, 'confirm number')
-			await actions.setValue(process.env.OLCIconfNumber, confirmNumber, 'confirm Number')
+			await this.actions.waitForClickable(confirmNumber, 'confirm number', 30000)
+			await this.actions.click(confirmNumber, 'confirm number')
+			await this.actions.setInputField('setValue', process.env.OLCIconfNumber, confirmNumber, 'confirm Number')
 
-			await actions.waitForClickable(findTrip, 'find trip')
-			await actions.click(findTrip, 'find trip')
+			await this.actions.waitForClickable(findTrip, 'find trip', 30000)
+			await this.actions.click(findTrip, 'find trip')
 		}
 	}
 
@@ -119,71 +154,71 @@ class GqlBookingPage {
 		else {
 			itn_number = process.env.confNumber
 		}
-		await actions.pause(20000)
-		let ManageTripisdispalyed = await actions.isDisplayed(Managetrip, 'Managetrip')
+		await this.actions.pause(20000)
+		let ManageTripisdispalyed = await this.actions.isDisplayed(Managetrip, 'Managetrip')
 		if (ManageTripisdispalyed) {
 			console.log("ManageTip heading is displayed")
 			console.log("ITN:", itn_number)
-			await actions.waitForClickable(cc_confirmation, 'cc_confirmation')
-			await actions.click(cc_confirmation, 'cc_confirmation')
-			await actions.setValue(itn_number, cc_confirmation, 'confirm Number')
+			await this.actions.waitForClickable(cc_confirmation, 'cc_confirmation')
+			await this.actions.click(cc_confirmation, 'cc_confirmation')
+			await this.actions.setInputField('setValue', itn_number, cc_confirmation, 'confirm Number')
 
-			await actions.waitForClickable(cc_search, 'cc_search')
-			await actions.click(cc_search, 'cc_search')
-			await actions.pause(10000)
-			const handles = await browser.getWindowHandles();
-			console.log("Windows count ", handles.length);
-			await browser.switchToWindow(handles[handles.length - 1]);
-			console.log("browserurl:", await browser.getUrl())
-			// await browser.switchWindow('/manage-travel');
-			await actions.pause(10000)
+			await this.actions.waitForClickable(cc_search, 'cc_search')
+			await this.actions.click(cc_search, 'cc_search')
+			await this.actions.pause(10000)
+
+			// Switch to newly opened window using Playwright
+			await this.actions.focusLastOpenedWindow()
+			console.log("browserurl:", await this.actions.getUrl())
+
+			await this.actions.pause(10000)
 		} else {
 			console.log("Manage trip is not dispalyed")
 		}
 	}
 	async enterOWDomesticdetails() {
-		await actions.pause(2000)
-		await actions.waitForDisplayed(myTripText, 'myTrip text')
+		await this.actions.pause(2000)
+		await this.actions.waitForDisplayed(myTripText, 'myTrip text')
 
-		if (await actions.isDisplayed(myTripText, 'myTrip Text')) {
+		if (await this.actions.isDisplayed(myTripText, 'myTrip Text')) {
 
-			await actions.waitForClickable(firstName, 'first name')
-			await actions.click(firstName, 'first name')
-			await actions.setValue(process.env.OWDomFirstName, firstName, 'firstName')
+			await this.actions.waitForClickable(firstName, 'first name')
+			await this.actions.click(firstName, 'first name')
+			await this.actions.setInputField('setValue', process.env.OLCIfirstName, firstName, 'first name')
 
-			await actions.waitForClickable(lastName, 'last name')
-			await actions.click(lastName, 'last name')
-			await actions.setValue(process.env.OWDomLastName, lastName, 'lastName')
+			await this.actions.waitForClickable(lastName, 'last name')
+			await this.actions.click(lastName, 'last name')
+			await this.actions.setInputField('setValue', process.env.OLCIlastName, lastName, 'last name')
 
-			await actions.waitForClickable(confirmNumber, 'confirm number')
-			await actions.click(confirmNumber, 'confirm number')
-			await actions.setValue(process.env.OWDomConfNumber, confirmNumber, 'confirm Number')
+			await this.actions.waitForClickable(confirmNumber, 'confirm number')
+			await this.actions.click(confirmNumber, 'confirm number')
+			await this.actions.setInputField('setValue', process.env.OLCIconfNumber, confirmNumber, 'confirm Number')
 
-			await actions.waitForClickable(findTrip, 'find trip')
-			await actions.click(findTrip, 'find trip')
+			await this.actions.waitForClickable(findTrip, 'find trip')
+			await this.actions.click(findTrip, 'find trip')
 		}
 	}
 
 	async enterRTDomesticdetails() {
-		await actions.pause(2000)
-		await actions.waitForDisplayed(myTripText, 'myTrip Text')
+		await this.actions.pause(2000)
+		await this.actions.waitForDisplayed(myTripText, 'myTrip Text')
 
-		if (await actions.isDisplayed(myTripText, 'myTrip Text')) {
+		if (await this.actions.isDisplayed(myTripText, 'myTrip Text')) {
 
-			await actions.waitForClickable(firstName, 'first name')
-			await actions.click(firstName, 'first name')
-			await actions.setValue(process.env.RTDomFirstName, firstName, 'firstName')
+			await this.actions.waitForClickable(firstName, 'first name')
+			await this.actions.click(firstName, 'first name')
+			await this.actions.setInputField('setValue', process.env.RTDomFirstName, firstName, 'firstName')
 
-			await actions.waitForClickable(lastName, 'last name')
-			await actions.click(lastName, 'last name')
-			await actions.setValue(process.env.RTDomLastName, lastName, 'lastName')
+			await this.actions.waitForClickable(lastName, 'last name')
+			await this.actions.click(lastName, 'last name')
+			await this.actions.setInputField('setValue', process.env.RTDomLastName, lastName, 'lastName')
 
-			await actions.waitForClickable(confirmNumber, 'confirm Number')
-			await actions.click(confirmNumber, 'confirma number')
-			await actions.setValue(process.env.RTDomConfNumber, confirmNumber, 'confirmNumber')
+			await this.actions.waitForClickable(confirmNumber, 'confirm Number')
+			await this.actions.click(confirmNumber, 'confirma number')
+			await this.actions.setInputField('setValue', process.env.RTDomConfNumber, confirmNumber, 'confirmNumber')
 
-			await actions.waitForClickable(findTrip, 'find trip')
-			await actions.click(findTrip, 'find trip')
+			await this.actions.waitForClickable(findTrip, 'find trip')
+			await this.actions.click(findTrip, 'find trip')
 		}
 	}
 
@@ -395,4 +430,4 @@ class GqlBookingPage {
 	}
 
 }
-export default new GqlBookingPage();
+export default GqlBookingPage;

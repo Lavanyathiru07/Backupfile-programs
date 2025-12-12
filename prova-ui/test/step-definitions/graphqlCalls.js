@@ -1,25 +1,29 @@
-import { Given, When, Then } from '@cucumber/cucumber';
+import { Given, When, Then, Before } from '@cucumber/cucumber';
 import { GqlBooking, CancelBooking, ModifyBooking } from '@g4/gql-booking-util/src/gql-booking.js'
 import GqlBookingPage from '../page-objects/GqlBookingPage.js';
 import ATLPage from '../page-objects/ATLPageObject.js'
 import { assert } from 'chai';
 
-Given(/^I complete the Booking using GQL for RT-1Adult->1CK CO$/, { timeout: 120000 }, async () => {
+Before(async function () {
+    this.gqlBookingPage = new GqlBookingPage(this.page, this.context);
+    this.atlPage = new ATLPage(this.page, this.context);
+});
+
+Given(/^I complete the Booking using GQL for RT-1Adult->1CK CO$/, { timeout: 120000 }, async function () {
     try {
-        await ATLBooking()
-        let ATLPageobj = new ATLPage()
-        await ATLPageobj.VerifyDuplicateITN(process.env.confNumber)
-        await GqlBookingPage.getBookingValues()
+        await ATLBooking.call(this)
+        await this.atlPage.VerifyDuplicateITN(process.env.confNumber)
+        await this.gqlBookingPage.getBookingValues()
     } catch (error) {
         console.log(">>>>>ITN might be duplicate or already used. Re-Initating the booking<<<<<")
         console.log("Error details:", error.message || error)
-        await ATLBooking()
-        await GqlBookingPage.getBookingValues()
+        await ATLBooking.call(this)
+        await this.gqlBookingPage.getBookingValues()
     }
 });
 
 Given(/^I upsell 1 checked bag using GQL utility via manage travel$/, async function () {
-    let Env = await GqlBookingPage.getEnvironment()
+    let Env = await this.gqlBookingPage.getEnvironment()
     await ModifyBooking(Env, process.env.firstName, process.env.lastName, process.env.confNumber, "2Both:1Both", "Master")
         .then((response) => {
             console.log("ITN Upsell Response ", response)
@@ -28,7 +32,7 @@ Given(/^I upsell 1 checked bag using GQL utility via manage travel$/, async func
 });
 
 Given(/^I cancel the ITN using GQL utility via manage travel$/, async function () {
-    let Env = await GqlBookingPage.getEnvironment()
+    let Env = await this.gqlBookingPage.getEnvironment()
     await CancelBooking(Env, process.env.firstName, process.env.lastName, process.env.confNumber)
         .then((response) => {
             console.log("ITN Upsell Response ", response)
@@ -44,7 +48,7 @@ async function ATLBooking() {
     }
     let departDay = Number(20)
     let adultsCount = Number(1)
-    let Env = await GqlBookingPage.getEnvironment()
+    let Env = await this.gqlBookingPage.getEnvironment()
     //Fetching environmentName from utility library
     // let Env = await new Promise((resolve) => {
     //     resolve(UtilityLibrary.getEnvironmentWithPrefix())
@@ -72,3 +76,58 @@ async function ATLBooking() {
             }
         })
 }
+
+Given(/^I complete the Booking using gql for Online-Check-in$/, { timeout: 180 * 10000 }, async function (dataTable) {
+    let ITN
+    let data = dataTable.rowsHash()
+    let tripType = data.tripType
+    if (tripType === "oneway") {
+        tripType = "ONEWAY"
+    } else {
+        tripType = "ROUNDTRIP"
+    }
+    let departDay = data.departDate
+    let adultsCount = Number(data.adult)
+    let Env = await this.gqlBookingPage.getEnvironment()
+    let cityPairDetails = await this.gqlBookingPage.getAvailableFlightsWithin24hoursFromApi();
+    console.log(`Source: ${cityPairDetails.source} => Destination: ${cityPairDetails.destination}`);
+    await GqlBooking(Env, cityPairDetails.source, cityPairDetails.destination, tripType, adultsCount, 0, 0, departDay, "0", "", "no", "no", "no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "")
+        .then((response) => {
+            console.log("online check-in response ", response)
+            console.log("online check-in confNum ", response.confNumber)
+            console.log("online check-in firstName ", response.firstName)
+            console.log("online check-in lastName ", response.lastName)
+            ITN = response.confNumber;
+            // if (response.confNumber === undefined) {
+            //   assert.fail(response.error)
+            // }
+            process.env.confirmationNumber = response.confNumber
+            process.env.OLCIconfNumber = response.confNumber
+            process.env.OLCIfirstName = response.firstName
+            process.env.OLCIlastName = response.lastName
+        })
+    if (ITN == undefined) {
+        await GqlBooking(Env, cityPairDetails.source, cityPairDetails.destination, tripType, adultsCount, 0, 0, departDay, "0", "", "no", "no", "no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "")
+            .then((response) => {
+                console.log("online check-in response ", response)
+                console.log("online check-in confNum ", response.confNumber)
+                console.log("online check-in firstName ", response.firstName)
+                console.log("online check-in lastName ", response.lastName)
+                if (response.confNumber === undefined) {
+                    assert.fail(response.error)
+                }
+                process.env.confirmationNumber = response.confNumber
+                process.env.OLCIconfNumber = response.confNumber
+                process.env.OLCIfirstName = response.firstName
+                process.env.OLCIlastName = response.lastName
+            })
+    }
+});
+
+Given(/^I am on landing page I click manage trip button$/, async function () {
+    await this.gqlBookingPage.clickManageTrip();
+});
+
+Given(/^I am on manage trip page I enter OLCI details$/, async function () {
+    await this.gqlBookingPage.enterOLCIdetails();
+});

@@ -23,7 +23,7 @@ const itineraryDetails = "//*[@data-hook='trip-summary-page_title']"
 const addBagsLink = "//span[contains(text(),'Update Bags')]"
 const checkedBags = "(//span[contains(text(),'Checked Bag')])[2]"
 const checkedBag = "//button[@data-hook='ancillaries-page-traveler_0_checked-in_increment']"
-const iAgreeCovidPolicyCheckBox = "//*[@class='touch-friendly-checkbox small']"
+const iAgreeCovidPolicyCheckBox = "//div[contains(text(),'I agree to the above')]"
 const somethingReallyOddError = "//h2[text()='Something really odd just happened...']"
 const continueButton = "(//span[contains(text(),'Continue')])[2]"
 const continueBagsPopUp = "[data-hook='ancillaries-continue-popup_button_continue']"
@@ -189,13 +189,13 @@ class Managetravel {
     async addProduct(product, paxNum) {
         console.log('Starting addProduct method in Manage Travel context')
         await this.actions.waitUntilPageLoad()
-        await this.actions.waitForLoadState('domcontentloaded', 30000)
-        await this.actions.waitForURL(/ancillaries/, 30000)
+        await this.actions.waitForLoadState('domcontentloaded', 60000)
+        await this.actions.waitForURL(/ancillaries/, 60000)
 
         const currentUrl = await this.actions.getUrl()
         console.log(`Current URL: ${currentUrl}`)
 
-        await this.actions.waitForLoadState('domcontentloaded', 30000)
+        await this.actions.waitForLoadState('domcontentloaded', 60000)
         if (product.includes("checked")) {
             try {
                 await this.actions.waitForDisplayed(addBagsLink, 'addBagsLink', 30000)
@@ -216,16 +216,18 @@ class Managetravel {
 
     async selectCovidRestrictedArticalPolicy() {
         try {
+            await this.actions.waitForLoadState('domcontentloaded', 30000)
+            await this.actions.waitForURL(/hazardous/, 30000)
             let covidPolicyPopUP = await this.actions.isDisplayed(iAgreeCovidPolicyCheckBox, 'iAgreeCovidPolicyCheckBox')
             if (covidPolicyPopUP) {
-                await this.actions.waitForDisplayed(iAgreeCovidPolicyCheckBox, 'iAgreeCovidPolicyCheckBox');
+                await this.actions.scroll(iAgreeCovidPolicyCheckBox)
+                await this.actions.waitForDisplayed(iAgreeCovidPolicyCheckBox, 'iAgreeCovidPolicyCheckBox', 30000);
                 await this.actions.clickElement('click', iAgreeCovidPolicyCheckBox, 'iAgreeCovidPolicyCheckBox')
-                await this.actions.waitForClickable('.continue-button, .next-button', 'continue button', 3000)
             } else {
-                console.log('Select Restricted Articles Policy and COVID-19 Confirmation policy not needed');
+                console.log('Select Restricted Articles Policy and COVID-19 Confirmation policy is not clicked');
             }
         } catch (ex) {
-            console.log('Select Restricted Articles Policy and COVID-19 Confirmation policy not needed');
+            console.log('Select Restricted Articles Policy and COVID-19 Confirmation policy not clicked');
         }
     }
 

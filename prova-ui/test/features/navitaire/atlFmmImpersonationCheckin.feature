@@ -55,29 +55,15 @@ Feature: This feature file is to run Navitaire BAT scenarios
     #QAA-26770
 
   Scenario: Domestic- Check-in Online OW
-    Given I navigate to www application
-    And I get market from gql for OLCI
-    And I am on landing page I select "oneway"
-    And I am on landing page I select market
-    And I am on landing page I choose the departure date "0" days from current day
-    And I am on landing page I select "1" adult travelers
-    And I am on landing page I click on search button
-    When I am on flights page I collect flight page details
-    And I am on flights page I click continue button
-    And I am on Bundles Page I click continue button
-    When I am on Travelers page I fill in data for "all" travelers
-    And I am on Travelers page I click continue button
-    And I am on WWW Seat page I click continue button
-    And I am on Bags page I click continue button
-    And I am on Hotels page I click No thanks button
-    And I am on Cars page I click No thanks button
-    And I am on payment page I verify decline amount adding extras
-    And I am on payment page I enter all required card details
-    And I am on Payment page I enter all required billing address details
-    And I am on Payment page I select Purchase my trip button
-    Then I am on the confirmation page I expect confirmation number to be displayed
-    When I am on confirmation page I click manage trip button
+    Given I complete the Booking using gql for Online-Check-in
+      | tripType   | oneway |
+      | departDate |      0 |
+      | adult      |      1 |
+    Then I navigate to www application
+    And I am on landing page I click manage trip button
+    And I am on manage trip page I enter OLCI details
     And I am on Online checkin Passengers selection page I click checkin button
     And I am on Manage Travel onlinechekin page, "Bags" page I click on continue button
     And I am on Manage Travel onlinechekin page "Seats" page I click on continue button
     Then I am on Online checkin Print passes page
+    And I am on online checkin validate seat is auto-assiganed after completing the checkin
