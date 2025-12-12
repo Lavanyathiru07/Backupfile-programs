@@ -49,7 +49,7 @@ class FlightsPage {
     }
 
     async flightsubmit() {
-        // await this.actions.waitForDisplayed(advert, 'advert', 15000)
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
         await this.actions.waitForDisplayed(submitflightpage, 'continue button', 30000)
         await this.actions.scroll(submitflightpage, 'continue button')
         await this.actions.waitForClickable(submitflightpage, 'continue button', 30000)
