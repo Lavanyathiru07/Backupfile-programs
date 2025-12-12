@@ -813,13 +813,14 @@ class Actions {
         }
     }
 
-    // /**
-    // * Pauses execution for a specific amount of time
-    // * @param {String} milliseconds Wait duration (optional) For Ex: 2000,3000
-    // */
-    // async pause(milliseconds) {
-    //     await this.page.waitForTimeout(milliseconds);
-    // }
+    /**
+    * Pauses execution for a specific amount of time
+    * @param {String} milliseconds Wait duration (optional) For Ex: 2000,3000
+    */
+    async pause(milliseconds) {
+        Logger.info(`Pausing execution for ${milliseconds}ms`);
+        await this.page.waitForTimeout(milliseconds);
+    }
 
     // =================== MISSING PLAYWRIGHT METHODS ===================
 
