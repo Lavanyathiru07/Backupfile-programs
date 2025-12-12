@@ -166,7 +166,7 @@ export default class ATLPage {
     }
 
     async verifyPositiveAndNegativeEntries(resultsJson, seg, field, event) {
-        await this.actions.pause(2500)
+        //await this.actions.pause(2500)
         // Handle case where only resultsJson and event are passed (seg is actually event, field is undefined)
         if (arguments.length === 2) {
             event = seg; // seg is actually the event parameter
@@ -202,7 +202,7 @@ export default class ATLPage {
                 pcAmount = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType=='FEES' && @.category=='PC')]"), '$..amount')
                 console.log(pcAmount)
             } else if (seg && (seg.includes('mod') || seg.includes('cancel'))) {
-                await this.actions.pause(2500)
+                //await this.actions.pause(2500)
                 posNegEntries = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "'&& @.FeeType==null && @.ota_order_event_type == 'MODIFIED')]"), '$..amount')
                 console.log(posNegEntries)
             } else {
@@ -312,7 +312,7 @@ export default class ATLPage {
     }
 
     async verifyAcctNbrColumnTransaction(resultsJson, value, seg, posneg, field) {
-        await this.actions.pause(2500)
+        //await this.actions.pause(2500)
         let FlightNum, date, posNegEntry
         switch (true) {
             case seg.includes('dep'):
@@ -395,7 +395,7 @@ export default class ATLPage {
     }
 
     async validateTotalAmountPaid(resultsJson, event) {
-        await this.actions.pause(2500)
+        //await this.actions.pause(2500)
         let field = 'PAYMENT_CC_MC'
         switch (true) {
             case event.includes('booking'):
@@ -417,7 +417,7 @@ export default class ATLPage {
     }
 
     async verifyMCCCPaymentFeesPCPercentage(resultsJson) {
-        await this.actions.pause(2500)
+        //await this.actions.pause(2500)
         let field = 'PAYMENT_CC_MC'
         let amount = jsonPath.query(jsonPath.query(resultsJson, "$..results[?(@.type=='" + field + "' && @.FeeType=='FEES' && @.category==='PC' && @.ota_order_event_type==='BOOKED')]"), '$..amount')
         console.log(amount)
