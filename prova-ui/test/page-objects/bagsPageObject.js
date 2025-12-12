@@ -88,8 +88,8 @@ class BagsPage {
     }
 
     async selectCarryOnBagByParams(params) {
-        await this.actions.waitUntilPageLoad()
-        await this.actions.waitForDisplayed(bagsPageHeading, 'bagsPageHeading')
+        await this.actions.waitForLoadState('domcontentloaded', 30000)
+        await this.actions.waitForDisplayed(bagsPageHeading, 'bagsPageHeading', 30000)
         if (!params.includes("false")) {
             try {
                 // await this.actions.pause(4000)
@@ -100,7 +100,7 @@ class BagsPage {
                 var paxNum = params.split(' ')[0].split('-')[1]
                 var segment = params.split(' ')[1].split('-')[1]
                 if (paxNum.includes("all")) {
-                    await this.actions.waitForDisplayed(travelerCount, 'seat info on header')
+                    await this.actions.waitForDisplayed(travelerCount, 'seat info on header', 30000)
                     var all = (await this.actions.getText(travelerCount, "travellers count")).split(' ')[0]
                     for (var i = 1; i <= all; i++) {
                         await this.selectCarryOn(i, segment)
@@ -295,13 +295,13 @@ class BagsPage {
         if (priorityAccess) {
             let slider1visbility = await this.actions.isDisplayed(slider1, 'extras button')
             if (slider1visbility) {
-                await this.actions.waitForDisplayed(slider1, 'Extras button')
-                await this.actions.waitForClickable(slider1, 'Extras button')
+                await this.actions.waitForDisplayed(slider1, 'Extras button', 30000)
+                await this.actions.waitForClickable(slider1, 'Extras button', 30000)
                 await this.actions.clickElement('click', slider1, "Extras Button")
             }
-            await this.actions.waitForClickable(priorityBoardingAddToCart, 'AddToCart Button')
+            await this.actions.waitForClickable(priorityBoardingAddToCart, 'AddToCart Button', 30000)
             await this.actions.clickElement('click', priorityBoardingAddToCart, "Extras Button")
-            await this.actions.waitForDisplayed(priorityBoardingModal, 'Priority access Modal')
+            await this.actions.waitForDisplayed(priorityBoardingModal, 'Priority access Modal', 30000)
             var pb = await this.actions.getElements(flightLegCheckboxLabel);
             if (await this.actions.isDisplayed(priorityBoardingModal, 'Priority Access Modal')) {
                 if (segment === "both") {

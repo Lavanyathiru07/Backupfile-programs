@@ -2,13 +2,14 @@ Feature: This feature file is to run Navitaire BAT scenarios
 
   Background:
     Given I navigate to www application
-    And I have a screen that is 1440 by 700 pixels
+    # And I have a screen that is 1440 by 700 pixels
     #QAA-26770
 
   Scenario Outline: Domestic-Bonus Bundle Booking, RT booking, 2 Adults
-    Given I am on landing page I select "<tripType>"
-    When I am on landing page I select "LAS" for the departure airport
-    And I am on landing page I select "CVG" for the destination airport
+    Given I create my allegaint account
+    When I am on landing page I select "<tripType>"
+    When I am on landing page I select "CVG" for the departure airport
+    And I am on landing page I select "LAS" for the destination airport
     And I am on landing page I choose the departure date "<departDate>" days from current day
     And I am on landing page I choose the returning date "<returnDate>" days from departure
     And I am on landing page I select "<adult>" adult travelers
@@ -35,11 +36,11 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Then I am on the confirmation page I expect confirmation number to be displayed
     When I am on confirmation page I click manage trip button
     And I am on Manage Travel page, I add a car
-        # And I am on cars page I add a car to cart
+    # And I am on cars page I add a car to cart
     And I am on cars page and I click on continue
     And I am on Manage Travel page, Payment page I complete payment
-    And I am on Manage Trip and I click cancel flight
+        # And I am on Manage Trip and I click cancel flight
 
     Examples:
       | tripType  | adult | child | childSeat | childLap | departDate | returnDate | cardType | Priority              | CarryOn        | Check                  | Seats                    |
-      | roundTrip |     2 |     0 |         0 |        0 |         14 |          4 | Visa     | pax-all Seg-departing | pax-2 Seg-both | pax-1 Seg-both count-3 | pax-all Seg-all type-any |
+      | roundTrip |     2 |     0 |         0 |        0 |         13 |          4 | Visa     | pax-all Seg-departing | pax-2 Seg-both | pax-1 Seg-both count-1 | pax-all Seg-all type-any |

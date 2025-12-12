@@ -61,7 +61,7 @@ When(/^I am on Manage Travel page, Payment page I complete payment$/, { timeout:
         await this.PaymentPage.popupClosing()
         await this.PaymentPage.cardDetails();
         await this.PaymentPage.billingaddress();
-        await this.Managetravel.purchasemytrip();
+        await this.PaymentPage.purchasemytrip();
     }
 });
 

@@ -66,9 +66,10 @@ class PaymentPage {
     }
 
     async popupClosing() {
-        await this.actions.waitForDisplayed(paypopup, "Pay Pop up", 20000) // Wait for payment popup
+        await this.actions.waitForLoadState('domcontentloaded', 20000);
 
         if (await this.actions.isDisplayed(paypopup, "pop-up button in payments page")) {
+            await this.actions.waitForDisplayed(paypopup, "Pay Pop up", 20000) // Wait for payment popup
             await this.actions.clickElement('click', paypopup, "button to close the popup")
             // await this.actions.pause(3000)
         }
@@ -79,7 +80,7 @@ class PaymentPage {
 
     async cardDetails() {
         await this.actions.waitForLoadState('domcontentloaded', 20000)
-        const cardNumArray = ["5454545454545454"];
+        const cardNumArray = ["5454545454545454", "4444444444444448"];
         const random = Math.floor(Math.random() * cardNumArray.length);
         const value = cardNumArray[random];
         const strLen = value.split('')[0];
