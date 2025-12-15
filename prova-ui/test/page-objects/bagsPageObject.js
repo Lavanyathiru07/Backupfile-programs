@@ -88,6 +88,7 @@ class BagsPage {
     }
 
     async selectCarryOnBagByParams(params) {
+        await this.actions.waitUntilPageLoad()
         await this.actions.waitForLoadState('domcontentloaded', 60000)
         await this.actions.waitForURL(/ancillaries/, 60000)
         await this.actions.waitForDisplayed(bagsPageHeading, 'bagsPageHeading', 30000)

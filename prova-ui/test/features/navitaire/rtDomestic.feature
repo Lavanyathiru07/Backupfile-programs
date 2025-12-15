@@ -8,7 +8,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
   Scenario Outline: RT, Domestic flight with Infant in lap and Child with 1 CO and 1 CK bag, Seat &Modify WWW booking via MT
     Given I am on landing page I select "<tripType>"
     When I am on landing page I select "CVG" for the departure airport
-    And I am on landing page I select "SFB" for the destination airport
+    And I am on landing page I select "PGD" for the destination airport
     And I am on landing page I choose the departure date "<departDate>" days from current day
     And I am on landing page I choose the returning date "<returnDate>" days from departure
     And I am on landing page I select "<adult>" adult travelers
