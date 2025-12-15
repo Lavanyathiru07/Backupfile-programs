@@ -1175,6 +1175,7 @@ class SeatPage {
 				}
 			}
 		}
+		await this.actions.waitForLoadState('domcontentloaded', 30000)
 	}
 	async clickSelectSeatPopupContinueButton(flightType) {
 		if (flightType === 'Departing') {
@@ -1846,7 +1847,7 @@ class SeatPage {
 		}
 
 		try {
-			await this.actions.waitForDisplayed(TravelerList, 'TravelerList', 10000);
+			await this.actions.waitForDisplayed(TravelerList, 'TravelerList', 60000);
 			var totalTravelers = await this.actions.getElements(TravelerList)
 			console.log('Found travelers:', totalTravelers.length);
 		} catch (error) {

@@ -176,9 +176,10 @@ class ConfirmationPage {
             } else {
                 // Try waiting for URL to change to manage-travel
                 try {
+                    await this.actions.waitForLoadState('domcontentloaded', 60000)
                     await this.actions.waitForURL('**/manage-travel**', 30000)
                     console.log('URL changed to manage-travel')
-                    await this.actions.waitForLoadState('domcontentloaded', 50000)
+                    await this.actions.waitForLoadState('domcontentloaded', 60000)
                     return this.page
                 } catch (urlError) {
                     console.log('URL did not change to manage-travel within timeout')
