@@ -371,6 +371,7 @@ class TravellersPage {
             let maleRadioButtonClickable = await this.actions.isClickable(male, 'Male Radio Button')
             let femaleRadioButtonClickable = await this.actions.isClickable(female, 'female Radio Button')
             if (gen[i] === "male") {
+                await this.actions.waitForDisplayed(male, 'male', 30000)
                 await this.actions.scroll(male)
                 if (maleRadioButtonClickable) {
                     await this.actions.clickElement('click', male, 'male Radio Button')

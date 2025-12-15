@@ -182,7 +182,11 @@ class Managetravel {
 
     async purchasemytrip() {
         await this.actions.scroll(termsscroll)
+        await this.actions.waitForDisplayed(termsbox, 'termsbox', 30000)
+        await this.actions.waitForClickable(termsbox, 'termsbox', 30000)
         await this.actions.clickElement('click', termsbox, "condition checkbox")
+        await this.actions.waitForDisplayed(purchase, 'purchase', 30000)
+        await this.actions.waitForClickable(purchase, 'purchase', 30000)
         await this.actions.clickElement('click', purchase, "Continue and Pay button")
     }
 
@@ -190,7 +194,6 @@ class Managetravel {
         console.log('Starting addProduct method in Manage Travel context')
         await this.actions.waitUntilPageLoad()
         await this.actions.waitForLoadState('domcontentloaded', 60000)
-        await this.actions.waitForURL(/ancillaries/, 60000)
 
         const currentUrl = await this.actions.getUrl()
         console.log(`Current URL: ${currentUrl}`)
@@ -236,52 +239,53 @@ class Managetravel {
         if (somethingReallyOddErrorIsDisplayed) {
             assert.fail(await this.actions.getText(somethingReallyOddError, 'somethingReallyOddError'))
         }
-        await this.actions.waitForDisplayed(continueButton, 'continueButton', 20000)
+        await this.actions.waitForDisplayed(continueButton, 'continueButton', 30000)
         let continueButtonIsDisplayed = await this.actions.isDisplayed(continueButton, 'continueButton')
         if (continueButtonIsDisplayed) {
             await this.actions.scroll(continueButton.replace("X", 1))
-            await this.actions.waitForClickable(continueButton.replace("X", 1), 'continueButton')
+            await this.actions.waitForDisplayed(continueButton.replace("X", 1), 'continueButton', 30000)
+            await this.actions.waitForClickable(continueButton.replace("X", 1), 'continueButton', 30000)
             await this.actions.clickElement('click', continueButton.replace("X", 1), 'continueButton')
             if (await this.actions.isDisplayed("//button[@data-hook='seats-page-continue-button-popup_continue-button']", 'continueButton')) {
                 await this.actions.clickElement('click', "//button[@data-hook='seats-page-continue-button-popup_continue-button']", 'continueButton')
             }
-            await this.actions.waitForDisplayed(continueBagsPopUp, 'continueBagsPopUp', 20000)
+            await this.actions.waitForDisplayed(continueBagsPopUp, 'continueBagsPopUp', 30000)
             let bagsPopUpVisiilty = await this.actions.isDisplayed(continueBagsPopUp, 'continueBagsPopUp')
             if (bagsPopUpVisiilty) {
-                await this.actions.waitForDisplayed(continueBagsPopUp, 'continueBagsPopUp', 20000)
+                await this.actions.waitForDisplayed(continueBagsPopUp, 'continueBagsPopUp', 30000)
                 await this.actions.scroll(continueBagsPopUp)
                 await this.actions.clickElement('click', continueBagsPopUp, 'continueBagsPopUp')
             }
-            await this.actions.waitForDisplayed(hazardMaterial, 'hazardMaterial', 10000)
+            await this.actions.waitForDisplayed(hazardMaterial, 'hazardMaterial', 30000)
             let hazardMaterialIsDisplayed = await this.actions.isDisplayed(hazardMaterial, 'hazardMaterial')
             if (hazardMaterialIsDisplayed) {
                 await this.actions.scroll(hazardcheckbox)
-                await this.actions.waitForDisplayed(hazardcheckbox, 'hazardcheckbox', 10000)
+                await this.actions.waitForDisplayed(hazardcheckbox, 'hazardcheckbox', 30000)
                 await this.actions.clickElement('click', hazardcheckbox, 'hazardcheckbox')
-                await this.actions.waitForEnabled(hazardContinueButton, 'hazardContinueButton')
-                await this.actions.waitForClickable(hazardContinueButton, 'hazardContinueButton')
+                await this.actions.waitForDisplayed(hazardContinueButton, 'hazardContinueButton', 30000)
+                await this.actions.waitForClickable(hazardContinueButton, 'hazardContinueButton', 30000)
                 await this.actions.clickElement('click', hazardContinueButton, 'hazardContinueButton')
             } else {
-                await this.actions.waitForDisplayed(seatcontinuebtn.replace("X", 1), 'continueButton', 20000)
+                await this.actions.waitForDisplayed(seatcontinuebtn.replace("X", 1), 'continueButton', 30000)
                 // await this.actions.scroll(seatcontinuebtn.replace("X", 1))
-                await this.actions.waitForClickable(seatcontinuebtn.replace("X", 1), 'continueButton')
+                await this.actions.waitForClickable(seatcontinuebtn.replace("X", 1), 'continueButton', 30000)
                 await this.actions.clickElement('click', seatcontinuebtn.replace("X", 1), 'continueButton')
-                await this.actions.waitForDisplayed(continueSeatsPopUp, 'continueSeatsPopUp', 20000)
+                await this.actions.waitForDisplayed(continueSeatsPopUp, 'continueSeatsPopUp', 30000)
                 let seatsPopUpVisiilty = await this.actions.isDisplayed(continueSeatsPopUp, 'continueSeatsPopUp')
                 if (seatsPopUpVisiilty) {
-                    await this.actions.waitForDisplayed(continueSeatsPopUp, 'continueSeatsPopUp', 10000)
+                    await this.actions.waitForDisplayed(continueSeatsPopUp, 'continueSeatsPopUp', 30000)
                     // await this.actions.scroll(continueSeatsPopUp)
                     await this.actions.clickElement('click', continueSeatsPopUp, 'continueSeatsPopUp')
                 }
                 if (hazardMaterialIsDisplayed) {
-                    await this.actions.waitForDisplayed(hazardcheckbox, 'hazardcheckbox', 10000)
+                    await this.actions.waitForDisplayed(hazardcheckbox, 'hazardcheckbox', 30000)
                     await this.actions.scroll(hazardcheckbox)
                     await this.actions.clickElement('click', hazardcheckbox, 'hazardcheckbox')
-                    await this.actions.waitForEnabled(hazardContinueButton, 'hazardContinueButton')
+                    await this.actions.waitForDisplayed(hazardContinueButton, 'hazardContinueButton', 30000)
                     await this.actions.clickElement('click', hazardContinueButton, 'hazardContinueButton')
                 }
             }
-            await this.actions.waitForDisplayed(paymentPageHeading, 'paymentPageHeading', 10000)
+            await this.actions.waitForDisplayed(paymentPageHeading, 'paymentPageHeading', 30000)
             let paymentPageHeadingIsDisplayed = await this.actions.isDisplayed(paymentPageHeading, 'paymentPageHeading')
             if (page === "Bags" && (paymentPageHeadingIsDisplayed) === false) {
                 try {

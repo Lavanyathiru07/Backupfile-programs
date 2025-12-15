@@ -61,7 +61,7 @@ When(/^I am on Manage Travel page, Payment page I complete payment$/, { timeout:
         await this.PaymentPage.popupClosing()
         await this.PaymentPage.cardDetails();
         await this.PaymentPage.billingaddress();
-        await this.PaymentPage.purchasemytrip();
+        await this.Managetravel.purchasemytrip();
     }
 });
 
@@ -102,8 +102,13 @@ When(/^I am on Manage Travel page I add "([^"]*)" for traveler "([^"]*)"$/, asyn
 });
 
 When(/^I am on Manage Travel page, (.+) page I click on continue button$/, { timeout: 180 * 16000 }, async function (page) {
-    await this.Managetravel.selectCovidRestrictedArticalPolicy()
-    await this.Managetravel.ContinueButton(page)
+    if (page === 'Seats') {
+        this.SeatPage = new SeatPageObject(this.page, this.context)
+        await this.SeatPage.clickContinueButton()
+    } else {
+        await this.Managetravel.selectCovidRestrictedArticalPolicy()
+        await this.Managetravel.ContinueButton(page)
+    }
 });
 
 When(/^I am on Manage Trip and I click change flight$/, async function () {
