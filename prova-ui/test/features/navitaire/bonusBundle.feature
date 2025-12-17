@@ -9,7 +9,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Given I create my allegaint account
     When I am on landing page I select "<tripType>"
     When I am on landing page I select "CVG" for the departure airport
-    And I am on landing page I select "LAS" for the destination airport
+    And I am on landing page I select "PGD" for the destination airport
     And I am on landing page I choose the departure date "<departDate>" days from current day
     And I am on landing page I choose the returning date "<returnDate>" days from departure
     And I am on landing page I select "<adult>" adult travelers
