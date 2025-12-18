@@ -71,10 +71,40 @@ class BagsPage {
     async clickContinueButton() {
         await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 30000)
         await this.actions.scroll(batteriesscroll)
-        await this.actions.waitForDisplayed(clickContinueButton, 'Continue button in BAGS PAGE', 30000)
-        await this.actions.waitForClickable(clickContinueButton, 'Continue button in BAGS PAGE')
+        await this.actions.waitForDisplayed(clickContinueButton, 'Continue button in BAGS PAGE', 60000)
+
+        // Wait for button to be enabled before attempting click
+        let retries = 0
+        const maxRetries = 15
+        while (retries < maxRetries) {
+            try {
+                const isEnabled = await this.actions.isEnabled(clickContinueButton)
+                if (isEnabled) {
+                    console.log('Continue button is enabled, proceeding with click...')
+                    break
+                }
+                console.log(`Continue button disabled, waiting... (${retries + 1}/${maxRetries})`)
+                await this.actions.pause(2000)
+                retries++
+            } catch (error) {
+                console.log(`Error checking button state: ${error.message}`)
+                retries++
+                await this.actions.pause(2000)
+            }
+        }
+
+        await this.actions.waitForClickable(clickContinueButton, 'Continue button in BAGS PAGE', 60000)
         await this.actions.scroll(clickContinueButton)
-        await this.actions.clickElement('click', clickContinueButton, 'Continue button in BAGS PAGE')
+
+        // Try click with multiple fallback methods
+        try {
+            await this.actions.clickElement('click', clickContinueButton, 'Continue button in BAGS PAGE')
+        } catch (clickError) {
+            console.log('Standard click failed, trying force click...')
+            const buttonElement = await this.actions.getElement(clickContinueButton)
+            await buttonElement.click({ force: true, timeout: 30000 })
+        }
+
         await this.actions.pause(10000)
         let popupContinueBtnVisibility = await this.actions.isDisplayed(popupContinueButton, "continue button to close the popup")
         console.log("popupContinueBtnVisibility: ", popupContinueBtnVisibility)
