@@ -69,14 +69,14 @@ class BagsPage {
     }
 
     async clickContinueButton() {
-        await this.actions.pause(5000)
-        await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 30000)
+        await this.actions.waitForLoadState('domcontentloaded', 60000)
+        // await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 30000)
         await this.actions.scroll(batteriesscroll)
         await this.actions.waitForDisplayed(clickContinueButton, 'Continue button in BAGS PAGE', 30000)
         await this.actions.waitForClickable(clickContinueButton, 'Continue button in BAGS PAGE')
         await this.actions.scroll(clickContinueButton)
         await this.actions.clickElement('click', clickContinueButton, 'Continue button in BAGS PAGE')
-        await this.actions.pause(5000)
+        await this.actions.waitForLoadState('domcontentloaded', 60000)
         let popupContinueBtnVisibility = await this.actions.isDisplayed(popupContinueButton, "continue button to close the popup")
         console.log("popupContinueBtnVisibility: ", popupContinueBtnVisibility)
         if (popupContinueBtnVisibility) {
@@ -234,7 +234,7 @@ class BagsPage {
                 }
             }
         }
-        await this.actions.waitForLoadState()
+        await this.actions.waitForLoadState('domcontentloaded', 60000)
 
         // Check if checked bag is included or has a price
         const priceElement = checkedbagPrice.replace(/X/g, 1)
