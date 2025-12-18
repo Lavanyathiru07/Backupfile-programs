@@ -7,6 +7,7 @@ const returnleg = "//div[@data-hook='extras-popup-flight-leg_returning']/div[2]/
 const priority = "[data-hook='priority-boarding-modal_add-to-cart']"
 const tripFlex = "[data-hook='trip-flex-card_add-to-cart']"
 const batteriesscroll = "[alt='Lithium Batteries']"
+const clickContinueButton = "//button[@data-hook='ancillaries-page_continue'] | //button[@data-hook='ancillaries-page_continue-popup']";
 const continueb = "//button[@data-hook='ancillaries-page_continue'] | //button[@data-hook='ancillaries-page_continue-popup']"
 const popupContinueButton = "[data-hook='ancillaries-continue-popup_button_continue']"
 const bagsPageHeading = "[data-hook='ancillaries-page_page-heading']"
@@ -68,97 +69,21 @@ class BagsPage {
     }
 
     async clickContinueButton() {
-        await this.actions.waitForLoadState('domcontentloaded', 30000)
-        try {
-            await this.actions.waitForDisplayed(spinnerBar, 'spinner bar', 5000)
-            await this.actions.waitForHidden(spinnerBar, 'spinner bar to disappear', 30000)
-            console.log('Spinner disappeared, continuing...')
-        } catch (error) {
-            console.log('No spinner found or already disappeared')
-        }
-        await this.actions.waitForLoadState('networkidle', 10000)
-
-        await this.actions.scroll(continueb)
-        await this.actions.waitForDisplayed(continueb, 'Continue button in BAGS PAGE', 60000)
-
-        const continueButtonElement = await this.actions.getElement(continueb)
-        let retries = 0
-        const maxRetries = 15 // Increased retry count
-
-        while (retries < maxRetries) {
-            try {
-                await this.actions.waitForLoadState('domcontentloaded', 30000)
-
-                const isEnabled = await this.actions.isEnabled(continueb)
-                if (isEnabled) {
-                    console.log('Continue button is now enabled, attempting to click...')
-                    break
-                }
-                console.log(`Continue button still disabled, waiting... (attempt ${retries + 1}/${maxRetries})`)
-
-                try {
-                    const buttonElement = await this.actions.getElement(continueb)
-                    const buttonText = await this.actions.getText(continueb, 'continue button text')
-                    console.log(`Button text: ${buttonText}`)
-
-                    const buttonClass = await buttonElement.getAttribute('class')
-                    console.log(`Button classes: ${buttonClass}`)
-                } catch (debugError) {
-                    console.log('Could not get button debug info:', debugError.message)
-                }
-
-                await this.actions.pause(3000) // Increased wait time
-                retries++
-            } catch (error) {
-                console.log(`Error checking button state: ${error.message}`)
-                retries++
-                await this.actions.pause(3000)
-            }
-        }
-
-        if (retries >= maxRetries) {
-            console.log('Continue button did not become enabled within timeout period')
-
-            try {
-                const buttonElement = await this.actions.getElement(continueb)
-                const isVisible = await this.actions.isDisplayed(continueb, 'continue button')
-                const buttonText = await this.actions.getText(continueb, 'continue button text')
-                const buttonClass = await buttonElement.getAttribute('class')
-                const disabled = await buttonElement.getAttribute('disabled')
-
-                console.log(`Button debug info:`)
-                console.log(`- Visible: ${isVisible}`)
-                console.log(`- Text: ${buttonText}`)
-                console.log(`- Classes: ${buttonClass}`)
-                console.log(`- Disabled attribute: ${disabled}`)
-                console.log('Attempting to force click despite disabled state...')
-                await continueButtonElement.click({ force: true, timeout: 5000 })
-                console.log('Force click succeeded')
-
-            } catch (forceClickError) {
-                console.log('Force click also failed:', forceClickError.message)
-                throw new Error(`Continue button remained disabled after maximum retries. Button may require prior selection of bags or other ancillaries.`)
-            }
-        } else {
-            // Button is enabled, proceed with normal click
-            await this.actions.waitForClickable(continueb, 'Continue button in BAGS PAGE', 60000)
-            try {
-                await this.actions.click(continueb, 'Continue button in BAGS PAGE')
-            } catch (error) {
-                console.log('Normal click failed, attempting force click...')
-                await continueButtonElement.click({ force: true })
-            }
-        }
-
-        await this.actions.waitForLoadState('domcontentloaded', 30000)
-
-        // Handle popup if it appears
+        // await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 30000)
+        // await this.actions.scroll(batteriesscroll)
+        await this.actions.waitForDisplayed(clickContinueButton, 'Continue button in BAGS PAGE', 30000)
+        await this.actions.waitForClickable(clickContinueButton, 'Continue button in BAGS PAGE')
+        await this.actions.scroll(clickContinueButton)
+        await this.actions.clickElement('click', clickContinueButton, 'Continue button in BAGS PAGE')
+        await this.actions.pause(10000)
         let popupContinueBtnVisibility = await this.actions.isDisplayed(popupContinueButton, "continue button to close the popup")
         console.log("popupContinueBtnVisibility: ", popupContinueBtnVisibility)
         if (popupContinueBtnVisibility) {
             await this.actions.waitForClickable(popupContinueButton, 'popupContinueButton', 30000)
+            await this.actions.waitForDisplayed(popupContinueButton, 'popupContinueButton', 30000)
             await this.actions.clickElement('click', popupContinueButton, "pop-up button for continue")
         }
+        await this.actions.pause(10000)
     }
 
     async selectCarryOnBagByParams(params) {
