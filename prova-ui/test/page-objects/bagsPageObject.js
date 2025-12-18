@@ -6,7 +6,7 @@ const departingleg = "//div[@data-hook='extras-popup-flight-leg_departing']/div[
 const returnleg = "//div[@data-hook='extras-popup-flight-leg_returning']/div[2]/div[1]"
 const priority = "[data-hook='priority-boarding-modal_add-to-cart']"
 const tripFlex = "[data-hook='trip-flex-card_add-to-cart']"
-const batteriesscroll = "[alt='Lithium Batteries']"
+const batteriesscroll = "//span[normalize-space()='Lithium Batteries']"
 const clickContinueButton = "//button[@data-hook='ancillaries-page_continue'] | //button[@data-hook='ancillaries-page_continue-popup']";
 const continueb = "//button[@data-hook='ancillaries-page_continue'] | //button[@data-hook='ancillaries-page_continue-popup']"
 const popupContinueButton = "[data-hook='ancillaries-continue-popup_button_continue']"
@@ -69,8 +69,8 @@ class BagsPage {
     }
 
     async clickContinueButton() {
-        // await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 30000)
-        // await this.actions.scroll(batteriesscroll)
+        await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 30000)
+        await this.actions.scroll(batteriesscroll)
         await this.actions.waitForDisplayed(clickContinueButton, 'Continue button in BAGS PAGE', 30000)
         await this.actions.waitForClickable(clickContinueButton, 'Continue button in BAGS PAGE')
         await this.actions.scroll(clickContinueButton)
