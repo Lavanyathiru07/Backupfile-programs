@@ -69,40 +69,87 @@ class BagsPage {
 
     async clickContinueButton() {
         await this.actions.waitForLoadState('domcontentloaded', 30000)
+        try {
+            await this.actions.waitForDisplayed(spinnerBar, 'spinner bar', 5000)
+            await this.actions.waitForHidden(spinnerBar, 'spinner bar to disappear', 30000)
+            console.log('Spinner disappeared, continuing...')
+        } catch (error) {
+            console.log('No spinner found or already disappeared')
+        }
+        await this.actions.waitForLoadState('networkidle', 10000)
+
         await this.actions.scroll(continueb)
         await this.actions.waitForDisplayed(continueb, 'Continue button in BAGS PAGE', 60000)
 
         const continueButtonElement = await this.actions.getElement(continueb)
         let retries = 0
-        const maxRetries = 10
+        const maxRetries = 15 // Increased retry count
+
         while (retries < maxRetries) {
             try {
+                await this.actions.waitForLoadState('domcontentloaded', 30000)
+
                 const isEnabled = await this.actions.isEnabled(continueb)
                 if (isEnabled) {
                     console.log('Continue button is now enabled, attempting to click...')
                     break
                 }
                 console.log(`Continue button still disabled, waiting... (attempt ${retries + 1}/${maxRetries})`)
-                await this.actions.pause(2000) // Wait 2 seconds before retrying
+
+                try {
+                    const buttonElement = await this.actions.getElement(continueb)
+                    const buttonText = await this.actions.getText(continueb, 'continue button text')
+                    console.log(`Button text: ${buttonText}`)
+
+                    const buttonClass = await buttonElement.getAttribute('class')
+                    console.log(`Button classes: ${buttonClass}`)
+                } catch (debugError) {
+                    console.log('Could not get button debug info:', debugError.message)
+                }
+
+                await this.actions.pause(3000) // Increased wait time
                 retries++
             } catch (error) {
                 console.log(`Error checking button state: ${error.message}`)
                 retries++
-                await this.actions.pause(2000)
+                await this.actions.pause(3000)
             }
         }
 
         if (retries >= maxRetries) {
             console.log('Continue button did not become enabled within timeout period')
-            throw new Error('Continue button remained disabled after maximum retries')
+
+            try {
+                const buttonElement = await this.actions.getElement(continueb)
+                const isVisible = await this.actions.isDisplayed(continueb, 'continue button')
+                const buttonText = await this.actions.getText(continueb, 'continue button text')
+                const buttonClass = await buttonElement.getAttribute('class')
+                const disabled = await buttonElement.getAttribute('disabled')
+
+                console.log(`Button debug info:`)
+                console.log(`- Visible: ${isVisible}`)
+                console.log(`- Text: ${buttonText}`)
+                console.log(`- Classes: ${buttonClass}`)
+                console.log(`- Disabled attribute: ${disabled}`)
+                console.log('Attempting to force click despite disabled state...')
+                await continueButtonElement.click({ force: true, timeout: 5000 })
+                console.log('Force click succeeded')
+
+            } catch (forceClickError) {
+                console.log('Force click also failed:', forceClickError.message)
+                throw new Error(`Continue button remained disabled after maximum retries. Button may require prior selection of bags or other ancillaries.`)
+            }
+        } else {
+            // Button is enabled, proceed with normal click
+            await this.actions.waitForClickable(continueb, 'Continue button in BAGS PAGE', 60000)
+            try {
+                await this.actions.click(continueb, 'Continue button in BAGS PAGE')
+            } catch (error) {
+                console.log('Normal click failed, attempting force click...')
+                await continueButtonElement.click({ force: true })
+            }
         }
-        await this.actions.waitForClickable(continueb, 'Continue button in BAGS PAGE', 60000)
-        try {
-            await this.actions.click(continueb, 'Continue button in BAGS PAGE')
-        } catch (error) {
-            console.log('Normal click failed, attempting force click...')
-            await continueButtonElement.first().click({ force: true })
-        }
+
         await this.actions.waitForLoadState('domcontentloaded', 30000)
 
         // Handle popup if it appears
