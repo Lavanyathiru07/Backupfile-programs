@@ -69,168 +69,21 @@ class BagsPage {
     }
 
     async clickContinueButton() {
-        try {
-            console.log('Starting clickContinueButton method...')
-
-            // Wait for page stability
-            await this.actions.waitForLoadState('domcontentloaded', 30000)
-
-            // Wait for batteries section and scroll to it
-            await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 30000)
-            await this.actions.scroll(batteriesscroll)
-            await this.actions.pause(2000)
-
-            // Wait for continue button to appear
-            console.log('Waiting for continue button to be displayed...')
-            await this.actions.waitForDisplayed(clickContinueButton, 'Continue button in BAGS PAGE', 60000)
-
-            // Wait for network stability
-            try {
-                await this.actions.waitForLoadState('networkidle', 15000)
-            } catch (networkError) {
-                console.log('Network idle timeout, proceeding anyway...')
-            }
-
-            // Wait for button to be enabled with enhanced retry logic
-            console.log('Checking if continue button is enabled...')
-            let retries = 0
-            const maxRetries = 20 // Increased retries
-            let buttonReady = false
-
-            while (retries < maxRetries && !buttonReady) {
-                try {
-                    const isDisplayed = await this.actions.isDisplayed(clickContinueButton, 'continue button')
-                    const isEnabled = await this.actions.isEnabled(clickContinueButton)
-
-                    console.log(`Retry ${retries + 1}: Button displayed: ${isDisplayed}, enabled: ${isEnabled}`)
-
-                    if (isDisplayed && isEnabled) {
-                        buttonReady = true
-                        console.log('Continue button is ready for clicking!')
-                    } else {
-                        console.log(`Continue button not ready, waiting... (${retries + 1}/${maxRetries})`)
-                        await this.actions.pause(2500)
-                        retries++
-
-                        // Re-scroll to button every few retries
-                        if (retries % 5 === 0) {
-                            console.log('Re-scrolling to continue button...')
-                            await this.actions.scroll(clickContinueButton)
-                        }
-                    }
-                } catch (error) {
-                    console.log(`Error checking button state on retry ${retries + 1}: ${error.message}`)
-                    retries++
-                    await this.actions.pause(2500)
-                }
-            }
-
-            // Scroll to button before attempting clicks
-            await this.actions.scroll(clickContinueButton)
-            await this.actions.pause(2000)
-
-            // Define click strategies with enhanced options
-            let clickSuccessful = false
-            const clickStrategies = [
-                async () => {
-                    console.log('Strategy 1: Attempting standard clickElement...')
-                    await this.actions.clickElement('click', clickContinueButton, 'Continue button in BAGS PAGE')
-                },
-                async () => {
-                    console.log('Strategy 2: Attempting direct click...')
-                    await this.actions.click(clickContinueButton, 'Continue button in BAGS PAGE')
-                },
-                async () => {
-                    console.log('Strategy 3: Attempting force click...')
-                    const buttonElement = await this.actions.getElement(clickContinueButton)
-                    await buttonElement.click({ force: true })
-                },
-                async () => {
-                    console.log('Strategy 4: Attempting force click with extended timeout...')
-                    const buttonElement = await this.actions.getElement(clickContinueButton)
-                    await buttonElement.click({ force: true, timeout: 15000 })
-                },
-                async () => {
-                    console.log('Strategy 5: Attempting click on first matching element...')
-                    const buttonElement = await this.actions.getElement(clickContinueButton)
-                    await buttonElement.first().click({ force: true, timeout: 10000 })
-                }
-            ]
-
-            // Try each click strategy
-            for (let i = 0; i < clickStrategies.length && !clickSuccessful; i++) {
-                try {
-                    await clickStrategies[i]()
-                    clickSuccessful = true
-                    console.log(`✅ Click strategy ${i + 1} succeeded!`)
-                    break
-                } catch (error) {
-                    console.log(`❌ Click strategy ${i + 1} failed: ${error.message}`)
-                    if (i < clickStrategies.length - 1) {
-                        console.log('Waiting before trying next strategy...')
-                        await this.actions.pause(3000)
-                        // Re-scroll before next attempt
-                        await this.actions.scroll(clickContinueButton)
-                    }
-                }
-            }
-
-            if (!clickSuccessful) {
-                throw new Error('All click strategies failed for continue button')
-            }
-
-            console.log('Continue button clicked successfully, waiting for page response...')
-            await this.actions.pause(5000)
-
-            // Check for popup with enhanced handling
-            console.log('Checking for popup continue button...')
-            let popupAttempts = 0
-            const maxPopupAttempts = 3
-
-            while (popupAttempts < maxPopupAttempts) {
-                try {
-                    let popupContinueBtnVisibility = await this.actions.isDisplayed(popupContinueButton, "continue button to close the popup")
-                    console.log(`Popup attempt ${popupAttempts + 1}: popupContinueBtnVisibility = ${popupContinueBtnVisibility}`)
-
-                    if (popupContinueBtnVisibility) {
-                        console.log('Popup detected, handling popup continue button...')
-                        await this.actions.waitForClickable(popupContinueButton, 'popupContinueButton', 30000)
-                        await this.actions.waitForDisplayed(popupContinueButton, 'popupContinueButton', 30000)
-                        await this.actions.clickElement('click', popupContinueButton, "pop-up button for continue")
-                        console.log('Popup continue button clicked successfully')
-                        break
-                    } else {
-                        console.log('No popup detected')
-                        break
-                    }
-                } catch (popupError) {
-                    console.log(`Popup handling error on attempt ${popupAttempts + 1}: ${popupError.message}`)
-                    popupAttempts++
-                    if (popupAttempts < maxPopupAttempts) {
-                        await this.actions.pause(2000)
-                    }
-                }
-            }
-
-            console.log('Final wait before completing clickContinueButton method...')
-            await this.actions.pause(5000)
-            console.log('✅ clickContinueButton method completed successfully')
-
-        } catch (error) {
-            console.error('❌ Critical error in clickContinueButton method:', error.message)
-            console.log('Attempting emergency recovery...')
-
-            try {
-                // Last resort: try force clicking without any checks
-                const buttonElement = await this.actions.getElement(clickContinueButton)
-                await buttonElement.click({ force: true, timeout: 30000 })
-                console.log('Emergency force click succeeded')
-                await this.actions.pause(5000)
-            } catch (emergencyError) {
-                console.error('Emergency force click also failed:', emergencyError.message)
-                throw new Error(`Complete failure in clickContinueButton: ${error.message}. Emergency attempt: ${emergencyError.message}`)
-            }
+        await this.actions.pause(5000)
+        await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 30000)
+        await this.actions.scroll(batteriesscroll)
+        await this.actions.waitForDisplayed(clickContinueButton, 'Continue button in BAGS PAGE', 30000)
+        await this.actions.waitForClickable(clickContinueButton, 'Continue button in BAGS PAGE')
+        await this.actions.scroll(clickContinueButton)
+        await this.actions.clickElement('click', clickContinueButton, 'Continue button in BAGS PAGE')
+        await this.actions.pause(5000)
+        let popupContinueBtnVisibility = await this.actions.isDisplayed(popupContinueButton, "continue button to close the popup")
+        console.log("popupContinueBtnVisibility: ", popupContinueBtnVisibility)
+        if (popupContinueBtnVisibility) {
+            await this.actions.waitForClickable(popupContinueButton, 'popupContinueButton', 30000)
+            await this.actions.clickElement('click', popupContinueButton, "pop-up button for continue")
         }
+        await this.actions.pause(5000)
     }
 
     async selectCarryOnBagByParams(params) {
