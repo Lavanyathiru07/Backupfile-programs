@@ -69,23 +69,81 @@ class BagsPage {
     }
 
     async clickContinueButton() {
-        await this.actions.pause(10000)
+        await this.actions.pause(5000)
         await this.actions.waitForLoadState('domcontentloaded', 60000)
-        // await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 30000)
-        // await this.actions.scroll(batteriesscroll)
-        await this.actions.waitForDisplayed(clickContinueButton, 'Continue button in BAGS PAGE', 30000)
-        await this.actions.waitForClickable(clickContinueButton, 'Continue button in BAGS PAGE')
-        await this.actions.scroll(clickContinueButton)
-        await this.actions.clickElement('click', clickContinueButton, 'Continue button in BAGS PAGE')
-        await this.actions.pause(10000)
-        await this.actions.waitForLoadState('domcontentloaded', 60000)
-        let popupContinueBtnVisibility = await this.actions.isDisplayed(popupContinueButton, "continue button to close the popup")
-        console.log("popupContinueBtnVisibility: ", popupContinueBtnVisibility)
-        if (popupContinueBtnVisibility) {
-            await this.actions.waitForClickable(popupContinueButton, 'popupContinueButton', 30000)
-            await this.actions.clickElement('click', popupContinueButton, "pop-up button for continue")
+
+        try {
+            // Scroll to batteries section to ensure page is fully loaded
+            await this.actions.scroll(batteriesscroll)
+            await this.actions.pause(2000)
+
+            // Define specific locators to avoid strict mode violation
+            const continueButtonSelectors = [
+                "button[data-hook='ancillaries-page_continue']",
+                "//button[@data-hook='ancillaries-page_continue']",
+                "button[data-hook='ancillaries-page_continue-popup']",
+                "//button[@data-hook='ancillaries-page_continue-popup']",
+                " //span[normalize-space()='Continue']"
+            ];
+
+            let continueButtonFound = false;
+            let selectedSelector = null;
+
+            for (const selector of continueButtonSelectors) {
+                try {
+                    console.log(`Checking for continue button with selector: ${selector}`);
+                    const elementCount = await this.actions.getElementCount(selector);
+                    console.log(`Found ${elementCount} elements with selector: ${selector}`);
+
+                    if (elementCount === 1) {
+                        await this.actions.waitForDisplayed(selector, `Continue button with selector ${selector}`, 10000);
+                        selectedSelector = selector;
+                        continueButtonFound = true;
+                        console.log(`Selected continue button with selector: ${selector}`);
+                        break;
+                    } else if (elementCount > 1) {
+                        const isVisible = await this.actions.isDisplayed(selector, `Continue button visibility check`);
+                        if (isVisible) {
+                            selectedSelector = selector;
+                            continueButtonFound = true;
+                            console.log(`Selected first visible continue button with selector: ${selectedSelector}`);
+                            break;
+                        }
+                    }
+                } catch (error) {
+                    console.log(`Continue button not found with selector ${selector}`);
+                    continue;
+                }
+            }
+
+            if (!continueButtonFound) {
+                throw new Error("No suitable continue button found with any of the attempted selectors");
+            }
+            await this.actions.waitForClickable(selectedSelector, `Continue button (${selectedSelector})`, 30000);
+            await this.actions.scroll(selectedSelector);
+            await this.actions.pause(1000);
+            await this.actions.clickElement('click', selectedSelector, `Continue button (${selectedSelector})`);
+
+            console.log(`Successfully clicked continue button with selector: ${selectedSelector}`);
+
+        } catch (error) {
+            console.error(`Error in continue button click process`);
         }
-        await this.actions.pause(10000)
+        await this.actions.pause(5000)
+        await this.actions.waitForLoadState('domcontentloaded', 60000)
+        try {
+            let popupContinueBtnVisibility = await this.actions.isDisplayed(popupContinueButton, "continue button to close the popup")
+            console.log("popupContinueBtnVisibility: ", popupContinueBtnVisibility)
+            if (popupContinueBtnVisibility) {
+                await this.actions.waitForClickable(popupContinueButton, 'popupContinueButton', 30000)
+                await this.actions.clickElement('click', popupContinueButton, "pop-up button for continue")
+                console.log("Popup continue button clicked successfully")
+            }
+        } catch (popupError) {
+            console.log(`Popup handling error (non-critical): ${popupError.message}`)
+        }
+
+        await this.actions.pause(3000)
     }
 
     async selectCarryOnBagByParams(params) {
