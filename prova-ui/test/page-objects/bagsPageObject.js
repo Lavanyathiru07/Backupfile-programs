@@ -69,6 +69,7 @@ class BagsPage {
     }
 
     async clickContinueButton() {
+        await this.actions.pause(10000)
         await this.actions.waitForLoadState('domcontentloaded', 60000)
         // await this.actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 30000)
         await this.actions.scroll(batteriesscroll)
@@ -76,6 +77,7 @@ class BagsPage {
         await this.actions.waitForClickable(clickContinueButton, 'Continue button in BAGS PAGE')
         await this.actions.scroll(clickContinueButton)
         await this.actions.clickElement('click', clickContinueButton, 'Continue button in BAGS PAGE')
+        await this.actions.pause(10000)
         await this.actions.waitForLoadState('domcontentloaded', 60000)
         let popupContinueBtnVisibility = await this.actions.isDisplayed(popupContinueButton, "continue button to close the popup")
         console.log("popupContinueBtnVisibility: ", popupContinueBtnVisibility)
@@ -83,7 +85,7 @@ class BagsPage {
             await this.actions.waitForClickable(popupContinueButton, 'popupContinueButton', 30000)
             await this.actions.clickElement('click', popupContinueButton, "pop-up button for continue")
         }
-        await this.actions.pause(5000)
+        await this.actions.pause(10000)
     }
 
     async selectCarryOnBagByParams(params) {
@@ -171,7 +173,7 @@ class BagsPage {
             var segment = params.split(' ')[1].split('-')[1]
             var checked = params.split(' ')[2].split('-')[1]
             if (paxNum.includes("all")) {
-                await this.actions.waitForDisplayed(travelerCount, 'seat info on header')
+                await this.actions.waitForDisplayed(travelerCount, 'seat info on header', 30000)
                 var all = (await this.actions.getText(travelerCount, 'traveler count')).split(' ')[0]
                 for (var i = 1; i <= all; i++) {
                     await this.selectCheckedBag(checked, Number(i), segment)
@@ -270,6 +272,7 @@ class BagsPage {
                 BagsPageCollector.set('checkedBagPrice', 'N/A')
             }
         }
+        console.log('Selected Checked Bag Prices:', BagsPageCollector.get('checkedBagPrice'))
     }
 
     async selectTripflex(tripflex) {
