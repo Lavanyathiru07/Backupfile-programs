@@ -170,8 +170,8 @@ class BundlesPage {
     
     async bundleScroll()
     {
-        let bonusBundleScroll = "[data-hook='text-below-strikethrough-price_allegiant_bonus_bundle']"
-        let totalBundleScroll = "[data-hook='text-below-strikethrough-price_allegiant_total_bundle']"
+        let bonusBundleScroll = "[data-hook='text-below-strikethrough-price_allegiant_bonus_bundle'],[data-hook='select-tier-2']"
+        let totalBundleScroll = "[data-hook='text-below-strikethrough-price_allegiant_total_bundle'], [data-hook='select-tier-3']"
         await actions.waitForDisplayed(bonusBundle, 'bonusBundle', 20000)
         browser.pause(5000);
         if (await actions.isDisplayed(basicBundlescroll)) {
