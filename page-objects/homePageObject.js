@@ -489,6 +489,24 @@ class HomePage {
 		}
 	}
 
+	async isDepartureDateEnabled() {
+		const dateExpandSelector = "[data-hook='flight-search-date-picker_expand-start-date']"; // Correct selector
+		try {
+			const element = await browser.$(dateExpandSelector);
+
+			// Check if the element is displayed and clickable
+			const isDisplayed = await element.isDisplayed();
+			const isClickable = await element.isClickable();
+
+			console.log(`Date Expand Button - Displayed: ${isDisplayed}, Clickable: ${isClickable}`);
+
+			return isDisplayed && isClickable; // Return true only if both conditions are met
+		} catch (err) {
+			console.log("Error checking date expand state:", err);
+			return false; // Return false if the element is not found or an error occurs
+		}
+	}
+
 }
 export default new HomePage()
 export { BookingDisabledFromMonth, billboardNameList }
