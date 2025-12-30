@@ -1,6 +1,6 @@
 @navitairebat
 Feature: This feature file is to run Naviataire BAT scenarios
-     Scenario Outline:RT, Domestic flight with Infant in lap and Child with 1 CO and 1 CK bag, Seat &Modify WWW booking via MT
+     Scenario Outline:RT, Domestic flight with Infant in lap and Child with 1 CO and 1 CK bag, Seat & Modify WWW booking via MT
           Given I complete the Booking using gql for RT Domestic
                | tripType    | roundTrip                |
                | origin      | BLV                      |
@@ -37,7 +37,7 @@ Feature: This feature file is to run Naviataire BAT scenarios
                | 1 checked bag | 1      | 1 checked bag | 9          |
 
      @set2 
-     Scenario Outline:RT, Domestic flight with Infant in lap and Child with 1 CO and 1 CK bag, Seat &Modify WWW booking via MT
+     Scenario Outline:RT, Domestic flight with 2Adult, 1Infant in lap and 1Child with 1 CO and 1 CK bag, Seat & Modify WWW booking via MT
           Given  I navigate to www application
           Given  I am on landing page I select "<tripType>"
           When  I am on landing page I select "BLV" for the departure airport

@@ -15,9 +15,7 @@ Then(/^I am on Bags page I expect "(.+)" message for collected bundle items for 
 });
 
 Then(/^I am on Bags page I select CarryOn "(.+)"$/, async (params) => {
-    await browser.pause(5000)
     await BagsPage.selectCarryOnBagByParams(params)
-    await browser.pause(5000)
 })
 
 Then(/^I am on Bags page I select Checked Bag "(.+)"$/, async (params) => {

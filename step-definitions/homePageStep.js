@@ -71,13 +71,78 @@ When(/^I am on MT landing page I choose the departure date "(.+)" days from curr
 });
 
 When(/^I am on landing page I choose the departure date "([^"]*)" days from current day$/, async (number) => {
-    await homePage.openDepartureDateCalendar()
-    if (process.env.ENV.includes("prod") || process.env.tag.includes("prod")) {
-        departureDate = await homePage.chooseDepartingDate(95);
-    } else {
-        departureDate = await homePage.chooseDepartingDate(number);
+    const timeout = 5000; // Maximum duration to wait (in milliseconds)
+    const interval = 500; // Interval between checks (in milliseconds)
+    let elapsedTime = 0;
+    let isDateEnabled = false;
+
+    while (elapsedTime < timeout) {
+        isDateEnabled = await homePage.isDepartureDateEnabled();
+        console.log(`Date expand enabled: ${isDateEnabled}`);
+
+        if (isDateEnabled) {
+            break; // Exit loop if date expand is enabled
+        }
+
+        await browser.pause(interval); // Wait for the interval duration
+        elapsedTime += interval;
     }
-    await browser.pause(3000)
+
+    if (isDateEnabled) {
+        console.log("Date expand is enabled for feature file city pairs.");
+        await homePage.openDepartureDateCalendar();
+        departureDate = await homePage.chooseDepartingDate(parseInt(number));
+        return; // Exit if date is selected successfully
+    }
+
+    console.log("Date expand is not enabled for feature file city pairs. Switching to hardcoded city pairs.");
+
+    const cityPairs = [
+        { origin: "AVL", destination: "SFB" },
+        { origin: "FAT", destination: "LAS" },
+    ];
+
+    let dateSelected = false;
+    for (let i = 0; i < cityPairs.length; i++) {
+        try {
+            console.log(`Trying city pair: ${cityPairs[i].origin} -> ${cityPairs[i].destination}`);
+
+            // Select departure and destination airports
+            await homePage.selectDeparture(cityPairs[i].origin);
+            await homePage.selectDestination(cityPairs[i].destination);
+            await browser.pause(1500);
+
+            // Custom polling mechanism for hardcoded city pairs
+            elapsedTime = 0;
+            isDateEnabled = false;
+
+            while (elapsedTime < timeout) {
+                isDateEnabled = await homePage.isDepartureDateEnabled();
+                console.log(`Date expand enabled for ${cityPairs[i].origin} -> ${cityPairs[i].destination}: ${isDateEnabled}`);
+
+                if (isDateEnabled) {
+                    break; // Exit loop if date expand is enabled
+                }
+
+                await browser.pause(interval);
+                elapsedTime += interval;
+            }
+
+            if (isDateEnabled) {
+                await homePage.openDepartureDateCalendar();
+                departureDate = await homePage.chooseDepartingDate(parseInt(number));
+                dateSelected = true;
+                console.log(`Date selected for ${cityPairs[i].origin} -> ${cityPairs[i].destination}`);
+                break; // Exit loop if date is selected successfully
+            }
+        } catch (err) {
+            console.log(`Failed for city pair: ${cityPairs[i].origin} -> ${cityPairs[i].destination}`, err);
+        }
+    }
+
+    if (!dateSelected) {
+        throw new Error("Unable to select a departure date for any city pair.");
+    }
 });
 
 When(/^I am on landing page I choose the returning date "(.+)" days from departure$/, async (number) => {

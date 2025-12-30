@@ -333,10 +333,10 @@ class BagsPage {
 	}
 
 	async selectCarryOnBagByParams(params) {
-		await actions.pause(5000)
+		await actions.pause(3000)
 		if (!params.includes("false")) {
 			try {
-				await actions.pause(4000)
+				await actions.pause(2000)
 				let bundleBannerVisibilty = await actions.isDisplayed(bundlebannerforCarryOnSelection, 'bundlebannerforCarryOnSelection')
 				if (bundleBannerVisibilty) {
 					console.log("Can't select the carryon Bags since it got selected automatically because we have opted Bonus and Total Bundle")
@@ -412,8 +412,7 @@ class BagsPage {
 	}
 
 	async clickContinueButton() {
-		await actions.pause(5000)
-		await actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 15000)
+		await actions.waitForDisplayed(batteriesscroll, 'batteriesscroll', 20000)
 		await actions.scroll(batteriesscroll)
 		await actions.waitForDisplayed(clickContinueButton, 'Continue button in BAGS PAGE', 10000)
 		await actions.waitForClickable(clickContinueButton, 'Continue button in BAGS PAGE')

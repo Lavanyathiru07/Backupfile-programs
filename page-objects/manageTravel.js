@@ -44,6 +44,7 @@ const hotelPageTitle = "//h1[contains(text(),'Bundle Air + Hotel and Save!')]"
 const addCar = "//span[(text()='Add a car')]"
 const carsPageHeader = "//*[text()='Car Selection']"
 const carPageTitle = "//h1[contains(text(),'Getting Around')]"
+const InfantinLap="//span[text()='Add Infant in Lap']"
 const bagsPageTitle = "//h1[text()='Select Bag and Boarding Options']"
 const paymentPageHeading = "//span[contains(text(),'Payment Information')]"
 const scrollnote = "//*[text()='* Please note:']"
@@ -102,6 +103,7 @@ const changeFlight = "[data-hook='order-highlights-banner_flight-dates-change-bu
 const flightH1 = "//span[text()='Select New Flights']"
 
 const checkinbagspagecontinue = "(//span[@class='Button__ButtonText-sc-1ececxa-0 fFLZUm'])[3]"
+const updateseatlink ="//span[text()='Update Seats']"
 const checkinbagspagecontinue2 = "//button[@data-hook='ancillaries-continue-popup_button_continue']"
 const checkinharadeouspagecheckbox = "//div[@class='Box-s8oj9r-0 cjJOaR']"
 const checkinharadeouspagecontinue = "//span[@class='Button__ButtonText-sc-1ececxa-0 fFLZUm']"
@@ -128,6 +130,8 @@ const clickFindMyTrip = "//*[@data-hook='lookup-page-lookup-button']"
 const itineraryDetails = "//*[@data-hook='trip-summary-page_title']"
 const seatscroll = "//div[text()='Seat']"
 const seatautoassigned ="(//div[@class='ant-col ant-col-3 PassengerList__StyledCol-sc-1rkj5fy-4 hTXNTo'][3])"
+const seatsheaderMT= "//span[text()='Seat']"
+const seatassigned = "//*[@data-hook='order-item-flight-info_onward_traveler-0-seat-number']"
 
 class Managetravel {
 
@@ -527,6 +531,41 @@ class Managetravel {
         await actions.scroll(scrollnote,'scrollnote')
         await actions.clickElement('click', continuecars, "bags and seats link")
     }
+    async clickAddInfantinLap() {
+        try {
+            await actions.pause(10000)
+            await actions.scroll(InfantinLap,'InfantinLap')
+            await actions.waitForDisplayed(InfantinLap, 'InfantinLap link', 30000)
+            await actions.waitForClickable(InfantinLap, 'InfantinLap Link')
+            await actions.clickElement('click', InfantinLap, "InfantinLap")
+        } catch (error) {
+            console.log(error)
+        
+    }}
+    async clickUpdateseats(){
+    try {
+            await actions.pause(10000)
+            await actions.scroll(updateseatlink,'updateseatlink')
+            await actions.waitForDisplayed(updateseatlink, 'updateseatlink', 30000)
+            await actions.waitForClickable(updateseatlink, 'updateseatlink')
+            await actions.clickElement('click', updateseatlink, "updateseatlink")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async seatassigned(){
+        await actions.scroll(seatsheaderMT,'seatsheader',1000)
+        await actions.waitForDisplayed(seatassigned,'seatassigned')
+        const seatdetails = await $(seatassigned);   
+            let seatText = await seatdetails.getText();
+            console.log("Seat number: " + seatText);
+            if(seatText=='-'||seatText.includes('Not')){
+                console.log("seat is not-assigned")
+            }
+            else{
+                console.log("seat is assigned")
+            }
+    }
 
     async cardDetails() {
         let {
@@ -603,8 +642,7 @@ class Managetravel {
     }
 
     async clickChangeDate() {
-        await actions.pause(15000)
-        await actions.waitForDisplayed(changeFlight, 'changeFlight', 30000)
+        await actions.waitForDisplayed(changeFlight, 'changeFlight', 35000)
         await actions.waitForClickable(changeFlight, 'changeFlight')
         await actions.clickElement('click', changeFlight, 'changeFlight')
         await actions.waitForDisplayed(flightH1, 'flightH1', 30000)

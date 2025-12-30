@@ -13,7 +13,9 @@ const firstName = "[data-hook='lookup-page-input-first-name_firstName']"
 const lastName = "[data-hook='lookup-page-input-last-name_lastName']"
 const confirmNumber = "[data-hook='lookup-page-input-confirmation-number_orderNumber']"
 const findTrip = "[data-hook='lookup-page-lookup-button']"
-
+const Managetrip = "(//*[contains(text(),'Manage Trip')])[2]"
+const cc_confirmation = "[data-hook='lookup-page-input-confirmation-number']"
+const cc_search ="(//span[@class='Button__ButtonText-sc-1ececxa-0 fFLZUm'])[2]"
 class GqlBookingPage {
 
 	// async getEnvironment() {
@@ -99,6 +101,49 @@ class GqlBookingPage {
 		}
 	}
 
+	async enterCCOLCIdetails() {
+		let itn_number;
+		if(process.env.confNumber ==undefined||process.env.confNumber ==''||process.env.confNumber==null)
+		{
+			// Parse confirmationNumber if it's a JSON string to extract the actual confirmation number
+			try {
+				if (process.env.confirmationNumber && process.env.confirmationNumber.startsWith('{')) {
+					let bookingData = JSON.parse(process.env.confirmationNumber);
+					itn_number = bookingData.confirmationNumber;
+				} else {
+					itn_number = process.env.confirmationNumber;
+				}
+			} catch (error) {
+				console.log("Error parsing confirmation number:", error);
+				itn_number = process.env.confirmationNumber;
+			}
+		}
+		else
+		{
+			itn_number = process.env.confNumber
+		}
+		await actions.pause(20000)
+        let ManageTripisdispalyed = await actions.isDisplayed(Managetrip, 'Managetrip')
+		if (ManageTripisdispalyed) {
+			console.log("ManageTip heading is displayed")
+            console.log("ITN:", itn_number)
+			await actions.waitForClickable(cc_confirmation, 'cc_confirmation')
+			await actions.click(cc_confirmation, 'cc_confirmation')
+			await actions.setValue(itn_number, cc_confirmation, 'confirm Number')
+
+			await actions.waitForClickable(cc_search, 'cc_search')
+			await actions.click(cc_search, 'cc_search')
+			await actions.pause(10000)
+			const handles = await browser.getWindowHandles();
+		    console.log("Windows count ", handles.length);
+		    await browser.switchToWindow(handles[handles.length-1]);
+			console.log("browserurl:", await browser.getUrl())
+			// await browser.switchWindow('/manage-travel');
+			await actions.pause(10000)
+		}else
+		{
+			console.log("Manage trip is not dispalyed")
+		}}
 	async enterOWDomesticdetails() {
 		await actions.pause(2000)
 		await actions.waitForDisplayed(myTripText, 'myTrip text')

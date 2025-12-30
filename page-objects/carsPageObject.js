@@ -8,7 +8,7 @@ const scrollcartype = "//*[text()='Car Type']"
 const carselection = "//*[contains(@class,'PriceSelectionButton-ayz81e-3 kZTAAf')]"
 const carsPageContinueButton = "[data-hook='cars-page_continue']"
 const noCarsResultMessage = "[data-hook='cars-page-no-result-message']"
-const priceButton = "(//*[contains(@class,'CarVendorPrices__PriceSelectionButton')])[1]"
+const priceButton = '(//button[@class="Button__StyledButton-sc-1ececxa-1 chKEKf CarVendorPrices__PriceSelectionButton-ayz81e-1 kjnkUG"])'
 const dropOffDateField = '(//span[contains(@class,"Text-sc-1o5ubbx-0 hSCplp")])[2]'
 const pickUpDateField = '(//span[contains(@class,"Text-sc-1o5ubbx-0 hSCplp")])[1]'
 const vehicletype = '(//span[contains(@class,"Text-sc-1o5ubbx-0 bltVao")])[1] | (//span[contains(@class,"Text-sc-1o5ubbx-0 kiUQmq")])[1]'
@@ -107,7 +107,6 @@ class CarPage {
   }
 
   async carspageContinueBtn() {
-    await actions.pause(5000)
     await actions.waitForDisplayed(carPageHeader, 'carPageHeader', 30000)
     let carsHeaderVisibilty = await actions.isDisplayed(carPageHeader, 'carPageHeader')
     if (carsHeaderVisibilty) {

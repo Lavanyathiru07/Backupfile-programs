@@ -3,7 +3,7 @@ import actions from '@g4/prova-ui/src/support/actions'
 import { assert } from 'chai';
 const heading = "//span[@data-hook='hotels-page_page-heading']";
 const hotelText = "//span[contains(text(),'Bundle Air + Hotel and Save!')]"
-const hotelTitle = "[data-hook='hotels-page_page-heading']"
+const hotelTitle = "//h1//span[contains(text(), '+ Hotel')] | //*[data-hook='hotels-page_page-heading']"
 const hotelPageTitle = '//title';
 const hotelsPageHeadingTitle = "[data-hook='hotels-page_page-heading']";
 const checkInDate = "[data-hook='hotels-page-search-criteria-check-in-date']";
@@ -167,7 +167,7 @@ class HotelPage {
     }
 
     async hotelContinueBtn() {
-        await actions.pause(30000)
+        await actions.waitForDisplayed(hotelTitle,'hotelTitle',30000)
         if ((await browser.getUrl()).includes('hotels')) {
             await actions.waitForDisplayed(cbutton, 'cbutton button', 30000)
             await actions.scroll(cbutton);

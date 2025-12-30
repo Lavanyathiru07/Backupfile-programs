@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "BAT-SUITE-EXECUTION",
   "scripts": {
-    "test": "wdio run wdio.conf.js"
+    "pretest": "node splitFeatures.js",
+    "test": "wdio run wdio.conf.js",
+    "test:full": "npm run pretest && npm run test --parallel=true"
   },
 
   "dependencies": {
-    "@g4/cat-integration-util": "^0.7.0",
+    "@g4/cat-integration-util": "0.8.0",
     "@g4/gql-booking-util": "1.14.6",
     "@g4/js-db-util": "0.1.4",
     "@g4/prova-ui": "^0.6.4",
@@ -27,5 +29,8 @@
   },
   "overrides": {
     "electron-to-chromium": "1.5.168"
+  },
+  "devDependencies": {
+    "wdio-cucumber-parallel-execution": "^3.6.15"
   }
 }

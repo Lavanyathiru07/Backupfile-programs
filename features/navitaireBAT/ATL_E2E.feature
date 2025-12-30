@@ -1,7 +1,7 @@
 @e2e @set1 @navitairebat
 Feature: This feature file is to run Navitaire BAT scenarios
 #PASS
-    Scenario Outline:Verify ATL Transactions for RT, Domestic flight with 1 Adult with 1 CO and 1 CK bag &Modify &Cancel WWW booking via MT
+    Scenario:Verify ATL Transactions for RT, Domestic flight with 1 Adult with 1 CO and 1 CK bag &Modify &Cancel WWW booking via MT
         Given I complete the Booking using GQL for RT-1Adult->1CK CO
         And I verify that the sum of all ATL transaction values are equal to 0
         And I verify I see one positive and one negative transaction for dep flt with Acct Date matching date of the flt RES_FLIGHT "book"

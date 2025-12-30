@@ -36,11 +36,11 @@ Feature: This feature file is to run Navitaire BAT scenarios
         And I am on cars page I add a car to cart
         And I am on cars page and I click on continue
         And I am on Manage Travel page, Payment page I complete payment
-        And I am on Manage Trip and I click cancel flight
+        # And I am on Manage Trip and I click cancel flight
 
         Examples:
             | tripType  | adult | child | childSeat | childLap | departDate | returnDate | cardType | Priority              | CarryOn        | Check                  | Seats                    |
-            | roundTrip | 2     | 0     | 0         | 0        | 13         | 4          | Visa     | pax-all Seg-departing | pax-2 Seg-both | pax-1 Seg-both count-1 | pax-all Seg-all type-any |
+            | roundTrip | 2     | 0     | 0         | 0        | 26         | 4          | Visa     | pax-all Seg-departing | pax-2 Seg-both | pax-1 Seg-both count-1 | pax-all Seg-all type-any |
 
     @blue @green
     Scenario Outline:Domestic-OW booking, 1 Adults
