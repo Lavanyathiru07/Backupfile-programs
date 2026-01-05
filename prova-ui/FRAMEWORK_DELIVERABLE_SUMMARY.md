@@ -28,7 +28,7 @@ prova-ui/
 ├── 🧪 test/                     # Active test framework
 ├── 🐱 cat-hooks/                # CAT integration (functional)
 ├── 🛠️ src/                      # Framework utilities
-├── 📦 archived-legacy/         # Preserved WebDriverIO legacy
+├── 📦 archived-legacy/         # Preserved legacy code
 ├── ⚙️ Configuration Files       # All configs updated
 └── 📚 Documentation            # Complete guides
 ```
@@ -36,7 +36,7 @@ prova-ui/
 ### ✅ **4. Dependencies Resolved & Updated**
 - **Added Missing Packages:** `chai`, `@faker-js/faker`, `allure-cucumberjs`
 - **Updated Import Paths:** Fixed legacy import references
-- **Package.json Cleaned:** Removed WebDriverIO references, added modern alternatives
+- **Package.json Cleaned:** Removed legacy references, added modern alternatives
 - **Node.js Compatibility:** Full support for Node.js 18+ and 22+
 
 ### ✅ **5. Development Environment Setup**
@@ -165,7 +165,7 @@ $ npx playwright install
 
 | Aspect | Before | After |
 |--------|--------|-------|
-| **Framework** | Mixed WebDriverIO/Playwright | Pure Playwright 1.56.1 |
+| **Framework** | Legacy Mixed Framework | Pure Playwright 1.56.1 |
 | **Dependencies** | Broken imports, missing packages | All dependencies resolved |
 | **Documentation** | Basic README only | 50+ page comprehensive guide |
 | **Structure** | Mixed legacy/modern code | Clean, organized structure |
@@ -254,7 +254,7 @@ The Prova UI Testing Framework has been successfully modernized, documented, and
 
 - ✅ **Comprehensive README.md created**
 - ✅ **CAT integration issues resolved**
-- ✅ **WebDriverIO legacy code cleaned up**
+- ✅ **Legacy code cleaned up**
 - ✅ **Complete project structure review delivered**
 - ✅ **INSTRUCTION.md documentation completed**
 - ✅ **Framework validated and ready for production use**

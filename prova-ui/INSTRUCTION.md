@@ -36,7 +36,7 @@ prova-ui/
 │   └── images/                 # Screenshots from failed tests
 ├── 📈 allure-results/          # Allure test results
 ├── 📚 docs/                     # Documentation files
-├── 📦 archived-legacy/         # Archived WebDriverIO legacy code
+├── 📦 archived-legacy/         # Archived legacy code
 └── ⚙️ Configuration Files       # Various config files
 ```
 
@@ -49,7 +49,7 @@ prova-ui/
 | `test/step-definitions/` | Cucumber step implementations | ✅ |
 | `src/support/` | Actions and validation utilities | ✅ |
 | `cat-hooks/` | CAT portal integration hooks | ✅ |
-| `archived-legacy/` | Legacy WebDriverIO code (preserved) | ❌ |
+| `archived-legacy/` | Legacy code (preserved) | ❌ |
 
 ---
 

@@ -55,7 +55,7 @@ A comprehensive test automation framework built with **Playwright** and **Cucumb
 ├── cat-hooks/            # CAT integration hooks
 
 ├── reports/              # Test execution reports
-├── archived-legacy/      # Archived WebDriverIO legacy code
+├── archived-legacy/      # Archived legacy code
 └── utility/              # Utility functions
 ```
 

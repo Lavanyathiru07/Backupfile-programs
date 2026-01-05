@@ -3,7 +3,7 @@
 ## 🧹 Files Removed
 
 ### **Legacy Documentation**
-- ❌ `WEBDRIVERIO_CLEANUP.md` - No longer needed
+- ❌ `LEGACY_CLEANUP.md` - No longer needed
 - ❌ `postinstall.sh` - Unused shell script
 
 ### **Python Environment**
@@ -78,7 +78,7 @@ prova-ui/
 ├── 🐱 cat-hooks/                # CAT integration
 ├── 🔧 utility/                  # Utility functions
 ├── 📚 docs/                     # Documentation
-├── 📦 archived-legacy/         # Preserved WebDriverIO code
+├── 📦 archived-legacy/         # Preserved legacy code
 ├── ⚙️ Configuration Files       # Essential configs only
 └── 📄 Documentation            # Clean documentation
 ```

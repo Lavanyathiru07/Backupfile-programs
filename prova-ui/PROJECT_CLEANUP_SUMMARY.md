@@ -1,6 +1,6 @@
 # Project Structure Cleanup Summary
 
-This document summarizes the cleanup of legacy WebDriverIO code and the migration to a pure Playwright implementation.
+This document summarizes the cleanup of legacy code and the migration to a pure Playwright implementation.
 
 ## Cleanup Actions Performed
 
@@ -8,12 +8,12 @@ This document summarizes the cleanup of legacy WebDriverIO code and the migratio
 
 **Moved to `archived-legacy/`:**
 - ✅ `test/page-objects/` → `archived-legacy/page-objects/`
-  - Mixed WebDriverIO and Playwright page objects
+  - Mixed legacy and Playwright page objects
   - Files with both `Object.js` and `PlaywrightObject.js` naming patterns
   - Legacy transition artifacts
 
 - ✅ `test/step-definitions/` → `archived-legacy/step-definitions/`
-  - Legacy step definitions that imported both WebDriverIO and Playwright page objects
+  - Legacy step definitions that imported both legacy and Playwright page objects
   - Already disabled in `cucumber.js` configuration
   - Mixed implementation during migration period
 
@@ -62,8 +62,8 @@ prova-ui/
 │   └── step-definitions/ # 🎯 Pure Playwright step definitions (ACTIVE)
 ├── cat-hooks/            # CAT integration hooks
 ├── reports/              # Test execution reports
-├── archived-legacy/      # 📦 Archived WebDriverIO legacy code
-│   ├── page-objects/     # Mixed WebDriverIO/Playwright page objects
+├── archived-legacy/      # 📦 Archived legacy code
+│   ├── page-objects/     # Mixed legacy/Playwright page objects
 │   └── step-definitions/ # Legacy step definitions
 └── utility/              # Utility functions
 ```
@@ -77,7 +77,7 @@ prova-ui/
 - `src/support/` - Playwright actions and validations
 
 ### 📦 **Archived (Preserved but Inactive):**
-- `archived-legacy/page-objects/` - Mixed WebDriverIO/Playwright implementations
+- `archived-legacy/page-objects/` - Mixed legacy/Playwright implementations
 - `archived-legacy/step-definitions/` - Legacy step definitions
 - `src/hooks-playwright/` - Legacy Playwright hooks (not currently used)
 
