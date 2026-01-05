@@ -1,0 +1,18 @@
+test/demo-app/lib/*
+
+# Don't check auto-generated stuff into git
+allure-results/
+coverage/
+build/
+junit.xml
+node_modules/
+jest_*/
+stats.json
+bundle-analysis.json
+*Fortify*
+jsdocs/
+reports/images/
+test/
+
+# VSCode
+.vscode/launch.json

@@ -1,0 +1,69 @@
+{
+    "name": "@g4/prova-ui",
+    "version": "0.6.2",
+    "type": "module",
+    "description": "Web Applications Automation Framework",
+    "homepage": "https://git.allegiantair.com:8443/projects/GQA/repos/prova-ui",
+    "publishConfig": {
+        "registry": "https://nexus3.allegiantair.com/repository/g4npm_hosted/"
+    },
+    "keywords": [
+        "qa",
+        "prova",
+        "cucumber",
+        "cucumber-js"
+    ],
+    "devDependencies": {
+        "eslint": "^8.28.0",
+        "gherkin-lint": "^4.2.2",
+        "husky": "^8.0.2"
+    },
+    "scripts": {
+        "demo-app": "http-server test/demo-app/",
+        "lint": "eslint --fix .",
+        "gherkin-lint": "gherkin-lint -c .gherkin-lintrc test/features/",
+        "prepare": "husky install",
+        "test": "cucumber-js -p default",
+        "test:parallel": "cucumber-js -p default --parallel 7",
+        "test:cat": "node run-tests-with-cat.js",
+        "test:cat-parallel": "node run-tests-with-cat.js --parallel 7",
+        "test:smoke": "cucumber-js -p default --tags '@smoke'",
+        "test:smoke-cat": "node run-tests-with-cat.js --tags '@smoke'",
+        "test:smoke-cat-parallel": "node run-tests-with-cat.js --parallel 2 --tags '@smoke'",
+        "test:regression": "cucumber-js -p default --tags '@regression'",
+        "test:regression-cat": "node run-tests-with-cat.js --tags '@regression'",
+        "test:regression-cat-parallel": "node run-tests-with-cat.js --parallel 4 --tags '@regression'",
+        "allure:generate": "allure generate allure-results --clean -o allure-report",
+        "allure:serve": "allure serve allure-results"
+    },
+    "dependencies": {
+        "@babel/cli": "^7.21.0",
+        "@babel/core": "^7.21.4",
+        "@babel/eslint-parser": "^7.19.1",
+        "@babel/plugin-proposal-export-default-from": "^7.18.10",
+        "@babel/preset-env": "^7.21.4",
+        "@babel/register": "^7.21.0",
+        "@cucumber/cucumber": "^10.0.1",
+        "@cucumber/gherkin": "25.0.2",
+        "@faker-js/faker": "^7.6.0",
+        "@g4/cat-integration-util": "^0.8.0",
+        "@g4/gql-booking-util": "^1.23.10",
+        "@playwright/test": "^1.37.1",
+        "allure-commandline": "^2.24.1",
+        "allure-cucumberjs": "^2.15.1",
+        "chai": "^6.2.0",
+        "http-server": "^14.1.1",
+        "jsonpath": "^1.1.1",
+        "lodash": "^4.17.21",
+        "mkdirp": "^3.0.1",
+        "node-fetch": "2.6.12",
+        "playwright": "^1.37.1"
+    },
+    "license": "Propietary, Allegiant Travel Company",
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run lint",
+            "pre-push": "npm run lint"
+        }
+    }
+}

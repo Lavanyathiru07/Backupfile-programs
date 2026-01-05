@@ -1,0 +1,322 @@
+// Playwright E2E Test Pipeline for Allegiant Travel
+// Updated for ES Modules support - removed Babel transpilation in favor of native ES modules
+// Using Node.js 18 LTS for Jenkins environment compatibility
+properties([
+    parameters([
+        choice(choices: ['https://www-qatnexusg4v4.apps.swe-qat.aws.allegiantair.com','https://www.stg01.aws.allegiantair.com'], description: 'Please select the application environment', name: 'appEnv'),
+        string(name: 'Tags', defaultValue: '', description: 'Cucumber tags (e.g., @demo, @smoke). Leave empty to run all tests.')
+    ])
+])
+
+String jnlp = 'jnlp'
+String jnlpDockerImage = 'docker-registry.default.svc:5000/pipe/gizmo-build-agent:rocky-v3.11'
+String cpuResources = '4'
+String memoryResources = '8Gi'
+String pullNexusAwsRegistry = 'https://nexus.aws.allegiantair.com/repository/npm-group/'
+
+String branchName = 'feature/TCOE-1867-Playwright-BAT-first-3-scenarios'
+String gitRepoUrl = "https://github.com/AllegiantTravelCo/gqa-bat.git"
+String credentialGitHub = 'jenkins-gizmo-github-app-access-token'
+String nodeVersion = 'lts/hydrogen' // Node.js 18 LTS
+
+addShortText(text: "Playwright E2E Tests", color: 'white', background: 'green', borderColor: 'white')
+timestamps {
+    ansiColor('xterm') {
+        def label = "playwright-e2e-tests-${UUID.randomUUID().toString()}"
+
+        podTemplate(
+            cloud: 'openshift',
+            label: label,
+            name: "${jnlp}-playwright-e2e",
+            serviceAccount: 'gizmo-slave',
+            namespace: 'allegiant-ci',
+            containers: generateContainer(jnlp, jnlpDockerImage, cpuResources, memoryResources),
+            volumes: [
+                emptyDirVolume(name: 'dshm', mountPath: '/dev/shm', memory: true),
+                emptyDirVolume(mountPath: '/tmp', memory: false),
+                emptyDirVolume(mountPath: '/home/jenkins/.cache', memory: false)
+            ],
+            envVars: [
+                envVar(key: 'CAT_JOB_NAME', value: "${JOB_NAME}"),
+                envVar(key: 'CAT_BUILD_NO', value: "${BUILD_NUMBER}"),
+                envVar(key: 'CAT_ENV', value: "playwright-e2e-${extractCatEnvFromUrl(params.appEnv)}"),
+                envVar(key: 'CAT_URL', value: "https://cat.stg.allegiantair.com"),
+                envVar(key: 'CI', value: "true"),
+                envVar(key: 'PLAYWRIGHT_BROWSERS_PATH', value: "/home/jenkins/.cache/playwright"),
+                envVar(key: 'TEST_ENVIRONMENT', value: "${params.appEnv}"),
+                envVar(key: 'APP_ENV', value: "${params.appEnv}"),
+                envVar(key: 'HEADLESS', value: "true"),
+                envVar(key: 'NODE_OPTIONS', value: "--max-old-space-size=4096")
+            ]
+        ) {
+            node(label) {
+                stage('Git Checkout') {
+                    container(jnlp) {
+                        withCredentials([
+                            usernamePassword(credentialsId: credentialGitHub, usernameVariable: 'GITHUB_APP', passwordVariable: 'GH_TOKEN')
+                        ]) {
+                            sh """
+                            git clone https://\$GITHUB_APP:\$GH_TOKEN@github.com/AllegiantTravelCo/gqa-bat.git ./
+                            git checkout ${branchName}
+                            """
+                        }
+                    }
+                }
+
+                stage('Install Dependencies & Setup') {
+                    container(jnlp) {
+                        try {
+                            sh """
+                            #!/bin/bash -ex
+                            
+                            source "\$NVM_DIR/nvm.sh" &>/dev/null
+                            nvm use ${nodeVersion} &>/dev/null || {
+                                nvm install ${nodeVersion}
+                                nvm use ${nodeVersion}
+                            }
+                            
+                            npm config set registry "${pullNexusAwsRegistry}" -g
+                            npm set strict-ssl false
+                            
+                            cd prova-ui
+                            
+                            # Set environment variables
+                            export HUSKY=0
+                            export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
+                            export DISPLAY=:99
+                            export PLAYWRIGHT_BROWSERS_PATH="/home/jenkins/.cache/playwright"
+                            export NODE_OPTIONS="--max-old-space-size=4096"
+                            
+                            # Install dependencies
+                            if [ -f "package-lock.json" ]; then
+                                npm ci --no-audit --no-fund
+                            else
+                                npm install --no-audit --no-fund
+                            fi
+                            
+                            # Install Playwright browsers
+                            mkdir -p "/home/jenkins/.cache/playwright"
+                            npx playwright install chromium --with-deps || npx playwright install chromium
+                            
+                            # Verify installation
+                            echo "Node.js version: \$(node --version)"
+                            echo "NPM version: \$(npm --version)"
+                            echo "Playwright version: \$(npx playwright --version)"
+                            
+                            echo "Setup completed successfully"
+                            """
+                            
+                        } catch (e) {
+                            currentBuild.result = 'FAILURE'
+                            echo "Exception during installation/setup: ${e}"
+                            throw e
+                        }
+                    }
+                }
+
+                stage('Validate Setup & Configuration') {
+                    container(jnlp) {
+                        sh """
+                        #!/bin/bash -e
+                        source "\$NVM_DIR/nvm.sh" &>/dev/null
+                        nvm use ${nodeVersion} &>/dev/null
+                        
+                        cd prova-ui
+                        
+                        echo "Node.js version: \$(node --version)"
+                        echo "NPM version: \$(npm --version)"
+                        echo "Validating ES module configuration..."
+                        
+                        # Check package.json configuration
+                        grep -q '"type".*"module"' package.json && echo "✓ ES modules enabled"
+                        
+                        # Verify Cucumber setup
+                        npx cucumber-js --version >/dev/null && echo "✓ Cucumber ready"
+                        
+                        # Verify Playwright installation
+                        npx playwright --version && echo "✓ Playwright ready"
+                        
+                        # Check test structure
+                        [ -f "cucumber.cjs" ] && echo "✓ Cucumber config found"
+                        [ -f "run-tests-with-cat.js" ] && echo "✓ CAT integration script found"
+                        [ -d "test/features" ] && echo "✓ Test features directory found"
+                        [ -d "test/step-definitions" ] && echo "✓ Step definitions directory found"
+                        
+                        echo "Setup validation completed successfully"
+                        """
+                    }
+                }
+
+                stage('Execute Playwright Tests') {
+                    container(jnlp) {
+                        try {
+                            sh """
+                            #!/bin/bash -e
+                            source "\$NVM_DIR/nvm.sh" &>/dev/null
+                            nvm use ${nodeVersion} &>/dev/null
+                            
+                            cd prova-ui
+                            export TEST_ENVIRONMENT="${params.appEnv}"
+                            export APP_ENV="${params.appEnv}"
+                            export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
+                            export HEADLESS=true
+                            export CI=true
+                            export PLAYWRIGHT_BROWSERS_PATH="/home/jenkins/.cache/playwright"
+                            export NODE_OPTIONS="--max-old-space-size=4096"
+                            export PLAYWRIGHT_PROJECT="chromium"
+                            
+                            # CAT Integration environment variables
+                            export CAT_JOB_NAME="${JOB_NAME}"
+                            export CAT_BUILD_NO="${BUILD_NUMBER}"
+                            export CAT_ENV="playwright-e2e-${extractCatEnvFromUrl(params.appEnv)}"
+                            export CAT_URL="https://cat.stg.allegiantair.com"
+                            export DEFAULT_CAT_UI="true"
+                            export CAT_JOB_ID="true"
+                            
+                            echo "Running tests with Node version: \$(node --version)"
+                            echo "App Environment: ${params.appEnv}"
+                            echo "CAT Integration enabled for job: ${JOB_NAME} build: ${BUILD_NUMBER}"
+                            
+                            # Run tests with custom tags if provided
+                            if [ -n "${params.Tags}" ] && [ "${params.Tags}" != "" ]; then
+                                echo "Running tests with tags: ${params.Tags}"
+                                npm run test:cat-parallel -- --tags '${params.Tags}'
+                            else
+                                echo "Running all tests (no tags specified)"
+                                npm run test:cat-parallel
+                            fi
+                            """
+                        } catch (e) {
+                            currentBuild.result = 'UNSTABLE'
+                            echo "Test execution failed: ${e}"
+                        }
+                    }
+                }
+
+                stage('Generate Reports & Artifacts') {
+                    container(jnlp) {
+                        try {
+                            sh """
+                            #!/bin/bash +x
+                            source "\$NVM_DIR/nvm.sh" &>/dev/null
+                            nvm use ${nodeVersion} &>/dev/null
+                            
+                            cd prova-ui
+                            
+                            # Generate Allure report if results exist
+                            if [ -d "allure-results" ] && [ "\$(ls -A allure-results 2>/dev/null)" ]; then
+                                echo "Generating Allure report..."
+                                npm run allure:generate || echo "Allure generation failed but continuing..."
+                            else
+                                echo "No Allure results found, skipping Allure report generation"
+                            fi
+                            
+                            # List available artifacts for debugging
+                            echo "Available artifacts:"
+                            ls -la . | grep -E "(cucumber-report|report\\.json|allure-|test-results|playwright-report)" || echo "No standard report files found"
+                            """
+                            
+                            // Archive test artifacts
+                            archiveArtifacts artifacts: 'prova-ui/cucumber-report.html', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'prova-ui/report.json', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'prova-ui/allure-results/**/*', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'prova-ui/allure-report/**/*', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'prova-ui/test-results/**/*', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'prova-ui/playwright-report/**/*', allowEmptyArchive: true
+                            
+                            // Publish Cucumber HTML report
+                            publishHTML([
+                                allowMissing: false,
+                                alwaysLinkToLastBuild: true,
+                                keepAll: true,
+                                reportDir: 'prova-ui',
+                                reportFiles: 'cucumber-report.html',
+                                reportName: "Cucumber Test Report - ${params.appEnv}"
+                            ])
+                            
+                            // Publish Allure report if available
+                            if (fileExists('prova-ui/allure-report/index.html')) {
+                                publishHTML([
+                                    allowMissing: true,
+                                    alwaysLinkToLastBuild: true,
+                                    keepAll: true,
+                                    reportDir: 'prova-ui/allure-report',
+                                    reportFiles: 'index.html',
+                                    reportName: "Allure Test Report - ${params.appEnv}"
+                                ])
+                            }
+                            
+                            // Publish Playwright report if available
+                            if (fileExists('prova-ui/playwright-report/index.html')) {
+                                publishHTML([
+                                    allowMissing: true,
+                                    alwaysLinkToLastBuild: true,
+                                    keepAll: true,
+                                    reportDir: 'prova-ui/playwright-report',
+                                    reportFiles: 'index.html',
+                                    reportName: "Playwright Test Report - ${params.appEnv}"
+                                ])
+                            }
+                            
+                        } catch (e) {
+                            echo "Report generation had issues: ${e}"
+                        }
+                    }
+                }
+                
+                stage('Post-Build Cleanup') {
+                    container(jnlp) {
+                        sh """
+                        #!/bin/bash +x
+                        cd prova-ui
+                        
+                        # Clean up temporary files and cache if needed
+                        echo "Cleaning up temporary files..."
+                        
+                        # Clean npm cache if it's taking too much space
+                        npm cache clean --force || echo "npm cache clean failed, continuing..."
+                        
+                        # Display disk usage for debugging
+                        echo "Disk usage summary:"
+                        du -sh . || echo "Cannot display disk usage"
+                        
+                        echo "Cleanup completed"
+                        """
+                    }
+                }
+            }
+        }
+    }
+}
+
+def generateContainer(String jnlp, String jnlpDockerImage, String cpuResources, String memoryResources) {
+    def nlist = []
+
+    nlist.add(containerTemplate(
+        name: jnlp,
+        image: jnlpDockerImage,
+        workingDir: '/tmp',
+        alwaysPullImage: true,
+        args: '${computer.jnlpmac} ${computer.name}',
+        runAsUser: '1001',
+        resourceRequestCpu: cpuResources,
+        resourceRequestMemory: memoryResources,
+        resourceLimitCpu: cpuResources,
+        resourceLimitMemory: memoryResources
+    ))
+
+    return nlist
+}
+
+def extractCatEnvFromUrl(String appEnv) {
+    if (appEnv.startsWith('http://') || appEnv.startsWith('https://')) {
+        String withoutProtocol = appEnv.replaceFirst('^https?://', '')
+        if (withoutProtocol.startsWith('www-') && withoutProtocol.contains('.allegiantair.com')) {
+            String extracted = withoutProtocol.substring(4)
+            extracted = extracted.replaceFirst('\\.allegiantair\\.com.*$', '')
+            return extracted
+        }
+        return withoutProtocol.split('/')[0]
+    }
+    return appEnv
+}

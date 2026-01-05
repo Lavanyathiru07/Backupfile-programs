@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "ms-playwright.playwright",
+    "alexkrechik.cucumberautocomplete",
+    "ms-vscode.vscode-json",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense"
+  ]
+}
