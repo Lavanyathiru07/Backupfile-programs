@@ -5,7 +5,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
     And I have a screen that is 1440 by 700 pixels
     #QAA-26770
 
-  Scenario Outline: RT, Domestic flight with Infant in lap and Child with 1 CO and 1 CK bag, Seat &Modify WWW booking via MT
+  Scenario Outline: RT, Domestic flight with 2Adult, 1Infant in lap and 1Child with 1 CO and 1 CK bag, Seat & Modify WWW booking via MT
     Given I am on landing page I select "<tripType>"
     When I am on landing page I select "CVG" for the departure airport
     And I am on landing page I select "PGD" for the destination airport
@@ -50,4 +50,4 @@ Feature: This feature file is to run Navitaire BAT scenarios
 
     Examples:
       | tripType  | adult | child | childSeat | childLap | departDate | returnDate | tripflex | Seats                    | CarryOn          | Check                    | Addproduct    | paxNum | productTotal  | changeDate |
-      | roundTrip |     2 |     0 |         0 |        0 |          7 |          7 | false    | pax-all Seg-all type-any | pax-all Seg-both | pax-all Seg-both count-1 | 1 checked bag |      1 | 2 checked bag |          9 |
+      | roundTrip |     2 |     1 |         0 |        1 |          7 |          7 | false    | pax-all Seg-all type-any | pax-all Seg-both | pax-all Seg-both count-1 | 1 checked bag |      1 | 2 checked bag |          9 |

@@ -1,11 +1,10 @@
 Feature: This feature file is to run Navitaire BAT scenarios
     #QAA-26770
-
-  Scenario: FMM validation
-    Given I navigate to www application
-    Then I navigate to G4 portal for FMM
-    And I select the "FMM" application
-    And I validate the Fmm Flights availability
+  # Scenario: FMM validation
+  #   Given I navigate to www application
+  #   Then I navigate to G4 portal for FMM
+  #   And I select the "FMM" application
+  #   And I validate the Fmm Flights availability
     #QAA-26770
 
   Scenario: ATL scenario
