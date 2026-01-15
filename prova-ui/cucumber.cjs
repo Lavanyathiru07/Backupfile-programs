@@ -1,5 +1,5 @@
 // Set environment variables before exporting configuration
-process.env.appEnv = 'https://www-cxj2512070.apps.swe-qat.aws.allegiantair.com';
+process.env.appEnv = 'https://www-cxj2601030.apps.swe-qat.aws.allegiantair.com';
 
 module.exports = {
     default: {
