@@ -8,7 +8,7 @@ const scrollcartype = "//*[text()='Car Type']"
 const carselection = "//*[contains(@class,'PriceSelectionButton-ayz81e-3 kZTAAf')]"
 const carsPageContinueButton = "[data-hook='cars-page_continue']"
 const noCarsResultMessage = "[data-hook='cars-page-no-result-message']"
-const priceButton = '(//button[@class="Button__StyledButton-sc-1ececxa-1 chKEKf CarVendorPrices__PriceSelectionButton-ayz81e-1 kjnkUG"])'
+const priceButton = '(//button[@class="Button__StyledButton-sc-1ececxa-1 chKEKf CarVendorPrices__PriceSelectionButton-ayz81e-1 kjnkUG"]) | (//span[@class="Button__ButtonText-sc-1ececxa-0 fFLZUm"])'
 const dropOffDateField = '(//span[contains(@class,"Text-sc-1o5ubbx-0 hSCplp")])[2]'
 const pickUpDateField = '(//span[contains(@class,"Text-sc-1o5ubbx-0 hSCplp")])[1]'
 const vehicletype = '(//span[contains(@class,"Text-sc-1o5ubbx-0 bltVao")])[1] | (//span[contains(@class,"Text-sc-1o5ubbx-0 kiUQmq")])[1]'
