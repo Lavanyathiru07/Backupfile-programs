@@ -22,15 +22,15 @@ When(/^I select "(.+)"$/, async (app) => {
 });
 
 When(/^I validate Transancation$/, async function () {
-  await browser.pause(10000)
-  if (process.env.ENV.includes("okd") && !process.env.tag.includes("prod")&& !process.env.ENV.includes("qatcustjny")) {
-    if (process.env.ENV.includes("qatnexusg4.okd")) {
-      process.env.atl = "PCWVXX"
-    } else if (process.env.ENV.includes("intnexusg4.okd")) {
-      process.env.atl = "HDY49R"
-    }
-    await G4portal.ATLTranscation();
-  }
+  // await browser.pause(10000)
+  // if (process.env.ENV.includes("okd") && !process.env.tag.includes("prod")&& !process.env.ENV.includes("qatcustjny")) {
+  //   if (process.env.ENV.includes("qatnexusg4.okd")) {
+  //     process.env.atl = "PCWVXX"
+  //   } else if (process.env.ENV.includes("intnexusg4.okd")) {
+  //     process.env.atl = "HDY49R"
+  //   }
+  //   await G4portal.ATLTranscation();
+  // }
 
 });
 
