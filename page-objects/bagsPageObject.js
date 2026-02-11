@@ -39,8 +39,8 @@ const carryonBagCurrentValueSeg2 = "(//input[@data-hook='ancillaries-page-travel
 const sameOptionsForAllFlight = "//label[contains(@data-hook,'ancillaries-page-clone-options-checkbox_label')]";
 const checkedIncrementButtonSeg1 = "(//button[@data-hook='ancillaries-page-traveler_X_checked-in_increment'])[1]|(//button[@data-hook='ancillaries-page-checked-bag_X_input_increment'])[1]"
 const checkedIncrementButtonSeg2 = "(//button[@data-hook='ancillaries-page-traveler_X_checked-in_increment'])[2]|(//button[@data-hook='ancillaries-page-checked-bag_X_input_increment'])[2]"
-const carryOnPrice = "(//span[@data-hook='ancillaries-page-carry-on_price']|//span[@data-hook='cart-travelers_0_bags_carry-on_price'])[X]"
-const checkedbagPrice = "(//span[@data-hook='cart-travelers_0_bags_checked-bag_price']|//span[@data-hook='ancillaries-page-checked-bag_price'])[X]"
+const carryOnPrice = "//span[@data-hook='ancillaries-page-subheader_carry-on']/following-sibling::span"
+const checkedbagPrice = "//span[@data-hook='ancillaries-page-subheader_checked-bag']/following-sibling::span"
 const slider = "[data-hook='extras-carousel-marker_slide-X']"
 const indicatorContainer = "//div[contains(@class,'AncillariesExtras__IndicatorContainer')]"
 const extraTitle = "//span[@data-hook='extras-title']"
@@ -58,10 +58,13 @@ const petInCabinModal = "[data-hook='pet-in-cabin-modal']";
 const petInCabinAdded = "[data-hook='pet-in-cabin-card_cart-added']";
 const petInCabinReturningLeg = "[data-hook='extras-popup-flight-leg_returning']"
 const spinnerBar = "//span[contains(@class,'Spinner')]"
-const bundlebannerforCarryOnSelection = "[data-hook='ancillaries-page-bundle-banner_text']"
+const bagpageHeading = "//span[@data-hook='ancillaries-page_page-heading']"
+const bundlebannerforCarryOnSelection = "[data-hook='ancillaries-page-subheader_carry-on']"
 const petinCab = "//button[@data-hook='pet-in-cabin-card_add-to-cart']"
 const petinCabselect = "//span[@data-hook='extras-popup-flight-leg_checkbox-label']"
 const prohibiteditems = "//span[@data-hook='prohibited-items-title']";
+
+
 var BagsPageCollector = new Map();
 var bundleItems = []
 
