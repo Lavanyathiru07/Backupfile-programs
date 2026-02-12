@@ -46,7 +46,7 @@ const departingbonusbundle="//form[@data-hook='flights-list_departing']//div[@ty
 const returningbasicbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant basic bundle']"
 const returningtotalbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant total bundle']"
 const returningbonusbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant bonus bundle']"	
-
+const changebundle="//span[@class='Text-sc-1o5ubbx-0 euRnZu']"
 let departDate
 let returnDate
 // let timelineID
@@ -75,6 +75,13 @@ class FlightsPage {
       }
     }
   }
+   async getTimeline() {
+      await actions.pause(2000);
+      const timelineURL = await browser.getUrl()
+      console.log("timelineURL: ", timelineURL)
+      const timelineId = timelineURL.split('/')
+      process.env.timeline = timelineId[4]
+    }
 
   async collectFlightPageDetails() {
     await actions.waitForDisplayed(flightheading, 'flightheading', 60000)

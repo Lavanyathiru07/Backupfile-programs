@@ -12,6 +12,7 @@ Given(/^I am on flights page I click continue button$/, async () => {
             //await FlightsPage.validateFlightPage()
         }
     }
+    FlightsPage.getTimeline();
 })
  When(/^I select "([^"]*)" for departing flight$/, async (bundleType) => {
     await FlightsPage.selectDepartingBundle(bundleType)

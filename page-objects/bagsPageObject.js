@@ -18,7 +18,8 @@ const bagsPagePrimaryTitle = "[data-hook='ancillaries-page_page-heading']";
 const tripFlexIncluded = "//div[@data-hook='trip-flex-card']//span[@data-hook='extra-included-in-bundle']"
 const priorityBoardingTotalBundleIncluded = "//div[@data-hook='priority-boarding-card']//span[@data-hook='extra-included-in-bundle']"
 const boarding = "[data-hook='priority-boarding-card_add-to-cart']"
-const scrollcheckedin = "[data-hook='ancillaries-page-subheader_carry-on']"
+const departingscrollcheckedin = "[data-hook='ancillaries-page-subheader_carry-on']"
+const returningScrollcheckedin= ""
 const carryonbags = "[data-hook='ancillaries-page-traveler_0_carry-on_increment']"
 const checkedinbags = "[data-hook='ancillaries-page-traveler_0_checked-in_increment']"
 const departingleg = "//div[@data-hook='extras-popup-flight-leg_departing']/div[2]/div[1]"
@@ -39,9 +40,8 @@ const carryonBagCurrentValueSeg2 = "(//input[@data-hook='ancillaries-page-travel
 const sameOptionsForAllFlight = "//label[contains(@data-hook,'ancillaries-page-clone-options-checkbox_label')]";
 const checkedIncrementButtonSeg1 = "(//button[@data-hook='ancillaries-page-traveler_X_checked-in_increment'])[1]|(//button[@data-hook='ancillaries-page-checked-bag_X_input_increment'])[1]"
 const checkedIncrementButtonSeg2 = "(//button[@data-hook='ancillaries-page-traveler_X_checked-in_increment'])[2]|(//button[@data-hook='ancillaries-page-checked-bag_X_input_increment'])[2]"
-const carryOnPrice = "//span[@data-hook='ancillaries-page-subheader_carry-on']/following-sibling::span"
-const checkedbagPrice = "//span[@data-hook='ancillaries-page-subheader_checked-bag']/following-sibling::span"
-const slider = "[data-hook='extras-carousel-marker_slide-X']"
+const carryOnPrice = "(//span[@data-hook='ancillaries-page-subheader_flight'])[X]"
+const checkedbagPrice = "(//span[@data-hook='ancillaries-page-subheader_checked-bag'])[X]"
 const indicatorContainer = "//div[contains(@class,'AncillariesExtras__IndicatorContainer')]"
 const extraTitle = "//span[@data-hook='extras-title']"
 const tripFlexAddToCart = "[data-hook='trip-flex-card_add-to-cart']";
@@ -63,6 +63,10 @@ const bundlebannerforCarryOnSelection = "[data-hook='ancillaries-page-subheader_
 const petinCab = "//button[@data-hook='pet-in-cabin-card_add-to-cart']"
 const petinCabselect = "//span[@data-hook='extras-popup-flight-leg_checkbox-label']"
 const prohibiteditems = "//span[@data-hook='prohibited-items-title']";
+const departingcarryoninc="//div[@data-hook='ancillaries-page-traveler_Departing Flight-travelerX']//button[@data-hook='ancillaries-page-traveler_X_carry-on_increment']"
+const returningcarryoninc="//div[@data-hook='ancillaries-page-traveler_Returning Flight-travelerX']//button[@data-hook='ancillaries-page-traveler_X_carry-on_increment']"
+const departingcheckedinc="//div[@data-hook='ancillaries-page-traveler_Departing Flight-travelerx']//button[@data-hook='ancillaries-page-traveler_X_checked-in_increment']"
+const returningcheckedinc="//div[@data-hook='ancillaries-page-traveler_Returning Flight-travelerX']//button[@data-hook='ancillaries-page-traveler_x_checked-in_increment']"
 
 
 var BagsPageCollector = new Map();
@@ -397,10 +401,15 @@ class BagsPage {
 		}
 	}
 
-	async carryOnBagsInc() {
+	async departingcarryOnBagsInc() {
 		await actions.scroll(scrollcheckedin)
 		await actions.clickElement('click', carryonbags, "Button to increment the carry-on bags")
 	}
+     async departingcarryOnBagsInc() {
+		await actions.scroll(scrollcheckedin)
+		await actions.clickElement('click', carryonbags, "Button to increment the carry-on bags")
+	}
+
 
 	async checkedInBagsInc() {
 		await actions.clickElement('click', checkedinbags, "Button to increment the checked-in bags")
