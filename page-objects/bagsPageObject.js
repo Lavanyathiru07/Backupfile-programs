@@ -42,6 +42,7 @@ const checkedIncrementButtonSeg1 = "(//button[@data-hook='ancillaries-page-trave
 const checkedIncrementButtonSeg2 = "(//button[@data-hook='ancillaries-page-traveler_X_checked-in_increment'])[2]|(//button[@data-hook='ancillaries-page-checked-bag_X_input_increment'])[2]"
 const carryOnPrice = "(//span[@data-hook='ancillaries-page-subheader_flight'])[X]"
 const checkedbagPrice = "(//span[@data-hook='ancillaries-page-subheader_checked-bag'])[X]"
+const slider = "[data-hook='extras-carousel-marker_slide-X']"
 const indicatorContainer = "//div[contains(@class,'AncillariesExtras__IndicatorContainer')]"
 const extraTitle = "//span[@data-hook='extras-title']"
 const tripFlexAddToCart = "[data-hook='trip-flex-card_add-to-cart']";
@@ -190,7 +191,7 @@ class BagsPage {
 		await actions.pause(4000)
 		let tripFlexAddToCartIsDisplay = await actions.isDisplayed(tripFlexAddToCart, 'Trip flex card info')
 		if (tripFlexAddToCartIsDisplay) {
-			await actions.scroll(tripflextitle)
+			await actions.scroll(tripflextitle,'tripflextitle')
 			await actions.waitForClickable(tripFlexAddToCart, 'button to add tripFlex ToCart')
 			await actions.clickElement('click', tripFlexAddToCart, 'Trip Flex add to cart button')
 		} else {
@@ -382,7 +383,7 @@ class BagsPage {
 	}
 
 	async selectTripflex(tripflex) {
-		let slide = slider.replace("X", 2)
+		let slide = slider1.replace("X", 2)
 		if (tripflex === "true") {
 			await actions.scroll(extraTitle)
 			if (await actions.isDisplayed(indicatorContainer, "indicator container")) {
