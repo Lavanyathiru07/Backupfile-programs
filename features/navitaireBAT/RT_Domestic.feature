@@ -40,8 +40,8 @@ Feature: This feature file is to run Naviataire BAT scenarios
      Scenario Outline:RT, Domestic flight with 2Adult, 1Infant in lap and 1Child with 1 CO and 1 CK bag, Seat & Modify WWW booking via MT
           Given  I navigate to www application
           Given  I am on landing page I select "<tripType>"
-          When  I am on landing page I select "BLV" for the departure airport
-          And  I am on landing page I select "VPS" for the destination airport
+          When  I am on landing page I select "SMX" for the departure airport
+          And  I am on landing page I select "LAS" for the destination airport
           And  I am on landing page I choose the departure date "<date>" days from current day
           And  I am on landing page I choose the returning date "<date>" days from departure
           And  I am on landing page I select "<adult>" adult travelers
@@ -50,8 +50,10 @@ Feature: This feature file is to run Naviataire BAT scenarios
           And  I am on landing page I select InfantInLap as "<InfantInLap>"
           And  I am on landing page I click on search button
           When I am on flights page I collect flight page details
+          And I am on flights page I skip departing bundle selection
+          And I am on flights page I skip returning bundle selection
           And  I am on flights page I click continue button
-          And  I am on Bundles Page I click continue button
+          # And  I am on Bundles Page I click continue button
           And I am on Travelers page I fill in data for "all" travelers
           And  I am on Travelers page I click continue button
           And  I get seat detils from GQL

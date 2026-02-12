@@ -11,8 +11,9 @@ Feature: Impersonation CC
         And I am on landing page I choose the departure date "<departDate>" days from current day
         And I am on landing page I select "<adult>" adult travelers
         And I am on landing page I click on search button
+        And I am on flights page I skip departing bundle selection
         And I am on flights page I click continue button
-        And I am on Bundles Page I click continue button
+        # And I am on Bundles Page I click continue button
         And I am on Travelers page I fill in data for "all" travelers
         And I select <ssr> for Multiple Travelers
         And I am on Travelers page I click continue button

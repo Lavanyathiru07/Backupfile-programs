@@ -14,9 +14,10 @@ Feature: This feature file is to run Navitaire BAT scenarios
         And I am on landing page I select InfantInLap as "<childLap>"
         And I am on landing page I click on search button
         When I am on flights page I collect flight page details
+        And I am on flights page I skip departing bundle selection
         And I am on flights page I click continue button
-        And I am on Bundles Page I expect flight details added to the trip summary
-        And I am on Bundles Page I click continue button
+        # And I am on Bundles Page I expect flight details added to the trip summary
+        # And I am on Bundles Page I click continue button
         And I am on Travelers page I fill in data for "all" travelers
         And I select <ssr> for Multiple Travelers
         And I am on Travelers page I click continue button
@@ -46,7 +47,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
             | oneway   | 2     | 0     | 0         | 0        | 20         | false    | pax-all Seg-all type-any | pax-all Seg-both | pax-all Seg-both count-1 | pax-all Seg-departing | Wheelchair |
 
     #PASS
-    @set2 @blue @green
+    @set2 @blue @green 
     Scenario: Domestic- Check-in Online OW
         Given I complete the Booking using gql for Online-Check-in
             | tripType   | oneway |
