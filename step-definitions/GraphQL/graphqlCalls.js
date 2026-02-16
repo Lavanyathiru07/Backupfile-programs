@@ -266,7 +266,8 @@ async function ATLBooking() {
     // let Env = await new Promise((resolve) => {
     //     resolve(UtilityLibrary.getEnvironmentWithPrefix())
     //   })
-    await GqlBooking(Env, "ABE", "SFB", tripType, adultsCount, 0, 0, "14", "14", "", "no", "no", "no", "no", "card", "Master-CC", "yes", "no", "no", "no", "", "", "")
+    //  GqlBooking( environment, origin, destination, tripType, adultsCounts, childrenCount, lapInfantCount, departDays, returnDays, depBundle, retBundle, depSeat, retSeat, petInCabin,hotelspage, carspage, paymentType, cardType, isInternational, login, ktn, redress, departFlightNum, returnFlightNum, bagsPage, raidersBooking, travelInsurance)
+    await GqlBooking(Env, "ABE", "SFB", tripType, adultsCount, 0, 0, "14", "14", "","","","", "no", "no", "no", "card", "Master-CC", "yes", "no", "no", "no", "", "", "","","")
         .then((response) => {
             console.log("Booking response ", response)
             console.log("Booking confNum ", response.confNumber)
@@ -283,7 +284,7 @@ async function ATLBooking() {
             process.env.depFlight = response.departureFlightId
             process.env.retFlight = response.returningFlightId
             process.env.mflightID = response.departureFlightId
-            process.env.bookingAmout = response.TripSummaryDetails.Total
+            process.env.bookingAmout = response.tripSummaryDetails.Total
             if (response.confNumber === undefined) {
                 assert.fail('No confirmation number found')
             }

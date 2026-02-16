@@ -18,7 +18,8 @@ Given(/^I complete the Booking using gql for Online-Check-in$/, async (dataTable
     src,
     dest,
   } = await GqlBookingPage.getmarket(Env)
-  await GqlBooking(Env, src, dest, tripType, adultsCount, 0, 0, departDay, "0", "", "no", "no", "no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "")
+   //GqlBooking( environment, origin, destination, tripType, adultsCounts, childrenCount, lapInfantCount, departDays, returnDays, depBundle, retBundle, depSeat, retSeat, petInCabin,hotelspage, carspage, paymentType, cardType, isInternational, login, ktn, redress, departFlightNum, returnFlightNum, bagsPage, raidersBooking, travelInsurance)
+  await GqlBooking(Env, src, dest, tripType, adultsCount, 0, 0, departDay, "0", "", "","","","no","no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "","")
     .then((response) => {
       console.log("online check-in response ", response)
       console.log("online check-in confNum ", response.confNumber)
