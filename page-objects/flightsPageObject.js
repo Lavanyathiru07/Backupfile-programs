@@ -38,7 +38,15 @@ const paxCount = "[data-hook='header-flight-info_seated']";
 const tripType = "[data-hook='header-flight-info_trip-type']";
 const flightDepartingList = "[data-hook='flights-list_departing']";
 const bundleHeader = "[data-hook='bundles-page_page-heading']"
-
+const departingSkipbundle="//form[@data-hook='flights-list_departing']//span[contains(text(),'No Thanks, Skip Bundle')]"
+const returningSkipbundle="//form[@data-hook='flights-list_returning']//span[contains(text(),'No Thanks, Skip Bundle')]"
+const departingbasicbundle="//form[@data-hook='flights-list_departing']//div[@type='allegiant basic bundle']"
+const departingtotalbundle="//form[@data-hook='flights-list_departing']//div[@type='allegiant total bundle']"
+const departingbonusbundle="//form[@data-hook='flights-list_departing']//div[@type='allegiant bonus bundle']"
+const returningbasicbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant basic bundle']"
+const returningtotalbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant total bundle']"
+const returningbonusbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant bonus bundle']"	
+const changebundle="//span[@class='Text-sc-1o5ubbx-0 euRnZu']"
 let departDate
 let returnDate
 // let timelineID
@@ -67,6 +75,13 @@ class FlightsPage {
       }
     }
   }
+   async getTimeline() {
+      await actions.pause(2000);
+      const timelineURL = await browser.getUrl()
+      console.log("timelineURL: ", timelineURL)
+      const timelineId = timelineURL.split('/')
+      process.env.timeline = timelineId[4]
+    }
 
   async collectFlightPageDetails() {
     await actions.waitForDisplayed(flightheading, 'flightheading', 60000)
@@ -209,7 +224,51 @@ class FlightsPage {
       console.log('Exception while collecting data on flights page: ' + ex);
     }
   }
-
+  async departingBundleSkip() {
+  await actions.waitForDisplayed(departingSkipbundle, 'departingSkipbundle', 5000)
+  await actions.clickElement('click', departingSkipbundle, 'departingSkipbundle')
+}
+  
+async returningBundleSkip() {
+await actions.waitForDisplayed(returningSkipbundle, 'returningSkipbundle', 5000)
+await actions.clickElement('click', returningSkipbundle, 'returningSkipbundle')
+}
+async selectDepartingBundle(bundleType) {
+  switch (bundleType) {
+    case "basicbundle":     
+      await actions.waitForDisplayed(departingbasicbundle, 'departingbasicbundle', 5000)
+      await actions.clickElement('click', departingbasicbundle, 'departingbasicbundle')
+      break;  
+    case "totalbundle":
+      await actions.waitForDisplayed(departingtotalbundle, 'departingtotalbundle', 5000)
+      await actions.clickElement('click', departingtotalbundle, 'departingtotalbundle')
+      break;        
+    case "bonusbundle":
+      await actions.waitForDisplayed(departingbonusbundle, 'departingbonusbundle', 5000)
+      await actions.clickElement('click', departingbonusbundle, 'departingbonusbundle')
+      break;        
+    default:
+      console.log("No matching bundle type found for departing flight");
+  }
+}
+async selectReturningBundle(bundleType) {
+  switch (bundleType) {
+    case "basicbundle":     
+      await actions.waitForDisplayed(returningbasicbundle, 'returningbasicbundle', 5000)  
+      await actions.clickElement('click', returningbasicbundle, 'returningbasicbundle')
+      break;
+      case "totalbundle":
+        await actions.waitForDisplayed(returningtotalbundle, 'returningtotalbundle', 5000)
+        await actions.clickElement('click', returningtotalbundle, 'returningtotalbundle')
+        break;
+      case "bonusbundle":
+        await actions.waitForDisplayed(returningbonusbundle, 'returningbonusbundle', 5000)
+        await actions.clickElement('click', returningbonusbundle, 'returningbonusbundle')
+        break;
+    default:
+      console.log("No matching bundle type found for returning flight");
+  }}
+  
   async flightsubmit() {
     await actions.waitForDisplayed(submitflightpage, "submit button in flights page", 60000)
     await actions.scroll(submitflightpage)

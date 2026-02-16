@@ -105,7 +105,7 @@ var newRetSeats = [];
 class SeatPage {
 
 	async getSeatDetails() {
-		// await actions.waitForDisplayed(seatsPageHeading, 'seatsPageHeading')
+		await actions.waitForDisplayed(seatsPageHeading, 'seatsPageHeading')
 		await actions.pause(5000)
 		var { depeartSeatDetails, returnSeatDetails } = await getSeatArray();
 		newDepSeats = depeartSeatDetails;
