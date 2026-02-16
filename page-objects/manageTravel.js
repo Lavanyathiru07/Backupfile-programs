@@ -132,6 +132,10 @@ const seatscroll = "//div[text()='Seat']"
 const seatautoassigned ="(//div[@class='ant-col ant-col-3 PassengerList__StyledCol-sc-1rkj5fy-4 hTXNTo'][3])"
 const seatsheaderMT= "//span[text()='Seat']"
 const seatassigned = "//*[@data-hook='order-item-flight-info_onward_traveler-0-seat-number']"
+const phoneNum = "//input[@data-hook='select-page-phone-number-input-field_phone']"
+const email="//input[@data-hook='select-page-email-id-input-field_email']"
+const selectcontinue="//span[@class='Button__ButtonText-sc-1ececxa-0 fFLZUm']"
+const selectcheckbox="//label[@data-hook='_optInForAlerts_label']"
 
 class Managetravel {
 
@@ -251,6 +255,16 @@ class Managetravel {
             await actions.pause(5000)
         } catch {
         }
+    }
+
+    async selectpage()
+    {
+        await actions.pause(5000);
+        await actions.setInputField('setvalue','7025551111',phoneNum,'phoneNum');
+        await actions.setInputField('setvalue','accept@fraudtest.com',email,'email');
+        await actions.clickElement('click', selectcheckbox, 'selectcheckbox')
+        await actions.scroll(selectcontinue,'selectcontinue')
+        await actions.clickElement('click', selectcontinue, 'selectcontinue');
     }
 
     async ContinueButtonBags(page) {

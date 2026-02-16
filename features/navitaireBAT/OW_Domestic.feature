@@ -57,6 +57,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
         And I am on landing page I click manage trip button
         And I am on manage trip page I enter OLCI details
         And I am on Online checkin Passengers selection page I click checkin button
+        And I am on Manage Travel onlinechekin page "Select" page,I click on continue button
         And I am on Manage Travel onlinechekin page, "Bags" page I click on continue button
         And I am on Manage Travel onlinechekin page "Seats" page I click on continue button
         Then I am on Online checkin Print passes page

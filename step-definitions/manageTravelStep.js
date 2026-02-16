@@ -114,6 +114,10 @@ Then(/^I am on Manage Travel page, I expect "([^"]*)" is updated correctly for t
 Then(/^I am on Manage Travel page I cancel my Trip$/, async () => {
 	await Managetravel.cancelMyTrip()
 });
+When(/^I am on Manage Travel onlinechekin page (.+) page,I click on continue button$/, async function (page) {	
+	await Managetravel.selectpage();;
+	
+});
 
 When(/^I am on Manage Travel onlinechekin page, (.+) page I click on continue button$/, async function (page) {	
 	await Managetravel.onlinecheckinbagspage();
