@@ -47,12 +47,19 @@ const nameText = "//span[contains(text(),'Name')]"
 let selectState
 
 class Login {
+     async generateRandom7DigitNumber() {
+         const min = 1000000; // Minimum 7-digit number
+         const max = 9999999; // Maximum 7-digit number
+         return Math.floor(Math.random() * (max - min + 1)) + min;
+     }
 
     async createMyAllegiantAccount() {
         const randomFname = await faker.name.firstName();
         const randomLname = await faker.name.lastName();
-        const date = new Date();
-        userEmailId = `tsqaautomation${date.getTime()}@tridentsqa.com`;
+        //const date = new Date();
+       // userEmailId = `tsqaautomation${date.getTime()}@tridentsqa.com`;
+        const random7DigitNumber = await this.generateRandom7DigitNumber();     
+        userEmailId = `tsqaautomation${random7DigitNumber}@tridentsqa.com`;
         userPassword = 'P@ssw0rd1234';
         await actions.setInputField('setValue', randomFname, firstName, "Firstname field")
         await actions.setInputField('setValue', randomLname, lastName, "Lastname Field")
