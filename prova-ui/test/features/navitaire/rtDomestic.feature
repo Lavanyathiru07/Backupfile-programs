@@ -1,10 +1,11 @@
+@navitairebat
 Feature: This feature file is to run Navitaire BAT scenarios
 
   Background:
     Given I navigate to www application
     And I have a screen that is 1440 by 700 pixels
     #QAA-26770
-
+  @set2
   Scenario Outline: RT, Domestic flight with 2Adult, 1Infant in lap and 1Child with 1 CO and 1 CK bag, Seat & Modify WWW booking via MT
     Given I am on landing page I select "<tripType>"
     When I am on landing page I select "CVG" for the departure airport

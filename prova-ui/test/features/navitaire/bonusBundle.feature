@@ -4,7 +4,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Given I navigate to www application
     # And I have a screen that is 1440 by 700 pixels
     #QAA-26770
-
+  @navitairebat @set1
   Scenario Outline: Domestic-Bonus Bundle Booking, RT booking, 2 Adults
     Given I create my allegaint account
     When I am on landing page I select "<tripType>"

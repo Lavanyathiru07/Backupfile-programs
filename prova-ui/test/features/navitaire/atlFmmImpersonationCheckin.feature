@@ -1,3 +1,4 @@
+@navitairebat
 Feature: This feature file is to run Navitaire BAT scenarios
     #QAA-26770
   # Scenario: FMM validation
@@ -6,14 +7,14 @@ Feature: This feature file is to run Navitaire BAT scenarios
   #   And I select the "FMM" application
   #   And I validate the Fmm Flights availability
     #QAA-26770
-
+  @atl @set1
   Scenario: ATL scenario
     Given I navigate to www application
     Then I navigate to G4 portal
     And I select "ATL"
     And I validate Transancation
     #QAA-26770
-
+  @set2 @blue @green
   Scenario Outline: Impersonation: Book Domestic, SSR, Seat, Carry on, Checked bag
     Given I navigate to www application
     Then I navigate to G4 portal
@@ -52,7 +53,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
       | tripType | adult | child | childSeat | childLap | departDate | returnDate | departure | destination | ssr            | tripflex | Priority              | CarryOn          | Check                    | petInCabin | paxNum | Seats                    |
       | oneway   |     1 |     0 |         0 |        0 |         10 |          0 | CVG       | PGD         | oxygencylinder | true     | pax-all Seg-departing | pax-all Seg-both | pax-all Seg-both count-1 | yes        |      1 | pax-all Seg-all type-any |
     #QAA-26770
-
+  @set2 @blue @green
   Scenario: Domestic- Check-in Online OW
     Given I complete the Booking using gql for Online-Check-in
       | tripType   | oneway |

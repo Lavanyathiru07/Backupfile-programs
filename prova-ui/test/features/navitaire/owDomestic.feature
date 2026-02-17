@@ -1,10 +1,11 @@
+@navitairebat
 Feature: This feature file is to run booking flow using Playwright
 
   Background:
     Given I navigate to www application
     And I have a screen that is 1440 by 700 pixels
     #QAA-26770
-
+  @set2
   Scenario Outline: OW Domestic-,F+H+C+SSR,2 Adults,CO,CK,Seats,PA & Cancel via MT
     Given I am on landing page I select "<tripType>"
     When I am on landing page I select "CVG" for the departure airport
