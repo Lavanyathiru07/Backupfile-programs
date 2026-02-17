@@ -25,7 +25,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
         And I am on Seat page I click continue button
         And I am on Bags page I select CarryOn "<CarryOn>"
         And I am on Bags page I select Checked Bag "<Check>"
-        # And I am on Bags page I select priority "<Priority>"
+        And I am on Bags page I select priority "<Priority>"
         And I am on Bags page I click continue button
         And I am on Hotels page I click No thanks button
         And I am on Cars page I click No thanks button
