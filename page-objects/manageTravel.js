@@ -404,9 +404,9 @@ class Managetravel {
     }
 
     async onlinecheckinbagspage() {
-        await actions.pause(3000)
+        await actions.pause(10000)
         await actions.click(checkinbagspagecontinue, 'checkin bags page continue button')
-        await actions.pause(3000)
+        await actions.pause(10000)
         try{
             await actions.click(checkinbagspagecontinue2, 'Bags page continue popup')
         }catch(e){}       
