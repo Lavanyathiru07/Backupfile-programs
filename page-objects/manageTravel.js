@@ -417,9 +417,9 @@ class Managetravel {
         await actions.pause(5000)
         await actions.click(checkinharadeouspagecheckbox, 'checkinharadeouspagecheckbox')
         await actions.click(checkinharadeouspagecontinue, 'checkinharadeouspagecontinue')
-        await actions.pause(5000)
+        await actions.pause(10000)
         await actions.click(checkinseatpagecontinue, 'checkinseatpagecontinue')
-        await actions.pause(3000)
+        await actions.pause(10000)
         await actions.click(checkinseatpagecontinuepopup, 'checkinseatpagecontinuepopup')        
         await actions.pause(20000)
     }
