@@ -2,7 +2,7 @@ import actions from '@g4/prova-ui/src/support/actions'
 import Check from '@g4/prova-ui/src/support/validations';
 import getSeatArray from './graphqlCalls'
 import { assert } from 'chai';
-const seatsPageSkip = "//div[contains(text(),'No thanks, skip seat selection.')]/parent::a";
+const seatsPageSkip = "//div[contains(text(),'No thanks, skip seat selection.')]/parent::a";//div[@class='Seats__SkipText-mptzun-8 eYMgJz']
 const seatsPageHeading = "[data-hook='seats-page_page-heading']"
 const bagsPageHeading = "[data-hook='ancillaries-page_page-heading']";
 const exitRowSeats = "//button//span[contains(@data-hook,'exit-row')][not(contains(@data-hook,'taken'))]"
@@ -404,9 +404,9 @@ class SeatPage {
 	}
 
 	async skipSeatsPage() {
-		do {
-			await actions.pause(5000)
-		} while (await actions.isDisplayed(spinnerBar, 'spinnerBar'));
+		// do {
+		// 	await actions.pause(5000)
+		// } while (await actions.isDisplayed(spinnerBar, 'spinnerBar'));
 		let previousHeight = await browser.execute(() => document.body.scrollHeight);
 		while (true) {
 			await browser.execute("window.scrollTo(0, document.body.scrollHeight);");
@@ -415,12 +415,12 @@ class SeatPage {
 			if (newHeight === previousHeight) break;
 			previousHeight = newHeight;
 		}
-		await actions.waitForDisplayed(seatsPageSkip, 'seatsPageSkip', 5000);
-		await actions.scroll(seatsPageSkip);
-		await actions.pause(3000);
+		await actions.waitForDisplayed(seatsPageSkip, 'seatsPageSkip', 20000);
+		await actions.scroll(seatsPageSkip, 'seatsPageSkip');
+		await actions.pause(10000);
 		await actions.waitForEnabled(seatsPageSkip, 'seatsPageSkip');
 		await actions.clickElement('click', seatsPageSkip, "seatsPageSkip");
-		await actions.pause(8000);
+		await actions.pause(10000);
 		
 	}
 	/*
