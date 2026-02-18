@@ -47,6 +47,8 @@ const returningbasicbundle="//form[@data-hook='flights-list_returning']//div[@ty
 const returningtotalbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant total bundle']"
 const returningbonusbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant bonus bundle']"	
 const changebundle="//span[@class='Text-sc-1o5ubbx-0 euRnZu']"
+const Returnbundleheading="//span[contains(text(),'Bundle and Save - Return Flight')]"
+const Returnprice="(//form[@data-hook='flights-list_returning']//div[@data-hook='flight-price-box'])[1]"
 let departDate
 let returnDate
 // let timelineID
@@ -226,12 +228,23 @@ class FlightsPage {
   }
   async departingBundleSkip() {
   await actions.waitForDisplayed(departingSkipbundle, 'departingSkipbundle', 5000)
+  //await actions.scroll(departingSkipbundle, 'departingSkipbundle')
   await actions.clickElement('click', departingSkipbundle, 'departingSkipbundle')
 }
   
 async returningBundleSkip() {
-await actions.waitForDisplayed(returningSkipbundle, 'returningSkipbundle', 5000)
-await actions.clickElement('click', returningSkipbundle, 'returningSkipbundle')
+  if (await actions.isDisplayed(Returnbundleheading, 'Returnbundleheading')) {
+    await actions.waitForDisplayed(returningSkipbundle, 'returningSkipbundle', 10000)
+    await actions.scroll(returningSkipbundle, 'returningSkipbundle')
+    await actions.clickElement('click', returningSkipbundle, 'returningSkipbundle')
+  }
+  else{
+    await actions.clickElement('click', Returnprice, 'Returnprice')
+     await actions.waitForDisplayed(returningSkipbundle, 'returningSkipbundle', 10000)
+    await actions.scroll(returningSkipbundle, 'returningSkipbundle')
+    await actions.clickElement('click', returningSkipbundle, 'returningSkipbundle')
+}
+
 }
 async selectDepartingBundle(bundleType) {
   switch (bundleType) {
