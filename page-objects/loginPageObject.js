@@ -59,7 +59,7 @@ class Login {
         //const date = new Date();
        // userEmailId = `tsqaautomation${date.getTime()}@tridentsqa.com`;
         const random7DigitNumber = await this.generateRandom7DigitNumber();     
-        userEmailId = `tsqaautomation${random7DigitNumber}@gmail.com`;
+        userEmailId = `tsqaautomationwdio${random7DigitNumber}@gmail.com`;
         userPassword = 'P@ssw0rd1234';
         await actions.setInputField('setValue', randomFname, firstName, "Firstname field")
         await actions.setInputField('setValue', randomLname, lastName, "Lastname Field")

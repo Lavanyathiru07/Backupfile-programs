@@ -5,7 +5,8 @@
 // process.env.CAT_API_PATH = "/api/ui/results"
 // process.env.DEFAULT_CAT_UI = "true"
 // process.env.confirmationNumber = "Q4WSXS"
-
+process.env.appEnv="https://www.stg01.aws.allegiantair.com"
+process.env.tag="@RT"
 process.env.ENV = process.env.appEnv
 import BrowserInfo from './browser_Info'
 if (process.env.flag === undefined) {
@@ -14,10 +15,10 @@ if (process.env.flag === undefined) {
 }
 const _ = require('lodash');
 import browsers from './browsers-config'
-
+ 
 import CatPortalWdioConf from '@g4/cat-integration-util/src/ui-hooks/cat-ui-hooks';
 let target_browser = process.env.browser;
-
+ 
 let browserConfig = null;
 let browserArg = process.argv.find(function (arg) {
   return /target_browser/.test(arg);
@@ -33,19 +34,19 @@ if (target_browser) {
 } else {
   browserConfig = browsers['chrome']; //default values: chrome
 }
-
-
+ 
+ 
 exports.config = _.extend({
   specs: [
-    './tmp/features/**/*.feature'
+    './features/**/*.feature'
   ],
   exclude: [
     // 'path/to/excluded/files'
   ],
-  hostname: 'selenium.apps.devops-qaa.aws.allegiantair.com',
-  port: 443,
-  path: '/wd/hub',
-  protocol: 'https',
+  // hostname: 'selenium.apps.devops-qaa.aws.allegiantair.com',
+  // port: 443,
+  // path: '/wd/hub',
+  // protocol: 'https',
   maxInstances: 6,
   capabilities: browserConfig,
   // capabilities: [{
@@ -53,18 +54,18 @@ exports.config = _.extend({
   // maxInstances: 2,
   // acceptInsecureCerts: true,
   // 'goog:chromeOptions': {
-  // 	args: ['--ignore-certificate-errors']
+  //  args: ['--ignore-certificate-errors']
   // },
   // }],
   // browserName: 'firefox',
   // maxInstances: 2,
   // acceptInsecureCerts: true,
   // 'goog:chromeOptions': {
-  // 	args: ['--ignore-certificate-errors']
+  //  args: ['--ignore-certificate-errors']
   // },
   // }],
   // [{
-
+ 
   // maxInstances can get overwritten per capability. So if you have an in-house Selenium
   // grid with only 5 firefox instances available you can make sure that not more than
   // 5 instances get started at a time.
@@ -78,7 +79,7 @@ exports.config = _.extend({
   // excludeDriverLogs: ['bugreport', 'server'],
   // }],
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: 'debug',  
+  logLevel: 'silent',  
   bail: 0,
   baseUrl: process.env.appEnv,
   // Default timeout for all waitFor* commands.
@@ -87,10 +88,10 @@ exports.config = _.extend({
   connectionRetryTimeout: 120000,
   // Default request retries count
   connectionRetryCount: 3,
-  services: [],
-  //  services: ['chromedriver'],
+  // services: [],
+  services: ['chromedriver'],
   // services: ['devtools'],
-  framework: 'cucumber', 
+  framework: 'cucumber',
   reporters: [
     ['allure', {
       outputDir: 'allure-results',
@@ -104,9 +105,9 @@ exports.config = _.extend({
       './step-definitions/**/*.js',
       // 'node_modules/@g4/prova-ui/src/step-definitions/*.js'
     ],
-
+ 
     // <boolean> show full backtrace for errors
-    backtrace: false,         
+    backtrace: false,        
     requireModule: [
       [
         '@babel/register',
@@ -120,7 +121,7 @@ exports.config = _.extend({
       ],
     ],    
     dryRun: false,    
-    failFast: false,   
+    failFast: false,  
     snippets: true,    
     source: true,    
     strict: false,    
@@ -134,5 +135,7 @@ exports.config = _.extend({
     }
   },
 },
-  CatPortalWdioConf
+  //CatPortalWdioConf
 );
+ 
+ 

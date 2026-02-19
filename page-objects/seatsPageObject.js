@@ -2,6 +2,7 @@ import actions from '@g4/prova-ui/src/support/actions'
 import Check from '@g4/prova-ui/src/support/validations';
 import getSeatArray from './graphqlCalls'
 import { assert } from 'chai';
+import browsersConfig from '../browsers-config';
 const seatsPageSkip = "//div[contains(text(),'No thanks, skip seat selection.')]/parent::a";//div[@class='Seats__SkipText-mptzun-8 eYMgJz']
 const seatsPageHeading = "[data-hook='seats-page_page-heading']"
 const bagsPageHeading = "[data-hook='ancillaries-page_page-heading']";
@@ -407,10 +408,11 @@ class SeatPage {
 		// do {
 		// 	await actions.pause(5000)
 		// } while (await actions.isDisplayed(spinnerBar, 'spinnerBar'));
+		await browser.pause(20000)
 		let previousHeight = await browser.execute(() => document.body.scrollHeight);
 		while (true) {
 			await browser.execute("window.scrollTo(0, document.body.scrollHeight);");
-			await browser.pause(1000);
+			await browser.pause(10000);
 			const newHeight = await browser.execute(() => document.body.scrollHeight);
 			if (newHeight === previousHeight) break;
 			previousHeight = newHeight;
