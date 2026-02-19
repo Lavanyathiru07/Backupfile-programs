@@ -5,8 +5,6 @@
 // process.env.CAT_API_PATH = "/api/ui/results"
 // process.env.DEFAULT_CAT_UI = "true"
 // process.env.confirmationNumber = "Q4WSXS"
-process.env.appEnv="https://www.stg01.aws.allegiantair.com"
-process.env.tag="@RT"
 process.env.ENV = process.env.appEnv
 import BrowserInfo from './browser_Info'
 if (process.env.flag === undefined) {
@@ -38,15 +36,15 @@ if (target_browser) {
  
 exports.config = _.extend({
   specs: [
-    './features/**/*.feature'
+    '.tmp/features/**/*.feature'
   ],
   exclude: [
     // 'path/to/excluded/files'
   ],
-  // hostname: 'selenium.apps.devops-qaa.aws.allegiantair.com',
-  // port: 443,
-  // path: '/wd/hub',
-  // protocol: 'https',
+  hostname: 'selenium.apps.devops-qaa.aws.allegiantair.com',
+  port: 443,
+  path: '/wd/hub',
+  protocol: 'https',
   maxInstances: 6,
   capabilities: browserConfig,
   // capabilities: [{
@@ -88,8 +86,8 @@ exports.config = _.extend({
   connectionRetryTimeout: 120000,
   // Default request retries count
   connectionRetryCount: 3,
-  // services: [],
-  services: ['chromedriver'],
+  services: [],
+  //services: ['chromedriver'],
   // services: ['devtools'],
   framework: 'cucumber',
   reporters: [
@@ -135,7 +133,7 @@ exports.config = _.extend({
     }
   },
 },
-  //CatPortalWdioConf
+  CatPortalWdioConf
 );
  
  
