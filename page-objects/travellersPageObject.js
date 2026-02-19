@@ -413,7 +413,7 @@ class TravellersPage {
         await actions.waitForDisplayed(continuetrav, "travellers page continue button")
         await actions.scroll(continuetrav, "travellers page continue button")
         await actions.waitForClickable(continuetrav, "travellers page continue button")
-        await actions.pause(10000)
+        await actions.pause(20000)
         await actions.clickElement('click', continuetrav, "travellers page continue button")
         await actions.pause(20000)
     }
