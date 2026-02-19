@@ -36,7 +36,7 @@ if (target_browser) {
  
 exports.config = _.extend({
   specs: [
-    '.tmp/features/**/*.feature'
+    './tmp/features/**/*.feature'
   ],
   exclude: [
     // 'path/to/excluded/files'
