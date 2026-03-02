@@ -65,7 +65,7 @@ helloo();
  //example:3 Arrow fuction with implicit return type
  //no need to specify the return word and curly braces if the function body contains only a single expression. The value of that expression will be implicitly returned by the function.
 
- let divisionn=(x:number,y:number)=>x/y;
+ let divisionn=(x:number,y:number)=>x/y;//x/y is an return expression
     console.log(`The division is ${divisionn(20,10)}`);
 
 
