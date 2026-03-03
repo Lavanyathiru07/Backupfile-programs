@@ -52,7 +52,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
         Given I complete the Booking using gql for Online-Check-in
             | tripType   | oneway |
             | departDate | 0      |
-            | adult      | 1      |
+            | adult      | 2      |
         Then I navigate to www application
         And I am on landing page I click manage trip button
         And I am on manage trip page I enter OLCI details

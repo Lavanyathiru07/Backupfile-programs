@@ -136,6 +136,7 @@ const phoneNum = "//input[@data-hook='select-page-phone-number-input-field_phone
 const email="//input[@data-hook='select-page-email-id-input-field_email']"
 const selectcontinue="//span[@class='Button__ButtonText-sc-1ececxa-0 fFLZUm']"
 const selectcheckbox="//label[@data-hook='_optInForAlerts_label']"
+const deselectpassenger="(//label[@class='Checkbox-ga32a1-0 cpsyWs'])[2]"
 
 class Managetravel {
 
@@ -262,7 +263,9 @@ class Managetravel {
         await actions.pause(5000);
         await actions.setInputField('setvalue','7025551111',phoneNum,'phoneNum');
         await actions.setInputField('setvalue','accept@fraudtest.com',email,'email');
-        await actions.clickElement('click', selectcheckbox, 'selectcheckbox')
+        //await actions.clickElement('click', selectcheckbox, 'selectcheckbox')
+        await actions.waitForDisplayed(deselectpassenger, 'secondadultcheckbox',2000)
+        await actions.clickElement('click', deselectpassenger, "second adult checkbox")
         await actions.scroll(selectcontinue,'selectcontinue')
         await actions.clickElement('click', selectcontinue, 'selectcontinue');
     }
