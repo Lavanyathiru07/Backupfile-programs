@@ -15,6 +15,7 @@ fruitss.forEach(function (element, index) {
     //console.log(`${index}`,`${element}`)
     console.log(index, element);
 });
+console.log(fruitss.reverse());
 //ex2:
 fruitss.forEach(function (element) {
     console.log(element.toUpperCase());
