@@ -10,3 +10,7 @@ console.log("sum of 2 number:"+sum);
 // node Basictypescript_Scripts/day6/array.js ------------3rd after complie one js will generate with same name different extension then you execute that js file
 //or else use this "node filepath.ts" -----it willnot genrate the one more js file 
 
+//javvascript execute easly "to install the extension as 'code runner'" right click use code run option you can see the result in output
+
+
+
