@@ -13,7 +13,7 @@ if (process.env.flag === undefined) {
 }
 const _ = require('lodash');
 import browsers from './browsers-config'
- 
+ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 import CatPortalWdioConf from '@g4/cat-integration-util/src/ui-hooks/cat-ui-hooks';
 let target_browser = process.env.browser;
  
