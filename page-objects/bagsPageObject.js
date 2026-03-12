@@ -83,8 +83,7 @@ class BagsPage {
 		if (segment === "both") {
 			do {
 				await actions.clickElement('click', carryonIncdepart, 'button to increment the carryOn bags for departing')
-				await actions.clickElement('click', carryonIncreturn, 'button to increment the carryOn bags for returning')
-			} while (parseInt(await actions.getText(carryonCurrentVlaue, "increment button")) < 1)
+				} while (parseInt(await actions.getText(carryonCurrentVlaue, "increment button")) < 1)
 		}
 		if (segment === "departing") {
 			if (!(await actions.isDisplayed(carryonIncdepart, "increment button for carryon bags"))) {
