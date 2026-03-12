@@ -82,7 +82,8 @@ class BagsPage {
 		let carryonCurrentVlaueret = await $(carryonBagCurrentValueSeg2.replace(/X/g, paxNum - 1))
 		if (segment === "both") {
 			do {
-				await actions.clickElement('click', carryonIncdepart, 'button to increment the carryOn bags')
+				await actions.clickElement('click', carryonIncdepart, 'button to increment the carryOn bags for departing')
+				await actions.clickElement('click', carryonIncreturn, 'button to increment the carryOn bags for returning')
 			} while (parseInt(await actions.getText(carryonCurrentVlaue, "increment button")) < 1)
 		}
 		if (segment === "departing") {
