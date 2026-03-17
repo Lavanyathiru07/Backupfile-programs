@@ -9,6 +9,8 @@ Feature: This feature file is to run Navitaire BAT scenarios
         And I am on landing page I select "SFB" for the destination airport
         And I am on landing page I choose the departure date "<departDate>" days from current day
         And I am on landing page I choose the returning date "<returnDate>" days from departure
+        And I select "<bundletype>" for departing flight
+        And I select "<bundletype>" for returning flight
         And I am on landing page I select "<adult>" adult travelers
         And I am on landing page I click on search button
         When I am on flights page I collect flight page details
