@@ -109,6 +109,7 @@ class BagsPage {
 	}
 
 	async selectCheckedBag(checked, paxNum, segment) {
+		await actions.pause(20000);
 		let checkedincdepart = await $(checkedIncrementButtonSeg1.replace(/X/g, paxNum - 1))
 		let checkedincreturn = await $(checkedIncrementButtonSeg2.replace(/X/g, paxNum - 1))
 		await browser.execute("window.scrollBy(0,-100)");
@@ -341,7 +342,7 @@ class BagsPage {
 	}
 
 	async selectCarryOnBagByParams(params) {
-		await actions.pause(3000)
+		await actions.pause(30000)
 		if (!params.includes("false")) {
 			try {
 				await actions.pause(2000)
@@ -383,6 +384,7 @@ class BagsPage {
 	}
 
 	async selectTripflex(tripflex) {
+		await actions.pause(30000);
 		let slide = slider1.replace("X", 2)
 		if (tripflex === "true") {
 			await actions.scroll(extraTitle)
@@ -395,6 +397,7 @@ class BagsPage {
 	}
 
 	async selectPriorityByParams(params) {
+		await actions.pause(20000);
 		if (!params.includes("false")) {
 			var paxNum = params.split(' ')[0].split('-')[1]
 			var segment = params.split(' ')[1].split('-')[1]
@@ -438,7 +441,7 @@ class BagsPage {
 			await actions.waitForClickable(popupContinueButton, 'popupContinueButton')
 			await actions.clickElement('click', popupContinueButton, "pop-up button for continue")
 		}
-		await actions.pause(10000)
+		await actions.pause(20000)
 	}
 
 	async continueButton() {

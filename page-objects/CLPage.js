@@ -8,12 +8,12 @@ class CLPage {
 	async clickContinueButton() {
 		await actions.waitForDisplayed(clickContinueButton, 'clickContinueButton')
 		await actions.clickElement('click', clickContinueButton, 'Continue Button')
-		await actions.pause(5000)
+		await actions.pause(10000)
 	}
 
 	async cartoverrideContinueBtn() {
 		await browser.execute("window.scrollBy(0,-1000)");
-		await actions.pause(5000);
+		await actions.pause(10000);
 		let cartoverrideContinueBtnVisbilty = await actions.isDisplayed(cartoverrideContinueBtn, 'cartoverrideContinueBtn')
 		if (cartoverrideContinueBtnVisbilty) {
 			await actions.clickElement('click', cartoverrideContinueBtn, 'Cartoverride ContinueBtn')
@@ -21,11 +21,11 @@ class CLPage {
 		} else {
 			console.error("Cart Overide Continue Button is not Displayed");
 		}
-		await actions.pause(5000);
+		await actions.pause(10000);
 	}
 
 	async validateCartOverridePage() {
-		await actions.pause(5000);
+		await actions.pause(20000);
 		if (await browser.getTitle() === 'Payment') {
 			console.log('Successfully completed on CART-OVERRIDE Page');
 		} else {

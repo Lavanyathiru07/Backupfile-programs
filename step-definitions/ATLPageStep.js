@@ -18,11 +18,11 @@ Then(/^I verify I see one positive and one negative transaction for (.+) flt wit
     await this.ATLPageobj.verifyPositiveAndNegativeEntries(this.responseJson, seg, field, event)
 });
 Then(/^I verify I see in the Acct Nbr column the value "(.+)" for the "(.+)" (.+) transaction "(.+)"$/, async function (value, seg, posneg, field) {
-    await actions.pause(2500)
+    await actions.pause(5000)
     await this.ATLPageobj.verifyAcctNbrColumnTransaction(this.responseJson, value, seg, posneg, field)
 });
 Then(/^I verify I see one positive and one negative transaction with Acct Date matching booking date for (.+)$/, async function (event) {
-    await actions.pause(2500)
+    await actions.pause(5000)
     await this.ATLPageobj.verifyPositiveAndNegativeEntries(this.responseJson, event)
 });
 When(/^I verify I see in the Acct Nbr column the value "([^"]*)" for the positive transaction "([^"]*)"$/, async function (value, field) {

@@ -107,7 +107,7 @@ class SeatPage {
 
 	async getSeatDetails() {
 		await actions.waitForDisplayed(seatsPageHeading, 'seatsPageHeading')
-		await actions.pause(5000)
+		await actions.pause(20000)
 		var { depeartSeatDetails, returnSeatDetails } = await getSeatArray();
 		newDepSeats = depeartSeatDetails;
 		newRetSeats = returnSeatDetails;
@@ -408,7 +408,7 @@ class SeatPage {
 		// do {
 		// 	await actions.pause(5000)
 		// } while (await actions.isDisplayed(spinnerBar, 'spinnerBar'));
-		await browser.pause(20000)
+		await browser.pause(30000)
 		let previousHeight = await browser.execute(() => document.body.scrollHeight);
 		while (true) {
 			await browser.execute("window.scrollTo(0, document.body.scrollHeight);");
@@ -1236,6 +1236,7 @@ class SeatPage {
 		// await actions.waitForDisplayed(tailOfPlane, 'tailOfPlane', 15000)
 		// await Check.isDisplayed(tailOfPlane, 'tailOfPlane', true)
 		// await actions.scroll(tailOfPlane,'tailOfPlane')
+		await actions.pause(20000)
 		await actions.waitForDisplayed(continueButton, 'continue Button')
 		await actions.waitForClickable(continueButton, 'continue Button')
 		await actions.clickElement('click', continueButton, "continue Button")

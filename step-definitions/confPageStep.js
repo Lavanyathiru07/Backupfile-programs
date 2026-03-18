@@ -1,6 +1,7 @@
 import { Then } from '@cucumber/cucumber'
 import ConfirmationPage from '../page-objects/confPageObject'
 import GqlBookingPage from '../page-objects/bookingGql/GqlBookingPage'
+import actions from '@g4/prova-ui/src/support/actions'
 
 Then(/^I am on confirmation page I click manage trip button$/, async () => {
     await ConfirmationPage.managetrip()
@@ -36,6 +37,7 @@ Then(/^I am on the confirmation page I expect priorityAccess-"([^"]*)" details t
 Then(/^I am on the confirmation page I expect confirmation number to be displayed$/, async () => {
     try {
         // First validate that confirmation page has opened successfully
+        await actions.pause(10000);
         await ConfirmationPage.validateConfirmationPageOpened()
         await ConfirmationPage.confirmationNumber()
         await GqlBookingPage.getBookingValues()

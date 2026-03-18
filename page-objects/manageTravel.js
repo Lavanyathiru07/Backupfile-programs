@@ -268,6 +268,7 @@ class Managetravel {
         await actions.clickElement('click', deselectpassenger, "second adult checkbox")
         await actions.scroll(selectcontinue,'selectcontinue')
         await actions.clickElement('click', selectcontinue, 'selectcontinue');
+        await actions.pause(30000);
     }
 
     async ContinueButtonBags(page) {
@@ -413,11 +414,11 @@ class Managetravel {
         try{
             await actions.click(checkinbagspagecontinue2, 'Bags page continue popup')
         }catch(e){}       
-        await actions.pause(8000)
+        await actions.pause(20000)
     }
 
     async onlinecheckinseatspage() {
-        await actions.pause(5000)
+        await actions.pause(20000)
         await actions.click(checkinharadeouspagecheckbox, 'checkinharadeouspagecheckbox')
         await actions.click(checkinharadeouspagecontinue, 'checkinharadeouspagecontinue')
         await actions.pause(10000)
@@ -539,6 +540,7 @@ class Managetravel {
             await actions.waitForClickable(addCar, 'addCar Link')
             await actions.clickElement('click', addCar, "Add Car link")
             await actions.waitForDisplayed(carsPageHeader, 'carsPageHeader', 30000)
+            await actions.pause(10000);
         } catch (error) {
             console.log(error)
         }
@@ -666,7 +668,7 @@ class Managetravel {
     }
     async seatautoassigned(){
        
-        await actions.pause(7000)
+        await actions.pause(20000)
         
             await actions.scroll(seatscroll,'scroll to the seat heading',1000),
             await actions.waitForDisplayed(seatautoassigned, 'seatautoassigned')

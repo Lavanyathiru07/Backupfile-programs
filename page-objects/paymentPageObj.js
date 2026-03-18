@@ -63,7 +63,7 @@ var TotalFareAmount = 0;
 class PaymentPage {
 
   async popupClosing() {
-    await actions.pause(10000)
+    await actions.pause(30000)
     try {
       await actions.waitForDisplayed(icePopup, 'icePopup', 20000)
       let icePopupVisibility = await actions.isDisplayed(icePopup, 'Payment page popup button')

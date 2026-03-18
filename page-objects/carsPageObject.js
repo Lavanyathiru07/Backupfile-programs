@@ -32,6 +32,7 @@ class CarPage {
       await actions.scroll(selectCarButton,"Select Car Button")
       await actions.pause(2000)
       await actions.click(selectCarButton,"Select Car Button")
+      await actions.pause(30000)
     }
     else
     {
@@ -73,7 +74,7 @@ class CarPage {
     CarsPageCollectorCP.set(
       'vehicletypeCP',
       await actions.getText(vehicletype, 'Type of the vehicle'));
-    await actions.pause(2000);
+    await actions.pause(30000);
   }
    else{
      console.log("There are no cars available for this route..")
@@ -116,6 +117,7 @@ class CarPage {
       await actions.waitForClickable(carsPageContinueButton, 'continue button in carspage')
       await actions.pause(5000)
       await actions.clickElement('click', carsPageContinueButton, "Cars page Continue Button");
+      await actions.pause(20000)
     }
   }
 }

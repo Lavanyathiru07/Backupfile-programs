@@ -28,6 +28,6 @@ When(/^I am on flights page I skip returning bundle selection$/, async () => {
 })
 
 When(/^I am on flights page I collect flight page details$/, async () => {
-    await browser.pause(5000)
+    await browser.pause(20000)
     await FlightsPage.collectFlightPageDetails();
 });

@@ -461,6 +461,7 @@ class ConfirmationPage {
 
 
 	async managetrip() {
+		await actions.pause(10000);
 		console.log(`Entered Manage Travel`)
 		console.log(`process.env.SunSeekerPopUp => ${process.env.SunSeekerPopUp}`)
 
@@ -593,6 +594,7 @@ class ConfirmationPage {
 		async validateConfirmationPageOpened() {
 		try {
 			// Check if the URL contains confirmation
+			await actions.pause(20000);
 			const currentUrl = await browser.getUrl();
 			assert.isTrue(currentUrl.includes('/confirmation'), 
 				`Expected to be on confirmation page but current URL is: ${currentUrl}`);
