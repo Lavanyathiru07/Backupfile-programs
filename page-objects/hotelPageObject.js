@@ -34,7 +34,7 @@ var hotelsDetailsPageCollector = new Map();
 class HotelPage {
 
     async collectHotelPageDetailsForConfirmationPage() {
-        await actions.pause(30000)
+        await actions.pause(5000)
         await browser.waitUntil(async () => {
             return (await actions.isDisplayed(hotelsPageHeadingTitle, "hotelsPageHeadingTitle") === true)
         }, {

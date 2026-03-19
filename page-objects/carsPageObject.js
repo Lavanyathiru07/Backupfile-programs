@@ -110,13 +110,13 @@ class CarPage {
     await actions.waitForDisplayed(carPageHeader, 'carPageHeader', 30000)
     let carsHeaderVisibilty = await actions.isDisplayed(carPageHeader, 'carPageHeader')
     if (carsHeaderVisibilty) {
-      await actions.pause(10000)
-      await actions.waitForDisplayed(carsPageContinueButton, 'continue button in carspage', 20000)
+      await actions.pause(5000)
+      await actions.waitForDisplayed(carsPageContinueButton, 'continue button in carspage', 10000)
       await actions.scroll(carsPageContinueButton,'carsPageContinueButton');
       await actions.waitForClickable(carsPageContinueButton, 'continue button in carspage')
       await actions.pause(5000)
       await actions.clickElement('click', carsPageContinueButton, "Cars page Continue Button");
-      await actions.pause(15000)
+      await actions.pause(3000)
     }
   }
 }

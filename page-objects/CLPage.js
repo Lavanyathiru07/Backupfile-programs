@@ -25,7 +25,6 @@ class CLPage {
 	}
 
 	async validateCartOverridePage() {
-		await actions.pause(10000);
 		if (await browser.getTitle() === 'Payment') {
 			console.log('Successfully completed on CART-OVERRIDE Page');
 		} else {
