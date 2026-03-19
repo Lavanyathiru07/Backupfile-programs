@@ -37,7 +37,7 @@ Then(/^I am on the confirmation page I expect priorityAccess-"([^"]*)" details t
 Then(/^I am on the confirmation page I expect confirmation number to be displayed$/, async () => {
     try {
         // First validate that confirmation page has opened successfully
-        await actions.pause(10000);
+        await actions.pause(5000);
         await ConfirmationPage.validateConfirmationPageOpened()
         await ConfirmationPage.confirmationNumber()
         await GqlBookingPage.getBookingValues()

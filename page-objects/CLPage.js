@@ -13,7 +13,7 @@ class CLPage {
 
 	async cartoverrideContinueBtn() {
 		await browser.execute("window.scrollBy(0,-1000)");
-		await actions.pause(10000);
+		await actions.pause(5000);
 		let cartoverrideContinueBtnVisbilty = await actions.isDisplayed(cartoverrideContinueBtn, 'cartoverrideContinueBtn')
 		if (cartoverrideContinueBtnVisbilty) {
 			await actions.clickElement('click', cartoverrideContinueBtn, 'Cartoverride ContinueBtn')
@@ -25,7 +25,7 @@ class CLPage {
 	}
 
 	async validateCartOverridePage() {
-		await actions.pause(20000);
+		await actions.pause(10000);
 		if (await browser.getTitle() === 'Payment') {
 			console.log('Successfully completed on CART-OVERRIDE Page');
 		} else {

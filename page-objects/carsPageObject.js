@@ -74,7 +74,7 @@ class CarPage {
     CarsPageCollectorCP.set(
       'vehicletypeCP',
       await actions.getText(vehicletype, 'Type of the vehicle'));
-    await actions.pause(30000);
+    await actions.pause(10000);
   }
    else{
      console.log("There are no cars available for this route..")
@@ -87,7 +87,6 @@ class CarPage {
   }
 
   async carspageskip() {
-    await actions.pause(10000)
     await actions.waitForDisplayed(carPageHeader, 'carPageHeader', 30000)
     let carPageHeaderVisbilty = await actions.isDisplayed(carPageHeader, 'carPageHeader')
     console.log("carPageHeaderVisbilty: ", carPageHeaderVisbilty)
@@ -117,7 +116,7 @@ class CarPage {
       await actions.waitForClickable(carsPageContinueButton, 'continue button in carspage')
       await actions.pause(5000)
       await actions.clickElement('click', carsPageContinueButton, "Cars page Continue Button");
-      await actions.pause(20000)
+      await actions.pause(15000)
     }
   }
 }

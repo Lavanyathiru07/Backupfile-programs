@@ -107,7 +107,7 @@ class SeatPage {
 
 	async getSeatDetails() {
 		await actions.waitForDisplayed(seatsPageHeading, 'seatsPageHeading')
-		await actions.pause(20000)
+		await actions.pause(10000)
 		var { depeartSeatDetails, returnSeatDetails } = await getSeatArray();
 		newDepSeats = depeartSeatDetails;
 		newRetSeats = returnSeatDetails;
@@ -419,7 +419,7 @@ class SeatPage {
 		}
 		await actions.waitForDisplayed(seatsPageSkip, 'seatsPageSkip', 20000);
 		await actions.scroll(seatsPageSkip, 'seatsPageSkip');
-		await actions.pause(10000);
+		await actions.pause(5000);
 		await actions.waitForEnabled(seatsPageSkip, 'seatsPageSkip');
 		await actions.clickElement('click', seatsPageSkip, "seatsPageSkip");
 		await actions.pause(10000);
@@ -1236,8 +1236,8 @@ class SeatPage {
 		// await actions.waitForDisplayed(tailOfPlane, 'tailOfPlane', 15000)
 		// await Check.isDisplayed(tailOfPlane, 'tailOfPlane', true)
 		// await actions.scroll(tailOfPlane,'tailOfPlane')
-		await actions.pause(20000)
-		await actions.waitForDisplayed(continueButton, 'continue Button')
+
+		await actions.waitForDisplayed(continueButton, 'continue Button',10000)
 		await actions.waitForClickable(continueButton, 'continue Button')
 		await actions.clickElement('click', continueButton, "continue Button")
 		await actions.pause(5000)
@@ -1255,7 +1255,7 @@ class SeatPage {
 			if (seatsPageReturningTabsIsDisplayed) {
 				await this.clickSelectSeatPopupContinueButton('returning')
 			}
-        await actions.waitForExist(bagsPageHeading, 'bagsPageHeading', 30000)
+        await actions.waitForExist(bagsPageHeading, 'bagsPageHeading', 20000)
 
 		}
 	}

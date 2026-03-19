@@ -17,7 +17,7 @@ When(/^I am on Travelers page I fill data for "(.+)" InfantinLap$/, async functi
 
 Then(/^I am on Travelers page I click continue button$/, async () => {
     await TravellersPage.continuebuttontravellers()
-    await browser.pause(30000)
+    await browser.pause(15000)
 })
 
 When(/^I select (.+) for Multiple Travelers$/, async (ssrtype) => {

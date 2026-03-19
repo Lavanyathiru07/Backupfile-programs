@@ -133,7 +133,7 @@ class HotelPage {
 
     async hotelSkip() {
         // await actions.pause(6000)
-        await actions.waitForDisplayed(hotelTitle, 'hotelTitle', 30000)
+        await actions.waitForDisplayed(hotelTitle, 'hotelTitle', 20000)
         let hotelTitleVisibilty = await actions.isDisplayed(hotelTitle, 'hotelTitle')
         console.log("hotelPageHeaderVisbilty: ", hotelTitleVisibilty)
         if (hotelTitleVisibilty) {
@@ -143,7 +143,7 @@ class HotelPage {
             await actions.waitForDisplayed(skipHotel, 'No thanks link of hotel page')
             await actions.waitForClickable(skipHotel, 'Link to Skip Hotel Page')
             await actions.clickElement('click', skipHotel, "link to skip hotel page")
-            await actions.pause(20000)
+            await actions.pause(10000)
         }
         else {
             console.log('Hotels are not available for this city pair');

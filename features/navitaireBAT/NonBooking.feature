@@ -8,7 +8,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
         And I select the "FMM" application
         And I validate the Fmm Flights availability
 
-    @atl @set1
+    @atl @set1 @all
     Scenario: ATL UI Validation
         Given I navigate to G4 portal
         And I select "ATL"
