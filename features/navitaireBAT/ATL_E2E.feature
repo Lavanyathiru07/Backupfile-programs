@@ -1,4 +1,4 @@
-@e2e @set1 @navitairebat @all
+@e2e @set1 @navitairebat
 Feature: This feature file is to run Navitaire BAT scenarios
 #PASS
     Scenario:Verify ATL Transactions for RT, Domestic flight with 1 Adult with 1 CO and 1 CK bag &Modify &Cancel WWW booking via MT
