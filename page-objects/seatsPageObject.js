@@ -1236,7 +1236,7 @@ class SeatPage {
 		// await actions.waitForDisplayed(tailOfPlane, 'tailOfPlane', 15000)
 		// await Check.isDisplayed(tailOfPlane, 'tailOfPlane', true)
 		// await actions.scroll(tailOfPlane,'tailOfPlane')
-
+        await actions.pause(10000);
 		await actions.waitForDisplayed(continueButton, 'continue Button',10000)
 		await actions.waitForClickable(continueButton, 'continue Button')
 		await actions.clickElement('click', continueButton, "continue Button")
