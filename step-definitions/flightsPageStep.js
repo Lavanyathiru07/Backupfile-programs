@@ -13,7 +13,18 @@ Given(/^I am on flights page I click continue button$/, async () => {
         }
     }
 })
-
+When(/^I select "([^"]*)" for departing flight$/, async (bundleType) => {
+    await FlightsPage.selectDepartingBundle(bundleType)
+ })
+ When(/^I select "([^"]*)" for returning flight$/, async (bundleType) => {
+    await FlightsPage.selectReturningBundle(bundleType)
+ })
+ When(/^I am on flights page I skip departing bundle selection$/, async () => {
+   await FlightsPage.departingBundleSkip();
+})
+When(/^I am on flights page I skip returning bundle selection$/, async () => {
+   await FlightsPage.returningBundleSkip();
+})
 When(/^I am on flights page I collect flight page details$/, async () => {
     await browser.pause(5000)
     await FlightsPage.collectFlightPageDetails();
