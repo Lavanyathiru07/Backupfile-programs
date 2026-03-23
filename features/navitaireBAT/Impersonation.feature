@@ -1,6 +1,6 @@
 Feature: Impersonation CC
 #PASS
-    @navitairebat @set2 @blue @green @all
+    @navitairebat @set2 @blue @green @test23
     Scenario Outline: Impersonation Book Domestic, SSR, Seat, Carry on, Checked bag
         Given I navigate to G4 link
         Then I open cl page in a new tab

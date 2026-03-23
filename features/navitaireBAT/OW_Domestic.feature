@@ -1,7 +1,7 @@
 @navitairebat 
 Feature: This feature file is to run Navitaire BAT scenarios
     #PASS
-    @set2 @all
+    @set2 @test23
     Scenario Outline: OW Domestic-,F+H+C+SSR,2 Adults,CO,CK,Seats,PA & Cancel via MT
         Given I navigate to www application
         Given I am on landing page I select "<tripType>"
@@ -47,7 +47,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
             | oneway   | 2     | 0     | 0         | 0        | 20         | false    | pax-all Seg-all type-any | pax-all Seg-both | pax-all Seg-both count-1 | pax-all Seg-departing | Wheelchair |
 
     #PASS
-    @set2 @blue @green @all
+    @set2 @blue @green @test23
     Scenario: Domestic- Check-in Online OW
         Given I complete the Booking using gql for Online-Check-in
             | tripType   | oneway |
