@@ -540,7 +540,7 @@ class Managetravel {
             await actions.waitForClickable(addCar, 'addCar Link')
             await actions.clickElement('click', addCar, "Add Car link")
             await actions.waitForDisplayed(carsPageHeader, 'carsPageHeader', 30000)
-            await actions.pause(5000);
+            await actions.pause(15000);
         } catch (error) {
             console.log(error)
         }
