@@ -8,3 +8,17 @@ Given(/^I am on flights page I click continue button$/, async function ()  {
     await this.FlightsPage.flightsubmit()
     await this.FlightsPage.validateFlightPage()
 })
+When(/^I am on flights page I skip departing bundle selection$/, async function () {
+    await this.FlightsPage.departingBundleSkip();
+         });
+         
+When(/^I select "([^"]*)" for departing flight$/, async function (bundleType) {
+    await this.FlightsPage.selectDepartingBundle(bundleType)
+ })
+ When(/^I select "([^"]*)" for returning flight$/, async function (bundleType) {
+    await  this.FlightsPage.selectReturningBundle(bundleType)
+ })
+ 
+When(/^I am on flights page I skip returning bundle selection$/, async function () {
+   await this.FlightsPage.returningBundleSkip();
+})

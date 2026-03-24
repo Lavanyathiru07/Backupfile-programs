@@ -15,12 +15,11 @@ Feature: This feature file is to run Navitaire BAT scenarios
     And I am on landing page I select "<adult>" adult travelers
     And I am on landing page I click on search button
     When I am on flights page I collect flight page details
+    When I am on flights page I skip departing bundle selection
     And I am on flights page I click continue button
-    And I am on Bundles Page I expect flight details added to the trip summary
-    And I am on Bundles Page I click continue button
     And I am on Travelers page I fill in data for "all" travelers
     And I am on Travelers page I click continue button
-    And I am on WWW Seat page I click continue button
+    And I am on Seat page I click continue button
     And I am on Bags page I select CarryOn "<CarryOn>"
     And I am on Bags page I select Checked Bag "<Check>"
         # And I am on Bags page I select pet in passenger cabin <petInCabin>

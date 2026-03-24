@@ -5,7 +5,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Given I navigate to www application
     And I have a screen that is 1440 by 700 pixels
     #QAA-26770
-  @set2
+  @set2 @rt
   Scenario Outline: RT, Domestic flight with 2Adult, 1Infant in lap and 1Child with 1 CO and 1 CK bag, Seat & Modify WWW booking via MT
     Given I am on landing page I select "<tripType>"
     When I am on landing page I select "CVG" for the departure airport
@@ -18,9 +18,9 @@ Feature: This feature file is to run Navitaire BAT scenarios
     And I am on landing page I select InfantInLap as "<childLap>"
     And I am on landing page I click on search button
     When I am on flights page I collect flight page details
+    And I am on flights page I skip departing bundle selection
+    And I am on flights page I skip returning bundle selection
     And I am on flights page I click continue button
-    And I am on Bundles Page I expect flight details added to the trip summary
-    And I am on Bundles Page I click continue button
     And I am on Travelers page I fill in data for "all" travelers
     And I am on Travelers page I click continue button
     And I get seat detils from GQL
