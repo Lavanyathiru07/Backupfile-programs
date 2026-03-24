@@ -20,8 +20,6 @@ Feature: This feature file is to run booking flow using Playwright
     And I select <ssr> for Multiple Travelers
     And I am on Travelers page I click continue button
     And I am on WWW Seat page I select seats for "<Seats>"
-    And I get seat detils from GQL
-    And I select seat from GQL "<Seats>"
     And I am on WWW Seat page I click continue button
     And I am on Bags page I select CarryOn "<CarryOn>"
     And I am on Bags page I select Checked Bag "<Check>"
