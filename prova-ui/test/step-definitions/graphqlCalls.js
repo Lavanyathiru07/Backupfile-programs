@@ -53,7 +53,7 @@ async function ATLBooking() {
     // let Env = await new Promise((resolve) => {
     //     resolve(UtilityLibrary.getEnvironmentWithPrefix())
     //   })
-    await GqlBooking(Env, "CVG", "PGD", tripType, adultsCount, 0, 0, "12", "5", "", "no", "no", "no", "no", "card", "Master-CC", "yes", "no", "no", "no", "", "", "")
+    await GqlBooking(Env, CVG, PGD, tripType, adultsCount, 0, 0, "20", "0", "", "no", "no", "no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "")
         .then((response) => {
             console.log("Booking response ", response)
             console.log("Booking confNum ", response.confNumber)

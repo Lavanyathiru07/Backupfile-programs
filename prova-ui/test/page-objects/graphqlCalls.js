@@ -50,73 +50,171 @@ async function graphQlCall(query, variables) {
 async function GetFlightAndTravellerDetails() {
   // Query
   let travelers = `query cart {
-        order {
-          hasPendingCSAdjustments
-          orderNumber
-          items {
-            id
-            __typename
-            ...BundleOrderItemFragment
-            ...FlightOrderItemFragment
-            ...HotelOrderItemFragment
-            ...SeatOrderItemFragment
-            ...TravelerAncillaryOrderItemFragment
-            ...VehicleOrderItemFragment
-            ...ItineraryAncillaryOrderItemFragment
-            ...ShowOrderItemFragment
-          }
-          ...TravelersFragment
-          price {
-            total
-            balanceDue
-            taxes {
-              amount
-              __typename
-            }
-            fees {
-              amount
-              __typename
-            }
-            __typename
-          }
-          payments {
-            ... on PromoPayment {
-              id
-              description
-              total {
-                amount
-                currency
-                __typename
-              }
-              __typename
-            }
-            __typename
-          }
-          isInternational
+  application(name: DESKTOPBOOKINGPATH) {
+    ... on DesktopBookingPath {
+      configurations {
+        allowedHotelSaleDestinations
+        enableAllowedHotelSaleDestinations
+        enableExcludedVehicleSaleDestinations
+        excludedVehicleSaleDestinations
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+  order {
+    hasPendingCSAdjustments
+    orderNumber
+    items {
+      id
+      __typename
+      ...BundleOrderItemFragment
+      ...FlightOrderItemFragment
+      ...HotelOrderItemFragment
+      ...SeatOrderItemFragment
+      ...TravelerAncillaryOrderItemFragment
+      ...VehicleOrderItemFragment
+      ...ItineraryAncillaryOrderItemFragment
+      ...ShowOrderItemFragment
+    }
+    ...TravelersFragment
+    price {
+      total
+      balanceDue
+      totalDueToday
+      totalDueAtHotelCheckout
+      taxes {
+        amount
+        __typename
+      }
+      fees {
+        amount
+        __typename
+      }
+      __typename
+    }
+    payments {
+      ... on PromoPayment {
+        id
+        description
+        total {
+          amount
+          currency
           __typename
         }
+        __typename
       }
-      
-      fragment BundleOrderItemFragment on OrderItem {
-        ... on BundleOrderItem {
-          id
-          bundle {
-            id
-            tier
-            name
-            banner
-            ancillaries {
-              name
-              type
-              price {
-                amount
-                __typename
-              }
-              __typename
-            }
-            __typename
-          }
-          price {
+      ... on LoyaltyPayment {
+        id
+        paymentMethod
+        total {
+          amount
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    isInternational
+    __typename
+  }
+  settings {
+    uplift {
+      pages {
+        pageName
+        pageValue
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+fragment BundleOrderItemFragment on OrderItem {
+  ... on BundleOrderItem {
+    id
+    flightId
+    bundle {
+      id
+      tier
+      name
+      banner
+      ancillaries {
+        name
+        type
+        icon
+        price {
+          amount
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    price {
+      amount
+      currency
+      __typename
+    }
+    __typename
+  }
+  __typename
+}
+
+fragment FlightOrderItemFragment on OrderItem {
+  ... on FlightOrderItem {
+    id
+    flight {
+      id
+      number
+      providerId
+      origin {
+        code
+        displayName
+        city
+        state
+        country
+        title
+        street
+        postalCode
+        __typename
+      }
+      destination {
+        code
+        displayName
+        city
+        state
+        country
+        title
+        street
+        postalCode
+        __typename
+      }
+      departingTime
+      arrivalTime
+      isOvernight
+      operatedBy {
+        carrier
+        __typename
+      }
+      __typename
+    }
+    flightPrice: price {
+      total
+      subtotal
+      taxesAndFees
+      taxes {
+        total {
+          amount
+          currency
+          __typename
+        }
+        breakdown {
+          name
+          code
+          value {
             amount
             currency
             __typename
@@ -125,339 +223,294 @@ async function GetFlightAndTravellerDetails() {
         }
         __typename
       }
-      
-      fragment FlightOrderItemFragment on OrderItem {
-        ... on FlightOrderItem {
-          id
-          flight {
-            id
-            number
-            providerId
-            origin {
-              code
-              displayName
-              city
-              state
-              country
-              title
-              street
-              postalCode
-              __typename
-            }
-            destination {
-              code
-              displayName
-              city
-              state
-              country
-              title
-              street
-              postalCode
-              __typename
-            }
-            departingTime
-            arrivalTime
-            isOvernight
-            operatedBy {
-              carrier
-              __typename
-            }
-            __typename
-          }
-          flightPrice: price {
-            total
-            subtotal
-            taxesAndFees
-            taxes {
-              total {
-                amount
-                currency
-                __typename
-              }
-              breakdown {
-                name
-                code
-                value {
-                  amount
-                  currency
-                  __typename
-                }
-                __typename
-              }
-              __typename
-            }
-            fees {
-              total {
-                amount
-                currency
-                __typename
-              }
-              breakdown {
-                name
-                code
-                value {
-                  amount
-                  currency
-                  __typename
-                }
-                __typename
-              }
-              __typename
-            }
-            discountValue {
-              amount
-              currency
-              __typename
-            }
-            discountType
-            total
-            __typename
-          }
+      fees {
+        total {
+          amount
+          currency
           __typename
         }
-        __typename
-      }
-      
-      fragment HotelOrderItemFragment on OrderItem {
-        ... on HotelOrderItem {
-          id
-          hotelPrice: price {
-            total
-            __typename
-          }
-          roomType
-          roomsCount
-          roomId
-          hotelId
-          hotel {
-            name
-            promos {
-              id
-              code
-              headlineDescription
-              __typename
-            }
-            __typename
-          }
-          checkin {
-            time
-            __typename
-          }
-          checkout {
-            time
-            __typename
-          }
-          roomsCount
-          adultCount
-          childrenCount
-          __typename
-        }
-        __typename
-      }
-      
-      fragment SeatOrderItemFragment on OrderItem {
-        ... on SeatOrderItem {
-          id
-          flightId
-          travelerId
-          column
-          row
-          price {
+        breakdown {
+          name
+          code
+          value {
             amount
             currency
             __typename
           }
-          seatPrice {
-            subtotal
-            taxes {
-              breakdown {
-                name
-                code
-                value {
-                  amount
-                  __typename
-                }
-                __typename
-              }
-              total {
-                amount
-                currency
-                __typename
-              }
-              __typename
-            }
-            taxesIncludedInBundle {
-              breakdown {
-                name
-                code
-                value {
-                  amount
-                  __typename
-                }
-                __typename
-              }
-              total {
-                amount
-                currency
-                __typename
-              }
-              __typename
-            }
-            total
-            isUpgradePrice
-            __typename
-          }
-          bundledAncillaryPrice {
-            amount
-            __typename
-          }
-          isBundledAncillaryIncluded
-          seatSizeId
           __typename
         }
         __typename
       }
-      
-      fragment TravelerAncillaryOrderItemFragment on OrderItem {
-        ... on TravelerAncillaryOrderItem {
-          id
-          flightId
-          travelerId
-          ancillaryType
-          quantity
-          price {
+      discountValue {
+        amount
+        currency
+        __typename
+      }
+      discountType
+      total
+      __typename
+    }
+    isBOGOApplied
+    __typename
+  }
+  __typename
+}
+
+fragment HotelOrderItemFragment on OrderItem {
+  ... on HotelOrderItem {
+    id
+    hotelPrice: price {
+      total
+      totalMandatoryFees
+      __typename
+    }
+    actualPrice {
+      total
+      __typename
+    }
+    paymentDueAt
+    roomType
+    roomsCount
+    roomId
+    hotelId
+    hotel {
+      name
+      promos {
+        id
+        code
+        headlineDescription
+        __typename
+      }
+      __typename
+    }
+    checkin {
+      time
+      __typename
+    }
+    checkout {
+      time
+      __typename
+    }
+    roomsCount
+    adultCount
+    childrenCount
+    __typename
+  }
+  __typename
+}
+
+fragment SeatOrderItemFragment on OrderItem {
+  ... on SeatOrderItem {
+    id
+    flightId
+    travelerId
+    column
+    row
+    price {
+      amount
+      currency
+      __typename
+    }
+    exitRow
+    seatPrice {
+      subtotal
+      taxes {
+        breakdown {
+          name
+          code
+          value {
             amount
-            currency
             __typename
           }
-          bundledAncillaryPrice {
-            amount
-            __typename
-          }
-          isBundledAncillaryIncluded
+          __typename
+        }
+        total {
+          amount
+          currency
           __typename
         }
         __typename
       }
-      
-      fragment VehicleOrderItemFragment on OrderItem {
-        ... on VehicleOrderItem {
-          id
-          vehiclePrice: price {
-            total {
-              amount
-              currency
-              __typename
-            }
-            __typename
-          }
-          vehicle {
-            category
-            code
-            type
-            description
-            __typename
-          }
-          vendor {
-            name
-            __typename
-          }
-          promotions {
-            id
-            code
-            headlineDescription
-            __typename
-          }
-          pickUpDate
-          dropOffDate
-          __typename
-        }
-        __typename
-      }
-      
-      fragment ItineraryAncillaryOrderItemFragment on OrderItem {
-        ... on ItineraryAncillaryOrderItem {
-          id
-          ancillaryType
-          quantity
-          price {
-            amount
-            currency
-            __typename
-          }
-          bundledAncillaryPrice {
+      taxesIncludedInBundle {
+        breakdown {
+          name
+          code
+          value {
             amount
             __typename
           }
-          isBundledAncillaryIncluded
+          __typename
+        }
+        total {
+          amount
+          currency
           __typename
         }
         __typename
       }
-      
-      fragment ShowOrderItemFragment on OrderItem {
-        ... on ShowOrderItem {
-          id
-          type
-          show {
-            date
-            location
-            categoryCode
-            categoryName
-            meta
-            productName
-            productDescription
-            __typename
-          }
-          quantity
-          price {
-            total {
-              amount
-              currency
-              __typename
-            }
-            subtotal {
-              amount
-              currency
-              __typename
-            }
-            taxesAndFees {
-              amount
-              currency
-              __typename
-            }
-            __typename
-          }
-          __typename
-        }
+      total
+      isUpgradePrice
+      __typename
+    }
+    bundledAncillaryPrice {
+      amount
+      __typename
+    }
+    isBundledAncillaryIncluded
+    seatSizeId
+    __typename
+  }
+  __typename
+}
+
+fragment TravelerAncillaryOrderItemFragment on OrderItem {
+  ... on TravelerAncillaryOrderItem {
+    id
+    flightId
+    travelerId
+    ancillaryType
+    quantity
+    price {
+      amount
+      currency
+      __typename
+    }
+    bundledAncillaryPrice {
+      amount
+      __typename
+    }
+    isRemovable
+    isBundledAncillaryIncluded
+    __typename
+  }
+  __typename
+}
+
+fragment VehicleOrderItemFragment on OrderItem {
+  ... on VehicleOrderItem {
+    id
+    vehiclePrice: price {
+      total {
+        amount
+        currency
         __typename
       }
-      
-      fragment TravelersFragment on Order {
-        travelers {
-          id
-          firstName
-          lastName
-          middleName
-          suffix
-          isPrimary
-          type
-          ssrs {
-            code
-            flightId
-            title
-            price {
-              amount
-              currency
-              __typename
-            }
-            additionalInfo
-            __typename
-          }
-          __typename
-        }
+      taxesAndFeesDueAtRentalSite {
+        amount
+        currency
         __typename
-      }`
+      }
+      __typename
+    }
+    vehicle {
+      category
+      code
+      type
+      description
+      __typename
+    }
+    vendor {
+      name
+      __typename
+    }
+    promotions {
+      id
+      code
+      headlineDescription
+      __typename
+    }
+    pickUpDate
+    dropOffDate
+    __typename
+  }
+  __typename
+}
+
+fragment ItineraryAncillaryOrderItemFragment on OrderItem {
+  ... on ItineraryAncillaryOrderItem {
+    id
+    flightId
+    travelerId
+    ancillaryType
+    quantity
+    price {
+      amount
+      currency
+      __typename
+    }
+    bundledAncillaryPrice {
+      amount
+      __typename
+    }
+    isBundledAncillaryIncluded
+    __typename
+  }
+  __typename
+}
+
+fragment ShowOrderItemFragment on OrderItem {
+  ... on ShowOrderItem {
+    id
+    type
+    show {
+      date
+      location
+      categoryCode
+      categoryName
+      meta
+      productName
+      productDescription
+      __typename
+    }
+    quantity
+    price {
+      total {
+        amount
+        currency
+        __typename
+      }
+      subtotal {
+        amount
+        currency
+        __typename
+      }
+      taxesAndFees {
+        amount
+        currency
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+  __typename
+}
+
+fragment TravelersFragment on Order {
+  travelers {
+    id
+    firstName
+    lastName
+    middleName
+    suffix
+    isPrimary
+    type
+    ssrs {
+      code
+      flightId
+      title
+      price {
+        amount
+        currency
+        __typename
+      }
+      additionalInfo
+      __typename
+    }
+    __typename
+  }
+  __typename
+}`
 
   return await graphQlCall(travelers).then((response) => {
     let responseJson = JSON.parse(JSON.stringify(response));
@@ -752,7 +805,8 @@ __typename
 }
 __typename
 }`
-  let seatMapVariables = `{
+
+let seatMapVariables = `{
 "origin":"${origin}",
 "destination": "${destination}",
 "departureDate": "${departDate}",
