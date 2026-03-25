@@ -55,3 +55,8 @@ When(/^I am on Manage Travel onlinechekin page (.+) page I click on continue but
 When(/^I am on online checkin validate seat is auto-assiganed after completing the checkin$/, async function () {
 	await this.CheckinPage.seatautoassigned()
 });
+When(/^I am on Manage Travel onlinechekin page (.+) page,I click on continue button$/, async function (page) {	
+	await this.CheckinPage.selectpage();
+	
+});
+

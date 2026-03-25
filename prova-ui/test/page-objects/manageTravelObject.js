@@ -472,7 +472,7 @@ class Managetravel {
         console.log("balanceCart" + await this.actions.getText(balanceCart, 'balance cart'))
         if ((await this.actions.getText(balanceCart, 'balance cart')).includes('-') || (await this.actions.getText(balanceCart, 'balanceCart')).includes('$0.00')) {
             console.log("PAYMENT PAGE")
-            if (await this.actions.isDisplayed(termsbox, 'termsbox')) {
+            if (await this.actions.isDisplayed(termsbo, 'termsbox')) {
                 await this.actions.click(termsbox, 'termsbox')
             }
             await this.actions.click(negativeContinue, 'negativeContinue')
@@ -480,6 +480,19 @@ class Managetravel {
         } else {
             return false
         }
+    }
+
+    async selectpage()
+    {
+        await actions.pause(5000);
+        await actions.setInputField('setvalue','7025551111',phoneNum,'phoneNum');
+        await actions.setInputField('setvalue','accept@fraudtest.com',email,'email');
+        //await actions.clickElement('click', selectcheckbox, 'selectcheckbox')
+        await actions.waitForDisplayed(deselectpassenger, 'secondadultcheckbox',2000)
+        await actions.clickElement('click', deselectpassenger, "second adult checkbox")
+        await actions.scroll(selectcontinue,'selectcontinue')
+        await actions.clickElement('click', selectcontinue, 'selectcontinue');
+        await actions.pause(30000);
     }
 }
 export default Managetravel

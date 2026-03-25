@@ -157,8 +157,9 @@ class TravellersPage {
     }
 
     async getDOB(DOB) {
-        var newDOB = new Date(departDate);
         console.log("departDate: " + departDate)
+        var baseDate = (departDate && !isNaN(new Date(departDate).getTime())) ? new Date(departDate) : new Date();
+        var newDOB = new Date(baseDate);
 
         if (DOB.includes("adult")) {
             newDOB.setDate(newDOB.getDate() - 12000);
@@ -176,7 +177,7 @@ class TravellersPage {
             newDOB.setDate(newDOB.getDate() + 366);
         }
         if (DOB === ">2yrsForRetrunflight") {
-            newDOB = new Date(returnDate);
+            newDOB = (returnDate && !isNaN(new Date(returnDate).getTime())) ? new Date(returnDate) : new Date();
             newDOB.setDate(newDOB.getDate() - 732);
         }
         return newDOB
@@ -425,6 +426,7 @@ class TravellersPage {
     async enterTravelerEmailId(email) {
         var emailAddress = email.split('|')
         var travelerNum = 0;
+        await this.actions.pause(500)
         for (var i = 0; i < emailAddress.length; i++) {
             travelerNum = travelerNum + 1;
             var travelerEmailId = "(//input[contains(@data-hook,'email')])[" + travelerNum + "]"

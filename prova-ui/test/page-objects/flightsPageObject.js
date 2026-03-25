@@ -100,14 +100,26 @@ class FlightsPage {
         }
     }
 
+    async getTimeline() {
+      await this.actions.pause(2000);
+      const timelineURL = await this.actions.getUrl()
+      console.log("timelineURL: ", timelineURL)
+      const timelineId = timelineURL.split('/')
+      process.env.timeline = timelineId[4]
+    }
+
     async getSelectedDepartureDate() {
         try {
             await this.actions.waitForDisplayed(selectedDepartDate, 'selectedDepartDate')
-            console.log("get dep date:" + await this.actions.getAttribute(selectedDepartDate, 'data-hook', 'selectedDepartDate'))
-            departDate = (await this.actions.getAttribute(selectedDepartDate, 'data-hook', 'selectedDepartDate'))
-                .slice(18);
+            const deptAttr = await this.actions.getAttribute(selectedDepartDate, 'data-hook', 'selectedDepartDate')
+            console.log("get dep date:" + deptAttr)
+            if (deptAttr) {
+                departDate = deptAttr.slice(18);
+            }
+            console.log("departDate set to: " + departDate)
         }
         catch (ex) {
+            console.log('Error getting departure date: ' + ex)
         }
     }
 
@@ -115,9 +127,13 @@ class FlightsPage {
         // await this.actions.pause(1000);
         if (await this.actions.isDisplayed(selectedReturnDate, 'selectedReturnDate')) {
             try {
-                returnDate = (await this.actions.getAttribute(selectedReturnDate, 'data-hook', 'selectedReturnDate'))
-                    .slice(18);
+                const retAttr = await this.actions.getAttribute(selectedReturnDate, 'data-hook', 'selectedReturnDate')
+                if (retAttr) {
+                    returnDate = retAttr.slice(18);
+                }
+                console.log("returnDate set to: " + returnDate)
             } catch (ex) {
+                console.log('Error getting return date: ' + ex)
             }
         }
     }
@@ -130,6 +146,7 @@ class FlightsPage {
             if (await this.actions.isDisplayed(clickContinueButton, 'clickContinueButton')) {
                 await this.getSelectedDepartureDate();
                 flightPageCollector.set('departDate', departDate);
+                console.log("Collecting flight page details for departure flight: " + departDate);
                 flightPageCollector.set(
                     'departFlightFare',
                     (await this.actions.getText(SelectedFlightFare.replace('X', '1'), 'selected flight fare'))
@@ -265,14 +282,14 @@ class FlightsPage {
         }
     }
 async departingBundleSkip() {
-  await this.actions.waitForLoadState('domcontentloaded', 30000)
+  //await this.actions.waitForLoadState('domcontentloaded', 30000)
   await this.actions.waitForDisplayed(departingSkipbundle, 'departingSkipbundle', 30000)
   //await this.actions.scroll(departingSkipbundle, 'departingSkipbundle')
   await this.actions.clickElement('click', departingSkipbundle, 'departingSkipbundle')
 }
   
 async returningBundleSkip() {
-  await this.actions.waitForLoadState('domcontentloaded', 30000)
+ // await this.actions.waitForLoadState('domcontentloaded', 30000)
   if (await this.actions.isDisplayed(Returnbundleheading, 'Returnbundleheading')) {
     await this.actions.waitForDisplayed(returningSkipbundle, 'returningSkipbundle', 30000)
     await this.actions.scroll(returningSkipbundle, 'returningSkipbundle')
@@ -287,7 +304,7 @@ async returningBundleSkip() {
 
 }
 async selectDepartingBundle(bundleType) {
-  await this.actions.waitForLoadState('domcontentloaded', 30000)
+  //await this.actions.waitForLoadState('domcontentloaded', 30000)
   switch (bundleType) {
     case "basicbundle":     
       await this.actions.waitForDisplayed(departingbasicbundle, 'departingbasicbundle', 30000)
@@ -306,7 +323,7 @@ async selectDepartingBundle(bundleType) {
   }
 }
 async selectReturningBundle(bundleType) {
-  await this.actions.waitForLoadState('domcontentloaded', 30000)
+  //await this.actions.waitForLoadState('domcontentloaded', 30000)
   switch (bundleType) {
     case "basicbundle":     
       await this.actions.waitForDisplayed(returningbasicbundle, 'returningbasicbundle', 30000)  

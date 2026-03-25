@@ -6,12 +6,12 @@ let adultSeatArray = []
 let childSeatArray = []
 let AdultChildSeats = []
 async function graphQlCall(query, variables) {
-
+ 
   let headersObj = {};
   headersObj["Content-Type"] = "application/json";
   headersObj["transaction-id"] = process.env.timeline
-
-
+ 
+ 
   let requestOpts = {
     method: 'POST',
     headers: headersObj,
@@ -37,7 +37,7 @@ async function graphQlCall(query, variables) {
   }
   return response;
 }
-
+ 
 /**
 * This method gets flight infor and traveller infor
 * @param {string } origin Ex:"BLI"
@@ -511,7 +511,7 @@ fragment TravelersFragment on Order {
   }
   __typename
 }`
-
+ 
   return await graphQlCall(travelers).then((response) => {
     let responseJson = JSON.parse(JSON.stringify(response));
     try {
@@ -523,12 +523,12 @@ fragment TravelersFragment on Order {
       let travelerCounts = responseJson.data.order.travelers.length;
       let depDate = responseJson.data.order.items[0].flight.departingTime.split('T')[0].toString()
       let isBundle = false
-
+ 
       console.log("Item : ", items.length)
       if (items.length > 2) {
         isBundle = true
       }
-
+ 
       try {
         if (items.length === 2 || (responseJson.data.order.items[0].flight.id != (responseJson.data.order.items[1].flight.id))) {
           retDate = responseJson.data.order.items[1].flight.departingTime.split('T')[0].toString()
@@ -553,13 +553,13 @@ fragment TravelersFragment on Order {
         adult,
         child,
         isBundle
-
+ 
       }
     } catch (err) {
       console.log(err)
       throw new Error("Travellers details are not available")
     }
-
+ 
   })
 }
 function createNumberArray(size) {
@@ -567,8 +567,8 @@ function createNumberArray(size) {
   for (let i = 1; i <= size; i++) { numberArray.push(i); }
   return numberArray;
 }
-
-
+ 
+ 
 /**
 * This method retrives the Arary of seats availale in flight for both returning and departing
 * @param {string } origin Ex:"BLI"
@@ -678,7 +678,7 @@ __typename
 __typename
 }
 }
-
+ 
 fragment seatPlanFragment on FlightSeatmap {
 colsMap
 seatSizesMap {
@@ -761,7 +761,7 @@ __typename
 }
 __typename
 }
-
+ 
 fragment seatPriceFragment on SeatOrderItem {
 seatPrice {
 subtotal
@@ -805,15 +805,14 @@ __typename
 }
 __typename
 }`
-
-let seatMapVariables = `{
+  let seatMapVariables = `{
 "origin":"${origin}",
 "destination": "${destination}",
 "departureDate": "${departDate}",
 "returningDate": "${returnDate}"
 }`
-
-
+ 
+ 
   return await graphQlCall(seatMapQuery, seatMapVariables).then((response) => {
     let responseJson = JSON.parse(JSON.stringify(response));
     try {
@@ -826,10 +825,10 @@ let seatMapVariables = `{
     } catch (err) {
       throw new Error("depart or return seats are not available")
     }
-
+ 
   })
 }
-
+ 
 /**
 * This method performs setting variable array
 * @param {string }travelerid Ex:1
@@ -839,7 +838,7 @@ let seatMapVariables = `{
 * @returns {Array} seatsSelectionArray
 */
 function getSeatDetails(travelerid, seatsArray, childrenCount, adultsCount, isBundle) {
-
+ 
   let seatTypes = ['economy', 'economy']
   let seatCompleteArray = []
   for (let seatLimit = 0; seatLimit <= 25; seatLimit++) {
@@ -955,19 +954,19 @@ function getSeatDetails(travelerid, seatsArray, childrenCount, adultsCount, isBu
       let j = 0;
       for (let i = 0; i < childrenCount; i++) {
         while (j < seatCompleteArray.length) {
-
+ 
           if (seatCompleteArray[j].includes("A")) {
             if (seatCompleteArray[j + 1].includes("B")) {
               adultSeatArray.push(seatCompleteArray[j]);
               childSeatArray.push(seatCompleteArray[j + 1]);
-
+ 
               seatCompleteArray.splice(j, 1);
               seatCompleteArray.splice(j, 1);
               break;
             } else {
               j++;
             }
-
+ 
           } else if (seatCompleteArray[j].includes("D")) {
             if (seatCompleteArray[j + 1].includes("E")) {
               adultSeatArray.push(seatCompleteArray[j]);
@@ -1001,10 +1000,10 @@ function getSeatDetails(travelerid, seatsArray, childrenCount, adultsCount, isBu
           } else {
             j++;
           }
-
+ 
         }
       }
-
+ 
       AdultChildSeats = adultSeatArray.concat(childSeatArray)
     }
   }
@@ -1028,7 +1027,7 @@ function getSeatDetails(travelerid, seatsArray, childrenCount, adultsCount, isBu
       } else {
         seatDetails.seatId = seatCompleteArray[index]
       }
-
+ 
     } else {
       seatDetails.seatId = seatCompleteArray[index]
     }
@@ -1042,12 +1041,12 @@ function getSeatDetails(travelerid, seatsArray, childrenCount, adultsCount, isBu
   childSeatArray = []
   return seatsSelectionArray
 }
-
+ 
 export default async function returnDetails() {
   let { origin, destination, travelerArray, depDate, retDate, tripType, adult, child, isBundle } = await GetFlightAndTravellerDetails()
-
+ 
   let { departFlightArray, returnFlightArray } = await SeatMap(origin, destination, depDate, retDate)
-
+ 
   let returnSeatDetails
   let depeartSeatDetails = await getSeatDetails(travelerArray, departFlightArray, child, adult, isBundle)
   // console.log("Trip Type: ", tripType)
@@ -1063,5 +1062,5 @@ export default async function returnDetails() {
   //console.log(returnSeatDetails)
   return { depeartSeatDetails, returnSeatDetails }
 }
-
+ 
 // returnDetails()

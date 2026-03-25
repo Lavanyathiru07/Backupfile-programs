@@ -5,7 +5,7 @@ Feature: This feature file is to run booking flow using Playwright
     Given I navigate to www application
     And I have a screen that is 1440 by 700 pixels
     #QAA-26770
-  @set2 @a1
+  @set2 @a1 
   Scenario Outline: OW Domestic-,F+H+C+SSR,2 Adults,CO,CK,Seats,PA & Cancel via MT
     Given I am on landing page I select "<tripType>"
     When I am on landing page I select "BLI" for the departure airport
@@ -20,8 +20,6 @@ Feature: This feature file is to run booking flow using Playwright
     And I select <ssr> for Multiple Travelers
     And I am on Travelers page I click continue button
     And I am on WWW Seat page I select seats for "<Seats>"
-    And I get seat detils from GQL
-    And I select seat from GQL "<Seats>"
     And I am on WWW Seat page I click continue button
     And I am on Bags page I select CarryOn "<CarryOn>"
     And I am on Bags page I select Checked Bag "<Check>"
@@ -46,3 +44,19 @@ Feature: This feature file is to run booking flow using Playwright
     Examples:
       | tripType | adult | departDate | tripflex | Seats                    | CarryOn          | Check                    | Priority              | ssr        |
       | oneway   |     2 |         10 | false    | pax-all Seg-all type-any | pax-all Seg-both | pax-all Seg-both count-1 | pax-all Seg-departing | Wheelchair |
+
+       @set2 @blue @green @dow
+    Scenario: Domestic- Check-in Online OW
+        Given I complete the Booking using gql for Online-Check-in
+            | tripType   | oneway |
+            | departDate | 0      |
+            | adult      | 2      |
+        Then I navigate to www application
+        And I am on landing page I click manage trip button
+        And I am on manage trip page I enter OLCI details
+        And I am on Online checkin Passengers selection page I click checkin button
+        And I am on Manage Travel onlinechekin page "Select" page,I click on continue button
+        And I am on Manage Travel onlinechekin page, "Bags" page I click on continue button
+        And I am on Manage Travel onlinechekin page "Seats" page I click on continue button
+        Then I am on Online checkin Print passes page
+        And I am on online checkin validate seat is auto-assiganed after completing the checkin
