@@ -114,9 +114,9 @@ class CarPage {
       await actions.waitForDisplayed(carsPageContinueButton, 'continue button in carspage', 10000)
       await actions.scroll(carsPageContinueButton,'carsPageContinueButton');
       await actions.waitForClickable(carsPageContinueButton, 'continue button in carspage')
-      await actions.pause(5000)
-      await actions.clickElement('click', carsPageContinueButton, "Cars page Continue Button");
       await actions.pause(3000)
+      await actions.clickElement('click', carsPageContinueButton, "Cars page Continue Button");
+      await actions.pause(10000);
     }
   }
 }

@@ -287,7 +287,8 @@ async selectReturningBundle(bundleType) {
     await actions.scroll(submitflightpage)
     await actions.waitForClickable(submitflightpage, "submit button in flights page", 20000)
     await actions.clickElement('click', submitflightpage, "submit button in flights page")
-    await actions.waitForDisplayed(bundleHeader,"bundles page header",20000)
+    await actions.waitForDisplayed(bundleHeader,"bundles page header",5000)
+    await actions.pause(20000);
   }
 
   async validateFlightPage() {
