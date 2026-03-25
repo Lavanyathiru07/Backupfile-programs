@@ -594,7 +594,7 @@ class ConfirmationPage {
 		async validateConfirmationPageOpened() {
 		try {
 			// Check if the URL contains confirmation
-			await actions.pause(20000);
+			await actions.pause(5000);
 			const currentUrl = await browser.getUrl();
 			assert.isTrue(currentUrl.includes('/confirmation'), 
 				`Expected to be on confirmation page but current URL is: ${currentUrl}`);

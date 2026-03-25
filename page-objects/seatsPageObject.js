@@ -91,7 +91,7 @@ const activePopup = "//div[contains(@data-hook,'_active')][contains(@data-hook,'
 const tripType = "[data-hook='header-flight-info_trip-type']"
 const bundleStarSeat = "//*[contains(@data-hook,'select-economy-seat_unrestricted')]/following::img"
 const seatspageContinueButton = "//span[contains(text(),'Continue')]/parent::button"
- 
+
 
 var seatPriceDepart = [];
 var seatPriceReturn = [];
@@ -107,7 +107,7 @@ class SeatPage {
 
 	async getSeatDetails() {
 		await actions.waitForDisplayed(seatsPageHeading, 'seatsPageHeading')
-		await actions.pause(20000)
+		await actions.pause(10000)
 		var { depeartSeatDetails, returnSeatDetails } = await getSeatArray();
 		newDepSeats = depeartSeatDetails;
 		newRetSeats = returnSeatDetails;
@@ -223,7 +223,7 @@ class SeatPage {
 				if (exitRowPopupButIsDipslay) {
 					await actions.click(exitRowPopupBut, 'exitRowPopupBut')
 					// await $(exitRowPopup.replace("XX", newDepSeats[i].seatId.toUpperCase())).click()
-					await actions.scroll(seatBreadcrumb,'seatBreadcrumb');
+					await actions.scroll(seatBreadcrumb, 'seatBreadcrumb');
 				}
 				// if ( $(updateSelectedSeat).isDisplayed()) {
 				// 	updatedSeatDetails = $(selectedSeatTypeUpdatePopup).getText() + '-' + $(selectedSeatIdUpdatePopup).getText() + '-' + $(selectedSeatPriceUpdatePopup).getText()
@@ -343,9 +343,9 @@ class SeatPage {
 			if (travelerNum === "all") {
 				for (var i = 0; i < newRetSeats.length; i++) {
 					// $("//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]").click()
-					await actions.isDisplayed("//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]", 'New Seat')					
+					await actions.isDisplayed("//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]", 'New Seat')
 					await actions.scroll("//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]", 'New Seat')
-					await actions.isClickable("//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]", 'New Seat')	
+					await actions.isClickable("//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]", 'New Seat')
 					await actions.click("//span[contains(@data-hook,'" + seatType + "')][contains(@data-hook,'_" + newRetSeats[i].seatId + "')]", 'New Seat')
 					let exitRowPopupIsDisplay = await actions.isDisplayed(exitRowPopup.replace("XX", newRetSeats[i].seatId.toUpperCase()), 'exitRowPopup Button')
 					if (exitRowPopupIsDisplay) {
@@ -419,11 +419,11 @@ class SeatPage {
 		}
 		await actions.waitForDisplayed(seatsPageSkip, 'seatsPageSkip', 20000);
 		await actions.scroll(seatsPageSkip, 'seatsPageSkip');
-		await actions.pause(10000);
+		await actions.pause(5000);
 		await actions.waitForEnabled(seatsPageSkip, 'seatsPageSkip');
 		await actions.clickElement('click', seatsPageSkip, "seatsPageSkip");
 		await actions.pause(10000);
-		
+
 	}
 	/*
 	*  seatType: any/exitRow/legroom/bundleSeat/economyBundleSeat/exitRowBundleSeat/economyNonBundleSeat/economy
@@ -510,7 +510,7 @@ class SeatPage {
 
 	}
 	async selectReturnSegSeatByPosition(position, traveler) {
-		await actions.scroll(seatBreadcrumb,'seatBreadcrumb');
+		await actions.scroll(seatBreadcrumb, 'seatBreadcrumb');
 		if (await actions.isDisplayed(returningSeatsSelectButton, 'returningSeatsSelectButton')) {
 			await actions.waitForClickable(returningSeatsSelectButton, 'returningSeatsSelectButton')
 			await actions.clickElement('click', returningSeatsSelectButton, 'returningSeatsSelectButton')
@@ -674,7 +674,7 @@ class SeatPage {
 				}
 			}
 		}
-		await actions.scroll(seatBreadcrumb,'seatBreadcrumb')
+		await actions.scroll(seatBreadcrumb, 'seatBreadcrumb')
 		await actions.waitForDisplayed(seatMap, 'seatMap')
 		if (travelerNum === "all") {
 			for (var i = 0; i < adjacentSeats.length; i++) {
@@ -689,7 +689,7 @@ class SeatPage {
 				let exitRowPopupIsDisplayed = await actions.isDisplayed(exitRowPopup.replace("XX", adjacentSeats[i].toUpperCase()), 'exitRowPopup')
 				if (exitRowPopupIsDisplayed) {
 					await actions.clickElement('click', 'exitRowPopup.replace("XX", adjacentSeats[i].toUpperCase())', 'exitRowPopUpButton')
-					await actions.scroll(seatBreadcrumb,'seatBreadcrumb')
+					await actions.scroll(seatBreadcrumb, 'seatBreadcrumb')
 				}
 				let updateSelectedSeatIsDisplayed = await actions.isDisplayed(updateSelectedSeat, 'updateSelectedSeat')
 				if (updateSelectedSeatIsDisplayed) {
@@ -887,7 +887,7 @@ class SeatPage {
 	}
 	async selectReturningSegAdjacentSeats(tripType, seatType, travelerNum) {
 		await browser.execute("window.scrollBy(0,-1000)");
-		await actions.scroll(returningSeatsSelectButton,'returningSeatsSelectButton')
+		await actions.scroll(returningSeatsSelectButton, 'returningSeatsSelectButton')
 		if (await actions.isDisplayed(returningSeatsSelectButton, 'returningSeatsSelectButton')) {
 			await actions.waitForDisplayed(returningSeatsSelectButton, 'returningSeatsSelectButton')
 			await actions.waitForClickable(returningSeatsSelectButton, 'returningSeatsSelectButton')
@@ -928,7 +928,7 @@ class SeatPage {
 			seatType = "economy"
 		}
 		await actions.waitForDisplayed(TravelerList, 'TravelerList')
-		await actions.scroll(TravelerList,'TravelerList')
+		await actions.scroll(TravelerList, 'TravelerList')
 		await actions.pause(3000)
 		await actions.waitForDisplayed(availableSeats, 'availableSeats')
 		var totalTravelers = await browser.$$(TravelerList)
@@ -1095,7 +1095,7 @@ class SeatPage {
 		);
 	}
 	async selectReturningSegNonAdjacentSeats(seatType, travelerNum) {
-		await actions.scroll(seatBreadcrumb,'seatBreadcrumb');
+		await actions.scroll(seatBreadcrumb, 'seatBreadcrumb');
 		if (await actions.isDisplayed(returningSeatsSelectButton, 'returningSeatsSelectButton')) {
 			await actions.waitForDisplayed(returningSeatsSelectButton, 'returningSeatsSelectButton')
 			await actions.waitForClickable(returningSeatsSelectButton, 'returningSeatsSelectButton')
@@ -1236,8 +1236,8 @@ class SeatPage {
 		// await actions.waitForDisplayed(tailOfPlane, 'tailOfPlane', 15000)
 		// await Check.isDisplayed(tailOfPlane, 'tailOfPlane', true)
 		// await actions.scroll(tailOfPlane,'tailOfPlane')
-		await actions.pause(20000)
-		await actions.waitForDisplayed(continueButton, 'continue Button')
+		await actions.pause(9000);
+		await actions.waitForDisplayed(continueButton, 'continue Button', 10000)
 		await actions.waitForClickable(continueButton, 'continue Button')
 		await actions.clickElement('click', continueButton, "continue Button")
 		await actions.pause(5000)
@@ -1247,7 +1247,7 @@ class SeatPage {
 			let selectSeatPopupContinueButtonIsDisplayed = await actions.isDisplayed(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')
 			if (selectSeatPopupContinueButtonIsDisplayed) {
 				await actions.waitForDisplayed(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton', 10000)
-				await actions.scroll(selectSeatPopupContinueButton,'selectSeatPopupContinueButton')
+				await actions.scroll(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')
 				await actions.waitForClickable(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')
 				await actions.clickElement('click', selectSeatPopupContinueButton, "selectSeatPopup ContinueButton")
 			}
@@ -1255,7 +1255,8 @@ class SeatPage {
 			if (seatsPageReturningTabsIsDisplayed) {
 				await this.clickSelectSeatPopupContinueButton('returning')
 			}
-        await actions.waitForExist(bagsPageHeading, 'bagsPageHeading', 30000)
+			await actions.pause(10000);
+			await actions.waitForExist(bagsPageHeading, 'bagsPageHeading', 20000)
 
 		}
 	}
@@ -1263,7 +1264,7 @@ class SeatPage {
 	async clickSelectSeatPopupContinueButton(flightType) {
 		if (flightType === 'Departing') {
 			await actions.waitForDisplayed(continueButton, "continue Button", 10000)
-			await actions.scroll(tailOfPlane,'tailOfPlane')
+			await actions.scroll(tailOfPlane, 'tailOfPlane')
 			await actions.clickElement('click', continueButton, "continue Button")
 		}
 
@@ -1311,11 +1312,11 @@ class SeatPage {
 
 	}
 	async deselectSelectedSeat(segment, paxNum) {
-		console.log(segment,paxNum)
+		console.log(segment, paxNum)
 		await actions.pause(30000)
 		if (segment == "departing") {
 			await $(departingSeg).click()
-			
+
 			await $(travelerGridPaxNum.replace("X", paxNum)).click()
 			await actions.scroll(takenSeats.replace("X", paxNum))
 			await $(takenSeats.replace("X", paxNum)).click()
@@ -1324,12 +1325,12 @@ class SeatPage {
 			await $(travelerGridPaxNum.replace("X", paxNum)).click()
 			await $(takenSeats.replace("X", paxNum)).click()
 		}
-		
+
 		await browser.execute("window.scrollBy(0,200)");
 		// deselectedSeatDetails = await $(selectedSeatTypeDeselectPopup).getText() + '-' + $(selectedSeatIdDeselectPopup).getText() + '-' + $(selectedSeatPriceDeselectPopup).getText()
 		await $(deselectSeatButton).click()
 		await actions.pause(5000)
-	
+
 	}
 	async validateSelectedFlightTypeInSeatsPage(flightType) {
 

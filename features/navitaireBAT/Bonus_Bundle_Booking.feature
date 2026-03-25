@@ -1,6 +1,6 @@
 Feature: This feature file is to run Navitaire BAT scenarios
 #PASS
-    @navitairebat @set1
+    @navitairebat @set1 
     Scenario Outline:Domestic-Bonus Bundle Booking, RT booking, 2 Adults
         Given I navigate to www application
         Then I create my allegaint account

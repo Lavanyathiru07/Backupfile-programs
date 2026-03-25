@@ -414,7 +414,7 @@ class Managetravel {
         try{
             await actions.click(checkinbagspagecontinue2, 'Bags page continue popup')
         }catch(e){}       
-        await actions.pause(20000)
+        await actions.pause(10000)
     }
 
     async onlinecheckinseatspage() {
@@ -540,7 +540,7 @@ class Managetravel {
             await actions.waitForClickable(addCar, 'addCar Link')
             await actions.clickElement('click', addCar, "Add Car link")
             await actions.waitForDisplayed(carsPageHeader, 'carsPageHeader', 30000)
-            await actions.pause(10000);
+            await actions.pause(15000);
         } catch (error) {
             console.log(error)
         }
@@ -668,7 +668,7 @@ class Managetravel {
     }
     async seatautoassigned(){
        
-        await actions.pause(20000)
+        await actions.pause(10000)
         
             await actions.scroll(seatscroll,'scroll to the seat heading',1000),
             await actions.waitForDisplayed(seatautoassigned, 'seatautoassigned')

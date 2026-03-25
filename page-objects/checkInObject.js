@@ -70,7 +70,7 @@ class CheckInPage {
     }
 
     async PrintBoardingPasses() {
-        await actions.pause(20000);
+        await actions.pause(10000);
         let checkinstatusIsDisplayed = await actions.isDisplayed(checkinstatus, 'checkinstatus')
         if (checkinstatusIsDisplayed) {
             console.log("Checkin Passed")

@@ -457,7 +457,7 @@ class HomePage {
 	}
 
 	async validateSearchPage() {
-		await actions.pause(30000);
+		await actions.pause(4000);
 		if ((await browser.getUrl()).includes('manage-travel/')) {
 			console.log('Selecting new fligts');
 		} else {
