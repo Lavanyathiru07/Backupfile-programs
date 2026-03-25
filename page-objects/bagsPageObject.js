@@ -189,7 +189,7 @@ class BagsPage {
 	}
 
 	async addExtras() {
-		await actions.pause(4000)
+		await actions.pause(8000)
 		let tripFlexAddToCartIsDisplay = await actions.isDisplayed(tripFlexAddToCart, 'Trip flex card info')
 		if (tripFlexAddToCartIsDisplay) {
 			await actions.scroll(tripflextitle,'tripflextitle')
