@@ -32,21 +32,21 @@ export default class ATLPage {
             WHERE k.order_nbr = '${ITN}'
             ORDER BY k.id;`
             console.time('process')
-            let results = await mydbConnection.executeQuery(mariaDBquery);
+            await mydbConnection.executeQuery(mariaDBquery);
             console.timeEnd('process')
-            resultsArray = await mydbConnection.getQueryResults()
-            // console.log("<-----LENGTH----->",resultsArray.length);
+            resultsArray = mydbConnection.getQueryResults()
+            // console.log("<-----LENGTH----->",resultsArray && resultsArray.length);
         } catch (error) {
-            console.log(error)
+            throw new Error(`Failed to execute ATL DB query: ${error && error.message ? error.message : error}`)
         } finally {
             mydbConnection.closeConnection();
             console.log("<-----MySQL CONNECTION CLOSED----->");
         }
         try {
-            outputObject.results = JSON.parse(JSON.stringify(resultsArray));
-        }
-        catch (error) {
-            throw new Error("Failed to get ATL DB results with error :", error)
+            const normalizedResults = Array.isArray(resultsArray) ? resultsArray : [];
+            outputObject.results = JSON.parse(JSON.stringify(normalizedResults));
+        } catch (error) {
+            throw new Error(`Failed to get ATL DB results with error: ${error && error.message ? error.message : error}`)
         }
         return outputObject
     }

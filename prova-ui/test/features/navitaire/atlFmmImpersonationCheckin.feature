@@ -13,6 +13,8 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Then I navigate to G4 portal
     And I select "ATL"
     And I validate Transancation
+
+
     #QAA-26770
   @set2 @blue @green @all
   Scenario Outline: Impersonation: Book Domestic, SSR, Seat, Carry on, Checked bag
