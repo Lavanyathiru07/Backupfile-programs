@@ -51,18 +51,4 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Examples:
       | tripType | adult | child | childSeat | childLap | departDate | returnDate | departure | destination | ssr            | tripflex | Priority              | CarryOn          | Check                    | petInCabin | paxNum | Seats                    |
       | oneway   |     1 |     0 |         0 |        0 |         10 |          0 | CVG       | PGD         | oxygencylinder | true     | pax-all Seg-departing | pax-all Seg-both | pax-all Seg-both count-1 | yes        |      1 | pax-all Seg-all type-any |
-    #QAA-26770
-  @set2 @blue @green
-  Scenario: Domestic- Check-in Online OW
-    Given I complete the Booking using gql for Online-Check-in
-      | tripType   | oneway |
-      | departDate |      0 |
-      | adult      |      1 |
-    Then I navigate to www application
-    And I am on landing page I click manage trip button
-    And I am on manage trip page I enter OLCI details
-    And I am on Online checkin Passengers selection page I click checkin button
-    And I am on Manage Travel onlinechekin page, "Bags" page I click on continue button
-    And I am on Manage Travel onlinechekin page "Seats" page I click on continue button
-    Then I am on Online checkin Print passes page
-    And I am on online checkin validate seat is auto-assiganed after completing the checkin
+    

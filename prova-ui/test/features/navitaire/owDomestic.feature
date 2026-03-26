@@ -45,7 +45,7 @@ Feature: This feature file is to run booking flow using Playwright
       | tripType | adult | departDate | tripflex | Seats                    | CarryOn          | Check                    | Priority              | ssr        |
       | oneway   |     2 |         10 | false    | pax-all Seg-all type-any | pax-all Seg-both | pax-all Seg-both count-1 | pax-all Seg-departing | Wheelchair |
 
-       @set2 @blue @green @dow
+    @set2 @blue @green 
     Scenario: Domestic- Check-in Online OW
         Given I complete the Booking using gql for Online-Check-in
             | tripType   | oneway |
