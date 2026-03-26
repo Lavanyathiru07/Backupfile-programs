@@ -1,4 +1,4 @@
-@e2e @set1 @navitairebat
+@e2e @set1 @navitairebat @all
 Feature: This feature file is to run Navitaire BAT scenarios
 #PASS
 
