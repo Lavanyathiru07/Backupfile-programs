@@ -7,14 +7,14 @@ Feature: This feature file is to run Navitaire BAT scenarios
   #   And I select the "FMM" application
   #   And I validate the Fmm Flights availability
     #QAA-26770
-  @atl @set1
+  @atl @set1 @all
   Scenario: ATL scenario
     Given I navigate to www application
     Then I navigate to G4 portal
     And I select "ATL"
     And I validate Transancation
     #QAA-26770
-  @set2 @blue @green
+  @set2 @blue @green @all
   Scenario Outline: Impersonation: Book Domestic, SSR, Seat, Carry on, Checked bag
     Given I navigate to www application
     Then I navigate to G4 portal

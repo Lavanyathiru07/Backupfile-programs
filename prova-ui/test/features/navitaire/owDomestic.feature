@@ -5,11 +5,11 @@ Feature: This feature file is to run booking flow using Playwright
     Given I navigate to www application
     And I have a screen that is 1440 by 700 pixels
     #QAA-26770
-  @set2 @a1 
+  @set2 @all
   Scenario Outline: OW Domestic-,F+H+C+SSR,2 Adults,CO,CK,Seats,PA & Cancel via MT
     Given I am on landing page I select "<tripType>"
-    When I am on landing page I select "CVG" for the departure airport
-    And I am on landing page I select "PGD" for the destination airport
+    When I am on landing page I select "BLI" for the departure airport
+    And I am on landing page I select "LAS" for the destination airport
     And I am on landing page I choose the departure date "<departDate>" days from current day
     And I am on landing page I select "<adult>" adult travelers
     And I am on landing page I click on search button
@@ -45,7 +45,7 @@ Feature: This feature file is to run booking flow using Playwright
       | tripType | adult | departDate | tripflex | Seats                    | CarryOn          | Check                    | Priority              | ssr        |
       | oneway   |     2 |         10 | false    | pax-all Seg-all type-any | pax-all Seg-both | pax-all Seg-both count-1 | pax-all Seg-departing | Wheelchair |
 
-    @set2 @blue @green @dow
+    @set2 @blue @green @all
     Scenario: Domestic- Check-in Online OW
         Given I complete the Booking using gql for Online-Check-in
             | tripType   | oneway |
