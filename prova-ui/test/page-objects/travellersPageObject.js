@@ -85,7 +85,7 @@ class TravellersPage {
 
     async fillAlltravelerDetails(travelerCount) {
         await this.actions.waitUntilPageLoad()
-        await this.actions.waitForDisplayed(TravelersPageHeading, 'Travellers Page Heading')
+        await this.actions.waitForDisplayed(TravelersPageHeading, 'Travellers Page Heading', 30000)
         await this.actions.waitForDisplayed(travelerType, 'traveler type', 15000) // Wait for traveler forms to load
         // await this.actions.waitUntil(travelerType, 'visible')
         // await this.actions.waitForDisplayed(travelerType, 'traveler type')
@@ -227,8 +227,8 @@ class TravellersPage {
             console.log(ssr)
             switch (true) {
                 case ssr.includes('Wheelchair'): {
-                    await this.actions.waitForDisplayed((wheelchairAssistance.replace('X', i).replace('LEG', segment)), 'wheel chair assistance')
-                    await this.actions.waitForClickable((wheelchairAssistance.replace('X', i).replace('LEG', segment)), 'wheel chair assistance')
+                    await this.actions.waitForDisplayed((wheelchairAssistance.replace('X', i).replace('LEG', segment)), 'wheel chair assistance', 15000)
+                    await this.actions.waitForClickable((wheelchairAssistance.replace('X', i).replace('LEG', segment)), 'wheel chair assistance', 15000)
                     await this.actions.clickElement('click', (wheelchairAssistance.replace('X', i).replace('LEG', segment)), 'wheel chair assistance')
                     // tofromGate
                     await this.actions.waitForClickable((tofromGate.replace('X', i).replace('LEG', segment)), 'toFromGate')

@@ -90,7 +90,7 @@ class CheckInPage {
 
     async selectpage()
     {
-        await this.actions.pause(5000);
+        await this.actions.waitForDisplayed(phoneNum, 'phone number field', 30000)
         await this.actions.setInputField('setvalue','7025551111',phoneNum,'phoneNum');
         await this.actions.setInputField('setvalue','accept@fraudtest.com',email,'email');
         //await actions.clickElement('click', selectcheckbox, 'selectcheckbox')

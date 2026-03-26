@@ -110,6 +110,7 @@ class HotelPage {
 
     async roomselection() {
         await this.actions.waitUntilPageLoad()
+        await this.actions.scroll(roombooking)
         await this.actions.waitForDisplayed(roombooking, 'select room', 15000)
         await this.actions.waitForClickable(roombooking, 'select room button', 5000)
         await this.actions.clickElement('click', roombooking, "Button to book the rooms");
