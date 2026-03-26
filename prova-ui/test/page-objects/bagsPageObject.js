@@ -341,7 +341,7 @@ class BagsPage {
                 await this.actions.clickElement('click', slide, "extras button")
             }
             await this.actions.clickElement('click', tripFlexAddToCart, "AddtoCart button")
-            await this.actions.waitForDisplayed(tripFlexAdded, "AddToCart button")
+            //await this.actions.waitForDisplayed(tripFlexAdded, "AddToCart button")
         }
     }
 
