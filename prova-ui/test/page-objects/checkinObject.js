@@ -71,6 +71,7 @@ class CheckInPage {
         } else {
             console.log("Check in Failed");
         }
+          await this.actions.pause(10000);
     }
 
     async selectCovidRestrictedArticalPolicy() {
@@ -90,15 +91,16 @@ class CheckInPage {
 
     async selectpage()
     {
-        await this.actions.waitForDisplayed(phoneNum, 'phone number field', 30000)
+       await this.actions.waitForDisplayed(phoneNum,"Phone numner field",10000)
         await this.actions.setInputField('setvalue','7025551111',phoneNum,'phoneNum');
         await this.actions.setInputField('setvalue','accept@fraudtest.com',email,'email');
-        //await actions.clickElement('click', selectcheckbox, 'selectcheckbox')
-        await this.actions.waitForDisplayed(deselectpassenger, 'secondadultcheckbox',2000)
+        await actions.clickElement('click', selectcheckbox, 'selectcheckbox')
+        await this.actions.waitForDisplayed(deselectpassenger, 'secondadultcheckbox')
         await this.actions.clickElement('click', deselectpassenger, "second adult checkbox")
-        await this.actions.scroll(selectcontinue,'selectcontinue')
+        await this.actions.waitForDisplayed(selectcontinue,"select continue",10000);
+        await this.actions.scroll(selectcontinue,'selectcontinue');
         await this.actions.clickElement('click', selectcontinue, 'selectcontinue');
-        await this.actions.pause(30000);
+
     }
 
     async onlinecheckinbagspage() {

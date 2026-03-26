@@ -502,9 +502,9 @@ class g4PortalPage {
     }
 
     async clickContinueButton() {
-        await this.actions.waitForDisplayed(clickContinueButton, 'clickContinueButton')
-        await this.actions.clickElement('click', clickContinueButton, 'Continue Button')
-        // await this.actions.pause(5000)
+        await this.actions.waitForDisplayed(clickContinueButton, 'clickContinueButton',10000)
+        await this.actions.clickElement('click', clickContinueButton, 'Continue Button');
+        await this.actions.pause(5000)
     }
 }
 

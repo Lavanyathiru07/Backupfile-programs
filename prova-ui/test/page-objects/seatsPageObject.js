@@ -1187,7 +1187,7 @@ class SeatPage {
 			await this.actions.click(popupContinueButton, 'popupContinueButton')
 		}
 		// await this.actions.pause(1000)
-		if (await this.actions.isDisplayed(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')) {
+		if (await this.actions.isDisplayed(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton',30000)) {
 			await this.actions.click(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')
 		}
 	}
