@@ -4,7 +4,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Given I navigate to www application
     # And I have a screen that is 1440 by 700 pixels
     #QAA-26770
-  @navitairebat @set1
+  @navitairebat @set1 @b
   Scenario Outline: Domestic-Bonus Bundle Booking, RT booking, 2 Adults
     Given I create my allegaint account
     When I am on landing page I select "<tripType>"
@@ -41,5 +41,5 @@ Feature: This feature file is to run Navitaire BAT scenarios
         # And I am on Manage Trip and I click cancel flight
 
     Examples:
-      | tripType  | adult | child | childSeat | childLap | departDate | returnDate | cardType | Priority              | CarryOn        | Check                  | Seats                    |
-      | roundTrip |     2 |     0 |         0 |        0 |         13 |          4 | Visa     | pax-all Seg-departing | pax-2 Seg-both | pax-1 Seg-both count-1 | pax-all Seg-all type-any |
+      | tripType  | bundletype  |adult | child | childSeat | childLap | departDate | returnDate | cardType | Priority              | CarryOn        | Check                  | Seats                    |
+      | roundTrip | bonusbundle |2     |     0 |         0 |        0 |         13 |          4 | Visa     | pax-all Seg-departing | pax-2 Seg-both | pax-1 Seg-both count-1 | pax-all Seg-all type-any |

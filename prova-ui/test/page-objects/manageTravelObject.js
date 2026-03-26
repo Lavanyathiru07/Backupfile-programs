@@ -472,7 +472,7 @@ class Managetravel {
         console.log("balanceCart" + await this.actions.getText(balanceCart, 'balance cart'))
         if ((await this.actions.getText(balanceCart, 'balance cart')).includes('-') || (await this.actions.getText(balanceCart, 'balanceCart')).includes('$0.00')) {
             console.log("PAYMENT PAGE")
-            if (await this.actions.isDisplayed(termsbo, 'termsbox')) {
+            if (await this.actions.isDisplayed(termsbox, 'termsbox')) {
                 await this.actions.click(termsbox, 'termsbox')
             }
             await this.actions.click(negativeContinue, 'negativeContinue')
