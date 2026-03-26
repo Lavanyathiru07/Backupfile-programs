@@ -35,7 +35,7 @@ Before(async function () {
 
 When(/^I am on Online checkin Passengers selection page I click checkin button$/, { timeout: 180 * 10000 }, async function () {
 	await this.CheckinPage.onlineCheckin()
-	await this.CheckinPage.acceptCheckinTermsAndConditions()
+	//await this.CheckinPage.acceptCheckinTermsAndConditions()
 	await this.CheckinPage.checkin()
 });
 
