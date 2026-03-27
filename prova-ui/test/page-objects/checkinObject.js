@@ -94,7 +94,7 @@ class CheckInPage {
        await this.actions.waitForDisplayed(phoneNum,"Phone numner field",10000)
         await this.actions.setInputField('setvalue','7025551111',phoneNum,'phoneNum');
         await this.actions.setInputField('setvalue','accept@fraudtest.com',email,'email');
-        await actions.clickElement('click', selectcheckbox, 'selectcheckbox')
+        await this.actions.clickElement('click', selectcheckbox, 'selectcheckbox')
         await this.actions.waitForDisplayed(deselectpassenger, 'secondadultcheckbox')
         await this.actions.clickElement('click', deselectpassenger, "second adult checkbox")
         await this.actions.waitForDisplayed(selectcontinue,"select continue",10000);
