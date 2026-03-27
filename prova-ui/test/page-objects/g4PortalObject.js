@@ -20,10 +20,14 @@ const AIS = "//span[contains(text(),'AIS')]"
 const FM = "//span[contains(text(),'FM')]"
 const BOOK = "//a//span[contains(text(),'BOOK')]"
 const clickContinueButton = "(//button[@data-hook='ancillaries-page_continue'])[2]"
+const clickContinueButton1 = "(//button[@data-hook='ancillaries-page_continue'])[1]"
 const cartoverrideContinueBtn = "//button[@data-hook='page-footer_continue']"
 const guestLogin = "//a[contains(text(),'Guest Login')]"
 const firstname = "//label[contains(text(),'First Name')]"
 const dateTimeFMM = "//div[@id='lastReloaded']"
+const hotelTitle = "[data-hook='hotels-page_page-heading']"
+const carPageHeader = "//*[text()='Car Selection']"
+
 
 class g4PortalPage {
 
@@ -502,10 +506,30 @@ class g4PortalPage {
     }
 
     async clickContinueButton() {
-        await this.actions.waitForDisplayed(clickContinueButton, 'clickContinueButton',10000)
-        await this.actions.clickElement('click', clickContinueButton, 'Continue Button');
-        await this.actions.pause(5000)
-    }
+        await this.actions.waitForDisplayed(clickContinueButton1, 'clickContinueButton',10000)
+        await this.actions.clickElement('click', clickContinueButton1, 'Continue Button');
+     
+//    while (true) {
+//         // 1. Click first
+// await this.actions.clickElement('click', clickContinueButton1, 'Continue Button');
+        
+//         // 2. Wait for the URL to potentially change
+//         await this.actions.pause(2000); 
+
+//         // 3. Get the URL and check the condition
+//         const currentUrl = await this.actions.getUrl();
+
+//         if (currentUrl.includes('/hotels') || 
+//             currentUrl.includes('/cars') || 
+//             currentUrl.includes('/cart-override')) {
+            
+//             console.log("Target reached. Stopping.");
+//             break; // Stop looping once the URL matches
+//         }
+        
+//         console.log("Not at target yet. Clicking again...");
+//     }
+}
 }
 
 export default g4PortalPage

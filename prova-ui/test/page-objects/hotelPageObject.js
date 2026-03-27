@@ -19,7 +19,6 @@ const hotelTitle = "[data-hook='hotels-page_page-heading']"
 const continueButton = "[data-hook='hotels-page_continue']"
 var hotelsDetailsPageCollectorCP = new Map();
 var hotelsPageCollectorCP = new Map();
-
 class HotelPage {
 
     actions;
@@ -110,11 +109,12 @@ class HotelPage {
 
     async roomselection() {
         await this.actions.waitUntilPageLoad()
-        await this.actions.scroll(roombooking)
+        await this.actions.waitForDisplayed(scrollrooms,"scroll rooms",20000)
+        await this.actions.scroll(scrollrooms)
         await this.actions.waitForDisplayed(roombooking, 'select room', 15000)
         await this.actions.waitForClickable(roombooking, 'select room button', 5000)
         await this.actions.clickElement('click', roombooking, "Button to book the rooms");
-        // await this.actions.pause(5000)
+       
     }
 
     async hotelContinueBtn() {

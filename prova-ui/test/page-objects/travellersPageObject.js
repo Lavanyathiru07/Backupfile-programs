@@ -217,11 +217,13 @@ class TravellersPage {
             // await this.actions.waitFor((addButtonSSR.replace("X", i)), 30000, '', true, 'add button SSR')
             await this.actions.waitForDisplayed((addButtonSSR.replace("X", i)), 'add button SSR')
             await this.actions.waitForClickable((addButtonSSR.replace("X", i)), 'add button SSR')
+            await this.actions.pause(3000);
             await this.actions.clickElement('click', (addButtonSSR.replace("X", i)), "Add button to select the SSR")
 
             let addButtonSSRChildIsDisplayed = await this.actions.isDisplayed((addButtonSSRChild.replace("X", i)), 'addButtonSSRChild')
             if (addButtonSSRChildIsDisplayed) {
                 await this.actions.waitForClickable((addButtonSSRChild.replace("X", i)), 'add button SSR')
+                await this.actions.pause(3000);
                 await this.actions.clickElement('click', (addButtonSSRChild.replace("X", i)), "Add button to select the SSR")
             }
             console.log(ssr)
