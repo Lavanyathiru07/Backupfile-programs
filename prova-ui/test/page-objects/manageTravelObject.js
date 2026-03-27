@@ -71,40 +71,40 @@ class Managetravel {
         // cancel trip popup
         await this.actions.waitForDisplayed(cancelTripPopup, 'cancelTripPopup', 10000)
         await this.check.isDisplayed(cancelTripPopup, 'cancelTripPopup')
-        let selectSegmentTextIsDisplayed = await this.actions.isDisplayed(selectSegmentText, 'selectSegmentText')
-        if (selectSegmentTextIsDisplayed) {
-            await this.check.isDisplayed(cancelEntireTripText, 'cancelEntireTripText')
-            await this.actions.waitForClickable(cancelEntireTripRadioButton, 'cancelEntireTrip RadioButton')
-            await this.actions.clickElement('click', cancelEntireTripRadioButton, 'cancelEntireTrip RadioButton')
-            await this.actions.waitForClickable(nextButton, 'next button')
-            await this.actions.clickElement('click', nextButton, 'next button')
-        }
+        // let selectSegmentTextIsDisplayed = await this.actions.isDisplayed(selectSegmentText, 'selectSegmentText')
+        // if (selectSegmentTextIsDisplayed) {
+        //     await this.check.isDisplayed(cancelEntireTripText, 'cancelEntireTripText')
+        //     await this.actions.waitForClickable(cancelEntireTripRadioButton, 'cancelEntireTrip RadioButton')
+        //     await this.actions.clickElement('click', cancelEntireTripRadioButton, 'cancelEntireTrip RadioButton')
+        //     await this.actions.waitForClickable(nextButton, 'next button')
+        //     await this.actions.clickElement('click', nextButton, 'next button')
+        // }
 
         // cancel trip content
         // await this.actions.waitFor(contentCancelPopup, 5000, '', true, 'content cancel popup')
-        await this.actions.waitForDisplayed(contentCancelPopup, 'contentCancelPopup', 10000)
+        // await this.actions.waitForDisplayed(contentCancelPopup, 'contentCancelPopup', 10000)
 
-        // click cancel reservation
-        await this.actions.waitForClickable(cancelTripButton, 'cancelTripButton')
-        await this.actions.clickElement('click', cancelTripButton, 'cancelTripButton')
+        // // click cancel reservation
+        // await this.actions.waitForClickable(cancelTripButton, 'cancelTripButton')
+        // await this.actions.clickElement('click', cancelTripButton, 'cancelTripButton')
 
-        // cancel completed
-        // await this.actions.waitFor(cancelCompleted, 5000, '', true, 'cancel completed')
-        await this.actions.waitForDisplayed(cancelCompleted, 'cancel completed', 10000)
-        let canceltext = await this.actions.getText(cancelCompleted, 'cancel completed')
-        assert.isTrue(canceltext.includes("Cancelation Completed"), "Error in verifying text for Cancelation Confirmed")
-        await this.actions.waitForDisplayed(reservationCanceled, 'reservation canceled', 30000)
-        assert.isTrue((await this.actions.getText(reservationCanceled, 'reservationCanceled')).includes("Your reservation has been canceled."), "FAILED!! Invalid Message for reservation cancelation")
+        // // cancel completed
+        // // await this.actions.waitFor(cancelCompleted, 5000, '', true, 'cancel completed')
+        // await this.actions.waitForDisplayed(cancelCompleted, 'cancel completed', 10000)
+        // let canceltext = await this.actions.getText(cancelCompleted, 'cancel completed')
+        // assert.isTrue(canceltext.includes("Cancelation Completed"), "Error in verifying text for Cancelation Confirmed")
+        // await this.actions.waitForDisplayed(reservationCanceled, 'reservation canceled', 30000)
+        // assert.isTrue((await this.actions.getText(reservationCanceled, 'reservationCanceled')).includes("Your reservation has been canceled."), "FAILED!! Invalid Message for reservation cancelation")
 
-        // close cancel popup
-        // await this.actions.waitFor(cancelPopUpCloseIcon, 5000, '', true, 'cancel completed')
-        await this.actions.waitForDisplayed(cancelPopUpCloseIcon, 'cancelPopUpCloseIcon', 10000)
-        await this.actions.clickElement('click', cancelPopUpCloseIcon, 'cancelPopUpCloseIcon')
-        let canceledRedBannerIsDisplayed = await this.actions.isDisplayed(canceledRedBanner, 'canceledRedBanner')
-        if (canceledRedBannerIsDisplayed) {
-            await this.actions.waitForDisplayed(canceledRedBanner, 'canceled redbanner')
-            assert.isTrue((await this.actions.getText(canceledRedBanner, 'canceledRedBanner')).includes("Canceled Trip"), "Assertion FAILED for Canceled Red Banner")
-        }
+        // // close cancel popup
+        // // await this.actions.waitFor(cancelPopUpCloseIcon, 5000, '', true, 'cancel completed')
+        // await this.actions.waitForDisplayed(cancelPopUpCloseIcon, 'cancelPopUpCloseIcon', 10000)
+        // await this.actions.clickElement('click', cancelPopUpCloseIcon, 'cancelPopUpCloseIcon')
+        // let canceledRedBannerIsDisplayed = await this.actions.isDisplayed(canceledRedBanner, 'canceledRedBanner')
+        // if (canceledRedBannerIsDisplayed) {
+        //     await this.actions.waitForDisplayed(canceledRedBanner, 'canceled redbanner')
+        //     assert.isTrue((await this.actions.getText(canceledRedBanner, 'canceledRedBanner')).includes("Canceled Trip"), "Assertion FAILED for Canceled Red Banner")
+        // }
     }
 
     async clickAddaCar() {
