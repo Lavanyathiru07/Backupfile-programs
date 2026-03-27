@@ -109,7 +109,7 @@ class HotelPage {
 
     async roomselection() {
         await this.actions.waitUntilPageLoad()
-        await this.actions.waitForDisplayed(scrollrooms,"scroll rooms",20000)
+        await this.waitForDisplayed(scrollrooms,"scroll room",30000)
         await this.actions.scroll(scrollrooms)
         await this.actions.waitForDisplayed(roombooking, 'select room', 15000)
         await this.actions.waitForClickable(roombooking, 'select room button', 5000)

@@ -53,7 +53,7 @@ async function ATLBooking() {
     // let Env = await new Promise((resolve) => {
     //     resolve(UtilityLibrary.getEnvironmentWithPrefix())
     //   })
-    await GqlBooking(Env, "ABE", "SFB", tripType, adultsCount, 0, 0, "14", "14", "","","","", "no", "no", "no", "card", "Master-CC", "yes", "no", "no", "no", "", "", "","","")
+    await GqlBooking(Env, "CVG", "PGD", tripType, adultsCount, 0, 0, "20", "0", "", "no", "no", "no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "")
         .then((response) => {
             console.log("Booking response ", response)
             console.log("Booking confNum ", response.confNumber)
@@ -89,39 +89,30 @@ Given(/^I complete the Booking using gql for Online-Check-in$/, { timeout: 180 *
     let departDay = data.departDate
     let adultsCount = Number(data.adult)
     let Env = await this.gqlBookingPage.getEnvironment()
-    //let cityPairDetails = await this.gqlBookingPage.getAvailableFlightsWithin24hoursFromApi();
-    //console.log(`Source: ${cityPairDetails.source} => Destination: ${cityPairDetails.destination}`);
-    await GqlBooking(Env, "CVG", "PGD", tripType, adultsCount, 0, 0, departDay, "0", "", "","","","no","no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "","")
+    let cityPairDetails = await this.gqlBookingPage.getAvailableFlightsWithin24hoursFromApi();
+    console.log(`Source: ${cityPairDetails.source} => Destination: ${cityPairDetails.destination}`);
+    await GqlBooking(Env, "ABE", "SFB", tripType, adultsCount, 0, 0, "14", "14", "","","","", "no", "no", "no", "card", "Master-CC", "yes", "no", "no", "no", "", "", "","","")
         .then((response) => {
-            console.log("online check-in response ", response)
-            console.log("online check-in confNum ", response.confNumber)
-            console.log("online check-in firstName ", response.firstName)
-            console.log("online check-in lastName ", response.lastName)
-            ITN = response.confNumber;
-            // if (response.confNumber === undefined) {
-            //   assert.fail(response.error)
-            // }
+            console.log("Booking response ", response)
+            console.log("Booking confNum ", response.confNumber)
+            console.log("Booking firstName ", response.firstName)
+            console.log("Booking lastName ", response.lastName)
             process.env.confirmationNumber = response.confNumber
-            process.env.OLCIconfNumber = response.confNumber
-            process.env.OLCIfirstName = response.firstName
-            process.env.OLCIlastName = response.lastName
+            process.env.confNumber = response.confNumber
+            process.env.firstName = response.firstName
+            process.env.lastName = response.lastName
+            process.env.ccNumber = response.encryptCC
+            process.env.ccV = response.encryptCvv
+            process.env.depDate = response.departDate
+            process.env.retDate = response.returnDate
+            process.env.depFlight = response.departureFlightId
+            process.env.retFlight = response.returningFlightId
+            process.env.mflightID = response.departureFlightId
+            process.env.bookingAmout = response.tripSummaryDetails.Total
+            if (response.confNumber === undefined) {
+                assert.fail('No confirmation number found')
+            }
         })
-    if (ITN == undefined) {
-        await GqlBooking(Env, cityPairDetails.source, cityPairDetails.destination, tripType, adultsCount, 0, 0, departDay, "0", "", "no", "no", "no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "")
-            .then((response) => {
-                console.log("online check-in response ", response)
-                console.log("online check-in confNum ", response.confNumber)
-                console.log("online check-in firstName ", response.firstName)
-                console.log("online check-in lastName ", response.lastName)
-                if (response.confNumber === undefined) {
-                    assert.fail(response.error)
-                }
-                process.env.confirmationNumber = response.confNumber
-                process.env.OLCIconfNumber = response.confNumber
-                process.env.OLCIfirstName = response.firstName
-                process.env.OLCIlastName = response.lastName
-            })
-    }
 });
 
 Given(/^I am on landing page I click manage trip button$/, async function () {

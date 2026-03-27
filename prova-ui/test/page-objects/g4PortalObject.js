@@ -506,30 +506,10 @@ class g4PortalPage {
     }
 
     async clickContinueButton() {
-        await this.actions.waitForDisplayed(clickContinueButton1, 'clickContinueButton',10000)
-        await this.actions.clickElement('click', clickContinueButton1, 'Continue Button');
-     
-//    while (true) {
-//         // 1. Click first
-// await this.actions.clickElement('click', clickContinueButton1, 'Continue Button');
-        
-//         // 2. Wait for the URL to potentially change
-//         await this.actions.pause(2000); 
-
-//         // 3. Get the URL and check the condition
-//         const currentUrl = await this.actions.getUrl();
-
-//         if (currentUrl.includes('/hotels') || 
-//             currentUrl.includes('/cars') || 
-//             currentUrl.includes('/cart-override')) {
-            
-//             console.log("Target reached. Stopping.");
-//             break; // Stop looping once the URL matches
-//         }
-        
-//         console.log("Not at target yet. Clicking again...");
-//     }
-}
+        await this.actions.waitForDisplayed(clickContinueButton1, 'clickContinueButton')
+        await this.actions.clickElement('click', clickContinueButton1, 'Continue Button')
+        // await this.actions.pause(5000)
+    }
 }
 
 export default g4PortalPage

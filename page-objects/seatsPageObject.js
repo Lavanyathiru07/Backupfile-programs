@@ -415,7 +415,7 @@ class SeatPage {
 			if (newHeight === previousHeight) break;
 			previousHeight = newHeight;
 		}
-		await actions.waitForDisplayed(seatsPageSkip, 'seatsPageSkip', 5000);
+		await actions.waitForDisplayed(seatsPageSkip, 'seatsPageSkip', 50000);
 		await actions.scroll(seatsPageSkip);
 		await actions.pause(3000);
 		await actions.waitForEnabled(seatsPageSkip, 'seatsPageSkip');
