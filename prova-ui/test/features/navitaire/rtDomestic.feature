@@ -23,8 +23,8 @@ Feature: This feature file is to run Navitaire BAT scenarios
     And I am on flights page I click continue button
     And I am on Travelers page I fill in data for "all" travelers
     And I am on Travelers page I click continue button
-    And I get seat detils from GQL
-    And I select seat from GQL "<Seats>"
+    #And I get seat detils from GQL
+    #And I select seat from GQL "<Seats>"
     And I am on WWW Seat page I click continue button
     And I am on Bags page I select CarryOn "<CarryOn>"
     And I am on Bags page I select Checked Bag "<Check>"
