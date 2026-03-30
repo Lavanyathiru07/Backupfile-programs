@@ -45,7 +45,6 @@ Before(async function (scenario) {
         // Initialize browser with proper configuration
         const headlessMode = process.env.HEADLESS === 'true' || false;
         this.browser = await chromium.launch({
-            slowMo: 10000,
             headless: headlessMode,
             args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
