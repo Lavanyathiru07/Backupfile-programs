@@ -80,7 +80,7 @@ class Managetravel {
             await this.actions.clickElement('click', nextButton, 'next button')
         }
 
-        cancel trip content
+        //cancel trip content
         await this.actions.waitFor(contentCancelPopup, 5000, '', true, 'content cancel popup')
         await this.actions.waitForDisplayed(contentCancelPopup, 'contentCancelPopup', 10000)
 
