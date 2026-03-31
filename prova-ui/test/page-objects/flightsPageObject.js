@@ -36,6 +36,17 @@ const destinationCity = "[data-hook='header-flight-info_destination']";
 const paxCount = "[data-hook='header-flight-info_seated']";
 const tripType = "[data-hook='header-flight-info_trip-type']";
 const flightDepartingList = "[data-hook='flights-list_departing']";
+const departingSkipbundle="//form[@data-hook='flights-list_departing']//span[contains(text(),'No Thanks, Skip Bundle')]"
+const returningSkipbundle="//form[@data-hook='flights-list_returning']//span[contains(text(),'No Thanks, Skip Bundle')]"
+const departingbasicbundle="//form[@data-hook='flights-list_departing']//div[@type='allegiant basic bundle']"
+const departingtotalbundle="//form[@data-hook='flights-list_departing']//div[@type='allegiant total bundle']"
+const departingbonusbundle="//form[@data-hook='flights-list_departing']//div[@type='allegiant bonus bundle']"
+const returningbasicbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant basic bundle']"
+const returningtotalbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant total bundle']"
+const returningbonusbundle="//form[@data-hook='flights-list_returning']//div[@type='allegiant bonus bundle']"	
+const changebundle="//span[@class='Text-sc-1o5ubbx-0 euRnZu']"
+const Returnbundleheading="//span[contains(text(),'Bundle and Save - Return Flight')]"
+const Returnprice="(//form[@data-hook='flights-list_returning']//div[@data-hook='flight-price-box'])[1]"
 
 let departDate
 let returnDate
@@ -60,6 +71,15 @@ class FlightsPage {
         await this.actions.waitForLoadState('domcontentloaded', 15000)
     }
 
+     async getTimeline() {
+      await this.actions.pause(2000);
+      const timelineURL = await this.actions.getUrl()
+      console.log("timelineURL: ", timelineURL)
+      const timelineId = timelineURL.split('/')
+      process.env.timeline = timelineId[4]
+    }
+
+
     async validateFlightPage() {
         await this.actions.waitUntilPageLoad()
         await this.actions.waitForLoadState('domcontentloaded', 30000)
@@ -80,14 +100,26 @@ class FlightsPage {
         }
     }
 
+    async getTimeline() {
+      await this.actions.pause(2000);
+      const timelineURL = await this.actions.getUrl()
+      console.log("timelineURL: ", timelineURL)
+      const timelineId = timelineURL.split('/')
+      process.env.timeline = timelineId[4]
+    }
+
     async getSelectedDepartureDate() {
         try {
             await this.actions.waitForDisplayed(selectedDepartDate, 'selectedDepartDate')
-            console.log("get dep date:" + await this.actions.getAttribute(selectedDepartDate, 'data-hook', 'selectedDepartDate'))
-            departDate = (await this.actions.getAttribute(selectedDepartDate, 'data-hook', 'selectedDepartDate'))
-                .slice(18);
+            const deptAttr = await this.actions.getAttribute(selectedDepartDate, 'data-hook', 'selectedDepartDate')
+            console.log("get dep date:" + deptAttr)
+            if (deptAttr) {
+                departDate = deptAttr.slice(18);
+            }
+            console.log("departDate set to: " + departDate)
         }
         catch (ex) {
+            console.log('Error getting departure date: ' + ex)
         }
     }
 
@@ -95,9 +127,13 @@ class FlightsPage {
         // await this.actions.pause(1000);
         if (await this.actions.isDisplayed(selectedReturnDate, 'selectedReturnDate')) {
             try {
-                returnDate = (await this.actions.getAttribute(selectedReturnDate, 'data-hook', 'selectedReturnDate'))
-                    .slice(18);
+                const retAttr = await this.actions.getAttribute(selectedReturnDate, 'data-hook', 'selectedReturnDate')
+                if (retAttr) {
+                    returnDate = retAttr.slice(18);
+                }
+                console.log("returnDate set to: " + returnDate)
             } catch (ex) {
+                console.log('Error getting return date: ' + ex)
             }
         }
     }
@@ -110,6 +146,7 @@ class FlightsPage {
             if (await this.actions.isDisplayed(clickContinueButton, 'clickContinueButton')) {
                 await this.getSelectedDepartureDate();
                 flightPageCollector.set('departDate', departDate);
+                console.log("Collecting flight page details for departure flight: " + departDate);
                 flightPageCollector.set(
                     'departFlightFare',
                     (await this.actions.getText(SelectedFlightFare.replace('X', '1'), 'selected flight fare'))
@@ -244,7 +281,69 @@ class FlightsPage {
             console.log('Exception while collecting data on flights page: ' + ex);
         }
     }
+async departingBundleSkip() {
+  //await this.actions.waitForLoadState('domcontentloaded', 30000)
+  await this.actions.waitForDisplayed(departingSkipbundle, 'departingSkipbundle', 30000)
+  //await this.actions.scroll(departingSkipbundle, 'departingSkipbundle')
+  await this.actions.clickElement('click', departingSkipbundle, 'departingSkipbundle')
 }
+  
+async returningBundleSkip() {
+ // await this.actions.waitForLoadState('domcontentloaded', 30000)
+  if (await this.actions.isDisplayed(Returnbundleheading, 'Returnbundleheading')) {
+    await this.actions.waitForDisplayed(returningSkipbundle, 'returningSkipbundle', 30000)
+    await this.actions.scroll(returningSkipbundle, 'returningSkipbundle')
+    await this.actions.clickElement('click', returningSkipbundle, 'returningSkipbundle')
+  }
+  else{
+    await this.actions.clickElement('click', Returnprice, 'Returnprice')
+     await this.actions.waitForDisplayed(returningSkipbundle, 'returningSkipbundle', 30000)
+    await this.actions.scroll(returningSkipbundle, 'returningSkipbundle')
+    await this.actions.clickElement('click', returningSkipbundle, 'returningSkipbundle')
+}
+
+}
+async selectDepartingBundle(bundleType) {
+  //await this.actions.waitForLoadState('domcontentloaded', 30000)
+  switch (bundleType) {
+    case "basicbundle":     
+      await this.actions.waitForDisplayed(departingbasicbundle, 'departingbasicbundle', 30000)
+      await this.actions.clickElement('click', departingbasicbundle, 'departingbasicbundle')
+      break;  
+    case "totalbundle":
+      await this.actions.waitForDisplayed(departingtotalbundle, 'departingtotalbundle', 30000)
+      await this.actions.clickElement('click', departingtotalbundle, 'departingtotalbundle')
+      break;        
+    case "bonusbundle":
+      await this.actions.waitForDisplayed(departingbonusbundle, 'departingbonusbundle', 30000)
+      await this.actions.clickElement('click', departingbonusbundle, 'departingbonusbundle')
+      break;        
+    default:
+      console.log("No matching bundle type found for departing flight");
+  }
+}
+async selectReturningBundle(bundleType) {
+  //await this.actions.waitForLoadState('domcontentloaded', 30000)
+  switch (bundleType) {
+    case "basicbundle":     
+      await this.actions.waitForDisplayed(returningbasicbundle, 'returningbasicbundle', 30000)  
+      await this.actions.clickElement('click', returningbasicbundle, 'returningbasicbundle')
+      break;
+      case "totalbundle":
+        await this.actions.waitForDisplayed(returningtotalbundle, 'returningtotalbundle', 30000)
+        await this.actions.clickElement('click', returningtotalbundle, 'returningtotalbundle')
+        break;
+      case "bonusbundle":
+        await this.actions.waitForDisplayed(returningbonusbundle, 'returningbonusbundle', 30000)
+        await this.actions.clickElement('click', returningbonusbundle, 'returningbonusbundle')
+        break;
+    default:
+      console.log("No matching bundle type found for returning flight");
+  }}
+}
+
+
+
 
 export { departDate, returnDate, flightPageCollector };
 export default FlightsPage

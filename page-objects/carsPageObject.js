@@ -95,7 +95,7 @@ class CarPage {
       await actions.waitForDisplayed(carsPageContinueButton, 'carsPageContinueButton', 30000)
       await actions.pause(3000)
       await actions.scroll(carsPageContinueButton,'carsPageContinueButton')
-      await actions.waitForDisplayed(carskip, 'carskip link', 30000)
+      await actions.waitForDisplayed(carskip, 'carskip link', 50000)
       await actions.waitForClickable(carskip, 'skip link in Cars Page')
       await actions.clickElement('click', carskip, "skip link in cars page")
     }

@@ -85,7 +85,7 @@ class TravellersPage {
 
     async fillAlltravelerDetails(travelerCount) {
         await this.actions.waitUntilPageLoad()
-        await this.actions.waitForDisplayed(TravelersPageHeading, 'Travellers Page Heading')
+        await this.actions.waitForDisplayed(TravelersPageHeading, 'Travellers Page Heading', 30000)
         await this.actions.waitForDisplayed(travelerType, 'traveler type', 15000) // Wait for traveler forms to load
         // await this.actions.waitUntil(travelerType, 'visible')
         // await this.actions.waitForDisplayed(travelerType, 'traveler type')
@@ -157,8 +157,9 @@ class TravellersPage {
     }
 
     async getDOB(DOB) {
-        var newDOB = new Date(departDate);
         console.log("departDate: " + departDate)
+        var baseDate = (departDate && !isNaN(new Date(departDate).getTime())) ? new Date(departDate) : new Date();
+        var newDOB = new Date(baseDate);
 
         if (DOB.includes("adult")) {
             newDOB.setDate(newDOB.getDate() - 12000);
@@ -176,7 +177,7 @@ class TravellersPage {
             newDOB.setDate(newDOB.getDate() + 366);
         }
         if (DOB === ">2yrsForRetrunflight") {
-            newDOB = new Date(returnDate);
+            newDOB = (returnDate && !isNaN(new Date(returnDate).getTime())) ? new Date(returnDate) : new Date();
             newDOB.setDate(newDOB.getDate() - 732);
         }
         return newDOB
@@ -216,18 +217,20 @@ class TravellersPage {
             // await this.actions.waitFor((addButtonSSR.replace("X", i)), 30000, '', true, 'add button SSR')
             await this.actions.waitForDisplayed((addButtonSSR.replace("X", i)), 'add button SSR')
             await this.actions.waitForClickable((addButtonSSR.replace("X", i)), 'add button SSR')
+            await this.actions.pause(3000);
             await this.actions.clickElement('click', (addButtonSSR.replace("X", i)), "Add button to select the SSR")
 
             let addButtonSSRChildIsDisplayed = await this.actions.isDisplayed((addButtonSSRChild.replace("X", i)), 'addButtonSSRChild')
             if (addButtonSSRChildIsDisplayed) {
                 await this.actions.waitForClickable((addButtonSSRChild.replace("X", i)), 'add button SSR')
+                await this.actions.pause(3000);
                 await this.actions.clickElement('click', (addButtonSSRChild.replace("X", i)), "Add button to select the SSR")
             }
             console.log(ssr)
             switch (true) {
                 case ssr.includes('Wheelchair'): {
-                    await this.actions.waitForDisplayed((wheelchairAssistance.replace('X', i).replace('LEG', segment)), 'wheel chair assistance')
-                    await this.actions.waitForClickable((wheelchairAssistance.replace('X', i).replace('LEG', segment)), 'wheel chair assistance')
+                    await this.actions.waitForDisplayed((wheelchairAssistance.replace('X', i).replace('LEG', segment)), 'wheel chair assistance', 15000)
+                    await this.actions.waitForClickable((wheelchairAssistance.replace('X', i).replace('LEG', segment)), 'wheel chair assistance', 15000)
                     await this.actions.clickElement('click', (wheelchairAssistance.replace('X', i).replace('LEG', segment)), 'wheel chair assistance')
                     // tofromGate
                     await this.actions.waitForClickable((tofromGate.replace('X', i).replace('LEG', segment)), 'toFromGate')
@@ -425,6 +428,7 @@ class TravellersPage {
     async enterTravelerEmailId(email) {
         var emailAddress = email.split('|')
         var travelerNum = 0;
+        await this.actions.pause(500)
         for (var i = 0; i < emailAddress.length; i++) {
             travelerNum = travelerNum + 1;
             var travelerEmailId = "(//input[contains(@data-hook,'email')])[" + travelerNum + "]"

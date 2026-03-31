@@ -88,6 +88,7 @@ const selectedSeatPriceUpdatePopup = "//div[contains(@data-hook,'_active')]//spa
 const activePopup = "//div[contains(@data-hook,'_active')][contains(@data-hook,'popover')]"
 const tripType = "[data-hook='header-flight-info_trip-type']"
 const seatspageContinueButton = "//span[contains(text(),'Continue')]/parent::button"
+const seatsPageHeading = "[data-hook='seats-page_page-heading']"
 var seatPriceDepart = [];
 var seatPriceReturn = [];
 var seatIdDepart = [];
@@ -108,11 +109,11 @@ class SeatPage {
 		this.page = page
 	}
 
-	// async skipSeatsPage() {
-	// 	await this.actions.waitForDisplayed(tailOfPlane, 'tail of plane')
-	// 	await this.actions.waitForEnabled(seatsPageSkip, 'seatsPageSkip')
-	// 	await this.actions.click(seatsPageSkip, 'seatsPageSkip')
-	// }
+	async skipSeatsPage() {
+		await this.actions.waitForDisplayed(tailOfPlane, 'tail of plane')
+		await this.actions.waitForEnabled(seatsPageSkip, 'seatsPageSkip')
+		await this.actions.click(seatsPageSkip, 'seatsPageSkip')
+	}
 	/*
 	*  seatType: any/exitRow/legroom/bundleSeat/economyBundleSeat/exitRowBundleSeat/economyNonBundleSeat/economy
 	*  tripType: both/departing/returning
@@ -140,102 +141,28 @@ class SeatPage {
 			await this.collectTravelerSeatInfo()
 		}
 	}
-
 	async selectSeatsByParams(params) {
-		console.log("Starting seat selection process with params:", params)
-
-		try {
-			// Wait for page to load with extended timeout
-			console.log("Waiting for seats page to load...")
-			await this.actions.waitUntilPageLoad()
-
-			// Try multiple strategies to detect if we're on the seats page
-			let onSeatsPage = false;
-
-			// Strategy 1: Try to wait for seats page heading
-			try {
-				console.log("Strategy 1: Waiting for seats page heading...")
-				await this.actions.waitForDisplayed(seatPageHeading, 'seats page heading', 15000)
-				onSeatsPage = true;
-				console.log("Seats page heading found successfully")
-			} catch (headingError) {
-				console.log("Seats page heading not found, trying alternative approach...")
-			}
-
-			// Strategy 2: Check if skip button is available (means we're on seats page but no heading)
-			if (!onSeatsPage) {
-				try {
-					console.log("Strategy 2: Looking for seats skip button...")
-					await this.actions.waitForDisplayed(seatsPageSkip, 'seats page skip button', 10000)
-					onSeatsPage = true;
-					console.log("Seats skip button found - we're on seats page")
-				} catch (skipError) {
-					console.log("Seats skip button not found either...")
+		await this.actions.pause(4000)
+	    await this.actions.waitForURL('**/seats', 30000)
+		if (!params.includes("false")) {
+			var travelerNum = await params.split(' ')[0].split('-')[1]
+			var seg = await params.split(' ')[1].split('-')[1]
+			var seatType = await params.split(' ')[2].split('-')[1]
+			if (seg.includes("all")) {
+				if ((await this.actions.getText(tripType, 'tripType')) === "Round Trip") {
+					await this.selectSeat(seatType, "departing", travelerNum)
+					await this.selectSeat(seatType, "returning", travelerNum)
 				}
-			}
-
-			// Strategy 3: Check if we're already on bags page (seats were skipped)
-			if (!onSeatsPage) {
-				try {
-					console.log("Strategy 3: Checking if we skipped to bags page...")
-					await this.actions.waitForDisplayed(bagsPageHeading, 'bags page heading', 5000)
-					console.log("Already on bags page - seats were likely skipped")
-					return; // Exit early as seats were skipped
-				} catch (bagsError) {
-					console.log("Not on bags page either...")
-				}
-			}
-
-			// If we're on the seats page, proceed with seat selection
-			if (onSeatsPage) {
-				console.log("Confirmed on seats page, proceeding with seat selection")
-
-				if (!params.includes("false")) {
-					var travelerNum = await params.split(' ')[0].split('-')[1]
-					var seg = await params.split(' ')[1].split('-')[1]
-					var seatType = await params.split(' ')[2].split('-')[1]
-					console.log(`Seat selection parameters - Travelers: ${travelerNum}, Segment: ${seg}, Type: ${seatType}`)
-
-					if (seg.includes("all")) {
-						console.log("Checking trip type for segment selection...")
-						try {
-							if (await this.actions.getText(tripType, 'tripType') === "Round Trip") {
-								console.log("Round trip detected - selecting departing and returning seats")
-								await this.selectSeat(seatType, "departing", travelerNum)
-								await this.selectSeat(seatType, "returning", travelerNum)
-							} else {
-								console.log("One-way trip detected - selecting departing seat")
-								await this.selectSeat(seatType, "departing", travelerNum)
-							}
-						} catch (tripTypeError) {
-							console.log("Could not determine trip type, defaulting to departing seat")
-							await this.selectSeat(seatType, "departing", travelerNum)
-						}
-					} else {
-						console.log("Single segment selection")
-						await this.selectSeat(seatType, seg, travelerNum)
-					}
-				} else {
-					console.log("Skipping seat selection - params indicate false")
+				else {
+					await this.selectSeat(seatType, "departing", travelerNum)
 				}
 			} else {
-				console.log("Could not confirm seats page presence")
-				try {
-					await this.skipSeatsPage();
-					console.log("Successfully skipped seats page");
-					return;
-				} catch (skipError) {
-					console.log("Could not skip seats page either, continuing anyway");
-				}
+				await this.selectSeat(seatType, tripType, travelerNum)
 			}
 
-			console.log("Seat selection process completed successfully")
-		} catch (error) {
-			console.log(`Error in selectSeatsByParams: ${error.message}`)
-			// For now, let's allow the test to continue even if seat selection fails
-			console.log("Continuing test despite seat selection error...")
 		}
 	}
+
 	async selectSeatByPosition(position, adjacency, segment, traveler) {
 
 		if (adjacency === "adjacent") {
@@ -1187,7 +1114,7 @@ class SeatPage {
 			await this.actions.click(popupContinueButton, 'popupContinueButton')
 		}
 		// await this.actions.pause(1000)
-		if (await this.actions.isDisplayed(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')) {
+		if (await this.actions.isDisplayed(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton',30000)) {
 			await this.actions.click(selectSeatPopupContinueButton, 'selectSeatPopupContinueButton')
 		}
 	}

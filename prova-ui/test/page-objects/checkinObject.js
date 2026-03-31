@@ -15,6 +15,12 @@ const seatscroll = "//div[text()='Seat']"
 const seatautoassigned = "(//div[@class='ant-col ant-col-3 PassengerList__StyledCol-sc-1rkj5fy-4 hTXNTo'][3])"
 const enterPhoneNumberCheckin = "//*[@data-hook='select-page-phone-number-input-field_phone']"
 const flightTermsAndConditions = "//label[@data-hook='_optInForAlerts_label']/div[2]"
+const phoneNum = "//input[@data-hook='select-page-phone-number-input-field_phone']"
+const email="//input[@data-hook='select-page-email-id-input-field_email']"
+const selectcontinue="//span[@class='Button__ButtonText-sc-1ececxa-0 fFLZUm']"
+const selectcheckbox="//label[@data-hook='_optInForAlerts_label']"
+const deselectpassenger="(//label[@class='Checkbox-ga32a1-0 cpsyWs'])[2]"
+
 
 class CheckInPage {
     actions;
@@ -65,6 +71,7 @@ class CheckInPage {
         } else {
             console.log("Check in Failed");
         }
+          await this.actions.pause(10000);
     }
 
     async selectCovidRestrictedArticalPolicy() {
@@ -80,6 +87,20 @@ class CheckInPage {
         } catch (ex) {
             console.log('Select Restricted Articles Policy and COVID-19 Confirmation policy not needed');
         }
+    }
+
+    async selectpage()
+    {
+       await this.actions.waitForDisplayed(phoneNum,"Phone numner field",10000)
+        await this.actions.setInputField('setvalue','7025551111',phoneNum,'phoneNum');
+        await this.actions.setInputField('setvalue','accept@fraudtest.com',email,'email');
+        await this.actions.clickElement('click', selectcheckbox, 'selectcheckbox')
+        await this.actions.waitForDisplayed(deselectpassenger, 'secondadultcheckbox')
+        await this.actions.clickElement('click', deselectpassenger, "second adult checkbox")
+        await this.actions.waitForDisplayed(selectcontinue,"select continue",10000);
+        await this.actions.scroll(selectcontinue,'selectcontinue');
+        await this.actions.clickElement('click', selectcontinue, 'selectcontinue');
+
     }
 
     async onlinecheckinbagspage() {

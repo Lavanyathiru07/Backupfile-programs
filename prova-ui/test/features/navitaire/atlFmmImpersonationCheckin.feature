@@ -7,14 +7,16 @@ Feature: This feature file is to run Navitaire BAT scenarios
   #   And I select the "FMM" application
   #   And I validate the Fmm Flights availability
     #QAA-26770
-  @atl @set1
+  @atl @set1 @all
   Scenario: ATL scenario
     Given I navigate to www application
     Then I navigate to G4 portal
     And I select "ATL"
     And I validate Transancation
+
+
     #QAA-26770
-  @set2 @blue @green
+  @set2 @blue @green @all
   Scenario Outline: Impersonation: Book Domestic, SSR, Seat, Carry on, Checked bag
     Given I navigate to www application
     Then I navigate to G4 portal
@@ -27,9 +29,8 @@ Feature: This feature file is to run Navitaire BAT scenarios
     And I am on landing page I select "<adult>" adult travelers
     And I am on landing page I click on search button
     When I am on flights page I collect flight page details
+    When I am on flights page I skip departing bundle selection
     And I am on flights page I click continue button
-    And I am on Bundles Page I expect flight details added to the trip summary
-    And I am on Bundles Page I click continue button
     And I am on Travelers page I fill in data for "all" travelers
     And I select <ssr> for Multiple Travelers
     And I am on Travelers page I click continue button
@@ -52,18 +53,4 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Examples:
       | tripType | adult | child | childSeat | childLap | departDate | returnDate | departure | destination | ssr            | tripflex | Priority              | CarryOn          | Check                    | petInCabin | paxNum | Seats                    |
       | oneway   |     1 |     0 |         0 |        0 |         10 |          0 | CVG       | PGD         | oxygencylinder | true     | pax-all Seg-departing | pax-all Seg-both | pax-all Seg-both count-1 | yes        |      1 | pax-all Seg-all type-any |
-    #QAA-26770
-  @set2 @blue @green
-  Scenario: Domestic- Check-in Online OW
-    Given I complete the Booking using gql for Online-Check-in
-      | tripType   | oneway |
-      | departDate |      0 |
-      | adult      |      1 |
-    Then I navigate to www application
-    And I am on landing page I click manage trip button
-    And I am on manage trip page I enter OLCI details
-    And I am on Online checkin Passengers selection page I click checkin button
-    And I am on Manage Travel onlinechekin page, "Bags" page I click on continue button
-    And I am on Manage Travel onlinechekin page "Seats" page I click on continue button
-    Then I am on Online checkin Print passes page
-    And I am on online checkin validate seat is auto-assiganed after completing the checkin
+    

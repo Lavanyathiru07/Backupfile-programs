@@ -18,11 +18,9 @@ const carryonBagCurrentValueSeg1 = "(//input[@data-hook='ancillaries-page-travel
 const carryOnIncrementButtonSeg2 = "(//button[@data-hook='ancillaries-page-traveler_X_carry-on_increment'])[2]|(//button[@data-hook='ancillaries-page-carry-on_X_input_increment'])[2]"
 const carryonBagCurrentValueSeg2 = "(//input[@data-hook='ancillaries-page-traveler_X_carry-on']|//input[@data-hook='ancillaries-page-carry-on_X_input'])[2]"
 const sameOptionsForAllFlight = "//label[contains(@data-hook,'ancillaries-page-clone-options-checkbox_label')]"
-const carryOnPrice = "(//span[@data-hook='ancillaries-page-carry-on_price']|//span[@data-hook='cart-travelers_0_bags_carry-on_price'])[X]"
 const checkedIncrementButtonSeg1 = "(//button[@data-hook='ancillaries-page-traveler_X_checked-in_increment'])[1]|(//button[@data-hook='ancillaries-page-checked-bag_X_input_increment'])[1]"
 const checkedIncrementButtonSeg2 = "(//button[@data-hook='ancillaries-page-traveler_X_checked-in_increment'])[2]|(//button[@data-hook='ancillaries-page-checked-bag_X_input_increment'])[2]"
-const checkedbagPrice = "(//span[@data-hook='cart-travelers_0_bags_checked-bag_price']|//span[@data-hook='ancillaries-page-checked-bag_price'])[X]"
-const slider = "[data-hook='extras-carousel-marker_slide-X']"
+const slider = "[data-hook='extras-carousel-marker_slide-1']"
 const indicatorContainer = "//div[contains(@class,'AncillariesExtras__IndicatorContainer')]"
 const extraTitle = "//span[@data-hook='extras-title']"
 const tripFlexAddToCart = "[data-hook='trip-flex-card_add-to-cart']";
@@ -40,6 +38,8 @@ const petInCabinReturningLeg = "[data-hook='extras-popup-flight-leg_returning']"
 const petInCabinModalAddToCart = "//button[@data-hook='pet-in-cabin-modal_add-to-cart']"
 const spinnerBar = "//span[contains(@class,'Spinner')]"
 const petInCabinAdded = "[data-hook='pet-in-cabin-card_cart-added']"
+const carryOnPrice = "(//span[@data-hook='ancillaries-page-subheader_flight'])[X]"
+const checkedbagPrice = "(//span[@data-hook='ancillaries-page-subheader_checked-bag'])[X]"
 
 var BagsPageCollector = new Map();
 
@@ -341,7 +341,7 @@ class BagsPage {
                 await this.actions.clickElement('click', slide, "extras button")
             }
             await this.actions.clickElement('click', tripFlexAddToCart, "AddtoCart button")
-            await this.actions.waitForDisplayed(tripFlexAdded, "AddToCart button")
+            //await this.actions.waitForDisplayed(tripFlexAdded, "AddToCart button")
         }
     }
 

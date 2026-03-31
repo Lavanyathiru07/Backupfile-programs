@@ -34,7 +34,7 @@ Given(/^I complete the Booking using gql for Online-Check-in$/, async (dataTable
       process.env.OLCIlastName = response.lastName
     })
   if (ITN == undefined) {
-    await GqlBooking(Env, src, dest, tripType, adultsCount, 0, 0, departDay, "0", "", "no", "no", "no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "")
+    await GqlBooking(Env, src, dest, tripType, adultsCount, 0, 0, departDay, "0", "", "","","","no","no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "","")
       .then((response) => {
         console.log("online check-in response ", response)
         console.log("online check-in confNum ", response.confNumber)

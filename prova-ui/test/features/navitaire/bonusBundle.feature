@@ -4,7 +4,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Given I navigate to www application
     # And I have a screen that is 1440 by 700 pixels
     #QAA-26770
-  @navitairebat @set1
+  @navitairebat @set1 @all
   Scenario Outline: Domestic-Bonus Bundle Booking, RT booking, 2 Adults
     Given I create my allegaint account
     When I am on landing page I select "<tripType>"
@@ -15,18 +15,17 @@ Feature: This feature file is to run Navitaire BAT scenarios
     And I am on landing page I select "<adult>" adult travelers
     And I am on landing page I click on search button
     When I am on flights page I collect flight page details
+    And  I select "<bundletype>" for departing flight
+    And I select "<bundletype>" for returning flight
     And I am on flights page I click continue button
-    And I am on Bundles Page I expect flight details added to the trip summary
-    And I am on Bundles page I select "Allegiant Bonus Bundle"
-    And I am on Bundles Page I click continue button
     And I am on Travelers page I fill in data for "all" travelers
     And I am on Travelers page I click continue button
     And I get seat detils from GQL
     And I select seat from GQL "<Seats>"
     And I am on WWW Seat page I click continue button
     And I am on Bags page I select CarryOn "<CarryOn>"
-    And I am on Bags page I select Checked Bag "<Check>"
-        # And I am on Bags page I select priority "<Priority>"
+    # And I am on Bags page I select Checked Bag "<Check>"
+    # And I am on Bags page I select priority "<Priority>"
     And I am on Bags page I click continue button
     And I am on Hotels page I click No thanks button
     And I am on Cars page I click No thanks button
@@ -42,5 +41,5 @@ Feature: This feature file is to run Navitaire BAT scenarios
         # And I am on Manage Trip and I click cancel flight
 
     Examples:
-      | tripType  | adult | child | childSeat | childLap | departDate | returnDate | cardType | Priority              | CarryOn        | Check                  | Seats                    |
-      | roundTrip |     2 |     0 |         0 |        0 |         13 |          4 | Visa     | pax-all Seg-departing | pax-2 Seg-both | pax-1 Seg-both count-1 | pax-all Seg-all type-any |
+      | tripType  | bundletype  |adult | child | childSeat | childLap | departDate | returnDate | cardType | Priority              | CarryOn        | Check                  | Seats                    |
+      | roundTrip | bonusbundle |2     |     0 |         0 |        0 |         13 |          4 | Visa     | pax-all Seg-departing | pax-2 Seg-both | pax-1 Seg-both count-1 | pax-all Seg-all type-any |

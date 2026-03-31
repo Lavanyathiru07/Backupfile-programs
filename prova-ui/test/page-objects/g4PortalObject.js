@@ -20,10 +20,14 @@ const AIS = "//span[contains(text(),'AIS')]"
 const FM = "//span[contains(text(),'FM')]"
 const BOOK = "//a//span[contains(text(),'BOOK')]"
 const clickContinueButton = "(//button[@data-hook='ancillaries-page_continue'])[2]"
+const clickContinueButton1 = "(//button[@data-hook='ancillaries-page_continue'])[1]"
 const cartoverrideContinueBtn = "//button[@data-hook='page-footer_continue']"
 const guestLogin = "//a[contains(text(),'Guest Login')]"
 const firstname = "//label[contains(text(),'First Name')]"
 const dateTimeFMM = "//div[@id='lastReloaded']"
+const hotelTitle = "[data-hook='hotels-page_page-heading']"
+const carPageHeader = "//*[text()='Car Selection']"
+
 
 class g4PortalPage {
 
@@ -502,8 +506,8 @@ class g4PortalPage {
     }
 
     async clickContinueButton() {
-        await this.actions.waitForDisplayed(clickContinueButton, 'clickContinueButton')
-        await this.actions.clickElement('click', clickContinueButton, 'Continue Button')
+        await this.actions.waitForDisplayed(clickContinueButton1, 'clickContinueButton')
+        await this.actions.clickElement('click', clickContinueButton1, 'Continue Button')
         // await this.actions.pause(5000)
     }
 }

@@ -53,7 +53,7 @@ async function ATLBooking() {
     // let Env = await new Promise((resolve) => {
     //     resolve(UtilityLibrary.getEnvironmentWithPrefix())
     //   })
-    await GqlBooking(Env, "CVG", "PGD", tripType, adultsCount, 0, 0, "12", "5", "", "no", "no", "no", "no", "card", "Master-CC", "yes", "no", "no", "no", "", "", "")
+    await GqlBooking(Env, "CVG", "PGD", tripType, adultsCount, 0, 0, "14", "14", "","","","", "no", "no", "no", "card", "Master-CC", "yes", "no", "no", "no", "", "", "","","")
         .then((response) => {
             console.log("Booking response ", response)
             console.log("Booking confNum ", response.confNumber)
@@ -89,9 +89,9 @@ Given(/^I complete the Booking using gql for Online-Check-in$/, { timeout: 180 *
     let departDay = data.departDate
     let adultsCount = Number(data.adult)
     let Env = await this.gqlBookingPage.getEnvironment()
-    let cityPairDetails = await this.gqlBookingPage.getAvailableFlightsWithin24hoursFromApi();
-    console.log(`Source: ${cityPairDetails.source} => Destination: ${cityPairDetails.destination}`);
-    await GqlBooking(Env, cityPairDetails.source, cityPairDetails.destination, tripType, adultsCount, 0, 0, departDay, "0", "", "no", "no", "no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "")
+    //let cityPairDetails = await this.gqlBookingPage.getAvailableFlightsWithin24hoursFromApi();
+    //console.log(`Source: ${cityPairDetails.source} => Destination: ${cityPairDetails.destination}`);
+    await GqlBooking(Env, "CVG", "PGD", tripType, adultsCount, 0, 0, departDay, "0", "", "","","","no","no", "no", "card", "Master", "yes", "no", "no", "no", "", "", "","")
         .then((response) => {
             console.log("online check-in response ", response)
             console.log("online check-in confNum ", response.confNumber)

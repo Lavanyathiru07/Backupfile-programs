@@ -80,8 +80,8 @@ class Managetravel {
             await this.actions.clickElement('click', nextButton, 'next button')
         }
 
-        // cancel trip content
-        // await this.actions.waitFor(contentCancelPopup, 5000, '', true, 'content cancel popup')
+        //cancel trip content
+        await this.actions.waitFor(contentCancelPopup, 5000, '', true, 'content cancel popup')
         await this.actions.waitForDisplayed(contentCancelPopup, 'contentCancelPopup', 10000)
 
         // click cancel reservation
@@ -480,6 +480,19 @@ class Managetravel {
         } else {
             return false
         }
+    }
+
+    async selectpage()
+    {
+        await actions.pause(5000);
+        await actions.setInputField('setvalue','7025551111',phoneNum,'phoneNum');
+        await actions.setInputField('setvalue','accept@fraudtest.com',email,'email');
+        //await actions.clickElement('click', selectcheckbox, 'selectcheckbox')
+        await actions.waitForDisplayed(deselectpassenger, 'secondadultcheckbox',2000)
+        await actions.clickElement('click', deselectpassenger, "second adult checkbox")
+        await actions.scroll(selectcontinue,'selectcontinue')
+        await actions.clickElement('click', selectcontinue, 'selectcontinue');
+        await actions.pause(30000);
     }
 }
 export default Managetravel
