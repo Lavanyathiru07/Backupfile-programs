@@ -1,6 +1,7 @@
 import { Given , When , Then} from '@cucumber/cucumber';
 
 When(/^I am on flights page I collect flight page details$/, async function ()  {
+    await this.actions.pause(20000);
     await this.FlightsPage.collectFlightPageDetails();
 });
 
