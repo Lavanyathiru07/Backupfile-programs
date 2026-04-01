@@ -16,7 +16,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
 
 
     #QAA-26770
-  @set2 @blue @green @all
+  @set2 @blue @green @all 
   Scenario Outline: Impersonation: Book Domestic, SSR, Seat, Carry on, Checked bag
     Given I navigate to www application
     Then I navigate to G4 portal
@@ -52,5 +52,5 @@ Feature: This feature file is to run Navitaire BAT scenarios
 
     Examples:
       | tripType | adult | child | childSeat | childLap | departDate | returnDate | departure | destination | ssr            | tripflex | Priority              | CarryOn          | Check                    | petInCabin | paxNum | Seats                    |
-      | oneway   |     1 |     0 |         0 |        0 |         10 |          0 | CVG       | PGD         | oxygencylinder | true     | pax-all Seg-departing | pax-all Seg-both | pax-all Seg-both count-1 | yes        |      1 | pax-all Seg-all type-any |
+      | oneway   |     1 |     0 |         0 |        0 |         10 |          0 | CVG       | PGD         | oxygencylinder | true     | pax-all Seg-departing | pax-all Seg-departing | pax-all Seg-departing count-1 | yes        |      1 | pax-all Seg-all type-any |
     

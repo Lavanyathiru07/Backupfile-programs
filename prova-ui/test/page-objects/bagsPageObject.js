@@ -183,7 +183,8 @@ class BagsPage {
         if (segment === "both") {
             do {
                 await this.actions.waitForClickable(carryonIncdepart, 'button to increment the carryOn bags', 10000)
-                await this.actions.clickElement('click', carryonIncdepart, 'button to increment the carryOn bags')
+                await this.actions.clickElement('click', carryonIncdepart, 'button to increment the carryOn bags for departure')
+                await this.actions.clickElement('click', carryonIncreturn, 'button to increment the carryOn bags for return')
             } while (parseInt(await this.actions.getText(carryonCurrentVlaue, "increment button")) < 1)
         }
         if (segment === "departing") {
@@ -254,8 +255,12 @@ class BagsPage {
                 await this.actions.waitForDisplayed(checkedincdepart, "increment button till it displayed", 30000)
                 await this.actions.waitForClickable(checkedincdepart, "increment button for checked-In bags", 30000)
                 if (await this.actions.isClickable(checkedincdepart, "increment button")) {
-                    await this.actions.clickElement('click', checkedincdepart, "increment button for checked-In bags")
+                    await this.actions.clickElement('click', checkedincdepart, "increment button for checked-In bags for departure")
                 }
+                if (await this.actions.isClickable(checkedincreturn, "increment button")) {
+                    await this.actions.clickElement('click', checkedincreturn, "increment button for checked-In bags for return")
+                }
+
             }
         }
         if (segment === "departing") {

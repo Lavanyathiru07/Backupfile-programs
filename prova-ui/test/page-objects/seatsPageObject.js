@@ -913,7 +913,6 @@ class SeatPage {
 		let seatsPageFound = false
 		const seatsDetectionStrategies = [
 			{ selector: continueButton, description: 'continue button' },
-			{ selector: seatsPageSkip, description: 'skip seats button' },
 			{ selector: "[data-hook='flights-breadcrumb_item-seats']", description: 'seats breadcrumb item' },
 		]
 
@@ -942,21 +941,7 @@ class SeatPage {
 		// Try to scroll to bottom where buttons usually are
 		await this.actions.scroll(tailOfPlane, 'tail of plane')
 
-		// Strategy 1: Try skip button first (for tests that don't select seats)
-		try {
-			console.log('Trying to click skip seats button')
-			await this.actions.waitForDisplayed(seatsPageSkip, 'skip seats button', 5000)
-			await this.actions.click(seatsPageSkip, 'skip seats button')
-			console.log('Skip seats button clicked successfully')
-
-			// Wait for navigation after skip
-			await this.actions.waitForLoadState('domcontentloaded', 10000)
-			await this.actions.waitForDisplayed("[data-hook='ancillaries-page_page-heading']", 'bags page heading', 10000)
-			console.log('Successfully navigated to bags page after skip')
-			return
-
-		} catch (skipError) {
-			console.log(`Skip button not available: ${skipError.message}, trying continue button`)
+		
 
 			// Strategy 2: Try continue button (for tests that do select seats)
 			try {
@@ -985,7 +970,7 @@ class SeatPage {
 					}
 				}
 			}
-		}
+		
 
 		// Handle any popups that might appear BEFORE checking for round trip
 		if (await this.actions.isDisplayed(selectSeatsPopup, 'selectSeatsPopup')) {
