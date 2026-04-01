@@ -43,7 +43,7 @@ Feature: This feature file is to run booking flow using Playwright
 
     Examples:
       | tripType | adult | departDate | tripflex | Seats                    | CarryOn          | Check                    | Priority              | ssr        |
-      | oneway   |     2 |         10 | false    | pax-all Seg-all type-any | pax-all Seg-both | pax-all Seg-both count-1 | pax-all Seg-departing | Wheelchair |
+      | oneway   |     2 |         10 | false    | pax-all Seg-all type-any | pax-all Seg-departing | pax-all Seg-departing count-1 | pax-all Seg-departing | Wheelchair |
 
     @set2 @blue @green @all
     Scenario: Domestic- Check-in Online OW

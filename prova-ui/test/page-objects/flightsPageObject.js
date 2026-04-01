@@ -68,7 +68,8 @@ class FlightsPage {
 
         // Wait for page navigation after clicking continue
         await this.actions.waitUntilPageLoad()
-        await this.actions.waitForLoadState('domcontentloaded', 15000)
+        await this.actions.waitForLoadState('domcontentloaded', 20000)
+        await this.actions.pause(30000);
     }
 
      async getTimeline() {
