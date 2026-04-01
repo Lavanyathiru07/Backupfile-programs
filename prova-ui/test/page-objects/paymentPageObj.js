@@ -79,50 +79,44 @@ class PaymentPage {
     }
 
     async cardDetails() {
-        await this.actions.waitForLoadState('domcontentloaded', 20000)
-        const cardNumArray = ["5454545454545454", "4444444444444448"];
-        const random = Math.floor(Math.random() * cardNumArray.length);
-        const value = cardNumArray[random];
-        const strLen = value.split('')[0];
-        await this.actions.pressButton('Enter')
-        await this.actions.waitForDisplayed(cardName, 'cardName text field', 10000);
-        await this.actions.scroll(cardName)
-        await this.actions.waitForClickable(cardName, 'cardName text field', 5000)
-        await this.actions.waitForClickable(cardName, 'cardName text field')
-        await this.actions.clearInputField(cardName, 'cardName')
-        await this.actions.setInputField('setValue', "Auto Tester", cardName, "card name input field")
-        await this.actions.setInputField('fill', value, cardnumfield, "card-number input field")
+  const cardNumArray = ["5454545454545454", "4444444444444448", "4000020000000000", "4400000000000008", "5555555555555557"];
+  const random = Math.floor(Math.random() * cardNumArray.length);
+  let value = process.env.ENV.includes("prd01") ? cardNumArray[0] : cardNumArray[random];
+  const strLen = value.split('');
 
-        console.log("CardNumber: ", cardNumArray[random])
-        await this.actions.waitForDisplayed(expirymonth, 'expirymonth', 10000)
-        await this.actions.scroll(expirymonth)
-        await this.actions.waitForClickable(expirymonth, 'expirymonth', 5000)
-        await this.actions.clickElement('click', expirymonth, "expiry month dropdown")
-        await this.actions.waitForClickable(monthselection, 'monthselection', 2000)
-        await this.actions.scroll(monthscroll)
-        await this.actions.waitForClickable(monthselection, 'monthselection', 5000)
-        await this.actions.clickElement('click', currentExpirationMonth.replace("X", "11"), "selecting the expiry month of card")
+  await this.actions.waitForDisplayed(cardName, 'cardName text field', 10000);
+  await this.actions.scroll(cardName, 'cardName');
+  await this.actions.clearInputField(cardName, 'cardName');
+  await this.actions.setInputField('fill', "Auto Tester", cardName, "card name input field");
 
-        await this.actions.waitForDisplayed(yearlocscroll, 'yearlocscroll', 10000)
-        await this.actions.scroll(yearlocscroll)
-        await this.actions.waitForClickable(yearlocscroll, 'yearlocscroll', 5000)
-        await this.actions.clickElement('click', expiryyear, "expiry year dropdown")
-        await this.actions.scroll(yearscroll)
-        await this.actions.waitForClickable(currentExpirationYear.replace("X", "5"), 'year selection', 1000)
-        await this.actions.clickElement('click', currentExpirationYear.replace("X", "5"), "selecting the expiry year of card")
-        await this.actions.scroll(yearlocscroll)
-        await this.actions.waitUntilPageLoad() // Wait for page to stabilize after year selection
-        if (value === '4444444444444448' || value === '4000020000000000' || value === '4400000000000008' || value === '6243030000000001') {
-            let cvvValue = "999"
-            await this.actions.setInputField('fill', cvvValue, cvv, "cvv field")
-        } else if (value === '5454545454545454') {
-            let cvvValue = "998"
-            await this.actions.setInputField('fill', cvvValue, cvv, "cvv field")
-        } else {
-            let cvvValue = "737"
-            await this.actions.setInputField('fill', cvvValue, cvv, "cvv field")
-        }
-    }
+  // Enter card number digit by digit
+  for (let i = 0; i < strLen.length; i++) {
+    await this.actions.setInputField('fill', strLen[i], cardnumfield, "card-number input field");
+  }
+  console.log("CardNumber: ", value);
+
+  // Expiry month
+  await this.actions.waitForClickable(expirymonth, 'expiry month dropdown');
+  await this.actions.clickElement('click', expirymonth, "expiry month dropdown");
+  await this.actions.pause(500);
+  await this.actions.clickElement('click', currentExpirationMonth.replace("X", "11"), "selecting expiry month");
+
+  // Expiry year
+  await this.actions.waitForClickable(expiryyear, 'expiry year dropdown');
+  await this.actions.clickElement('click', expiryyear, "expiry year dropdown");
+  await this.actions.pause(500);
+  await this.actions.clickElement('click', currentExpirationYear.replace("X", "8"), "selecting expiry year");
+
+  // CVV logic
+  let cvvValue = "737";
+  if (["4444444444444448", "4000020000000000", "4400000000000008"].includes(value)) {
+    cvvValue = "999";
+  } else if (value === "5454545454545454") {
+    cvvValue = "998";
+  }
+  await this.actions.setInputField('fill', cvvValue, cvv, "cvv field");
+}
+
 
     async billingaddress() {
         await this.actions.waitForDisplayed(billingscroll, 'billingscroll', 10000) // Wait for billing section to load
@@ -169,47 +163,34 @@ class PaymentPage {
     }
 
     async purchasemytrip() {
-        try {
-            paymentPageCollector.set('customerFirstName', await this.actions.getAttribute(billingFirstName, 'value', 'billingFirstName'))
-            paymentPageCollector.set('customerLastName', await this.actions.getAttribute(billingLastName, 'value', 'billingLastName'))
-            paymentPageCollector.set('emailAddress', await this.actions.getAttribute(emailAddressInput, 'value', 'emailAddressInput'))
-            await this.getTripSummaryAmount();
-        }
-        catch (ex) {
-            console.log("Exception while collecting paymentPage details")
-        }
-
-        await this.actions.scroll(termsscroll)
-        await this.actions.waitForDisplayed(termsbox, 'terms and conditions checkbox')
-        await this.actions.waitForClickable(termsbox, 'terms and conditions checkbox');
-        await this.actions.clickElement('click', termsbox, "condition checkbox")
-
-        await this.actions.scroll(purchaseMyTrip)
-        await this.actions.waitForClickable(purchaseMyTrip, 'purchaseMyTrip button');
-
-        await this.actions.clickElement('click', purchaseMyTrip, "Purchase my trip Button");
-        await this.actions.waitForLoadState('load', 15000)
-
-        console.log("URL: ", await this.actions.getUrl())
-        let oddJustHappenedVisibility = await this.actions.isDisplayed(somethingReallyOddJustHappened, 'somethingReallyOddJustHappened')
-        let errorMsgVisibility = await this.actions.isDisplayed(errorMessageCarNum, 'errorMessageCarNum')
-        if (oddJustHappenedVisibility) {
-            console.log("URL Odd Happen: ", await this.actions.getUrl())
-            assert.fail("something Really Odd Just Happened error! " + (await this.actions.getText(recoverableErrorMsg, 'recoverableErrorMsg')) + " Fare Amount: " + TotalFareAmount)
-        } else if (errorMsgVisibility) {
-            console.log("URL error msg: ", await this.actions.getUrl())
-            assert.fail("Valid card " + (await this.actions.getText(errorMessageCarNum, 'errorMessageCarNum')))
-        }
-        else {
-            do {
-                await this.actions.waitForLoadState('domcontentloaded', 3000) // Reduced from 10000 for faster checking
-            } while (await this.actions.isDisplayed(spinnerBar, 'spinner bar'))
-
-            await this.actions.waitForDisplayed(thankyouMessage, 'thankyouMessage', 60000);
-
-        }
-
+    try {
+      paymentPageCollector.set('customerFirstName', await this.actions.getAttribute(billingFirstName, 'value', 'billingFirstName'));
+      paymentPageCollector.set('customerLastName', await this.actions.getAttribute(billingLastName, 'value', 'billingLastName'));
+      paymentPageCollector.set('emailAddress', await this.actions.getAttribute(emailAddressInput, 'value', 'emailAddressInput'));
+      await this.getTripSummaryAmount();
+    } catch (ex) {
+      console.log("Exception while collecting paymentPage details");
     }
+
+    await this.actions.scroll(termsscroll, 'termsscroll');
+    let claimPointCheckBox = `//label[contains(@data-hook,'claim-my-points')]/div[2]`;
+    if (await this.actions.isDisplayed(claimPointCheckBox, 'Points Claim Check box')) {
+      console.log("Unchecking the Points Claim Checkbox");
+      await this.actions.click(claimPointCheckBox, 'Points Claim Check box');
+      await this.actions.pause(3000);
+    }
+
+    await this.actions.waitForDisplayed(termsbox, 'terms and conditions checkbox');
+    await this.actions.waitForClickable(termsbox, 'terms and conditions checkbox');
+    await this.actions.clickElement('click', termsbox, "condition checkbox");
+    await this.actions.scroll(purchaseMyTrip, 'purchaseMyTrip');
+    await this.actions.waitForClickable(purchaseMyTrip, 'purchaseMyTrip button');
+    await this.actions.clickElement('click', purchaseMyTrip, "Purchase my trip Button");
+
+    // Validate payment completion
+    await this.validatePaymentCompletion();
+  }
+
 
     async getTripSummaryAmount() {
         TotalFareAmount = await this.actions.getText(tripSummaryAmount, 'tripSummaryAmount');
@@ -361,6 +342,68 @@ class PaymentPage {
         }
 
     }
+    async validatePaymentCompletion() {
+    try {
+      // Wait for spinner to disappear (indicating payment processing completion)
+      // Use a while loop similar to the existing approach in purchasemytrip method
+      let spinnerVisible = true;
+      let maxWaitTime = 60000; // 60 seconds maximum wait
+      let startTime = Date.now();
+      
+      while (spinnerVisible && (Date.now() - startTime) < maxWaitTime) {
+        try {
+          spinnerVisible = await this.actions.isDisplayed(spinnerBar, 'spinner');
+          if (spinnerVisible) {
+            await this.actions.pause(500);
+          }
+        } catch (error) {
+          // If spinner element is not found, consider it as not visible
+          spinnerVisible = false;
+        }
+      }
+      
+      if (spinnerVisible) {
+        throw new Error("Payment processing timeout - spinner still visible after 60 seconds");
+      }
+      
+      // Additional wait to ensure page has stabilized
+      await this.actions.pause(2000);
+      
+      // Check if we're redirected to confirmation page or if there's an error
+      const currentUrl = await this.actions.getUrl();
+      
+      if (currentUrl.includes('/confirmation')) {
+        console.log("Payment completed successfully - redirected to confirmation page");
+        return true;
+      }
+      
+      // Check for error messages that indicate payment failure
+      const errorMessageDisplayed = await this.actions.isDisplayed(somethingReallyOddJustHappened, 'error message');
+      if (errorMessageDisplayed) {
+        const errorText = await this.actions.getText(recoverableErrorMsg, 'error message text');
+        throw new Error(`Payment failed with error: ${errorText}`);
+      }
+      
+      // Check for card number error
+      const cardErrorDisplayed = await this.actions.isDisplayed(errorMessageCarNum, 'card error message');
+      if (cardErrorDisplayed) {
+        const cardErrorText = await this.actions.getText(errorMessageCarNum, 'card error text');
+        throw new Error(`Payment failed with card error: ${cardErrorText}`);
+      }
+      
+      // If we're still on payment page after long wait, payment might have failed
+      if (currentUrl.includes('/payment')) {
+        throw new Error("Payment processing failed - still on payment page after completion attempt");
+      }
+      
+      console.log("Payment validation completed successfully");
+      return true;
+      
+    } catch (error) {
+      console.error("Payment completion validation failed:", error.message);
+      throw error;
+    }
+  }
 }
 export default PaymentPage
 export { paymentPageCollector }

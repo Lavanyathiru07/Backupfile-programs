@@ -176,6 +176,7 @@ class BagsPage {
     }
 
     async selectCarryOn(paxNum, segment) {
+                               
         let carryonIncdepart = await this.actions.getElement(carryOnIncrementButtonSeg1.replace(/X/g, paxNum - 1))
         let carryonCurrentVlaue = await this.actions.getElement(carryonBagCurrentValueSeg1.replace(/X/g, paxNum - 1))
         let carryonIncreturn = await this.actions.getElement(carryOnIncrementButtonSeg2.replace(/X/g, paxNum - 1))

@@ -16,7 +16,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
 
 
     #QAA-26770
-  @set2 @blue @green @all 
+  @set2 @blue @green @all @im
   Scenario Outline: Impersonation: Book Domestic, SSR, Seat, Carry on, Checked bag
     Given I navigate to www application
     Then I navigate to G4 portal

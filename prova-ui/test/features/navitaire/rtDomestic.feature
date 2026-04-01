@@ -5,7 +5,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
     Given I navigate to www application
     And I have a screen that is 1440 by 700 pixels
     #QAA-26770
-  @set2 @all
+  @set2 @all @rt
   Scenario Outline: RT, Domestic flight with 2Adult, 1Infant in lap and 1Child with 1 CO and 1 CK bag, Seat & Modify WWW booking via MT
     Given I am on landing page I select "<tripType>"
     When I am on landing page I select "AVL" for the departure airport
@@ -44,8 +44,8 @@ Feature: This feature file is to run Navitaire BAT scenarios
     And I am on Travelers page I click continue button
     And I am on Seat page I click No thanks, skip seat selection
     When I am on Manage Travel page I add "<Addproduct>" for traveler "<paxNum>"
-    And I am on Manage Travel page, Bags page I click on continue button only
-    And I am on Cars page I click No thanks button
+    And  I am on Manage Travel page, Bags page I click on continue button
+    And  I am on cars page and I click on continue
     And I am on Manage Travel page, Payment page I complete payment
     Then I am on Manage Travel page, I expect "<productTotal>" is updated correctly for traveler "<paxNum>"
 
