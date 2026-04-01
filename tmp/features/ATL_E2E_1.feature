@@ -1,12 +1,10 @@
 @e2e
 @set1
 @navitairebat
-@all
 Feature: This feature file is to run Navitaire BAT scenarios
 @e2e
 @set1
 @navitairebat
-@all
 Scenario: Verify ATL Transactions for RT, Domestic flight with 1 Adult with 1 CO and 1 CK bag &Modify &Cancel WWW booking via MT
 Given I complete the Booking using GQL for RT-1Adult->1CK CO
 And I verify that the sum of all ATL transaction values are equal to 0
@@ -58,7 +56,6 @@ And I verify I see in the Acct Nbr column the value "450291" for the "dep" negat
 And I verify I see one positive and one negative transaction for ret flt with Acct Date matching date of the flt RES_FLIGHT_ANC_BAGS_CHECKED_PREPAID "book"
 And I verify I see in the Acct Nbr column the value "240141" for the "ret" positive transaction "RES_FLIGHT_ANC_BAGS_CHECKED_PREPAID"
 And I verify I see in the Acct Nbr column the value "450291" for the "ret" negative transaction "RES_FLIGHT_ANC_BAGS_CHECKED_PREPAID"
-# And I verify I see one positive and one negative transaction with Acct Date matching booking date for booking
 And I verify I see in the Acct Nbr column the value "100026" for the positive transaction "MC_CC_PAYMENT"
 And I verify I see in the Acct Nbr column the value "240141" for the negative transaction "MC_CC_PAYMENT"
 And I verify I see one positive and one negative transaction for PA & PC flt with Acct Date matching date of the flt MC_CC_PAYMENT_FEES for booking
