@@ -35,4 +35,4 @@ Feature: Impersonation CC
 
         Examples:
             | tripType | adult | child | childSeat | childLap | departDate | returnDate | departure | destination | ssr            | tripflex | Priority              | CarryOn          | Check                    | petInCabin | paxNum | Seats                    |
-            | oneway   | 1     | 0     | 0         | 0        | 10         | 0          | SFB       | ABE         | oxygencylinder | true     | pax-all Seg-departing | pax-all Seg-both | pax-all Seg-both count-1 | yes        | 1      | pax-all Seg-all type-any |
+            | oneway   | 1     | 0     | 0         | 0        | 10         | 0          | SFB       | ABE         | oxygencylinder | true     | pax-all Seg-departing | pax-all Seg-departing | pax-all Seg-departing count-1 | yes        | 1      | pax-all Seg-all type-any |

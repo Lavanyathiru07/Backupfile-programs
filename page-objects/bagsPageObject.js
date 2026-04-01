@@ -83,6 +83,7 @@ class BagsPage {
 		if (segment === "both") {
 			do {
 				await actions.clickElement('click', carryonIncdepart, 'button to increment the carryOn bags for departing')
+								await actions.clickElement('click', carryonIncreturn, 'button to increment the carryOn bags for returning')
 				} while (parseInt(await actions.getText(carryonCurrentVlaue, "increment button")) < 1)
 		}
 		if (segment === "departing") {
@@ -121,6 +122,9 @@ class BagsPage {
 				await actions.waitForDisplayed(checkedincdepart, "increment button till it displayed")
 				if (await actions.isClickable(checkedincdepart, "increment button")) {
 					await actions.clickElement('click', checkedincdepart, "increment button for checked-In bags")
+				}
+				if (await actions.isClickable(checkedincreturn, "increment button")) {
+					await actions.clickElement('click', checkedincreturn, "increment button for checked-In bags")
 				}
 			}
 		}
