@@ -47,7 +47,7 @@ Feature: This feature file is to run Navitaire BAT scenarios
             | oneway   | 2     | 0     | 0         | 0        | 20         | false    | pax-all Seg-all type-any | pax-all Seg-departing | pax-all Seg-departing count-1 | pax-all Seg-departing | Wheelchair |
 
     #PASS
-    @set2 @blue @green @all
+    @set2 @blue @green
     Scenario: Domestic- Check-in Online OW
         Given I complete the Booking using gql for Online-Check-in
             | tripType   | oneway |
