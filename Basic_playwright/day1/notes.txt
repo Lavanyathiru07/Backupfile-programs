@@ -231,4 +231,134 @@ radio is checked already means it will true then this compare with toBeTruthy() 
 isn't selected means return false then check this toBefalsy() 
 
 
+soft assertion
+===================
+await expect.soft(page).toHaveTitle('STOREe');
+    await expect.soft(page).toHaveURL("https://www.demoblaze.com/");
+    await expect.soft(page.locator('#nava')).toBeVisible();
+
+
+    //checkbox
+
+    await page.locator("selector").check();
+    await expect(await page.locator("selector")).toBeChecked();
+
+    //ischecked() and toBeTruthy()
+    await expect(await page.locator("selector").isChecked()).toBeTruthy();
+
+    await expect(await page.locator("selector").isChecked()).toBeFalsy();
+
+
+    //mutilecheckbox
+
+   const checkboxes=["#monday","#tuesday","#saturday"]
+
+   for(const checkboxlocator of checkboxes)
+{
+    await page.check(checkboxlocator);
+}
+
+
+    //radio button
+
+    // await page.locator("#female").check();
+
+    await page.check("#female");
+    await expect(await page.locator("#female")).toBeChecked();
+    await expect(await page.locator("#female").isChecked()).toBeTruthy();
+
+//input box
+
+    // await page.getByPlaceholder("Enter Name").fill("Doganimal");
+    await expect(await page.getByPlaceholder('Enter Name')).toBeVisible();
+    await expect(await page.getByPlaceholder('Enter Name')).toBeEmpty();
+    await expect(await page.getByPlaceholder('Enter Name')).toBeEditable();
+    await expect(await page.getByPlaceholder('Enter Name')).toBeEnabled();
+
+
+    await page.fill('[placeholder="Enter Name"]', 'catanimal')
+
+    //multiple ways to select the dropdown
+
+     await page.locator("#country").selectOption({label:'Canada'})//label /visible
+
+    await page.locator("#country").selectOption('Canada');// using visible text
+
+    await page.locator("#country").selectOption({value:'uk'});// using value
+
+     await page.locator("#country").selectOption({index:1});// using index
+
+    2)check number of option in dropdowm ---Approach 2
+    await expect(options.length).toBe(10); // verifinf the count 
+
+
+    3)check presence of value in the dropdown--aproach
+
+const content=await page.locator('#country').textContent();///it will return the text value then it is string return value
+
+ await expect(content.includes('India')).toBeTruthy();
+
+
+4)Check presence of value in the dropdown -approach 2 --using for looping
+
+ const options=await page.$$('#country option');
+  let status=false; //intiall status is false because you didn't find the match value till now 
+  for(const option of options)
+ {
+     console.log(await option.textContent());
+    let value=await option.textContent();
+     if(value.includes('France'))
+      {
+         status=true;
+         break;
+      }
+  }
+await expect(status).toBeTruthy();
+
+
+
+//select multiple options from multi select dropdown
+
+    await page.selectOption("#colors",['Green','Blue','Red']);
+
+//Assertions
+
+// //1)check number of option in the dropdown
+
+ const options=await page.locator('#colors option')
+
+ await expect(options).toHaveCount(7)
+    await page.waitForTimeout(5000);
+
+// //2)check number of option in the dropdown using JS Array
+
+const options=await page.$$('#colors option')
+
+ console.log(await options.length)
+
+ await expect(options.length).toBe(7);
+
+
+3)check the presence of value in the dropdown
+
+const content=await page.locator('#colors').textContent();
+await expect(content.includes('Blue')).toBeTruthy();
+
+//autosuggestion dropdown
+
+//hidden dropdown (crl+shift+p)
+
+
+//pageobject 
+wherever I crrated file need to call under test
+
+//handling multiple windows
+
+1.with help of browser like chromium
+2.call the context because context contains many pages
+3.before open the second page ,you have to open the event page 
+4.thencall the second page /click the second page
+5.pase the promise toHaveRole
+
+
 
