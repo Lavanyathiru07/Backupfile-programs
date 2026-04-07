@@ -1,4 +1,4 @@
-const{test,except, expect}=require('@playwright/test');
+const{test, expect}=require('@playwright/test');
 const { notDeepEqual } = require('node:assert');
 
 test("AssertionsTest",async({page})=>{

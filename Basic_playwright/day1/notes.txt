@@ -360,5 +360,16 @@ wherever I crrated file need to call under test
 4.thencall the second page /click the second page
 5.pase the promise toHaveRole
 
+//alerts
+1.normal alerts
+2.confirmation alerts
+3.prompt alert
 
+before the alert appear you should enable the alert first
+await page.goto('https://testautomationpractice.blogspot.com/');
 
+    //enabling alert handling or dialog window handler
+page.on('dialog',async dialog=>{
+expect(dialog.type()).toContain('confirm');
+expect(dialog.message()).toContain('Press a button!');
+await dialog.accept();
